@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -46,10 +46,7 @@ def get_tax_class_proportions(lines):
         # Can't calculate proportions, if total is zero
         return []
 
-    return [
-        (tax_class, tax_class_total / total)
-        for (tax_class, tax_class_total) in total_by_tax_class.items()
-    ]
+    return [(tax_class, tax_class_total / total) for (tax_class, tax_class_total) in total_by_tax_class.items()]
 
 
 def stacked_value_added_taxes(price, taxes):
@@ -65,6 +62,7 @@ def stacked_value_added_taxes(price, taxes):
     :return: TaxedPrice with the calculated taxes.
     :rtype: TaxedPrice
     """
+
     def money_sum(iterable):
         return sum(iterable, Money(0, price.currency))
 
@@ -80,10 +78,7 @@ def stacked_value_added_taxes(price, taxes):
         taxful = None  # will be calculated below
         taxless = price
 
-    line_taxes = [
-        SourceLineTax.from_tax(tax=tax, base_amount=taxless.amount)
-        for tax in taxes
-    ]
+    line_taxes = [SourceLineTax.from_tax(tax=tax, base_amount=taxless.amount) for tax in taxes]
 
     if taxful is None:
         total_tax_amount = money_sum(x.amount for x in line_taxes)
@@ -122,10 +117,7 @@ def _calc_compounded_added_taxes_from_taxful(amount, tax_groups):
         base_price = TaxfulPrice(taxed_price.taxless)
         reversed_line_taxes.extend(reversed(taxed_price.taxes))
     line_taxes = list(reversed(reversed_line_taxes))
-    return TaxedPrice(
-        taxful=TaxfulPrice(amount),
-        taxless=TaxlessPrice(base_price),
-        taxes=line_taxes)
+    return TaxedPrice(taxful=TaxfulPrice(amount), taxless=TaxlessPrice(base_price), taxes=line_taxes)
 
 
 def _calc_compounded_added_taxes_from_taxless(amount, tax_groups):
@@ -135,7 +127,4 @@ def _calc_compounded_added_taxes_from_taxless(amount, tax_groups):
         taxed_price = stacked_value_added_taxes(base_price, taxes)
         base_price = TaxlessPrice(taxed_price.taxful)
         line_taxes.extend(taxed_price.taxes)
-    return TaxedPrice(
-        taxful=TaxfulPrice(base_price),
-        taxless=TaxlessPrice(amount),
-        taxes=line_taxes)
+    return TaxedPrice(taxful=TaxfulPrice(base_price), taxless=TaxlessPrice(amount), taxes=line_taxes)

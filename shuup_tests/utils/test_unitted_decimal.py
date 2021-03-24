@@ -1,13 +1,12 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
-
 import pytest
 import six
+from decimal import Decimal
 
 from shuup.utils.numbers import UnittedDecimal
 
@@ -16,15 +15,15 @@ class BaseDecimal(UnittedDecimal):
     unit = None
 
     def unit_matches_with(self, other):
-        return self.unit == getattr(other, 'unit', None)
+        return self.unit == getattr(other, "unit", None)
 
 
 class FooDecimal(BaseDecimal):
-    unit = 'foo'
+    unit = "foo"
 
 
 class BarDecimal(BaseDecimal):
-    unit = 'bar'
+    unit = "bar"
 
 
 def test_unitted_decimal_basics():
@@ -33,10 +32,10 @@ def test_unitted_decimal_basics():
     assert FooDecimal(1) < FooDecimal(2)
     assert FooDecimal(2) * 5 == FooDecimal(10)
     assert 5 * FooDecimal(2) == FooDecimal(10)
-    assert FooDecimal(7) / FooDecimal(2) == Decimal('3.5')
+    assert FooDecimal(7) / FooDecimal(2) == Decimal("3.5")
     assert FooDecimal(7) // FooDecimal(2) == 3
-    assert FooDecimal(7) / 2 == FooDecimal('3.5')
-    assert -FooDecimal(4) == FooDecimal('-4')
+    assert FooDecimal(7) / 2 == FooDecimal("3.5")
+    assert -FooDecimal(4) == FooDecimal("-4")
 
 
 def test_unitted_decimal_value():
@@ -155,7 +154,7 @@ def test_pos():
 
 
 def test_abs():
-    assert abs(FooDecimal('-2')) == FooDecimal(2)
+    assert abs(FooDecimal("-2")) == FooDecimal(2)
 
 
 def test_int():
@@ -163,28 +162,27 @@ def test_int():
 
 
 def test_float():
-    assert float(FooDecimal('42.5')) == 42.5
+    assert float(FooDecimal("42.5")) == 42.5
 
 
 def test_round():
     if six.PY2:
         # Python 2 does not have __round__ operator
         with pytest.raises(AttributeError):
-            FooDecimal('42.46').__round__()
-        assert round(FooDecimal('42.46')) == 42
-        assert round(FooDecimal('42.46'), 1) == 42.5
+            FooDecimal("42.46").__round__()
+        assert round(FooDecimal("42.46")) == 42
+        assert round(FooDecimal("42.46"), 1) == 42.5
     else:
-        assert round(FooDecimal('42.46')) == FooDecimal(42)
-        assert round(FooDecimal('42.46'), 1) == FooDecimal('42.5')
+        assert round(FooDecimal("42.46")) == FooDecimal(42)
+        assert round(FooDecimal("42.46"), 1) == FooDecimal("42.5")
 
 
 def test_quantize():
-    assert FooDecimal('42.66').quantize(Decimal('0.1')) == FooDecimal('42.7')
+    assert FooDecimal("42.66").quantize(Decimal("0.1")) == FooDecimal("42.7")
 
 
 def test_copy_negate():
     assert FooDecimal(1).copy_negate() == FooDecimal(-1)
-
 
 
 def test_unit_mixup_error_message():

@@ -1,18 +1,15 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import AnonymousContact, get_person_contact
-from shuup.front.admin_module.carts.views import (
-    CartDetailView, CartListView
-)
+from shuup.front.admin_module.carts.views import CartDetailView, CartListView
 from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing import factories
@@ -22,15 +19,11 @@ from shuup_tests.utils.faux_users import AnonymousUser
 from shuup_tests.utils.fixtures import regular_user
 
 
-
 def _add_products_to_basket(basket, product_count):
     supplier = factories.get_supplier("simple_supplier", basket.shop)
     for x in range(0, product_count):
         product = factories.create_product(
-            sku="%s-%s" % (printable_gibberish(), x),
-            shop=basket.shop,
-            supplier=supplier,
-            default_price=50
+            sku="%s-%s" % (printable_gibberish(), x), shop=basket.shop, supplier=supplier, default_price=50
         )
         basket.add_product(supplier=supplier, shop=basket.shop, product=product, quantity=1)
 
@@ -50,7 +43,7 @@ def _create_cart_with_products(rf, shop, user, customer, person, product_count, 
     basket = _add_products_to_basket(basket, product_count)
 
     assert basket.customer == customer
-    assert basket.orderer == person   
+    assert basket.orderer == person
 
     basket.customer = customer
     basket.orderer = person
@@ -93,9 +86,9 @@ def test_stored_basket_list_view(rf, regular_user, admin_user, prices_include_ta
 
     # Fetching data and expecting JSONResponse
     view = CartListView.as_view()
-    request = apply_request_middleware(rf.get("/", {
-        "jq": json.dumps({"perPage": 100, "page": 1})
-    }), user=admin_user, shop=shop)
+    request = apply_request_middleware(
+        rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user, shop=shop
+    )
     set_shop(request, shop)
     response = view(request)
     assert 200 <= response.status_code < 300
@@ -138,10 +131,7 @@ def test_stored_basket_detail_view(rf, regular_user, admin_user):
 def test_anonymous_stored_basket_detail_view(rf, regular_user, admin_user):
     shop = factories.get_default_shop()
 
-    cart = _create_cart_with_products(
-        rf, shop, AnonymousUser(), AnonymousContact(),
-        AnonymousContact(), 2, False
-    )
+    cart = _create_cart_with_products(rf, shop, AnonymousUser(), AnonymousContact(), AnonymousContact(), 2, False)
     assert cart
     assert cart.product_count == 2
     stored_basket = StoredBasket.objects.first()

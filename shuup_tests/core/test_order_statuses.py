@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,14 +10,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import force_text
 from django.utils.translation import activate, get_language
 
-from shuup.core.models import (
-    DefaultOrderStatus, OrderLineType, OrderStatus, OrderStatusManager,
-    OrderStatusRole
-)
+from shuup.core.models import DefaultOrderStatus, OrderLineType, OrderStatus, OrderStatusManager, OrderStatusRole
 from shuup.core.order_creator import OrderCreator
-from shuup.testing.factories import (
-    create_default_order_statuses, get_default_product, get_default_supplier
-)
+from shuup.testing.factories import create_default_order_statuses, get_default_product, get_default_supplier
 from shuup_tests.core.test_order_creator import seed_source
 
 
@@ -31,10 +26,7 @@ def test_order_statuses_are_translatable():
 def test_single_default_status_for_role():
     create_default_order_statuses()
     new_default_cancel = OrderStatus.objects.create(
-        identifier="foo",
-        role=OrderStatusRole.CANCELED,
-        name="foo",
-        default=True
+        identifier="foo", role=OrderStatusRole.CANCELED, name="foo", default=True
     )
     assert new_default_cancel.default
     assert OrderStatus.objects.get_default_canceled() == new_default_cancel
@@ -105,7 +97,7 @@ def test_order_status_manager():
     status = OrderStatus.objects.get(identifier=DefaultOrderStatus.INITIAL.value)
     assert force_text(status.name) == new_name
     old_identifier = status.identifier
-    status.identifier =  "random_identifier"
+    status.identifier = "random_identifier"
     status.save()
     OrderStatusManager().ensure_default_statuses()
     status = OrderStatus.objects.get(identifier=old_identifier)

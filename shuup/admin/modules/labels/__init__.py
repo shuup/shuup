@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,16 +21,13 @@ class LabelsModule(AdminModule):
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
+
         delete = admin_url(
-            r"^labels/(?P<pk>\d+)/delete/$",
-            "shuup.admin.modules.labels.views.LabelDeleteView",
-            name="label.delete"
+            r"^labels/(?P<pk>\d+)/delete/$", "shuup.admin.modules.labels.views.LabelDeleteView", name="label.delete"
         )
 
         return [delete] + get_edit_and_list_urls(
-            url_prefix="^labels",
-            view_template="shuup.admin.modules.labels.views.Label%sView",
-            name_template="label.%s"
+            url_prefix="^labels", view_template="shuup.admin.modules.labels.views.Label%sView", name_template="label.%s"
         )
 
     def get_menu_entries(self, request):
@@ -40,7 +37,7 @@ class LabelsModule(AdminModule):
                 icon="fa fa-sitemap",
                 url="shuup_admin:label.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=5
+                ordering=5,
             )
         ]
 

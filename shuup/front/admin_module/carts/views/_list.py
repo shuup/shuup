@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,8 +12,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
-    TextFilter
+    ChoicesFilter,
+    Column,
+    DateRangeFilter,
+    MultiFieldTextFilter,
+    RangeFilter,
+    TextFilter,
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.front.models import StoredBasket
@@ -23,24 +27,29 @@ from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 class CartListView(PicotableListView):
     model = StoredBasket
     default_columns = [
-        Column("key", _(u"Key"), filter_config=TextFilter(filter_field="key")),
-        Column("updated_on", _(u"Last updated on"), display="format_updated_date", filter_config=DateRangeFilter()),
+        Column("key", _("Key"), filter_config=TextFilter(filter_field="key")),
+        Column("updated_on", _("Last updated on"), display="format_updated_date", filter_config=DateRangeFilter()),
         Column(
-            "finished", _("Completed"),
+            "finished",
+            _("Completed"),
             display="format_finished_status",
-            filter_config=ChoicesFilter([(True, _("yes")), (False, _("no"))], filter_field="finished", default=False)
+            filter_config=ChoicesFilter([(True, _("yes")), (False, _("no"))], filter_field="finished", default=False),
         ),
         Column("shop", _("Shop"), filter_config=TextFilter(filter_field="shop__translations__public_name")),
         Column("supplier", _("Supplier"), filter_config=TextFilter(filter_field="supplier__name")),
         Column(
-            "customer", _(u"Customer"),
-            filter_config=MultiFieldTextFilter(filter_fields=("customer__email", "customer__name"))
+            "customer",
+            _("Customer"),
+            filter_config=MultiFieldTextFilter(filter_fields=("customer__email", "customer__name")),
         ),
         Column("product_count", _("Product count"), filter_config=RangeFilter()),
         Column(
-            "taxful_total_price", _(u"Total"), sort_field="taxful_total_price_value",
-            display="format_taxful_total_price", class_name="text-right",
-            filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
+            "taxful_total_price",
+            _("Total"),
+            sort_field="taxful_total_price_value",
+            display="format_taxful_total_price",
+            class_name="text-right",
+            filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value"),
         ),
     ]
     toolbar_buttons_provider_key = "cart_list_toolbar_provider"
@@ -77,8 +86,8 @@ class CartListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Created on"), "text": item.get("created_on")},
-            {"title": _(u"Last updated on"), "text": item.get("updated_on")},
-            {"title": _(u"Ordered"), "text": item.get("finished")},
-            {"title": _(u"Total"), "text": item.get("taxful_total_price")},
+            {"title": _("Created on"), "text": item.get("created_on")},
+            {"title": _("Last updated on"), "text": item.get("updated_on")},
+            {"title": _("Ordered"), "text": item.get("finished")},
+            {"title": _("Total"), "text": item.get("taxful_total_price")},
         ]

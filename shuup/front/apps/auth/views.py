@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ from shuup.utils.importing import cached_load
 
 
 class LoginView(FormView):
-    template_name = 'shuup/user/login.jinja'
+    template_name = "shuup/user/login.jinja"
     form_class = cached_load("SHUUP_AUTH_LOGIN_FORM_SPEC")
 
     def get_context_data(self, **kwargs):
@@ -36,7 +36,7 @@ class LoginView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super(LoginView, self).get_form_kwargs()
-        kwargs['request'] = self.request
+        kwargs["request"] = self.request
         return kwargs
 
     def get_form(self, form_class=None, id_prefix="auth"):
@@ -44,13 +44,11 @@ class LoginView(FormView):
             form_class = self.get_form_class()
 
         kwargs = self.get_form_kwargs()
-        kwargs['auto_id'] = "id_{}_for_%s".format(id_prefix)
+        kwargs["auto_id"] = "id_{}_for_%s".format(id_prefix)
 
         form = form_class(**kwargs)
         form.fields[REDIRECT_FIELD_NAME] = forms.CharField(
-            widget=forms.HiddenInput,
-            required=False,
-            initial=self.request.GET.get(REDIRECT_FIELD_NAME)
+            widget=forms.HiddenInput, required=False, initial=self.request.GET.get(REDIRECT_FIELD_NAME)
         )
         return form
 
@@ -114,9 +112,9 @@ class RecoverPasswordConfirmView(FormView):
         user = self.get_target_user()
         token = self.kwargs["token"]
 
-        valid = (user is not None and self.token_generator.check_token(user, token))
+        valid = user is not None and self.token_generator.check_token(user, token)
         if not valid:
-            raise Problem(_(u"Error! This recovery link is invalid."))
+            raise Problem(_("Error! This recovery link is invalid."))
 
         return super(RecoverPasswordConfirmView, self).dispatch(request, *args, **kwargs)
 
@@ -126,7 +124,7 @@ class RecoverPasswordConfirmView(FormView):
         :type form: SetPasswordForm
         """
         form.save()
-        form.user.backend = 'django.contrib.auth.backends.ModelBackend'
+        form.user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, form.user)
         return HttpResponseRedirect(self.get_success_url())
 

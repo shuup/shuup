@@ -1,25 +1,43 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2019, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2019, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 try:
-    from django.urls.resolvers import RegexPattern
     from django.urls import (
-        clear_url_caches, get_callable, get_resolver, get_urlconf,
-        NoReverseMatch, resolve, Resolver404, reverse,
-        reverse_lazy, set_urlconf, URLResolver, URLPattern
+        NoReverseMatch,
+        Resolver404,
+        URLPattern,
+        URLResolver,
+        clear_url_caches,
+        get_callable,
+        get_resolver,
+        get_urlconf,
+        resolve,
+        reverse,
+        reverse_lazy,
+        set_urlconf,
     )
+    from django.urls.resolvers import RegexPattern
 except ImportError:
     from django.core.urlresolvers import (  # noqa (F401)
-        clear_url_caches, get_callable, get_resolver, get_urlconf,
-        NoReverseMatch, RegexURLPattern as RegexPattern,
-        RegexURLResolver as URLResolver, resolve, Resolver404,
-        reverse, reverse_lazy, set_urlconf
+        NoReverseMatch,
+        RegexURLPattern as RegexPattern,
+        RegexURLResolver as URLResolver,
+        Resolver404,
+        clear_url_caches,
+        get_callable,
+        get_resolver,
+        get_urlconf,
+        resolve,
+        reverse,
+        reverse_lazy,
+        set_urlconf,
     )
+
     URLPattern = RegexPattern
 
 
@@ -38,6 +56,7 @@ except ImportError:
 try:
     from django.utils.deprecation import MiddlewareMixin
 except ImportError:
+
     class MiddlewareMixin(object):  # noqa (F811)
         pass
 
@@ -52,4 +71,5 @@ def is_authenticated(user):
 
 def get_middleware_classes():
     from django.conf import settings
+
     return settings.MIDDLEWARE

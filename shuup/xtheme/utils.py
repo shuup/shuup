@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -41,10 +41,5 @@ def get_html_attrs(attrs):
             return join_css_classes(value)
         return value
 
-    attrs = dict(
-        (key, _massage_attribute(value))
-        for (key, value)
-        in six.iteritems(attrs)
-        if key and value
-    )
+    attrs = dict((key, _massage_attribute(value)) for (key, value) in six.iteritems(attrs) if key and value)
     return flatatt(attrs)

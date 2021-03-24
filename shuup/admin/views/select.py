@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,8 +19,15 @@ from django.views.generic import TemplateView
 
 from shuup.admin.supplier_provider import get_supplier
 from shuup.core.models import (
-    Carrier, Category, Contact, Product, ProductMode, Shop, ShopProduct,
-    ShopProductVisibility, Supplier
+    Carrier,
+    Category,
+    Contact,
+    Product,
+    ProductMode,
+    Shop,
+    ShopProduct,
+    ShopProductVisibility,
+    Supplier,
 )
 from shuup.utils.django_compat import force_text
 
@@ -76,7 +83,7 @@ class MultiselectAjaxView(TemplateView):
             if not _field_exists(user_model, "name"):
                 self.search_fields.remove("name")
 
-    def get_data(self, request, *args, **kwargs):   # noqa
+    def get_data(self, request, *args, **kwargs):  # noqa
         model_name = request.GET.get("model")
         if not model_name:
             return []
@@ -110,20 +117,20 @@ class MultiselectAjaxView(TemplateView):
 
         if search_mode and issubclass(cls, Product):
             if search_mode == "main":
-                qs = qs.filter(mode__in=[
-                    ProductMode.SIMPLE_VARIATION_PARENT,
-                    ProductMode.VARIABLE_VARIATION_PARENT,
-                    ProductMode.NORMAL
-                ])
+                qs = qs.filter(
+                    mode__in=[
+                        ProductMode.SIMPLE_VARIATION_PARENT,
+                        ProductMode.VARIABLE_VARIATION_PARENT,
+                        ProductMode.NORMAL,
+                    ]
+                )
             elif search_mode == "parent_product":
-                qs = qs.filter(mode__in=[
-                    ProductMode.SIMPLE_VARIATION_PARENT,
-                    ProductMode.VARIABLE_VARIATION_PARENT])
+                qs = qs.filter(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT])
             elif search_mode == "sellable_mode_only":
                 qs = qs.exclude(
-                    Q(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT]) |
-                    Q(deleted=True) |
-                    Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
+                    Q(mode__in=[ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT])
+                    | Q(deleted=True)
+                    | Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
                 ).filter(shop_products__purchasable=True)
 
         sales_units = request.GET.get("salesUnits")
@@ -171,10 +178,13 @@ class MultiselectAjaxView(TemplateView):
         if supplier:
             allowed_supplier_fields = ["supplier", "suppliers"]
             supplier_related_fields = [
-                field for field in cls._meta.get_fields()
-                if (type(field) in related_fields and
-                    field.related_model == Supplier and
-                    field.name in allowed_supplier_fields)
+                field
+                for field in cls._meta.get_fields()
+                if (
+                    type(field) in related_fields
+                    and field.related_model == Supplier
+                    and field.name in allowed_supplier_fields
+                )
             ]
             for supplier_field in supplier_related_fields:
                 qs = qs.filter(**{supplier_field.name: supplier})

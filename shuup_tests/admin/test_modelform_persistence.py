@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,18 +17,13 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 class MultiProductForm(MultiLanguageModelForm):
     class Meta:
         model = Product
-        fields = (
-            "barcode",  # Regular field
-            "name"
-        )
+        fields = ("barcode", "name")  # Regular field
 
 
 class SingleProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = (
-            "barcode",  # Regular field
-        )
+        fields = ("barcode",)  # Regular field
 
 
 @pytest.mark.django_db

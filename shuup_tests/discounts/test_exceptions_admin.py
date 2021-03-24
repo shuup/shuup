@@ -1,12 +1,11 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
 import json
-
 import pytest
 from django.http.response import Http404
 from django.test import override_settings
@@ -15,8 +14,9 @@ from django.utils.timezone import now
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Shop
 from shuup.discounts.admin.views import (
-    AvailabilityExceptionDeleteView, AvailabilityExceptionEditView,
-    AvailabilityExceptionListView
+    AvailabilityExceptionDeleteView,
+    AvailabilityExceptionEditView,
+    AvailabilityExceptionListView,
 )
 from shuup.discounts.models import AvailabilityException, Discount
 from shuup.testing import factories
@@ -137,16 +137,14 @@ def _test_exception_list_view(rf, index):
     shop.staff_members.add(staff_user)
 
     exception = AvailabilityException.objects.create(
-        name="Exception %s" % index, start_datetime=now(), end_datetime=now())
+        name="Exception %s" % index, start_datetime=now(), end_datetime=now()
+    )
     exception.shops.add(shop)
 
     view_func = AvailabilityExceptionListView.as_view()
     request = apply_request_middleware(
-        rf.get("/", {
-            "jq": json.dumps({"perPage": 100, "page": 1})
-        }),
-        user=staff_user,
-        shop=shop)
+        rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=staff_user, shop=shop
+    )
     set_shop(request, shop)
     response = view_func(request)
     if hasattr(response, "render"):
@@ -171,11 +169,8 @@ def test_discount_admin_list_view(rf, admin_user):
         # Superuser gets same data as shop staff
         shop = Shop.objects.exclude(identifier=factories.DEFAULT_IDENTIFIER).order_by("?").first()
         request = apply_request_middleware(
-            rf.get("/", {
-                "jq": json.dumps({"perPage": 100, "page": 1})
-            }),
-            user=admin_user,
-            shop=shop)
+            rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user, shop=shop
+        )
         set_shop(request, shop)
         view_instance = AvailabilityExceptionListView()
         view_instance.request = request
@@ -188,11 +183,11 @@ def _test_exception_delete_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     exception_name = "Exception %s" % index
-    exception = AvailabilityException.objects.create(
-        name=exception_name, start_datetime=now(), end_datetime=now())
+    exception = AvailabilityException.objects.create(name=exception_name, start_datetime=now(), end_datetime=now())
     exception.shops.add(shop)
     extra_exception = AvailabilityException.objects.create(
-        name="Extra Exception %s" % index, start_datetime=now(), end_datetime=now())
+        name="Extra Exception %s" % index, start_datetime=now(), end_datetime=now()
+    )
     extra_exception.shops.add(shop)
 
     assert AvailabilityException.objects.filter(name=exception_name).exists()

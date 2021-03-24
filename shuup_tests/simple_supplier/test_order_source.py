@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import get_person_contact, OrderLineType
+from shuup.core.models import OrderLineType, get_person_contact
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_initial_order_status
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_initial_order_status,
 )
 from shuup_tests.core.test_order_creator import seed_source
-from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 from shuup_tests.simple_supplier.utils import get_simple_supplier
+from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
 def seed_source(user, shop):
@@ -38,7 +41,7 @@ def test_order_source(rf, admin_user):
     supplier.adjust_stock(product.pk, quantity)
     assert supplier.get_stock_statuses([product.id])[product.id].logical_count == quantity
     assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
-    assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
+    assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity + 1, customer=None))
 
     source = seed_source(admin_user, shop)
     source.add_line(

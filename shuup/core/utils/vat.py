@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import re
-
 import six
 from django.core.exceptions import ValidationError
 
@@ -31,22 +30,14 @@ PATTERNS = {
         "pattern": [
             "999999999",  # 1 block of 9 digits
             "9999999999",  # 1 block of 10 digits
-        ]
+        ],
     },
     "CY": {
         "country": "Cyprus",
         "iso3166": "CY",
         "pattern": "99999999L",  # 1 block of 9 characters
     },
-    "CZ": {
-        "country": "Czech Republic",
-        "iso3166": "CZ",
-        "pattern": [
-            "99999999",
-            "999999999",
-            "9999999999"
-        ]
-    },
+    "CZ": {"country": "Czech Republic", "iso3166": "CZ", "pattern": ["99999999", "999999999", "9999999999"]},
     "DE": {
         "country": "Germany",
         "iso3166": "DE",
@@ -70,18 +61,12 @@ PATTERNS = {
     "ES": {
         "country": "Spain",
         "iso3166": "ES",
-        "pattern": [
-            "X9999999X4",  # 1 block of 9 characters
-            "X99999999",
-            "99999999X",
-            "X9999999X"
-        ]
+        "pattern": ["X9999999X4", "X99999999", "99999999X", "X9999999X"]  # 1 block of 9 characters
         # CIF (Certificado de Identificación Fiscal): This is the tax ID number for all companies.
         # It consists of a letter followed by 8 digits. The letter represents the type of company,
         # the most common being an 'A' for Sociedad Anónima or a 'B' for Sociedad Limitada.
         # For companies nonresident in Spain, the letter is 'N'.
         # VAT number (Número IVA): This is 'ES' followed by the CIF.
-
         # From vero.fi. 9 characters where first or last can be chars or number, but can not be
         # numbers.
     },
@@ -98,12 +83,7 @@ PATTERNS = {
     "GB": {
         "country": "United Kingdom",
         "iso3166": "GB",
-        "pattern": [
-            "999999999",  # 1 block of 9 or 12 digits
-            "999999999999",
-            "GD999",
-            "HA999"
-        ]
+        "pattern": ["999999999", "999999999999", "GD999", "HA999"],  # 1 block of 9 or 12 digits
     },
     "HU": {
         "iso3166": "HU",
@@ -115,14 +95,7 @@ PATTERNS = {
         "country": "Croatia",
         "pattern": "99999999999",  # 1 block of 11 digits
     },
-    "IE": {
-        "iso3166": "IE",
-        "country": "Ireland",
-        "pattern": [
-            "9S99999L",  # 1 block of 8 or 9 characters
-            "9999999LL"
-        ]
-    },
+    "IE": {"iso3166": "IE", "country": "Ireland", "pattern": ["9S99999L", "9999999LL"]},  # 1 block of 8 or 9 characters
     "IT": {
         "iso3166": "IT",
         "country": "Italy",
@@ -134,7 +107,7 @@ PATTERNS = {
         "pattern": [
             "999999999",
             "999999999999",  # 1 block of 9 digits, or 1 block of 12 digits
-        ]
+        ],
     },
     "LU": {
         "iso3166": "LU",
@@ -199,16 +172,16 @@ PATTERNS = {
 def compile_pattern(prefix, pattern):
     r = pattern.replace(" ", "")
     for gf, gt in (
-            ("9", "[0-9]"),
-            ("R", "[0-9]*"),
-            ("X", "[a-z0-9]"),
-            ("S", "[a-z0-9+*]"),
-            ("L", "[a-z]"),
+        ("9", "[0-9]"),
+        ("R", "[0-9]*"),
+        ("X", "[a-z0-9]"),
+        ("S", "[a-z0-9+*]"),
+        ("L", "[a-z]"),
     ):
         regex_frag = "(%s{%%d})" % gt
 
         def gt(m):
-            return (regex_frag % len(m.group(0)))
+            return regex_frag % len(m.group(0))
 
         r = re.sub(gf + "+", gt, r)
 
@@ -232,7 +205,7 @@ class VatInvalidValidationError(VatValidationError):
 
 
 def verify_vat(vat_id, default_prefix=""):
-    """ Verify an EU VAT ID.
+    """Verify an EU VAT ID.
 
     Returns a tuple (prefix, code_parts) -- if both are truthy, the validation succeeded.
     If the prefix part is falsy, then the prefix was unknown and no validation was even attempted.
@@ -263,7 +236,7 @@ def verify_vat(vat_id, default_prefix=""):
         vat_id = prefix + vat_id
 
     # Get the relephant PATTERNS (one or more) from the spec
-    patterns = (spec.get("pattern") or [])
+    patterns = spec.get("pattern") or []
     if isinstance(patterns, six.string_types):
         patterns = [patterns]
 
@@ -273,8 +246,7 @@ def verify_vat(vat_id, default_prefix=""):
         if match:
             return (prefix, match.groups())
 
-    raise VatInvalidValidationError(
-        "VAT ID for %(country)s could not be validated" % spec)
+    raise VatInvalidValidationError("VAT ID for %(country)s could not be validated" % spec)
 
 
 def get_vat_prefix_for_country(iso3166):

@@ -1,11 +1,10 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.test import override_settings
 from django.utils.translation import activate
 
@@ -33,7 +32,7 @@ def test_shop_and_supplier_info():
     with override_settings(
         SHUUP_ENABLE_MULTIPLE_SHOPS=True,
         SHUUP_ENABLE_MULTIPLE_SUPPLIERS=False,
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
+        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider",
     ):
         url = reverse("shuup_admin:dashboard")
         client.login(username=staff_user.username, password="randpw")
@@ -45,7 +44,7 @@ def test_shop_and_supplier_info():
     with override_settings(
         SHUUP_ENABLE_MULTIPLE_SHOPS=True,
         SHUUP_ENABLE_MULTIPLE_SUPPLIERS=True,
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
+        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider",
     ):
         url = reverse("shuup_admin:dashboard")
         client.login(username=staff_user.username, password="randpw")

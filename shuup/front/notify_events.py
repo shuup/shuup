@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,14 +11,16 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
-    order_status_changed, payment_created, refund_created,
-    shipment_created_and_processed, shipment_deleted, shipment_sent
+    order_status_changed,
+    payment_created,
+    refund_created,
+    shipment_created_and_processed,
+    shipment_deleted,
+    shipment_sent,
 )
 from shuup.notify.base import Event, Variable
 from shuup.notify.models import Script
-from shuup.notify.typology import (
-    Email, Enum, Language, Model, Phone, Text, URL
-)
+from shuup.notify.typology import URL, Email, Enum, Language, Model, Phone, Text
 
 # Common attributes that can be used with orders.
 ORDER_ATTRIBUTES = (
@@ -125,14 +127,11 @@ def send_order_received_notification(order, **kwargs):
         customer_phone=order.phone,
         shop_email=None,
         shop_phone=None,
-        language=order.language
+        language=order.language,
     )
 
     if order.shop.contact_address:
-        params.update(dict(
-            shop_email=order.shop.contact_address.email,
-            shop_phone=order.shop.contact_address.phone
-        ))
+        params.update(dict(shop_email=order.shop.contact_address.email, shop_phone=order.shop.contact_address.phone))
 
     OrderReceived(**params).run(shop=order.shop)
 
@@ -175,7 +174,7 @@ def send_shipment_deleted_notification(shipment, **kwargs):
         customer_phone=shipment.order.phone,
         language=shipment.order.language,
         shipment=shipment,
-        shipping_status=shipment.order.shipping_status
+        shipping_status=shipment.order.shipping_status,
     ).run(shop=shipment.order.shop)
 
 
@@ -187,7 +186,7 @@ def send_payment_created_notification(order, payment, **kwargs):
         customer_phone=order.phone,
         language=order.language,
         payment_status=order.payment_status,
-        payment=payment
+        payment=payment,
     ).run(shop=order.shop)
 
 
@@ -198,7 +197,7 @@ def send_refund_created_notification(order, refund_lines, **kwargs):
         customer_email=order.email,
         customer_phone=order.phone,
         language=order.language,
-        payment_status=order.payment_status
+        payment_status=order.payment_status,
     ).run(shop=order.shop)
 
 
@@ -206,9 +205,7 @@ def send_refund_created_notification(order, refund_lines, **kwargs):
 def send_order_status_changed_notification(order, old_status, new_status, **kwargs):
     # no script for this event configured
     enabled_scripts = Script.objects.filter(
-        shop=order.shop,
-        event_identifier=OrderStatusChanged.identifier,
-        enabled=True
+        shop=order.shop, event_identifier=OrderStatusChanged.identifier, enabled=True
     )
     if not enabled_scripts.exists():
         return
@@ -221,13 +218,10 @@ def send_order_status_changed_notification(order, old_status, new_status, **kwar
         shop_phone=None,
         language=order.language,
         old_status=old_status,
-        new_status=new_status
+        new_status=new_status,
     )
 
     if order.shop.contact_address:
-        params.update(dict(
-            shop_email=order.shop.contact_address.email,
-            shop_phone=order.shop.contact_address.phone
-        ))
+        params.update(dict(shop_email=order.shop.contact_address.email, shop_phone=order.shop.contact_address.phone))
 
     OrderStatusChanged(**params).run(shop=order.shop)

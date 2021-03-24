@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from collections import OrderedDict
-
 from django.db import connection
 
 from shuup.utils.dates import parse_date
@@ -32,8 +31,7 @@ def group_by_period(queryset, column, period, **annotate):
 
     d = OrderedDict()
     for line in (
-        queryset
-        .extra({"period_group": connection.ops.date_trunc_sql(period, column)})
+        queryset.extra({"period_group": connection.ops.date_trunc_sql(period, column)})
         .values("period_group")
         .annotate(**annotate)
         .order_by("period_group")

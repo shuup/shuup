@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models, connection
+from django.db import connection, migrations, models
 
 
 def combine_refund_types(apps, schema_editor):

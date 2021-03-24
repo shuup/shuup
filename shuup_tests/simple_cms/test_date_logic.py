@@ -1,17 +1,16 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
 from django.utils.timezone import now
 
 from shuup.simple_cms.models import Page
-from shuup_tests.simple_cms.utils import create_page
 from shuup.testing.factories import get_default_shop
+from shuup_tests.simple_cms.utils import create_page
 
 
 @pytest.mark.django_db
@@ -29,7 +28,7 @@ def test_past_page_not_visible():
     page = create_page(
         available_from=(today - datetime.timedelta(days=2)),
         available_to=(today - datetime.timedelta(days=1)),
-        shop=get_default_shop()
+        shop=get_default_shop(),
     )
     assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()
@@ -41,7 +40,7 @@ def test_future_page_not_visible():
     page = create_page(
         available_from=(today + datetime.timedelta(days=1)),
         available_to=(today + datetime.timedelta(days=2)),
-        shop=get_default_shop()
+        shop=get_default_shop(),
     )
     assert not Page.objects.visible(get_default_shop()).filter(pk=page.pk).exists()
     assert not page.is_visible()

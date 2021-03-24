@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -22,8 +22,9 @@ class BaseBasketCommandMiddleware:
         """
         return kwargs
 
-    def postprocess_response(self, basket: BaseBasket, request: HttpRequest,
-                             command: str, kwargs: dict, response: dict) -> dict:
+    def postprocess_response(
+        self, basket: BaseBasket, request: HttpRequest, command: str, kwargs: dict, response: dict
+    ) -> dict:
         """
         Mutate the `response` before it is returned by the command dispatcher.
         """

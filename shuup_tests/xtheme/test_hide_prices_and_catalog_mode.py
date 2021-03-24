@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
-from shuup.themes.classic_gray.theme import ClassicGrayTheme
 from shuup.testing import factories
+from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import SmartClient
@@ -75,7 +74,7 @@ def _is_basket_in_soup(soup):
     if not cart_dropdown:
         return False
 
-    return cart_dropdown.find("i", {"class": "fa-shopping-cart"})is not None
+    return cart_dropdown.find("i", {"class": "fa-shopping-cart"}) is not None
 
 
 def _is_add_to_basket_button_in_soup(soup):

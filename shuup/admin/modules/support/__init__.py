@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -34,14 +34,16 @@ class ShuupSupportModule(AdminModule):
         articles = self._get_resource(request, "articles")
         if articles.get("articles"):
             article_block = DashboardContentBlock.by_rendering_template(
-                "articles", request, "shuup/admin/support/_articles_dashboard_block.jinja", articles)
+                "articles", request, "shuup/admin/support/_articles_dashboard_block.jinja", articles
+            )
             article_block.size = "small"
             return [article_block]
         return []
 
     def _get_support_block(self, request):
         support_block = DashboardContentBlock.by_rendering_template(
-            "support", request, "shuup/admin/support/_support_dashboard_block.jinja", {})
+            "support", request, "shuup/admin/support/_support_dashboard_block.jinja", {}
+        )
         support_block.size = "medium"
         support_block.sort_order = 3
         return [support_block]

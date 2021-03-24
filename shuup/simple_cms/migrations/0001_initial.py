@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+import django.db.models.deletion
 import mptt.fields
-import shuup.core.fields
 import parler.models
 from django.conf import settings
-import django.db.models.deletion
+from django.db import migrations, models
+
+import shuup.core.fields
 
 
 class Migration(migrations.Migration):

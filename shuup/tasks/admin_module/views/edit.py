@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,7 +18,7 @@ from django.views.generic.detail import BaseDetailView
 
 from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.toolbar import get_default_edit_toolbar, PostActionButton
+from shuup.admin.toolbar import PostActionButton, get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, get_person_contact
 from shuup.tasks.models import Task, TaskComment, TaskStatus, TaskType
@@ -42,7 +42,7 @@ class TaskTypeForm(MultiLanguageModelForm):
         super(TaskTypeForm, self).__init__(*args, **kwargs)
 
     def save(self, **kwargs):
-        if (not self.instance.pk):
+        if not self.instance.pk:
             self.instance.shop = get_shop(self.request)
         return super(TaskTypeForm, self).save(**kwargs)
 
@@ -51,9 +51,7 @@ class TaskForm(ModelForm):
     class Meta:
         model = Task
         exclude = ("shop", "created_on", "modified_on", "status", "completed_on", "completed_by", "creator")
-        widgets = {
-            "type": QuickAddTaskTypeSelect(editable_model="shuup_tasks.TaskType")
-        }
+        widgets = {"type": QuickAddTaskTypeSelect(editable_model="shuup_tasks.TaskType")}
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -66,7 +64,7 @@ class TaskForm(ModelForm):
         self.fields["assigned_to"].widget.editable_model = "shuup.Contact"
 
     def save(self, **kwargs):
-        is_new = (not self.instance.pk)
+        is_new = not self.instance.pk
         old_assigned = None
         if not is_new:
             old_assigned = Task.objects.get(id=self.instance.pk).assigned_to
@@ -79,11 +77,10 @@ class TaskForm(ModelForm):
 
         if not is_new and old_assigned != self.instance.assigned_to:
             self.instance.add_log_entry(
-                _("Changed assigment from {from_contact_name} to {to_contact_name}.").format(**dict(
-                    from_contact_name=old_assigned,
-                    to_contact_name=self.instance.assigned_to
-                )),
-                kind=LogEntryKind.EDIT
+                _("Changed assigment from {from_contact_name} to {to_contact_name}.").format(
+                    **dict(from_contact_name=old_assigned, to_contact_name=self.instance.assigned_to)
+                ),
+                kind=LogEntryKind.EDIT,
             )
 
         return result
@@ -173,23 +170,19 @@ class TaskEditView(BaseTaskViewMixin, CreateOrUpdateView):
         kwargs = self.get_form_kwargs()
         instance = kwargs.pop("instance", None)
         form_group = FormGroup(**kwargs)
-        form_group.add_form_def(
-            name="base",
-            form_class=TaskForm,
-            kwargs=dict(instance=instance, request=self.request)
-        )
+        form_group.add_form_def(name="base", form_class=TaskForm, kwargs=dict(instance=instance, request=self.request))
         if self.object.pk:
             form_group.add_form_def(
                 name="comment",
                 form_class=TaskCommentForm,
                 kwargs=dict(request=self.request, task=instance),
-                required=False
+                required=False,
             )
         return form_group
 
     @atomic
     def save_form(self, form):
-        is_new = (not self.object.pk)
+        is_new = not self.object.pk
         form.forms["base"].save()
         if not is_new and form.forms["comment"].cleaned_data.get("body"):
             form.forms["comment"].save()

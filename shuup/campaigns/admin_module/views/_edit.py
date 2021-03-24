@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -15,16 +15,18 @@ from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.campaigns.admin_module.form_parts import (
-    BasketBaseFormPart, BasketConditionsFormPart,
-    BasketDiscountEffectsFormPart, BasketLineEffectsFormPart,
-    CatalogBaseFormPart, CatalogConditionsFormPart, CatalogEffectsFormPart,
-    CatalogFiltersFormPart
+    BasketBaseFormPart,
+    BasketConditionsFormPart,
+    BasketDiscountEffectsFormPart,
+    BasketLineEffectsFormPart,
+    CatalogBaseFormPart,
+    CatalogConditionsFormPart,
+    CatalogEffectsFormPart,
+    CatalogFiltersFormPart,
 )
 from shuup.campaigns.admin_module.forms import CouponForm
 from shuup.campaigns.admin_module.utils import get_formparts_for_provide_key
-from shuup.campaigns.models.campaigns import (
-    BasketCampaign, CatalogCampaign, Coupon
-)
+from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign, Coupon
 
 
 class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
@@ -57,7 +59,8 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
 
     def _get_rules_form_part(self, form, object):
         return self.rules_form_part_class(
-            self.request, form, "conditions_%s" % form._meta.model.__name__.lower(), object)
+            self.request, form, "conditions_%s" % form._meta.model.__name__.lower(), object
+        )
 
     def _get_effects_form_part(self, form, object, cls):
         return cls(self.request, form, "effects_%s" % form._meta.model.__name__.lower(), object)
@@ -92,8 +95,7 @@ class CatalogCampaignEditView(BreadcrumbedView, CampaignEditView):
         return form_parts
 
     def _get_filters_form_part(self, form, object):
-        return CatalogFiltersFormPart(
-            self.request, form, "filters_%s" % form._meta.model.__name__.lower(), object)
+        return CatalogFiltersFormPart(self.request, form, "filters_%s" % form._meta.model.__name__.lower(), object)
 
 
 class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
@@ -101,7 +103,7 @@ class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
     condition_key = "campaign_basket_condition"
     effects = [
         ("campaign_basket_discount_effect_form", BasketDiscountEffectsFormPart),
-        ("campaign_basket_line_effect_form", BasketLineEffectsFormPart)
+        ("campaign_basket_line_effect_form", BasketLineEffectsFormPart),
     ]
     base_form_part_classes = [BasketBaseFormPart]
     rules_form_part_class = BasketConditionsFormPart

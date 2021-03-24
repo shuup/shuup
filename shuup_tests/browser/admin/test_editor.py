@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared,
-    wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_appeared,
+    wait_until_condition,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -57,5 +58,5 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
 
     # make sure the image was added to the editor
     wait_until_appeared(
-        browser,
-        "#id_base-description__en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20)
+        browser, "#id_base-description__en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20
+    )

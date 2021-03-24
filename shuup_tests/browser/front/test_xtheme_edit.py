@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,18 +10,15 @@ import pytest
 import selenium
 import time
 
-from shuup.utils.django_compat import reverse
-
 from shuup.core.models import get_person_contact
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    page_has_loaded,
+    wait_until_condition,
 )
-from shuup.testing.browser_utils import (
-    initialize_admin_browser_test
-)
-from shuup.testing.browser_utils import page_has_loaded
-
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -40,7 +37,8 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     # Add some content only visible for person contacts
     person_contact_text_content = "This text is shown for person contacts only!"
     _edit_layout(
-        browser, "front_content", "#xt-ph-front_content-xtheme-person-contact-layout", person_contact_text_content)
+        browser, "front_content", "#xt-ph-front_content-xtheme-person-contact-layout", person_contact_text_content
+    )
 
     browser.find_by_css("#admin-tools-menu li.dropdown").click()
     browser.find_by_css("a[href='/force-anonymous-contact/']").first.click()
@@ -48,7 +46,8 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     ## Add some content only visible for anonymous contacts
     anonymous_contact_text_content = "This text is shown for guests only!"
     _edit_layout(
-        browser, "front_content", "#xt-ph-front_content-xtheme-anonymous-contact-layout", anonymous_contact_text_content)
+        browser, "front_content", "#xt-ph-front_content-xtheme-anonymous-contact-layout", anonymous_contact_text_content
+    )
 
     browser.find_by_css("#admin-tools-menu li.dropdown").click()
     browser.find_by_css("a[href='/force-company-contact/']").first.click()
@@ -56,7 +55,8 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     ### Add some content only visible for company contacts
     company_contact_text_content = "This text is shown for company contacts only!"
     _edit_layout(
-        browser, "front_content", "#xt-ph-front_content-xtheme-company-contact-layout", company_contact_text_content)
+        browser, "front_content", "#xt-ph-front_content-xtheme-company-contact-layout", company_contact_text_content
+    )
 
     # Close edit
     click_element(browser, ".xt-edit-toggle button[type='submit']")
@@ -128,7 +128,8 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     # Visit first product and edit the layout with custom text
     first_product = products.pop()
     first_product_url = "%s%s" % (
-        live_server, reverse("shuup:product", kwargs={"pk": first_product.pk, "slug": first_product.slug})
+        live_server,
+        reverse("shuup:product", kwargs={"pk": first_product.pk, "slug": first_product.slug}),
     )
     browser.visit(first_product_url)
 
@@ -137,13 +138,14 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
         browser,
         "product_extra_1",
         "#xt-ph-product_extra_1-xtheme-product-layout-%s" % first_product.pk,
-        first_product_text_content
+        first_product_text_content,
     )
 
     # Visit second product and edit the layout with custom text
     second_product = products.pop()
     second_product_url = "%s%s" % (
-        live_server, reverse("shuup:product", kwargs={"pk": second_product.pk, "slug": second_product.slug})
+        live_server,
+        reverse("shuup:product", kwargs={"pk": second_product.pk, "slug": second_product.slug}),
     )
     browser.visit(second_product_url)
 
@@ -152,19 +154,19 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
         browser,
         "product_extra_1",
         "#xt-ph-product_extra_1-xtheme-product-layout-%s" % second_product.pk,
-        second_product_text_content
+        second_product_text_content,
     )
 
     # Visit third product and edit common layout with text
     third_product = products.pop()
     third_product_url = "%s%s" % (
-        live_server, reverse("shuup:product", kwargs={"pk": third_product.pk, "slug": third_product.slug})
+        live_server,
+        reverse("shuup:product", kwargs={"pk": third_product.pk, "slug": third_product.slug}),
     )
     browser.visit(third_product_url)
 
     common_text_content = "This text is visible for all products."
-    _edit_layout(
-        browser, "product_extra_1", "#xt-ph-product_extra_1", common_text_content)
+    _edit_layout(browser, "product_extra_1", "#xt-ph-product_extra_1", common_text_content)
 
     # Close edit
     click_element(browser, ".xt-edit-toggle button[type='submit']")
@@ -229,8 +231,8 @@ def test_xtheme_edit_save_and_publish(admin_user, browser, live_server, settings
         wait_until_condition(iframe, lambda x: x.is_element_present_by_css("div.note-editable"))
         wait_until_condition(iframe, lambda x: x.is_element_present_by_css("#id_plugin-text_en-editor-wrap"))
         iframe.execute_script(
-            "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');" %
-            text_content
+            "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');"
+            % text_content
         )
 
         click_element(iframe, "button.publish-btn")
@@ -277,7 +279,8 @@ def _edit_layout(browser, placeholder_name, layout_selector, text_content):
         wait_until_condition(iframe, lambda x: x.is_element_present_by_css("div.note-editable"))
         wait_until_condition(iframe, lambda x: x.is_element_present_by_css("#id_plugin-text_en-editor-wrap"))
         iframe.execute_script(
-            "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');" % text_content
+            "$('#id_plugin-text_en-editor-wrap .summernote-editor').summernote('editor.insertText', '%s');"
+            % text_content
         )
 
         click_element(iframe, "button.submit-form-btn")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,7 +21,7 @@ class PermissionGroupModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^permission-groups",
             view_template="shuup.admin.modules.permission_groups.views.PermissionGroup%sView",
-            name_template="permission_group.%s"
+            name_template="permission_group.%s",
         )
 
     def get_menu_entries(self, request):
@@ -31,7 +31,7 @@ class PermissionGroupModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:permission_group.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=3
+                ordering=3,
             )
         ]
 

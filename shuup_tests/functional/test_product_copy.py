@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
-
 from bs4 import BeautifulSoup
+
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.modules.products.views.copy import ProductCopyView
 from shuup.core.models import Product, ProductMedia, ProductMediaKind

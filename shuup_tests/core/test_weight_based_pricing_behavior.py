@@ -1,37 +1,37 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 import decimal
 import pytest
-
 from django.core.exceptions import ValidationError
 
-from shuup.core.models import (
-    OrderLineType, WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
-)
+from shuup.core.models import OrderLineType, WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
 from shuup.core.models._service_behavior import _is_in_range
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method, get_default_supplier
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_supplier,
 )
 
 from .test_order_creator import seed_source
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_service,service_attr", [
-    (get_default_payment_method, "payment_method"),
-    (get_default_shipping_method, "shipping_method")
-])
+@pytest.mark.parametrize(
+    "get_service,service_attr",
+    [(get_default_payment_method, "payment_method"), (get_default_shipping_method, "shipping_method")],
+)
 def test_with_one_matching_range(admin_user, get_service, service_attr):
     ranges_data = [
         (None, "10.32", decimal.Decimal("0.0001"), "Low range"),
         ("10.32", "32.45678", decimal.Decimal("10.000000"), "Mid range"),
-        ("32.45678", None, decimal.Decimal("23.567"), "High range")
+        ("32.45678", None, decimal.Decimal("23.567"), "High range"),
     ]
     service = get_service()
     _assign_component_for_service(service, ranges_data)
@@ -46,16 +46,16 @@ def test_with_one_matching_range(admin_user, get_service, service_attr):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_service,service_attr", [
-    (get_default_payment_method, "payment_method"),
-    (get_default_shipping_method, "shipping_method")
-])
+@pytest.mark.parametrize(
+    "get_service,service_attr",
+    [(get_default_payment_method, "payment_method"), (get_default_shipping_method, "shipping_method")],
+)
 def test_with_multiple_matching_ranges(admin_user, get_service, service_attr):
     ranges_data = [
         (None, "10.32", decimal.Decimal("0.0001"), "Low range"),
         ("10.00", "50.00", decimal.Decimal("10.000000"), "Mid range"),
         ("32.45678", None, decimal.Decimal("23.567"), "High range"),
-        (None, None, decimal.Decimal("1000000"), "Expensive range")
+        (None, None, decimal.Decimal("1000000"), "Expensive range"),
     ]
     service = get_service()
     _assign_component_for_service(service, ranges_data)
@@ -78,7 +78,8 @@ def _assign_component_for_service(service, ranges_data):
     component = WeightBasedPricingBehaviorComponent.objects.create()
     for min, max, price, description in ranges_data:
         WeightBasedPriceRange.objects.create(
-            description=description, min_value=min, max_value=max, price_value=price, component=component)
+            description=description, min_value=min, max_value=max, price_value=price, component=component
+        )
     service.behavior_components.add(component)
 
 
@@ -125,7 +126,7 @@ def test_is_in_range():
         ("0", "0", "10.32", True),
         ("32.00", None, None, True),
         ("32.00", "0", None, True),
-        ("32.00", None,  "64", True),
+        ("32.00", None, "64", True),
         ("32.00", "0", "31.9999", False),
         ("32.00", "0", "32", True),
         ("32.00", "0", "64", True),
@@ -141,28 +142,26 @@ def test_is_in_range():
     ]
 
     for value, min, max, result in test_data:
-        assert _is_in_range(
-            decimal.Decimal(value),
-            decimal.Decimal(min) if min else None,
-            decimal.Decimal(max) if max else None) == result
+        assert (
+            _is_in_range(
+                decimal.Decimal(value), decimal.Decimal(min) if min else None, decimal.Decimal(max) if max else None
+            )
+            == result
+        )
         # Any range with None value should be False
-        assert not _is_in_range(
-            None,
-            decimal.Decimal(min) if min else None,
-            decimal.Decimal(max) if max else None)
+        assert not _is_in_range(None, decimal.Decimal(min) if min else None, decimal.Decimal(max) if max else None)
         # In case when both limits is given range shouldn't work in reverse order.
         if min and max and min != max:
             assert not _is_in_range(
-                decimal.Decimal(value),
-                decimal.Decimal(max) if max else None,
-                decimal.Decimal(min) if min else None)
+                decimal.Decimal(value), decimal.Decimal(max) if max else None, decimal.Decimal(min) if min else None
+            )
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_service,service_attr", [
-    (get_default_payment_method, "payment_method"),
-    (get_default_shipping_method, "shipping_method")
-])
+@pytest.mark.parametrize(
+    "get_service,service_attr",
+    [(get_default_payment_method, "payment_method"), (get_default_shipping_method, "shipping_method")],
+)
 def test_out_of_range(admin_user, get_service, service_attr):
     ranges_data = [
         (None, "10.32", decimal.Decimal("0.0001"), "Low range"),

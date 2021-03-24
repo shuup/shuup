@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -88,10 +88,16 @@ def setup_blocks_complete(request):
     :rtype: Boolean
     """
     for module in get_modules():
-        if len([
-            block for block in module.get_help_blocks(request=request, kind="setup")
-                if block.required and not block.done
-        ]) > 0:
+        if (
+            len(
+                [
+                    block
+                    for block in module.get_help_blocks(request=request, kind="setup")
+                    if block.required and not block.done
+                ]
+            )
+            > 0
+        ):
             return False
     return True
 

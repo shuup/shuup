@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,9 +10,9 @@ import mock
 import pytest
 import pytz
 
-from shuup.utils import i18n
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.utils import parse_date_range_preset
+from shuup.utils import i18n
 
 
 def test_parse_date_range_presets():
@@ -54,7 +54,6 @@ def test_parse_date_range_presets():
 
 @pytest.mark.parametrize("locale", ["en-US", "fi-FI"])
 def test_parse_date_range_presets_running_week(locale):
-
     def get_locale():
         return i18n.get_babel_locale(locale)
 

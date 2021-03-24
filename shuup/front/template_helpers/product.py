@@ -1,31 +1,34 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import warnings
-
 from django.conf import settings
 from jinja2.utils import contextfunction
 
 from shuup.core.models import (
-    AttributeVisibility, get_person_contact, Product, ProductAttribute,
-    ProductCrossSell, ProductCrossSellType, ProductMode, ShopProduct, Supplier
+    AttributeVisibility,
+    Product,
+    ProductAttribute,
+    ProductCrossSell,
+    ProductCrossSellType,
+    ProductMode,
+    ShopProduct,
+    Supplier,
+    get_person_contact,
 )
 from shuup.core.utils import context_cache
-from shuup.core.utils.product_subscription import (
-    get_product_subscription_options, ProductSubscriptionContext
-)
+from shuup.core.utils.product_subscription import ProductSubscriptionContext, get_product_subscription_options
 from shuup.front.utils import cache as cache_utils
 from shuup.utils.text import force_ascii
 
 
 def get_visible_attributes(product):
     return ProductAttribute.objects.filter(
-        product=product,
-        attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
+        product=product, attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE
     )
 
 
@@ -39,14 +42,16 @@ def get_subscription_options_for_product(shop, product, supplier=None, user=None
 def get_products_bought_with(context, product, count=5):
     warnings.warn("Warning! Products bought with template helper is deprecated.", DeprecationWarning)
     related_product_cross_sells = set(
-        ProductCrossSell.objects
-        .filter(product1=product, type=ProductCrossSellType.COMPUTED).values_list("product2_id", flat=True)
-        .order_by("-weight")[:(count * 4)])
+        ProductCrossSell.objects.filter(product1=product, type=ProductCrossSellType.COMPUTED)
+        .values_list("product2_id", flat=True)
+        .order_by("-weight")[: (count * 4)]
+    )
 
     request = context["request"]
     customer = get_person_contact(request.user)
-    return Product.objects.listed(
-        shop=request.shop, customer=customer).filter(pk__in=related_product_cross_sells)[:count]
+    return Product.objects.listed(shop=request.shop, customer=customer).filter(pk__in=related_product_cross_sells)[
+        :count
+    ]
 
 
 @contextfunction
@@ -56,10 +61,15 @@ def is_visible(context, product):
     return shop_product.is_visible(request.customer)
 
 
-@contextfunction    # noqa (C901)
+@contextfunction  # noqa (C901)
 def get_product_cross_sells(
-        context, product, relation_type=ProductCrossSellType.RELATED,
-        count=4, orderable_only=True, use_variation_parents=False):
+    context,
+    product,
+    relation_type=ProductCrossSellType.RELATED,
+    count=4,
+    orderable_only=True,
+    use_variation_parents=False,
+):
     request = context["request"]
 
     key, products = context_cache.get_cached_value(
@@ -70,7 +80,7 @@ def get_product_cross_sells(
         relation_type=relation_type,
         count=count,
         orderable_only=orderable_only,
-        use_variation_parents=use_variation_parents
+        use_variation_parents=use_variation_parents,
     )
 
     if products is not None:
@@ -82,14 +92,13 @@ def get_product_cross_sells(
     if product.mode in [ProductMode.VARIABLE_VARIATION_PARENT, ProductMode.SIMPLE_VARIATION_PARENT]:
         # Remember to exclude relations with the same parent
         cross_sell_products = ProductCrossSell.objects.filter(
-            product1__in=product.variation_children.visible(request.shop, customer=request.customer),
-            type=rtype
+            product1__in=product.variation_children.visible(request.shop, customer=request.customer), type=rtype
         ).exclude(product2__in=product.variation_children.visible(request.shop, customer=request.customer))
     else:
         cross_sell_products = ProductCrossSell.objects.filter(product1=product, type=rtype)
 
     related_product_ids = list(
-        cross_sell_products.order_by("weight")[:(count * 4)].values_list("product2_id", flat=True)
+        cross_sell_products.order_by("weight")[: (count * 4)].values_list("product2_id", flat=True)
     )
 
     sorted_related_products = []
@@ -107,7 +116,8 @@ def get_product_cross_sells(
         if orderable_only:
             for supplier in Supplier.objects.enabled(shop=request.shop):
                 if shop_product.is_orderable(
-                        supplier, request.customer, shop_product.minimum_purchase_quantity, allow_cache=True):
+                    supplier, request.customer, shop_product.minimum_purchase_quantity, allow_cache=True
+                ):
                     sorted_related_products.append((sort_order, product))
                     break
         elif shop_product.is_visible(request.customer):
@@ -140,4 +150,4 @@ def map_relation_type(relation_type):
     try:
         return getattr(ProductCrossSellType, attr_name)
     except AttributeError:
-        raise LookupError('Unknown ProductCrossSellType %r' % (relation_type,))
+        raise LookupError("Unknown ProductCrossSellType %r" % (relation_type,))

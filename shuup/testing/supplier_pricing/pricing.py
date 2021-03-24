@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,7 +19,7 @@ class SupplierPricingModule(PricingModule):
     name = _("Supplier Pricing")
 
     def get_price_info(self, context, product, quantity=1):
-        product_id = (product if isinstance(product, six.integer_types) else product.pk)
+        product_id = product if isinstance(product, six.integer_types) else product.pk
         shop = context.shop
 
         # By default let's use supplier passed to context.
@@ -37,7 +37,7 @@ class SupplierPricingModule(PricingModule):
                 "shop": context.shop,
                 "customer": context.customer,
                 "quantity": quantity,
-                "basket": context.basket
+                "basket": context.basket,
             }
 
             # Since this is custom pricing module it
@@ -47,8 +47,9 @@ class SupplierPricingModule(PricingModule):
             supplier = supplier_strategy().get_supplier(**kwargs)
 
         # Like now in customer group pricing let's take default price from shop product
-        default_price_values = list(ShopProduct.objects.filter(
-            product_id=product_id, shop=shop).values_list("default_price_value", flat=True))
+        default_price_values = list(
+            ShopProduct.objects.filter(product_id=product_id, shop=shop).values_list("default_price_value", flat=True)
+        )
         if len(default_price_values) == 0:  # No shop product
             return PriceInfo(price=shop.create_price(0), base_price=shop.create_price(0), quantity=quantity)
         else:
@@ -62,9 +63,11 @@ class SupplierPricingModule(PricingModule):
         # orderability checks and so on.
         price = None
         if supplier:
-            result = SupplierPrice.objects.filter(
-                shop=shop, product_id=product_id, supplier=supplier
-            ).order_by("amount_value")[:1].values_list("amount_value", flat=True)
+            result = (
+                SupplierPrice.objects.filter(shop=shop, product_id=product_id, supplier=supplier)
+                .order_by("amount_value")[:1]
+                .values_list("amount_value", flat=True)
+            )
             if result:
                 price = result[0]
 

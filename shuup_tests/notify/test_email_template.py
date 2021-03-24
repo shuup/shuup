@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 import pytest
-
 from bs4 import BeautifulSoup
 
 from shuup.notify.admin_module.views.email_template import EmailTemplateEditView
@@ -19,7 +18,6 @@ def test_media_view_images(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     request.user = admin_user
-
 
     view_func = EmailTemplateEditView.as_view()
     response = view_func(request)

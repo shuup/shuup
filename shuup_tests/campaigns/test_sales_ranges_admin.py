@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,14 +10,10 @@ import pytest
 from mock import patch
 
 from shuup.admin.modules.contact_groups.views import ContactGroupEditView
-from shuup.admin.modules.contact_groups.views.forms import \
-    ContactGroupBaseFormPart
+from shuup.admin.modules.contact_groups.views.forms import ContactGroupBaseFormPart
 from shuup.campaigns.models import ContactGroupSalesRange
 from shuup.core.models import Shop, ShopStatus
-from shuup.testing.factories import (
-    create_random_company, get_default_customer_group, get_default_shop,
-    get_shop
-)
+from shuup.testing.factories import create_random_company, get_default_customer_group, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 
 

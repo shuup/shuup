@@ -1,16 +1,14 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
 import decimal
 import json
-from decimal import Decimal
-
 import pytest
-
+from decimal import Decimal
 from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.timezone import now
@@ -18,21 +16,11 @@ from django.utils.translation import activate
 
 from shuup.admin.modules.orders.views.edit import OrderEditView
 from shuup.campaigns.models.campaigns import CatalogCampaign
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter, ProductFilter, ProductTypeFilter
-)
-from shuup.campaigns.models.context_conditions import (
-    ContactGroupCondition
-)
-from shuup.campaigns.models.product_effects import (
-    ProductDiscountAmount, ProductDiscountPercentage
-)
-from shuup.core.models import (
-    Category, ProductType, Shop, ShopProduct, ShopStatus
-)
-from shuup.testing.factories import (
-    create_product, get_default_customer_group, get_default_shop
-)
+from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter, ProductTypeFilter
+from shuup.campaigns.models.context_conditions import ContactGroupCondition
+from shuup.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
+from shuup.core.models import Category, ProductType, Shop, ShopProduct, ShopStatus
+from shuup.testing.factories import create_product, get_default_customer_group, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.campaigns import initialize_test
 
@@ -356,24 +344,24 @@ def test_start_end_dates():
     today = now()
 
     # starts in future
-    campaign.start_datetime = (today + datetime.timedelta(days=2))
+    campaign.start_datetime = today + datetime.timedelta(days=2)
     campaign.save()
     assert not campaign.is_available()
     assert product.get_price_info(request, quantity=1).price == price(original_price)
 
     # has already started
-    campaign.start_datetime = (today - datetime.timedelta(days=2))
+    campaign.start_datetime = today - datetime.timedelta(days=2)
     campaign.save()
     assert product.get_price_info(request, quantity=1).price == price(discounted_price)
 
     # already ended
-    campaign.end_datetime = (today - datetime.timedelta(days=1))
+    campaign.end_datetime = today - datetime.timedelta(days=1)
     campaign.save()
     assert not campaign.is_available()
     assert product.get_price_info(request, quantity=1).price == price(original_price)
 
     # not ended yet
-    campaign.end_datetime = (today + datetime.timedelta(days=1))
+    campaign.end_datetime = today + datetime.timedelta(days=1)
     campaign.save()
     assert product.get_price_info(request, quantity=1).price == price(discounted_price)
 
@@ -383,7 +371,7 @@ def test_start_end_dates():
     assert product.get_price_info(request, quantity=1).price == price(discounted_price)
 
     # no start datetime but ended
-    campaign.end_datetime = (today - datetime.timedelta(days=1))
+    campaign.end_datetime = today - datetime.timedelta(days=1)
     campaign.save()
     assert not campaign.is_available()
     assert product.get_price_info(request, quantity=1).price == price(original_price)
@@ -417,21 +405,29 @@ def test_admin_order_with_campaign(rf, admin_user):
         campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
         campaign.conditions.add(rule1)
 
-        ProductDiscountAmount.objects.create(campaign=campaign,  discount_amount="10")
+        ProductDiscountAmount.objects.create(campaign=campaign, discount_amount="10")
         product = create_product("Just-A-Product-Too", shop, default_price=20)
         shop_product = product.get_shop_instance(shop)
         shop_product.categories.add(cat)
 
-        request = apply_request_middleware(rf.get("/", {
-            "command": "product_data",
-            "shop_id": shop.id,
-            "customer_id": customer.id,
-            "id": product.id,
-            "quantity": 1
-        }), user=admin_user, HTTP_HOST=shop.domain, shop=shop)
+        request = apply_request_middleware(
+            rf.get(
+                "/",
+                {
+                    "command": "product_data",
+                    "shop_id": shop.id,
+                    "customer_id": customer.id,
+                    "id": product.id,
+                    "quantity": 1,
+                },
+            ),
+            user=admin_user,
+            HTTP_HOST=shop.domain,
+            shop=shop,
+        )
         response = OrderEditView.as_view()(request)
         data = json.loads(response.content.decode("utf8"))
-        assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value
+        assert decimal.Decimal(data["unitPrice"]["value"]) == shop.create_price(10).value
 
 
 @pytest.mark.django_db
@@ -449,7 +445,7 @@ def test_product_catalog_campaigns():
 
     shop_product = product.get_shop_instance(shop)
     parent_shop_product = parent_product.get_shop_instance(shop)
-    child_shop_product =shop_child.get_shop_instance(shop)
+    child_shop_product = shop_child.get_shop_instance(shop)
 
     cat = Category.objects.create(name="test")
     campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
@@ -480,7 +476,9 @@ def test_product_catalog_campaigns():
         assert CatalogCampaign.get_for_product(sp).count() == 1
 
     # create other shop
-    shop1 = Shop.objects.create(name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop")
+    shop1 = Shop.objects.create(
+        name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop"
+    )
     sp = ShopProduct.objects.create(product=product, shop=shop1, default_price=shop1.create_price(200))
 
     assert product.get_shop_instance(shop1) == sp

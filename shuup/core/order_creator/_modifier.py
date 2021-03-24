@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,14 +17,7 @@ from ._source_modifier import get_order_source_modifier_modules
 
 class OrderModifier(OrderProcessor):
 
-    _PROTECTED_ATTRIBUTES = [
-        "shop",
-        "currency,"
-        "prices_include_tax",
-        "creator",
-        "created_on",
-        "ip_address"
-    ]
+    _PROTECTED_ATTRIBUTES = ["shop", "currency," "prices_include_tax", "creator", "created_on", "ip_address"]
 
     @atomic
     def update_order_from_source(self, order_source, order):
@@ -32,10 +25,7 @@ class OrderModifier(OrderProcessor):
         for key in self._PROTECTED_ATTRIBUTES:
             if key in data:
                 data.pop(key)
-        data.update({
-            "modified_by": real_user_or_none(order_source.modified_by),
-            "modified_on": now()
-        })
+        data.update({"modified_by": real_user_or_none(order_source.modified_by), "modified_on": now()})
         Order.objects.filter(pk=order.pk).update(**data)
 
         order = Order.objects.get(pk=order.pk)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,8 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.utils.text import slugify
-from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from markupsafe import Markup
 
 from shuup.core import cache
@@ -40,7 +39,7 @@ def get_view_config(context, global_type=False):
     request = context.get("request")
     config_key = "_xtheme_global_view_config" if global_type else "_xtheme_view_config"
     config = context.vars.get(config_key)
-    if (config is None):
+    if config is None:
         view_object = context.get("view")
         if view_object:
             view_class = view_object.__class__
@@ -58,8 +57,9 @@ def get_view_config(context, global_type=False):
     return config
 
 
-def render_placeholder(context, placeholder_name, default_layout=None, template_name=None,
-                       global_type=False):  # doccov: noargs
+def render_placeholder(
+    context, placeholder_name, default_layout=None, template_name=None, global_type=False
+):  # doccov: noargs
     """
     Render a placeholder in a given context.
 
@@ -82,6 +82,7 @@ class PlaceholderRenderer(object):
     """
     Main class for materializing a placeholder's contents during template render time.
     """
+
     # TODO: Maybe make this pluggable per-theme?
 
     def __init__(self, context, placeholder_name, default_layout=None, template_name=None, global_type=False):
@@ -101,7 +102,7 @@ class PlaceholderRenderer(object):
         self.context = context
         self.view_config = get_view_config(context, global_type=global_type)
         self.placeholder_name = placeholder_name
-        self.template_name = ("_xtheme_global_template_name" if global_type else template_name)
+        self.template_name = "_xtheme_global_template_name" if global_type else template_name
         self.default_layout = default_layout
         # Fetch all layouts for this placeholder context combination
         self.layouts = self.view_config.get_placeholder_layouts(context, placeholder_name, self.default_layout)
@@ -112,8 +113,8 @@ class PlaceholderRenderer(object):
         if global_type:
             self.edit = is_edit_mode(context["request"])
         else:
-            is_base = (self.template_name == self.context.name)
-            self.edit = (is_base and is_edit_mode(context["request"]))
+            is_base = self.template_name == self.context.name
+            self.edit = is_base and is_edit_mode(context["request"])
 
     def render(self):
         """
@@ -131,7 +132,8 @@ class PlaceholderRenderer(object):
         saved_view_config = self.view_config.saved_view_config
         for layout in self.layouts:
             cache_key = slugify(
-                "shuup_xtheme_placeholders:placeholder_%s_%s_%s_%s_%s_%s" % (
+                "shuup_xtheme_placeholders:placeholder_%s_%s_%s_%s_%s_%s"
+                % (
                     (saved_view_config.pk if saved_view_config else ""),
                     (saved_view_config.status if saved_view_config else ""),
                     (
@@ -141,15 +143,15 @@ class PlaceholderRenderer(object):
                     ),
                     language,
                     self.placeholder_name,
-                    get_layout_data_key(self.placeholder_name, layout, self.context)
+                    get_layout_data_key(self.placeholder_name, layout, self.context),
                 )
             )
             layout_content = cache.get(cache_key)
             if (
-                settings.SHUUP_XTHEME_USE_PLACEHOLDER_CACHE and
-                saved_view_config and
-                saved_view_config.status == SavedViewConfigStatus.PUBLIC and
-                layout_content
+                settings.SHUUP_XTHEME_USE_PLACEHOLDER_CACHE
+                and saved_view_config
+                and saved_view_config.status == SavedViewConfigStatus.PUBLIC
+                and layout_content
             ):
                 full_content += layout_content
             else:
@@ -158,12 +160,11 @@ class PlaceholderRenderer(object):
                 write = buffer.append
                 self._render_layout(write, layout)
                 content = "".join(buffer)
-                layout_content = (
-                    "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
-                        "wrapper_start": wrapper_start,
-                        "content": content,
-                        "wrapper_end": "</div>",
-                    })
+                layout_content = "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
+                    "wrapper_start": wrapper_start,
+                    "content": content,
+                    "wrapper_end": "</div>",
+                }
                 cache.set(cache_key, layout_content)
                 full_content += layout_content
 
@@ -173,7 +174,7 @@ class PlaceholderRenderer(object):
         layout_data_key = get_layout_data_key(self.placeholder_name, layout, self.context)
         attrs = {
             "class": ["xt-ph", "xt-ph-edit" if self.edit else None, "xt-global-ph" if self.global_type else None],
-            "id": "xt-ph-%s" % layout_data_key
+            "id": "xt-ph-%s" % layout_data_key,
         }
         if self.edit:
             # Pass layout editor to editor so we can fetch
@@ -193,7 +194,8 @@ class PlaceholderRenderer(object):
             help_text = layout.get_help_text(self.context)
             if self.global_type:
                 glopal_help_text = _(
-                    "This placeholder is global and content of this placeholder is shown on all pages.")
+                    "This placeholder is global and content of this placeholder is shown on all pages."
+                )
                 help_text += " " + force_text(glopal_help_text)
             ph_name = self.placeholder_name.replace("_", " ").title()
             tmpl = '<p class="placeholder-help-text">%s<span class="layout-identifier">%s</span></p>'
@@ -216,9 +218,7 @@ class PlaceholderRenderer(object):
         :param row: Row object
         :type row: shuup.xtheme.view_config.LayoutRow
         """
-        row_attrs = {
-            "class": [layout.row_class, "xt-ph-row"]
-        }
+        row_attrs = {"class": [layout.row_class, "xt-ph-row"]}
         if self.edit:
             row_attrs["data-xt-row"] = str(y)
         write("<div%s>" % get_html_attrs(row_attrs))
@@ -250,9 +250,7 @@ class PlaceholderRenderer(object):
         if cell.extra_classes:
             classes.append(cell.extra_classes)
 
-        cell_attrs = {
-            "class": classes
-        }
+        cell_attrs = {"class": classes}
         if self.edit:
             cell_attrs.update({"data-xt-cell": str(x)})
         write("<div%s>" % get_html_attrs(cell_attrs))
@@ -263,10 +261,7 @@ class PlaceholderRenderer(object):
 
     def _render_default_layout_script_tag(self, write):
         # This script tag is read by editor.js
-        write("<script%s>" % get_html_attrs({
-            "class": "xt-ph-default-layout",
-            "type": "text/plain"
-        }))
+        write("<script%s>" % get_html_attrs({"class": "xt-ph-default-layout", "type": "text/plain"}))
         layout = self.default_layout
         if hasattr(layout, "serialize"):
             layout = layout.serialize()

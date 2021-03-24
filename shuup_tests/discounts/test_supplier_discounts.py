@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import random
-
 import pytest
+import random
 
 from shuup.core.models import Supplier
 from shuup.discounts.models import Discount
@@ -32,7 +31,8 @@ def test_discounted_price(rf):
     # Set discount with discount amount for $2
     discount_amount = 2
     discount = Discount.objects.create(
-        active=True, product=product, supplier=supplier, discount_amount_value=discount_amount)
+        active=True, product=product, supplier=supplier, discount_amount_value=discount_amount
+    )
     discount.shops.add(shop)
 
     # Even though the supplier is matching with the product there is no discount

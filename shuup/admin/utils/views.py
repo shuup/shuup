@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,16 +19,10 @@ from django.views.generic import ListView, UpdateView
 
 from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.signals import object_created, object_saved, view_form_valid
-from shuup.admin.toolbar import (
-    get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
-)
-from shuup.admin.utils.forms import (
-    add_form_errors_as_messages, get_possible_name_fields_for_model
-)
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar, get_default_edit_toolbar
+from shuup.admin.utils.forms import add_form_errors_as_messages, get_possible_name_fields_for_model
 from shuup.admin.utils.picotable import Column, PicotableViewMixin
-from shuup.admin.utils.urls import (
-    get_model_front_url, get_model_url, NoModelUrl
-)
+from shuup.admin.utils.urls import NoModelUrl, get_model_front_url, get_model_url
 from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
@@ -51,7 +45,7 @@ class CreateOrUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateOrUpdateView, self).get_context_data(**kwargs)
-        context["is_new"] = (not self.object.pk)
+        context["is_new"] = not self.object.pk
         context["front_url"] = get_model_front_url(self.request, self.object)
         context["title"] = get_create_or_change_title(self.request, self.object)
         context["save_form_id"] = self.get_save_form_id()
@@ -132,7 +126,7 @@ class CreateOrUpdateView(UpdateView):
         except ValidationError:
             return self.form_invalid(form)
 
-        is_new = (not self.object.pk)
+        is_new = not self.object.pk
         self.save_form(form)
         if is_new:
             object_created.send(sender=type(self.object), object=self.object, request=self.request)
@@ -171,11 +165,11 @@ def add_create_or_change_message(request, instance, is_new):
         msg = _("Item")  # instance is not always present. For example when saving configurations.
 
     if is_new:
-        msg = _(u"New %s was created.") % msg
+        msg = _("New %s was created.") % msg
     else:
-        msg = _(u"%s was edited.") % msg
+        msg = _("%s was edited.") % msg
 
-    messages.success(request,  msg)
+    messages.success(request, msg)
 
 
 def get_create_or_change_title(request, instance, name_field=None):
@@ -213,7 +207,6 @@ def check_and_raise_if_only_one_allowed(setting_name, obj):
 
 
 class PicotableListView(PicotableViewMixin, ListView):
-
     def __init__(self):
         super(PicotableListView, self).__init__()
         if self.mass_actions:
@@ -232,7 +225,7 @@ class PicotableListView(PicotableViewMixin, ListView):
             else:
                 self.columns = self.default_columns
         else:
-            self.columns = (self.settings.columns or self.default_columns)
+            self.columns = self.settings.columns or self.default_columns
 
     def get_toolbar(self):
         toolbar = Toolbar()

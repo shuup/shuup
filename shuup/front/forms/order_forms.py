@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,7 +13,7 @@ from shuup.core.models import ProductMode
 class ProductOrderForm(FormView):
     template_name = "shuup/front/product/forms/product_order_form.jinja"
     engine = None
-    priority = 0    # a greater number has precedence
+    priority = 0  # a greater number has precedence
 
     def __init__(self, request, context, product, language, **kwargs):
         self.request = request
@@ -35,18 +35,15 @@ class ProductOrderForm(FormView):
 
 
 class VariableVariationProductOrderForm(ProductOrderForm):
-
     def is_compatible(self):
-        return (self.product.mode == ProductMode.VARIABLE_VARIATION_PARENT)
+        return self.product.mode == ProductMode.VARIABLE_VARIATION_PARENT
 
 
 class SimpleVariationProductOrderForm(ProductOrderForm):
-
     def is_compatible(self):
-        return (self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT)
+        return self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT
 
 
 class SimpleProductOrderForm(ProductOrderForm):
-
     def is_compatible(self):
-        return (self.product.mode in [ProductMode.NORMAL, ProductMode.PACKAGE_PARENT])
+        return self.product.mode in [ProductMode.NORMAL, ProductMode.PACKAGE_PARENT]

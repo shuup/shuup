@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import defaultdict
-
 import six
+from collections import defaultdict
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.middleware.csrf import get_token
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 
-from shuup.core.models import (
-    Category, Manufacturer, Product, ShopProduct, Supplier
-)
+from shuup.core.models import Category, Manufacturer, Product, ShopProduct, Supplier
 from shuup.core.utils import context_cache
 from shuup.front.utils import cache as cache_utils
 from shuup.front.utils.companies import allow_company_registration
@@ -39,12 +36,12 @@ def get_login_form(request, id_prefix="quick-login"):
 
 def _group_list_items(group_list, number):
     for i in range(0, len(group_list), number):
-        yield tuple(group_list[i: i + number])
+        yield tuple(group_list[i : i + number])
 
 
-def _get_listed_products(context, n_products, ordering=None,    # noqa (C901)
-                         filter_dict=None, orderable_only=True,
-                         extra_filters=None):
+def _get_listed_products(  # noqa (C901)
+    context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None
+):
     """
     Returns all products marked as listed that are determined to be
     visible based on the current context.
@@ -122,7 +119,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         ordering=ordering,
         filter_dict=filter_dict,
         orderable_only=orderable_only,
-        extra_filters=hash(str(extra_filters))
+        extra_filters=hash(str(extra_filters)),
     )
     if products is not None:
         return products
@@ -133,7 +130,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         ordering=ordering,
         filter_dict=filter_dict,
         orderable_only=orderable_only,
-        extra_filters=extra_filters
+        extra_filters=extra_filters,
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -148,8 +145,9 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         identifier="best_selling_products_%s" % (supplier.pk if supplier else ""),
         item=cache_utils.get_best_selling_products_cache_item(request.shop),
         context=request,
-        n_products=n_products, cutoff_days=cutoff_days,
-        orderable_only=orderable_only
+        n_products=n_products,
+        cutoff_days=cutoff_days,
+        orderable_only=orderable_only,
     )
 
     if products is not None:
@@ -161,11 +159,7 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
 
 
 def _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=None):  # noqa (C901)
-    data = get_best_selling_product_info(
-        shop_ids=[request.shop.pk],
-        cutoff_days=cutoff_days,
-        supplier=supplier
-    )
+    data = get_best_selling_product_info(shop_ids=[request.shop.pk], cutoff_days=cutoff_days, supplier=supplier)
     combined_variation_products = defaultdict(int)
     for product_id, parent_id, qty in data:
         if parent_id:
@@ -174,22 +168,14 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
             combined_variation_products[product_id] += qty
 
     # get all the product ids
-    product_ids = [
-        d[0] for
-        d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)
-    ]
+    product_ids = [d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)]
 
     # group product ids in groups of n_products
     # to prevent querying ALL products at once
     products = []
     for grouped_product_ids in _group_list_items(product_ids, n_products):
-        valid_products_qs = Product.objects.listed(
-            shop=request.shop,
-            customer=request.customer
-        ).filter(
-            id__in=grouped_product_ids,
-            shop_products__shop=request.shop,
-            shop_products__suppliers__enabled=True
+        valid_products_qs = Product.objects.listed(shop=request.shop, customer=request.customer).filter(
+            id__in=grouped_product_ids, shop_products__shop=request.shop, shop_products__suppliers__enabled=True
         )
         for product in valid_products_qs.iterator():
             products.append(product)
@@ -231,19 +217,14 @@ def get_newest_products(context, n_products=6, orderable_only=True):
         identifier="newest_products",
         item=cache_utils.get_newest_products_cache_item(request.shop),
         context=request,
-        n_products=n_products, orderable_only=orderable_only
+        n_products=n_products,
+        orderable_only=orderable_only,
     )
     if products is not None:
         return products
 
     products = _get_listed_products(
-        context,
-        n_products,
-        ordering="-pk",
-        filter_dict={
-            "variation_parent": None
-        },
-        orderable_only=orderable_only
+        context, n_products, ordering="-pk", filter_dict={"variation_parent": None}, orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -257,19 +238,14 @@ def get_random_products(context, n_products=6, orderable_only=True):
         identifier="random_products",
         item=cache_utils.get_random_products_cache_item(request.shop),
         context=request,
-        n_products=n_products, orderable_only=orderable_only
+        n_products=n_products,
+        orderable_only=orderable_only,
     )
     if products is not None:
         return products
 
     products = _get_listed_products(
-        context,
-        n_products,
-        ordering="?",
-        filter_dict={
-            "variation_parent": None
-        },
-        orderable_only=orderable_only
+        context, n_products, ordering="?", filter_dict={"variation_parent": None}, orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -285,7 +261,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         context=request,
         n_products=n_products,
         categories=categories,
-        orderable_only=orderable_only
+        orderable_only=orderable_only,
     )
     if products is not None:
         return products
@@ -294,11 +270,8 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         context,
         n_products,
         ordering="?",
-        filter_dict={
-            "variation_parent": None,
-            "shop_products__categories__in": categories
-        },
-        orderable_only=orderable_only
+        filter_dict={"variation_parent": None, "shop_products__categories__in": categories},
+        orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
     context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
@@ -309,9 +282,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
 def get_all_manufacturers(context):
     request = context["request"]
     key, manufacturers = context_cache.get_cached_value(
-        identifier="all_manufacturers",
-        item=cache_utils.get_all_manufacturers_cache_item(request.shop),
-        context=request
+        identifier="all_manufacturers", item=cache_utils.get_all_manufacturers_cache_item(request.shop), context=request
     )
     if manufacturers is not None:
         return manufacturers
@@ -328,8 +299,8 @@ def get_root_categories(context):
     request = context["request"]
     language = get_language()
     roots = get_cached_trees(
-        Category.objects.all_visible(
-            customer=request.customer, shop=request.shop, language=language))
+        Category.objects.all_visible(customer=request.customer, shop=request.shop, language=language)
+    )
     cache_translations_for_tree(roots, languages=[language])
     return roots
 
@@ -347,7 +318,7 @@ def get_pagination_variables(context, objects, limit):
     variables = {"objects": objects}
 
     variables["paginator"] = paginator = Paginator(objects, limit)
-    variables["is_paginated"] = (paginator.num_pages > 1)
+    variables["is_paginated"] = paginator.num_pages > 1
     try:
         requested_page = int(context["request"].GET.get("page") or 0)
     except ValueError:
@@ -427,6 +398,7 @@ def can_toggle_all_seeing(context):
 @contextfunction
 def get_admin_edit_url(context, intance_or_model):
     from shuup.admin.template_helpers.shuup_admin import model_url
+
     url = model_url(context, intance_or_model)
     if url:
         return dict(

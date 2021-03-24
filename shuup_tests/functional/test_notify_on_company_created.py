@@ -1,28 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.conf import settings
-from shuup.utils.django_compat import reverse
 
 from shuup import configuration
 from shuup.core.models import get_company_contact, get_person_contact
 from shuup.front.apps.customer_information.notify_events import CompanyAccountCreated
 from shuup.notify.actions.notification import AddNotification
-from shuup.notify.models import Notification
 from shuup.notify.enums import StepConditionOperator, StepNext
-from shuup.notify.models import Script
+from shuup.notify.models import Notification, Script
 from shuup.notify.script import Step
 from shuup.testing.factories import get_default_shop
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
-from shuup_tests.utils.fixtures import (
-    regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
-)
+from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME, regular_user
 
 
 @pytest.mark.django_db
@@ -37,15 +33,18 @@ def test_notify_on_company_created(regular_user, allow_company_registration):
     step = Step(
         cond_op=StepConditionOperator.NONE,
         actions=[
-            AddNotification({
-                "message": {"constant": "It Works. {{ customer_email }}"},
-                "message_identifier": {"constant": "company_created"},
-            })
+            AddNotification(
+                {
+                    "message": {"constant": "It Works. {{ customer_email }}"},
+                    "message_identifier": {"constant": "company_created"},
+                }
+            )
         ],
-        next=StepNext.STOP
+        next=StepNext.STOP,
     )
     script = Script(
-        event_identifier=CompanyAccountCreated.identifier, name="Test Script", enabled=True, shop=get_default_shop())
+        event_identifier=CompanyAccountCreated.identifier, name="Test Script", enabled=True, shop=get_default_shop()
+    )
     script.set_steps([step])
     script.save()
 
@@ -96,7 +95,7 @@ def _default_company_data():
 
 def _default_address_data(address_type):
     return {
-        "{}-name".format(address_type) : "Fakerr",
+        "{}-name".format(address_type): "Fakerr",
         "{}-phone".format(address_type): "11-111-111-1110",
         "{}-email".format(address_type): "captain@shuup.local",
         "{}-street".format(address_type): "123 Fake St.",

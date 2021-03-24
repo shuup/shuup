@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -22,4 +22,5 @@ if __name__ == "__main__":
     sys.path.insert(0, os.path.realpath(os.path.dirname(__file__) + "/.."))
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shuup_workbench.settings")
     from django.core.management import execute_from_command_line
+
     execute_from_command_line(sys.argv)

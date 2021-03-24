@@ -1,28 +1,26 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import os
-from decimal import Decimal
-
 import mock
+import os
 import pytest
-
+from decimal import Decimal
 from django.conf import settings
 from django.utils.translation import activate
 from six import BytesIO
 
-from shuup.core.models import (
-    MediaFile, Product, ProductMode, ShopProduct, Supplier
-)
+from shuup.core.models import MediaFile, Product, ProductMode, ShopProduct, Supplier
 from shuup.default_importer.importers import ProductImporter
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils.importer import ImportMode
 from shuup.testing.factories import (
-    get_default_product_type, get_default_sales_unit, get_default_shop,
-    get_default_tax_class
+    get_default_product_type,
+    get_default_sales_unit,
+    get_default_shop,
+    get_default_tax_class,
 )
 from shuup.testing.image_generator import generate_image
 from shuup.utils.filer import filer_image_from_data
@@ -36,12 +34,7 @@ def _create_random_media_file(shop, file_path):
     pil_image = generate_image(2, 2)
     sio = BytesIO()
     pil_image.save(sio, "JPEG", quality=45)
-    filer_file = filer_image_from_data(
-        request=None,
-        path=path,
-        file_name=name,
-        file_data=sio.getvalue()
-    )
+    filer_file = filer_image_from_data(request=None, path=path, file_name=name, file_data=sio.getvalue())
     media_file = MediaFile.objects.create(file=filer_file)
     media_file.shops.add(shop)
     return media_file
@@ -70,8 +63,7 @@ def test_variatins_import(rf):
     transformed_data = transform_file(filename.split(".")[1], path)
 
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 
@@ -117,16 +109,12 @@ def test_variatins_import(rf):
     assert supplier.get_stock_status(child2.pk).logical_count == Decimal(10)
 
     path = os.path.join(
-        os.path.dirname(__file__),
-        "data",
-        "product",
-        "product_sample_import_with_variations_update.xlsx"
+        os.path.dirname(__file__), "data", "product", "product_sample_import_with_variations_update.xlsx"
     )
     transformed_data = transform_file(filename.split(".")[1], path)
 
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 
@@ -150,7 +138,9 @@ def test_variatins_import(rf):
 
     # Check stock counts
     assert supplier.get_stock_status(child1.pk).logical_count == Decimal(5)
-    assert supplier.get_stock_status(child2.pk).logical_count == Decimal(20)  # Did not add 20 but made the logical to 20
+    assert supplier.get_stock_status(child2.pk).logical_count == Decimal(
+        20
+    )  # Did not add 20 but made the logical to 20
 
     parent2 = Product.objects.filter(sku=22).first()
     assert parent1.mode == ProductMode.VARIABLE_VARIATION_PARENT
@@ -169,16 +159,12 @@ def test_variatins_import(rf):
 
     # Test file with missing variations
     path = os.path.join(
-        os.path.dirname(__file__),
-        "data",
-        "product",
-        "product_sample_import_with_variations_missing_variables.xlsx"
+        os.path.dirname(__file__), "data", "product", "product_sample_import_with_variations_missing_variables.xlsx"
     )
     transformed_data = transform_file(filename.split(".")[1], path)
 
     importer = ProductImporter(
-        transformed_data,
-        ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
+        transformed_data, ProductImporter.get_importer_context(rf.get("/"), shop=shop, language="en")
     )
     importer.process_data()
 

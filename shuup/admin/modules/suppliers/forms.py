@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,18 +39,16 @@ class SupplierBaseForm(ShuupAdminForm):
 
         # add shops field when superuser only
         if getattr(self.request.user, "is_superuser", False):
-            initial_shops = (self.instance.shops.all() if self.instance.pk else [])
+            initial_shops = self.instance.shops.all() if self.instance.pk else []
             self.fields["shops"] = Select2MultipleField(
                 label=_("Shops"),
                 help_text=_("Select shops for this supplier. Keep it blank to share with all shops."),
                 model=Shop,
                 required=False,
-                initial=initial_shops
+                initial=initial_shops,
             )
             self.fields["shops"].choices = initial_shops
-            self.fields["shops"].widget.choices = [
-                (shop.pk, force_text(shop)) for shop in initial_shops
-            ]
+            self.fields["shops"].widget.choices = [(shop.pk, force_text(shop)) for shop in initial_shops]
         else:
             # drop shops fields
             self.fields.pop("shops", None)
@@ -70,9 +68,7 @@ class SupplierBaseForm(ShuupAdminForm):
         else:
             self.fields["is_approved"].initial = False
 
-        choices = Supplier.get_module_choices(
-            empty_label=(_("No %s module") % Supplier._meta.verbose_name)
-        )
+        choices = Supplier.get_module_choices(empty_label=(_("No %s module") % Supplier._meta.verbose_name))
         self.fields["module_identifier"].choices = self.fields["module_identifier"].widget.choices = choices
 
     def clean(self):
@@ -113,20 +109,27 @@ class SupplierBaseForm(ShuupAdminForm):
 
     def _save_supplier_shop(self, shop, instance):
         # update the is_approved flag for this shop
-        SupplierShop.objects.filter(
-            shop=shop,
-            supplier=instance
-        ).update(is_approved=self.cleaned_data["is_approved"])
+        SupplierShop.objects.filter(shop=shop, supplier=instance).update(is_approved=self.cleaned_data["is_approved"])
 
 
 class SupplierContactAddressForm(forms.ModelForm):
     class Meta:
         model = MutableAddress
         fields = (
-            "name", "prefix", "suffix",
-            "email", "phone", "tax_number",
-            "street", "street2", "street3",
-            "postal_code", "city",
-            "region_code", "region", "country",
-            "latitude", "longitude"
+            "name",
+            "prefix",
+            "suffix",
+            "email",
+            "phone",
+            "tax_number",
+            "street",
+            "street2",
+            "street3",
+            "postal_code",
+            "city",
+            "region_code",
+            "region",
+            "country",
+            "latitude",
+            "longitude",
         )

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,6 +12,7 @@ class PriceDisplayOptions(object):
 
     Parameters on how prices should be rendered.
     """
+
     def __init__(self, include_taxes=None, show_prices=True):
         """
         Initialize price display options.
@@ -39,11 +40,11 @@ class PriceDisplayOptions(object):
         :type context: jinja2.runtime.Context|dict
         :rtype: PriceDisplayOptions
         """
-        options = context.get('price_display_options')
+        options = context.get("price_display_options")
 
         if options is None:
-            request = context.get('request')  # noqa (F821) type: django.http.HttpRequest
-            options = getattr(request, 'price_display_options', None)
+            request = context.get("request")  # noqa (F821) type: django.http.HttpRequest
+            options = getattr(request, "price_display_options", None)
 
         if options is None:
             options = cls()

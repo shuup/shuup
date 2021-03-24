@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 
 from shuup.core.models import CategoryStatus
@@ -28,9 +27,7 @@ def test_list_view(rf, admin_user):
     child_category.shops.add(shop)
 
     view = load("shuup.admin.modules.categories.views:CategoryListView").as_view()
-    request = apply_request_middleware(rf.get("/", {
-        "jq": json.dumps({"perPage": 100, "page": 1})
-    }), user=admin_user)
+    request = apply_request_middleware(rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user)
     response = view(request)
     assert 200 <= response.status_code < 300
 

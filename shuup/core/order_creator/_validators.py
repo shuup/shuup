@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 from decimal import Decimal
-
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from six import iteritems
@@ -65,6 +64,7 @@ class OrderSourceSupplierValidator(object):
                     continue
 
                 for error in shop_product.get_orderability_errors(
-                        supplier=supplier, quantity=quantity, customer=order_source.customer):
+                    supplier=supplier, quantity=quantity, customer=order_source.customer
+                ):
                     error.message = "%s: %s" % (product.name, error.message)
                     yield error

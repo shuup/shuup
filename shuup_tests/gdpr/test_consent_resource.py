@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import django.template
 import json
-
 import pytest
 import reversion
-
-import django.template
 from django.conf import settings
-from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 from django.utils.translation import activate
 
 from shuup.core.models import ShopStatus
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
-from shuup.gdpr.utils import ensure_gdpr_privacy_policy, create_user_consent_for_all_documents, \
-    is_documents_consent_in_sync
+from shuup.gdpr.utils import (
+    create_user_consent_for_all_documents,
+    ensure_gdpr_privacy_policy,
+    is_documents_consent_in_sync,
+)
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -65,7 +66,7 @@ def test_resource_injection(client):
         always_active=True,
         cookies="cookie1,cookie2,_cookie3",
         name="RequiredCookies",
-        how_is_used="to make the site work"
+        how_is_used="to make the site work",
     )
     default_active_cookie_category = GDPRCookieCategory.objects.create(
         shop=shop,
@@ -73,7 +74,7 @@ def test_resource_injection(client):
         default_active=True,
         cookies="analyticsCookie",
         name="Analytics",
-        how_is_used="to track users"
+        how_is_used="to track users",
     )
     response, soup = client.response_and_soup(index_url)
     response_content = response.content.decode("utf-8")
@@ -154,14 +155,14 @@ def test_consent_cookies(rf):
             always_active=True,
             cookies="cookie1,cookir2,_cookie3",
             name="RequiredCookies",
-            how_is_used="to make the site work"
+            how_is_used="to make the site work",
         )
         optional_cookie_category = GDPRCookieCategory.objects.create(
             shop=shop,
             always_active=False,
             cookies="_opt1,_opt2,_opt3",
             name="OptionalCookies",
-            how_is_used="to spy users"
+            how_is_used="to spy users",
         )
         default_active_cookie_category = GDPRCookieCategory.objects.create(
             shop=shop,
@@ -169,7 +170,7 @@ def test_consent_cookies(rf):
             default_active=True,
             cookies="_analytics",
             name="Analytics",
-            how_is_used="to track users"
+            how_is_used="to track users",
         )
 
         # create privacy policy GDPR document
@@ -178,11 +179,14 @@ def test_consent_cookies(rf):
         assert settings.SHUUP_GDPR_CONSENT_COOKIE_NAME not in response.cookies
 
         # send consent
-        response = client.post(reverse("shuup:gdpr_consent"), data={
-            "cookie_category_{}".format(required_cookie_category.id): "on",
-            "cookie_category_{}".format(optional_cookie_category.id): "on",
-            "cookie_category_{}".format(default_active_cookie_category.id): "on",
-        })
+        response = client.post(
+            reverse("shuup:gdpr_consent"),
+            data={
+                "cookie_category_{}".format(required_cookie_category.id): "on",
+                "cookie_category_{}".format(optional_cookie_category.id): "on",
+                "cookie_category_{}".format(default_active_cookie_category.id): "on",
+            },
+        )
 
         assert settings.SHUUP_GDPR_CONSENT_COOKIE_NAME in response.cookies
         cookies_data = json.loads(response.cookies[settings.SHUUP_GDPR_CONSENT_COOKIE_NAME].value)
@@ -196,11 +200,11 @@ def test_consent_cookies(rf):
         for cookie in default_active_cookie_category.cookies.split(","):
             assert cookie in cookies_data["cookies"]
 
-        engine = django.template.engines['jinja2']
+        engine = django.template.engines["jinja2"]
         template = engine.from_string("{{ gdpr.get_accepted_cookies()|json }}")
 
         request = rf.get("/")
-        context = {'request': request}
+        context = {"request": request}
         rendered_cookies = json.loads(template.render(context))
         assert rendered_cookies == []
 
@@ -209,6 +213,6 @@ def test_consent_cookies(rf):
                 response.client.cookies[settings.SHUUP_GDPR_CONSENT_COOKIE_NAME].value
             )
         }
-        context = {'request': request}
+        context = {"request": request}
         rendered_cookies = set(json.loads(template.render(context)))
-        assert rendered_cookies == set(['_opt2', 'cookie1', '_cookie3', '_opt3', '_analytics', 'cookir2', '_opt1'])
+        assert rendered_cookies == set(["_opt2", "cookie1", "_cookie3", "_opt3", "_analytics", "cookir2", "_opt1"])

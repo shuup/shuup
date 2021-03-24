@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -44,8 +44,7 @@ def set(shop, key, value):
     :param value: Value to set.  Note: Must be JSON serializable.
     :type value: Any
     """
-    ConfigurationItem.objects.update_or_create(
-        shop=shop, key=key, defaults={"value": value})
+    ConfigurationItem.objects.update_or_create(shop=shop, key=key, defaults={"value": value})
     if shop:
         cache.set(_get_cache_key(shop), None)
     else:

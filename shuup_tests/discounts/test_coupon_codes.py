@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,11 +10,11 @@ import pytest
 from shuup.core.basket import get_basket
 from shuup.core.models import AnonymousContact, Product
 from shuup.core.order_creator import OrderCreator
+from shuup.core.pricing import get_price_info
 from shuup.discounts.models import CouponCode, CouponUsage, Discount
 from shuup.discounts.modules import CouponCodeModule
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
-from shuup.core.pricing import get_price_info
 
 
 def _init_test_for_product_without_basket(rf, default_price):
@@ -58,7 +58,8 @@ def test_matching_coupon_code(rf):
     coupon_code = CouponCode.objects.create(code="HORSESHOW2018", active=True)
     coupon_code.shops.add(request.shop)
     discount = Discount.objects.create(
-        active=True, product=product, coupon_code=coupon_code, discount_amount_value=discount_amount)
+        active=True, product=product, coupon_code=coupon_code, discount_amount_value=discount_amount
+    )
     discount.shops.add(request.shop)
 
     # No basket means no coupon code in basket which means no discount
@@ -86,7 +87,7 @@ def test_matching_coupon_code(rf):
     assert coupon_code.code in basket.codes
     assert coupon_code.code in request.basket.codes
 
-    get_price_info(context=request, product=product.id) # Test if get_price_info works with product.id sent
+    get_price_info(context=request, product=product.id)  # Test if get_price_info works with product.id sent
     assert product.get_price_info(request).price == request.shop.create_price(default_price - discount_amount)
 
     # Apply coupon code after order is created
@@ -114,7 +115,8 @@ def test_customer_usage_limit_for_anons(rf):
     coupon = CouponCode.objects.create(code="sUpErAle 123", active=True, usage_limit_customer=1)
     coupon.shops.add(request.shop)
     discount = Discount.objects.create(
-        active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price)
+        active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price
+    )
     discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price)
 
@@ -171,7 +173,8 @@ def test_customer_usage_limit(rf):
     coupon = CouponCode.objects.create(code="sUpErAle", active=True, usage_limit_customer=2)
     coupon.shops.add(request.shop)
     discount = Discount.objects.create(
-        active=True, product=product, coupon_code=coupon, discount_percentage=discount_percentage)
+        active=True, product=product, coupon_code=coupon, discount_percentage=discount_percentage
+    )
     discount.shops.add(request.shop)
 
     # Order product twice for each customer
@@ -226,7 +229,8 @@ def test_usage_limit(rf):
     coupon = CouponCode.objects.create(code=coupon_code, active=True)
     coupon.shops.add(shop)
     discount = Discount.objects.create(
-        active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price)
+        active=True, product=product, coupon_code=coupon, discounted_price_value=discounted_price
+    )
     discount.shops.add(request.shop)
 
     # Can not use coupon code that does not exist

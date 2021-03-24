@@ -1,24 +1,21 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 from django.utils.text import slugify
 
-from shuup.admin.modules.suppliers.views import (
-    SupplierEditView, SupplierListView,
-    SupplierDeleteView)
+from shuup.admin.modules.suppliers.views import SupplierDeleteView, SupplierEditView, SupplierListView
 from shuup.core.models import Supplier, SupplierType
 from shuup.testing import factories
 from shuup.testing.factories import get_default_supplier
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 
 
 @pytest.mark.django_db
@@ -73,7 +70,7 @@ def test_suppliers_edit(rf, admin_user):
                 "address-postal_code": "90014",
                 "address-city": "Los Angeles",
                 "address-region_code": "CA",
-                "address-country": "US"
+                "address-country": "US",
             }
 
             request = apply_request_middleware(rf.post("/", payload), user=user)
@@ -118,9 +115,7 @@ def test_suppliers_delete(rf, admin_user):
     supplier.save()
 
     request_supplier = apply_request_middleware(rf.post("/"), user=admin_user)
-    with override_settings(
-        SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"
-    ):
+    with override_settings(SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC="shuup.testing.supplier_provider.FirstSupplierProvider"):
         response = delete_view(request_supplier, **{"pk": supplier.pk})
         assert response.status_code == 302
         assert response.url == reverse("shuup_admin:supplier.list")

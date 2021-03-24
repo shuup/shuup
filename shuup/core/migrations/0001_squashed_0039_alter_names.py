@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from decimal import Decimal
-
 import django.core.validators
 import django.db.models.deletion
 import django_countries.fields
@@ -13,6 +11,7 @@ import jsonfield.fields
 import mptt.fields
 import parler.models
 import timezone_field.fields
+from decimal import Decimal
 from django.conf import settings
 from django.db import migrations, models
 
@@ -22,9 +21,9 @@ import shuup.core.modules.interface
 import shuup.core.pricing
 import shuup.core.taxing
 import shuup.core.utils.line_unit_mixin
-import shuup.utils.migrations
 import shuup.core.utils.name_mixin
 import shuup.utils.analog
+import shuup.utils.migrations
 import shuup.utils.properties
 
 LANGUAGE_CHOICES = [

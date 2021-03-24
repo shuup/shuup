@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -31,8 +31,10 @@ class CheckoutMethodChoices(Enum):
 
 class ChooseToRegisterForm(forms.Form):
     register = forms.ChoiceField(
-        choices=CheckoutMethodChoices.choices(), initial=CheckoutMethodChoices.REGISTER.value,
-        label=_("Register with us for future convenience"), required=False
+        choices=CheckoutMethodChoices.choices(),
+        initial=CheckoutMethodChoices.REGISTER.value,
+        label=_("Register with us for future convenience"),
+        required=False,
     )
 
 
@@ -45,8 +47,9 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
 
     def get_form(self, form_class=None):
         form_group = FormGroup(**self.get_initial_form_group_kwargs())
-        form_group.add_form_def(name=self.login_form_key, form_class=LoginView.form_class, required=False,
-                                kwargs={"request": self.request})
+        form_group.add_form_def(
+            name=self.login_form_key, form_class=LoginView.form_class, required=False, kwargs={"request": self.request}
+        )
         form_group.add_form_def(name=self.checkout_method_choice_key, form_class=ChooseToRegisterForm, required=False)
         return form_group
 
@@ -78,15 +81,17 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
         Returns the keyword arguments for instantiating the form group.
         """
         kwargs = {
-            'initial': self.get_initial(),
-            'prefix': self.get_prefix(),
+            "initial": self.get_initial(),
+            "prefix": self.get_prefix(),
         }
 
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
+        if self.request.method in ("POST", "PUT"):
+            kwargs.update(
+                {
+                    "data": self.request.POST,
+                    "files": self.request.FILES,
+                }
+            )
         return kwargs
 
 

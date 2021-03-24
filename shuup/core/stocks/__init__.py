@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -15,8 +15,16 @@ class ProductStockStatus(ProductCachingObject):
     error = None
     stock_managed = False
 
-    def __init__(self, product=None, product_id=None, logical_count=0,
-                 physical_count=0, message=None, error=None, stock_managed=False):
+    def __init__(
+        self,
+        product=None,
+        product_id=None,
+        logical_count=0,
+        physical_count=0,
+        message=None,
+        error=None,
+        stock_managed=False,
+    ):
         if product_id:
             self.product_id = product_id
         else:

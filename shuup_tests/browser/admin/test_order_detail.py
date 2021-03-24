@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.admin.modules.orders.views.addresses import ADDRESS_EDITED_LOG_IDENTIFIER
 from shuup.core.models import OrderStatus
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    wait_until_appeared,
+    wait_until_condition,
 )
 from shuup.testing.factories import create_empty_order, get_default_shop
-from shuup.testing.browser_utils import initialize_admin_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -107,5 +108,5 @@ def set_status(browser, order, status):
 def check_log_entries_count(browser, order, target_count):
     wait_until_condition(
         browser,
-        condition=lambda x: order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == target_count
+        condition=lambda x: order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == target_count,
     )

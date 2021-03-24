@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -43,7 +43,7 @@ def test_bound_file_dnd_uploader_widget():
             "max-filesize": 10,
             "retry-chunks-limit": 100,
             "clickable": "false",
-        }
+        },
     ).render(name="foo", value=f.pk)
     soup = BeautifulSoup(widget_html)
     assert soup.select("#dropzone-dropzone"), "widget has id"

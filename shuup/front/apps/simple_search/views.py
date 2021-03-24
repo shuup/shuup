@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,8 +12,11 @@ from django.views.generic import ListView
 from shuup.core.models import Product
 from shuup.front.template_helpers.product import is_visible
 from shuup.front.utils.sorts_and_filters import (
-    get_product_queryset, get_query_filters, post_filter_products,
-    ProductListForm, sort_products
+    ProductListForm,
+    get_product_queryset,
+    get_query_filters,
+    post_filter_products,
+    sort_products,
 )
 from shuup.front.utils.views import cache_product_things
 
@@ -25,8 +28,7 @@ class SearchView(ListView):
     context_object_name = "products"
 
     def dispatch(self, request, *args, **kwargs):
-        self.form = ProductListForm(
-            request=self.request, shop=self.request.shop, category=None, data=self.request.GET)
+        self.form = ProductListForm(request=self.request, shop=self.request.shop, category=None, data=self.request.GET)
         return super(SearchView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -49,5 +51,5 @@ class SearchView(ListView):
             products = sort_products(self.request, None, products, data)
             products = [p for p in products if is_visible({"request": self.request}, p)]
             context["products"] = products
-        context["no_results"] = (self.form.is_valid() and not products)
+        context["no_results"] = self.form.is_valid() and not products
         return context

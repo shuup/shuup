@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -33,7 +33,7 @@ class ContactGroupCondition(ContextCondition):
     contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
 
     def matches(self, context):
-        customer = (context.customer if context.customer is not None else AnonymousContact())
+        customer = context.customer if context.customer is not None else AnonymousContact()
         customers_groups = customer.groups.all()
         return self.contact_groups.filter(pk__in=customers_groups).exists()
 
@@ -79,12 +79,11 @@ class HourCondition(ContextCondition):
     name = _("Day and hour")
 
     hour_start = models.TimeField(
-        verbose_name=_("start time"),
-        help_text=_("12pm is considered noon and 12am as midnight.")
+        verbose_name=_("start time"), help_text=_("12pm is considered noon and 12am as midnight.")
     )
     hour_end = models.TimeField(
         verbose_name=_("end time"),
-        help_text=_("12pm is considered noon and 12am as midnight. End time is not considered match.")
+        help_text=_("12pm is considered noon and 12am as midnight. End time is not considered match."),
     )
     days = models.CharField(max_length=255, verbose_name=_("days"))
 

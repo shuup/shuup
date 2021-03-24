@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import shuup.notify.enums
-import enumfields.fields
-import shuup.core.fields
-from django.conf import settings
 import django.db.models.deletion
+import enumfields.fields
 import jsonfield.fields
+from django.conf import settings
+from django.db import migrations, models
+
+import shuup.core.fields
+import shuup.notify.enums
 
 
 class Migration(migrations.Migration):

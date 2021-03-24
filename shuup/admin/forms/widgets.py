@@ -1,31 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import json
-
 import six
-from django.forms import HiddenInput, Textarea, TextInput
-from django.forms import TimeInput as DjangoTimeInput
-from django.forms import Widget
+from django.forms import HiddenInput, Textarea, TextInput, TimeInput as DjangoTimeInput, Widget
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
-from shuup.admin.forms.quick_select import (
-    QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
-)
+from shuup.admin.forms.quick_select import QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect
 from shuup.admin.utils.forms import flatatt_filter
-from shuup.admin.utils.urls import get_model_url, NoModelUrl
-from shuup.core.models import (
-    Contact, PersonContact, Product, ProductMode, ShopProduct
-)
+from shuup.admin.utils.urls import NoModelUrl, get_model_url
+from shuup.core.models import Contact, PersonContact, Product, ProductMode, ShopProduct
 from shuup.utils.django_compat import force_text, reverse_lazy
 
 
@@ -47,7 +40,7 @@ class BasePopupChoiceWidget(Widget):
             <button class='browse-btn btn btn-primary btn-sm' type='button'><i class='%(icon)s'></i> %(text)s</button>
         """ % {
             "icon": self.select_icon,
-            "text": self.browse_text
+            "text": self.browse_text,
         }
 
     def get_clear_markup(self):
@@ -78,13 +71,17 @@ class BasePopupChoiceWidget(Widget):
         icon = "<i class='%s'></i>" % self.external_icon
 
         return mark_safe(
-            ("<a class=\"btn btn-inverse browse-text btn-sm\" style=\"%(css_style)s\" \
-            href=\"%(url)s\" target=\"_blank\">%(icon)s %(text)s</a>") % {
+            (
+                '<a class="btn btn-inverse browse-text btn-sm" style="%(css_style)s" \
+            href="%(url)s" target="_blank">%(icon)s %(text)s</a>'
+            )
+            % {
                 "css_style": css_style,
                 "icon": icon,
                 "text": escape(text),
                 "url": escape(url),
-            })
+            }
+        )
 
     def get_object(self, value):
         raise NotImplementedError("Error! Not implemented: `BasePopupChoiceWidget` -> `get_object()`.")
@@ -101,21 +98,34 @@ class BasePopupChoiceWidget(Widget):
         if self.clearable:
             bits.append(self.get_clear_markup())
 
-        return mark_safe("<div %(attrs)s>%(content)s</div>" % {
-            "attrs": flatatt_filter({
-                "class": "browse-widget %s-browse-widget d-flex mr-auto align-items-center" % self.browse_kind,
-                "data-browse-kind": self.browse_kind,
-                "data-clearable": self.clearable,
-                "data-empty-text": self.empty_text,
-                "data-filter": self.filter
-            }),
-            "content": "".join(bits)
-        })
+        return mark_safe(
+            "<div %(attrs)s>%(content)s</div>"
+            % {
+                "attrs": flatatt_filter(
+                    {
+                        "class": "browse-widget %s-browse-widget d-flex mr-auto align-items-center" % self.browse_kind,
+                        "data-browse-kind": self.browse_kind,
+                        "data-clearable": self.clearable,
+                        "data-empty-text": self.empty_text,
+                        "data-filter": self.filter,
+                    }
+                ),
+                "content": "".join(bits),
+            }
+        )
 
 
 class FileDnDUploaderWidget(Widget):
-    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False,
-                 browsable=True, upload_url=None, dropzone_attrs={}):
+    def __init__(
+        self,
+        attrs=None,
+        kind=None,
+        upload_path="/",
+        clearable=False,
+        browsable=True,
+        upload_url=None,
+        dropzone_attrs={},
+    ):
         self.kind = kind
         self.upload_path = upload_path
         self.clearable = clearable
@@ -131,12 +141,9 @@ class FileDnDUploaderWidget(Widget):
         if not file:
             return []
         try:
-            thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
-                'size': (120, 120),
-                'crop': True,
-                'upscale': True,
-                'subject_location': file.subject_location
-            })
+            thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail(
+                {"size": (120, 120), "crop": True, "upscale": True, "subject_location": file.subject_location}
+            )
         except Exception:
             thumbnail = None
         data = {
@@ -145,7 +152,7 @@ class FileDnDUploaderWidget(Widget):
             "size": file.size,
             "url": file.url,
             "thumbnail": (thumbnail.url if thumbnail else None),
-            "date": file.uploaded_at.isoformat()
+            "date": file.uploaded_at.isoformat(),
         }
         return ["data-%s='%s'" % (key, val) for key, val in six.iteritems(data) if val is not None]
 
@@ -165,34 +172,26 @@ class FileDnDUploaderWidget(Widget):
         if self.dropzone_attrs:
             # attributes passed here will be converted into keys with dz_ prefix
             # `{max-filesize: 1}` will be converted into `data-dz_max-filesize="1"`
-            file_attrs.extend([
-                'data-dz_{}="{}"'.format(k, force_text(v))
-                for k, v in self.dropzone_attrs.items()
-            ])
+            file_attrs.extend(['data-dz_{}="{}"'.format(k, force_text(v)) for k, v in self.dropzone_attrs.items()])
 
         if value:
             file = File.objects.filter(pk=value).first()
             file_attrs += self._get_file_attrs(file)
-        return (
-            mark_safe("<div id='%s-dropzone' class='dropzone %s' %s>%s</div>" % (
-                attrs.get("id", "dropzone"),
-                "has-file" if value else "",
-                " ".join(file_attrs),
-                pk_input
-            ))
+        return mark_safe(
+            "<div id='%s-dropzone' class='dropzone %s' %s>%s</div>"
+            % (attrs.get("id", "dropzone"), "has-file" if value else "", " ".join(file_attrs), pk_input)
         )
 
 
 class TextEditorWidget(Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         attrs_for_textarea = attrs.copy()
-        attrs_for_textarea['class'] = 'hidden'
-        attrs_for_textarea['id'] += '-textarea'
+        attrs_for_textarea["class"] = "hidden"
+        attrs_for_textarea["id"] += "-textarea"
         html = super(TextEditorWidget, self).render(name, value, attrs_for_textarea)
         return mark_safe(
-            "<div id='%s-editor-wrap' class='summernote-wrap'>%s<div class='summernote-editor'>%s</div></div>" % (
-                attrs["id"], html, value or ""
-            )
+            "<div id='%s-editor-wrap' class='summernote-wrap'>%s<div class='summernote-editor'>%s</div></div>"
+            % (attrs["id"], html, value or "")
         )
 
 
@@ -237,7 +236,7 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
         icon = "<i class='fa fa-user'></i>"
         return "<button class='browse-btn btn btn-primary btn-sm' type='button'>%(icon)s %(text)s</button>" % {
             "icon": icon,
-            "text": self.browse_text
+            "text": self.browse_text,
         }
 
 
@@ -257,7 +256,7 @@ class CodeEditorWidget(Textarea):
 
 
 class CodeEditorWithHTMLPreview(Textarea):
-    template_name = 'shuup/admin/forms/widgets/code_editor_with_preview.html'
+    template_name = "shuup/admin/forms/widgets/code_editor_with_preview.html"
 
     def render(self, name, value, attrs=None, renderer=None):
         attrs_for_textarea = attrs.copy()
@@ -267,7 +266,6 @@ class CodeEditorWithHTMLPreview(Textarea):
 
 
 class PersonContactChoiceWidget(ContactChoiceWidget):
-
     @property
     def filter(self):
         return json.dumps({"groups": [PersonContact().default_group.pk]})

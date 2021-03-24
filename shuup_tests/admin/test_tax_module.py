@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -28,7 +28,7 @@ def test_tax_edit_view_works_at_all(rf, admin_user):
             view_func = TaxClassEditView.as_view()
             response = view_func(request, pk=default_tax_class.pk)
             response.render()
-            assert (default_tax_class.name in force_text(response.content))
+            assert default_tax_class.name in force_text(response.content)
             response = view_func(request, pk=None)  # "new mode"
             response.render()
             assert response.content

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 from __future__ import unicode_literals
@@ -10,9 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.urls import (
-    admin_url, derive_model_url, get_edit_and_list_urls
-)
+from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.front.apps.carousel.models import Carousel
 
 
@@ -24,12 +22,12 @@ class CarouselModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^carousels",
             view_template="shuup.front.apps.carousel.admin_module.views.Carousel%sView",
-            name_template="carousel.%s"
+            name_template="carousel.%s",
         ) + [
             admin_url(
                 r"^carousel/(?P<pk>\d+)/delete/$",
                 "shuup.front.apps.carousel.admin_module.views.CarouselDeleteView",
-                name="carousel.delete"
+                name="carousel.delete",
             ),
         ]
 

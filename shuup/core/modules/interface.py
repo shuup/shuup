@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,9 +10,7 @@ from __future__ import unicode_literals, with_statement
 import six
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.apps.provides import (
-    get_provide_objects, get_provide_specs_and_objects
-)
+from shuup.apps.provides import get_provide_objects, get_provide_specs_and_objects
 from shuup.utils.importing import load
 from shuup.utils.text import force_ascii
 
@@ -53,15 +51,12 @@ class ModuleInterface(object):
     @classmethod
     def get_module_choices(cls, empty_label=None):
         if empty_label is None:
-            empty_label = _('No Choice')
+            empty_label = _("No Choice")
         choices = [("", empty_label)]
 
         for module in get_provide_objects(cls.module_provides_key):
             if module.identifier:
-                choices.append((
-                    module.identifier,
-                    getattr(module, "name", None) or module.identifier
-                ))
+                choices.append((module.identifier, getattr(module, "name", None) or module.identifier))
         choices.sort()
         return choices
 

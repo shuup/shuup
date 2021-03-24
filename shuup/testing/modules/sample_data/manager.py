@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -65,8 +65,4 @@ def save_carousel(shop, carousel_pk):
 
 def has_installed_samples(shop):
     """ Returns whether there is some sample data installed """
-    return bool(
-        get_installed_products(shop) or
-        get_installed_categories(shop) or
-        get_installed_carousel(shop)
-    )
+    return bool(get_installed_products(shop) or get_installed_categories(shop) or get_installed_carousel(shop))

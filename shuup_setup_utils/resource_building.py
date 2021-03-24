@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -24,7 +24,8 @@ class Options(object):
     :ivar no_install: do not install npm packages before building
     :ivar ci: whether the build is running inside a Continuous Integration environment
     """
-    directories = '.'
+
+    directories = "."
     production = False
     clean = False
     force = False
@@ -39,8 +40,8 @@ def build_resources(options):
     :type options: Options
     """
     verify_nodejs()
-    builder = Builder('.', options)
-    if '.' in options.directories:
+    builder = Builder(".", options)
+    if "." in options.directories:
         builder.build_all()
     else:
         builder.build_dirs(options.directories)
@@ -50,15 +51,15 @@ class Builder(object):
     def __init__(self, root_directory, options):
         self.root_directory = root_directory
         self.opts = options
-        self.dirs_to_clean = ['node_modules', 'bower_components']
-        self.install_command = ['npm', 'install']
-        self.build_command = ['npm', 'run', 'build']
+        self.dirs_to_clean = ["node_modules", "bower_components"]
+        self.install_command = ["npm", "install"]
+        self.build_command = ["npm", "run", "build"]
         self.env = os.environ.copy()
-        self.env['NODE_ENV'] = 'production' if self.opts.production else ''
-        self.env['CI'] = 'true'
+        self.env["NODE_ENV"] = "production" if self.opts.production else ""
+        self.env["CI"] = "true"
 
         if self.opts.ci:
-            self.install_command.append('--no-audit')
+            self.install_command.append("--no-audit")
 
     def build_all(self):
         package_json_dirs = list(self._find_package_json_dirs())
@@ -67,7 +68,7 @@ class Builder(object):
     def _find_package_json_dirs(self):
         items = excludes.walk_excl(self.root_directory)
         for (dirpath, dirnames, filenames) in items:
-            if 'package.json' in filenames:
+            if "package.json" in filenames:
                 package = json.load(open(os.path.join(dirpath, "package.json")))
                 if package.get("shuup", {}).get("static_build"):
                     yield dirpath
@@ -82,7 +83,7 @@ class Builder(object):
             for dir_to_clean in self.dirs_to_clean:
                 remove_all_subdirs(dir, dir_to_clean)
 
-        shell = (os.name == 'nt')  # Windows needs shell, since npm is .cmd
+        shell = os.name == "nt"  # Windows needs shell, since npm is .cmd
 
         node_modules_exists = os.path.exists(os.path.join(dir, "node_modules"))
         if not self.opts.no_install or not node_modules_exists or self.opts.production:
@@ -100,5 +101,5 @@ def remove_all_subdirs(root, subdir_name):
         if subdir_name in dirnames:
             dir_to_remove = os.path.join(dirpath, subdir_name)
             dirnames[:] = [dn for dn in dirnames if dn != subdir_name]
-            print('Removing directory %s' % dir_to_remove)  # noqa
+            print("Removing directory %s" % dir_to_remove)  # noqa
             shutil.rmtree(dir_to_remove)

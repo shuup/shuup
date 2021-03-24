@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,52 +26,49 @@ class ContactModule(AdminModule):
                 r"^contacts/new/$",
                 "shuup.admin.modules.contacts.views.ContactEditView",
                 kwargs={"pk": None},
-                name="contact.new"
+                name="contact.new",
             ),
             admin_url(
                 r"^contacts/(?P<pk>\d+)/edit/$",
                 "shuup.admin.modules.contacts.views.ContactEditView",
-                name="contact.edit"
+                name="contact.edit",
             ),
             admin_url(
                 r"^contacts/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactDetailView",
-                name="contact.detail"
+                name="contact.detail",
             ),
             admin_url(
                 r"^contacts/reset-password/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactResetPasswordView",
-                name="contact.reset_password"
+                name="contact.reset_password",
             ),
-            admin_url(
-                r"^contacts/$",
-                "shuup.admin.modules.contacts.views.ContactListView",
-                name="contact.list"
-            ),
+            admin_url(r"^contacts/$", "shuup.admin.modules.contacts.views.ContactListView", name="contact.list"),
             admin_url(
                 r"^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
-                name="contact.list_settings"
+                name="contact.list_settings",
             ),
             admin_url(
                 r"^contacts/mass-edit/$",
                 "shuup.admin.modules.contacts.views.ContactMassEditView",
-                name="contact.mass_edit"
+                name="contact.mass_edit",
             ),
             admin_url(
                 r"^contacts/mass-edit-group/$",
                 "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
-                name="contact.mass_edit_group"
-            )
+                name="contact.mass_edit_group",
+            ),
         ]
 
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=_("Contacts"), icon="fa fa-users",
+                text=_("Contacts"),
+                icon="fa fa-users",
                 url="shuup_admin:contact.list",
                 category=CONTACTS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
@@ -91,8 +88,7 @@ class ContactModule(AdminModule):
             for i, contact in enumerate(contacts[:10]):
                 relevance = 100 - i
                 yield SearchResult(
-                    text=six.text_type(contact), url=get_model_url(contact),
-                    category=_("Contacts"), relevance=relevance
+                    text=six.text_type(contact), url=get_model_url(contact), category=_("Contacts"), relevance=relevance
                 )
 
     def get_model_url(self, object, kind, shop=None):

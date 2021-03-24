@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -52,12 +52,15 @@ class SystemSettingsView(FormPartsViewMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(SystemSettingsView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([
-            PostActionButton(
-                icon="fa fa-check-circle",
-                form_id="settings_form",
-                text=_("Save system settings"),
-                extra_css_class="btn-success",
-            )
-        ], view=self)
+        context["toolbar"] = Toolbar(
+            [
+                PostActionButton(
+                    icon="fa fa-check-circle",
+                    form_id="settings_form",
+                    text=_("Save system settings"),
+                    extra_css_class="btn-success",
+                )
+            ],
+            view=self,
+        )
         return context

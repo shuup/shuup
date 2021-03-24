@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
 import datetime
-
 from django.db.models import Sum
 from django.utils.translation import get_language
 
@@ -24,16 +23,13 @@ def get_best_selling_product_info(shop_ids, cutoff_days=30, supplier=None):
     sales_data = cache.get(cache_key)
     if sales_data is None:
         queryset = OrderLine.objects.filter(
-            order__shop_id__in=shop_ids,
-            order__order_date__gte=to_aware(cutoff_date),
-            type=OrderLineType.PRODUCT
+            order__shop_id__in=shop_ids, order__order_date__gte=to_aware(cutoff_date), type=OrderLineType.PRODUCT
         )
         if supplier:
             queryset = queryset.filter(supplier=supplier)
 
         sales_data = (
-            queryset
-            .values("product")
+            queryset.values("product")
             .annotate(n=Sum("quantity"))
             .order_by("-n")[:100]
             .values_list("product", "product__variation_parent_id", "n")
@@ -47,33 +43,26 @@ def get_products_ordered_with(prod, count=20, request=None, language=None):
     product_ids = cache.get(cache_key)
     if product_ids is None:
         # XXX: could this be optimized more? (and does it matter?)
-        order_ids = (
-            OrderLine.objects.filter(product=prod, type=OrderLineType.PRODUCT)
-            .values_list("order__id", flat=True)
+        order_ids = OrderLine.objects.filter(product=prod, type=OrderLineType.PRODUCT).values_list(
+            "order__id", flat=True
         )
         product_ids = (
-            OrderLine.objects
-            .filter(order_id__in=order_ids)
+            OrderLine.objects.filter(order_id__in=order_ids)
             .exclude(product=prod)
             .distinct()
             .values_list("product", flat=True)
         )
         cache.set(cache_key, set(product_ids), 4 * 60 * 60)
-    return (
-        Product.objects
-        .all_visible(request, language=language)
-        .filter(id__in=product_ids)
-        .order_by("?")[:count]
-    )
+    return Product.objects.all_visible(request, language=language).filter(id__in=product_ids).order_by("?")[:count]
 
 
 def get_products_by_brand(prod, count=6, request=None, language=None):
     language = language or get_language()
     return list(
-        Product.objects
-        .all_visible(request, language)
+        Product.objects.all_visible(request, language)
         .filter(manufacturer_id__in=[prod.manufacturer_id])
-        .exclude(pk=prod.id).order_by("?")[:count]
+        .exclude(pk=prod.id)
+        .order_by("?")[:count]
     )
 
 
@@ -81,8 +70,8 @@ def get_products_by_same_categories(prod, count=6, request=None, language=None):
     categories = prod.categories.values_list("pk", flat=True)
     language = language or get_language()
     return list(
-        Product.objects
-        .all_visible(request, language)
+        Product.objects.all_visible(request, language)
         .filter(categories__id__in=categories)
-        .exclude(pk=prod.id).order_by("?")[:count]
+        .exclude(pk=prod.id)
+        .order_by("?")[:count]
     )

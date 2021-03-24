@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,19 +13,20 @@
 import pytest
 from django.core.exceptions import ValidationError
 
-from shuup.campaigns.models.basket_conditions import \
-    BasketTotalProductAmountCondition
+from shuup.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
-from shuup.campaigns.models.campaigns import (
-    BasketCampaign, Coupon, CouponUsage
-)
+from shuup.campaigns.models.campaigns import BasketCampaign, Coupon, CouponUsage
 from shuup.core.models import OrderLineType
 from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-    create_product, create_random_order, create_random_person,
-    get_default_shop, get_shipping_method, get_default_supplier,
-    get_initial_order_status
+    create_product,
+    create_random_order,
+    create_random_person,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
+    get_shipping_method,
 )
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
@@ -33,10 +34,7 @@ from shuup_tests.utils import printable_gibberish
 
 def get_default_campaign(coupon=None):
     shop = get_default_shop()
-    campaign = BasketCampaign.objects.create(
-            shop=shop, public_name="test", name="test",
-            coupon=coupon, active=True
-    )
+    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", coupon=coupon, active=True)
     BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
     return campaign
 
@@ -59,7 +57,7 @@ def test_coupon_user_limit():
     product = create_product("test", shop=shop, supplier=get_default_supplier(shop), default_price="12")
     order = create_random_order(customer=contact)
     for x in range(50):
-       coupon.use(order)
+        coupon.use(order)
 
     assert coupon.usages.count() == 50
 
@@ -88,7 +86,7 @@ def test_coupon_amount_limit():
     order = create_random_order(customer=contact)
 
     for x in range(50):
-       coupon.use(order)
+        coupon.use(order)
 
     assert coupon.usages.count() == 50
     coupon.increase_usage_limit_by(5)
@@ -184,9 +182,7 @@ def _init_basket_coupon_test(rf, code="TEST"):
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
     dc = Coupon.objects.create(code=code, active=True)
-    campaign = BasketCampaign.objects.create(
-        shop=shop, name="test", public_name="test", coupon=dc, active=True
-    )
+    campaign = BasketCampaign.objects.create(shop=shop, name="test", public_name="test", coupon=dc, active=True)
     BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
     rule = BasketTotalProductAmountCondition.objects.create(value=2)
     campaign.conditions.add(rule)

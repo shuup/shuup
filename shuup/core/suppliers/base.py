@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,15 +39,15 @@ class BaseSupplierModule(object):
         :return: Dict of {product_id: ProductStockStatus}.
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
-        return dict((
-            product_id,
-            ProductStockStatus(
-                product_id=product_id,
-                logical_count=0,
-                physical_count=0,
-                stock_managed=self.supplier.stock_managed
+        return dict(
+            (
+                product_id,
+                ProductStockStatus(
+                    product_id=product_id, logical_count=0, physical_count=0, stock_managed=self.supplier.stock_managed
+                ),
             )
-        ) for product_id in product_ids)
+            for product_id in product_ids
+        )
 
     def get_stock_status(self, product_id):
         """
@@ -76,8 +76,7 @@ class BaseSupplierModule(object):
         if self.supplier.stock_managed and stock_status.stock_managed:
             if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
                 yield ValidationError(
-                    stock_status.message or _(u"Error! Insufficient quantity in stock."),
-                    code="stock_insufficient"
+                    stock_status.message or _(u"Error! Insufficient quantity in stock."), code="stock_insufficient"
                 )
 
     def adjust_stock(self, product_id, delta, created_by=None, type=StockAdjustmentType.INVENTORY):
@@ -90,7 +89,8 @@ class BaseSupplierModule(object):
         """
         context_cache.bump_cache_for_product(product_id)
         stocks_updated.send(
-            type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier)
+            type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
+        )
 
     def update_stocks(self, product_ids):
         # Naive default implementation; smarter modules can do something better
@@ -110,16 +110,13 @@ class BaseSupplierModule(object):
 
             if insufficient_stocks:
                 formatted_counts = [
-                    _("%(name)s (physical stock: %(quantity)s)") % {
-                        "name": force_text(name),
-                        "quantity": force_text(quantity)
-                    }
+                    _("%(name)s (physical stock: %(quantity)s)")
+                    % {"name": force_text(name), "quantity": force_text(quantity)}
                     for (name, quantity) in insufficient_stocks.items()
                 ]
                 raise Problem(
-                    _("Insufficient physical stock count for the following products: `%(product_counts)s`.") % {
-                        "product_counts": ", ".join(formatted_counts)
-                    }
+                    _("Insufficient physical stock count for the following products: `%(product_counts)s`.")
+                    % {"product_counts": ", ".join(formatted_counts)}
                 )
 
         for product, quantity in product_quantities.items():

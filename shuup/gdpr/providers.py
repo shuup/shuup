@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
-from shuup.front.providers import (
-    FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
-)
+from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 from shuup.gdpr.forms import CompanyAgreementForm
 from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
 from shuup.gdpr.utils import get_active_consent_pages
@@ -26,12 +23,12 @@ class TextOnlyWidget(forms.Widget):
 
 
 class GDPRFormDefProvider(FormDefProvider):
-
     def get_definitions(self, **kwargs):
         from shuup.gdpr.models import GDPRSettings
+
         if not GDPRSettings.get_for_shop(self.request.shop).enabled:
             return []
-        return [FormDefinition('agreement', CompanyAgreementForm, required=True)]
+        return [FormDefinition("agreement", CompanyAgreementForm, required=True)]
 
 
 def get_gdpr_settings(request):
@@ -39,7 +36,7 @@ def get_gdpr_settings(request):
         return None
 
     gdpr_settings = GDPRSettings.get_for_shop(request.shop)
-    return (gdpr_settings if gdpr_settings.enabled else None)
+    return gdpr_settings if gdpr_settings.enabled else None
 
 
 class GDPRFieldProvider(FormFieldProvider):
@@ -63,11 +60,13 @@ class GDPRFieldProvider(FormFieldProvider):
 
             key = "accept_{}".format(page.id)
             field = forms.BooleanField(
-                label=mark_safe(ugettext(
-                    "I have read and accept the <a href='{}' target='_blank' class='gdpr_consent_doc_check'>{}</a>"
-                ).format(reverse("shuup:cms_page", kwargs=dict(url=page.url)), page.title)),
+                label=mark_safe(
+                    ugettext(
+                        "I have read and accept the <a href='{}' target='_blank' class='gdpr_consent_doc_check'>{}</a>"
+                    ).format(reverse("shuup:cms_page", kwargs=dict(url=page.url)), page.title)
+                ),
                 required=True,
-                error_messages=dict(required=self.error_message)
+                error_messages=dict(required=self.error_message),
             )
             definition = FormFieldDefinition(name=key, field=field)
             fields.append(definition)
@@ -97,11 +96,8 @@ class GDPRAuthFieldProvider(GDPRFieldProvider):
                 FormFieldDefinition(
                     name="auth_consent_text",
                     field=forms.CharField(
-                        label="",
-                        initial="",
-                        required=False,
-                        widget=TextOnlyWidget(attrs={"value": auth_consent_text})
-                    )
+                        label="", initial="", required=False, widget=TextOnlyWidget(attrs={"value": auth_consent_text})
+                    ),
                 )
             ]
         else:

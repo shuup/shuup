@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,8 +11,9 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 
 from shuup.core.models import get_company_contact_for_shop_staff
 from shuup.core.utils.users import (
-    force_anonymous_contact_for_user, force_person_contact_for_user,
-    toggle_all_seeing_for_user
+    force_anonymous_contact_for_user,
+    force_person_contact_for_user,
+    toggle_all_seeing_for_user,
 )
 from shuup.front.utils.user import is_admin_user
 from shuup.utils.django_compat import reverse

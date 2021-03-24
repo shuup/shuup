@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
 
-from shuup.core.models import CompanyContact, get_company_contact, SavedAddress
+from shuup.core.models import CompanyContact, SavedAddress, get_company_contact
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.utils.django_compat import reverse_lazy
@@ -76,7 +76,8 @@ class CompanyEditView(DashboardViewMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super(CompanyEditView, self).get_context_data(**kwargs)
         context["pending_company_approval"] = CompanyContact.objects.filter(
-            members__in=[self.request.customer], is_active=False).exists()
+            members__in=[self.request.customer], is_active=False
+        ).exists()
         return context
 
 

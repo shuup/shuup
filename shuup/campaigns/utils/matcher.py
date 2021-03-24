@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -101,7 +101,7 @@ class ProductCampaignMatcher(object):
         attr = getattr(obj, field_name)
         if not attr:
             return False
-        return (self.product.type.pk == attr.pk)
+        return self.product.type.pk == attr.pk
 
     def _products_match(self, field, obj):
         attr = getattr(obj, field.name)
@@ -118,9 +118,9 @@ class ProductCampaignMatcher(object):
         if not attr:
             return False
         if self._is_product(field.related_model):
-            return (self.product.pk == attr.pk)
+            return self.product.pk == attr.pk
         elif self._is_shop_product(field.related_model):
-            return (self.product.pk == attr.product.pk)
+            return self.product.pk == attr.product.pk
         return False
 
     def _categories_match(self, field_name, obj):
@@ -141,7 +141,7 @@ class ProductCampaignMatcher(object):
         return self.shop_product.categories.filter(pk=attr.pk).exists()
 
     def _is_product_kind(self, model):
-        return (self._is_product(model) or self._is_shop_product(model))
+        return self._is_product(model) or self._is_shop_product(model)
 
     def _is_product(self, model):
         if model is None:
