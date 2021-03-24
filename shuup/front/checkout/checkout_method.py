@@ -8,12 +8,17 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
+from registration.signals import login_user
+
 from shuup.front.apps.auth.views import LoginView
-from shuup.front.apps.registration.views import RegistrationNoActivationView
+from shuup.front.apps.registration.views import (
+    RegistrationNoActivationView, RegistrationWithActivationView, RegistrationView
+)
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.form_group import FormGroup
 
@@ -90,7 +95,7 @@ class CheckoutMethodPhase(CheckoutPhaseViewMixin, LoginView):
         return kwargs
 
 
-class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
+class RegisterPhaseMixin:
     identifier = "register"
     title = _("Register")
     template_name = "shuup/front/checkout/register.jinja"
@@ -108,3 +113,41 @@ class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
 
     def process(self):
         return
+
+
+class RegisterPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationNoActivationView):
+    pass
+
+
+class RegisterWithActivationPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationView):
+    """Registration with mandatory activation over email.
+
+    Blocks further checkout process until user activates their account
+    by clicking the activation link in the email.
+    """
+    pass
+
+
+class RegisterWithDeferredActivationPhase(RegisterPhaseMixin, CheckoutPhaseViewMixin, RegistrationWithActivationView):
+    """Registration with activation over email, but also automatically
+    logging in the (still inactive) user, thus not creating an
+    interruption in the checkout process. This assumes that the
+    `AllowAllUsersModelBackend` auth backend is used for
+    authentication (i.e. django allows inactive users to login).
+    """
+    def add_activation_message(self):
+        """Add a message notifying the user that their acount is inactive."""
+        messages.success(
+            self.request,
+            _(
+                "Thank you for registering. You can activate your account "
+                "later by clicking the activation link we have just sent you."
+            ),
+            extra_tags="registered-activate-later",
+        )
+
+    def register(self, form):
+        user = super().register(form)
+        login_user(self, user, self.request)
+        self.add_activation_message()
+        return user
