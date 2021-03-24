@@ -18,9 +18,22 @@ from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import Order, OrderStatus, OrderStatusRole
 
 
+class OrderEntry(MenuEntry):
+    def get_badge(self, request):
+        shop = request.shop
+        received_orders_count = Order.objects.filter(
+            shop=shop,
+            status__role=OrderStatusRole.INITIAL,
+        ).count()
+        return {
+            "tag": "badge-danger",
+            "value": received_orders_count
+        }
+
+
 class OrderModule(AdminModule):
     name = _("Orders")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order.list")
+    breadcrumbs_menu_entry = OrderEntry(name, url="shuup_admin:order.list")
 
     def get_urls(self):
         return [
@@ -104,7 +117,7 @@ class OrderModule(AdminModule):
 
     def get_menu_entries(self, request):
         return [
-            MenuEntry(
+            OrderEntry(
                 text=_("Orders"),
                 icon="fa fa-inbox",
                 url="shuup_admin:order.list",
@@ -170,7 +183,7 @@ class OrderModule(AdminModule):
 
 class OrderStatusModule(AdminModule):
     name = _("Order Status")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order_status.list")
+    breadcrumbs_menu_entry = OrderEntry(name, url="shuup_admin:order_status.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(

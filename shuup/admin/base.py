@@ -215,6 +215,12 @@ class MenuEntry(BaseMenuEntry):
         for alias in self.aliases:
             yield alias
 
+    def get_text(self, request):
+        pass
+
+    def get_badge(self, request):
+        return None
+
 
 class SearchResult(Resolvable):
     def __init__(self, text, url, icon=None, category=None, is_action=False, relevance=100, target=None):
