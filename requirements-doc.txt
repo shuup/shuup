@@ -31,7 +31,7 @@ jinja2==2.11.2            # via django-jinja, shuup, sphinx
 jsonfield==2.1.1          # via shuup
 keyring==22.0.0           # via shuup
 keyrings.alt==4.0.2       # via shuup
-lxml==4.6.2               # via shuup
+lxml==4.6.3               # via shuup
 markdown==3.3.3           # via shuup
 markupsafe==1.1.1         # via jinja2
 openpyxl==2.5.14          # via shuup
