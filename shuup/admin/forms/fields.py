@@ -91,7 +91,7 @@ class Select2MultipleField(Field):
         model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
         attrs.update({"data-model": model_name})
         if getattr(self, "search_mode", None):
-            attrs.update({"search-mode": self.search_mode})
+            attrs.update({"data-search-mode": self.search_mode})
         if not self.required:
             attrs["data-allow-clear"] = "true"
         return attrs
