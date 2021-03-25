@@ -19,6 +19,7 @@ from shuup.core.models import Order, OrderStatus, OrderStatusRole
 
 
 class OrderEntry(MenuEntry):
+    name = _("Orders")
     def get_badge(self, request):
         shop = request.shop
         received_orders_count = Order.objects.filter(

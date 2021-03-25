@@ -216,7 +216,7 @@ class MenuEntry(BaseMenuEntry):
             yield alias
 
     def get_text(self, request):
-        pass
+        return self.name
 
     def get_badge(self, request):
         return None
