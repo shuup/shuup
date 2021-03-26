@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,9 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms import ShuupAdminForm
-from shuup.core.models import (
-    WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
-)
+from shuup.core.models import WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
 
 
 class WeightBasedPriceRangeForm(ShuupAdminForm):
@@ -53,8 +51,7 @@ class WeightBasedPricingFormPart(FormPart):
     )
 
     def __init__(self, request, object):
-        self.component = object.behavior_components.instance_of(
-            WeightBasedPricingBehaviorComponent).first()
+        self.component = object.behavior_components.instance_of(WeightBasedPricingBehaviorComponent).first()
         if not self.component:
             self.component = WeightBasedPricingBehaviorComponent()
         super(WeightBasedPricingFormPart, self).__init__(request, object)
@@ -65,7 +62,7 @@ class WeightBasedPricingFormPart(FormPart):
             self.formset,
             "shuup/admin/services/_edit_weight_based_pricing_form.jinja",
             required=False,
-            kwargs={"instance": self.component}
+            kwargs={"instance": self.component},
         )
 
     def form_valid(self, form):

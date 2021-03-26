@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-
 from bs4 import BeautifulSoup
 from django.test import override_settings
 
-from shuup.admin.modules.orders.views.refund import (
-    OrderCreateFullRefundView, OrderCreateRefundView
-)
+from shuup.admin.modules.orders.views.refund import OrderCreateFullRefundView, OrderCreateRefundView
 from shuup.core.models import OrderLine, OrderLineType
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_order_with_product,
-    create_product, get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_empty_order,
+    create_order_with_product,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import force_text
@@ -133,13 +134,15 @@ def test_order_refunds_with_other_lines(rf, admin_user):
 
     # Lines without quantity shouldn't affect refunds
     other_line = OrderLine(
-        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0)
+        order=order, type=OrderLineType.OTHER, text="This random line for textual information", quantity=0
+    )
     other_line.save()
     order.lines.add(other_line)
 
     # Lines with quantity again should be able to be refunded normally.
     other_line_with_quantity = OrderLine(
-        order=order, type=OrderLineType.OTHER, text="Special service 100$/h", quantity=1, base_unit_price_value=100)
+        order=order, type=OrderLineType.OTHER, text="Special service 100$/h", quantity=1, base_unit_price_value=100
+    )
     other_line_with_quantity.save()
     order.lines.add(other_line_with_quantity)
 
@@ -149,7 +152,7 @@ def test_order_refunds_with_other_lines(rf, admin_user):
     order.cache_prices()
     order.create_payment(order.taxful_total_price)
     assert order.is_paid()
-    assert order.taxful_total_price_value == 120 # 100 + 4 * 20
+    assert order.taxful_total_price_value == 120  # 100 + 4 * 20
 
     def get_refund_view_content():
         request = apply_request_middleware(rf.get("/"), user=admin_user)

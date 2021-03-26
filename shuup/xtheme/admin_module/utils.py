@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -25,7 +25,4 @@ def get_theme_context(shop):
         if theme_settings.active:
             active_theme = theme
 
-    return {
-        "theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)),
-        "current_theme": active_theme
-    }
+    return {"theme_classes": sorted(themes, key=lambda t: (t.name or t.identifier)), "current_theme": active_theme}

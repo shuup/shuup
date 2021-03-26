@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from itertools import chain
-
 from django.http.response import JsonResponse
 from django.views.generic import View
+from itertools import chain
 
 from shuup.admin.base import SearchResult
 from shuup.admin.module_registry import get_modules
@@ -26,21 +25,19 @@ def get_search_results(request, query):
 
         normal_results.extend(module.get_search_results(request, query) or ())
         for menu_entry in module.get_menu_entries(request) or ():
-            texts = (menu_entry.get_search_query_texts() or ())
+            texts = menu_entry.get_search_query_texts() or ()
             if any(fuzzer.test(text) for text in texts):
-                menu_entry_results.append(SearchResult(
-                    text=menu_entry.text,
-                    url=menu_entry.url,
-                    icon=menu_entry.icon,
-                    category=menu_entry.category,
-                    relevance=90,
-                    is_action=True
-                ))
-    results = sorted(
-        chain(normal_results, menu_entry_results),
-        key=lambda r: r.relevance,
-        reverse=True
-    )
+                menu_entry_results.append(
+                    SearchResult(
+                        text=menu_entry.text,
+                        url=menu_entry.url,
+                        icon=menu_entry.icon,
+                        category=menu_entry.category,
+                        relevance=90,
+                        is_action=True,
+                    )
+                )
+    results = sorted(chain(normal_results, menu_entry_results), key=lambda r: r.relevance, reverse=True)
     return results
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,9 +9,9 @@ import pytest
 from bs4 import BeautifulSoup
 from django.test.utils import override_settings
 
+from shuup.front.views.index import IndexView
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
-from shuup.front.views.index import IndexView
 
 
 @pytest.mark.django_db
@@ -33,7 +33,7 @@ def _get_front_soup(rf):
     request = apply_request_middleware(rf.get("/"))
     response = view_func(request)
     response.render()
-    content = (response.content)
+    content = response.content
     return BeautifulSoup(content)
 
 

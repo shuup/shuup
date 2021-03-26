@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,17 +10,15 @@ from django.conf import settings
 
 from shuup.core.models import AnonymousContact, ContactGroup
 from shuup.core.pricing import get_pricing_module
-from shuup.core.utils.price_cache import get_cached_price_info, cache_price_info
+from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info
 from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.customer_group_pricing.module import CustomerGroupPricingModule
-from shuup.testing.factories import (
-    create_product, create_random_person, get_shop
-)
+from shuup.testing.factories import create_product, create_random_person, get_shop
 from shuup.testing.utils import apply_request_middleware
 
-
-pytestmark = pytest.mark.skipif("shuup.customer_group_pricing" not in settings.INSTALLED_APPS,
-                                reason="customer_group_pricing not installed")
+pytestmark = pytest.mark.skipif(
+    "shuup.customer_group_pricing" not in settings.INSTALLED_APPS, reason="customer_group_pricing not installed"
+)
 
 original_pricing_module = settings.SHUUP_PRICING_MODULE
 
@@ -47,8 +45,7 @@ def initialize_test(rf, include_tax=False, customer=create_customer):
     if callable(customer):
         customer = customer()
 
-    request = apply_request_middleware(
-        rf.get("/"), shop=shop, customer=customer, META={"HTTP_HOST": "%s" % domain})
+    request = apply_request_middleware(rf.get("/"), shop=shop, customer=customer, META={"HTTP_HOST": "%s" % domain})
     assert request.shop == shop
     assert request.customer == customer
     assert request.basket.shop == shop
@@ -200,10 +197,8 @@ def test_anonymous_customers_default_group(rf):
     product = create_product("random-52", shop=shop, default_price=121)
     request.customer = AnonymousContact()
     CgpPrice.objects.create(
-        product=product,
-        group=request.customer.get_default_group(),
-        shop=shop,
-        price_value=discount_value)
+        product=product, group=request.customer.get_default_group(), shop=shop, price_value=discount_value
+    )
     price_info = product.get_price_info(request)
     assert price_info.price == shop.create_price(discount_value)
 
@@ -231,7 +226,7 @@ def test_discount_for_customer(rf, admin_user, price, discount):
     product = create_product("product", shop=shop, default_price=price)
     CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
     price_info = product.get_price_info(request)
-    assert price_info.price == shop.create_price(max(price-discount, 0))
+    assert price_info.price == shop.create_price(max(price - discount, 0))
 
 
 @pytest.mark.parametrize("price,discount", [(10, 8), (8, 4), (4, 8), (999, 999)])
@@ -242,7 +237,7 @@ def test_discount_for_anonymous(rf, admin_user, price, discount):
     product = create_product("product", shop=shop, default_price=price)
     CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
     price_info = product.get_price_info(request)
-    assert price_info.price == shop.create_price(max(price-discount, 0))
+    assert price_info.price == shop.create_price(max(price - discount, 0))
 
 
 @pytest.mark.parametrize("price, discount, anonymous_discount", [(10, 8, 6), (8, 4, 3), (4, 8, 8), (999, 999, 999)])
@@ -255,18 +250,22 @@ def test_discount_for_multi_group_using_customer(rf, admin_user, price, discount
 
     product = create_product("product", shop=shop, default_price=price)
 
-    CgpDiscount.objects.create(product=product, group=customer.groups.first(), shop=shop, discount_amount_value=discount)
-    CgpDiscount.objects.create(product=product, group=anonymous.get_default_group(), shop=shop, discount_amount_value=anonymous_discount)
+    CgpDiscount.objects.create(
+        product=product, group=customer.groups.first(), shop=shop, discount_amount_value=discount
+    )
+    CgpDiscount.objects.create(
+        product=product, group=anonymous.get_default_group(), shop=shop, discount_amount_value=anonymous_discount
+    )
 
     # discount for customer
     request, shop, _ = initialize_test(rf, True, customer)
     price_info = product.get_price_info(request)
-    assert price_info.price == shop.create_price(max(price-discount, 0))
+    assert price_info.price == shop.create_price(max(price - discount, 0))
 
     # discount for anonymous
     request, shop, _ = initialize_test(rf, True, anonymous)
     price_info = product.get_price_info(request)
-    assert price_info.price == shop.create_price(max(price-anonymous_discount, 0))
+    assert price_info.price == shop.create_price(max(price - anonymous_discount, 0))
 
 
 @pytest.mark.parametrize("price,discount,quantity", [(10, 8, 2), (8, 4, 3), (999, 999, 4)])
@@ -278,7 +277,7 @@ def test_discount_quantities(rf, admin_user, price, discount, quantity):
     CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
 
     price_info = product.get_price_info(request, quantity=quantity)
-    discount_amount = (discount * quantity)
+    discount_amount = discount * quantity
 
     assert price_info.price == shop.create_price((price * quantity) - discount_amount)
     assert price_info.base_unit_price == shop.create_price(price)
@@ -307,7 +306,7 @@ def test_price_info_cache_bump(rf):
         lambda: cgp_discount.save(),
         lambda: group2.members.add(contact),
         lambda: cgp_price.delete(),
-        lambda: cgp_discount.delete()
+        lambda: cgp_discount.delete(),
     ]:
         cache_price_info(pricing_context, product_one, 1, product_one.get_price_info(pricing_context))
         cache_price_info(pricing_context, product_two, 1, product_two.get_price_info(pricing_context))

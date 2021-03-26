@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
-from shuup.admin.base import (
-    Activity, AdminModule, MenuEntry, Notification, SearchResult
-)
-from shuup.admin.dashboard import (
-    DashboardContentBlock, DashboardMoneyBlock, DashboardNumberBlock,
-    DashboardValueBlock
-)
+from shuup.admin.base import Activity, AdminModule, MenuEntry, Notification, SearchResult
+from shuup.admin.dashboard import DashboardContentBlock, DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 from shuup.admin.utils.urls import admin_url
 
 
@@ -31,16 +25,21 @@ class ATestModule(AdminModule):
 
     def get_urls(self):
         return [
+            admin_url("test/$", OkAction, name="test-auth", require_authentication=True, permissions=()),
             admin_url(
-                "test/$", OkAction,
-                name="test-auth", require_authentication=True, permissions=()),
+                "test2/$",
+                "shuup_tests.admin.fixtures.test_module.OkAction",
+                name="test-unauth",
+                require_authentication=False,
+                permissions=(),
+            ),
             admin_url(
-                "test2/$", "shuup_tests.admin.fixtures.test_module.OkAction",
-                name="test-unauth", require_authentication=False, permissions=()),
-            admin_url(
-                "test3/$", "shuup_tests.admin.fixtures.test_module.OkAction",
-                name="test-perm", require_authentication=True,
-                permissions=("bogus-permission",)),
+                "test3/$",
+                "shuup_tests.admin.fixtures.test_module.OkAction",
+                name="test-perm",
+                require_authentication=True,
+                permissions=("bogus-permission",),
+            ),
         ]
 
     def get_menu_entries(self, request):

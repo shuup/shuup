@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -48,6 +48,7 @@ class Priceful(object):
       * ``tax_rate = (raw_taxful_price.amount / raw_taxless_price.amount) - 1``
       * ``tax_percentage = 100 * tax_rate``
     """
+
     @property
     def price(self):
         """
@@ -93,7 +94,7 @@ class Priceful(object):
 
         :rtype: shuup.core.pricing.Price
         """
-        return (self.base_price - self.price)
+        return self.base_price - self.price
 
     @property
     def discount_rate(self):
@@ -130,7 +131,7 @@ class Priceful(object):
 
         :return: True, iff price < base price.
         """
-        return (self.price < self.base_price)
+        return self.price < self.base_price
 
     @property
     def discounted_unit_price(self):
@@ -198,17 +199,17 @@ class Priceful(object):
         price = self.price
         return (TaxlessPrice(price.amount - self.tax_amount) if price.includes_tax else price).as_rounded()
 
-    taxful_base_price = TaxfulFrom('base_price')
-    taxless_base_price = TaxlessFrom('base_price')
+    taxful_base_price = TaxfulFrom("base_price")
+    taxless_base_price = TaxlessFrom("base_price")
 
-    taxful_discount_amount = TaxfulFrom('discount_amount')
-    taxless_discount_amount = TaxlessFrom('discount_amount')
+    taxful_discount_amount = TaxfulFrom("discount_amount")
+    taxless_discount_amount = TaxlessFrom("discount_amount")
 
-    taxful_base_unit_price = TaxfulFrom('base_unit_price')
-    taxless_base_unit_price = TaxlessFrom('base_unit_price')
+    taxful_base_unit_price = TaxfulFrom("base_unit_price")
+    taxless_base_unit_price = TaxlessFrom("base_unit_price")
 
-    taxful_discounted_unit_price = TaxfulFrom('discounted_unit_price')
-    taxless_discounted_unit_price = TaxlessFrom('discounted_unit_price')
+    taxful_discounted_unit_price = TaxfulFrom("discounted_unit_price")
+    taxless_discounted_unit_price = TaxlessFrom("discounted_unit_price")
 
-    taxful_unit_discount_amount = TaxfulFrom('unit_discount_amount')
-    taxless_unit_discount_amount = TaxlessFrom('unit_discount_amount')
+    taxful_unit_discount_amount = TaxfulFrom("unit_discount_amount")
+    taxless_unit_discount_amount = TaxlessFrom("unit_discount_amount")

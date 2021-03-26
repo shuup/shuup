@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,7 +17,7 @@ from enumfields import Enum, EnumIntegerField
 from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
-from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.analog import LogEntryKind, define_log_model
 from shuup.utils.django_compat import force_text
 
 
@@ -49,15 +49,14 @@ class TaskCommentVisibility(Enum):
 class TaskType(TranslatableModel):
     identifier = InternalIdentifierField(unique=False, blank=True, null=True, editable=True)
     shop = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="task_types")
-    translations = TranslatedFields(
-        name=models.TextField(verbose_name=_("name"))
+        on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="task_types"
     )
+    translations = TranslatedFields(name=models.TextField(verbose_name=_("name")))
 
     class Meta:
         unique_together = ("shop", "identifier")
-        verbose_name = _('task type')
-        verbose_name_plural = _('task types')
+        verbose_name = _("task type")
+        verbose_name_plural = _("task types")
 
     def __str__(self):
         return self.name
@@ -91,16 +90,28 @@ class Task(models.Model):
     status = EnumIntegerField(TaskStatus, default=TaskStatus.NEW, verbose_name=_("status"))
     priority = models.PositiveIntegerField(default=0, verbose_name=_("priority"), db_index=True)
     creator = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
-        related_name="creted_tasks", verbose_name=_("creator")
+        on_delete=models.CASCADE,
+        to="shuup.Contact",
+        blank=True,
+        null=True,
+        related_name="creted_tasks",
+        verbose_name=_("creator"),
     )
     assigned_to = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
-        related_name="assigned_tasks", verbose_name=_("assigned to")
+        on_delete=models.CASCADE,
+        to="shuup.Contact",
+        blank=True,
+        null=True,
+        related_name="assigned_tasks",
+        verbose_name=_("assigned to"),
     )
     completed_by = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
-        related_name="completed_tasks", verbose_name=_("completed by")
+        on_delete=models.CASCADE,
+        to="shuup.Contact",
+        blank=True,
+        null=True,
+        related_name="completed_tasks",
+        verbose_name=_("completed by"),
     )
     completed_on = models.DateTimeField(verbose_name=_("completed on"), null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
@@ -141,7 +152,7 @@ class Task(models.Model):
 
     def get_completion_time(self):
         if self.completed_on:
-            return (self.completed_on - self.created_on)
+            return self.completed_on - self.created_on
 
 
 class TaskCommentQuerySet(models.QuerySet):
@@ -155,8 +166,7 @@ class TaskCommentQuerySet(models.QuerySet):
 
             elif contact.user.is_staff:
                 visibility_filters |= Q(
-                    visibility=TaskCommentVisibility.STAFF_ONLY,
-                    task__shop__staff_members=contact.user
+                    visibility=TaskCommentVisibility.STAFF_ONLY, task__shop__staff_members=contact.user
                 )
 
         return self.filter(visibility_filters).distinct()
@@ -165,14 +175,15 @@ class TaskCommentQuerySet(models.QuerySet):
 class TaskComment(models.Model):
     task = models.ForeignKey(on_delete=models.CASCADE, to=Task, verbose_name=_("task"), related_name="comments")
     author = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Contact", blank=True, null=True,
-        related_name="task_comments", verbose_name=_("author")
+        on_delete=models.CASCADE,
+        to="shuup.Contact",
+        blank=True,
+        null=True,
+        related_name="task_comments",
+        verbose_name=_("author"),
     )
     visibility = EnumIntegerField(
-        TaskCommentVisibility,
-        default=TaskCommentVisibility.PUBLIC,
-        db_index=True,
-        verbose_name=_("visibility")
+        TaskCommentVisibility, default=TaskCommentVisibility.PUBLIC, db_index=True, verbose_name=_("visibility")
     )
     body = models.TextField(verbose_name=_("body"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
@@ -194,11 +205,10 @@ class TaskComment(models.Model):
         is_staff = bool(user.is_staff and user in self.task.shop.staff_members.all())
 
         if not (is_admin or is_staff):
-            return (self.visibility == TaskCommentVisibility.PUBLIC)
+            return self.visibility == TaskCommentVisibility.PUBLIC
         elif not is_admin:
             return (
-                self.visibility == TaskCommentVisibility.PUBLIC or
-                self.visibility == TaskCommentVisibility.STAFF_ONLY
+                self.visibility == TaskCommentVisibility.PUBLIC or self.visibility == TaskCommentVisibility.STAFF_ONLY
             )
 
         return True

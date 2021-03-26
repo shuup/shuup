@@ -1,12 +1,11 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal, InvalidOperation
-
 import pytest
+from decimal import Decimal, InvalidOperation
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db.backends.utils import format_number
@@ -23,7 +22,7 @@ def test_percentage_field():
     assert field.to_python("") is None
     assert field.prepare_value(Decimal("0.50")) == 50
     with pytest.raises(ValidationError):
-        field.clean(-7) # --> -0.07 (< min_value)
+        field.clean(-7)  # --> -0.07 (< min_value)
     with pytest.raises(ValidationError):
         field.clean("700")  # -> 7 (> max_value)
 
@@ -34,8 +33,7 @@ def test_percentage_field():
     assert frm.cleaned_data["x"] == Decimal("0.15")
 
 
-
 def test_rounding():
     with pytest.raises(InvalidOperation):
-        format_number(Decimal('99.99990'), 6, 5)
-    format_number(Decimal('99.9999'), 6, 4)
+        format_number(Decimal("99.99990"), 6, 5)
+    format_number(Decimal("99.9999"), 6, 4)

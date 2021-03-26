@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import migrations
-from shuup.core.utils.units import get_shuup_volume_unit
+
 import shuup.core.fields
+from shuup.core.utils.units import get_shuup_volume_unit
 
 
 class Migration(migrations.Migration):

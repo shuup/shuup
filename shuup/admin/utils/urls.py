@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,9 +9,8 @@ from __future__ import unicode_literals
 
 import inspect
 import json
-import warnings
-
 import six
+import warnings
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
@@ -24,9 +23,7 @@ from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.utils import importing
-from shuup.utils.django_compat import (
-    get_callable, is_authenticated, NoReverseMatch, reverse, URLPattern
-)
+from shuup.utils.django_compat import NoReverseMatch, URLPattern, get_callable, is_authenticated, reverse
 from shuup.utils.excs import Problem
 
 try:
@@ -44,6 +41,7 @@ class AdminRegexURLPattern(URLPattern):
             callback = self.wrap_with_permissions(callback)
 
         from django.urls import re_path
+
         repath = re_path(regex, callback, default_args, name)
         pattern = repath.pattern
         super(AdminRegexURLPattern, self).__init__(pattern, callback, default_args, name)
@@ -66,8 +64,9 @@ class AdminRegexURLPattern(URLPattern):
             # Instead of redirecting to the login page, let the user know what's wrong with
             # a helpful link.
             raise (
-                Problem(_("Can't view this page. %(reason)s") % {"reason": reason})
-                .with_link(url=resp.url, title=_("Log in with different credentials..."))
+                Problem(_("Can't view this page. %(reason)s") % {"reason": reason}).with_link(
+                    url=resp.url, title=_("Log in with different credentials...")
+                )
             )
         return resp
 
@@ -82,7 +81,7 @@ class AdminRegexURLPattern(URLPattern):
         if self.require_authentication:
             if not is_authenticated(request.user):
                 return _("Sign in to continue.")
-            elif not getattr(request.user, 'is_staff', False):
+            elif not getattr(request.user, "is_staff", False):
                 return _("Your account must have `Access to Admin Panel` permissions to access this page.")
             elif not get_shop(request):
                 return _("There is no active shop available. Contact support for more details.")
@@ -118,22 +117,20 @@ class AdminRegexURLPattern(URLPattern):
         self._callback = value
 
 
-def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=None):
+def admin_url(regex, view, kwargs=None, name=None, prefix="", require_authentication=True, permissions=None):
     if permissions is None:
-        permissions = ((name,) if name else ())
+        permissions = (name,) if name else ()
 
     if isinstance(view, six.string_types):
         if not view:
-            raise ImproperlyConfigured('Error! Empty URL pattern view name not permitted (for pattern `%r`).' % regex)
+            raise ImproperlyConfigured("Error! Empty URL pattern view name not permitted (for pattern `%r`)." % regex)
         if prefix:
-            view = prefix + '.' + view
+            view = prefix + "." + view
 
         view = importing.load(view)
 
     return AdminRegexURLPattern(
-        regex, view, kwargs, name,
-        require_authentication=require_authentication,
-        permissions=permissions
+        regex, view, kwargs, name, require_authentication=require_authentication, permissions=permissions
     )
 
 
@@ -155,7 +152,7 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
         warnings.warn(
             "Warning! `get_edit_and_list_urls` permissions attribute will be "
             "deprecated in Shuup 2.0 as unused for this util.",
-            DeprecationWarning
+            DeprecationWarning,
         )
 
     return [
@@ -163,27 +160,27 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
             r"%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=(name_template % "edit",)
+            permissions=(name_template % "edit",),
         ),
         admin_url(
             "%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=(name_template % "new",)
+            permissions=(name_template % "new",),
         ),
         admin_url(
             "%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
-            permissions=(name_template % "list",)
+            permissions=(name_template % "list",),
         ),
         admin_url(
             "%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
-            permissions=(name_template % "list_settings",)
-        )
+            permissions=(name_template % "list_settings",),
+        ),
     ]
 
 
@@ -191,9 +188,9 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail", user=None,
-                  required_permissions=None, shop=None,
-                  raise_permission_denied=False, **kwargs):
+def get_model_url(
+    object, kind="detail", user=None, required_permissions=None, shop=None, raise_permission_denied=False, **kwargs
+):
     """
     Get a an admin object URL for the given object or object class by
     interrogating each admin module.
@@ -229,18 +226,20 @@ def get_model_url(object, kind="detail", user=None,
         if user is None:
             return url
 
-        from shuup.utils.django_compat import resolve, Resolver404
+        from shuup.utils.django_compat import Resolver404, resolve
+
         try:
             if required_permissions is not None:
                 warnings.warn(
                     "Warning! `required_permissions` parameter will be deprecated "
                     "in Shuup 2.0 as unused for this util.",
-                    DeprecationWarning
+                    DeprecationWarning,
                 )
                 permissions = required_permissions
             else:
                 resolved = resolve(url)
                 from shuup.admin.utils.permissions import get_permissions_for_module_url
+
                 permissions = get_permissions_for_module_url(module, resolved.url_name)
 
             missing_permissions = get_missing_permissions(user, permissions)
@@ -250,6 +249,7 @@ def get_model_url(object, kind="detail", user=None,
 
             if raise_permission_denied:
                 from django.core.exceptions import PermissionDenied
+
                 reason = _("Can't view this page. You do not have the required permission(s): `{permissions}`.").format(
                     permissions=", ".join(missing_permissions)
                 )
@@ -329,6 +329,7 @@ def get_model_front_url(request, object):
         # Best effort to use the default frontend for front URLs.
         try:
             from shuup.front.template_helpers.urls import model_url
+
             return model_url({"request": request}, object)
         except (ValueError, NoReverseMatch):
             pass

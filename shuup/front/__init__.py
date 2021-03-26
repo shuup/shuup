@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,13 +26,14 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.admin_module.checkout.form_parts.CheckoutShopFormPart",
             "shuup.front.admin_module.companies.form_parts.RegistrationSettingsFormPart",
             "shuup.front.admin_module.translation.form_parts.TranslationSettingsFormPart",
-            "shuup.front.admin_module.carts.form_parts.CartDelayFormPart"
+            "shuup.front.admin_module.carts.form_parts.CartDelayFormPart",
         ],
         "notify_event": [
             "shuup.front.notify_events:OrderReceived",
             "shuup.front.notify_events:OrderStatusChanged",
             "shuup.front.notify_events:ShipmentCreated",
             "shuup.front.notify_events:ShipmentDeleted",
+            "shuup.front.notify_events:ShipmentSent",
             "shuup.front.notify_events:PaymentCreated",
             "shuup.front.notify_events:RefundCreated",
         ],
@@ -53,22 +54,21 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.product_list_modifiers.SortProductListByName",
             "shuup.front.forms.product_list_modifiers.SortProductListByPrice",
             "shuup.front.forms.product_list_modifiers.ManufacturerProductListFilter",
-            "shuup.front.forms.product_list_supplier_modifier.SupplierProductListFilter"
+            "shuup.front.forms.product_list_supplier_modifier.SupplierProductListFilter",
         ],
         "front_product_order_form": [
             "shuup.front.forms.order_forms:VariableVariationProductOrderForm",
             "shuup.front.forms.order_forms:SimpleVariationProductOrderForm",
             "shuup.front.forms.order_forms:SimpleProductOrderForm",
         ],
-        "front_model_url_resolver": [
-            "shuup.front.utils.urls.model_url"
-        ]
+        "front_model_url_resolver": ["shuup.front.utils.urls.model_url"],
     }
 
     def ready(self):
         # connect signals
         import shuup.front.notify_events  # noqa: F401
         import shuup.front.signal_handlers  # noqa: F401
+
         validate_templates_configuration()
 
 

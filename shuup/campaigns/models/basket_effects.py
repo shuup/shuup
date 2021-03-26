@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,7 +21,8 @@ class BasketDiscountEffect(PolymorphicShuupModel):
     admin_form_class = None
 
     campaign = models.ForeignKey(
-        on_delete=models.CASCADE, to="BasketCampaign", related_name="discount_effects", verbose_name=_("campaign"))
+        on_delete=models.CASCADE, to="BasketCampaign", related_name="discount_effects", verbose_name=_("campaign")
+    )
 
     def apply_for_basket(self, order_source):
         """
@@ -38,9 +39,8 @@ class BasketDiscountAmount(BasketDiscountEffect):
     name = _("Discount amount value")
 
     discount_amount = MoneyValueField(
-        default=None, blank=True, null=True,
-        verbose_name=_("discount amount"),
-        help_text=_("Flat amount of discount."))
+        default=None, blank=True, null=True, verbose_name=_("discount amount"), help_text=_("Flat amount of discount.")
+    )
 
     @property
     def description(self):
@@ -64,9 +64,13 @@ class BasketDiscountPercentage(BasketDiscountEffect):
     admin_form_class = PercentageField
 
     discount_percentage = models.DecimalField(
-        max_digits=6, decimal_places=5, blank=True, null=True,
+        max_digits=6,
+        decimal_places=5,
+        blank=True,
+        null=True,
         verbose_name=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     @property
     def description(self):
@@ -82,7 +86,7 @@ class BasketDiscountPercentage(BasketDiscountEffect):
 
     def apply_for_basket(self, order_source):
         total_price_of_products = get_total_price_of_products(order_source, self.campaign)
-        return (total_price_of_products * self.value)
+        return total_price_of_products * self.value
 
 
 class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
@@ -91,9 +95,13 @@ class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
     admin_form_class = PercentageField
 
     discount_percentage = models.DecimalField(
-        max_digits=6, decimal_places=5, blank=True, null=True,
+        max_digits=6,
+        decimal_places=5,
+        blank=True,
+        null=True,
         verbose_name=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     @property
     def description(self):
@@ -109,6 +117,7 @@ class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
 
     def apply_for_basket(self, order_source):
         from shuup.campaigns.models import CatalogCampaign
+
         campaign = self.campaign
         supplier = campaign.supplier if hasattr(campaign, "supplier") and campaign.supplier else None
         discounted_base_amount = get_total_price_of_products(order_source, campaign)
@@ -121,4 +130,4 @@ class DiscountPercentageFromUndiscounted(BasketDiscountEffect):
             product = line.product
             if CatalogCampaign.get_matching(context, product.get_shop_instance(order_source.shop)):
                 discounted_base_amount -= line.price
-        return (discounted_base_amount * self.value)
+        return discounted_base_amount * self.value

@@ -1,27 +1,35 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import defaultdict
-
+import json
 import pytest
 import six
+from collections import defaultdict
+from django.template import loader
+from django.test.client import Client
+from django.urls import reverse
 
 from shuup.admin.modules.orders.sections import ShipmentSection
+from shuup.admin.modules.orders.views.shipment import ShipmentListView
 from shuup.admin.utils.permissions import set_permissions_for_group
-from shuup.core.models import ShippingMode, Supplier
+from shuup.core.models import ShipmentStatus, ShippingMode, Supplier
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    create_random_user, get_default_permission_group, get_default_shop
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    create_random_user,
+    get_default_permission_group,
+    get_default_shop,
 )
 from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_order_shipment_section(rf, admin_user):
+def test_order_shipments(rf, admin_user):
     shop = get_default_shop()
     supplier1 = Supplier.objects.create(identifier="1", name="supplier1")
     supplier1.shops.add(shop)
@@ -36,14 +44,7 @@ def test_order_shipment_section(rf, admin_user):
     shop_product2 = product1.get_shop_instance(shop=shop)
     shop_product2.suppliers.set([supplier2])
 
-    product_quantities = {
-        supplier1.pk: {
-            product1.pk: 20
-        },
-        supplier2.pk: {
-            product2.pk: 10
-        }
-    }
+    product_quantities = {supplier1.pk: {product1.pk: 20}, supplier2.pk: {product2.pk: 10}}
 
     def get_quantity(supplier, product):
         return product_quantities[supplier.pk][product.pk]
@@ -101,6 +102,7 @@ def test_order_shipment_section(rf, admin_user):
     assert len(context["suppliers"]) == 2
     assert len(context["create_urls"].keys()) == 0
     assert len(context["delete_urls"].keys()) == 0
+    assert len(context["set_sent_urls"].keys()) == 0
 
     set_permissions_for_group(group, ["order.create-shipment"])
     request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop)
@@ -108,13 +110,42 @@ def test_order_shipment_section(rf, admin_user):
     assert len(context["suppliers"]) == 2
     assert len(context["create_urls"].keys()) == 2
     assert len(context["delete_urls"].keys()) == 0
+    assert len(context["set_sent_urls"].keys()) == 0
 
-    set_permissions_for_group(group, ["order.create-shipment", "order.delete-shipment"])
+    set_permissions_for_group(group, ["order.create-shipment", "order.delete-shipment", "order.set-shipment-sent"])
     request = apply_request_middleware(rf.get("/"), user=staff_user, shop=shop)
     context = ShipmentSection.get_context_data(order, request)
     assert len(context["suppliers"]) == 2
     assert len(context["create_urls"].keys()) == 2
     assert len(context["delete_urls"].keys()) == 3
+    assert len(context["set_sent_urls"].keys()) == 3
+
+    # works fine while rendering
+    rendered_content = loader.render_to_string(
+        ShipmentSection.template,
+        context={
+            ShipmentSection.identifier: context,
+            "order": order,
+        },
+    )
+    all_urls = list(context["delete_urls"].values())
+    all_urls.extend(list(context["set_sent_urls"].values()))
+    for url in all_urls:
+        assert url in rendered_content
+
+    assert order.get_sent_shipments().count() == 0
+    order.shipments.filter(status=ShipmentStatus.NOT_SENT) == 3
+
+    client = Client()
+    client.force_login(admin_user)
+
+    # mark all shipments as sent!
+    for mark_sent_url in context["set_sent_urls"].values():
+        response = client.post(mark_sent_url)
+        assert response.status_code == 302
+
+    assert order.get_sent_shipments().count() == 3
+    order.shipments.filter(status=ShipmentStatus.NOT_SENT) == 0
 
     # Make product1 unshipped
     product1.shipping_mode = ShippingMode.NOT_SHIPPED
@@ -123,9 +154,19 @@ def test_order_shipment_section(rf, admin_user):
     # We still should see the order shipment section since existing shipments
     assert ShipmentSection.visible_for_object(order, request)
 
+    # list all shipments in shipments list view
+    response = client.get(
+        "{}?jq={}".format(reverse("shuup_admin:order.shipments.list"), json.dumps({"perPage": 10, "page": 1}))
+    )
+    assert response.status_code == 200
+    data = json.loads(response.content)
+    assert len(data["items"]) == 3
+    for item in data["items"]:
+        assert item["status"] == "Sent"
+
     # Let's delete all shipments since both products is unshipped and we
     # don't need those.
     for shipment in order.shipments.all():
         shipment.soft_delete()
-    
+
     assert not ShipmentSection.visible_for_object(order, request)

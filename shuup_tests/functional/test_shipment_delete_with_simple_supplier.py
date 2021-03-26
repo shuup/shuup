@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,9 +9,7 @@ import pytest
 import random
 
 from shuup.core.models import Shipment, ShipmentStatus
-from shuup.testing.factories import (
-    create_order_with_product, create_product, get_default_shop
-)
+from shuup.testing.factories import create_order_with_product, create_product, get_default_shop
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
 

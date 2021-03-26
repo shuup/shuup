@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from typing import TYPE_CHECKING, Union
-
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
@@ -16,6 +14,7 @@ from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
+from typing import TYPE_CHECKING, Union
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
@@ -32,15 +31,15 @@ class SupplierType(Enum):
     EXTERNAL = 2
 
     class Labels:
-        INTERNAL = _('internal')
-        EXTERNAL = _('external')
+        INTERNAL = _("internal")
+        EXTERNAL = _("external")
 
 
 class SupplierQueryset(TranslatableQuerySet):
     def not_deleted(self):
         return self.filter(deleted=False)
 
-    def enabled(self, shop: Union['Shop', int] = None):
+    def enabled(self, shop: Union["Shop", int] = None):
         """
         Filter the queryset to contain only enabled and approved suppliers.
 
@@ -49,13 +48,11 @@ class SupplierQueryset(TranslatableQuerySet):
 
         `shop` can be either a Shop instance or the shop's PK
         """
-        queryset = self.filter(
-            enabled=True,
-            supplier_shops__is_approved=True
-        ).not_deleted()
+        queryset = self.filter(enabled=True, supplier_shops__is_approved=True).not_deleted()
 
         if shop:
             from shuup.core.models import Shop
+
             shop_id = shop.pk if isinstance(shop, Shop) else shop
             queryset = queryset.filter(supplier_shops__shop_id=shop_id)
 
@@ -67,27 +64,45 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
-    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_("modified on"))
     identifier = InternalIdentifierField(unique=True)
-    name = models.CharField(verbose_name=_("name"), max_length=128, db_index=True, help_text=_(
-        "The product supplier's name. "
-        "You can enable suppliers to manage the inventory of stocked products."
-    ))
-    type = EnumIntegerField(SupplierType, verbose_name=_("supplier type"), default=SupplierType.INTERNAL, help_text=_(
-        "The supplier type indicates whether the products are supplied through an internal supplier or "
-        "an external supplier, and which group this supplier belongs to."
-    ))
-    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=False, help_text=_(
-        "Enable this if this supplier will manage the inventory of the stocked products. Having a managed stock "
-        "enabled is unnecessary if e.g. selling digital products that will never run out no matter how many are "
-        "being sold. There are some other cases when it could be an unnecessary complication. This setting"
-        "merely assigns a sensible default behavior, which can be overwritten on a product-by-product basis."
-    ))
-    module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'), help_text=_(
-        "Select the supplier module to use for this supplier. "
-        "Supplier modules define the rules by which inventory is managed."
-    ))
+    name = models.CharField(
+        verbose_name=_("name"),
+        max_length=128,
+        db_index=True,
+        help_text=_(
+            "The product supplier's name. " "You can enable suppliers to manage the inventory of stocked products."
+        ),
+    )
+    type = EnumIntegerField(
+        SupplierType,
+        verbose_name=_("supplier type"),
+        default=SupplierType.INTERNAL,
+        help_text=_(
+            "The supplier type indicates whether the products are supplied through an internal supplier or "
+            "an external supplier, and which group this supplier belongs to."
+        ),
+    )
+    stock_managed = models.BooleanField(
+        verbose_name=_("stock managed"),
+        default=False,
+        help_text=_(
+            "Enable this if this supplier will manage the inventory of the stocked products. Having a managed stock "
+            "enabled is unnecessary if e.g. selling digital products that will never run out no matter how many are "
+            "being sold. There are some other cases when it could be an unnecessary complication. This setting"
+            "merely assigns a sensible default behavior, which can be overwritten on a product-by-product basis."
+        ),
+    )
+    module_identifier = models.CharField(
+        max_length=64,
+        blank=True,
+        verbose_name=_("module"),
+        help_text=_(
+            "Select the supplier module to use for this supplier. "
+            "Supplier modules define the rules by which inventory is managed."
+        ),
+    )
     module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
 
     shops = models.ManyToManyField(
@@ -98,35 +113,38 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         help_text=_("You can select which particular shops fronts the supplier should be available in."),
         through="SupplierShop",
     )
-    enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
-        "Indicates whether this supplier is currently enabled. In order to participate fully, "
-        "the supplier also needs to be `Approved`."
-    ))
+    enabled = models.BooleanField(
+        default=True,
+        verbose_name=_("enabled"),
+        help_text=_(
+            "Indicates whether this supplier is currently enabled. In order to participate fully, "
+            "the supplier also needs to be `Approved`."
+        ),
+    )
     logo = FilerImageField(
-        verbose_name=_("logo"),
-        blank=True, null=True,
-        on_delete=models.SET_NULL,
-        related_name="supplier_logos"
+        verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL, related_name="supplier_logos"
     )
     contact_address = models.ForeignKey(
         "MutableAddress",
         related_name="supplier_addresses",
         verbose_name=_("contact address"),
-        blank=True, null=True,
-        on_delete=models.SET_NULL
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
-    translations = TranslatedFields(
-        description=models.TextField(blank=True, verbose_name=_("description"))
-    )
+    translations = TranslatedFields(description=models.TextField(blank=True, verbose_name=_("description")))
     slug = models.SlugField(
-        verbose_name=_('slug'), max_length=255, blank=True, null=True,
+        verbose_name=_("slug"),
+        max_length=255,
+        blank=True,
+        null=True,
         help_text=_(
             "Enter a URL slug for your supplier. Slug is user- and search engine-friendly short text "
             "used in a URL to identify and describe a resource. In this case it will determine "
             "what your supplier page URL in the browser address bar will look like. "
             "A default will be created using the supplier name."
-        )
+        ),
     )
     deleted = models.BooleanField(default=False, verbose_name=_("deleted"))
 
@@ -179,13 +197,13 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         """
         return [
             shop_product.pk
-            for shop_product
-            in self.shop_products.filter(shop=shop)
+            for shop_product in self.shop_products.filter(shop=shop)
             if shop_product.is_orderable(self, customer, shop_product.minimum_purchase_quantity)
         ]
 
     def adjust_stock(self, product_id, delta, created_by=None, type=None):
         from shuup.core.suppliers.base import StockAdjustmentType
+
         adjustment_type = type or StockAdjustmentType.INVENTORY
         return self.module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type)
 
@@ -207,7 +225,7 @@ class SupplierShop(models.Model):
     is_approved = models.BooleanField(
         default=True,
         verbose_name=_("Approved"),
-        help_text=_("Indicates whether this supplier is currently approved for work.")
+        help_text=_("Indicates whether this supplier is currently approved for work."),
     )
 
     class Meta:

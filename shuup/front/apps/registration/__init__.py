@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -45,15 +45,13 @@ class RegistrationAppConfig(AppConfig):
     }
 
     provides = {
-        "front_urls": [
-            "shuup.front.apps.registration.urls:urlpatterns"
-        ],
+        "front_urls": ["shuup.front.apps.registration.urls:urlpatterns"],
         "notify_event": [
             "shuup.front.apps.registration.notify_events:RegistrationReceived",
             "shuup.front.apps.registration.notify_events:AccountReactivation",
             "shuup.front.apps.registration.notify_events:CompanyRegistrationReceived",
             "shuup.front.apps.registration.notify_events:CompanyApproved",
-            "shuup.front.apps.registration.notify_events:AccountActivation"
+            "shuup.front.apps.registration.notify_events:AccountActivation",
         ],
         "notify_script_template": [
             "shuup.front.apps.registration.notify_events:RegistrationReceivedEmailScriptTemplate",
@@ -61,12 +59,12 @@ class RegistrationAppConfig(AppConfig):
             "shuup.front.apps.registration.notify_events:CompanyRegistrationReceivedEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:CompanyActivatedEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:AccountActivationEmailScriptTemplate",
-
-        ]
+        ],
     }
 
     def ready(self):
         from shuup.core.models import CompanyContact
+
         from .notify_events import send_company_activated_first_time_notification
         from .signals import handle_user_activation
 

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import shuup.core.models._service_payment
-from decimal import Decimal
 import enumfields.fields
+from decimal import Decimal
+from django.db import migrations, models
+
+import shuup.core.models._service_payment
 
 
 class Migration(migrations.Migration):

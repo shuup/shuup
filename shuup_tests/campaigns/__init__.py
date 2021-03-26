@@ -1,15 +1,12 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import activate
 
-from shuup.testing.factories import (
-    create_random_person, get_default_customer_group, get_payment_method,
-    get_shop
-)
+from shuup.testing.factories import create_random_person, get_default_customer_group, get_payment_method, get_shop
 from shuup.testing.utils import apply_request_middleware
 
 

@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
 import re
 import sys
-
 from babel.messages.pofile import read_po
-from six import print_
-
 from rope.base.codeanalyze import ChangeCollector
 from rope.base.project import Project
 from rope.refactor.restructure import Restructure
 from rope.refactor.similarfinder import CodeTemplate
+from six import print_
 
 safe_double_quote_re = re.compile(r"^[\w ]+$", re.UNICODE)
 
 
 class LanguageTwist(CodeTemplate):
-
     def __init__(self, po_file):
         with open(po_file, "rb") as in_f:
             self.catalog = read_po(in_f)
@@ -67,5 +64,5 @@ def main():
     prj.do(twist_set)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

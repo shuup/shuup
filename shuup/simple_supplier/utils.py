@@ -1,26 +1,29 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
-from math import pow
-
 from django.conf import settings
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
+from math import pow
 
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.core.models import (
-    OrderLine, OrderLineType, OrderStatusRole, Product, ShipmentProduct,
-    ShipmentStatus, ShipmentType, ShippingMode
+    OrderLine,
+    OrderLineType,
+    OrderStatusRole,
+    Product,
+    ShipmentProduct,
+    ShipmentStatus,
+    ShipmentType,
+    ShippingMode,
 )
 from shuup.core.suppliers.base import StockAdjustmentType
-from shuup.simple_supplier.forms import (
-    AlertLimitForm, StockAdjustmentForm, StockManagedForm
-)
+from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm, StockManagedForm
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.utils.django_compat import reverse
 
@@ -41,31 +44,34 @@ def get_current_stock_value(supplier_id, product_id):
     """
     # TODO: Consider whether this should be done with an SQL view
     events = (
-        StockAdjustment.objects
-        .filter(supplier_id=supplier_id, product_id=product_id)
+        StockAdjustment.objects.filter(supplier_id=supplier_id, product_id=product_id)
         .exclude(type=StockAdjustmentType.RESTOCK_LOGICAL)
-        .aggregate(total=Sum("delta"))["total"] or 0)
+        .aggregate(total=Sum("delta"))["total"]
+        or 0
+    )
     products_bought = (
-        OrderLine.objects
-        .filter(supplier_id=supplier_id, product_id=product_id)
-        .exclude(
-            Q(order__status__role=OrderStatusRole.CANCELED) |
-            Q(type=OrderLineType.REFUND))
-        .aggregate(total=Sum("quantity"))["total"] or 0)
+        OrderLine.objects.filter(supplier_id=supplier_id, product_id=product_id)
+        .exclude(Q(order__status__role=OrderStatusRole.CANCELED) | Q(type=OrderLineType.REFUND))
+        .aggregate(total=Sum("quantity"))["total"]
+        or 0
+    )
     products_refunded_before_shipment = (
-        StockAdjustment.objects
-        .filter(supplier_id=supplier_id, product_id=product_id, type=StockAdjustmentType.RESTOCK_LOGICAL)
-        .aggregate(total=Sum("delta"))["total"] or 0)
+        StockAdjustment.objects.filter(
+            supplier_id=supplier_id, product_id=product_id, type=StockAdjustmentType.RESTOCK_LOGICAL
+        ).aggregate(total=Sum("delta"))["total"]
+        or 0
+    )
     pending_incoming_shipments = (
-        ShipmentProduct.objects
-        .filter(
+        ShipmentProduct.objects.filter(
             shipment__supplier=supplier_id,
             shipment__type=ShipmentType.IN,
             product_id=product_id,
-            product__shipping_mode=ShippingMode.SHIPPED
+            product__shipping_mode=ShippingMode.SHIPPED,
         )
         .exclude(shipment__status__in=[ShipmentStatus.DELETED, ShipmentStatus.RECEIVED])
-        .aggregate(total=Sum("quantity"))["total"] or 0)
+        .aggregate(total=Sum("quantity"))["total"]
+        or 0
+    )
 
     logical_count = events - products_bought + products_refunded_before_shipment + pending_incoming_shipments
 
@@ -75,19 +81,19 @@ def get_current_stock_value(supplier_id, product_id):
     product_shipping_mode = Product.objects.only("shipping_mode").get(pk=product_id).shipping_mode
     if product_shipping_mode == ShippingMode.SHIPPED:
         products_sent = (
-            ShipmentProduct.objects
-            .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.OUT, product_id=product_id)
+            ShipmentProduct.objects.filter(
+                shipment__supplier=supplier_id, shipment__type=ShipmentType.OUT, product_id=product_id
+            )
             .exclude(shipment__status=ShipmentStatus.DELETED)
-            .aggregate(total=Sum("quantity"))["total"] or 0)
+            .aggregate(total=Sum("quantity"))["total"]
+            or 0
+        )
 
         physical_count = events - products_sent
     else:
         physical_count = logical_count
 
-    return {
-        "logical_count": logical_count,
-        "physical_count": physical_count
-    }
+    return {"logical_count": logical_count, "physical_count": physical_count}
 
 
 def get_stock_information_div_id(supplier, product):
@@ -110,7 +116,7 @@ def get_stock_information_html(supplier, product):
         "div_id": get_stock_information_div_id(supplier, product),
         "sales_decimals": product.sales_unit.decimals if product.sales_unit else 0,
         "sales_unit": product.sales_unit.symbol if product.sales_unit else "",
-        "stock": stock
+        "stock": stock,
     }
     if "shuup.notify" in settings.INSTALLED_APPS:
         context["alert_limit"] = True
@@ -134,15 +140,16 @@ def get_stock_adjustment_div(request, supplier, product):
     """
     stock = StockCount.objects.get_or_create(product=product, supplier=supplier)[0]
     latest_adjustment = StockAdjustment.objects.filter(
-        product=product, supplier=supplier, type=StockAdjustmentType.INVENTORY).last()
-    purchase_price = (latest_adjustment.purchase_price.as_rounded().value if latest_adjustment else Decimal())
+        product=product, supplier=supplier, type=StockAdjustmentType.INVENTORY
+    ).last()
+    purchase_price = latest_adjustment.purchase_price.as_rounded().value if latest_adjustment else Decimal()
     context = {
         "product": product,
         "supplier": supplier,
         "delta_step": pow(0.1, product.sales_unit.decimals) if product.sales_unit.decimals else 0,
         "adjustment_form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None}),
         "stock": stock,
-        "stock_managed_form": StockManagedForm(initial={"stock_managed": not stock.stock_managed})
+        "stock_managed_form": StockManagedForm(initial={"stock_managed": not stock.stock_managed}),
     }
     if "shuup.notify" in settings.INSTALLED_APPS:
         context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": stock.alert_limit or Decimal()})

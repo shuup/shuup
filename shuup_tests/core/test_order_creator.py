@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from decimal import Decimal
 
 import pytest
+from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import ProtectedError
@@ -16,23 +16,34 @@ from django.test import override_settings
 
 from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
-from shuup.core.models import get_person_contact, Order, OrderLineType, Shop
+from shuup.core.excs import NoPaymentToCreateException
+from shuup.core.models import Order, OrderLineType, Shop, get_person_contact
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shuup.core.order_creator._creator import OrderProcessor
 from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
+from shuup.core.pricing import TaxfulPrice
 from shuup.testing.factories import (
-    create_default_tax_rule, create_package_product, create_product,
-    create_random_company, create_random_contact_group, create_random_person,
-    create_random_user, get_address, get_default_customer_group,
-    get_default_product, get_default_shop, get_default_supplier,
-    get_initial_order_status, get_payment_method, get_shipping_method,
-    get_shop, get_tax
+    create_default_tax_rule,
+    create_package_product,
+    create_product,
+    create_random_company,
+    create_random_contact_group,
+    create_random_person,
+    create_random_user,
+    get_address,
+    get_default_customer_group,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
+    get_payment_method,
+    get_shipping_method,
+    get_shop,
+    get_tax,
 )
 from shuup.utils.models import get_data_dict
-from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 from shuup.utils.money import Money
-from shuup.core.excs import NoPaymentToCreateException
-from shuup.core.pricing import TaxfulPrice
+from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
 def test_invalid_order_source_updating():
@@ -104,7 +115,7 @@ def test_order_creator(rf, admin_user):
         quantity=1,
         base_unit_price=source.create_price(10),
         require_verification=True,
-        extra={"runner": "runner"}
+        extra={"runner": "runner"},
     )
 
     the_line = [sl for sl in source.get_lines() if sl.accounting_identifier == "strawberries"]
@@ -178,8 +189,7 @@ def test_order_creator_with_package_product(rf, admin_user):
 
     shop = get_default_shop()
     supplier = get_simple_supplier()
-    package_product = create_package_product("Package-Product-Test", shop=shop, supplier=supplier,
-                                             children=2)
+    package_product = create_package_product("Package-Product-Test", shop=shop, supplier=supplier, children=2)
     shop_product = package_product.get_shop_instance(shop)
     quantity_map = package_product.get_package_child_to_quantity_map()
     product_1, product_2 = quantity_map.keys()
@@ -306,7 +316,7 @@ def test_order_source_parentage(rf, admin_user):
         supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
-        line_id="parent"
+        line_id="parent",
     )
     source.add_line(
         type=OrderLineType.OTHER,
@@ -314,7 +324,7 @@ def test_order_source_parentage(rf, admin_user):
         sku="KIDKIDKID",
         quantity=1,
         base_unit_price=source.create_price(5),
-        parent_line_id="parent"
+        parent_line_id="parent",
     )
 
     creator = OrderCreator()
@@ -334,7 +344,7 @@ def test_order_source_extra_data(rf, admin_user):
         supplier=get_default_supplier(source.shop),
         quantity=1,
         base_unit_price=source.create_price(10),
-        line_id="parent"
+        line_id="parent",
     )
     line2 = source.add_line(
         type=OrderLineType.OTHER,
@@ -342,7 +352,7 @@ def test_order_source_extra_data(rf, admin_user):
         sku="KIDKIDKID",
         quantity=1,
         base_unit_price=source.create_price(5),
-        parent_line_id="parent"
+        parent_line_id="parent",
     )
 
     creator = OrderCreator()
@@ -427,7 +437,7 @@ def test_order_customer_groups(rf, admin_user):
     default_group = get_default_customer_group()
     default_group.members.add(customer)
     source = seed_source(admin_user)
-    source.customer=customer
+    source.customer = customer
 
     source.add_line(
         type=OrderLineType.PRODUCT,
@@ -541,7 +551,7 @@ def test_order_creator_taxes(admin_user, include_tax):
     source = OrderSource(shop)
     source.status = get_initial_order_status()
     create_default_order_statuses()
-    tax = get_tax("sales-tax", "Sales Tax", Decimal(0.2)) # 20%
+    tax = get_tax("sales-tax", "Sales Tax", Decimal(0.2))  # 20%
     create_default_tax_rule(tax)
     product = get_default_product()
 
@@ -561,7 +571,7 @@ def test_order_creator_taxes(admin_user, include_tax):
         quantity=1,
         base_unit_price=source.create_price(0),
         discount_amount=source.create_price(100),
-        parent_line_id=line.line_id
+        parent_line_id=line.line_id,
     )
     assert source.taxful_total_price.value == Decimal()
     creator = OrderCreator()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,8 +10,8 @@ import pytest
 from shuup.apps.provides import override_provides
 from shuup.testing import factories
 from shuup.utils.django_compat import reverse
-
 from shuup_tests.utils import SmartClient
+
 
 @pytest.mark.django_db
 def test_product_subscription_options():
@@ -22,9 +22,10 @@ def test_product_subscription_options():
 
     client = SmartClient()
 
-    with override_provides("product_subscription_option_provider", [
-        "shuup.testing.subscription_option_provider.TestSubscriptionOptionProvider"
-    ]):
+    with override_provides(
+        "product_subscription_option_provider",
+        ["shuup.testing.subscription_option_provider.TestSubscriptionOptionProvider"],
+    ):
         response = client.soup(reverse("shuup:product", kwargs=dict(pk=product.pk, slug=product.slug)))
         purchase_options = response.find("ul", {"class": "product-purchase-options-list-group"})
 

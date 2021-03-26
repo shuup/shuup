@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,6 +19,7 @@ class NewLogEntryView(View):
     """
     Create a log `note` item associated with a particular order.
     """
+
     def post(self, request, *args, **kwargs):
         shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
         order = Order.objects.filter(pk=kwargs["pk"], shop_id__in=shop_ids).first()
@@ -33,9 +34,11 @@ class NewLogEntryView(View):
             user=request.user,
         )
 
-        return JsonResponse({
-            "message": entry.message,
-            "kind": force_text(entry.kind.label),
-            "created_on": get_locally_formatted_datetime(entry.created_on),
-            "user": force_text(getattr(entry.user, get_user_model().USERNAME_FIELD)),
-        })
+        return JsonResponse(
+            {
+                "message": entry.message,
+                "kind": force_text(entry.kind.label),
+                "created_on": get_locally_formatted_datetime(entry.created_on),
+                "user": force_text(getattr(entry.user, get_user_model().USERNAME_FIELD)),
+            }
+        )

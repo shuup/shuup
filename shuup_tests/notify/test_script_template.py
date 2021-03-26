@@ -1,37 +1,33 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from shuup.utils.django_compat import reverse
 from django.template.defaultfilters import linebreaksbr
 from django.utils.translation import activate
 
 from shuup.apps.provides import override_provides
-from shuup.front.apps.registration.notify_events import (
-    RegistrationReceivedEmailScriptTemplate
-)
+from shuup.front.apps.registration.notify_events import RegistrationReceivedEmailScriptTemplate
 from shuup.front.notify_script_templates.generics import (
-    OrderConfirmationEmailScriptTemplate, PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate, ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate
+    OrderConfirmationEmailScriptTemplate,
+    PaymentCreatedEmailScriptTemplate,
+    RefundCreatedEmailScriptTemplate,
+    ShipmentCreatedEmailScriptTemplate,
+    ShipmentDeletedEmailScriptTemplate,
 )
-from shuup.notify.admin_module.views import (
-    ScriptTemplateConfigView, ScriptTemplateEditView, ScriptTemplateView
-)
-from shuup.notify.script_templates import PasswordResetTemplate
+from shuup.notify.admin_module.views import ScriptTemplateConfigView, ScriptTemplateEditView, ScriptTemplateView
 from shuup.notify.models import Script
+from shuup.notify.script_templates import PasswordResetTemplate
 from shuup.simple_supplier.notify_events import AlertLimitReached
-from shuup.simple_supplier.notify_script_template import (
-    StockLimitEmailScriptTemplate
-)
+from shuup.simple_supplier.notify_script_template import StockLimitEmailScriptTemplate
 from shuup.testing.factories import get_default_shop
 from shuup.testing.notify_script_templates import DummyScriptTemplate
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 
 
 def setup_function(fn):
@@ -47,8 +43,10 @@ def _assert_generic_script(script_template_cls, script, data):
     assert serialized_steps[0]["actions"][0]["recipient"]["variable"] == "customer_email"
 
     for lang, _ in settings.LANGUAGES:
-        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("body") == data.get("%s-body" % lang, '')
-        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("subject") == data.get("%s-subject" % lang, '')
+        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("body") == data.get("%s-body" % lang, "")
+        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("subject") == data.get(
+            "%s-subject" % lang, ""
+        )
 
 
 def _assert_stock_alert_limit_script(script, data):
@@ -66,20 +64,25 @@ def _assert_stock_alert_limit_script(script, data):
         assert serialized_steps[0]["conditions"] == []
 
     for lang, _ in settings.LANGUAGES:
-        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("body") == data.get("%s-body" % lang, '')
-        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("subject") == data.get("%s-subject" % lang, '')
+        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("body") == data.get("%s-body" % lang, "")
+        assert serialized_steps[0]["actions"][0]["template_data"][lang].get("subject") == data.get(
+            "%s-subject" % lang, ""
+        )
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("script_template_cls", [
-    OrderConfirmationEmailScriptTemplate,
-    PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate,
-    ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate,
-    RegistrationReceivedEmailScriptTemplate,
-    PasswordResetTemplate
-])
+@pytest.mark.parametrize(
+    "script_template_cls",
+    [
+        OrderConfirmationEmailScriptTemplate,
+        PaymentCreatedEmailScriptTemplate,
+        RefundCreatedEmailScriptTemplate,
+        ShipmentCreatedEmailScriptTemplate,
+        ShipmentDeletedEmailScriptTemplate,
+        RegistrationReceivedEmailScriptTemplate,
+        PasswordResetTemplate,
+    ],
+)
 def test_generic_script_template_manual(script_template_cls):
     shop = get_default_shop()
     script_template = script_template_cls()
@@ -93,7 +96,7 @@ def test_generic_script_template_manual(script_template_cls):
         "en-body": "my body",
         "en-subject": "something",
         "fi-body": "my body FI",
-        "fi-subject": "something FI"
+        "fi-subject": "something FI",
     }
     form = script_template.get_form(data=data)
     assert form.is_valid()
@@ -105,11 +108,7 @@ def test_generic_script_template_manual(script_template_cls):
     # edit
     script_template = script_template_cls(script)
     assert script_template.can_edit_script()
-    data.update({
-        "base-send_to": "customer",
-        "en-body": "my body 2",
-        "en-subject": "something 2"
-    })
+    data.update({"base-send_to": "customer", "en-body": "my body 2", "en-subject": "something 2"})
     form = script_template.get_form(data=data)
     assert form.is_valid()
     edited_script = script_template.update_script(form)
@@ -125,14 +124,17 @@ def test_generic_script_template_manual(script_template_cls):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("script_template_cls", [
-    OrderConfirmationEmailScriptTemplate,
-    PaymentCreatedEmailScriptTemplate,
-    RefundCreatedEmailScriptTemplate,
-    ShipmentCreatedEmailScriptTemplate,
-    ShipmentDeletedEmailScriptTemplate,
-    RegistrationReceivedEmailScriptTemplate
-])
+@pytest.mark.parametrize(
+    "script_template_cls",
+    [
+        OrderConfirmationEmailScriptTemplate,
+        PaymentCreatedEmailScriptTemplate,
+        RefundCreatedEmailScriptTemplate,
+        ShipmentCreatedEmailScriptTemplate,
+        ShipmentDeletedEmailScriptTemplate,
+        RegistrationReceivedEmailScriptTemplate,
+    ],
+)
 def test_generic_script_template_admin(rf, admin_user, script_template_cls):
     get_default_shop()
     Script.objects.all().delete()
@@ -151,7 +153,7 @@ def test_generic_script_template_admin(rf, admin_user, script_template_cls):
         "en-body": "my body",
         "en-subject": "something",
         "fi-body": "my body FI",
-        "fi-subject": "something FI"
+        "fi-subject": "something FI",
     }
     request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateConfigView.as_view()(request, id=identifier)
@@ -162,10 +164,7 @@ def test_generic_script_template_admin(rf, admin_user, script_template_cls):
     _assert_generic_script(script_template_cls, script, data)
 
     # edit
-    data.update({
-        "en-body": "my body 2",
-        "en-subject": "something 2"
-    })
+    data.update({"en-body": "my body 2", "en-subject": "something 2"})
     request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateEditView.as_view()(request, pk=script.pk)
     assert response.status_code == 302
@@ -189,7 +188,7 @@ def test_stock_alert_limit_script_template_manual(rf):
         "en-body": "my body",
         "en-subject": "something",
         "base-recipient": "someemail@shuup.com",
-        "base-last24hrs": True
+        "base-last24hrs": True,
     }
     form = script_template.get_form(data=data)
     assert form.is_valid()
@@ -202,11 +201,13 @@ def test_stock_alert_limit_script_template_manual(rf):
     # edit
     script_template = StockLimitEmailScriptTemplate(script)
     assert script_template.can_edit_script()
-    data.update({
-        "en-body": "my body 2",
-        "en-subject": "something 2",
-        "base-recipient": "someemail@shuup.comzzz",
-    })
+    data.update(
+        {
+            "en-body": "my body 2",
+            "en-subject": "something 2",
+            "base-recipient": "someemail@shuup.comzzz",
+        }
+    )
     form = script_template.get_form(data=data)
     assert form.is_valid()
     edited_script = script_template.update_script(form)
@@ -240,7 +241,7 @@ def test_stock_alert_limit_script_template_admin(rf, admin_user):
         "en-body": "my body",
         "en-subject": "something",
         "base-recipient": "someemail@shuup.com",
-        "base-last24hrs": True
+        "base-last24hrs": True,
     }
     request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateConfigView.as_view()(request, id=identifier)
@@ -251,11 +252,13 @@ def test_stock_alert_limit_script_template_admin(rf, admin_user):
     _assert_stock_alert_limit_script(script, data)
 
     # edit
-    data.update({
-        "en-body": "my body 2",
-        "en-subject": "something 2",
-        "base-recipient": "someemail@shuup.comzzz",
-    })
+    data.update(
+        {
+            "en-body": "my body 2",
+            "en-subject": "something 2",
+            "base-recipient": "someemail@shuup.comzzz",
+        }
+    )
     request = apply_request_middleware(rf.post("/", data), user=admin_user)
     response = ScriptTemplateEditView.as_view()(request, pk=script.pk)
     assert response.status_code == 302
@@ -268,9 +271,7 @@ def test_stock_alert_limit_script_template_admin(rf, admin_user):
 @pytest.mark.django_db
 def test_dummy_script_template_manual(rf):
 
-    with override_provides("notify_script_template", [
-            "shuup.testing.notify_script_templates:DummyScriptTemplate"
-        ]):
+    with override_provides("notify_script_template", ["shuup.testing.notify_script_templates:DummyScriptTemplate"]):
         shop = get_default_shop()
         Script.objects.all().delete()
 
@@ -296,9 +297,7 @@ def test_dummy_script_template_manual(rf):
 @pytest.mark.django_db
 def test_dummy_script_template_admin(rf, admin_user):
 
-    with override_provides("notify_script_template", [
-            "shuup.testing.notify_script_templates:DummyScriptTemplate"
-        ]):
+    with override_provides("notify_script_template", ["shuup.testing.notify_script_templates:DummyScriptTemplate"]):
         get_default_shop()
 
         Script.objects.all().delete()

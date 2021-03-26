@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import logging
-
 import six
 from django.db.models.query import QuerySet
 
@@ -30,12 +29,7 @@ cond_op_to_func_map = {
 
 class Step(object):
     def __init__(
-            self,
-            conditions=(),
-            actions=(),
-            next=StepNext.CONTINUE,
-            cond_op=StepConditionOperator.ALL,
-            enabled=True
+        self, conditions=(), actions=(), next=StepNext.CONTINUE, cond_op=StepConditionOperator.ALL, enabled=True
     ):
         self._conditions = conditions
         self._actions = actions

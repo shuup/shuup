@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import datetime
-
 import six
 
 from shuup.utils import dates, i18n, iterables
@@ -43,13 +42,14 @@ def get_first_day_of_the_current_week(today_start):
         return first_day_of_the_week
 
     def get_prospect(i):
-        return (today_start - datetime.timedelta(days=i))
+        return today_start - datetime.timedelta(days=i)
 
     return iterables.first([get_prospect(i) for i in range(1, 7) if get_prospect(i).weekday() == locale.first_week_day])
 
 
 def parse_date_range_preset(value):
     from shuup.reports.forms import DateRangeChoices
+
     now = dates.local_now()
     today_start = now.replace(hour=0, minute=0, second=0)
     if value == DateRangeChoices.TODAY:

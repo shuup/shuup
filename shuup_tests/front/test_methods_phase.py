@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,8 +14,11 @@ from shuup.front.basket import get_basket
 from shuup.front.checkout.methods import MethodsPhase
 from shuup.front.views.checkout import BaseCheckoutView
 from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_supplier, get_payment_method,
-    get_shipping_method
+    create_product,
+    get_default_shop,
+    get_default_supplier,
+    get_payment_method,
+    get_shipping_method,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
@@ -32,14 +35,17 @@ PAYMENT_DATA = {
 
 
 class MethodsOnlyCheckoutView(BaseCheckoutView):
-        phase_specs = ['shuup.front.checkout.methods:MethodsPhase']
+    phase_specs = ["shuup.front.checkout.methods:MethodsPhase"]
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_method,data,method_id,", [
-    (get_shipping_method, SHIPPING_DATA, "id_shipping_method"),
-    (get_payment_method, PAYMENT_DATA, "id_payment_method")
-])
+@pytest.mark.parametrize(
+    "get_method,data,method_id,",
+    [
+        (get_shipping_method, SHIPPING_DATA, "id_shipping_method"),
+        (get_payment_method, PAYMENT_DATA, "id_payment_method"),
+    ],
+)
 def test_method_phase_basic(rf, admin_user, get_method, data, method_id):
     activate("en")
     shop = get_default_shop()
@@ -69,7 +75,7 @@ def test_method_phase_basic(rf, admin_user, get_method, data, method_id):
     request = apply_request_middleware(request, user=admin_user, person=person, customer=person, basket=basket)
 
     # request = apply_request_middleware(rf.get("/"))
-    response = view(request=request, phase='methods')
+    response = view(request=request, phase="methods")
     if hasattr(response, "render"):
         response.render()
     assert response.status_code in [200, 302]

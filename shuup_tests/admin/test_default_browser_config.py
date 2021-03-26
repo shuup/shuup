@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.utils.django_compat import reverse
-
 from shuup.admin.modules.media import MediaModule
 from shuup.admin.template_helpers.shuup_admin import get_browser_urls
-from shuup.admin.utils.permissions import (
-    get_permissions_from_urls, set_permissions_for_group
-)
+from shuup.admin.utils.permissions import get_permissions_from_urls, set_permissions_for_group
 from shuup.testing import factories
-
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 
 
 @pytest.mark.django_db

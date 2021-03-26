@@ -1,16 +1,13 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db.models import Q
 
 from shuup.campaigns.consts import CONTEXT_CONDITION_CACHE_NAMESPACE
-from shuup.campaigns.models import (
-    CatalogFilter, CatalogFilterCachedShopProduct, CategoryFilter,
-    ContextCondition
-)
+from shuup.campaigns.models import CatalogFilter, CatalogFilterCachedShopProduct, CategoryFilter, ContextCondition
 from shuup.core import cache
 from shuup.core.models import ShopProduct
 from shuup.core.utils import context_cache
@@ -18,9 +15,7 @@ from shuup.core.utils import context_cache
 
 def get_matching_context_conditions(context):
     namespace = CONTEXT_CONDITION_CACHE_NAMESPACE
-    ctx_cache_elements = dict(
-        customer=context.customer.pk or 0,
-        shop=context.shop.pk)
+    ctx_cache_elements = dict(customer=context.customer.pk or 0, shop=context.shop.pk)
     conditions_cache_key = "%s:%s" % (namespace, hash(frozenset(ctx_cache_elements.items())))
     matching_context_conditions = cache.get(conditions_cache_key, None)
     if matching_context_conditions is None:
@@ -58,6 +53,7 @@ def update_matching_catalog_filters(shop_product_or_filter):
     shop_product = shop_product_or_filter
 
     from shuup.campaigns.utils.matcher import get_matching_for_product
+
     q = _get_filter_query(shop_product)
     all_shop_products = [shop_product] + list(ShopProduct.objects.filter(q))
     all_ids = [sp.pk for sp in all_shop_products]
@@ -65,7 +61,7 @@ def update_matching_catalog_filters(shop_product_or_filter):
     ids = get_matching_for_product(
         shop_product_or_filter,
         provide_category="campaign_catalog_filter",
-        skippable_classes=[CatalogFilter]  # these will be handled separately in update_matching_category_filters
+        skippable_classes=[CatalogFilter],  # these will be handled separately in update_matching_category_filters
     )
     CatalogFilterCachedShopProduct.objects.filter(filter__id__in=ids, shop_product__id__in=all_ids).delete()
     for filter in CatalogFilter.objects.filter(id__in=ids):
@@ -76,7 +72,7 @@ def update_matching_catalog_filters(shop_product_or_filter):
 
 
 def get_matching_catalog_filters(shop_product):
-    return shop_product.cached_catalog_campaign_filters.values_list('filter__id', flat=True)
+    return shop_product.cached_catalog_campaign_filters.values_list("filter__id", flat=True)
 
 
 def _get_filter_query(shop_product):

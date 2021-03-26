@@ -1,40 +1,34 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import pytest
 from copy import deepcopy
-from itertools import chain
-
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.test.utils import override_settings
 from django.utils.timezone import now
-import pytest
+from itertools import chain
 
 from shuup.admin import ShuupAdminAppConfig
 from shuup.admin.base import AdminModule
 from shuup.admin.dashboard import DashboardContentBlock, get_activity
 from shuup.admin.menu import get_menu_entry_categories
-from shuup.admin.module_registry import (
-    get_module_urls, get_modules, replace_modules
-)
+from shuup.admin.module_registry import get_module_urls, get_modules, replace_modules
 from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.search import get_search_results
 from shuup.testing.factories import get_default_shop, get_default_staff_user
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.excs import Problem
-from shuup_tests.admin.fixtures.test_module import ATestModule, ARestrictedTestModule
+from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule, ATestModule
 from shuup_tests.utils import empty_iterable
-from shuup_tests.utils.faux_users import (
-    AnonymousUser, AuthenticatedUser, StaffUser, SuperUser
-)
-from shuup_tests.utils.templates import \
-    get_templates_setting_for_specific_directories
+from shuup_tests.utils.faux_users import AnonymousUser, AuthenticatedUser, StaffUser, SuperUser
+from shuup_tests.utils.templates import get_templates_setting_for_specific_directories
 
 TEMPLATES_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), "templates"))
 
@@ -51,10 +45,7 @@ def test_admin_module_base(rf, admin_user):
 
 
 def test_module_loading_and_urls():
-    with replace_modules([
-        ATestModule,
-        "shuup_tests.admin.fixtures.test_module:ATestModule"
-    ]):
+    with replace_modules([ATestModule, "shuup_tests.admin.fixtures.test_module:ATestModule"]):
         assert all(u.name.startswith("test") for u in get_module_urls())
 
 
@@ -104,8 +95,7 @@ def test_dashboard_blocks_permissions(rf, client):
         # able to see some blocks permission to some admin module
         # providing dashboard bocks needed.
         set_permissions_for_group(
-            request.user.groups.first(),
-            set("dashboard") | set(ARestrictedTestModule().get_required_permissions())
+            request.user.groups.first(), set("dashboard") | set(ARestrictedTestModule().get_required_permissions())
         )
         view = DashboardView(request=request)
         assert view.get_context_data()["blocks"]
@@ -126,9 +116,7 @@ def test_content_block_template(rf):
     TEMPLATES = get_templates_setting_for_specific_directories(settings.TEMPLATES, [TEMPLATES_DIR])
     with override_settings(TEMPLATES=TEMPLATES):
         request = rf.get("/")
-        dcb = DashboardContentBlock.by_rendering_template("foo", request, "module_template.jinja", {
-            "name": "world"
-        })
+        dcb = DashboardContentBlock.by_rendering_template("foo", request, "module_template.jinja", {"name": "world"})
         assert dcb.content == "Hello world"
 
 
@@ -137,7 +125,7 @@ def test_activity(rf):
         request = rf.get("/")
         texts = [a.text for a in get_activity(request, 10)]
         # Check that activity is returned in newest-first order.
-        assert texts == ["Latest", "Later", "Earlier", "Earliest" ]
+        assert texts == ["Latest", "Later", "Earlier", "Earliest"]
 
 
 def test_url_auth(rf):

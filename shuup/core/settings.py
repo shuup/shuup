@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -183,12 +183,10 @@ SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE = True
 
 #: Spec which defines the address formatter used to
 #: format output string of an Address model instances.
-SHUUP_ADDRESS_FORMATTER_SPEC = (
-    "shuup.core.utils.formatters:DefaultAddressFormatter")
+SHUUP_ADDRESS_FORMATTER_SPEC = "shuup.core.utils.formatters:DefaultAddressFormatter"
 
 #: Spec which defines an default address model form.
-SHUUP_ADDRESS_MODEL_FORM = (
-    "shuup.core.utils.forms.MutableAddressForm")
+SHUUP_ADDRESS_MODEL_FORM = "shuup.core.utils.forms.MutableAddressForm"
 
 #: A dictionary defining properties to override the default field properties of:
 #: 1. the checkout address form
@@ -247,12 +245,10 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = []
 #:
 #: This spec defines class, which should implement `get_supplier` method. For this method
 #: the current shop product with customer, quantity and shipping address is passed as kwargs.
-SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY = (
-    "shuup.core.suppliers.FirstSupplierStrategy")
+SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY = "shuup.core.suppliers.FirstSupplierStrategy"
 
 #: Spec which provides the current shop for a given request and a set of parameters.
-SHUUP_REQUEST_SHOP_PROVIDER_SPEC = (
-    "shuup.core.shop_provider.DefaultShopProvider")
+SHUUP_REQUEST_SHOP_PROVIDER_SPEC = "shuup.core.shop_provider.DefaultShopProvider"
 
 #: Whether to allow to create arbitrary refunds. Set this to False when it is
 #: required that all refunds are linked to the actual order items/lines.

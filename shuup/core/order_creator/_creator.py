@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,14 +9,11 @@ from __future__ import unicode_literals
 
 import warnings
 from decimal import Decimal
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from shuup.core.models import Order, OrderLine, OrderLineType, ShopProduct
-from shuup.core.order_creator.signals import (
-    order_creator_finished, post_order_line_save
-)
+from shuup.core.order_creator.signals import order_creator_finished, post_order_line_save
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils.users import real_user_or_none
 from shuup.utils.deprecation import RemovedFromShuupWarning
@@ -27,7 +24,6 @@ from ._source_modifier import get_order_source_modifier_modules
 
 
 class OrderProcessor(object):
-
     def source_line_to_order_lines(self, order, source_line):
         """
         Convert a source line into one or more order lines.
@@ -64,11 +60,10 @@ class OrderProcessor(object):
             order_line.base_unit_price = source_line.base_unit_price
         if source_line.discount_amount:
             order_line.discount_amount = source_line.discount_amount
-        order_line.type = (source_line.type if source_line.type is not None
-                           else OrderLineType.OTHER)
+        order_line.type = source_line.type if source_line.type is not None else OrderLineType.OTHER
         order_line.accounting_identifier = text(source_line.accounting_identifier)
         order_line.require_verification = bool(source_line.require_verification)
-        order_line.verified = (not order_line.require_verification)
+        order_line.verified = not order_line.require_verification
         order_line.source_line = source_line
         order_line.parent_source_line = source_line.parent_line
         extra_data = source_line.data.get("extra", {}) if hasattr(source_line, "data") else {}
@@ -116,14 +111,11 @@ class OrderProcessor(object):
             shop_product = order_line.product.get_shop_instance(order.shop)
         except ShopProduct.DoesNotExist:
             raise ValidationError(
-                "Error! %s is not available in %s." % (order_line.product, order.shop),
-                code="invalid_shop"
+                "Error! %s is not available in %s." % (order_line.product, order.shop), code="invalid_shop"
             )
 
         shop_product.raise_if_not_orderable(
-            supplier=order_line.supplier,
-            quantity=order_line.quantity,
-            customer=order.customer
+            supplier=order_line.supplier, quantity=order_line.quantity, customer=order.customer
         )
 
     def process_saved_order_line(self, order, order_line):
@@ -138,10 +130,7 @@ class OrderProcessor(object):
 
     def add_lines_into_order(self, order, lines):
         # Map source lines to order lines for parentage linking
-        order_line_by_source = {
-            id(order_line.source_line): order_line
-            for order_line in lines
-        }
+        order_line_by_source = {id(order_line.source_line): order_line for order_line in lines}
 
         # Set line ordering, parentage and save the lines
         for index, order_line in enumerate(lines):
@@ -214,7 +203,7 @@ class OrderProcessor(object):
             status=order_source.status,
             payment_data=order_source.payment_data,
             shipping_data=order_source.shipping_data,
-            extra_data=order_source.extra_data
+            extra_data=order_source.extra_data,
         )
 
     def finalize_creation(self, order, order_source):
@@ -295,7 +284,6 @@ class OrderProcessor(object):
 
 
 class OrderCreator(OrderProcessor):
-
     def __init__(self, request=None):
         """
         Initialize order creator.
@@ -308,7 +296,9 @@ class OrderCreator(OrderProcessor):
         if request is not None:
             warnings.warn(
                 "Warning! Initializing `OrderCreator` with a `request` is deprecated.",
-                RemovedFromShuupWarning, stacklevel=2)
+                RemovedFromShuupWarning,
+                stacklevel=2,
+            )
 
     def create_order(self, order_source):
         data = self.get_source_base_data(order_source)

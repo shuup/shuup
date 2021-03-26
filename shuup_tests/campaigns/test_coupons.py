@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 
 from shuup.campaigns.models.campaigns import BasketCampaign, Coupon
 from shuup.testing import factories
-
 
 
 @pytest.mark.django_db
@@ -33,7 +31,6 @@ def test_same_codes():
 
     dc1 = Coupon.objects.create(code="TEST")
     dc2 = Coupon.objects.create(code="TEST")
-
 
     BasketCampaign.objects.create(name="test1", active=True, shop_id=shop1.id, coupon_id=dc1.id)
     with pytest.raises(ValidationError):

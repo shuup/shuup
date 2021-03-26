@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import json
-
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -19,8 +18,7 @@ from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
 from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import ugettext as _, ugettext_lazy
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
@@ -35,10 +33,17 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.utils.excs import Problem
 from shuup.utils.filer import (
-    can_see_root_folder, ensure_media_file, ensure_media_folder,
-    filer_file_from_upload, filer_file_to_json_dict, filer_folder_to_json_dict,
-    filer_image_from_upload, get_or_create_folder, subfolder_of_users_root,
-    UploadFileForm, UploadImageForm
+    UploadFileForm,
+    UploadImageForm,
+    can_see_root_folder,
+    ensure_media_file,
+    ensure_media_folder,
+    filer_file_from_upload,
+    filer_file_to_json_dict,
+    filer_folder_to_json_dict,
+    filer_image_from_upload,
+    get_or_create_folder,
+    subfolder_of_users_root,
 )
 from shuup.utils.importing import cached_load
 from shuup.utils.mptt import get_cached_trees
@@ -55,9 +60,7 @@ def _is_folder_shared(folder):
 
 
 def _get_folder_query_filter(shop, user=None):
-    query = Q(
-        Q(Q(media_folder__isnull=True) | Q(media_folder__shops__isnull=True) | Q(media_folder__shops=shop))
-    )
+    query = Q(Q(Q(media_folder__isnull=True) | Q(media_folder__shops__isnull=True) | Q(media_folder__shops=shop)))
     if user and not has_permission(user, "media.view-all"):
         root_folders = Folder.objects.filter(media_folder__owners=user)
         folders = []
@@ -96,7 +99,7 @@ def _get_file_query(shop, folder=None):
 
 
 def get_folder_name(folder):
-    return (folder.name if folder else _("Root"))
+    return folder.name if folder else _("Root")
 
 
 class MediaBrowserView(TemplateView):
@@ -105,15 +108,13 @@ class MediaBrowserView(TemplateView):
 
     Most of this is just a JSON API that the Javascript (`static_src/media/browser`) uses.
     """
+
     template_name = "shuup/admin/media/browser.jinja"
     title = ugettext_lazy("Browse Media")
 
     def get_context_data(self, **kwargs):
         context = super(MediaBrowserView, self).get_context_data(**kwargs)
-        context["browser_config"] = {
-            "filter": self.filter,
-            "disabledMenus": self.disabledMenus
-        }
+        context["browser_config"] = {"filter": self.filter, "disabledMenus": self.disabledMenus}
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -161,9 +162,9 @@ class MediaBrowserView(TemplateView):
         # If the user has a root folder and not permission to view all folders
         if len(users_owned_folders) > 0 and not has_permission(self.user, "media.view-all"):
             all_accessed_folders = list(
-                Folder._tree_manager.filter(
-                    _get_folder_query_filter(shop, self.user)
-                ).order_by(users_owned_folders.first()._mptt_meta.level_attr)
+                Folder._tree_manager.filter(_get_folder_query_filter(shop, self.user)).order_by(
+                    users_owned_folders.first()._mptt_meta.level_attr
+                )
             )
             get_media_folder = cached_load("SHUUP_GET_MEDIA_FOLDER_FROM_FOLDER")
 
@@ -192,9 +193,7 @@ class MediaBrowserView(TemplateView):
                         setattr(folder, folder._mptt_meta.level_attr, 0)
                         ordered_folders.insert(0, folder)
 
-            root_folders = get_cached_trees(
-                ordered_folders
-            )
+            root_folders = get_cached_trees(ordered_folders)
         else:
             # Everything is shown under the fake root folder that is actually not a real folder
             root_folders = get_cached_trees(Folder._tree_manager.filter(_get_folder_query_filter(shop, self.user)))
@@ -231,10 +230,9 @@ class MediaBrowserView(TemplateView):
             return self._create_folder(data["name"], parent, shop)
 
         else:
-            return JsonResponse({
-                'error': _("You do not have permissions to create a subfolder here."),
-                "folder": {"id": parent.id}
-            })
+            return JsonResponse(
+                {"error": _("You do not have permissions to create a subfolder here."), "folder": {"id": parent.id}}
+            )
 
     def _create_folder(self, name, parent, shop):
         folder = Folder.objects.create(name=name)
@@ -263,24 +261,25 @@ class MediaBrowserView(TemplateView):
                     subfolders = Folder.objects.none()
 
         except ObjectDoesNotExist:
-            return JsonResponse({
-                "folder": None,
-                "error": "Error! Folder does not exist."
-            })
+            return JsonResponse({"folder": None, "error": "Error! Folder does not exist."})
 
         if self.filter == "images":
             files = files.instance_of(Image)
 
-        return JsonResponse({"folder": {
-            "id": folder.id if folder else 0,
-            "name": get_folder_name(folder),
-            "files": [filer_file_to_json_dict(file, user=self.user) for file in files if file.is_public],
-            "folders": [
-                # Explicitly pass empty list of children to avoid recursion
-                filer_folder_to_json_dict(subfolder, children=(), user=self.user)
-                for subfolder in subfolders.order_by("name")
-            ]
-        }})
+        return JsonResponse(
+            {
+                "folder": {
+                    "id": folder.id if folder else 0,
+                    "name": get_folder_name(folder),
+                    "files": [filer_file_to_json_dict(file, user=self.user) for file in files if file.is_public],
+                    "folders": [
+                        # Explicitly pass empty list of children to avoid recursion
+                        filer_folder_to_json_dict(subfolder, children=(), user=self.user)
+                        for subfolder in subfolders.order_by("name")
+                    ],
+                }
+            }
+        )
 
     def handle_get_edit_url(self, data):
         """
@@ -301,10 +300,10 @@ class MediaBrowserView(TemplateView):
         # If the folder is not sheard between one or more shop and
         # the folder is in the subfolder tree of the users root folder or the user has folder renaming permissions.
         # Then they are alloed to change rename the folder.
-        if not _is_folder_shared(folder) and folder.media_folder.all().values_list("owners", flat=True)[0] is None and (
-            subfolder_of_users_root(self.user, folder) or
-            has_permission(self.user, "media.rename-folder")
-
+        if (
+            not _is_folder_shared(folder)
+            and folder.media_folder.all().values_list("owners", flat=True)[0] is None
+            and (subfolder_of_users_root(self.user, folder) or has_permission(self.user, "media.rename-folder"))
         ):
             folder.name = data["name"]
             try:
@@ -328,8 +327,7 @@ class MediaBrowserView(TemplateView):
         # the folder is in the subfolder tree of the users root folder or the user has the folder delete permissions.
         # Then they are alloed to delete the folder.
         if not _is_folder_shared(folder) and (
-            subfolder_of_users_root(self.user, folder) or
-            has_permission(self.user, "media.delete-folder")
+            subfolder_of_users_root(self.user, folder) or has_permission(self.user, "media.delete-folder")
         ):
             new_selected_folder_id = folder.parent_id  # This will be changed by the delete function so save it here.
             try:
@@ -393,25 +391,24 @@ class MediaBrowserView(TemplateView):
         old_folder = file.folder
         file.folder = folder
         file.save(update_fields=("folder",))
-        return JsonResponse({
-            "success": True,
-            "message": _("%(file)s moved from %(old)s to %(new)s.") % {
-                "file": file,
-                "old": get_folder_name(old_folder),
-                "new": get_folder_name(folder)
+        return JsonResponse(
+            {
+                "success": True,
+                "message": _("%(file)s moved from %(old)s to %(new)s.")
+                % {"file": file, "old": get_folder_name(old_folder), "new": get_folder_name(folder)},
             }
-        })
+        )
 
 
 def _process_form(request, folder):
     try:
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
-            filer_file = filer_image_from_upload(request, path=folder, upload_data=request.FILES['file'])
+            filer_file = filer_image_from_upload(request, path=folder, upload_data=request.FILES["file"])
         elif not request.FILES["file"].content_type.startswith("image/"):
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                filer_file = filer_file_from_upload(request, path=folder, upload_data=request.FILES['file'])
+                filer_file = filer_file_from_upload(request, path=folder, upload_data=request.FILES["file"])
 
         if not form.is_valid():
             return JsonResponse({"error": form.errors}, status=400)
@@ -420,13 +417,13 @@ def _process_form(request, folder):
     except Exception as exc:
         return JsonResponse({"error": force_text(exc)}, status=500)
 
-    return JsonResponse({
-        "file": filer_file_to_json_dict(filer_file),
-        "message": _("%(file)s uploaded to %(folder)s.") % {
-            "file": filer_file.label,
-            "folder": get_folder_name(folder)
+    return JsonResponse(
+        {
+            "file": filer_file_to_json_dict(filer_file),
+            "message": _("%(file)s uploaded to %(folder)s.")
+            % {"file": filer_file.label, "folder": get_folder_name(folder)},
         }
-    })
+    )
 
 
 def media_upload(request, *args, **kwargs):

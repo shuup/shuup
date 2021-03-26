@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,16 +20,13 @@ def send_user_reset_password_email(user_id: int, shop_id: int, reset_domain_url:
     user = get_user_model().objects.get(pk=user_id)
     uid = urlsafe_base64_encode(force_bytes(user_id))
     token = default_token_generator.make_token(user)
-    recovery_url = urljoin(
-        reset_domain_url,
-        reverse(reset_url_name, kwargs=dict(uidb64=uid, token=token))
-    )
+    recovery_url = urljoin(reset_domain_url, reverse(reset_url_name, kwargs=dict(uidb64=uid, token=token)))
     context = {
         "site_name": shop.public_name,
         "uid": uid,
         "user_to_recover": user,
         "token": token,
         "customer_email": user.email,
-        "recovery_url": recovery_url
+        "recovery_url": recovery_url,
     }
     PasswordReset(**context).run(shop=shop)

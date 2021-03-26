@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import random
-
 import pytest
+import random
 
 from shuup.discounts.models import Discount
 from shuup.testing import factories
@@ -41,14 +40,14 @@ def test_discounted_price(rf):
     # Ok now the actual test let's set the discounted price between 5 and 10
     # and it shouldn't become active since the 50% base discount
     for x in range(0, 5):
-        discounted_price = decimal.Decimal(random.randrange(501, 1000))/100
+        discounted_price = decimal.Decimal(random.randrange(501, 1000)) / 100
         discount = Discount.objects.create(active=True, product=product, discounted_price_value=discounted_price)
         discount.shops.add(shop)
         assert product.get_price_info(request).price == request.shop.create_price(5)
 
     assert product.get_price_info(request).price == request.shop.create_price(5)
     # And then finally let's set the lowest discounted price
-    discounted_price = decimal.Decimal(random.randrange(0, 500))/100
+    discounted_price = decimal.Decimal(random.randrange(0, 500)) / 100
     discount = Discount.objects.create(active=True, product=product, discounted_price_value=discounted_price)
     discount.shops.add(shop)
     assert product.get_price_info(request).price == request.shop.create_price(discounted_price)

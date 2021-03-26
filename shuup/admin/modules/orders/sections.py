@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,7 +39,7 @@ class BasicDetailsOrderSection(Section):
         return {
             "provided_information": provided_information,
             "multiple_shops_enabled": settings.SHUUP_ENABLE_MULTIPLE_SHOPS,
-            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS
+            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
         }
 
 
@@ -69,9 +69,13 @@ class ShipmentSection(Section):
 
     @staticmethod
     def visible_for_object(order, request=None):
+        if not order.shipping_method:
+            return False
+        if not order.shipping_method.carrier.uses_default_shipments_manager:
+            return False
         return (
-            order.has_products_requiring_shipment() or
-            Shipment.objects.all_except_deleted().filter(order=order).exists()
+            order.has_products_requiring_shipment()
+            or Shipment.objects.all_except_deleted().filter(order=order).exists()
         )
 
     @staticmethod
@@ -79,23 +83,31 @@ class ShipmentSection(Section):
         suppliers = Supplier.objects.filter(order_lines__order=order).distinct()
         create_permission = "order.create-shipment"
         delete_permission = "order.delete-shipment"
-        missing_permissions = get_missing_permissions(request.user, [create_permission, delete_permission])
+        set_sent_permission = "order.set-shipment-sent"
+        missing_permissions = get_missing_permissions(
+            request.user, [create_permission, delete_permission, set_sent_permission]
+        )
         create_urls = {}
+        delete_urls = {}
+        set_sent_urls = {}
+
         if create_permission not in missing_permissions:
             for supplier in suppliers:
                 create_urls[supplier.pk] = reverse(
-                    "shuup_admin:order.create-shipment", kwargs={"pk": order.pk, "supplier_pk": supplier.pk})
+                    "shuup_admin:order.create-shipment", kwargs={"pk": order.pk, "supplier_pk": supplier.pk}
+                )
 
-        delete_urls = {}
-        if delete_permission not in missing_permissions:
-            for shipment_id in order.shipments.all_except_deleted().values_list("id", flat=True):
-                delete_urls[shipment_id] = reverse(
-                    "shuup_admin:order.delete-shipment", kwargs={"pk": shipment_id})
+        for shipment_id in order.shipments.all_except_deleted().values_list("id", flat=True):
+            if delete_permission not in missing_permissions:
+                delete_urls[shipment_id] = reverse("shuup_admin:order.delete-shipment", kwargs={"pk": shipment_id})
+            if set_sent_permission not in missing_permissions:
+                set_sent_urls[shipment_id] = reverse("shuup_admin:order.set-shipment-sent", kwargs={"pk": shipment_id})
 
         return {
             "suppliers": suppliers,
             "create_urls": create_urls,
-            "delete_urls": delete_urls
+            "delete_urls": delete_urls,
+            "set_sent_urls": set_sent_urls,
         }
 
 

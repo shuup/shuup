@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
-
 from django.db.models import Count, F, Q, Sum
 from django.utils.translation import ugettext_lazy as _
 
@@ -34,9 +33,7 @@ class TaxesReport(OrderReportMixin, ShuupReportBase):
     ]
 
     def get_objects(self):
-        order_line_taxes = OrderLineTax.objects.filter(
-            order_line__order__in=super(TaxesReport, self).get_objects()
-        )
+        order_line_taxes = OrderLineTax.objects.filter(order_line__order__in=super(TaxesReport, self).get_objects())
 
         tax = self.options.get("tax")
         tax_class = self.options.get("tax_class")
@@ -47,31 +44,38 @@ class TaxesReport(OrderReportMixin, ShuupReportBase):
         if tax_class:
             filters &= Q(order_line__product__tax_class__in=tax_class)
 
-        return order_line_taxes.filter(filters).values(
-            "tax", "tax__rate"
-        ).annotate(
-            total_tax_amount=Sum("amount_value"),
-            total_pretax_amount=Sum("base_amount_value"),
-            total=Sum(F('amount_value') + F('base_amount_value'), output_field=MoneyValueField()),
-            order_count=Count("order_line__order", distinct=True)
-        ).order_by("total_tax_amount")
+        return (
+            order_line_taxes.filter(filters)
+            .values("tax", "tax__rate")
+            .annotate(
+                total_tax_amount=Sum("amount_value"),
+                total_pretax_amount=Sum("base_amount_value"),
+                total=Sum(F("amount_value") + F("base_amount_value"), output_field=MoneyValueField()),
+                order_count=Count("order_line__order", distinct=True),
+            )
+            .order_by("total_tax_amount")
+        )
 
     def get_data(self):
         data = []
         tax_map = {}
 
-        for tax_total in self.get_objects():
+        for tax_total in self.get_objects()[: self.queryset_row_limit]:
             # load tax on-demand
             if not tax_total["tax"] in tax_map:
                 tax_map[tax_total["tax"]] = Tax.objects.get(pk=tax_total["tax"])
 
-            data.append({
-                "tax": tax_map[tax_total["tax"]].name,
-                "tax_rate": tax_total["tax__rate"] * Decimal(100.0),
-                "order_count": tax_total["order_count"],
-                "total_pretax_amount": Money(tax_total["total_pretax_amount"], self.shop.currency).as_rounded().value,
-                "total_tax_amount": Money(tax_total["total_tax_amount"], self.shop.currency).as_rounded().value,
-                "total": Money(tax_total["total"], self.shop.currency).as_rounded().value
-            })
+            data.append(
+                {
+                    "tax": tax_map[tax_total["tax"]].name,
+                    "tax_rate": tax_total["tax__rate"] * Decimal(100.0),
+                    "order_count": tax_total["order_count"],
+                    "total_pretax_amount": Money(tax_total["total_pretax_amount"], self.shop.currency)
+                    .as_rounded()
+                    .value,
+                    "total_tax_amount": Money(tax_total["total_tax_amount"], self.shop.currency).as_rounded().value,
+                    "total": Money(tax_total["total"], self.shop.currency).as_rounded().value,
+                }
+            )
 
         return self.get_return_data(data)

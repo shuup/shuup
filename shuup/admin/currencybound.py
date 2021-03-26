@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,6 +18,7 @@ class CurrencyBound(object):
     `module_registry.register` (which is called at import because
     `admin.urls` calls `get_module_urls` at import).
     """
+
     def __init__(self, currency=None, *args, **kwargs):
         self._currency = currency
         super(CurrencyBound, self).__init__(*args, **kwargs)

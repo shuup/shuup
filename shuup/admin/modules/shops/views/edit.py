@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,15 +14,11 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
-)
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.modules.shops.forms import ContactAddressForm, ShopBaseForm
 from shuup.admin.shop_provider import set_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
-from shuup.admin.utils.views import (
-    check_and_raise_if_only_one_allowed, CreateOrUpdateView
-)
+from shuup.admin.utils.views import CreateOrUpdateView, check_and_raise_if_only_one_allowed
 from shuup.admin.utils.wizard import onboarding_complete
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
@@ -39,10 +35,7 @@ class ShopBaseFormPart(FormPart):
             ShopBaseForm,
             template_name="shuup/admin/shops/_edit_base_shop_form.jinja",
             required=True,
-            kwargs={
-                "instance": self.object,
-                "languages": settings.LANGUAGES
-            }
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES},
         )
 
     def form_valid(self, form):
@@ -59,7 +52,7 @@ class ContactAddressFormPart(FormPart):
             ContactAddressForm,
             template_name="shuup/admin/shops/_edit_contact_address_form.jinja",
             required=False,
-            kwargs={"instance": self.object.contact_address, "initial": initial}
+            kwargs={"instance": self.object.contact_address, "initial": initial},
         )
 
     def form_valid(self, form):
@@ -101,8 +94,7 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         with_split_save = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
-        toolbar = get_default_edit_toolbar(
-            self, save_form_id, with_split_save=with_split_save)
+        toolbar = get_default_edit_toolbar(self, save_form_id, with_split_save=with_split_save)
 
         for button in get_provide_objects("admin_shop_edit_toolbar_button"):
             if button.visible_for_object(self.object):

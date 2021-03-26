@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,9 +18,9 @@ class TemplateUse(Enum):
     MULTILINGUAL = 2
 
     class Labels:
-        NONE = _('none')
-        UNILINGUAL = _('unilingual')
-        MULTILINGUAL = _('multilingual')
+        NONE = _("none")
+        UNILINGUAL = _("unilingual")
+        MULTILINGUAL = _("multilingual")
 
 
 class ConstantUse(Enum):
@@ -29,9 +29,9 @@ class ConstantUse(Enum):
     VARIABLE_OR_CONSTANT = 3
 
     class Labels:
-        VARIABLE_ONLY = _('variable only')
-        CONSTANT_ONLY = _('constant only')
-        VARIABLE_OR_CONSTANT = _('variable or constant')
+        VARIABLE_ONLY = _("variable only")
+        CONSTANT_ONLY = _("constant only")
+        VARIABLE_OR_CONSTANT = _("variable or constant")
 
 
 class StepNext(Enum):
@@ -70,7 +70,7 @@ class Priority(Enum):
     CRITICAL = 4
 
     class Labels:
-        LOW = _('low')
-        NORMAL = _('normal')
-        HIGH = _('high')
-        CRITICAL = _('critical')
+        LOW = _("low")
+        NORMAL = _("normal")
+        HIGH = _("high")
+        CRITICAL = _("critical")

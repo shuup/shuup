@@ -8,8 +8,6 @@ without an instance.
 This fixes some warnings that Sphinx will yield when it tries to parse
 Shuup's models.
 """
-
-import django.db.models.manager
 import django_countries.fields
 import jsonfield.subclassing
 
@@ -37,14 +35,14 @@ class PatchFor(object):
         return self.patcher(self.original, *args, **kwargs)
 
 
-@PatchFor(django_countries.fields.CountryDescriptor, '__get__')
+@PatchFor(django_countries.fields.CountryDescriptor, "__get__")
 def country_descriptor_get(original, self, instance=None, owner=None):
     if instance is None:
         return self
     return original(self, instance, owner)
 
 
-@PatchFor(jsonfield.subclassing.Creator, '__get__')
+@PatchFor(jsonfield.subclassing.Creator, "__get__")
 def jsonfield_creator_get(original, self, obj, type=None):
     if obj is None:
         return self

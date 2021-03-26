@@ -1,19 +1,16 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import django
 import json
-import tempfile
-
 import mock
 import pytest
+import tempfile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import ProtectedError
-
-from shuup.utils.django_compat import reverse
 from django.http import JsonResponse
 from django.test import override_settings
 from django.test.client import RequestFactory
@@ -26,10 +23,9 @@ from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.testing import factories
 from shuup.testing.factories import generate_image, get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
+from shuup.utils.filer import can_see_root_folder, ensure_media_folder, get_or_create_folder
 from shuup_tests.utils import printable_gibberish
-from shuup.utils.filer import (
-    can_see_root_folder, ensure_media_folder, get_or_create_folder
-)
 
 
 @pytest.mark.django_db
@@ -41,8 +37,7 @@ def test_media_view_images(rf, admin_user, is_public, expected_file_count):
     img = Image.objects.create(name="imagefile", folder=folder, is_public=is_public)
 
     request = apply_request_middleware(
-        rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}),
-        user=admin_user
+        rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}), user=admin_user
     )
     request.user = admin_user
     view_func = MediaBrowserView.as_view()
@@ -70,10 +65,7 @@ def test_media_view_images_without_root_access(rf):
     File.objects.create(name="normalfile", folder=folder)
     img = Image.objects.create(name="imagefile", folder=folder, is_public=True)
 
-    request = apply_request_middleware(
-        rf.get("/", {"filter": "images", "action": "folder"}),
-        user=staff_user
-    )
+    request = apply_request_middleware(rf.get("/", {"filter": "images", "action": "folder"}), user=staff_user)
     request.user = staff_user
     view_func = MediaBrowserView.as_view()
     response = view_func(request)
@@ -390,15 +382,13 @@ def test_upload_invalid_image(rf, admin_user):
 def test_upload_valid_image(client, rf, admin_user):
     assert File.objects.count() == 0
 
-    tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+    tmp_file = tempfile.NamedTemporaryFile(suffix=".jpg")
     generate_image(120, 120).save(tmp_file)
-    #tmp_file.seek(0)
+    # tmp_file.seek(0)
     client.login(username="admin", password="password")
-    with open(tmp_file.name, 'rb') as data:
+    with open(tmp_file.name, "rb") as data:
         response = client.post(
-            reverse("shuup_admin:media.upload"),
-            data=dict({"action": "upload", "file": data}),
-            format="multipart"
+            reverse("shuup_admin:media.upload"), data=dict({"action": "upload", "file": data}), format="multipart"
         )
 
     assert File.objects.count() == 1
@@ -407,16 +397,14 @@ def test_upload_valid_image(client, rf, admin_user):
 @pytest.mark.django_db
 def test_large_image(client, rf, admin_user):
     assert File.objects.count() == 0
-    with override_settings(SHUUP_MAX_UPLOAD_SIZE = 10):
-        tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+    with override_settings(SHUUP_MAX_UPLOAD_SIZE=10):
+        tmp_file = tempfile.NamedTemporaryFile(suffix=".jpg")
         generate_image(120, 120).save(tmp_file)
-        #tmp_file.seek(0)
+        # tmp_file.seek(0)
         client.login(username="admin", password="password")
-        with open(tmp_file.name, 'rb') as data:
+        with open(tmp_file.name, "rb") as data:
             response = client.post(
-                reverse("shuup_admin:media.upload"),
-                data=dict({"action": "upload", "file": data}),
-                format="multipart"
+                reverse("shuup_admin:media.upload"), data=dict({"action": "upload", "file": data}), format="multipart"
             )
             assert response.status_code == 400
             data = json.loads(response.content.decode("utf-8"))

@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import pytest
-
 from selenium.common.exceptions import ElementNotInteractableException
 
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    move_to_element,
+    wait_until_condition,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -48,7 +48,9 @@ def test_dashbord_tour(browser, admin_user, live_server, settings):
     browser.visit(live_server + "/sa")
 
     # test with admin_user 2
-    initialize_admin_browser_test(browser, live_server, settings, shop=shop, tour_complete=False, username=admin_user_2.username)
+    initialize_admin_browser_test(
+        browser, live_server, settings, shop=shop, tour_complete=False, username=admin_user_2.username
+    )
     wait_until_condition(browser, lambda x: x.is_text_present("Welcome!"))
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("#menu-button"))
     wait_until_condition(browser, lambda x: x.is_text_present("This is the dashboard for your store."), timeout=30)
@@ -155,7 +157,7 @@ def test_product_tour(browser, admin_user, live_server, settings):
             "a.shepherd-enabled[href='#product-media-section']",
             "a.shepherd-enabled[href='#product-images-section']",
             "a.shepherd-enabled[href='#contact-group-pricing-section']",
-            "a.shepherd-enabled[href='#contact-group-discount-section']"
+            "a.shepherd-enabled[href='#contact-group-discount-section']",
         ]
 
         # Scroll top before starting to click. For some reason the first

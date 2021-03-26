@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -28,13 +28,13 @@ class CartViewMixin(object):
 
 
 class CartListView(DashboardViewMixin, CartViewMixin, ListView):
-    template_name = 'shuup/saved_carts/cart_list.jinja'
-    context_object_name = 'carts'
+    template_name = "shuup/saved_carts/cart_list.jinja"
+    context_object_name = "carts"
 
 
 class CartDetailView(DashboardViewMixin, CartViewMixin, DetailView):
-    template_name = 'shuup/saved_carts/cart_detail.jinja'
-    context_object_name = 'cart'
+    template_name = "shuup/saved_carts/cart_detail.jinja"
+    context_object_name = "cart"
 
     def get_queryset(self):
         qs = super(CartDetailView, self).get_queryset()
@@ -52,10 +52,12 @@ class CartDetailView(DashboardViewMixin, CartViewMixin, DetailView):
                 continue
             product = product_dict[line["product_id"]]
             quantity = line.get("quantity", 0)
-            lines.append({
-                "product": product,
-                "quantity": quantity,
-            })
+            lines.append(
+                {
+                    "product": product,
+                    "quantity": quantity,
+                }
+            )
         context["lines"] = lines
         return context
 
@@ -80,7 +82,8 @@ class CartSaveView(View):
             persistent=True,
             title=title,
             data=basket.storage.load(basket=basket),
-            product_count=basket.smart_product_count)
+            product_count=basket.smart_product_count,
+        )
         saved_basket.save()
         saved_basket.products.set(set(basket.product_ids))
         return JsonResponse({"ok": True}, status=200)
@@ -104,7 +107,7 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
         product_ids_to_quantities = basket.get_product_ids_and_quantities()
         errors = []
         quantity_added = 0
-        for line in cart.data.get('lines', []):
+        for line in cart.data.get("lines", []):
             if line.get("type", None) != OrderLineType.PRODUCT:
                 continue
             product = Product.objects.get(id=line.get("product_id", None))
@@ -114,7 +117,8 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
                 errors.append({"product": line.text, "message": _("Product is not available in this shop.")})
                 continue
             supplier = self._get_supplier(
-                shop_product, line.get("supplier_id"), basket.customer, line.get("quantity"), basket.shipping_address)
+                shop_product, line.get("supplier_id"), basket.customer, line.get("quantity"), basket.shipping_address
+            )
             if not supplier:
                 errors.append({"product": line.text, "message": _("Invalid supplier.")})
                 continue
@@ -124,20 +128,14 @@ class CartAddAllProductsView(CartViewMixin, SingleObjectMixin, View):
                 quantity_added += quantity
                 product_quantity = quantity + product_ids_to_quantities.get(line["product_id"], 0)
                 shop_product.raise_if_not_orderable(
-                    supplier=supplier,
-                    quantity=product_quantity,
-                    customer=request.customer)
-                basket.add_product(
-                    supplier=supplier,
-                    shop=request.shop,
-                    product=product,
-                    quantity=quantity)
+                    supplier=supplier, quantity=product_quantity, customer=request.customer
+                )
+                basket.add_product(supplier=supplier, shop=request.shop, product=product, quantity=quantity)
             except ProductNotOrderableProblem as e:
                 errors.append({"product": line["text"], "message": force_text(e.message)})
-        return JsonResponse({
-            "errors": errors,
-            "success": force_text(_("%d product(s) added to cart." % quantity_added))
-        }, status=200)
+        return JsonResponse(
+            {"errors": errors, "success": force_text(_("%d product(s) added to cart." % quantity_added))}, status=200
+        )
 
 
 class CartDeleteView(CartViewMixin, SingleObjectMixin, View):

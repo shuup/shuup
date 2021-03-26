@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,12 +18,14 @@ from shuup_tests.xtheme.utils import H2G2Theme
 
 
 def test_xtheme_extra_views(rf):
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         with override_current_theme_class(H2G2Theme, get_default_shop()):
             request = rf.get("/", {"name": "Arthur Dent"})
@@ -39,12 +41,14 @@ def test_xtheme_extra_views(rf):
 
 
 def test_xtheme_extra_view_exceptions(rf):
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         with override_current_theme_class(H2G2Theme, get_default_shop()):
             request = rf.get("/")

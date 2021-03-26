@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,21 +20,12 @@ class ReportsAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:reports.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "^reports/$",
-                "shuup.reports.admin_module.views.ReportView",
-                name="reports.list"
-            )
-        ]
+        return [admin_url("^reports/$", "shuup.reports.admin_module.views.ReportView", name="reports.list")]
 
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=self.name,
-                icon="fa fa-image",
-                url="shuup_admin:reports.list",
-                category=REPORTS_MENU_CATEGORY
+                text=self.name, icon="fa fa-image", url="shuup_admin:reports.list", category=REPORTS_MENU_CATEGORY
             )
         ]
 

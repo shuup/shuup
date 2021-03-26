@@ -12,6 +12,72 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - CORE: Add .jsx support for shuup_makemessages command
 
+### Fixed
+
+- Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
+- Admin: Fix picotable mobile styling to default to full-width
+
+## [2.5.0] - 2021-03-22
+
+### Changed
+
+- Front: Add so `basket.get_final_lines(with_taxes=True)` gets called after selecting shipping- and payment method.
+  Reason for this is so all the taxes gets calculated before end customers fills in their payment details
+- Core: undeprecate signals for ShopProduct model
+
+### Added
+
+- Core: add attribute in Carrier model to control whether to manage shipments using default behavior
+- Admin: add shipment list view to list all shipments
+
+### Fixed
+
+- Notify: Fix so there is no 500 error when accessing EmailTemplate settings page
+- Taxes: fallback location to billing address when shipping address is not available
+- Importer: Ignore rows without any data
+
+## [2.4.0] - 2021-03-02
+
+### Added
+
+- Admin: add option to hide font selection and always paste plain text in summernote editors
+
+### Changed
+
+- Core: move refund order line logic to tax module
+  - Since each refund line you need to take care of the taxes it is
+  more logical if the tax module handles the whole thing. With some
+  3rd party taxation tool you need an option to handle refund taxes
+  in different way.
+
+### Fixed
+
+- Added missing labels to product category and supplier fields
+
+## [2.3.18] - 2021-03-01
+
+### Added
+
+- Front: create shipment sent notify event
+- Core: add shipment tracking url to shipment model
+- Admin: add shipment action to mark a shipment as sent
+
+### Changed
+
+- Admin: fix product module not to fail on object does not exists
+- Front: update media upload URL from "media-upload/" to "upload-media/"
+- Core: bump attribute name to 256 characters
+
+## [2.3.17] - 2021-02-23
+
+### Fixed
+
+- Core: Adding normal products with only deleted children to basket
+
+### Removed
+
+- Front: remove templatecache around basket partial as not stable with custom baskets
+
 ## [2.3.16] - 2021-02-18
 
 ### Fixed

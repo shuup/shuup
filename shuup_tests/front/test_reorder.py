@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-from shuup.utils.django_compat import reverse
 from django.test.client import Client
-from shuup.simple_supplier.module import SimpleSupplierModule
 
-from shuup.testing import factories
 from shuup.core.models import ShippingMode
+from shuup.simple_supplier.module import SimpleSupplierModule
+from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 
 
 @pytest.mark.django_db
@@ -26,18 +26,10 @@ def test_reorder_view():
     assert supplier1.pk != supplier2.pk
 
     product_supplier1 = factories.create_product(
-        "product_supplier1",
-        shop=shop,
-        supplier=supplier1,
-        default_price=10,
-        shipping_mode=ShippingMode.NOT_SHIPPED
+        "product_supplier1", shop=shop, supplier=supplier1, default_price=10, shipping_mode=ShippingMode.NOT_SHIPPED
     )
     product_supplier2 = factories.create_product(
-        "product_supplier2",
-        shop=shop,
-        supplier=supplier2,
-        default_price=20,
-        shipping_mode=ShippingMode.NOT_SHIPPED
+        "product_supplier2", shop=shop, supplier=supplier2, default_price=20, shipping_mode=ShippingMode.NOT_SHIPPED
     )
 
     user = factories.create_random_user("en")
@@ -53,7 +45,7 @@ def test_reorder_view():
         shop=shop,
         products=[product_supplier1, product_supplier2],
         completion_probability=0,
-        random_products=False
+        random_products=False,
     )
     suppliers = [line.supplier for line in order.lines.products()]
     assert supplier1 in suppliers
@@ -90,6 +82,7 @@ def test_reorder_view():
     # ensure the basket contain those products and suppliers
     basket_key = client.session["basket_basket_key"]["key"]
     from shuup.front.models import StoredBasket
+
     basket = StoredBasket.objects.get(key=basket_key)
     lines = basket.data["lines"]
     product_supplier = [(line["product_id"], line["supplier_id"]) for line in lines]

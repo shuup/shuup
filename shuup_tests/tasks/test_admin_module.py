@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import AnonymousContact, get_person_contact
 from shuup.tasks.admin_module import TaskAdminModule
-from shuup.tasks.models import (
-    Task, TaskComment, TaskCommentVisibility, TaskStatus, TaskType
-)
+from shuup.tasks.models import Task, TaskComment, TaskCommentVisibility, TaskStatus, TaskType
 from shuup.tasks.utils import create_task
 from shuup.testing import factories
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 ADMIN_PWD = "admin"
@@ -47,12 +44,9 @@ def test_task_admin(admin_user):
     # get the form fields
     soup = client.soup(new_task_url)
     payload = extract_form_fields(soup)
-    payload.update({
-        "base-name": "My Task",
-        "base-type": task_type.id,
-        "base-assigned_to": admin_contact.id,
-        "base-priority": 10
-    })
+    payload.update(
+        {"base-name": "My Task", "base-type": task_type.id, "base-assigned_to": admin_contact.id, "base-priority": 10}
+    )
     response = client.post(new_task_url, payload)
     assert response.status_code == 302
     assert Task.objects.count() == 1
@@ -61,14 +55,7 @@ def test_task_admin(admin_user):
 
     # List Tasks
     list_task_url = reverse("shuup_admin:task.list")
-    list_data = {
-        "jq": json.dumps({
-            "sort": None,
-            "perPage": 20,
-            "page": 1,
-            "filters": {}
-        })
-    }
+    list_data = {"jq": json.dumps({"sort": None, "perPage": 20, "page": 1, "filters": {}})}
     response = client.get(list_task_url, data=list_data)
     assert task.name in response.content.decode("utf-8")
 
@@ -79,9 +66,7 @@ def test_task_admin(admin_user):
 
     soup = client.soup(edit_task_url)
     payload = extract_form_fields(soup)
-    payload.update({
-        "comment-body": "Comment here"
-    })
+    payload.update({"comment-body": "Comment here"})
     response = client.post(edit_task_url, payload)
     assert response.status_code == 302
     assert Task.objects.count() == 1
@@ -164,9 +149,7 @@ def test_task_type_admin(admin_user):
     # get the form fields
     soup = client.soup(new_task_type_url)
     payload = extract_form_fields(soup)
-    payload.update({
-        "name__en": "My Task Type"
-    })
+    payload.update({"name__en": "My Task Type"})
     response = client.post(new_task_type_url, payload)
     assert response.status_code == 302
     assert TaskType.objects.count() == 1
@@ -174,14 +157,7 @@ def test_task_type_admin(admin_user):
 
     # List task types
     list_task_type_url = reverse("shuup_admin:task_type.list")
-    list_data = {
-        "jq": json.dumps({
-            "sort": None,
-            "perPage": 20,
-            "page": 1,
-            "filters": {}
-        })
-    }
+    list_data = {"jq": json.dumps({"sort": None, "perPage": 20, "page": 1, "filters": {}})}
     response = client.get(list_task_type_url, data=list_data)
     assert task_type.name in response.content.decode("utf-8")
 
@@ -190,8 +166,6 @@ def test_task_type_admin(admin_user):
 
     soup = client.soup(edit_task_type_url)
     payload = extract_form_fields(soup)
-    payload.update({
-        "name__en": "My Task Type Edited"
-    })
+    payload.update({"name__en": "My Task Type Edited"})
     response = client.post(edit_task_type_url, payload)
     assert response.status_code == 302

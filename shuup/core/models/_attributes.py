@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,10 +9,9 @@ from __future__ import unicode_literals, with_statement
 
 import calendar
 import datetime
+import six
 from collections import defaultdict
 from decimal import Decimal
-
-import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,15 +20,13 @@ from django.template.defaultfilters import yesno
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
-from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
-from shuup.core.templatetags.shuup_common import datetime as format_datetime
-from shuup.core.templatetags.shuup_common import number as format_number
+from shuup.core.templatetags.shuup_common import datetime as format_datetime, number as format_number
 from shuup.utils.analog import define_log_model
 from shuup.utils.dates import parse_date
 from shuup.utils.numbers import parse_decimal_string
@@ -45,10 +42,10 @@ class AttributeVisibility(Enum):
     NOT_VISIBLE = 3
 
     class Labels:
-        HIDDEN = _('hidden')
-        SHOW_ON_PRODUCT_PAGE = _('shown on product page')
-        SEARCHABLE_FIELD = _('searchable metadata')
-        NOT_VISIBLE = _('private metadata')
+        HIDDEN = _("hidden")
+        SHOW_ON_PRODUCT_PAGE = _("shown on product page")
+        SEARCHABLE_FIELD = _("searchable metadata")
+        NOT_VISIBLE = _("private metadata")
 
 
 class AttributeType(Enum):
@@ -64,16 +61,16 @@ class AttributeType(Enum):
     UNTRANSLATED_STRING = 21
 
     class Labels:
-        INTEGER = _('integer')
-        DECIMAL = _('decimal')
-        BOOLEAN = _('boolean')
-        TIMEDELTA = _('time interval')
+        INTEGER = _("integer")
+        DECIMAL = _("decimal")
+        BOOLEAN = _("boolean")
+        TIMEDELTA = _("time interval")
 
-        DATETIME = _('date and time')
-        DATE = _('date only')
+        DATETIME = _("date and time")
+        DATE = _("date only")
 
-        TRANSLATED_STRING = _('translated string')
-        UNTRANSLATED_STRING = _('untranslated string')
+        TRANSLATED_STRING = _("translated string")
+        UNTRANSLATED_STRING = _("untranslated string")
 
 
 ATTRIBUTE_STRING_TYPES = (
@@ -102,42 +99,52 @@ class AttributeQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Attribute(TranslatableModel):
     identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
-    searchable = models.BooleanField(default=True, verbose_name=_("searchable"), help_text=_(
-        "Searchable attributes will be used for product lookup when customers search in your store."
-    ))
+    searchable = models.BooleanField(
+        default=True,
+        verbose_name=_("searchable"),
+        help_text=_("Searchable attributes will be used for product lookup when customers search in your store."),
+    )
     type = EnumIntegerField(
-        AttributeType, default=AttributeType.TRANSLATED_STRING, verbose_name=_("type"), help_text=_(
-            "The attribute data type. Attribute values can be set on the product editor page."
-        ))
+        AttributeType,
+        default=AttributeType.TRANSLATED_STRING,
+        verbose_name=_("type"),
+        help_text=_("The attribute data type. Attribute values can be set on the product editor page."),
+    )
     visibility_mode = EnumIntegerField(
         AttributeVisibility,
         default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
         verbose_name=_("visibility mode"),
         help_text=_(
             "Select the attribute visibility setting. "
-            "Attributes can be shown on the product detail page or can be used to enhance product search results."))
+            "Attributes can be shown on the product detail page or can be used to enhance product search results."
+        ),
+    )
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
-            "The attribute name. "
-            "Product attributes can be used to list the various features of a product and can be shown on the "
-            "product detail page. The product attributes for a product are determined by the product type and can "
-            "be set on the product editor page."
-        )),
+        name=models.CharField(
+            max_length=256,
+            verbose_name=_("name"),
+            help_text=_(
+                "The attribute name. "
+                "Product attributes can be used to list the various features of a product and can be shown on the "
+                "product detail page. The product attributes for a product are determined by the product type and can "
+                "be set on the product editor page."
+            ),
+        ),
     )
 
     objects = AttributeQuerySet.as_manager()
 
     class Meta:
-        verbose_name = _('attribute')
-        verbose_name_plural = _('attributes')
+        verbose_name = _("attribute")
+        verbose_name_plural = _("attributes")
 
     def __str__(self):
-        return u'%s' % self.name
+        return "%s" % self.name
 
     def save(self, *args, **kwargs):
         if not self.identifier:
-            raise ValueError(u"Error! Attribute with null identifier is not allowed.")
+            raise ValueError("Error! Attribute with null identifier is not allowed.")
         self.identifier = flatten(("%s" % self.identifier).lower())
         return super(Attribute, self).save(*args, **kwargs)
 
@@ -177,20 +184,20 @@ class Attribute(TranslatableModel):
 
     @property
     def is_translated(self):
-        return (self.type == AttributeType.TRANSLATED_STRING)
+        return self.type == AttributeType.TRANSLATED_STRING
 
     @property
     def is_stringy(self):
         # Pun intended.
-        return (self.type in ATTRIBUTE_STRING_TYPES)
+        return self.type in ATTRIBUTE_STRING_TYPES
 
     @property
     def is_numeric(self):
-        return (self.type in ATTRIBUTE_NUMERIC_TYPES)
+        return self.type in ATTRIBUTE_NUMERIC_TYPES
 
     @property
     def is_temporal(self):
-        return (self.type in ATTRIBUTE_DATETIME_TYPES)
+        return self.type in ATTRIBUTE_DATETIME_TYPES
 
     def is_null_value(self, value):
         """
@@ -202,8 +209,8 @@ class Attribute(TranslatableModel):
         :rtype: bool
         """
         if self.type == AttributeType.BOOLEAN:
-            return (value is None)
-        return (not value)
+            return value is None
+        return not value
 
 
 class AppliedAttribute(TranslatableModel):
@@ -212,9 +219,11 @@ class AppliedAttribute(TranslatableModel):
     attribute = models.ForeignKey(on_delete=models.CASCADE, to=Attribute, verbose_name=_("attribute"))
 
     numeric_value = models.DecimalField(
-        null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True)
+        null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True
+    )
     datetime_value = models.DateTimeField(
-        auto_now_add=False, editable=True, null=True, blank=True, verbose_name=_("datetime value"), db_index=True)
+        auto_now_add=False, editable=True, null=True, blank=True, verbose_name=_("datetime value"), db_index=True
+    )
     untranslated_string_value = models.TextField(blank=True, verbose_name=_("untranslated value"))
 
     # Concrete subclasses will require this TranslatedFields declaration:
@@ -260,7 +269,7 @@ class AppliedAttribute(TranslatableModel):
         if self.attribute.type == AttributeType.TRANSLATED_STRING:
             if self.has_translation():
                 return self.translated_string_value
-            return u""
+            return ""
 
         raise ValueError("Error! Unknown attribute type.")  # pragma: no cover
 
@@ -378,24 +387,22 @@ class AppliedAttribute(TranslatableModel):
         return six.text_type(self.value)
 
     def __repr__(self):  # pragma: no cover
-        return '<%s of %r: %s=%r>' % (
+        return "<%s of %r: %s=%r>" % (
             type(self).__name__,
             getattr(self, self._applied_fk_field or "", None),
             self.attribute.identifier,
-            self.value
+            self.value,
         )
 
 
 class AttributableMixin(object):
-
     def _set_cached_attribute(self, language, identifier, applied_attribute):
         if not hasattr(self, "_attr_cache"):
             self._attr_cache = {}
         self._attr_cache[(language, identifier or applied_attribute.attribute.identifier)] = applied_attribute
 
     @classmethod
-    def cache_attributes_for_targets(
-            cls, applied_attr_cls, targets, attribute_identifiers, language):
+    def cache_attributes_for_targets(cls, applied_attr_cls, targets, attribute_identifiers, language):
         if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
             return targets
 
@@ -403,7 +410,7 @@ class AttributableMixin(object):
         attr_ids = set()
         filter_kwargs = {
             "%s_id__in" % (applied_attr_cls._applied_fk_field): (t.pk for t in targets),
-            "attribute__identifier__in": attribute_identifiers
+            "attribute__identifier__in": attribute_identifiers,
         }
 
         for applied_attr in applied_attr_cls.objects.language(language).filter(**filter_kwargs):
@@ -417,9 +424,7 @@ class AttributableMixin(object):
 
             for applied_attr in applied_attrs_by_target_id.get(target.id, ()):
                 setattr(
-                    applied_attr,
-                    applied_attr.__class__.attribute.field.name,
-                    attr_map.get(applied_attr.attribute_id)
+                    applied_attr, applied_attr.__class__.attribute.field.name, attr_map.get(applied_attr.attribute_id)
                 )
                 target._set_cached_attribute(language, applied_attr.attribute.identifier, applied_attr)
 
@@ -495,8 +500,7 @@ class AttributableMixin(object):
         if applied_attr is None:
             try:
                 applied_attr = (
-                    self.attributes.language(language).select_related("attribute")
-                    .get(attribute__identifier=identifier)
+                    self.attributes.language(language).select_related("attribute").get(attribute__identifier=identifier)
                 )
             except ObjectDoesNotExist:
                 applied_attr = None

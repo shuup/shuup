@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import itertools
-from operator import itemgetter
-
 from django.utils.translation import ugettext_lazy as _
+from operator import itemgetter
 
 from shuup.core.models import OrderLine
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
@@ -33,7 +32,11 @@ class ProductSalesReport(OrderReportMixin, ShuupReportBase):
 
     def get_objects(self):
         order_line_qs = OrderLine.objects.products().filter(order__in=super(ProductSalesReport, self).get_objects())
-        return order_line_qs.select_related("product").prefetch_related("taxes").order_by("product__id")
+        return (
+            order_line_qs.select_related("product")
+            .prefetch_related("taxes")
+            .order_by("product__id")[: self.queryset_row_limit]
+        )
 
     def get_data(self):
         data = []
@@ -53,13 +56,15 @@ class ProductSalesReport(OrderReportMixin, ShuupReportBase):
                 if not product:
                     product = order_line.product
 
-            data.append({
-                "product": product.name,
-                "sku": product.sku,
-                "quantity": quantity,
-                "taxful_total": taxful_total.as_rounded().value,
-                "taxless_total": taxless_total.as_rounded().value,
-            })
+            data.append(
+                {
+                    "product": product.name,
+                    "sku": product.sku,
+                    "quantity": quantity,
+                    "taxful_total": taxful_total.as_rounded().value,
+                    "taxless_total": taxless_total.as_rounded().value,
+                }
+            )
 
         order_by = self.options.get("order_by")
         if order_by:

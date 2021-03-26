@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,15 +12,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.shop_provider import get_shop
-from shuup.campaigns.admin_module.forms import (
-    BasketCampaignForm, CatalogCampaignForm
-)
+from shuup.campaigns.admin_module.forms import BasketCampaignForm, CatalogCampaignForm
 from shuup.campaigns.models import ContactGroupSalesRange
 
 from .form_sets import (
-    BasketConditionsFormSet, BasketDiscountEffectsFormSet,
-    BasketLineEffectsFormSet, CatalogConditionsFormSet, CatalogEffectsFormSet,
-    CatalogFiltersFormSet
+    BasketConditionsFormSet,
+    BasketDiscountEffectsFormSet,
+    BasketLineEffectsFormSet,
+    CatalogConditionsFormSet,
+    CatalogEffectsFormSet,
+    CatalogFiltersFormSet,
 )
 
 
@@ -28,13 +29,8 @@ class SalesRangesForm(forms.ModelForm):
     class Meta:
         model = ContactGroupSalesRange
         fields = ["min_value", "max_value"]
-        labels = {
-            "min_value": _("Minimum value"),
-            "max_value": _("Maximum value")
-        }
-        help_texts = {
-            "max_value": _("Leave empty for no maximum")
-        }
+        labels = {"min_value": _("Minimum value"), "max_value": _("Maximum value")}
+        help_texts = {"max_value": _("Leave empty for no maximum")}
 
     def __init__(self, **kwargs):
         super(SalesRangesForm, self).__init__(**kwargs)
@@ -63,7 +59,7 @@ class SalesRangesFormPart(FormPart):
                 form_class=self.form,
                 template_name="shuup/campaigns/admin/sales_ranges_form_part.jinja",
                 required=False,
-                kwargs={"instance": instance}
+                kwargs={"instance": instance},
             )
 
     def form_valid(self, form):
@@ -87,7 +83,7 @@ class CampaignBaseFormPart(FormPart):
             self.form,
             required=True,
             template_name="shuup/campaigns/admin/_edit_base_form.jinja",
-            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):

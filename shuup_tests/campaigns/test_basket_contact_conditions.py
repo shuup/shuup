@@ -1,22 +1,25 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.utils.translation import activate
 
-from shuup.campaigns.models.basket_conditions import (
-    ContactBasketCondition, ContactGroupBasketCondition
-)
+from shuup.campaigns.models.basket_conditions import ContactBasketCondition, ContactGroupBasketCondition
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
 from shuup.campaigns.models.campaigns import BasketCampaign
 from shuup.core.models import AnonymousContact, Shop
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_customer_group,
-    get_default_supplier, get_payment_method, get_shipping_method, get_shop
+    create_product,
+    create_random_person,
+    get_default_customer_group,
+    get_default_supplier,
+    get_payment_method,
+    get_shipping_method,
+    get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -32,7 +35,8 @@ def get_request_for_contact_tests(rf):
 
 def create_basket_and_campaign(request, conditions, product_price_value, campaign_discount_value):
     product = create_product(
-        "Some crazy product", request.shop, get_default_supplier(), default_price=product_price_value)
+        "Some crazy product", request.shop, get_default_supplier(), default_price=product_price_value
+    )
     basket = get_basket(request)
     basket.customer = request.customer
     supplier = get_default_supplier()
@@ -44,8 +48,7 @@ def create_basket_and_campaign(request, conditions, product_price_value, campaig
     assert basket.product_count == 1
     original_price = basket.total_price
 
-    campaign = BasketCampaign.objects.create(
-        shop=request.shop, name="test", public_name="test", active=True)
+    campaign = BasketCampaign.objects.create(shop=request.shop, name="test", public_name="test", active=True)
     BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=campaign_discount_value)
 
     for condition in conditions:
@@ -80,7 +83,8 @@ def test_basket_contact_group_condition(rf):
     condition = ContactGroupBasketCondition.objects.create()
     condition.contact_groups.add(default_group)
     basket, original_line_count, original_price = create_basket_and_campaign(
-        request, [condition], product_price_value, campaign_discount_value)
+        request, [condition], product_price_value, campaign_discount_value
+    )
 
     assert basket.customer == customer
     assert_discounted_basket(basket, original_line_count, original_price, campaign_discount_value)
@@ -98,7 +102,8 @@ def test_group_basket_condition_with_anonymous_contact(rf):
     condition.contact_groups.add(request.customer.groups.first())
 
     basket, original_line_count, original_price = create_basket_and_campaign(
-        request, [condition], product_price_value, campaign_discount_value)
+        request, [condition], product_price_value, campaign_discount_value
+    )
 
     assert isinstance(basket.customer, AnonymousContact)
     assert_discounted_basket(basket, original_line_count, original_price, campaign_discount_value)
@@ -123,7 +128,8 @@ def test_basket_contact_condition(rf):
     condition = ContactBasketCondition.objects.create()
     condition.contacts.add(random_person)
     basket, original_line_count, original_price = create_basket_and_campaign(
-        request, [condition], product_price_value, campaign_discount_value)
+        request, [condition], product_price_value, campaign_discount_value
+    )
 
     # random_person should get this campaign
     assert basket.customer == random_person

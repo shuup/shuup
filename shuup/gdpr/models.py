@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,19 +10,18 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.lru_cache import lru_cache
-from django.utils.translation import activate, get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language, ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from reversion.models import Version
 
 from shuup.gdpr.utils import get_active_consent_pages
 from shuup.simple_cms.models import Page
+from shuup.utils.i18n import lang_lru_cache
 
 GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
 
 
-@lru_cache()
+@lang_lru_cache
 def get_setting(shop):
     instance, created = GDPRSettings.objects.get_or_create(shop=shop)
     if created or not instance.safe_translation_getter("cookie_banner_content"):
@@ -34,50 +33,55 @@ def get_setting(shop):
 class GDPRSettings(TranslatableModel):
     shop = models.OneToOneField("shuup.Shop", related_name="gdpr_settings", on_delete=models.CASCADE)
     enabled = models.BooleanField(
-        default=False,
-        verbose_name=_('enabled'),
-        help_text=_("Define if the GDPR is active.")
+        default=False, verbose_name=_("enabled"), help_text=_("Define if the GDPR is active.")
     )
     skip_consent_on_auth = models.BooleanField(
         default=False,
         verbose_name=_("skip consent on login"),
-        help_text=_("Do not require consent on login when GDPR is activated.")
+        help_text=_("Do not require consent on login when GDPR is activated."),
     )
     privacy_policy_page = models.ForeignKey(
         on_delete=models.CASCADE,
         to="shuup_simple_cms.Page",
         null=True,
         verbose_name=_("privacy policy page"),
-        help_text=_("Choose your privacy policy page here. If this page changes, customers will be "
-                    "prompted for new consent."))
+        help_text=_(
+            "Choose your privacy policy page here. If this page changes, customers will be " "prompted for new consent."
+        ),
+    )
     consent_pages = models.ManyToManyField(
         "shuup_simple_cms.Page",
         verbose_name=_("consent pages"),
         related_name="consent_settings",
-        help_text=_("Choose pages here which are being monitored for customer consent. If any of these pages change, "
-                    "the customer is being prompted for a new consent."))
+        help_text=_(
+            "Choose pages here which are being monitored for customer consent. If any of these pages change, "
+            "the customer is being prompted for a new consent."
+        ),
+    )
     translations = TranslatedFields(
         cookie_banner_content=models.TextField(
             blank=True,
             verbose_name=_("cookie banner content"),
-            help_text=_("The text to be presented to users in a pop-up warning.")
+            help_text=_("The text to be presented to users in a pop-up warning."),
         ),
         cookie_privacy_excerpt=models.TextField(
             blank=True,
             verbose_name=_("cookie privacy excerpt"),
-            help_text=_("The summary text to be presented about cookie privacy.")
+            help_text=_("The summary text to be presented about cookie privacy."),
         ),
         auth_consent_text=models.TextField(
             blank=True,
             verbose_name=_("login consent text"),
-            help_text=_("Shown in login page between the form and the button. "
-                        "Optional, but should be considered when the consent on login is disabled.")
-        )
+            help_text=_(
+                "Shown in login page between the form and the button. "
+                "Optional, but should be considered when the consent on login is disabled."
+            ),
+        ),
     )
 
     class Meta:
-        verbose_name = _('GDPR settings')
-        verbose_name_plural = _('GDPR settings')
+        verbose_name = _("GDPR settings")
+        verbose_name_plural = _("GDPR settings")
 
     def __str__(self):
         return _("GDPR for {}").format(self.shop)
@@ -102,11 +106,11 @@ class GDPRSettings(TranslatableModel):
 @python_2_unicode_compatible
 class GDPRCookieCategory(TranslatableModel):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="gdpr_cookie_categories")
-    always_active = models.BooleanField(default=False, verbose_name=_('always active'))
+    always_active = models.BooleanField(default=False, verbose_name=_("always active"))
     default_active = models.BooleanField(
-        verbose_name=_('active by default'),
+        verbose_name=_("active by default"),
         default=False,
-        help_text=_('whether this cookie category is active by default')
+        help_text=_("whether this cookie category is active by default"),
     )
     cookies = models.TextField(
         verbose_name=_("cookies used"),
@@ -121,13 +125,13 @@ class GDPRCookieCategory(TranslatableModel):
         how_is_used=models.TextField(
             verbose_name=_("how we use"),
             help_text=_("Describe the purpose of this category of cookies and how it is used."),
-            blank=True
-        )
+            blank=True,
+        ),
     )
 
     class Meta:
-        verbose_name = _('GDPR cookie category')
-        verbose_name_plural = _('GDPR cookie categories')
+        verbose_name = _("GDPR cookie category")
+        verbose_name_plural = _("GDPR cookie categories")
 
     def __str__(self):
         return _("GDPR cookie category for {}").format(self.shop)
@@ -135,34 +139,21 @@ class GDPRCookieCategory(TranslatableModel):
 
 @python_2_unicode_compatible
 class GDPRUserConsent(models.Model):
-    created_on = models.DateTimeField(
-        auto_now_add=True,
-        editable=False,
-        db_index=True,
-        verbose_name=_("created on")
-    )
-    shop = models.ForeignKey(
-        on_delete=models.CASCADE,
-        to="shuup.Shop",
-        related_name="gdpr_consents",
-        editable=False
-    )
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
+    shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="gdpr_consents", editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='gdpr_consents',
+        related_name="gdpr_consents",
         on_delete=models.PROTECT,
         editable=False,
     )
     documents = models.ManyToManyField(
-        "GDPRUserConsentDocument",
-        verbose_name=_("consent documents"),
-        blank=True,
-        editable=False
+        "GDPRUserConsentDocument", verbose_name=_("consent documents"), blank=True, editable=False
     )
 
     class Meta:
-        verbose_name = _('GDPR user consent')
-        verbose_name_plural = _('GDPR user consents')
+        verbose_name = _("GDPR user consent")
+        verbose_name_plural = _("GDPR user consents")
 
     @classmethod
     def ensure_for_user(cls, user, shop, consent_documents):
@@ -170,10 +161,7 @@ class GDPRUserConsent(models.Model):
         for page in consent_documents:
             Page.create_initial_revision(page)
             version = Version.objects.get_for_object(page).first()
-            consent_document = GDPRUserConsentDocument.objects.create(
-                page=page,
-                version=version
-            )
+            consent_document = GDPRUserConsentDocument.objects.create(page=page, version=version)
             documents.append(consent_document)
 
         # ensure only one consent exists for this user in this shop

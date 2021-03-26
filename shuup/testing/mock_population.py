@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import random
-
 from django.conf import settings
 from django.utils import translation
 
 from shuup.core.models import Category, Product, ShopProduct
 
 from .factories import (
-    CategoryFactory, create_default_order_statuses, get_currency,
-    get_default_customer_group, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, ProductFactory
+    CategoryFactory,
+    ProductFactory,
+    create_default_order_statuses,
+    get_currency,
+    get_default_customer_group,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
 )
 
 
@@ -52,11 +56,12 @@ class Populator:
     def generate_pricing(self, product):
         if "shuup.customer_group_pricing" in settings.INSTALLED_APPS:
             from shuup.customer_group_pricing.models import CgpPrice
+
             CgpPrice.objects.create(
                 product=product,
                 price_value=random.randint(15, 340),
                 shop=get_default_shop(),
-                group=get_default_customer_group()
+                group=get_default_customer_group(),
             )
 
     def populate_if_required(self):

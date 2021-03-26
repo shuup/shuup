@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -46,7 +46,7 @@ def get_cached_trees(queryset):
         # Get the model's parent-attribute name
         parent_attr = queryset[0]._mptt_meta.parent_attr
         root_level = None
-        is_filtered = (hasattr(queryset, "query") and queryset.query.has_filters())
+        is_filtered = hasattr(queryset, "query") and queryset.query.has_filters()
         for obj in queryset:
             # Get the current mptt node level
             node_level = obj.get_level()
@@ -58,9 +58,7 @@ def get_cached_trees(queryset):
             elif node_level < root_level:
                 # ``queryset`` was a list or other iterable (unable to order),
                 # and was provided in an order other than depth-first
-                raise ValueError(
-                    'Error! Node %s not in depth-first order.' % (type(queryset),)
-                )
+                raise ValueError("Error! Node %s not in depth-first order." % (type(queryset),))
 
             # Set up the attribute on the node that will store cached children,
             # which is used by ``MPTTModel.get_children``
@@ -82,7 +80,7 @@ def get_cached_trees(queryset):
 
                 if root_level == 0:
                     # get_ancestors() can use .parent.parent.parent...
-                    setattr(obj, '_mptt_use_cached_ancestors', True)
+                    setattr(obj, "_mptt_use_cached_ancestors", True)
 
             # Add the current node to end of the current path - the last node
             # in the current path is the parent for the next iteration, unless

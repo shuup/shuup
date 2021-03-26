@@ -1,37 +1,40 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_save
-# extends SQLite with necessary functions
 from django.dispatch import receiver
 
 from shuup.core.models import (
-    Category, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
-    DisplayUnit, PersonContact, Product, Shop, ShopProduct, Supplier, Tax,
-    TaxClass
+    Category,
+    CompanyContact,
+    ContactGroup,
+    ContactGroupPriceDisplay,
+    DisplayUnit,
+    PersonContact,
+    Product,
+    Shop,
+    ShopProduct,
+    Supplier,
+    Tax,
+    TaxClass,
 )
-from shuup.core.models._contacts import (
-    get_groups_ids, get_price_display_options
-)
+from shuup.core.models._contacts import get_groups_ids, get_price_display_options
 from shuup.core.models._units import get_display_unit
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import context_cache_item_bumped, order_changed
 from shuup.core.utils import context_cache
 from shuup.core.utils.context_cache import (
-    bump_internal_cache, bump_product_signal_handler,
-    bump_shop_product_signal_handler
+    bump_internal_cache,
+    bump_product_signal_handler,
+    bump_shop_product_signal_handler,
 )
 from shuup.core.utils.db import extend_sqlite_functions
-from shuup.core.utils.price_cache import (
-    bump_all_price_caches, bump_prices_for_product,
-    bump_prices_for_shop_product
-)
+from shuup.core.utils.price_cache import bump_all_price_caches, bump_prices_for_product, bump_prices_for_shop_product
 
 
 def handle_post_save_bump_all_prices_caches(sender, instance, **kwargs):
@@ -97,27 +100,15 @@ def handle_display_unit_post_save(sender, instance, **kwargs):
 
 # connect signals to bump caches on Product and ShopProduct change
 m2m_changed.connect(
-    handle_shop_product_post_save,
-    sender=ShopProduct.categories.through,
-    dispatch_uid="shop_product:change_categories"
+    handle_shop_product_post_save, sender=ShopProduct.categories.through, dispatch_uid="shop_product:change_categories"
 )
+post_save.connect(handle_product_post_save, sender=Product, dispatch_uid="product:bump_product_cache")
 post_save.connect(
-    handle_product_post_save,
-    sender=Product,
-    dispatch_uid="product:bump_product_cache"
-)
-post_save.connect(
-    handle_shop_product_post_save,
-    sender=ShopProduct,
-    dispatch_uid="shop_product:bump_shop_product_cache"
+    handle_shop_product_post_save, sender=ShopProduct, dispatch_uid="shop_product:bump_shop_product_cache"
 )
 
 # connect signals to bump caches on Supplier change
-post_save.connect(
-    handle_supplier_post_save,
-    sender=Supplier,
-    dispatch_uid="supplier:bump_supplier_cache"
-)
+post_save.connect(handle_supplier_post_save, sender=Supplier, dispatch_uid="supplier:bump_supplier_cache")
 
 # connect signals to bump price caches on Tax and TaxClass change
 post_save.connect(handle_post_save_bump_all_prices_caches, sender=Tax, dispatch_uid="tax_class:bump_prices_cache")
@@ -127,21 +118,15 @@ post_save.connect(handle_post_save_bump_all_prices_caches, sender=TaxClass, disp
 post_save.connect(handle_contact_post_save, sender=PersonContact, dispatch_uid="person_contact:bump_context_cache")
 post_save.connect(handle_contact_post_save, sender=CompanyContact, dispatch_uid="company_contact:bump_context_cache")
 m2m_changed.connect(
-    handle_contact_post_save,
-    sender=ContactGroup.members.through,
-    dispatch_uid="contact_group:change_members"
+    handle_contact_post_save, sender=ContactGroup.members.through, dispatch_uid="contact_group:change_members"
 )
 
 post_save.connect(
     handle_contact_group_price_display_post_save,
     sender=ContactGroupPriceDisplay,
-    dispatch_uid="shuup_contact_group_price_display_bump"
+    dispatch_uid="shuup_contact_group_price_display_bump",
 )
 
-post_save.connect(
-    handle_display_unit_post_save,
-    sender=DisplayUnit,
-    dispatch_uid="shuup_display_unit_bump"
-)
+post_save.connect(handle_display_unit_post_save, sender=DisplayUnit, dispatch_uid="shuup_display_unit_bump")
 
 connection_created.connect(extend_sqlite_functions)

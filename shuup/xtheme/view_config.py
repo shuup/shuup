@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,7 +39,7 @@ class ViewConfig(object):
         """
         self.theme = theme
         self.shop = shop
-        self.view_name = (XTHEME_GLOBAL_VIEW_NAME if global_type else force_text(view_name))
+        self.view_name = XTHEME_GLOBAL_VIEW_NAME if global_type else force_text(view_name)
         self.draft = bool(draft)
         self._saved_view_config = None
 
@@ -56,10 +56,7 @@ class ViewConfig(object):
 
         if self._saved_view_config is None:
             self._saved_view_config = SavedViewConfig.objects.appropriate(
-                theme=self.theme,
-                shop=self.shop,
-                view_name=self.view_name,
-                draft=self.draft
+                theme=self.theme, shop=self.shop, view_name=self.view_name, draft=self.draft
             )
             self.draft = self._saved_view_config.draft
         return self._saved_view_config
@@ -78,8 +75,8 @@ class ViewConfig(object):
         :rtype: list
         """
         layouts = [
-            self.get_placeholder_layout(
-                Layout, placeholder_name, default_layout=default_layout, context=context)]
+            self.get_placeholder_layout(Layout, placeholder_name, default_layout=default_layout, context=context)
+        ]
 
         for layout_cls in get_provided_layouts():
             layout = self.get_placeholder_layout(layout_cls, placeholder_name, context=context)
@@ -89,7 +86,8 @@ class ViewConfig(object):
         return layouts
 
     def get_placeholder_layout(
-            self, layout_cls, placeholder_name, default_layout={}, context=None, layout_data_key=None):
+        self, layout_cls, placeholder_name, default_layout={}, context=None, layout_data_key=None
+    ):
         """
         Get a layout object for the given placeholder.
 

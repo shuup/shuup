@@ -1,26 +1,29 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
 
-from collections import OrderedDict
-from datetime import date, time, timedelta
-from decimal import Decimal
-
 import six
 from babel.dates import format_date
+from collections import OrderedDict
+from datetime import date, time, timedelta
 from dateutil import rrule
+from decimal import Decimal
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.dashboard import (
-    ChartDataType, ChartType, DashboardChartBlock, DashboardContentBlock,
-    DashboardMoneyBlock, MixedChart
+    ChartDataType,
+    ChartType,
+    DashboardChartBlock,
+    DashboardContentBlock,
+    DashboardMoneyBlock,
+    MixedChart,
 )
 from shuup.core.models import Order, Shop
 from shuup.core.pricing import TaxfulPrice
@@ -61,7 +64,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         for dataset in self.get_chart().datasets:
             data_size = max(data_size, len(dataset["data"]))
         # the size will be dynamic. small for periods up to 4 months, otherwise medium
-        return ("medium" if data_size > 4 else "small")
+        return "medium" if data_size > 4 else "small"
 
     @size.setter
     def size(self, value):
@@ -72,15 +75,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         if self.cached_chart is not None:
             return self.cached_chart
 
-        chart_options = {
-            "scales": {
-                "yAxes": [{
-                    "ticks": {
-                        "beginAtZero": True
-                    }
-                }]
-            }
-        }
+        chart_options = {"scales": {"yAxes": [{"ticks": {"beginAtZero": True}}]}}
 
         today = date.today()
         chart_start_date = today - timedelta(days=365)
@@ -90,7 +85,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
             orders.valid().since((today - chart_start_date).days),
             "order_date",
             "month",
-            sum=Sum("taxful_total_price_value")
+            sum=Sum("taxful_total_price_value"),
         )
 
         for (month, year) in month_iter(chart_start_date, today):
@@ -102,16 +97,15 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         sum_sales_data = OrderedDict(sorted(six.iteritems(sum_sales_data), key=lambda x: x[0]))
 
         locale = get_current_babel_locale()
-        labels = [
-            format_date(k, format=get_year_and_month_format(locale), locale=locale)
-            for k in sum_sales_data
-        ]
-        mixed_chart = MixedChart(title=_("Sales per Month (past 12 months)"),
-                                 labels=labels,
-                                 data_type=ChartDataType.CURRENCY,
-                                 options=chart_options,
-                                 currency=self.currency,
-                                 locale=locale)
+        labels = [format_date(k, format=get_year_and_month_format(locale), locale=locale) for k in sum_sales_data]
+        mixed_chart = MixedChart(
+            title=_("Sales per Month (past 12 months)"),
+            labels=labels,
+            data_type=ChartDataType.CURRENCY,
+            options=chart_options,
+            currency=self.currency,
+            locale=locale,
+        )
 
         cumulative_sales = []
         average_sales = []
@@ -124,7 +118,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
             for month_sale in sum_sales_data.values():
                 total = total + month_sale["sum"]
                 cumulative_sales.append(total)
-                average_sales.append(total / (count+1))
+                average_sales.append(total / (count + 1))
                 count = count + 1
 
         # this will be on top of all bars
@@ -153,9 +147,7 @@ def get_sales_of_the_day_block(request, currency=None):
         currency = shop.currency
 
     # Sales of the day
-    todays_order_data = (
-        orders.complete().since(0)
-        .aggregate(count=Count("id"), sum=Sum("taxful_total_price_value")))
+    todays_order_data = orders.complete().since(0).aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
     return DashboardMoneyBlock(
         id="todays_order_sum",
         color="green",
@@ -163,7 +155,7 @@ def get_sales_of_the_day_block(request, currency=None):
         value=(todays_order_data.get("sum") or 0),
         currency=currency,
         icon="fa fa-calculator",
-        subtitle=get_subtitle(todays_order_data.get("count"))
+        subtitle=get_subtitle(todays_order_data.get("count")),
     )
 
 
@@ -174,10 +166,7 @@ def get_lifetime_sales_block(request, currency=None):
         currency = shop.currency
 
     # Lifetime sales
-    lifetime_sales_data = orders.complete().aggregate(
-        count=Count("id"),
-        sum=Sum("taxful_total_price_value")
-    )
+    lifetime_sales_data = orders.complete().aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
 
     return DashboardMoneyBlock(
         id="lifetime_sales_sum",
@@ -187,7 +176,7 @@ def get_lifetime_sales_block(request, currency=None):
         currency=currency,
         icon="fa fa-line-chart",
         subtitle=get_subtitle(lifetime_sales_data.get("count")),
-        sort_order=1
+        sort_order=1,
     )
 
 
@@ -197,15 +186,12 @@ def get_avg_purchase_size_block(request, currency=None):
     if not currency:
         currency = shop.currency
 
-    lifetime_sales_data = orders.complete().aggregate(
-        count=Count("id"),
-        sum=Sum("taxful_total_price_value")
-    )
+    lifetime_sales_data = orders.complete().aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
 
     # Average size of purchase with amount of orders it is calculated from
-    average_purchase_size = (
-        Order.objects.filter(shop=shop)
-        .aggregate(count=Count("id"), sum=Avg("taxful_total_price_value")))
+    average_purchase_size = Order.objects.filter(shop=shop).aggregate(
+        count=Count("id"), sum=Avg("taxful_total_price_value")
+    )
     return DashboardMoneyBlock(
         id="average_purchase_sum",
         color="blue",
@@ -214,7 +200,7 @@ def get_avg_purchase_size_block(request, currency=None):
         currency=currency,
         icon="fa fa-shopping-cart",
         subtitle=get_subtitle(lifetime_sales_data.get("count")),
-        sort_order=1
+        sort_order=1,
     )
 
 
@@ -225,9 +211,7 @@ def get_open_orders_block(request, currency=None):
         currency = shop.currency
 
     # Open orders / open orders value
-    open_order_data = (
-        orders.incomplete()
-        .aggregate(count=Count("id"), sum=Sum("taxful_total_price_value")))
+    open_order_data = orders.incomplete().aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
 
     return DashboardMoneyBlock(
         id="open_orders_sum",
@@ -237,7 +221,7 @@ def get_open_orders_block(request, currency=None):
         currency=currency,
         icon="fa fa-inbox",
         subtitle=get_subtitle(open_order_data.get("count")),
-        sort_order=1
+        sort_order=1,
     )
 
 
@@ -252,11 +236,9 @@ def get_order_overview_for_date_range(currency, start_date, end_date, shop=None)
 
     orders_in_range = orders.in_date_range(start_date, end_date)
     q = orders_in_range.aggregate(
-        num_orders=Count("id"),
-        num_customers=Count("customer", distinct=True),
-        sales=Sum("taxful_total_price_value"))
-    anon_orders = orders_in_range.filter(customer__isnull=True).aggregate(
-        num_orders=Count("id"))
+        num_orders=Count("id"), num_customers=Count("customer", distinct=True), sales=Sum("taxful_total_price_value")
+    )
+    anon_orders = orders_in_range.filter(customer__isnull=True).aggregate(num_orders=Count("id"))
     q["num_customers"] += anon_orders["num_orders"]
     q["sales"] = TaxfulPrice(q["sales"] or 0, currency)
     return q
@@ -275,22 +257,30 @@ def get_shop_overview_block(request, currency, for_date=None):
     daily = get_order_overview_for_date_range(currency, start_of_day, end, shop=shop)
     mtd = get_order_overview_for_date_range(currency, start_of_month, end, shop=shop)
     ytd = get_order_overview_for_date_range(currency, start_of_year, end, shop=shop)
-    totals = get_orders_by_currency(currency).complete().filter(shop=shop).aggregate(
-        num_orders=Count("id"),
-        num_customers=Count("customer", distinct=True),
-        sales=Sum("taxful_total_price_value")
+    totals = (
+        get_orders_by_currency(currency)
+        .complete()
+        .filter(shop=shop)
+        .aggregate(
+            num_orders=Count("id"),
+            num_customers=Count("customer", distinct=True),
+            sales=Sum("taxful_total_price_value"),
+        )
     )
-    anon_orders = get_orders_by_currency(currency).complete().filter(customer__isnull=True, shop=shop).aggregate(
-        num_orders=Count("id"))
+    anon_orders = (
+        get_orders_by_currency(currency)
+        .complete()
+        .filter(customer__isnull=True, shop=shop)
+        .aggregate(num_orders=Count("id"))
+    )
     totals["num_customers"] += anon_orders["num_orders"]
     totals["sales"] = TaxfulPrice(totals["sales"] or 0, currency)
     block = DashboardContentBlock.by_rendering_template(
-        "store_overview", request, "shuup/admin/sales_dashboard/_store_overview_dashboard_block.jinja", {
-            "daily": daily,
-            "mtd": mtd,
-            "ytd": ytd,
-            "totals": totals
-        })
+        "store_overview",
+        request,
+        "shuup/admin/sales_dashboard/_store_overview_dashboard_block.jinja",
+        {"daily": daily, "mtd": mtd, "ytd": ytd, "totals": totals},
+    )
     block.size = "medium"
     block.sort_order = 0
     return block
@@ -300,9 +290,7 @@ def get_recent_orders_block(request, currency=None):
     orders = get_orders_for_shop(request).valid().order_by("-order_date")[:5]
 
     block = DashboardContentBlock.by_rendering_template(
-        "recent_orders", request, "shuup/admin/sales_dashboard/_recent_orders_dashboard_block.jinja", {
-            "orders": orders
-        }
+        "recent_orders", request, "shuup/admin/sales_dashboard/_recent_orders_dashboard_block.jinja", {"orders": orders}
     )
     block.size = "medium"
     block.sort_order = 2

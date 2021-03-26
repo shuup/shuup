@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import django.db.models.deletion
-import filer.fields.image
 import enumfields.fields
-import shuup.front.apps.carousel.models
+import filer.fields.image
 import parler.models
+from django.db import migrations, models
+
+import shuup.front.apps.carousel.models
 
 
 class Migration(migrations.Migration):

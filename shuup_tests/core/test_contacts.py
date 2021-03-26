@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,15 +14,18 @@ from django.db.models import QuerySet
 
 from shuup import configuration
 from shuup.core.models import (
-    AnonymousContact, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
-    get_company_contact, get_person_contact,
+    AnonymousContact,
+    CompanyContact,
+    ContactGroup,
+    ContactGroupPriceDisplay,
+    PersonContact,
+    get_company_contact,
+    get_person_contact,
     get_price_display_for_group_and_shop,
-    get_price_display_options_for_group_and_shop, PersonContact
+    get_price_display_options_for_group_and_shop,
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.testing.factories import (
-    create_random_company, get_all_seeing_key, get_default_shop, get_shop
-)
+from shuup.testing.factories import create_random_company, get_all_seeing_key, get_default_shop, get_shop
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -57,17 +60,17 @@ def test_anonymous_contact():
     assert not a1.is_all_seeing, "AnonymousContact is not all seeing"
     assert a1.identifier is None
     assert a1.is_active, "AnonymousContact is active"
-    assert a1.language == ''
+    assert a1.language == ""
     assert a1.marketing_permission is False
-    assert a1.phone == ''
-    assert a1.www == ''
+    assert a1.phone == ""
+    assert a1.www == ""
     assert a1.timezone is None
-    assert a1.prefix == ''
-    assert a1.name == '', "AnonymousContact has no name"
-    assert a1.suffix == ''
-    assert a1.name_ext == ''
-    assert a1.email == '', "AnonymousContact has no email"
-    assert str(a1) == ''
+    assert a1.prefix == ""
+    assert a1.name == "", "AnonymousContact has no name"
+    assert a1.suffix == ""
+    assert a1.name_ext == ""
+    assert a1.email == "", "AnonymousContact has no email"
+    assert str(a1) == ""
 
     # Primary key / id
     assert a1.pk is None
@@ -104,8 +107,8 @@ def test_anonymous_contact_vs_person(regular_user):
 @pytest.mark.django_db
 def test_person_contact_creating_from_user(regular_user):
     user = regular_user
-    user.first_name = 'Joe'
-    user.last_name = 'Regular'
+    user.first_name = "Joe"
+    user.last_name = "Regular"
 
     # Preconditions
     assert user.get_full_name()
@@ -169,47 +172,47 @@ def test_person_name_gets_saved():
 
 def test_contact_group_repr_and_str_no_identifier_no_name():
     cg = ContactGroup()
-    assert repr(cg) == '<ContactGroup:None>'
-    assert str(cg) == 'contact group'
+    assert repr(cg) == "<ContactGroup:None>"
+    assert str(cg) == "contact group"
 
 
 def test_contact_group_repr_and_str_has_identifier_no_name():
-    cg = ContactGroup(identifier='hello')
-    assert repr(cg) == '<ContactGroup:None-hello>'
+    cg = ContactGroup(identifier="hello")
+    assert repr(cg) == "<ContactGroup:None-hello>"
     assert str(cg) == 'contact group "hello"'
 
 
 def test_contact_group_repr_and_str_no_identifier_has_name():
-    cg = ContactGroup(name='world')
-    assert repr(cg) == '<ContactGroup:None>'
-    assert str(cg) == 'world'
+    cg = ContactGroup(name="world")
+    assert repr(cg) == "<ContactGroup:None>"
+    assert str(cg) == "world"
 
 
 def test_contact_group_repr_and_str_has_identifier_has_name():
-    cg = ContactGroup(identifier='hello', name='world')
-    assert repr(cg) == '<ContactGroup:None-hello>'
-    assert str(cg) == 'world'
+    cg = ContactGroup(identifier="hello", name="world")
+    assert repr(cg) == "<ContactGroup:None-hello>"
+    assert str(cg) == "world"
 
 
 @pytest.mark.django_db
 def test_default_anonymous_contact_group_repr_and_str():
     adg = AnonymousContact.get_default_group()
-    assert repr(adg) == '<ContactGroup:%d-default_anonymous_group>' % adg.pk
-    assert str(adg) == 'Anonymous Contacts'
+    assert repr(adg) == "<ContactGroup:%d-default_anonymous_group>" % adg.pk
+    assert str(adg) == "Anonymous Contacts"
 
 
 @pytest.mark.django_db
 def test_default_company_contact_group_repr_and_str():
     cdg = CompanyContact.get_default_group()
-    assert repr(cdg) == '<ContactGroup:%d-default_company_group>' % cdg.pk
-    assert str(cdg) == 'Company Contacts'
+    assert repr(cdg) == "<ContactGroup:%d-default_company_group>" % cdg.pk
+    assert str(cdg) == "Company Contacts"
 
 
 @pytest.mark.django_db
 def test_default_person_contact_group_repr_and_str():
     pdg = PersonContact.get_default_group()
-    assert repr(pdg) == '<ContactGroup:%d-default_person_group>' % pdg.pk
-    assert str(pdg) == 'Person Contacts'
+    assert repr(pdg) == "<ContactGroup:%d-default_person_group>" % pdg.pk
+    assert str(pdg) == "Person Contacts"
 
 
 @pytest.mark.django_db
@@ -241,12 +244,11 @@ def test_contact_group_price_display_options_defaults():
 @pytest.mark.parametrize("hide_prices", [True, False, None])
 def test_contact_group_price_display_options_defined(taxes, hide_prices):
     shop = get_default_shop()
-    options = ContactGroup.objects.create(
-        shop=shop
-    ).set_price_display_options(
-        show_prices_including_taxes=taxes,
-        hide_prices=hide_prices
-    ).get_price_display_options()
+    options = (
+        ContactGroup.objects.create(shop=shop)
+        .set_price_display_options(show_prices_including_taxes=taxes, hide_prices=hide_prices)
+        .get_price_display_options()
+    )
     assert isinstance(options, PriceDisplayOptions)
     assert options.include_taxes is taxes
     assert options.hide_prices is bool(hide_prices)
@@ -261,7 +263,6 @@ def test_contact_group_price_display_for_contact(regular_user):
     person.groups.add(group)
 
     assert not person.in_shop(shop)
-
 
     # price options for non shop
     options = person.get_price_display_options(group=group)

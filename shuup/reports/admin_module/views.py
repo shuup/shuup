@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -52,7 +52,7 @@ class ReportView(FormView):
             label=_("Type"),
             required=True,
             initial=selected.identifier,
-            help_text=_("Select the type of report to run.")
+            help_text=_("Select the type of report to run."),
         )
         form.fields["report"] = report_field
         return form

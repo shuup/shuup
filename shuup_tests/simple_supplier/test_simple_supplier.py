@@ -1,29 +1,28 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import random
-from time import time
-
 import pytest
+import random
 from django.test import override_settings
+from time import time
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
 from shuup.core.models import ShippingMode
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
-    process_alert_limit, process_stock_adjustment, process_stock_managed
+    process_alert_limit,
+    process_stock_adjustment,
+    process_stock_managed,
 )
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.simple_supplier.notify_events import AlertLimitReached
-from shuup.testing.factories import (
-    create_order_with_product, create_product, get_default_shop
-)
+from shuup.testing.factories import create_order_with_product, create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
@@ -78,7 +77,7 @@ def test_supplier_with_stock_counts(rf, stock_managed):
         # Since product is stocked with quantity we get no orderability error with quantity
         assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
         # Since product is stocked with quantity we get orderability error with quantity + 1
-        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
+        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity + 1, customer=None))
     else:
         # Check that count is not adjusted
         assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 0
@@ -93,7 +92,7 @@ def test_supplier_with_stock_counts(rf, stock_managed):
         # No orderability errors since product is stocked with quantity
         assert not list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, customer=None))
         # Since product is stocked with quantity we get orderability errors with quantity + 1
-        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity+1, customer=None))
+        assert list(supplier.get_orderability_errors(product.get_shop_instance(shop), quantity + 1, customer=None))
 
 
 @pytest.mark.django_db
@@ -108,10 +107,7 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         supplier.adjust_stock(product.pk, quantity)
         adjust_quantity = random.randint(100, 600)
         request = apply_request_middleware(rf.get("/"), user=admin_user)
-        request.POST = {
-            "purchase_price": decimal.Decimal(32.00),
-            "delta": adjust_quantity
-        }
+        request.POST = {"purchase_price": decimal.Decimal(32.00), "delta": adjust_quantity}
         response = process_stock_adjustment(request, supplier.id, product.id)
         assert response.status_code == 400  # Only POST is allowed
         request.method = "POST"
@@ -131,7 +127,7 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         assert sc.stock_unit_price.includes_tax
 
         with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
-            sa = StockAdjustment.objects.first() # refetch to invalidate cache
+            sa = StockAdjustment.objects.first()  # refetch to invalidate cache
             assert sa.purchase_price.currency != shop.currency
             assert sa.purchase_price.currency == settings.SHUUP_HOME_CURRENCY
             assert not sa.purchase_price.includes_tax
@@ -210,12 +206,14 @@ def test_alert_limit_view(rf, admin_user):
 
 
 def test_alert_limit_notification(rf, admin_user):
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
 
         supplier = get_simple_supplier()
@@ -269,7 +267,7 @@ def test_alert_limit_notification(rf, admin_user):
             product=product,
             supplier=supplier,
             supplier_email="supplier-no-break@email.com",
-            shop_email="shop-no-break@email.com"
+            shop_email="shop-no-break@email.com",
         )
         assert event.variable_values["dispatched_last_24hs"] is True
 
@@ -305,16 +303,14 @@ def test_process_stock_managed(rf, admin_user):
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is disabled for product
-    sc = StockCount.objects.filter(
-        supplier=supplier, product=product).first()
+    sc = StockCount.objects.filter(supplier=supplier, product=product).first()
     assert sc.stock_managed == False
     # Now test with stock managed turned on
     request = apply_request_middleware(rf.post("/", data={"stock_managed": True}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is enabled for product
-    sc = StockCount.objects.filter(
-        supplier=supplier, product=product).first()
+    sc = StockCount.objects.filter(supplier=supplier, product=product).first()
     assert sc.stock_managed == True
 
 

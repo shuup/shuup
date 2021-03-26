@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
 
 from shuup.core.models import Category
-from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_supplier
-)
+from shuup.testing.factories import create_product, get_default_shop, get_default_supplier
 from shuup.xtheme.plugins.products import ProductsFromCategoryPlugin
 from shuup_tests.front.fixtures import get_jinja_context
-
 
 CATEGORY_PRODUCT_DATA = [
     ("Test Product", "test-sku-1", 123),
@@ -40,7 +36,7 @@ def test_products_from_category_plugin():
         shop_product.categories.add(cat)
 
     context = get_jinja_context()
-    rendered  = ProductsFromCategoryPlugin({"title": "Products", "count": 4, "category": cat.id}).render(context)
+    rendered = ProductsFromCategoryPlugin({"title": "Products", "count": 4, "category": cat.id}).render(context)
     soup = BeautifulSoup(rendered)
     assert "Products" in soup.find("h2").contents[0]
     assert len(soup.findAll("div", {"class": "product-card"})) == 4

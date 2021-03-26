@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import random
-
 import pytest
-from shuup.utils.django_compat import reverse
+import random
 from django.test import override_settings
 
 from shuup.core import cache
@@ -18,6 +16,7 @@ from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import SmartClient
@@ -106,11 +105,7 @@ def test_order_flow_with_multiple_suppliers():
 
 
 def _add_to_basket(client, product_id, quantity, supplier=None):
-    data = {
-        "command": "add",
-        "product_id": product_id,
-        "quantity": quantity
-    }
+    data = {"command": "add", "product_id": product_id, "quantity": quantity}
     if supplier:
         data.update({"supplier_id": supplier.id})
 
@@ -136,7 +131,7 @@ def _complete_checkout(client, expected_order_count):
     confirm_path = reverse("shuup:checkout", kwargs={"phase": "confirm"})
     confirm_soup = client.soup(confirm_path)
     data = extract_form_fields(confirm_soup)
-    data['accept_terms'] = True
+    data["accept_terms"] = True
     assert client.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
     n_orders_post = Order.objects.count()
@@ -147,7 +142,7 @@ def _complete_checkout(client, expected_order_count):
 def _fill_address_inputs(soup, with_company=False):
     inputs = {}
     test_address = factories.get_address()
-    for key, value in extract_form_fields(soup.find('form', id='addresses')).items():
+    for key, value in extract_form_fields(soup.find("form", id="addresses")).items():
         if not value:
             if key in ("order-tax_number", "order-company_name"):
                 continue

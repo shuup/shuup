@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import decimal
-
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -20,10 +19,7 @@ from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 from shuup.core.fields import MeasurementField, MoneyValueField
 
 from ._addresses import REGION_ISO3166
-from ._service_base import (
-    ServiceBehaviorComponent, ServiceCost,
-    TranslatableServiceBehaviorComponent
-)
+from ._service_base import ServiceBehaviorComponent, ServiceCost, TranslatableServiceBehaviorComponent
 
 
 class FixedCostBehaviorComponent(TranslatableServiceBehaviorComponent):
@@ -34,41 +30,48 @@ class FixedCostBehaviorComponent(TranslatableServiceBehaviorComponent):
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
-            "The order line text to display when this behavior is applied."
-        )),
+        description=models.CharField(
+            max_length=100,
+            blank=True,
+            verbose_name=_("description"),
+            help_text=_("The order line text to display when this behavior is applied."),
+        ),
     )
 
     def get_costs(self, service, source):
         price = source.create_price(self.price_value)
-        description = self.safe_translation_getter('description')
+        description = self.safe_translation_getter("description")
         yield ServiceCost(price, description)
 
 
 class WaivingCostBehaviorComponent(TranslatableServiceBehaviorComponent):
     name = _("Waiving cost")
     help_text = _(
-        "If the total price of the products is less than a waive limit "
-        "add cost to the price of the service.")
+        "If the total price of the products is less than a waive limit " "add cost to the price of the service."
+    )
 
     price_value = MoneyValueField(
-        help_text=_("The cost to apply to this service if the total price is below the waive limit."))
-    waive_limit_value = MoneyValueField(help_text=_(
-        "The total price of products limit, at which this service cost is waived."
-    ))
+        help_text=_("The cost to apply to this service if the total price is below the waive limit.")
+    )
+    waive_limit_value = MoneyValueField(
+        help_text=_("The total price of products limit, at which this service cost is waived.")
+    )
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
-            "The order line text to display when this behavior is applied."
-        )),
+        description=models.CharField(
+            max_length=100,
+            blank=True,
+            verbose_name=_("description"),
+            help_text=_("The order line text to display when this behavior is applied."),
+        ),
     )
 
     def get_costs(self, service, source):
         waive_limit = source.create_price(self.waive_limit_value)
         product_total = source.total_price_of_products
         price = source.create_price(self.price_value)
-        description = self.safe_translation_getter('description')
+        description = self.safe_translation_getter("description")
         zero_price = source.create_price(0)
         if product_total and product_total >= waive_limit:
             yield ServiceCost(zero_price, description, base_price=price)
@@ -78,20 +81,24 @@ class WaivingCostBehaviorComponent(TranslatableServiceBehaviorComponent):
 
 class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
     name = _("Weight limits")
-    help_text = _(
-        "Limit availability of the service based on "
-        "total weight of the products.")
+    help_text = _("Limit availability of the service based on " "total weight of the products.")
 
     min_weight = models.DecimalField(
-        max_digits=36, decimal_places=6, blank=True, null=True,
-        verbose_name=_("minimum weight"), help_text=_(
-            "The minimum weight required for this service to be available."
-        ))
+        max_digits=36,
+        decimal_places=6,
+        blank=True,
+        null=True,
+        verbose_name=_("minimum weight"),
+        help_text=_("The minimum weight required for this service to be available."),
+    )
     max_weight = models.DecimalField(
-        max_digits=36, decimal_places=6, blank=True, null=True,
-        verbose_name=_("maximum weight"), help_text=_(
-            "The maximum weight allowed by this service."
-        ))
+        max_digits=36,
+        decimal_places=6,
+        blank=True,
+        null=True,
+        verbose_name=_("maximum weight"),
+        help_text=_("The maximum weight allowed by this service."),
+    )
 
     def get_unavailability_reasons(self, service, source):
         weight = sum(((x.get("weight") or 0) for x in source.get_lines()), 0)
@@ -105,31 +112,32 @@ class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
 
 class WeightBasedPriceRange(TranslatableModel):
     component = models.ForeignKey(
-        "WeightBasedPricingBehaviorComponent",
-        related_name="ranges",
-        on_delete=models.CASCADE
+        "WeightBasedPricingBehaviorComponent", related_name="ranges", on_delete=models.CASCADE
     )
     min_value = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
         verbose_name=_("min weight ({})".format(settings.SHUUP_MASS_UNIT)),
         blank=True,
         null=True,
-        help_text=_("The minimum weight for this price to apply.")
+        help_text=_("The minimum weight for this price to apply."),
     )
     max_value = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
         verbose_name=_("max weight ({})".format(settings.SHUUP_MASS_UNIT)),
         blank=True,
         null=True,
-        help_text=_("The maximum weight before this price no longer applies.")
+        help_text=_("The maximum weight before this price no longer applies."),
     )
     price_value = MoneyValueField(help_text=_("The cost to apply to this service when the weight criteria is met."))
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
-            "The order line text to display when this behavior is applied."
-        )),
+        description=models.CharField(
+            max_length=100,
+            blank=True,
+            verbose_name=_("description"),
+            help_text=_("The order line text to display when this behavior is applied."),
+        ),
     )
 
     def matches_to_value(self, value):
@@ -142,7 +150,8 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
         "Define price based on basket weight. "
         "Range minimums are counted in range only as zero e.g. if there are 2 ranges "
         "(range1 = min 0, max 5; range2 = min 5, max 10), only range1's 'min 0' is going "
-        "to be counted, but not range2's 'min 5'.")
+        "to be counted, but not range2's 'min 5'."
+    )
 
     def _get_matching_range_with_lowest_price(self, source):
         total_gross_weight = source.total_gross_weight
@@ -155,7 +164,7 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
         range = self._get_matching_range_with_lowest_price(source)
         if range:
             price = source.create_price(range.price_value)
-            description = range.safe_translation_getter('description')
+            description = range.safe_translation_getter("description")
             yield ServiceCost(price, description)
 
     def get_unavailability_reasons(self, service, source):
@@ -168,9 +177,9 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
     name = _("Contact group availability")
     help_text = _("Make service available only for specific contact groups.")
 
-    groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"), help_text=_(
-        "The contact groups for which this service is available."
-    ))
+    groups = models.ManyToManyField(
+        "ContactGroup", verbose_name=_("groups"), help_text=_("The contact groups for which this service is available.")
+    )
 
     def get_unavailability_reasons(self, service, source):
         if source.customer and not source.customer.pk:
@@ -202,13 +211,11 @@ class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
     max_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("max price value"))
 
     def get_unavailability_reasons(self, service, source):
-        total = (
-            source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value)
+        total = source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value
         is_in_range = _is_in_range(total, self.min_price_value, self.max_price_value)
         if not is_in_range:
             yield ValidationError(
-                _("Order's total price is not within the defined service limits."),
-                code="order_total_out_of_range"
+                _("Order's total price is not within the defined service limits."), code="order_total_out_of_range"
             )
 
 
@@ -217,15 +224,15 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
     help_text = _("Limit service availability based on countries selected.")
 
     available_in_countries = JSONField(blank=True, null=True, verbose_name=_("available in countries"))
-    available_in_european_countries = models.BooleanField(
-        default=False, verbose_name=_("available in european union"))
+    available_in_european_countries = models.BooleanField(default=False, verbose_name=_("available in european union"))
     unavailable_in_countries = JSONField(blank=True, null=True, verbose_name=_("unavailable in countries"))
     unavailable_in_european_countries = models.BooleanField(
-        default=False, verbose_name=_("unavailable in european union"))
+        default=False, verbose_name=_("unavailable in european union")
+    )
 
     def get_unavailability_reasons(self, service, source):
-        address = (source.shipping_address if hasattr(service, "carrier") else source.billing_address)
-        country = (address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY)
+        address = source.shipping_address if hasattr(service, "carrier") else source.billing_address
+        country = address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY
         if not (address or country):
             yield ValidationError(_("Service is not available without a defined country."), code="no_country")
 

@@ -1,27 +1,22 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier
-from shuup.front.forms.product_list_supplier_modifier import (
-    SupplierProductListFilter
-)
-from shuup.front.utils.sorts_and_filters import (
-    set_configuration
-)
+from shuup.front.forms.product_list_supplier_modifier import SupplierProductListFilter
+from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
 from shuup.testing.utils import apply_request_middleware
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 
@@ -97,14 +92,10 @@ def test_category_detail_filters(client):
         data={
             "filter_products_by_supplier": True,
             "filter_products_by_supplier_ordering": 1,
-        }
+        },
     )
 
-    product_data = [
-        ("laptop", 1500),
-        ("keyboard", 150),
-        ("mouse", 150)
-    ]
+    product_data = [("laptop", 1500), ("keyboard", 150), ("mouse", 150)]
     products = []
     for sku, price_value in product_data:
         products.append(factories.create_product(sku, shop=shop, default_price=price_value))
@@ -126,7 +117,8 @@ def test_category_detail_filters(client):
             shop_product.save()
 
             supplier_price = (
-                percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0])
+                percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0]
+            )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
@@ -187,8 +179,8 @@ def test_category_detail_multiselect_supplier_filters(client):
         data={
             "filter_products_by_supplier": True,
             "filter_products_by_supplier_ordering": 1,
-            "filter_products_by_supplier_multiselect_enabled": True
-        }
+            "filter_products_by_supplier_multiselect_enabled": True,
+        },
     )
 
     supplier_data = [
@@ -209,7 +201,7 @@ def test_category_detail_multiselect_supplier_filters(client):
         shop_product.categories.add(category)
         shop_product.save()
 
-        supplier_price = (percentage_from_original_price * price_value)
+        supplier_price = percentage_from_original_price * price_value
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
@@ -219,14 +211,10 @@ def test_category_detail_multiselect_supplier_filters(client):
             mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
             simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
 
-            soup = _get_category_detail_soup_multiselect(
-                client, category, [johnny_supplier.pk]
-            )
+            soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk])
             assert len(soup.findAll("div", {"class": "single-product"})) == 1
 
-            soup = _get_category_detail_soup_multiselect(
-                client, category, [johnny_supplier.pk, mike_supplier.pk]
-            )
+            soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk, mike_supplier.pk])
             assert len(soup.findAll("div", {"class": "single-product"})) == 2
 
             soup = _get_category_detail_soup_multiselect(
@@ -236,13 +224,13 @@ def test_category_detail_multiselect_supplier_filters(client):
 
 
 def _get_category_detail_soup(client, category, supplier_id):
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url, data={"supplier": supplier_id})
     return BeautifulSoup(response.content)
 
 
 def _get_category_detail_soup_multiselect(client, category, supplier_ids):
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url, data={"suppliers": ",".join(["%s" % sid for sid in supplier_ids])})
     return BeautifulSoup(response.content)
 
@@ -259,8 +247,8 @@ def _assert_product_price(box_soup, expected_price_value):
 
 def _assert_product_url(box_soup, supplier, product):
     expected_url = reverse(
-        'shuup:supplier-product',
-        kwargs={'supplier_pk': supplier.pk, 'pk': product.pk, 'slug': product.slug})
+        "shuup:supplier-product", kwargs={"supplier_pk": supplier.pk, "pk": product.pk, "slug": product.slug}
+    )
 
     link = box_soup.find("a", {"rel": "product-detail"})
     assert expected_url in link["href"]

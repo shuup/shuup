@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,7 +18,7 @@ class GeneralForm(forms.Form):
 
 
 def make_form_group(**kwargs):
-    AddressForm = modelform_factory(MutableAddress, fields=("name", ))
+    AddressForm = modelform_factory(MutableAddress, fields=("name",))
     fg = FormGroup(**kwargs)
     fg.add_form_def("address1", AddressForm, required=True)
     fg.add_form_def("address2", AddressForm, required=False)

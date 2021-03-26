@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,8 +13,12 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
-    TextFilter
+    ChoicesFilter,
+    Column,
+    DateRangeFilter,
+    MultiFieldTextFilter,
+    RangeFilter,
+    TextFilter,
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
@@ -25,26 +29,36 @@ from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 class OrderListView(PicotableListView):
     model = Order
     default_columns = [
-        Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),
-        Column("order_date", _(u"Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
+        Column("identifier", _("Order"), linked=True, filter_config=TextFilter(operator="startswith")),
+        Column("order_date", _("Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
         Column(
-            "customer", _(u"Customer"), display="format_customer_name",
+            "customer",
+            _("Customer"),
+            display="format_customer_name",
             filter_config=MultiFieldTextFilter(
                 filter_fields=(
-                    "customer__email", "customer__name", "billing_address__name",
-                    "shipping_address__name", "orderer__name"
+                    "customer__email",
+                    "customer__name",
+                    "billing_address__name",
+                    "shipping_address__name",
+                    "orderer__name",
                 )
-            )
+            ),
         ),
         Column(
-            "status", _(u"Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all()),
+            "status",
+            _("Status"),
+            filter_config=ChoicesFilter(choices=OrderStatus.objects.all()),
         ),
-        Column("payment_status", _(u"Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
-        Column("shipping_status", _(u"Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
+        Column("payment_status", _("Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
+        Column("shipping_status", _("Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
         Column(
-            "taxful_total_price_value", _(u"Total"), sort_field="taxful_total_price_value",
-            display="format_taxful_total_price", class_name="text-right",
-            filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
+            "taxful_total_price_value",
+            _("Total"),
+            sort_field="taxful_total_price_value",
+            display="format_taxful_total_price",
+            class_name="text-right",
+            filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value"),
         ),
     ]
     related_objects = [
@@ -61,12 +75,13 @@ class OrderListView(PicotableListView):
     mass_actions_provider_key = "order_list_mass_actions_provider"
 
     def get_toolbar(self):
-        toolbar = Toolbar([
-            NewActionButton.for_model(
-                Order, url=reverse("shuup_admin:order.new")
-            ),
-            SettingsActionButton.for_model(Order, return_url="order")
-        ], view=self)
+        toolbar = Toolbar(
+            [
+                NewActionButton.for_model(Order, url=reverse("shuup_admin:order.new")),
+                SettingsActionButton.for_model(Order, return_url="order"),
+            ],
+            view=self,
+        )
         return toolbar
 
     def get_queryset(self):
@@ -88,6 +103,6 @@ class OrderListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Total"), "text": item.get("taxful_total_price_value")},
-            {"title": _(u"Status"), "text": item.get("status")}
+            {"title": _("Total"), "text": item.get("taxful_total_price_value")},
+            {"title": _("Status"), "text": item.get("status")},
         ]

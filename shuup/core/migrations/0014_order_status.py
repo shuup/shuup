@@ -3,10 +3,11 @@
 from __future__ import unicode_literals
 
 import enumfields.fields
-import shuup.core.models
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import migrations, models
+
+import shuup.core.models
 
 
 def forwards_func(apps, schema_editor):

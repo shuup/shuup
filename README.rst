@@ -19,11 +19,11 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (c) 2012-2021 by Shoop Commerce Ltd. <support@shuup.com>
+Copyright (c) 2012-2021 by Shuup Commerce Inc. <support@shuup.com>
 
-Shuup is International Registered Trademark & Property of Shoop Commerce Ltd.,
-Business ID: FI27184225,
-Business Address: Iso-Roobertinkatu 20-22, 00120 HELSINKI, Finland.
+Shuup is International Registered Trademark & Property of Shuup Commerce Inc.,
+Business ID: BC1126729,
+Business Address: 1500 West Georgia Suite 1300, Vancouver, BC, V6G-2Z6, Canada.
 
 CLA
 ---
@@ -130,28 +130,10 @@ v4 (mid 2021)
 * Move various other not essential apps in this repository to addons for
   better version management.
 
-OS Addons
----------
+Additional Material
+-------------------
 
 * `Django-project template <https://github.com/shuup/shuup-project-template>`__. Django-project template.
-
-* `Shuup API <https://github.com/shuup/shuup-api>`__. Shuup API.
-* `Shuup REST API <https://github.com/shuup/shuup-rest-api>`__. Shuup REST API.
-* `Shuup Product Variations <https://github.com/shuup/shuup-product-variations>`__. Shuup Product Variations.
-* `Shuup Product Reviews <https://github.com/shuup/shuup-product-reviews>`__. Shuup Product Reviews.
-* `Shuup Stripe <https://github.com/shuup/shuup-stripe>`__. Stripe Payment Processor Addon for Shuup.
-* `Shuup Wishlist <https://github.com/shuup/shuup-wishlist>`__. Shuup Wishlist Addon.
-* `Shuup Checkoutfi <https://github.com/shuup/shuup-checkoutfi>`__. Checkout.fi integration for Shuup.
-* `Shuup Yaml <https://github.com/shuup/shuup-yaml>`__. Import categories, manufacturers and products to Shuup.
-* `Shuup Mailchimp <https://github.com/shuup/shuup-mailchimp>`__. Mailchimp integration for Shuup (New v0.7.8 released).
-* `Shuup Xtheme Layouts <https://github.com/shuup/shuup-xtheme-extra-layouts>`__. Xtheme layouts for Shuup.
-* `Shuup Category Organizer <https://github.com/shuup/shuup-category-organizer>`__. Shuup Category Organizer.
-* `Shuup Logging <https://github.com/shuup/shuup-logging>`__. Shuup Logging.
-
-The purpose of these addons, is to demonstrate how to build
-other simple addons to extend Shuup. To learn more, here are
-some useful links about how to extend Shuup.
-
 * `Provides system <https://shuup.readthedocs.io/en/latest/ref/provides.html>`__.
 * `Core settings <https://shuup.readthedocs.io/en/latest/api/shuup.core.html#module-shuup.core.settings>`__.
 * `Front settings <https://shuup.readthedocs.io/en/latest/api/shuup.front.html#module-shuup.front.settings>`__.

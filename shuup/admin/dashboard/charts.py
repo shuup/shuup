@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
 import json
-
 import six
 from babel.numbers import format_decimal, format_percent
 
@@ -18,19 +17,21 @@ from shuup.utils.serialization import ExtendedJSONEncoder
 
 class ChartType(object):
     """ Type of a chart """
+
     BAR = "bar"
     LINE = "line"
 
 
 class ChartDataType(object):
     """ Data type of datasets """
+
     NUMBER = "number"
     CURRENCY = "currency"
     PERCENT = "percent"
 
 
 class Chart(six.with_metaclass(abc.ABCMeta)):
-    supported_chart_types = []   # list[ChartType]
+    supported_chart_types = []  # list[ChartType]
 
     def __init__(self, title, data_type=ChartDataType.NUMBER, locale=None, currency=None, options=None):
         """
@@ -74,7 +75,7 @@ class Chart(six.with_metaclass(abc.ABCMeta)):
         return {}  # Implement me in a subclass, please.
 
     def get_config_json(self):
-        return json.dumps(self.get_config(), cls=ExtendedJSONEncoder, separators=',:')
+        return json.dumps(self.get_config(), cls=ExtendedJSONEncoder, separators=",:")
 
     def add_data(self, name, data, chart_type):
         """
@@ -118,11 +119,8 @@ class BarChart(Chart):
     def get_config(self):
         return {
             "type": ChartType.BAR,
-            "data": {
-                "labels": self.labels,
-                "datasets": self.datasets
-            },
-            "options": self.options
+            "data": {"labels": self.labels, "datasets": self.datasets},
+            "options": self.options,
         }
 
 
@@ -130,6 +128,7 @@ class MixedChart(Chart):
     """
     This chart supports both Bars and Lines.
     """
+
     supported_chart_types = [ChartType.BAR, ChartType.LINE]
 
     def __init__(self, title, labels, data_type=ChartDataType.NUMBER, **kwargs):
@@ -137,9 +136,4 @@ class MixedChart(Chart):
         self.labels = labels
 
     def get_config(self):
-        return {
-            "type": "mixed",
-            "labels": self.labels,
-            "data": self.datasets,
-            "options": self.options
-        }
+        return {"type": "mixed", "labels": self.labels, "data": self.datasets, "options": self.options}

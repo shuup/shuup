@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,15 +10,14 @@ from django.http.response import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
-from shuup.core.models import (
-    Category, CategoryStatus, ShopProduct, ShopProductVisibility
-)
+from shuup.core.models import Category, CategoryStatus, ShopProduct, ShopProductVisibility
 
 
 class CategoryCopyVisibilityView(View):
     """
     Copy category visibility settings to all products with this category as the primary category.
     """
+
     @atomic
     def post(self, request, *args, **kwargs):
         try:

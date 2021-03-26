@@ -1,19 +1,18 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import sys
-
 import setuptools
+import sys
 
 import shuup_setup_utils as utils
 
 TOPDIR = os.path.abspath(os.path.dirname(__file__))
-LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
-VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
+LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, "README.rst")
+VERSION_FILE = os.path.join(TOPDIR, "shuup", "_version.py")
 
 # Release instructions
 #
@@ -37,16 +36,16 @@ VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 #        Change Log
 #      - Add ".post0.dev" suffix to VERSION variable here
 
-NAME = 'shuup'
-VERSION = '2.3.16.post0.dev'
-DESCRIPTION = 'E-Commerce Platform'
-AUTHOR = 'Shoop Commerce Ltd.'
-AUTHOR_EMAIL = 'shuup@shuup.com'
-URL = 'http://shuup.com/'
+NAME = "shuup"
+VERSION = "2.5.0.post0.dev"
+DESCRIPTION = "E-Commerce Platform"
+AUTHOR = "Shuup Commerce Inc."
+AUTHOR_EMAIL = "shuup@shuup.com"
+URL = "http://shuup.com/"
 DOWNLOAD_URL_TEMPLATE = (
-    'https://github.com/shuup/shuup/releases/download/'
-    'v{version}/shuup-{version}-py2.py3-none-any.whl')
-LICENSE = 'proprietary'  # https://spdx.org/licenses/
+    "https://github.com/shuup/shuup/releases/download/" "v{version}/shuup-{version}-py2.py3-none-any.whl"
+)
+LICENSE = "proprietary"  # https://spdx.org/licenses/
 CLASSIFIERS = """
 Development Status :: 5 - Production/Stable
 Intended Audience :: Developers
@@ -57,12 +56,9 @@ Natural Language :: Finnish
 Natural Language :: Japanese
 Natural Language :: Portuguese (Brazilian)
 Programming Language :: JavaScript
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
-Programming Language :: Python :: 3
-Programming Language :: Python :: 3.4
-Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
 Topic :: Internet :: WWW/HTTP :: Dynamic Content
 Topic :: Internet :: WWW/HTTP :: Site Management
 Topic :: Office/Business
@@ -71,75 +67,68 @@ Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
 EXCLUDED_PACKAGES = [
-    'shuup_tests', 'shuup_tests.*',
+    "shuup_tests",
+    "shuup_tests.*",
 ]
 
-utils.add_exclude_patters([
-    'build', 'doc', 'var',
-    'LC_MESSAGES',
-    'local_settings.py',
-])
-
-REQUIRES = [
-    'Babel==2.5.3',
-    'bleach==3.1.5',
-    'django>=1.11,<2.3',
-    'django-bootstrap3>=11,<11.1',
-    'django-countries>=6.1.2,<6.2',
-    'django-enumfields>=2.0.0,<2.1',
-    'django-filer>=1.7,<1.8',
-    'django-filter>=2.2.0,<2.3',
-    'django-jinja==2.5.0',
-    'django-mptt==0.9.1',
-    'django-parler==2.0.1',
-    'django-polymorphic==2.1.2',
-    'django-registration-redux==2.7',
-    'django-reversion==3.0.5',
-    'django-timezone-field==3.1',   # doesn't support Django 3 in this version
-    'djangorestframework==3.11',
-    'factory-boy==2.7.0',
-    'fake-factory>=0.5.0,<0.5.4',
-    'Jinja2==2.8.1',
-    'jsonfield>=1,<3',
-    'keyring>=10',
-    'keyrings.alt>=2',
-    'lxml>=4,<5',
-    'Markdown>=3,<4',
-    'openpyxl>=2.3,<2.6',
-    'python-dateutil>=2.8',
-    'toml>=0.10.0,<1'
-    'pytz>=2015.4',
-    'requests>=2.7,<3',
-    'six>=1.9,<2',
-    'unicodecsv==0.14.1',
-    'xlrd>=1'
-]
-
-
-REQUIRES_FOR_PYTHON2_ONLY = [
-    'pillow>=3.4.2,<4'
-]
-
-EXTRAS_REQUIRE = {
-    ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
-    'docs': [
-        'Sphinx>=1.3,<2',
-    ],
-    'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
-    'coding-style': [
-        'flake8>3,<4',
-        'isort>4.3,<5',
-    ],
-}
-EXTRAS_REQUIRE['everything'] = list(
-    set(sum(EXTRAS_REQUIRE.values(), [])) -  # All extras, but not...
-    set(REQUIRES_FOR_PYTHON2_ONLY)  # the Python 2 compatibility things
+utils.add_exclude_patters(
+    [
+        "build",
+        "doc",
+        "var",
+        "LC_MESSAGES",
+        "local_settings.py",
+    ]
 )
 
+REQUIRES = [
+    "Babel==2.5.3",
+    "bleach==3.1.5",
+    "django>=1.11,<2.3",
+    "django-bootstrap3>=11,<11.1",
+    "django-countries>=6.1.2,<6.2",
+    "django-enumfields>=2.0.0,<2.1",
+    "django-filer>=1.7,<1.8",
+    "django-filter>=2.2.0,<2.3",
+    "django-jinja==2.5.0",
+    "django-mptt==0.9.1",
+    "django-parler==2.0.1",
+    "django-polymorphic==2.1.2",
+    "django-registration-redux==2.7",
+    "django-reversion==3.0.5",
+    "django-timezone-field==3.1",  # doesn't support Django 3 in this version
+    "djangorestframework==3.11",
+    "factory-boy==2.7.0",
+    "fake-factory>=0.5.0,<0.5.4",
+    "Jinja2==2.8.1",
+    "jsonfield>=1,<3",
+    "keyring>=10",
+    "keyrings.alt>=2",
+    "lxml>=4,<5",
+    "Markdown>=3,<4",
+    "openpyxl>=2.3,<2.6",
+    "python-dateutil>=2.8",
+    "toml>=0.10.0,<1" "pytz>=2015.4",
+    "requests>=2.7,<3",
+    "six>=1.9,<2",
+    "unicodecsv==0.14.1",
+    "xlrd>=1",
+]
 
-if __name__ == '__main__':
-    if 'upload' in sys.argv:
-        raise EnvironmentError('Uploading is blacklisted')
+
+EXTRAS_REQUIRE = {
+    "docs": [
+        "Sphinx>=1.3,<2",
+    ],
+    "testing": utils.get_test_requirements_from_tox_ini(TOPDIR),
+    "coding-style": ["black==20.8b1", "isort==5.6.4", "flake8==3.8.4"],
+}
+EXTRAS_REQUIRE["everything"] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
+
+
+if __name__ == "__main__":
+    if "upload" in sys.argv:
+        raise EnvironmentError("Uploading is blacklisted")
 
     version = utils.get_version(VERSION, TOPDIR, VERSION_FILE)
     utils.write_version_to_file(version, VERSION_FILE)
@@ -156,9 +145,9 @@ if __name__ == '__main__':
         license=LICENSE,
         classifiers=CLASSIFIERS,
         install_requires=REQUIRES,
-        tests_require=EXTRAS_REQUIRE['testing'],
+        tests_require=EXTRAS_REQUIRE["testing"],
         extras_require=EXTRAS_REQUIRE,
         packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
-        cmdclass=utils.COMMANDS
+        cmdclass=utils.COMMANDS,
     )

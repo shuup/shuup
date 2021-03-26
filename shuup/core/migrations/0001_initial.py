@@ -1,30 +1,31 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import shuup.core.models
-import filer.fields.image
-import filer.fields.file
-import parler.models
-import shuup.core.models._attributes
 import django.db.models.deletion
-import shuup.core.modules.interface
-from decimal import Decimal
-import shuup.core.fields
-import shuup.core.models._shipments
-import shuup.utils.properties
-from django.conf import settings
 import django_countries.fields
+import enumfields.fields
+import filer.fields.file
+import filer.fields.image
+import jsonfield.fields
 import mptt.fields
+import parler.models
+import timezone_field.fields
+from decimal import Decimal
+from django.conf import settings
+from django.db import migrations, models
+
+import shuup.core.fields
+import shuup.core.models
+import shuup.core.models._attributes
+import shuup.core.models._base
+import shuup.core.models._shipments
+import shuup.core.models._shops
+import shuup.core.modules.interface
 import shuup.core.pricing
+import shuup.core.taxing
 import shuup.core.utils.name_mixin
 import shuup.utils.analog
-import shuup.core.taxing
-import timezone_field.fields
-import shuup.core.models._base
-import shuup.core.models._shops
-import jsonfield.fields
-import enumfields.fields
+import shuup.utils.properties
 
 
 class Migration(migrations.Migration):

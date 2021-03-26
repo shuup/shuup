@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import logging
-
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -46,7 +45,7 @@ class DictStoredBasket(object):
         self.shop_id = shop_id
         self.currency = currency
         self.prices_include_tax = prices_include_tax
-        self.data = (data or {})
+        self.data = data or {}
 
     @classmethod
     def from_basket_and_data(cls, basket, data):

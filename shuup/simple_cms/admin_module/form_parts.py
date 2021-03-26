@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -40,10 +40,7 @@ class CMSOpenGraphFormPart(FormPart):
             form_class=self.form,
             template_name="shuup/simple_cms/admin/_edit_og_form.jinja",
             required=True,
-            kwargs={
-                "instance": instance,
-                "languages": settings.LANGUAGES
-            }
+            kwargs={"instance": instance, "languages": settings.LANGUAGES},
         )
 
     def form_valid(self, form):

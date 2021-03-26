@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from functools import lru_cache
 from logging import getLogger
-
-from django.utils.lru_cache import lru_cache
 
 LOGGER = getLogger(__name__)
 
@@ -22,11 +21,14 @@ def get_shuup_static_url(path, package=None):
         version as a base.
     """
     from django.templatetags.static import static
+
     from shuup import __version__
+
     version = __version__
 
     if package:
         import pkg_resources
+
         try:
             distribution = pkg_resources.get_distribution(package)
             if distribution:

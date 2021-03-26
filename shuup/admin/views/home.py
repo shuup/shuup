@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,9 +13,7 @@ from shuup.admin.module_registry import get_modules
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
-from shuup.admin.utils.wizard import (
-    load_setup_wizard_panes, setup_wizard_complete
-)
+from shuup.admin.utils.wizard import load_setup_wizard_panes, setup_wizard_complete
 from shuup.utils.django_compat import reverse
 
 
@@ -43,7 +41,7 @@ QUICKLINK_ORDER = [
     HelpBlockCategory.CAMPAIGNS,
     HelpBlockCategory.CONTACTS,
     HelpBlockCategory.STOREFRONT,
-    HelpBlockCategory.GENERAL
+    HelpBlockCategory.GENERAL,
 ]
 
 
@@ -74,18 +72,13 @@ class HomeView(TemplateView):
         wizard_url = reverse("shuup_admin:wizard")
         wizard_actions = []
         if not wizard_complete:
-            wizard_actions.append({
-                "text": _("Complete wizard"),
-                "url": wizard_url
-            })
+            wizard_actions.append({"text": _("Complete wizard"), "url": wizard_url})
         else:
             wizard_steps = load_setup_wizard_panes(shop=shop, request=self.request, visible_only=False)
             for step in wizard_steps:
-                wizard_actions.append({
-                    "text": step.title,
-                    "url": "%s?pane_id=%s" % (wizard_url, step.identifier),
-                    "no_redirect": True
-                })
+                wizard_actions.append(
+                    {"text": step.title, "url": "%s?pane_id=%s" % (wizard_url, step.identifier), "no_redirect": True}
+                )
 
         if wizard_actions:
             blocks.append(
@@ -94,7 +87,7 @@ class HomeView(TemplateView):
                     actions=wizard_actions,
                     icon_url="shuup_admin/img/configure.png",
                     priority=-1,
-                    done=wizard_complete
+                    done=wizard_complete,
                 )
             )
 
@@ -110,7 +103,7 @@ class HomeView(TemplateView):
                     actions=[],
                     icon_url="shuup_admin/img/configure.png",
                     priority=-1,
-                    done=True
+                    done=True,
                 )
             )
 

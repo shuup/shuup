@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
-
 import mock
+import pytest
 
 from shuup.core import cache
 from shuup.core.models import (
-    Attribute, AttributeType, AttributeVisibility, ProductAttribute,
-    ProductCrossSell, ProductCrossSellType, ShopProductVisibility
+    Attribute,
+    AttributeType,
+    AttributeVisibility,
+    ProductAttribute,
+    ProductCrossSell,
+    ProductCrossSellType,
+    ShopProductVisibility,
 )
 from shuup.core.utils import context_cache
 from shuup.front.template_helpers import product as product_helpers
-from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_supplier
-)
+from shuup.testing.factories import create_product, get_default_shop, get_default_supplier
 from shuup_tests.front.fixtures import get_jinja_context
 
 
@@ -47,9 +49,11 @@ def test_cross_sell_plugin_type():
     supplier = get_default_supplier()
     product = create_product("test-sku", shop=shop, supplier=supplier)
     context = get_jinja_context(product=product)
-    type_counts = ((ProductCrossSellType.RELATED, 1),
-                   (ProductCrossSellType.RECOMMENDED, 2),
-                   (ProductCrossSellType.BOUGHT_WITH, 3))
+    type_counts = (
+        (ProductCrossSellType.RELATED, 1),
+        (ProductCrossSellType.RECOMMENDED, 2),
+        (ProductCrossSellType.BOUGHT_WITH, 3),
+    )
 
     # Create cross sell products and relations in different quantities
     for type, count in type_counts:
@@ -111,6 +115,7 @@ def test_cross_sell_plugin_cache_bump():
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == total_count
 
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "product_cross_sells" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -137,14 +142,15 @@ def test_visible_attributes():
     product = create_product("test-sku", shop=shop, supplier=supplier)
 
     _add_attribute_for_product(
-        product, "attr1", AttributeType.BOOLEAN, AttributeVisibility.SHOW_ON_PRODUCT_PAGE, "attr1")
-    _add_attribute_for_product(
-        product, "attr2", AttributeType.BOOLEAN, AttributeVisibility.HIDDEN, "attr2")
+        product, "attr1", AttributeType.BOOLEAN, AttributeVisibility.SHOW_ON_PRODUCT_PAGE, "attr1"
+    )
+    _add_attribute_for_product(product, "attr2", AttributeType.BOOLEAN, AttributeVisibility.HIDDEN, "attr2")
 
     assert len(product_helpers.get_visible_attributes(product)) == 1
 
     _add_attribute_for_product(
-        product, "attr3", AttributeType.BOOLEAN, AttributeVisibility.SHOW_ON_PRODUCT_PAGE, "attr3")
+        product, "attr3", AttributeType.BOOLEAN, AttributeVisibility.SHOW_ON_PRODUCT_PAGE, "attr3"
+    )
 
     assert len(product_helpers.get_visible_attributes(product)) == 2
 
@@ -157,7 +163,7 @@ def test_visible_attributes():
 
 def _add_attribute_for_product(product, attr_identifier, attr_type, attr_visibility, attr_name):
     attribute = Attribute.objects.create(
-        identifier=attr_identifier, type=attr_type,
-        visibility_mode=attr_visibility, name=attr_name)
+        identifier=attr_identifier, type=attr_type, visibility_mode=attr_visibility, name=attr_name
+    )
     product.type.attributes.add(attribute)
     ProductAttribute.objects.create(product=product, attribute=attribute)

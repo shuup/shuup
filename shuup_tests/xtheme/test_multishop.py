@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,8 +14,11 @@ from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
 from shuup.xtheme import (
-    get_current_theme, get_middleware_current_theme, get_theme_by_identifier,
-    set_current_theme, set_middleware_current_theme
+    get_current_theme,
+    get_middleware_current_theme,
+    get_theme_by_identifier,
+    set_current_theme,
+    set_middleware_current_theme,
 )
 from shuup.xtheme.middleware import XthemeMiddleware
 from shuup.xtheme.models import ThemeSettings
@@ -29,10 +32,7 @@ def setup_function(fn):
 @pytest.mark.django_db
 @pytest.mark.parametrize("host", ["shop-1.somedomain.com", "shop-test-2.otherdomain.com.br"])
 def test_multishops_middleware(rf, host):
-    with override_provides("xtheme", [
-        "shuup_tests.xtheme.utils:FauxTheme",
-        "shuup_tests.xtheme.utils:FauxTheme2"
-    ]):
+    with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme", "shuup_tests.xtheme.utils:FauxTheme2"]):
         shop1 = Shop.objects.create(identifier="shop1", domain="shop-1")
         shop2 = Shop.objects.create(identifier="shop2", domain="shop-test-2")
 
@@ -108,10 +108,7 @@ def test_set_get_middleware_theme(rf):
 
 @pytest.mark.django_db
 def test_set_get_theme(rf):
-    with override_provides("xtheme", [
-        "shuup_tests.xtheme.utils:FauxTheme",
-        "shuup_tests.xtheme.utils:FauxTheme2"
-    ]):
+    with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme", "shuup_tests.xtheme.utils:FauxTheme2"]):
         shop1 = Shop.objects.create(identifier="shop1", domain="shop-1")
         shop2 = Shop.objects.create(identifier="shop2", domain="shop-test-2")
 
@@ -128,10 +125,7 @@ def test_set_get_theme(rf):
 
 @pytest.mark.django_db
 def test_get_by_identifier_theme(rf):
-    with override_provides("xtheme", [
-        "shuup_tests.xtheme.utils:FauxTheme",
-        "shuup_tests.xtheme.utils:FauxTheme2"
-    ]):
+    with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme", "shuup_tests.xtheme.utils:FauxTheme2"]):
         shop1 = Shop.objects.create(identifier="shop1", domain="shop-1")
         shop2 = Shop.objects.create(identifier="shop2", domain="shop-test-2")
 

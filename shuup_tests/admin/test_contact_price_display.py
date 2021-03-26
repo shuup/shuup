@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,19 +10,21 @@ import pytest
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
 
-from shuup.admin.modules.contact_group_price_display.views import \
-    ContactGroupPriceDisplayEditView
+from shuup.admin.modules.contact_group_price_display.views import ContactGroupPriceDisplayEditView
 from shuup.admin.modules.contact_group_price_display.views.forms import PriceDisplayChoices
 from shuup.core.models import (
-    AnonymousContact, CompanyContact, ContactGroup, ContactGroupPriceDisplay,
-    get_groups_for_price_display_create, get_person_contact,
-    get_price_display_options_for_group_and_shop, get_price_displays_for_shop,
-    PersonContact
+    AnonymousContact,
+    CompanyContact,
+    ContactGroup,
+    ContactGroupPriceDisplay,
+    PersonContact,
+    get_groups_for_price_display_create,
+    get_person_contact,
+    get_price_display_options_for_group_and_shop,
+    get_price_displays_for_shop,
 )
 from shuup.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
-from shuup.testing.factories import (
-    get_default_customer_group, get_default_shop
-)
+from shuup.testing.factories import get_default_customer_group, get_default_shop
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user
@@ -48,7 +50,6 @@ def test_display_queryset(regular_user):
     for_create = get_groups_for_price_display_create(shop)
     assert for_create.count() == 2
     assert anonymous_group not in for_create
-
 
     items = get_price_displays_for_shop(shop)
     assert items.count() == 3
@@ -82,7 +83,6 @@ def test_admin_edit(rf, admin_user):
     cgpd = ContactGroupPriceDisplay.objects.for_group_and_shop(group, shop)
     view = ContactGroupPriceDisplayEditView.as_view()
 
-
     options = get_price_display_options_for_group_and_shop(group, shop)
     assert options.show_prices
 
@@ -93,10 +93,12 @@ def test_admin_edit(rf, admin_user):
 
     data = extract_form_fields(BeautifulSoup(content))
 
-    data.update({
-        "price_display_mode": [PriceDisplayChoices.HIDE.value],
-        "group": group.id,
-    })
+    data.update(
+        {
+            "price_display_mode": [PriceDisplayChoices.HIDE.value],
+            "group": group.id,
+        }
+    )
 
     request = apply_request_middleware(rf.post("/", data), user=admin_user, shop=shop)
     response = view(request, pk=cgpd.pk)

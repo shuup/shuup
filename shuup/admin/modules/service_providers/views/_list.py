@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,11 +18,12 @@ class ServiceProviderListView(PicotableListView):
     model = ServiceProvider
     default_columns = [
         Column(
-            "name", _("Name"), sort_field="base_translations__name",
-            filter_config=TextFilter(
-                filter_field="base_translations__name",
-                placeholder=_("Filter by name..."))),
-        Column("type", _(u"Type"), display="get_type_display", sortable=False),
+            "name",
+            _("Name"),
+            sort_field="base_translations__name",
+            filter_config=TextFilter(filter_field="base_translations__name", placeholder=_("Filter by name...")),
+        ),
+        Column("type", _("Type"), display="get_type_display", sortable=False),
     ]
     toolbar_buttons_provider_key = "service_provider_list_toolbar_provider"
     mass_actions_provider_key = "service_provider_mass_actions_provider"

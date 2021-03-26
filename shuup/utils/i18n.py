@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,10 +12,26 @@ from babel.dates import format_datetime
 from babel.numbers import format_currency, format_decimal, parse_pattern
 from django.apps import apps
 from django.utils import translation
-from django.utils.lru_cache import lru_cache
 from django.utils.timezone import localtime
 from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
+from functools import lru_cache, wraps
+
+
+def lang_lru_cache(func):
+    """Language aware least recently used cache decorator"""
+
+    @lru_cache()
+    def cached(*args, __lang=None, **kwargs):
+        return func(*args, **kwargs)
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return cached(*args, **kwargs, __lang=translation.get_language())
+
+    wrapper.cache_clear = cached.cache_clear
+
+    return wrapper
 
 
 @lru_cache()
@@ -50,9 +66,7 @@ def get_current_babel_locale(fallback="en-US-POSIX"):
         if fallback:
             locale = get_babel_locale(fallback)
         if not locale:
-            raise ValueError(
-                "Error! Failed to get the current babel locale (lang=%s)." %
-                (translation.get_language(),))
+            raise ValueError("Error! Failed to get the current babel locale (lang=%s)." % (translation.get_language(),))
     return locale
 
 
@@ -60,8 +74,7 @@ def format_number(value, digits=None):
     locale = get_current_babel_locale()
     if digits is None:
         return format_decimal(value, locale=locale)
-    (min_digits, max_digits) = (
-        digits if isinstance(digits, tuple) else (digits, digits))
+    (min_digits, max_digits) = digits if isinstance(digits, tuple) else (digits, digits)
     format = locale.decimal_formats.get(None)
     pattern = parse_pattern(format)  # type: babel.numbers.NumberPattern
     return pattern.apply(value, locale, force_frac=(min_digits, max_digits))
@@ -120,7 +133,7 @@ def format_money(amount, digits=None, widen=0, locale=None):
     return format_currency(amount.value, amount.currency, pattern, loc, currency_digits=False)
 
 
-@lru_cache()
+@lang_lru_cache
 def get_language_name(language_code):
     """
     Get a language's name in the currently active locale.
@@ -144,12 +157,13 @@ def get_language_name(language_code):
 
 
 @cache_page(3600, key_prefix="js18n-%s" % get_language())
-def javascript_catalog_all(request, domain='djangojs'):
+def javascript_catalog_all(request, domain="djangojs"):
     """
     Get JavaScript message catalog for all apps in `INSTALLED_APPS`.
     """
     all_apps = [x.name for x in apps.get_app_configs()]
     from django.views.i18n import JavaScriptCatalog
+
     js_catalog = JavaScriptCatalog(packages=all_apps, domain=domain)
     return js_catalog.get(request)
 

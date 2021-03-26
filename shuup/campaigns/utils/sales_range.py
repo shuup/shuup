@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,12 +39,12 @@ def assign_to_group_based_on_sales(cls, shop, customer, sales_range=None):
 
 
 def get_contacts_in_sales_range(shop, min_value, max_value):
-    total_sales = Payment.objects.filter(
-        order__shop=shop,
-    ).values(
-        "order__customer_id"
-    ).annotate(
-        total_sales=Sum("amount_value")
+    total_sales = (
+        Payment.objects.filter(
+            order__shop=shop,
+        )
+        .values("order__customer_id")
+        .annotate(total_sales=Sum("amount_value"))
     )
     # Since https://github.com/django/django/commit/3bbaf84d6533fb61ac0038f2bbe52ee0d7b4fd10
     # is introduced in Django 1.9a1 we can't filter total sales with min and max value

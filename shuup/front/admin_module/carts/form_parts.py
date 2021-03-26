@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,11 +21,7 @@ def get_cart_delay_hours(shop):
 
 
 def set_cart_delay_hours(shop, value):
-    return configuration.set(
-        shop,
-        CART_UPDATE_DELAY_CONF_KEY,
-        (value or CART_UPDATE_DELAY_DEFAULT)
-    )
+    return configuration.set(shop, CART_UPDATE_DELAY_CONF_KEY, (value or CART_UPDATE_DELAY_DEFAULT))
 
 
 class CartDelayConfigurationForm(forms.Form):
@@ -33,7 +29,7 @@ class CartDelayConfigurationForm(forms.Form):
         required=False,
         min_value=0,
         label=_("Cart Inactivity Delay (hours)"),
-        help_text=_("Set the number of hours the cart must be inactive before it's displayed in Orders > Carts")
+        help_text=_("Set the number of hours the cart must be inactive before it's displayed in Orders > Carts"),
     )
 
 
@@ -46,13 +42,13 @@ class CartDelayFormPart(FormPart):
         if not self.object.pk:
             return
 
-        initial = {"shuup_front_cart_update_delay":  get_cart_delay_hours(self.object)}
+        initial = {"shuup_front_cart_update_delay": get_cart_delay_hours(self.object)}
         yield TemplatedFormDef(
             name=self.name,
             form_class=self.form,
             template_name="shuup/front/admin/cart_delay.jinja",
             required=False,
-            kwargs={"initial": initial}
+            kwargs={"initial": initial},
         )
 
     def form_valid(self, form):

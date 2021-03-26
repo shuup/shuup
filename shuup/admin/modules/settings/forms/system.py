@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -28,7 +28,7 @@ class BaseSettingsFormPart(FormPart):
             self.form,
             required=False,
             template_name="shuup/admin/settings/form_parts/settings_base.jinja",
-            kwargs={"request": self.request}
+            kwargs={"request": self.request},
         )
 
     def save(self, form):
@@ -63,12 +63,15 @@ class OrderSettingsForm(BaseSettingsForm):
     title = _("Order Settings")
     order_reference_number_method = EnumField(OrderReferenceNumberMethod).formfield(
         label=_("Order Reference number method"),
-        help_text=_("This option defines how the reference numbers for orders are built. The options are:"
-                    "<br><br><b>Unique</b><br>Order reference number is unique system wide, "
-                    "regardless of the amount of shops."
-                    "<br><br><b>Running</b><br>Order number is running system wide, regardless of the amount of shops."
-                    "<br><br><b>Shop Running</b><br>Every shop has its own running numbers for reference."),
-        required=False)
+        help_text=_(
+            "This option defines how the reference numbers for orders are built. The options are:"
+            "<br><br><b>Unique</b><br>Order reference number is unique system wide, "
+            "regardless of the amount of shops."
+            "<br><br><b>Running</b><br>Order number is running system wide, regardless of the amount of shops."
+            "<br><br><b>Shop Running</b><br>Every shop has its own running numbers for reference."
+        ),
+        required=False,
+    )
 
 
 class OrderSettingsFormPart(BaseSettingsFormPart):
