@@ -21,7 +21,7 @@ cache:
     - shuup/xtheme/node_modules
 jobs:
   include:
-    - {stage: development, env: TOXENV=sanity, name: "Sanity Check"}
+    # - {stage: development, env: TOXENV=sanity, name: "Sanity Check"}
     - {stage: development, env: TOXENV=codestyle, name: "Code Style"}
     - {stage: development, env: TOXENV=license_headers, name: "License Headers"}
     - {stage: development, env: TOXENV=migrations, name: "Migrations & Messages"}
