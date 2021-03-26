@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.models import ShopProduct
@@ -20,6 +21,9 @@ class ProductCopyView(DetailView):
     model = ShopProduct
     context_object_name = "product"
 
+    def get_success_url(self, copied_shop_product: ShopProduct):
+        return get_model_url(copied_shop_product, shop=get_shop(self.request))
+
     def get(self, request, *args, **kwargs):
         shop_product = self.get_object()
         current_supplier = None if request.user.is_superuser else get_supplier(request)
@@ -28,4 +32,4 @@ class ProductCopyView(DetailView):
         messages.success(
             request, _("{product_name} was successfully copied".format(product_name=copied_shop_product.product))
         )
-        return HttpResponseRedirect(get_model_url(copied_shop_product, shop=request.shop))
+        return HttpResponseRedirect(self.get_success_url(copied_shop_product))

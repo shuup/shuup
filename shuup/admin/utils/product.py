@@ -19,7 +19,7 @@ class ProductCloner:
 
     @atomic()
     def clone_product(self, shop_product: ShopProduct):
-        # Clone product
+        # clone product
         product = shop_product.product
         new_product = copy_model_instance(product)
         new_product.sku = "{}-{}".format(product.sku, Product.objects.count())
@@ -37,7 +37,7 @@ class ProductCloner:
 
             new_trans.save()
 
-        # Clone shop_product
+        # clone shop product
         new_shop_product = copy_model_instance(shop_product)
         new_shop_product.product = new_product
         new_shop_product.save()
@@ -49,16 +49,19 @@ class ProductCloner:
                 **trans_shop_product_data
             )
 
+        # clone suppliers
         if self.current_supplier:
             new_shop_product.suppliers.add(self.current_supplier)
         else:
             new_shop_product.suppliers.set(shop_product.suppliers.all())
 
         new_shop_product.categories.set(shop_product.categories.all())
+
+        # clone attributes
         for attribute in product.attributes.all():
             ProductAttribute.objects.create(product=new_product, attribute=attribute.attribute, value=attribute.value)
 
-        # Clone media
+        # clone media
         for media in product.media.all():
             media_copy = copy_model_instance(media)
             media_copy.product = new_product
