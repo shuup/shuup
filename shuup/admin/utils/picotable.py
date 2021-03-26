@@ -653,7 +653,7 @@ class PicotableFileMassAction(PicotableMassAction):
 
     Examples:
     * `shuup.admin.modules.orders.mass_actions.OrderConfirmationPdfAction`
-    * `shuup.admin.modules.products.mass_actions.FileResponseAction`
+    * `shuup.admin.modules.products.mass_actions.ExportProductsCSVAction`
     """
 
     def process(self, request, ids):
