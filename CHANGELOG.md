@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Improve the copy product functionality
 
+### Added
+
+- CORE: Add .jsx support for shuup_makemessages command
+
 ### Fixed
 
 - Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
@@ -67,7 +71,6 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: fix product module not to fail on object does not exists
 - Front: update media upload URL from "media-upload/" to "upload-media/"
 - Core: bump attribute name to 256 characters
-
 
 ## [2.3.17] - 2021-02-23
 
