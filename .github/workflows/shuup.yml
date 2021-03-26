@@ -8,8 +8,8 @@ on:
 
 jobs:
 
-  sanity:
-    name: "Sanity Check"
+  codestyle:
+    name: "Code style & sanity checks"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,5 +17,15 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.6
+    - name: Install dependencies
+      run: pip install -r requirements-dev.txt
     - name: Run sanity check
       run: _misc/check_sanity.py
+    - name: Run license headers check
+      run: _misc/ensure_license_headers.py -s shuup
+    - name: Check flake8
+      run: flake8 .
+    - name: Check isort
+      run: isort --check --diff .
+    - name: Check black
+      run: black --check --diff .
