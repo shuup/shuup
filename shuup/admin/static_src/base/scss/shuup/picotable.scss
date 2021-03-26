@@ -228,6 +228,11 @@
 
         @include media-breakpoint-down(md) {
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            flex-direction: column;
         }
 
         @include media-breakpoint-down(xl) {
@@ -238,6 +243,7 @@
             @include media-breakpoint-down(sm) {
                 text-align: center;
                 float: left;
+                width: 100%!important;
             }
 
             @include media-breakpoint-down(md) {
@@ -261,6 +267,9 @@
 
         .picotable-filter-name {
             flex: 1;
+            @include media-breakpoint-down(md) {
+                width: 100%;
+            }
         }
 
         .picotable-filter {

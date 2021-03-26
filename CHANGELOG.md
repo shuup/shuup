@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
+- Admin: Fix picotable mobile styling to default to full-width
 
 ## [2.5.0] - 2021-03-22
 
