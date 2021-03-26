@@ -26,8 +26,6 @@ class ProductCopyView(DetailView):
         cloner = cached_load("SHUUP_ADMIN_PRODUCT_CLONER")(request.shop, current_supplier)
         copied_shop_product = cloner.clone_product(shop_product=shop_product)
         messages.success(
-            request,
-            _("{product_name} was successfully copied".format(product_name=copied_shop_product.product))
+            request, _("{product_name} was successfully copied".format(product_name=copied_shop_product.product))
         )
-
         return HttpResponseRedirect(get_model_url(copied_shop_product, shop=request.shop))

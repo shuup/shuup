@@ -119,3 +119,6 @@ SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = True
 #: Alltho this allows many media folder to be linked a folder we only have one media folder per folder.
 #: If the use case change we can change this setting to get the media folder from the folder.
 SHUUP_GET_MEDIA_FOLDER_FROM_FOLDER = "shuup.admin.utils.media_folder_from_folder"
+
+#: Spec that indicates the product cloner object
+SHUUP_ADMIN_PRODUCT_CLONER = "shuup.admin.utils.product.ProductCloner"
