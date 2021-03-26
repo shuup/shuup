@@ -9,9 +9,9 @@ from __future__ import unicode_literals
 
 import hashlib
 import six
-import warnings
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
+from typing import Dict, Optional
 
 from shuup.utils.django_compat import reverse
 
@@ -192,12 +192,6 @@ class MenuEntry(BaseMenuEntry):
         self.ordering = ordering
         self.aliases = tuple(aliases)
 
-        if "subcategory" in kwargs:
-            warnings.warn(
-                "Warning! `subcategory` attribute will be deprecated in Shuup 2.0 as unused for this util.",
-                DeprecationWarning,
-            )
-
     @property
     def identifier(self):
         return self._url
@@ -215,10 +209,19 @@ class MenuEntry(BaseMenuEntry):
         for alias in self.aliases:
             yield alias
 
-    def get_text(self, request):
-        return self.name
+    def get_text(self, request) -> str:
+        return self.text
 
-    def get_badge(self, request):
+    def get_badge(self, request) -> Optional[Dict]:
+        """
+        Should return a dictionary with the information of the badge or None:
+        ```
+        {
+            "tag": "info|success|danger|warning",
+            "value": "my value"
+        }
+        ```
+        """
         return None
 
 

@@ -73,12 +73,6 @@
                 transition: color 0.2s ease-in-out;
             }
 
-            .item-exclamation {
-                font-size: 0.9rem;
-                color: rgba($primary, 0.1);
-                margin-right: 5px;
-            }
-
             &:hover {
                 text-decoration: none;
                 color: $primary;

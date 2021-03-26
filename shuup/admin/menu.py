@@ -107,6 +107,9 @@ class _MenuCategory(BaseMenuEntry):
         self.children = []
         self.entries = []
 
+    def contains_badges(self, request):
+        return any(bool(entry.get_badge(request)) for entry in self.entries)
+
 
 def extend_main_menu(menu):
     for menu_updater in get_provide_objects("admin_main_menu_updater"):
@@ -260,8 +263,6 @@ def get_menu_entry_categories(request):  # noqa (C901)
                         name=category_identifier,
                         icon=menu_category_icons.get(category_identifier, "fa fa-circle"),
                     )
-            if entry.get_badge(request):
-                category.has_badge_entries = True
             category.entries.append(entry)
             all_categories.add(category)
 

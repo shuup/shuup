@@ -61,18 +61,19 @@
                             <i class="item-icon {{ category.icon }}"></i>
                             <span class="item-name parent">{{ category.name }}</span>
                             {% if has_children %}
-                                {% if category.has_badge_entries %}
-                                    <i class="item-exclamation ml-auto fa fa-exclamation-circle"></i>
+                                {% if category.contains_badges(request) %}
+                                    <i class="item-exclamation ml-auto mr-2 fa fa-exclamation-circle fa-text text-warning"></i>
                                     <i class="item-arrow fa fa-chevron-down {% if is_menu_category_active %}rotate{% endif %}"></i>
-<<<<<<< HEAD
                                 {% else %}
-                                <i class="ml-auto item-arrow fa fa-chevron-down {% if is_menu_category_active %}rotate{% endif %}"></i>
-                                {% endif %}
-=======
-                                {% else %}               
                                     <i class="ml-auto item-arrow fa fa-chevron-down {% if is_menu_category_active %}rotate{% endif %}"></i>
-                                {% endif %}                            
->>>>>>> fix style in SCSS file
+                                {% endif %}
+                            {% elif only_entry %}
+                                {% set badge = only_entry.get_badge(request) %}
+                                {% if badge %}
+                                    <small class="ml-auto badge-pill badge-{{ badge.tag }}">
+                                        <strong>{{ badge.value }}</strong>
+                                    </small>
+                                {% endif %}
                             {% endif %}
                         </a>
                         <ul class="submenu{% if is_menu_category_active %} active{% endif %}">
@@ -81,14 +82,16 @@
                                     {% if not entry.is_hidden %}
                                         {% set is_active = shuup_admin.is_menu_item_active(entry.url, request.path, breadcrumbs) %}
                                         {% set badge = entry.get_badge(request) %}
-                                            <li>
-                                                <a class="item-submenu {{ 'active-menu' if is_active else '' }}" href="{{ entry.url }}">
-                                                    {{ entry.get_text(request) }}
-                                                    {% if badge %}
-                                                        <span class="ml-auto badge-pill {{ badge['tag'] }}">{{ badge['value'] }}</span>
-                                                    {% endif %}
-                                                </a>
-                                            </li>
+                                        <li>
+                                            <a class="item-submenu {{ 'active-menu' if is_active else '' }}" href="{{ entry.url }}">
+                                                <span class="item-submenu-text">{{ entry.get_text(request) }}</span>
+                                                {% if badge %}
+                                                    <small class="ml-auto badge-pill badge-{{ badge.tag }}">
+                                                        <strong>{{ badge.value }}</strong>
+                                                    </small>
+                                                {% endif %}
+                                            </a>
+                                        </li>
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
