@@ -107,6 +107,9 @@ class _MenuCategory(BaseMenuEntry):
         self.children = []
         self.entries = []
 
+    def contains_badges(self, request):
+        return any(bool(entry.get_badge(request)) for entry in self.entries)
+
 
 def extend_main_menu(menu):
     for menu_updater in get_provide_objects("admin_main_menu_updater"):

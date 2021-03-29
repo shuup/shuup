@@ -13,14 +13,33 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shuup.admin.menu import ORDERS_MENU_CATEGORY, STOREFRONT_MENU_CATEGORY
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import Order, OrderStatus, OrderStatusRole
 
 
+class OrderEntry(MenuEntry):
+    name = _("Orders")
+
+    def get_badge(self, request):
+        shop = get_shop(request)
+        received_orders_count = (
+            Order.objects.valid()
+            .filter(
+                shop=shop,
+                status__role=OrderStatusRole.INITIAL,
+            )
+            .count()
+        )
+
+        if received_orders_count:
+            return {"tag": "danger", "value": received_orders_count}
+
+
 class OrderModule(AdminModule):
     name = _("Orders")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order.list")
+    breadcrumbs_menu_entry = OrderEntry(name, url="shuup_admin:order.list")
 
     def get_urls(self):
         return [
@@ -104,7 +123,7 @@ class OrderModule(AdminModule):
 
     def get_menu_entries(self, request):
         return [
-            MenuEntry(
+            OrderEntry(
                 text=_("Orders"),
                 icon="fa fa-inbox",
                 url="shuup_admin:order.list",
@@ -170,7 +189,7 @@ class OrderModule(AdminModule):
 
 class OrderStatusModule(AdminModule):
     name = _("Order Status")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order_status.list")
+    breadcrumbs_menu_entry = OrderEntry(name, url="shuup_admin:order_status.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(

@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Admin: add number of received orders in orders menu
 - Admin: add contact CSV exporter
 - CORE: Add .jsx support for shuup_makemessages command
 
