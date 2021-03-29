@@ -37,8 +37,8 @@ class ProductPriceView(ProductDetailView):
             self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
             return context
 
-        supplier_pk = self.request.GET.get("supplier", None)
-        if supplier_pk is not None:
+        supplier_pk = self.request.GET.get("supplier")
+        if supplier_pk:
             context["supplier"] = Supplier.objects.enabled(shop=shop_product.shop).filter(pk=int(supplier_pk)).first()
         else:
             context["supplier"] = shop_product.get_supplier(

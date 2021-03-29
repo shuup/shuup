@@ -55,7 +55,9 @@
     {% else %}
         {%- set product_id = shop_product.product.pk -%}
     {% endif %}
-    <input type="hidden" id="product-supplier-{{ product_id }}" name="supplier_id" value="{{ supplier.id }}">
+    {% if supplier %}
+        <input type="hidden" id="product-supplier-{{ product_id }}" name="supplier_id" value="{{ supplier.id }}">
+    {% endif %}
 {% endmacro %}
 
 {% macro variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children, supplier) %}
