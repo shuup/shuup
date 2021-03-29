@@ -559,8 +559,6 @@ def get_default_edit_toolbar(
         required_permissions=required_permissions,
     )
 
-    save_as_copy_button = get_save_as_copy_button(object, copy_url)
-
     if with_split_save:
         dropdown_options = [
             DropdownItem(
@@ -576,7 +574,9 @@ def get_default_edit_toolbar(
         ]
 
         if with_save_as_copy:
-            dropdown_options.append(save_as_copy_button)
+            save_as_copy_button = get_save_as_copy_button(object, copy_url)
+            if save_as_copy_button:
+                dropdown_options.append(save_as_copy_button)
 
         if object and object.pk:
             if discard_url:
