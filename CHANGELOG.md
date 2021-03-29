@@ -14,10 +14,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Admin: add contact CSV exporter
 - CORE: Add .jsx support for shuup_makemessages command
 
 ### Fixed
 
+- Admin: prevent exporting products that are not accessible by the current user
 - Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
 - Admin: Fix picotable mobile styling to default to full-width
 - Front: Fail cleanly when visiting a product page without supplier
