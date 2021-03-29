@@ -57,6 +57,7 @@ class ContactListView(PicotableListView):
     mass_actions = [
         "shuup.admin.modules.contacts.mass_actions:EditContactsAction",
         "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
+        "shuup.admin.modules.contacts.mass_actions:ExportContactsCSVAction",
     ]
     toolbar_buttons_provider_key = "contact_list_toolbar_provider"
     mass_actions_provider_key = "contact_list_mass_actions_provider"

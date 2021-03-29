@@ -77,12 +77,17 @@ class EditProductToolbar(Toolbar):
 
         provided_items = get_provide_objects("admin_product_toolbar_action_item")
         if provided_items:
-            for item in self._get_header_items(header=_("Other"), identifier=ProductActionCategory.CHILD_OTHER):
-                menu_items.append(item)
+            other_menu = []
 
             for button in provided_items:
                 if button.visible_for_object(product):
-                    menu_items.append(button(product))
+                    other_menu.append(button(product))
+
+            if other_menu:
+                for item in self._get_header_items(header=_("Other"), identifier=ProductActionCategory.CHILD_OTHER):
+                    menu_items.append(item)
+
+                menu_items.extend(other_menu)
 
         # add the actual Action button
         self.append(

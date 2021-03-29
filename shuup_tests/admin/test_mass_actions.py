@@ -4,18 +4,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import csv
 import json
 import mock
 import pytest
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
 from django.utils.translation import activate
 
-from shuup.admin.modules.products.mass_actions import FileResponseAction, InvisibleMassAction, VisibleMassAction
-from shuup.admin.utils.picotable import PicotableFileMassAction, PicotableMassAction
-from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
+from shuup.admin.modules.products.mass_actions import ExportProductsCSVAction, InvisibleMassAction, VisibleMassAction
+from shuup.admin.utils.picotable import PicotableMassAction
+from shuup.core.models import Shop, ShopProduct, ShopProductVisibility, ShopStatus
 from shuup.core.utils import context_cache
 from shuup.testing.factories import (
     create_product,
@@ -50,16 +48,16 @@ def test_mass_actions(rf, admin_user):
     TestPicotableMassAction().process(request, ids)
 
     for shop_product in ShopProduct.objects.all():
-        assert shop_product.purchasable == False
+        assert shop_product.purchasable is False
 
-    mass_action_response = FileResponseAction().process(request, ids)
+    mass_action_response = ExportProductsCSVAction().process(request, ids)
     assert mass_action_response["Content-disposition"] == 'attachment; filename="products.csv"'
 
 
 @pytest.mark.django_db
 def test_mass_actions_product_ids_mixup(rf, admin_user):
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    get_default_supplier()
     product1 = create_product("sku1")
     product2 = create_product("sku2")
 

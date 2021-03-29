@@ -16,6 +16,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import View
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
@@ -40,9 +41,13 @@ def maybe_callable(thing, context=None):
         return thing
 
     if isinstance(thing, six.string_types):
-        thing = getattr(context, thing, None)
-        if callable(thing):
-            return thing
+        callable_thing = getattr(context, thing, None)
+        if callable(callable_thing):
+            # prevent returning a callable that is defined in a base View class
+            # this won't allow leaking methods like: dispatch, options, get, post etc
+            base_view_thing = getattr(View, thing, None)
+            if not callable(base_view_thing):
+                return callable_thing
 
     return None
 
@@ -455,6 +460,7 @@ class Picotable(object):
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)
+
         out["type"] = type(object).__name__
         out["_abstract"] = self.get_object_abstract(object, item=out) if callable(self.get_object_abstract) else None
         return out
@@ -647,7 +653,7 @@ class PicotableFileMassAction(PicotableMassAction):
 
     Examples:
     * `shuup.admin.modules.orders.mass_actions.OrderConfirmationPdfAction`
-    * `shuup.admin.modules.products.mass_actions.FileResponseAction`
+    * `shuup.admin.modules.products.mass_actions.ExportProductsCSVAction`
     """
 
     def process(self, request, ids):

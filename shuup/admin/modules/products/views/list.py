@@ -101,7 +101,7 @@ class ProductListView(PicotableListView):
     mass_actions = [
         "shuup.admin.modules.products.mass_actions:VisibleMassAction",
         "shuup.admin.modules.products.mass_actions:InvisibleMassAction",
-        "shuup.admin.modules.products.mass_actions:FileResponseAction",
+        "shuup.admin.modules.products.mass_actions:ExportProductsCSVAction",
         "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
     ]
     toolbar_buttons_provider_key = "product_list_toolbar_provider"
