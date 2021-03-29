@@ -21,7 +21,6 @@ cache:
     - shuup/xtheme/node_modules
 jobs:
   include:
-    - {stage: development, env: TOXENV=migrations, name: "Migrations & Messages"}
     - {stage: development, python: 3.6, env: TOXENV=py36-django22-nomigrations}
     - {stage: development, python: 3.7, env: TOXENV=py37-django22-nomigrations}
     - {stage: development, python: 3.8, env: TOXENV=py38-django22-nomigrations}
