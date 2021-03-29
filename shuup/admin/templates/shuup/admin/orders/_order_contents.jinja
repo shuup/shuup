@@ -5,6 +5,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>{{ _("Picture") }}</th>
                         <th>{% trans %}SKU{% endtrans %}</th>
                         <th>{% trans %}Text{% endtrans %}</th>
                         <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
@@ -18,7 +19,7 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th colspan="7"></th>
+                        <th colspan="8"></th>
                         <th class="text-right">{{ order.taxless_total_price|money }}</th>
                         <th class="text-right">{{ order.taxful_total_price|money }}</th>
                     </tr>
@@ -26,6 +27,14 @@
                 <tbody>
                     {% for line in order.lines.order_by("ordering") %}
                     <tr>
+                        <td>
+                            {% if line.product and line.product.primary_image %}
+                                {% set thumbnail = line.product.primary_image.get_thumbnail() %}
+                                {% if thumbnail %}
+                                    <img src="{{ thumbnail.url }}" width="50" height="50">
+                                {% endif %}
+                            {% endif %}
+                        </td>
                         <td>{{ line.sku }}</td>
                         <td>{{ line.text }}{% if line.supplier and order_details and order_details.multiple_suppliers_enabled %} - {% trans supplier=line.supplier.name %}Supplied by {{ supplier }}{% endtrans %}{% endif %}</td>
                         <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
@@ -45,11 +54,16 @@
                 {% for line in order.lines.order_by("ordering") %}
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <strong>{{ line.sku }}</strong>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                                {{ line.text }}
+                            {% if line.product and line.product.primary_image %}
+                                {% set thumbnail = line.product.primary_image.get_thumbnail() %}
+                                {% if thumbnail %}
+                                    <div class="col-12 text-center">
+                                        <img src="{{ thumbnail.url }}" width="50" height="50">
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            <div class="col-12 text-center">
+                                {% if line.sku %}<strong>{{ line.sku }}</strong> - {% endif %}{{ line.text }}
                             </div>
                         </div>
                         <div class="row">
