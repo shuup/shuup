@@ -225,6 +225,11 @@ class OrderStatus(TranslatableModel):
             OrderStatus.objects.filter(role=self.role).exclude(pk=self.pk).update(default=False)
 
 
+class OrderStatusHistoryManager(models.Manager):
+    def create(self, *args, **kwargs):
+        return super(OrderStatusHistoryManager, self).create()
+
+
 class OrderStatusHistory(models.Model):
     order = (
         models.ForeignKey(
@@ -275,6 +280,8 @@ class OrderStatusHistory(models.Model):
         on_delete=models.PROTECT,
         verbose_name=_("creating user"),
     )
+
+    objects = OrderStatusHistoryManager()
 
 
 class OrderStatusManager(object):
@@ -1348,18 +1355,17 @@ class Order(MoneyPropped, models.Model):
         # Have to do this as we will assign new value to current status
         old_status = OrderStatus.objects.filter(identifier=self.status.identifier)
 
-        # update new status of oder
+        # update new status of order
         self.status = next_status
 
         # create a new OrderStatusHistory entry
-        order_history = OrderStatusHistory(
+        OrderStatusHistory.objects.create(
             order=self,
             previous_order_status=self.status,
             next_order_status=next_status,
             description=description,
             creator=user,
         )
-        order_history.save()
 
         # end OrderStatusHistory creatation
         order_status_changed.send(

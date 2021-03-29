@@ -38,14 +38,8 @@ from ._manufacturers import Manufacturer
 from ._media import MediaFile, MediaFolder
 from ._order_lines import AbstractOrderLine, OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
-    DefaultOrderStatus,
-    Order,
-    OrderLogEntry,
-    OrderStatus,
-    OrderStatusManager,
-    OrderStatusRole,
-    PaymentStatus,
-    ShippingStatus,
+    DefaultOrderStatus, Order, OrderLogEntry, OrderStatus, OrderStatusManager,
+    OrderStatusRole, PaymentStatus, ShippingStatus, OrderStatusHistory
 )
 from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry
@@ -143,6 +137,7 @@ __all__ = [
     "OrderLineType",
     "OrderLogEntry",
     "OrderStatus",
+    "OrderStatusHistory",
     "OrderStatusManager",
     "OrderStatusRole",
     "OrderTotalLimitBehaviorComponent",
