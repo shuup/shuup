@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,8 +14,7 @@ from shuup.utils.dates import to_datetime_range
 class OrderReportMixin(object):
     def get_objects(self, paid=True):
         (start, end) = to_datetime_range(self.start_date, self.end_date)
-        queryset = Order.objects.filter(
-            shop=self.shop, order_date__range=(start, end))
+        queryset = Order.objects.filter(shop=self.shop, order_date__range=(start, end))
         creator = self.options.get("creator")
         orderer = self.options.get("orderer")
         customer = self.options.get("customer")

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,8 +13,9 @@ from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.pricing import DiscountModule
 from shuup.discounts.models import CouponCode, CouponUsage
 from shuup.discounts.utils import (
-    get_active_discount_for_code, get_potential_discounts_for_product,
-    get_price_expiration
+    get_active_discount_for_code,
+    get_potential_discounts_for_product,
+    get_price_expiration,
 )
 
 
@@ -40,10 +41,7 @@ class ProductDiscountModule(DiscountModule):
                 discounted_prices.append(
                     min(
                         price_info.price,
-                        max(
-                            shop.create_price(discounted_price_value) * price_info.quantity,
-                            shop.create_price(0)
-                        )
+                        max(shop.create_price(discounted_price_value) * price_info.quantity, shop.create_price(0)),
                     )
                 )
 
@@ -51,28 +49,27 @@ class ProductDiscountModule(DiscountModule):
                 discounted_prices.append(
                     max(
                         price_info.price - shop.create_price(discount_amount_value) * price_info.quantity,
-                        shop.create_price(0)
+                        shop.create_price(0),
                     )
                 )
 
             if discount_percentage:  # Discount percentage per item
                 discounted_prices.append(
-                    max(
-                        price_info.price - price_info.price * discount_percentage,
-                        shop.create_price(0)
-                    )
+                    max(price_info.price - price_info.price * discount_percentage, shop.create_price(0))
                 )
 
         if discounted_prices:
-            product_id = (product if isinstance(product, six.integer_types) else product.pk)
-            minimum_price_values = list(ShopProduct.objects.filter(
-                product_id=product_id, shop=shop).values_list("minimum_price_value", flat=True))
+            product_id = product if isinstance(product, six.integer_types) else product.pk
+            minimum_price_values = list(
+                ShopProduct.objects.filter(product_id=product_id, shop=shop).values_list(
+                    "minimum_price_value", flat=True
+                )
+            )
 
             minimum_price_value = minimum_price_values[0] if minimum_price_values else 0
 
             price_info.price = max(
-                min(discounted_prices),
-                shop.create_price(minimum_price_value or 0) or shop.create_price(0)
+                min(discounted_prices), shop.create_price(minimum_price_value or 0) or shop.create_price(0)
             )
 
         price_expiration = get_price_expiration(context, product)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,10 +17,9 @@ loading components, both first-party and third-party.
 
 from __future__ import unicode_literals
 
-from collections import defaultdict, OrderedDict
-from contextlib import contextmanager
-
 import six
+from collections import OrderedDict, defaultdict
+from contextlib import contextmanager
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -233,9 +232,12 @@ def _load_module(provide_category, setting_name, setting_value):
     if not object:
         raise ImproperlyConfigured(
             "Error! Setting `%s` refers to a provide with identifier `%r`, but "
-            "it isn't one of the known identifiers in the `%s` category: `%r`." % (
-                setting_name, setting_value, provide_category,
-                sorted(get_identifier_to_object_map(provide_category).keys())
+            "it isn't one of the known identifiers in the `%s` category: `%r`."
+            % (
+                setting_name,
+                setting_value,
+                provide_category,
+                sorted(get_identifier_to_object_map(provide_category).keys()),
             )
         )
 

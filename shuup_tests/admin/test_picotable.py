@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
@@ -14,14 +13,19 @@ from django.contrib.auth.models import Group
 from shuup.admin.modules.products.views import ProductListView
 from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, DateRangeFilter, Filter, MPTTFilter,
-    MultiFieldTextFilter, Picotable, RangeFilter, TextFilter
+    ChoicesFilter,
+    Column,
+    DateRangeFilter,
+    Filter,
+    MPTTFilter,
+    MultiFieldTextFilter,
+    Picotable,
+    RangeFilter,
+    TextFilter,
 )
 from shuup.apps.provides import override_provides
 from shuup.core.models import Category, Product, ShopProduct
-from shuup.testing.factories import (
-    create_random_user, get_default_shop
-)
+from shuup.testing.factories import create_random_user, get_default_shop
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
@@ -33,9 +37,7 @@ class PicoContext(object):
         self.request = request
 
     def get_object_extra(self, instance):
-        return {
-            "extra": True
-        }
+        return {"extra": True}
 
     def superuser_display(self, instance):  # Test indirect `display` callable
         return "very super" if instance.is_superuser else "-"
@@ -52,30 +54,38 @@ class CustomProductDataColumn(object):
 def instance_id(instance):  # Test direct `display` callable
     return instance.id
 
+
 def false_and_true():
     return [(False, "False"), (True, "True")]
+
 
 def get_pico(rf, admin_user, model=None, columns=None):
     shop = get_default_shop()
     model = model or get_user_model()
     columns = columns or [
         Column("id", "Id", filter_config=Filter(), display=instance_id),
-        Column("username", "Username", sortable=False, filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex")),
+        Column(
+            "username",
+            "Username",
+            sortable=False,
+            filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex"),
+        ),
         Column("email", "Email", sortable=False, filter_config=TextFilter()),
-        Column("is_superuser", "Is Superuser", display="superuser_display", filter_config=ChoicesFilter(choices=false_and_true())),
+        Column(
+            "is_superuser",
+            "Is Superuser",
+            display="superuser_display",
+            filter_config=ChoicesFilter(choices=false_and_true()),
+        ),
         Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true)),  # `choices` callable
-        Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
+        Column("date_joined", "Date Joined", filter_config=DateRangeFilter()),
     ]
     admin_user.is_staff = True
     admin_user.save()
     shop.staff_members.add(admin_user)
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     return Picotable(
-        request=request,
-        columns=columns,
-        mass_actions=[],
-        queryset=model.objects.all(),
-        context=PicoContext(request)
+        request=request, columns=columns, mass_actions=[], queryset=model.objects.all(), context=PicoContext(request)
     )
 
 
@@ -102,8 +112,8 @@ def test_picotable_display(rf, admin_user, regular_user):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
 def test_picotable_display_related(rf, admin_user, regular_user):
-    group_1 = Group.objects.create(name='group 1')
-    group_2 = Group.objects.create(name='group 2')
+    group_1 = Group.objects.create(name="group 1")
+    group_2 = Group.objects.create(name="group 2")
     groups = (group_1, group_2)
     admin_user.groups.add(*groups)
 
@@ -182,13 +192,23 @@ def test_picotable_multi_filter(rf, admin_user, regular_user):
 def test_picotable_range_filter(rf, admin_user, regular_user):
     pico = get_pico(rf, admin_user)
     one_day = datetime.timedelta(days=1)
-    assert not empty_iterable(pico.get_data({"perPage": 100, "page": 1, "filters": {"date_joined": {"min": regular_user.date_joined - one_day}}})["items"])
-    assert not empty_iterable(pico.get_data({"perPage": 100, "page": 1, "filters": {"date_joined": {"max": regular_user.date_joined + one_day}}})["items"])
+    assert not empty_iterable(
+        pico.get_data(
+            {"perPage": 100, "page": 1, "filters": {"date_joined": {"min": regular_user.date_joined - one_day}}}
+        )["items"]
+    )
+    assert not empty_iterable(
+        pico.get_data(
+            {"perPage": 100, "page": 1, "filters": {"date_joined": {"max": regular_user.date_joined + one_day}}}
+        )["items"]
+    )
     # TODO: a false test for this
+
 
 def test_column_is_user_friendly():
     with pytest.raises(NameError):
         Column(id="foo", title="bar", asdf=True)
+
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
@@ -218,14 +238,26 @@ def test_picotable_get_object_extra(rf, admin_user):
 def test_choice_filter_with_default(rf, admin_user, regular_user):
     columns = [
         Column("id", "Id", filter_config=Filter(), display=instance_id),
-        Column("username", "Username", sortable=False, filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex")),
+        Column(
+            "username",
+            "Username",
+            sortable=False,
+            filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex"),
+        ),
         Column("email", "Email", sortable=False, filter_config=TextFilter()),
-        Column("is_superuser", "Is Superuser", display="superuser_display", filter_config=ChoicesFilter(choices=false_and_true())),
-        Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
+        Column(
+            "is_superuser",
+            "Is Superuser",
+            display="superuser_display",
+            filter_config=ChoicesFilter(choices=false_and_true()),
+        ),
+        Column("date_joined", "Date Joined", filter_config=DateRangeFilter()),
     ]
 
     is_active = [Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true))]
-    is_active_with_default = [Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true, default=True))]
+    is_active_with_default = [
+        Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true, default=True))
+    ]
 
     query = {"perPage": 100, "page": 1, "sort": "+id"}
 
@@ -273,8 +305,8 @@ def test_picotable_correctly_sorts_translated_fields(rf, admin_user, regular_use
     columns = [
         Column("id", "Id", filter_config=Filter(), display=instance_id),
         Column(
-            "name", "Name", sort_field="translations__name",
-            filter_config=TextFilter(filter_field="translations__name")),
+            "name", "Name", sort_field="translations__name", filter_config=TextFilter(filter_field="translations__name")
+        ),
     ]
 
     pico = get_pico(rf, admin_user, model=Product, columns=columns)
@@ -295,15 +327,7 @@ def test_mptt_filter(rf, admin_user):
     parent_category = Category.objects.create(name="parent")
     child_category = Category.objects.create(name="child")
     parent_category.children.add(child_category)
-    columns = [
-        Column(
-            "name", "name",
-            filter_config=MPTTFilter(
-                choices=Category.objects.all(),
-                filter_field="id"
-            )
-        )
-    ]
+    columns = [Column("name", "name", filter_config=MPTTFilter(choices=Category.objects.all(), filter_field="id"))]
     pico = get_pico(rf, admin_user, model=Category, columns=columns)
     data = pico.get_data({"perPage": 100, "page": 1, "filters": {"id": parent_category.id}})
     assert len(data["items"]) == 2
@@ -314,8 +338,9 @@ def test_mptt_filter(rf, admin_user):
 
 @pytest.mark.django_db
 def test_provide_columns():
-    with override_provides("provided_columns_ShopProduct", [
-            "shuup_tests.admin.test_picotable:CustomProductDataColumn"]):
+    with override_provides(
+        "provided_columns_ShopProduct", ["shuup_tests.admin.test_picotable:CustomProductDataColumn"]
+    ):
         view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
         column_ids = [col.id for col in view_settings.inactive_columns]  # provided column is not set active yet
         assert "custom_product_info" in column_ids
@@ -324,9 +349,7 @@ def test_provide_columns():
 @pytest.mark.django_db
 def test_picotable_queryset_default_ordering(rf, admin_user):
     shop = get_default_shop()
-    columns = [
-        Column("username", "Username", filter_config=Filter())
-    ]
+    columns = [Column("username", "Username", filter_config=Filter())]
     some_users = []
     for x in range(5):
         some_users.append(create_random_user())
@@ -340,7 +363,7 @@ def test_picotable_queryset_default_ordering(rf, admin_user):
         columns=columns,
         mass_actions=[],
         queryset=get_user_model().objects.exclude(is_superuser=True).order_by("-username"),
-        context=PicoContext(request)
+        context=PicoContext(request),
     )
     users = pico.get_data({"perPage": 100, "page": 1})
 

@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import time
-
 import pytest
+import time
 from django.test.utils import override_settings
 from django.utils.translation import activate, get_language
 
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
-    click_element, page_has_loaded, wait_until_appeared, wait_until_condition
+    click_element,
+    initialize_admin_browser_test,
+    page_has_loaded,
+    wait_until_appeared,
+    wait_until_condition,
 )
-from shuup.testing.browser_utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
-
 
 
 @pytest.mark.parametrize("default_language", ["it", "pt-br", "fi"])
@@ -206,4 +207,6 @@ def test_xtheme_editor_form_picture(admin_user, browser, live_server, settings):
         browser.windows.current = browser.windows[0]
 
         # make sure the image was added to the editor
-        wait_until_appeared(browser, "#id_plugin-text_en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20)
+        wait_until_appeared(
+            browser, "#id_plugin-text_en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20
+        )

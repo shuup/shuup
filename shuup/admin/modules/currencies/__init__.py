@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -23,7 +23,7 @@ class CurrencyModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^currencies",
             view_template="shuup.admin.modules.currencies.views.Currency%sView",
-            name_template="currency.%s"
+            name_template="currency.%s",
         )
 
     def get_menu_entries(self, request):
@@ -33,7 +33,7 @@ class CurrencyModule(AdminModule):
                 icon="fa fa-money",
                 url="shuup_admin:currency.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=2
+                ordering=2,
             ),
         ]
 

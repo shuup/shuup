@@ -1,13 +1,12 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
 import json
 import pytest
-
 from bs4 import BeautifulSoup
 from django.http.response import Http404
 from django.test import override_settings
@@ -55,7 +54,7 @@ def test_coupon_creation_for_supplier(rf, admin_user):
     """
     shop = get_default_shop()
     supplier = Supplier.objects.create(identifier=admin_user.username)
-    
+
     another_superuser = create_random_user(is_superuser=True, is_staff=True)
     supplier2 = Supplier.objects.create(identifier=another_superuser.username)
 
@@ -63,11 +62,7 @@ def test_coupon_creation_for_supplier(rf, admin_user):
     with override_settings(LANGUAGES=[("en", "en")]):
         with override_settings(SHUUP_ADMIN_SUPPLIER_PROVIDER_SPEC=supplier_provider):
             view = CouponEditView.as_view()
-            data = {
-                "code": "OK",
-                "active": True,
-                "shop": shop.pk
-            }
+            data = {"code": "OK", "active": True, "shop": shop.pk}
             coupons_before = Coupon.objects.count()
             request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
             assert get_supplier(request) == supplier
@@ -149,10 +144,7 @@ def test_coupon_with_supplier_filter(rf, admin_user):
 
 
 def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None, shop=None):
-    data = {
-        "model": model_name,
-        "search": search_str
-    }
+    data = {"model": model_name, "search": search_str}
     if search_mode:
         data.update({"searchMode": search_mode})
 

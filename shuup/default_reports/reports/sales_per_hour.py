@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import itertools
-
 import six
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
@@ -25,7 +24,7 @@ class SalesPerHour(OrderReportMixin, ShuupReportBase):
     schema = [
         {"key": "hour", "title": _("Hour")},
         {"key": "order_amount", "title": _("Order Amount")},
-        {"key": "total_sales", "title": _("Total Sales")}
+        {"key": "total_sales", "title": _("Total Sales")},
     ]
 
     def date_hour(self, timestamp):

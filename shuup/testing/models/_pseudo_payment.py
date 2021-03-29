@@ -1,26 +1,22 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import hmac
-
 from django.contrib import messages
 from django.db import models
 from django.http.response import HttpResponse
 from django.utils.timezone import now
 
-from shuup.core.models import (
-    FixedCostBehaviorComponent, PaymentProcessor, ServiceChoice,
-    WaivingCostBehaviorComponent
-)
+from shuup.core.models import FixedCostBehaviorComponent, PaymentProcessor, ServiceChoice, WaivingCostBehaviorComponent
 from shuup.utils.excs import Problem
 
-HTML_TEMPLATE = u"""
+HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,28 +35,25 @@ HTML_TEMPLATE = u"""
 
 class PseudoPaymentProcessor(PaymentProcessor):
     bg_color = models.CharField(
-        max_length=20, blank=True, default="white",
-        verbose_name="Payment Page Background Color")
-    fg_color = models.CharField(
-        max_length=20, blank=True, default="black",
-        verbose_name="Payment Page Text Color")
+        max_length=20, blank=True, default="white", verbose_name="Payment Page Background Color"
+    )
+    fg_color = models.CharField(max_length=20, blank=True, default="black", verbose_name="Payment Page Text Color")
 
     def get_service_choices(self):
         return [
-            ServiceChoice('normal', "Pseudo payment"),
-            ServiceChoice('caps', "Pseudo payment CAPS"),
+            ServiceChoice("normal", "Pseudo payment"),
+            ServiceChoice("caps", "Pseudo payment CAPS"),
         ]
 
     def _create_service(self, choice_identifier, **kwargs):
-        service = super(PseudoPaymentProcessor, self)._create_service(
-            choice_identifier, **kwargs)
+        service = super(PseudoPaymentProcessor, self)._create_service(choice_identifier, **kwargs)
         service.behavior_components.add(
-            WaivingCostBehaviorComponent.objects.create(
-                price_value=10, waive_limit_value=1000))
-        if choice_identifier == 'caps':
+            WaivingCostBehaviorComponent.objects.create(price_value=10, waive_limit_value=1000)
+        )
+        if choice_identifier == "caps":
             service.behavior_components.add(
-                FixedCostBehaviorComponent.objects.create(
-                    price_value=50, description="UPPERCASING EXTRA FEE"))
+                FixedCostBehaviorComponent.objects.create(price_value=50, description="UPPERCASING EXTRA FEE")
+            )
         return service
 
     def compute_pseudo_mac(self, order):
@@ -75,9 +68,8 @@ class PseudoPaymentProcessor(PaymentProcessor):
             ("Return", urls.return_url),
         ]
         urls_html = "\n".join(
-            "<li><a href=\"%s?mac=%s\">%s</a></li>" % (
-                url, mac, transform(title))
-            for (title, url) in url_list)
+            '<li><a href="%s?mac=%s">%s</a></li>' % (url, mac, transform(title)) for (title, url) in url_list
+        )
         html = HTML_TEMPLATE % {
             "urls": urls_html,
             "title": transform("Shuup Pseudo Payment Service"),
@@ -91,22 +83,21 @@ class PseudoPaymentProcessor(PaymentProcessor):
         transform = self._get_text_transformer(service)
         mac = self.compute_pseudo_mac(order)
         if request.GET.get("mac") != mac:
-            raise Problem(u"Error! Invalid MAC.")
+            raise Problem("Error! Invalid MAC.")
         if not order.is_paid():
             order.create_payment(
                 order.taxful_total_price,
                 payment_identifier="Pseudo-%s" % now().isoformat(),
-                description=transform("Shuup Pseudo Payment Service Payment")
+                description=transform("Shuup Pseudo Payment Service Payment"),
             )
-            msg = transform(
-                "Success! The request was processed by Pseudo Payment.")
+            msg = transform("Success! The request was processed by Pseudo Payment.")
             messages.success(request, msg)
 
     def _get_text_transformer(self, service):
         choice = service.choice_identifier
-        if choice == 'caps':
+        if choice == "caps":
             return type("").upper
-        elif choice == 'normal':
+        elif choice == "normal":
             return type("")
         else:
-            raise ValueError('Error! Invalid service choice: `%r`.' % choice)
+            raise ValueError("Error! Invalid service choice: `%r`." % choice)

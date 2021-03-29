@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -23,7 +23,7 @@ class SalesUnitModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^sales-units",
             view_template="shuup.admin.modules.sales_units.views.SalesUnit%sView",
-            name_template="sales_unit.%s"
+            name_template="sales_unit.%s",
         )
 
     def get_menu_entries(self, request):
@@ -33,7 +33,7 @@ class SalesUnitModule(AdminModule):
                 icon="fa fa-asterisk",
                 url="shuup_admin:sales_unit.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=5
+                ordering=5,
             ),
         ]
 
@@ -49,7 +49,7 @@ class DisplayUnitModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^display-units",
             view_template="shuup.admin.modules.sales_units.views.DisplayUnit%sView",
-            name_template="display_unit.%s"
+            name_template="display_unit.%s",
         )
 
     def get_menu_entries(self, request):
@@ -59,7 +59,7 @@ class DisplayUnitModule(AdminModule):
                 icon="fa fa-asterisk",
                 url="shuup_admin:display_unit.list",
                 category=STOREFRONT_MENU_CATEGORY,
-                ordering=5
+                ordering=5,
             ),
         ]
 

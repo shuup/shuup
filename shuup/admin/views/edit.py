@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.apps import apps
 from django.core.exceptions import PermissionDenied
-from django.http.response import (
-    Http404, HttpResponseBadRequest, HttpResponseRedirect
-)
+from django.http.response import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.admin.utils.urls import NoModelUrl, get_model_url
 from shuup.utils.excs import Problem
 
 
 class EditObjectView(View):
-    def get(self, request):     # noqa (C901)
+    def get(self, request):  # noqa (C901)
         model_name = request.GET.get("model")
         object_id = request.GET.get("pk", request.GET.get("id"))
 
@@ -39,11 +37,7 @@ class EditObjectView(View):
                 # try edit first
                 try:
                     url = get_model_url(
-                        instance,
-                        kind="edit",
-                        user=request.user,
-                        shop=get_shop(request),
-                        raise_permission_denied=True
+                        instance, kind="edit", user=request.user, shop=get_shop(request), raise_permission_denied=True
                     )
                 except NoModelUrl:
                     # try detail
@@ -53,12 +47,13 @@ class EditObjectView(View):
                             kind="detail",
                             user=request.user,
                             shop=get_shop(request),
-                            raise_permission_denied=True
+                            raise_permission_denied=True,
                         )
                     except NoModelUrl:
                         pass
             except PermissionDenied as exception:
                 from shuup.utils.django_compat import force_text
+
                 raise Problem(force_text(exception))
 
             if url:

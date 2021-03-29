@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from collections import Counter
+from django.core.exceptions import ImproperlyConfigured
 from mock import patch
 
-import pytest
-from django.core.exceptions import ImproperlyConfigured
-
 from shuup.admin.utils.permissions import set_permissions_for_group
-from shuup.admin.utils.urls import admin_url, get_model_url, NoModelUrl
-from shuup.testing.factories import (
-    get_default_product, get_default_shop, get_default_staff_user
-)
+from shuup.admin.utils.urls import NoModelUrl, admin_url, get_model_url
+from shuup.testing.factories import get_default_product, get_default_shop, get_default_staff_user
 from shuup_tests.admin.utils import admin_only_urls
 
 

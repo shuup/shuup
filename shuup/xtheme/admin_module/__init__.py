@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,9 +13,7 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.urls import (
-    admin_url, derive_model_url, get_edit_and_list_urls
-)
+from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.utils.django_compat import reverse
 from shuup.xtheme._theme import get_current_theme
@@ -29,6 +27,7 @@ class XthemeAdminModule(AdminModule):
 
     Allows theme activation/deactivation and further configuration.
     """
+
     name = _("Shuup Extensible Theme Engine")
     breadcrumbs_menu_entry = MenuEntry(_("Themes"), "shuup_admin:xtheme.config", category=CONTENT_MENU_CATEGORY)
 
@@ -37,27 +36,24 @@ class XthemeAdminModule(AdminModule):
             admin_url(
                 r"^xtheme/guide/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeGuideTemplateView",
-                name="xtheme.guide"
+                name="xtheme.guide",
             ),
             admin_url(
                 r"^xtheme/configure/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
-                name="xtheme.config_detail"
+                name="xtheme.config_detail",
             ),
-            admin_url(
-                r"^xtheme/theme",
-                "shuup.xtheme.admin_module.views.ThemeConfigView",
-                name="xtheme.config"
-            )
+            admin_url(r"^xtheme/theme", "shuup.xtheme.admin_module.views.ThemeConfigView", name="xtheme.config"),
         ]
 
     def get_menu_entries(self, request):  # doccov: ignore
         return [
             MenuEntry(
-                text=_("Themes"), icon="fa fa-paint-brush",
+                text=_("Themes"),
+                icon="fa fa-paint-brush",
                 url="shuup_admin:xtheme.config",
                 category=CONTENT_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
@@ -66,13 +62,17 @@ class XthemeAdminModule(AdminModule):
         if kind == "quicklink" and theme:
             yield SimpleHelpBlock(
                 text=_("Customize the look and feel of your shop"),
-                actions=[{
-                    "text": _("Customize theme"),
-                    "url": reverse("shuup_admin:xtheme.config_detail", kwargs={"theme_identifier": theme.identifier})
-                }],
+                actions=[
+                    {
+                        "text": _("Customize theme"),
+                        "url": reverse(
+                            "shuup_admin:xtheme.config_detail", kwargs={"theme_identifier": theme.identifier}
+                        ),
+                    }
+                ],
                 priority=200,
                 category=HelpBlockCategory.STOREFRONT,
-                icon_url="xtheme/theme.png"
+                icon_url="xtheme/theme.png",
             )
 
     def get_notifications(self, request):
@@ -89,28 +89,24 @@ class XthemeAdminModule(AdminModule):
                     yield Notification(
                         text=_("No theme is active. Click here to activate one."),
                         title=_("Theming"),
-                        url="shuup_admin:xtheme.config"
+                        url="shuup_admin:xtheme.config",
                     )
 
 
 class XthemeSnippetsAdminModule(AdminModule):
     name = _("Shuup Extensible Theme Engine Snippets")
-    breadcrumbs_menu_entry = MenuEntry(
-        _("Snippets"),
-        "shuup_admin:xtheme_snippet.list",
-        category=CONTENT_MENU_CATEGORY
-    )
+    breadcrumbs_menu_entry = MenuEntry(_("Snippets"), "shuup_admin:xtheme_snippet.list", category=CONTENT_MENU_CATEGORY)
 
     def get_urls(self):
         return get_edit_and_list_urls(
             url_prefix=r"^xtheme/snippet",
             view_template="shuup.xtheme.admin_module.views.Snippet%sView",
-            name_template="xtheme_snippet.%s"
+            name_template="xtheme_snippet.%s",
         ) + [
             admin_url(
                 r"^xtheme/snippet/(?P<pk>\d+)/delete/$",
                 "shuup.xtheme.admin_module.views.SnippetDeleteView",
-                name="xtheme_snippet.delete"
+                name="xtheme_snippet.delete",
             )
         ]
 
@@ -121,7 +117,7 @@ class XthemeSnippetsAdminModule(AdminModule):
                 icon="fa fa-magic",
                 url="shuup_admin:xtheme_snippet.list",
                 category=CONTENT_MENU_CATEGORY,
-                ordering=2
+                ordering=2,
             )
         ]
 

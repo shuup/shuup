@@ -1,26 +1,20 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import (
-    CompanyContact, Contact, MutableAddress, PersonContact
-)
-from shuup.importer.importing import (
-    DataImporter, ImporterExampleFile, ImportMetaBase
-)
+from shuup.core.models import CompanyContact, Contact, MutableAddress, PersonContact
+from shuup.importer.importing import DataImporter, ImporterExampleFile, ImportMetaBase
 
 
 class AddressHandlerMeta(ImportMetaBase):
-    aliases = {
-        "name_ext": ["extension", "ext"]
-    }
+    aliases = {"name_ext": ["extension", "ext"]}
 
     post_save_handlers = {
-        "handle_row_address": ['city', 'country', 'postal code', 'region code', 'street'],
+        "handle_row_address": ["city", "country", "postal code", "region code", "street"],
     }
 
     def handle_row_address(self, fields, row_session):
@@ -57,8 +51,7 @@ class PersonContactImporter(DataImporter):
 
     example_files = [
         ImporterExampleFile(
-            "person_contact_sample.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "person_contact_sample.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     ]
 
@@ -71,6 +64,7 @@ class PersonContactImporter(DataImporter):
     @classmethod
     def get_example_file_content(cls, example_file, request):
         from shuup.default_importer.samples import get_sample_file_content
+
         return get_sample_file_content(example_file.file_name)
 
 
@@ -83,8 +77,7 @@ class CompanyContactImporter(DataImporter):
 
     example_files = [
         ImporterExampleFile(
-            "company_contact_sample.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "company_contact_sample.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     ]
 
@@ -97,4 +90,5 @@ class CompanyContactImporter(DataImporter):
     @classmethod
     def get_example_file_content(cls, example_file, request):
         from shuup.default_importer.samples import get_sample_file_content
+
         return get_sample_file_content(example_file.file_name)

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,7 +18,8 @@ class ProductDiscountEffect(PolymorphicShuupModel):
     admin_form_class = None
 
     campaign = models.ForeignKey(
-        on_delete=models.CASCADE, to="CatalogCampaign", related_name='effects', verbose_name=_("campaign"))
+        on_delete=models.CASCADE, to="CatalogCampaign", related_name="effects", verbose_name=_("campaign")
+    )
 
     def apply_for_product(self, context, product, price_info):
         """
@@ -36,9 +37,8 @@ class ProductDiscountAmount(ProductDiscountEffect):
     name = _("Discount amount value")
 
     discount_amount = MoneyValueField(
-        default=None, blank=True, null=True,
-        verbose_name=_("discount amount"),
-        help_text=_("Flat amount of discount."))
+        default=None, blank=True, null=True, verbose_name=_("discount amount"), help_text=_("Flat amount of discount.")
+    )
 
     @property
     def description(self):
@@ -62,9 +62,13 @@ class ProductDiscountPercentage(ProductDiscountEffect):
     admin_form_class = PercentageField
 
     discount_percentage = models.DecimalField(
-        max_digits=6, decimal_places=5, blank=True, null=True,
+        max_digits=6,
+        decimal_places=5,
+        blank=True,
+        null=True,
         verbose_name=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     @property
     def description(self):
@@ -79,4 +83,4 @@ class ProductDiscountPercentage(ProductDiscountEffect):
         self.discount_percentage = value
 
     def apply_for_product(self, context, product, price_info):
-        return (price_info.price * self.value)
+        return price_info.price * self.value

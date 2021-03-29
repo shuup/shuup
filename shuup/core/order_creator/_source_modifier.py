@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -15,15 +15,11 @@ def get_order_source_modifier_modules():
 
     :rtype: list[OrderSourceModifierModule]
     """
-    return load_module_instances(
-        "SHUUP_ORDER_SOURCE_MODIFIER_MODULES", "order_source_modifier_module")
+    return load_module_instances("SHUUP_ORDER_SOURCE_MODIFIER_MODULES", "order_source_modifier_module")
 
 
 def is_code_usable(order_source, code):
-    return any(
-        module.can_use_code(order_source, code)
-        for module in get_order_source_modifier_modules()
-    )
+    return any(module.can_use_code(order_source, code) for module in get_order_source_modifier_modules())
 
 
 class OrderSourceModifierModule(object):

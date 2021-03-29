@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
 import platform
+import requests
 import sys
 from datetime import date, datetime, time, timedelta
-
-import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,9 +20,7 @@ from django.utils.timezone import now
 
 import shuup
 from shuup import configuration
-from shuup.core.models import (
-    Contact, Order, Payment, PersistentCacheEntry, Product
-)
+from shuup.core.models import Contact, Order, Payment, PersistentCacheEntry, Product
 from shuup.utils.django_compat import force_text
 
 User = get_user_model()
@@ -69,7 +66,7 @@ def is_in_grace_period():
     """
     get_installation_key()  # Need to initialize here
     installation_time = PersistentCacheEntry.objects.get(**INSTALLATION_KEY_KWARGS).time
-    return ((now() - installation_time).total_seconds() < 60 * 60 * 24)
+    return (now() - installation_time).total_seconds() < 60 * 60 * 24
 
 
 def is_telemetry_enabled():
@@ -142,8 +139,7 @@ def get_daily_data_for_day(date):
 
     created_on_filter = Q(created_on__range=(today_min, today_max))
     total_paid_sales = Payment.objects.filter(created_on_filter).aggregate(total_paid=Sum("amount_value"))
-    data["total_paid_sales"] = (
-        float(total_paid_sales["total_paid"]) if total_paid_sales["total_paid"] else 0)
+    data["total_paid_sales"] = float(total_paid_sales["total_paid"]) if total_paid_sales["total_paid"] else 0
     for service_identifier in ["stripe", "checkoutfi", "paytrail"]:
         payment_query = created_on_filter & Q(order__payment_method__choice_identifier=service_identifier)
         total_sales = Payment.objects.filter(payment_query).aggregate(total_sales=Sum("amount_value"))
@@ -223,10 +219,10 @@ def _send_telemetry(request, max_age_hours, force_send=False):
     try:
         resp = requests.post(url=settings.SHUUP_TELEMETRY_URL, data=data, timeout=5)
         if (
-            not settings.DEBUG and
-            resp.status_code == 200 and
-            resp.json().get("support_id") and
-            not configuration.get(None, "shuup_support_id")
+            not settings.DEBUG
+            and resp.status_code == 200
+            and resp.json().get("support_id")
+            and not configuration.get(None, "shuup_support_id")
         ):
             configuration.set(None, "shuup_support_id", resp.json().get("support_id"))
     except Exception as exc:

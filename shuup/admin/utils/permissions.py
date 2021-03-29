@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import warnings
-
 import six
+import warnings
 from django.contrib.auth.models import Permission
 
 from shuup import configuration
@@ -28,7 +27,7 @@ def get_default_model_permissions(model):
     warnings.warn(
         "Warning! `get_default_model_permissions` is deprecated in Shuup 2.0. "
         "Use human readable permission strings instead.",
-        DeprecationWarning
+        DeprecationWarning,
     )
     permissions = set()
 
@@ -100,12 +99,12 @@ def get_permissions_for_user(user):
 
 
 def get_permissions_from_group(group):
-    group_id = (group if isinstance(group, six.integer_types) else group.pk)
+    group_id = group if isinstance(group, six.integer_types) else group.pk
     return set(configuration.get(None, _get_permission_key_for_group(group_id), default=[]))
 
 
 def set_permissions_for_group(group, permissions):
-    group_id = (group if isinstance(group, six.integer_types) else group.pk)
+    group_id = group if isinstance(group, six.integer_types) else group.pk
     configuration.set(None, _get_permission_key_for_group(group_id), permissions)
     cache.bump_version(USER_PERMISSIONS_CACHE_NAMESPACE)
 
@@ -113,7 +112,7 @@ def set_permissions_for_group(group, permissions):
 def get_permissions_from_groups(groups):
     permissions = set()
     for group in groups:
-        group_id = (group if isinstance(group, six.integer_types) else group.pk)
+        group_id = group if isinstance(group, six.integer_types) else group.pk
         permissions |= get_permissions_from_group(group_id)
     return permissions
 
@@ -148,7 +147,7 @@ def get_permission_object_from_string(permission_string):
     warnings.warn(
         "Warning! `get_permission_object_from_string` is deprecated in Shuup 2.0. "
         "Django permission shouldn't be needed.",
-        DeprecationWarning
+        DeprecationWarning,
     )
     app_label, codename = permission_string.split(".")
     return Permission.objects.get(content_type__app_label=app_label, codename=codename)

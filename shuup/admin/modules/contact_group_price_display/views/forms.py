@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,16 +13,14 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 
 from shuup.admin.shop_provider import get_shop
-from shuup.core.models import (
-    ContactGroupPriceDisplay, get_groups_for_price_display_create, Shop
-)
+from shuup.core.models import ContactGroupPriceDisplay, Shop, get_groups_for_price_display_create
 
 
 class PriceDisplayChoices(Enum):
-    NONE = 'none'
-    WITH_TAXES = 'with_taxes'
-    WITHOUT_TAXES = 'without_taxes'
-    HIDE = 'hide'
+    NONE = "none"
+    WITH_TAXES = "with_taxes"
+    WITHOUT_TAXES = "without_taxes"
+    HIDE = "hide"
 
     class Labels:
         NONE = _("unspecified")
@@ -34,7 +32,10 @@ class PriceDisplayChoices(Enum):
 class ContactGroupPriceDisplayForm(forms.ModelForm):
     class Meta:
         model = ContactGroupPriceDisplay
-        fields = ("group", "shop",)
+        fields = (
+            "group",
+            "shop",
+        )
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -45,26 +46,29 @@ class ContactGroupPriceDisplayForm(forms.ModelForm):
             self.fields["group"].initial = self.instance.group
         else:
             self.fields["group"].choices = [
-                (group.id, group.name) for group in get_groups_for_price_display_create(shop)]
+                (group.id, group.name) for group in get_groups_for_price_display_create(shop)
+            ]
 
         self.fields["shop"] = forms.ModelChoiceField(
             queryset=Shop.objects.filter(pk=shop.id),
             initial=shop,
             widget=HiddenInput(),
-            label=_('shop'),
-            required=False)
+            label=_("shop"),
+            required=False,
+        )
 
-        self.fields['price_display_mode'] = forms.ChoiceField(
+        self.fields["price_display_mode"] = forms.ChoiceField(
             choices=PriceDisplayChoices.choices(),
             label=_("Price display mode"),
             initial=get_price_display_mode(self.request, self.instance),
-            help_text=_("Set how prices are displayed to contacts in this group."))
+            help_text=_("Set how prices are displayed to contacts in this group."),
+        )
 
     def clean_shop(self):
         return get_shop(self.request)
 
     def save(self, commit=True):
-        price_display_mode = self.cleaned_data['price_display_mode']
+        price_display_mode = self.cleaned_data["price_display_mode"]
         super(ContactGroupPriceDisplayForm, self).save(commit=commit)
         _set_price_display_mode(self.request, self.instance.group, price_display_mode)
 
@@ -99,9 +103,7 @@ def _set_price_display_mode(request, contact_group, price_display_mode):
         assert contact_group.shop == shop
 
     if price_display_mode == PriceDisplayChoices.HIDE.value:
-        options = {
-            "hide_prices": True
-        }
+        options = {"hide_prices": True}
     elif price_display_mode == PriceDisplayChoices.WITH_TAXES.value:
         options = {
             "show_prices_including_taxes": True,

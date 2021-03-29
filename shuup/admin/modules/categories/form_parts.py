@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.modules.categories.forms import (
-    CategoryBaseForm, CategoryProductForm
-)
+from shuup.admin.modules.categories.forms import CategoryBaseForm, CategoryProductForm
 from shuup.core.models import Category
 
 
@@ -23,11 +21,11 @@ class CategoryBaseFormPart(FormPart):
             CategoryBaseForm,
             template_name="shuup/admin/categories/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object, "request": self.request, "languages": settings.LANGUAGES}
+            kwargs={"instance": self.object, "request": self.request, "languages": settings.LANGUAGES},
         )
 
     def form_valid(self, form):
-        rebuild = ("parent" in form["base"].changed_data)
+        rebuild = "parent" in form["base"].changed_data
         self.object = form["base"].save()
         if rebuild:
             Category.objects.rebuild()
@@ -47,7 +45,7 @@ class CategoryProductFormPart(FormPart):
             CategoryProductForm,
             template_name="shuup/admin/categories/_edit_products_form.jinja",
             required=True,
-            kwargs={"shop": shop, "category": self.object}
+            kwargs={"shop": shop, "category": self.object},
         )
 
     def _get_form_name(self, shop):

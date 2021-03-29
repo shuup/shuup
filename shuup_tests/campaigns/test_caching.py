@@ -1,15 +1,14 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.campaigns.models import CatalogCampaign
-from shuup.campaigns.models import CatalogFilterCachedShopProduct
-from shuup.campaigns.models import ProductFilter
+
+from shuup.campaigns.models import CatalogCampaign, CatalogFilterCachedShopProduct, ProductFilter
 from shuup.campaigns.models.matching import get_matching_catalog_filters
-from shuup.testing.factories import get_default_supplier, create_product
+from shuup.testing.factories import create_product, get_default_supplier
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
 

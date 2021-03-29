@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from contextlib import contextmanager
-
 import pytest
+from contextlib import contextmanager
 from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
 
@@ -19,7 +18,7 @@ from shuup.xtheme.layout import Layout
 from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
 from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shuup.xtheme.testing import override_current_theme_class
-from shuup.xtheme.views.editor import EditorView, ROW_CELL_LIMIT
+from shuup.xtheme.views.editor import ROW_CELL_LIMIT, EditorView
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.utils.faux_users import SuperUser
 from shuup_tests.utils.forms import get_form_data
@@ -34,11 +33,7 @@ def initialize_editor_view(view_name, placeholder_name, request=None):
     request.user = SuperUser()
     if hasattr(request.GET, "_mutable"):
         request.GET._mutable = True  # Ahem
-    request.GET.update({
-        "theme": FauxTheme.identifier,
-        "view": view_name,
-        "ph": placeholder_name
-    })
+    request.GET.update({"theme": FauxTheme.identifier, "view": view_name, "ph": placeholder_name})
 
     with plugin_override():
         with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme"]):
@@ -51,7 +46,7 @@ def get_test_layout_and_svc():
         theme_identifier=FauxTheme.identifier,
         shop=get_default_shop(),
         view_name=printable_gibberish(),
-        status=SavedViewConfigStatus.CURRENT_DRAFT
+        status=SavedViewConfigStatus.CURRENT_DRAFT,
     )
     layout = Layout(FauxTheme, "ph")
     layout.add_plugin("text", {"text_*": "hello"})

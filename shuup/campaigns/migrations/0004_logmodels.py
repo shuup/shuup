@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import shuup.utils.analog
-from django.conf import settings
 import django.db.models.deletion
 import enumfields.fields
 import jsonfield.fields
+from django.conf import settings
+from django.db import migrations, models
+
+import shuup.utils.analog
 
 
 class Migration(migrations.Migration):

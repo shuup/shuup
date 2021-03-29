@@ -21,12 +21,10 @@ cache:
     - shuup/xtheme/node_modules
 jobs:
   include:
-    - {stage: development, env: TOXENV=sanity, name: "Sanity Check"}
-    - {stage: development, env: TOXENV=flake8-isort, name: "Code Style"}
-    - {stage: development, env: TOXENV=license_headers, name: "License Headers"}
     - {stage: development, env: TOXENV=migrations, name: "Migrations & Messages"}
     - {stage: development, python: 3.6, env: TOXENV=py36-django22-nomigrations}
     - {stage: development, python: 3.7, env: TOXENV=py37-django22-nomigrations}
+    - {stage: development, python: 3.8, env: TOXENV=py38-django22-nomigrations}
     - stage: development
       python: 3.6
       env: TOXENV=py36-django22-nomigrations-nocoverage-browser-travis-admin

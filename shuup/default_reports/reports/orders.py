@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -36,16 +36,18 @@ class OrdersReport(OrderReportMixin, ShuupReportBase):
         orders = self.get_objects(paid=False)
 
         for order in orders:
-            data.append({
-                "order_num": order.identifier,
-                "order_date": get_locally_formatted_datetime(order.order_date),
-                "status": order.status,
-                "order_line_quantity": order.lines.filter(type=OrderLineType.PRODUCT).count(),
-                "order_total_amount": format_money(order.taxful_total_price),
-                "payment_status": order.get_payment_status_display(),
-                "shipment_status": order.get_shipping_status_display(),
-                "customer": order.get_customer_name()
-            })
+            data.append(
+                {
+                    "order_num": order.identifier,
+                    "order_date": get_locally_formatted_datetime(order.order_date),
+                    "status": order.status,
+                    "order_line_quantity": order.lines.filter(type=OrderLineType.PRODUCT).count(),
+                    "order_total_amount": format_money(order.taxful_total_price),
+                    "payment_status": order.get_payment_status_display(),
+                    "shipment_status": order.get_shipping_status_display(),
+                    "customer": order.get_customer_name(),
+                }
+            )
         return self.get_return_data(data, has_totals=False)
 
 
@@ -68,16 +70,18 @@ class OrderLineReport(OrderLineReportMixin, ShuupReportBase):
 
     def get_data(self):
         data = []
-        order_lines = self.get_objects()[:self.queryset_row_limit]
+        order_lines = self.get_objects()[: self.queryset_row_limit]
         for line in order_lines:
-            data.append({
-                "order_line_sku": line.sku,
-                "order_line_text": line.text,
-                "order_line_quantity": line.quantity,
-                "taxless_unit_price": format_money(line.taxless_base_unit_price),
-                "taxful_unit_price": format_money(line.taxful_base_unit_price),
-                "taxful_price": format_money(line.taxful_price),
-                "type": line.type.name.capitalize(),
-                "created_on": get_locally_formatted_datetime(line.created_on),
-            })
+            data.append(
+                {
+                    "order_line_sku": line.sku,
+                    "order_line_text": line.text,
+                    "order_line_quantity": line.quantity,
+                    "taxless_unit_price": format_money(line.taxless_base_unit_price),
+                    "taxful_unit_price": format_money(line.taxful_base_unit_price),
+                    "taxful_price": format_money(line.taxful_price),
+                    "type": line.type.name.capitalize(),
+                    "created_on": get_locally_formatted_datetime(line.created_on),
+                }
+            )
         return self.get_return_data(data, has_totals=False)

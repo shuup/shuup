@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,7 +10,7 @@ from shuup.apps.provides import get_provide_objects
 
 def get_customer_from_context(context):
     request = context.get("request")
-    return (request.customer if request else None)
+    return request.customer if request else None
 
 
 def get_layout_data_key(placeholder_name, layout, context):

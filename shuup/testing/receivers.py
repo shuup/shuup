@@ -1,12 +1,10 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.core.models import (
-    AnonymousContact, ShopProduct, ShopProductVisibility
-)
+from shuup.core.models import AnonymousContact, ShopProduct, ShopProductVisibility
 
 
 def shop_product_orderability_check(sender, **kwargs):
@@ -24,8 +22,9 @@ def shop_product_orderability_check(sender, **kwargs):
     the project orderability signal handler has to adapt accordingly.
     """
     for shop in kwargs["shops"]:
-        for shop_product in ShopProduct.objects.filter(
-                shop=shop, product_id__in=kwargs["product_ids"]).exclude(visibility=ShopProductVisibility.NOT_VISIBLE):
+        for shop_product in ShopProduct.objects.filter(shop=shop, product_id__in=kwargs["product_ids"]).exclude(
+            visibility=ShopProductVisibility.NOT_VISIBLE
+        ):
             ensure_shop_product_visibility(shop_product)
 
 
@@ -40,7 +39,8 @@ def ensure_shop_product_visibility(shop_product):
             break
 
         if shop_product.is_purchasable(
-                supplier=supplier, customer=AnonymousContact(), quantity=shop_product.minimum_purchase_quantity):
+            supplier=supplier, customer=AnonymousContact(), quantity=shop_product.minimum_purchase_quantity
+        ):
             # Product is purchasable for at least one supplier so we can
             # quit the purchasability checks for this product
             purchasable = True

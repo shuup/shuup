@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 from collections import Counter
-
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
@@ -20,11 +19,19 @@ from six import iteritems
 from shuup.core import taxing
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
-    AnonymousContact, OrderStatus, PaymentMethod, Product, ProductMode,
-    ShippingMethod, ShippingMode, Shop, Supplier, TaxClass
+    AnonymousContact,
+    OrderStatus,
+    PaymentMethod,
+    Product,
+    ProductMode,
+    ShippingMethod,
+    ShippingMode,
+    Shop,
+    Supplier,
+    TaxClass,
 )
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
-from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
+from shuup.core.taxing import TaxableItem, should_calculate_taxes_automatically
 from shuup.core.utils.line_unit_mixin import LineWithUnit
 from shuup.utils.decorators import non_reentrant
 from shuup.utils.django_compat import force_text
@@ -69,15 +76,15 @@ class _PriceSum(object):
         self.field = field
         self.line_getter = line_getter
         self.params = {}
-        if 'taxful' in self.field:
-            self.params['includes_tax'] = True
-        elif 'taxless' in self.field:
-            self.params['includes_tax'] = False
+        if "taxful" in self.field:
+            self.params["includes_tax"] = True
+        elif "taxless" in self.field:
+            self.params["includes_tax"] = False
 
     def __get__(self, instance, type=None):
         if instance is None:
             return self
-        taxful = self.params.get('includes_tax', instance.prices_include_tax)
+        taxful = self.params.get("includes_tax", instance.prices_include_tax)
         zero = (TaxfulPrice if taxful else TaxlessPrice)(0, instance.currency)
         lines = getattr(instance, self.line_getter)()
         return sum([getattr(x, self.field) for x in lines], zero)
@@ -144,7 +151,7 @@ class OrderSource(object):
         self._modified_by = None
         self.shipping_method_id = None
         self.payment_method_id = None
-        self.customer_comment = u""
+        self.customer_comment = ""
         self.marketing_permission = False
         self.ip_address = None  # type: str
         self.order_date = now()
@@ -166,8 +173,7 @@ class OrderSource(object):
         for key, value in values.items():
             if not hasattr(self, key):
                 raise ValueError(
-                    "Error! Can't update `%r` with key `%r`, as it is not a pre-existing attribute."
-                    % (self, key)
+                    "Error! Can't update `%r` with key `%r`, as it is not a pre-existing attribute." % (self, key)
                 )
             if isinstance(getattr(self, key), dict) and value:  # (Shallowly) merge dicts
                 getattr(self, key).update(value)
@@ -198,7 +204,7 @@ class OrderSource(object):
             payment_data=order.payment_data,
             shipping_data=order.shipping_data,
             extra_data=order.extra_data,
-            codes=order.codes
+            codes=order.codes,
         )
 
     total_price = _PriceSum("price")
@@ -219,7 +225,7 @@ class OrderSource(object):
 
     @property
     def customer(self):
-        return (self._customer or AnonymousContact())
+        return self._customer or AnonymousContact()
 
     @customer.setter
     def customer(self, value):
@@ -227,7 +233,7 @@ class OrderSource(object):
 
     @property
     def orderer(self):
-        return (self._orderer or AnonymousContact())
+        return self._orderer or AnonymousContact()
 
     @orderer.setter
     def orderer(self, value):
@@ -235,7 +241,7 @@ class OrderSource(object):
 
     @property
     def creator(self):
-        return (self._creator or AnonymousUser())
+        return self._creator or AnonymousUser()
 
     @creator.setter
     def creator(self, value):
@@ -243,7 +249,7 @@ class OrderSource(object):
 
     @property
     def modified_by(self):
-        return (self._modified_by or self.creator)
+        return self._modified_by or self.creator
 
     @modified_by.setter
     def modified_by(self, value):
@@ -256,7 +262,7 @@ class OrderSource(object):
 
     @shipping_method.setter
     def shipping_method(self, shipping_method):
-        self.shipping_method_id = (shipping_method.id if shipping_method else None)
+        self.shipping_method_id = shipping_method.id if shipping_method else None
 
     @property
     def payment_method(self):
@@ -265,7 +271,7 @@ class OrderSource(object):
 
     @payment_method.setter
     def payment_method(self, payment_method):
-        self.payment_method_id = (payment_method.id if payment_method else None)
+        self.payment_method_id = payment_method.id if payment_method else None
 
     @property
     def status(self):
@@ -293,7 +299,7 @@ class OrderSource(object):
 
     @status.setter
     def status(self, status):
-        self.status_id = (status.id if status else None)
+        self.status_id = status.id if status else None
 
     @property
     def is_empty(self):
@@ -482,7 +488,7 @@ class OrderSource(object):
     def calculate_taxes_or_raise(self):
         if not self._taxes_calculated:
             if not should_calculate_taxes_automatically():
-                raise TaxesNotCalculated('Error! Taxes are not calculated.')
+                raise TaxesNotCalculated("Error! Taxes are not calculated.")
             self.calculate_taxes()
 
     def uncache(self):
@@ -508,9 +514,9 @@ class OrderSource(object):
         lines.extend(self._compute_shipping_method_lines())
         self._add_lines_from_modifiers(lines)
 
-        lines.extend(_collect_lines_from_signal(
-            post_compute_source_lines.send(
-                sender=type(self), source=self, lines=lines)))
+        lines.extend(
+            _collect_lines_from_signal(post_compute_source_lines.send(sender=type(self), source=self, lines=lines))
+        )
 
         return lines
 
@@ -550,6 +556,7 @@ class OrderSource(object):
 
     def get_validation_errors(self):  # noqa (C901)
         from shuup.apps.provides import get_provide_objects
+
         for order_source_validator in get_provide_objects("order_source_validator"):
             for error in order_source_validator.get_validation_errors(self):
                 yield error
@@ -570,10 +577,10 @@ class OrderSource(object):
             package_children = line.product.get_package_child_to_quantity_map()
 
             # multiply the quantity by the number os packages in the line
-            package_quantity = (int(line.quantity) if line.product.mode == ProductMode.PACKAGE_PARENT else 1)
+            package_quantity = int(line.quantity) if line.product.mode == ProductMode.PACKAGE_PARENT else 1
 
             for product, quantity in iteritems(package_children):
-                q_counter[product] += (quantity * package_quantity)
+                q_counter[product] += quantity * package_quantity
 
             product = line.product
             q_counter[product] += line.quantity
@@ -583,7 +590,7 @@ class OrderSource(object):
     @property
     def total_gross_weight(self):
         product_lines = self.get_product_lines()
-        return ((sum(line.product.gross_weight * line.quantity for line in product_lines)) if product_lines else 0)
+        return (sum(line.product.gross_weight * line.quantity for line in product_lines)) if product_lines else 0
 
     def _get_object(self, model, pk):
         """
@@ -606,9 +613,7 @@ class OrderSource(object):
         """
         :rtype: Money
         """
-        return sum(
-            (line.tax_amount for line in self.get_final_lines()),
-            self.zero_price.amount)
+        return sum((line.tax_amount for line in self.get_final_lines()), self.zero_price.amount)
 
     def get_tax_summary(self):
         """
@@ -649,17 +654,28 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     Note: Properties like price, taxful_price, tax_rate, etc. are
     inherited from the `Priceful` mixin.
     """
+
     quantity = None  # override property from Priceful
     base_unit_price = None  # override property from Priceful
     discount_amount = None  # override property from Priceful
     on_parent_change_behavior = OrderLineBehavior.INHERIT
 
     _FIELDS = [
-        "line_id", "parent_line_id", "type",
-        "shop", "product", "supplier", "tax_class",
-        "quantity", "base_unit_price", "discount_amount",
-        "sku", "text",
-        "require_verification", "accounting_identifier", "on_parent_change_behavior"
+        "line_id",
+        "parent_line_id",
+        "type",
+        "shop",
+        "product",
+        "supplier",
+        "tax_class",
+        "quantity",
+        "base_unit_price",
+        "discount_amount",
+        "sku",
+        "text",
+        "require_verification",
+        "accounting_identifier",
+        "on_parent_change_behavior",
     ]
     _FIELDSET = set(_FIELDS)
     _OBJECT_FIELDS = {
@@ -711,8 +727,9 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
 
     def _state_check(self):
         if not self.base_unit_price.unit_matches_with(self.discount_amount):
-            raise TypeError('Error! Unit price %r unit mismatch with discount %r.' % (
-                self.base_unit_price, self.discount_amount))
+            raise TypeError(
+                "Error! Unit price %r unit mismatch with discount %r." % (self.base_unit_price, self.discount_amount)
+            )
 
         assert self.shop is None or isinstance(self.shop, Shop)
         assert self.product is None or isinstance(self.product, Product)
@@ -739,8 +756,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         forbidden_keys = set(dir(self)) - self._FIELDSET
         found_forbidden_keys = [key for key in kwargs if key in forbidden_keys]
         if found_forbidden_keys:
-            raise TypeError(
-                "Error! You may not add these keys to SourceLine: `%s`." % forbidden_keys)
+            raise TypeError("Error! You may not add these keys to SourceLine: `%s`." % forbidden_keys)
 
         for (key, value) in kwargs.items():
             if key in self._FIELDSET:
@@ -751,11 +767,8 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     def __repr__(self):
         key_values = [(key, getattr(self, key, None)) for key in self._FIELDS]
         set_key_values = [(k, v) for (k, v) in key_values if v is not None]
-        assigns = [
-            "%s=%r" % (k, v)
-            for (k, v) in (set_key_values + sorted(self._data.items()))]
-        return "<%s(%r, %s)>" % (
-            type(self).__name__, self.source, ", ".join(assigns))
+        assigns = ["%s=%r" % (k, v) for (k, v) in (set_key_values + sorted(self._data.items()))]
+        return "<%s(%r, %s)>" % (type(self).__name__, self.source, ", ".join(assigns))
 
     def get(self, key, default=None):
         if key in self._FIELDSET:
@@ -773,7 +786,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         for line in self.source.get_lines():
             if line.line_id == self.parent_line_id:
                 return line
-        raise ValueError('Error! Invalid `parent_line_id`: `%r`.' % (self.parent_line_id,))
+        raise ValueError("Error! Invalid `parent_line_id`: `%r`." % (self.parent_line_id,))
 
     @property
     def tax_class(self):
@@ -783,8 +796,8 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
     def tax_class(self, value):
         if self.product and value and value != self.product.tax_class:
             raise ValueError(
-                "Error! Conflicting product and line tax classes: `%r` vs. `%r`." % (
-                    self.product.tax_class, value))
+                "Error! Conflicting product and line tax classes: `%r` vs. `%r`." % (self.product.tax_class, value)
+            )
         self._tax_class = value
 
     @property
@@ -829,11 +842,11 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
             return [(key + "_id", value.id)]
         elif isinstance(value, Price):
             if key not in self._PRICE_FIELDS:
-                raise TypeError('Error! Non-price field `%s` has `%r`.' % (key, value))
+                raise TypeError("Error! Non-price field `%s` has `%r`." % (key, value))
             if not value.unit_matches_with(self.source.zero_price):
                 raise TypeError(
-                    'Error! Price `%r` (in field `%s`) not compatible with `%r`.' % (
-                        value, key, self.source.zero_price))
+                    "Error! Price `%r` (in field `%s`) not compatible with `%r`." % (value, key, self.source.zero_price)
+                )
             return [(key, value.value)]
         assert not isinstance(value, Money)
         return [(key, value)]

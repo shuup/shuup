@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
 
 from shuup.apps.provides import override_provides
@@ -30,16 +29,16 @@ def test_theme_selection():
         location="body_end",
         snippet_type=SnippetType.InlineJS,
         snippet=test_js_script,
-        themes=theme.identifier
+        themes=theme.identifier,
     )
 
-    test_css_style = 'h1 { font-size: 3px; }'
+    test_css_style = "h1 { font-size: 3px; }"
     css_snippet = Snippet.objects.create(
         shop=shop,
         location="head_end",
         snippet_type=SnippetType.InlineCSS,
         snippet=test_css_style,
-        themes=theme.identifier
+        themes=theme.identifier,
     )
 
     test_html_code = '<p class="test-snippet">Test HTML snippet</p>'
@@ -48,7 +47,7 @@ def test_theme_selection():
         location="body_end",
         snippet_type=SnippetType.InlineHTMLMarkup,
         snippet=test_html_code,
-        themes=theme.identifier
+        themes=theme.identifier,
     )
 
     test_jinja_code = '<p class="test-snippet">Test Jinja snippet %s</p>'
@@ -56,7 +55,7 @@ def test_theme_selection():
         shop=shop,
         location="body_end",
         snippet_type=SnippetType.InlineJinjaHTMLMarkup,
-        snippet=test_jinja_code % ('{{ request.shop.public_name}}')
+        snippet=test_jinja_code % ("{{ request.shop.public_name}}"),
     )
 
     html_that_should_not_exist = "<h1>-Hello world</h1>"
@@ -65,7 +64,7 @@ def test_theme_selection():
         location="body_end",
         snippet_type=SnippetType.InlineHTMLMarkup,
         snippet=html_that_should_not_exist,
-        themes="random.theme"
+        themes="random.theme",
     )
     with override_provides("xtheme_resource_injection", ["shuup.xtheme.resources:inject_global_snippet"]):
         client = SmartClient()
@@ -81,7 +80,6 @@ def test_theme_selection():
 
         head = str(soup.find("head"))
         assert '<style type="text/css">%s</style>' % test_css_style in head
-
 
         # Admin views are not allowed to inject into
         client = SmartClient()

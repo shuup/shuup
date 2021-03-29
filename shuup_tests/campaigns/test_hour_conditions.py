@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-import pytz
-
 import pytest
-from mock import patch
-
+import pytz
 from django.test import override_settings
 from django.utils import timezone
+from mock import patch
 
-from shuup.campaigns.models.context_conditions import HourCondition
 from shuup.campaigns.models.basket_conditions import HourBasketCondition
+from shuup.campaigns.models.context_conditions import HourCondition
 
 
 def get_basket_condition(hour_start, hour_end, matching_days):
@@ -33,16 +31,15 @@ def mocked_now_basic():
 
 @patch("django.utils.timezone.now", side_effect=mocked_now_basic)
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_condition,params_for_matches", {
-    (get_basket_condition, (None, None)),
-    (get_context_condition, (None, ))
-})
+@pytest.mark.parametrize(
+    "get_condition,params_for_matches", {(get_basket_condition, (None, None)), (get_context_condition, (None,))}
+)
 def test_hour_conditions(rf, get_condition, params_for_matches):
     timezone.activate(pytz.UTC)
     w_today = timezone.now().date().weekday()
     w_tomorrow = (timezone.now() + datetime.timedelta(days=1)).date().weekday()
     w_future = (timezone.now() + datetime.timedelta(days=2)).date().weekday()
-    matching_days = ",".join(map(str,[w_today]))
+    matching_days = ",".join(map(str, [w_today]))
     non_matching_days = ",".join(map(str, [w_tomorrow, w_future]))
 
     # Matching time range
@@ -140,15 +137,14 @@ def mocked_now_weekday_change():
 
 @patch("django.utils.timezone.now", side_effect=mocked_now_weekday_change)
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_condition,params_for_matches", {
-    (get_basket_condition, (None, None)),
-    (get_context_condition, (None, ))
-})
+@pytest.mark.parametrize(
+    "get_condition,params_for_matches", {(get_basket_condition, (None, None)), (get_context_condition, (None,))}
+)
 def test_hour_conditions_localized_weekday(rf, get_condition, params_for_matches):
     timezone.activate(pytz.UTC)
     w_today = timezone.now().date().weekday()
     w_yesterday = (timezone.now() - datetime.timedelta(days=1)).date().weekday()
-    matching_day_for_utc = ",".join(map(str,[w_today]))
+    matching_day_for_utc = ",".join(map(str, [w_today]))
     matching_day_for_la = ",".join(map(str, [w_yesterday]))
 
     # Matching time range
@@ -173,10 +169,9 @@ def test_hour_conditions_localized_weekday(rf, get_condition, params_for_matches
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("get_condition,params_for_matches", {
-    (get_basket_condition, (None, None)),
-    (get_context_condition, (None, ))
-})
+@pytest.mark.parametrize(
+    "get_condition,params_for_matches", {(get_basket_condition, (None, None)), (get_context_condition, (None,))}
+)
 def test_hour_conditions_end_before_start(rf, get_condition, params_for_matches):
     timezone.activate(pytz.UTC)
     # Create condition from 5pm to 1am for monday

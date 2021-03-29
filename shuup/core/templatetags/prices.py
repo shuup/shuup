@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,31 +20,35 @@ import django_jinja
 import jinja2
 
 from shuup.core.utils.price_display import (
-    PriceDisplayFilter, PriceDisplayOptions, PricePercentPropertyFilter,
-    PricePropertyFilter, PriceRangeDisplayFilter, TotalPriceDisplayFilter
+    PriceDisplayFilter,
+    PriceDisplayOptions,
+    PricePercentPropertyFilter,
+    PricePropertyFilter,
+    PriceRangeDisplayFilter,
+    TotalPriceDisplayFilter,
 )
 
 # Filters for Product, SourceLine, BasketLine, OrderLine, Service
 
-price = PriceDisplayFilter('price')
-base_price = PriceDisplayFilter('base_price')
-base_unit_price = PriceDisplayFilter('base_unit_price')
-discount_amount = PriceDisplayFilter('discount_amount')
-discounted_unit_price = PriceDisplayFilter('discounted_unit_price')
-unit_discount_amount = PriceDisplayFilter('unit_discount_amount')
-is_discounted = PricePropertyFilter('is_discounted')
-discount_percent = PricePercentPropertyFilter('discount_percent', 'discount_rate')
-tax_percent = PricePercentPropertyFilter('tax_percent', 'tax_rate')
-discount_rate = PricePropertyFilter('discount_rate')
-tax_rate = PricePropertyFilter('tax_rate')
+price = PriceDisplayFilter("price")
+base_price = PriceDisplayFilter("base_price")
+base_unit_price = PriceDisplayFilter("base_unit_price")
+discount_amount = PriceDisplayFilter("discount_amount")
+discounted_unit_price = PriceDisplayFilter("discounted_unit_price")
+unit_discount_amount = PriceDisplayFilter("unit_discount_amount")
+is_discounted = PricePropertyFilter("is_discounted")
+discount_percent = PricePercentPropertyFilter("discount_percent", "discount_rate")
+tax_percent = PricePercentPropertyFilter("tax_percent", "tax_rate")
+discount_rate = PricePropertyFilter("discount_rate")
+tax_rate = PricePropertyFilter("tax_rate")
 
 # Filters for Product
 
-price_range = PriceRangeDisplayFilter('price_range')
+price_range = PriceRangeDisplayFilter("price_range")
 
 # Filters for OrderSource, BaseBasket, Order
 
-total_price = TotalPriceDisplayFilter('total_price')
+total_price = TotalPriceDisplayFilter("total_price")
 
 
 @django_jinja.library.global_function

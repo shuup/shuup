@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,7 +26,7 @@ class BaseSettingsFormPart(FormPart):
             self.form,
             required=False,
             template_name="shuup/front/admin/settings_base.jinja",
-            kwargs={"request": self.request}
+            kwargs={"request": self.request},
         )
 
     def form_valid(self, form):

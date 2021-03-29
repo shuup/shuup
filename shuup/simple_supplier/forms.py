@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,9 +17,8 @@ from shuup.utils.i18n import get_currency_name
 
 class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
-        label=_("Purchase price per unit (%(currency_name)s)") % {
-            "currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)
-        }
+        label=_("Purchase price per unit (%(currency_name)s)")
+        % {"currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)}
     )
     delta = forms.DecimalField(label=_("Quantity"))
 

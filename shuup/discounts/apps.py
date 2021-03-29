@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,10 +20,8 @@ class AppConfig(shuup.apps.AppConfig):
         ],
         "discount_module": ["shuup.discounts.modules:ProductDiscountModule"],
         "order_source_modifier_module": ["shuup.discounts.modules:CouponCodeModule"],
-        "xtheme_plugin": [
-            "shuup.discounts.plugins:DiscountedProductsPlugin"
-        ]
+        "xtheme_plugin": ["shuup.discounts.plugins:DiscountedProductsPlugin"],
     }
 
     def ready(self):
-        import shuup.discounts.signal_handers   # noqa F401
+        import shuup.discounts.signal_handers  # noqa F401

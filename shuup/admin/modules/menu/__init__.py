@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,15 +20,9 @@ class YourAdminMenuModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                r"^menu/your/$",
-                "shuup.admin.modules.menu.views.arrange.AdminMenuArrangeView",
-                name="menu.arrange"
+                r"^menu/your/$", "shuup.admin.modules.menu.views.arrange.AdminMenuArrangeView", name="menu.arrange"
             ),
-            admin_url(
-                r"^menu/reset/$",
-                "shuup.admin.modules.menu.views.arrange.AdminMenuResetView",
-                name="menu.reset"
-            )
+            admin_url(r"^menu/reset/$", "shuup.admin.modules.menu.views.arrange.AdminMenuResetView", name="menu.reset"),
         ]
 
     def get_menu_entries(self, request):
@@ -38,7 +32,7 @@ class YourAdminMenuModule(AdminModule):
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
@@ -51,13 +45,13 @@ class SuperUserAdminMenuModule(AdminModule):
             admin_url(
                 r"^menu/superuser/$",
                 "shuup.admin.modules.menu.views.arrange.SuperUserMenuArrangeView",
-                name="menu.arrange_superuser"
+                name="menu.arrange_superuser",
             ),
             admin_url(
                 r"^menu/reset/superuser/$",
                 "shuup.admin.modules.menu.views.arrange.SuperUserMenuResetView",
-                name="menu.reset_superuser"
-            )
+                name="menu.reset_superuser",
+            ),
         ]
 
     def get_menu_entries(self, request):
@@ -67,7 +61,7 @@ class SuperUserAdminMenuModule(AdminModule):
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange_superuser",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
@@ -80,13 +74,13 @@ class StaffAdminMenuModule(AdminModule):
             admin_url(
                 r"^menu/staff/$",
                 "shuup.admin.modules.menu.views.arrange.StaffMenuArrangeView",
-                name="menu.arrange_staff"
+                name="menu.arrange_staff",
             ),
             admin_url(
                 r"^menu/reset/staff/$",
                 "shuup.admin.modules.menu.views.arrange.StaffMenuResetView",
-                name="menu.reset_staff"
-            )
+                name="menu.reset_staff",
+            ),
         ]
 
     def get_menu_entries(self, request):
@@ -96,7 +90,7 @@ class StaffAdminMenuModule(AdminModule):
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange_staff",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]
 
@@ -109,13 +103,13 @@ class SupplierAdminMenuModule(AdminModule):
             admin_url(
                 r"^menu/supplier/$",
                 "shuup.admin.modules.menu.views.arrange.SupplierMenuArrangeView",
-                name="menu.arrange_supplier"
+                name="menu.arrange_supplier",
             ),
             admin_url(
                 r"^menu/reset/supplier/$",
                 "shuup.admin.modules.menu.views.arrange.SupplierMenuResetView",
-                name="menu.reset_supplier"
-            )
+                name="menu.reset_supplier",
+            ),
         ]
 
     def get_menu_entries(self, request):
@@ -125,6 +119,6 @@ class SupplierAdminMenuModule(AdminModule):
                 icon="fa fa-list-alt",
                 url="shuup_admin:menu.arrange_supplier",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=1
+                ordering=1,
             )
         ]

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,11 +21,11 @@ from shuup.core.models import Category, Product, Shop
 from shuup.testing.modules.sample_data import manager as sample_manager
 from shuup.testing.modules.sample_data.data import BUSINESS_SEGMENTS
 from shuup.testing.modules.sample_data.factories import (
-    create_sample_carousel, create_sample_category, create_sample_product
+    create_sample_carousel,
+    create_sample_category,
+    create_sample_product,
 )
-from shuup.testing.modules.sample_data.forms import (
-    ConsolidateObjectsForm, SampleObjectsWizardForm
-)
+from shuup.testing.modules.sample_data.forms import ConsolidateObjectsForm, SampleObjectsWizardForm
 from shuup.utils.django_compat import reverse
 
 
@@ -54,11 +54,11 @@ class ConsolidateSampleObjectsView(FormView):
                 category.soft_delete()
 
         # uninstall carousel
-        if 'shuup.front.apps.carousel' in settings.INSTALLED_APPS and \
-                form.cleaned_data.get("carousel", False):
+        if "shuup.front.apps.carousel" in settings.INSTALLED_APPS and form.cleaned_data.get("carousel", False):
             carousel = sample_manager.get_installed_carousel(shop)
             if carousel:
                 from shuup.front.apps.carousel.models import Carousel
+
                 Carousel.objects.filter(pk=carousel).delete()
 
         sample_manager.clear_installed_samples(shop)
@@ -89,6 +89,7 @@ class SampleObjectsWizardPane(WizardPane):
 
     def valid(self):
         from shuup.admin.utils.permissions import has_permission
+
         return has_permission(self.request.user, "sample_data")
 
     def get_form_defs(self):
@@ -97,9 +98,7 @@ class SampleObjectsWizardPane(WizardPane):
                 name="sample",
                 form_class=SampleObjectsWizardForm,
                 template_name="shuup/admin/sample_data/wizard.jinja",
-                kwargs={
-                    "shop": self.object
-                }
+                kwargs={"shop": self.object},
             )
         ]
 
@@ -163,11 +162,9 @@ class SampleObjectsWizardPane(WizardPane):
         categories = []
 
         for category_data in BUSINESS_SEGMENTS[business_segment]["categories"]:
-            category = create_sample_category(category_data["name"],
-                                              category_data["description"],
-                                              business_segment,
-                                              category_data["image"],
-                                              shop)
+            category = create_sample_category(
+                category_data["name"], category_data["description"], business_segment, category_data["image"], shop
+            )
             categories.append(category.pk)
 
         return categories
@@ -183,11 +180,9 @@ class SampleObjectsWizardPane(WizardPane):
         products = []
 
         for product_data in BUSINESS_SEGMENTS[business_segment]["products"]:
-            product = create_sample_product(product_data["name"],
-                                            product_data["description"],
-                                            business_segment,
-                                            product_data["image"],
-                                            shop)
+            product = create_sample_product(
+                product_data["name"], product_data["description"], business_segment, product_data["image"], shop
+            )
             products.append(product.pk)
 
         return products
@@ -206,13 +201,12 @@ class SampleObjectsWizardPane(WizardPane):
 
         # injects the carousel plugin with in the front_content placeholder
         # this will only works if the theme have this placeholder, we expect so
-        if 'shuup.xtheme' in settings.INSTALLED_APPS:
+        if "shuup.xtheme" in settings.INSTALLED_APPS:
             from shuup.front.apps.carousel.plugins import CarouselPlugin
-            from shuup.xtheme.plugins.products import ProductHighlightPlugin
-
-            from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
-            from shuup.xtheme.layout import Layout
             from shuup.xtheme._theme import get_current_theme
+            from shuup.xtheme.layout import Layout
+            from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
+            from shuup.xtheme.plugins.products import ProductHighlightPlugin
 
             theme = get_current_theme(shop)
 
@@ -233,7 +227,7 @@ class SampleObjectsWizardPane(WizardPane):
                     theme_identifier=theme.identifier,
                     shop=shop,
                     view_name="IndexView",
-                    status=SavedViewConfigStatus.CURRENT_DRAFT
+                    status=SavedViewConfigStatus.CURRENT_DRAFT,
                 )
                 svc.set_layout_data(layout.placeholder_name, layout)
                 svc.save()

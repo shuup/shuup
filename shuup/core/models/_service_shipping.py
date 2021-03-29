@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,23 +20,21 @@ from ._service_base import Service, ServiceChoice, ServiceProvider
 
 
 class ShippingMethod(Service):
-    carrier = models.ForeignKey(
-        "Carrier", null=True, blank=True, on_delete=models.SET_NULL,
-        verbose_name=_("carrier"))
+    carrier = models.ForeignKey("Carrier", null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("carrier"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_(
-                "The shipping method name. This name is shown to the customers on checkout."
-            )),
-        description=models.CharField(
-            max_length=500, blank=True, verbose_name=_("description")), help_text=_(
-                "The description of the shipping method. This name is shown to the customers on checkout."
-            )
+        name=models.CharField(
+            max_length=100,
+            verbose_name=_("name"),
+            help_text=_("The shipping method name. This name is shown to the customers on checkout."),
+        ),
+        description=models.CharField(max_length=500, blank=True, verbose_name=_("description")),
+        help_text=_("The description of the shipping method. This name is shown to the customers on checkout."),
     )
 
     line_type = OrderLineType.SHIPPING
     shop_product_m2m = "shipping_methods"
-    provider_attr = 'carrier'
+    provider_attr = "carrier"
 
     class Meta:
         verbose_name = _("shipping method")
@@ -92,8 +90,7 @@ class Carrier(ServiceProvider):
 
     def _create_service(self, choice_identifier, **kwargs):
         labels = kwargs.pop("labels", None)
-        service = ShippingMethod.objects.create(
-            carrier=self, choice_identifier=choice_identifier, **kwargs)
+        service = ShippingMethod.objects.create(carrier=self, choice_identifier=choice_identifier, **kwargs)
         if labels:
             service.labels.set(labels)
         return service
@@ -103,12 +100,13 @@ class CustomCarrier(Carrier):
     """
     Carrier without any integration or special processing.
     """
+
     class Meta:
         verbose_name = _("custom carrier")
         verbose_name_plural = _("custom carriers")
 
     def get_service_choices(self):
-        return [ServiceChoice('manual', _("Manually processed shipment"))]
+        return [ServiceChoice("manual", _("Manually processed shipment"))]
 
 
 ShippingMethodLogEntry = define_log_model(ShippingMethod)

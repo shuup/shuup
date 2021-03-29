@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,7 +39,7 @@ class BasicDetailsOrderSection(Section):
         return {
             "provided_information": provided_information,
             "multiple_shops_enabled": settings.SHUUP_ENABLE_MULTIPLE_SHOPS,
-            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS
+            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
         }
 
 
@@ -74,8 +74,8 @@ class ShipmentSection(Section):
         if not order.shipping_method.carrier.uses_default_shipments_manager:
             return False
         return (
-            order.has_products_requiring_shipment() or
-            Shipment.objects.all_except_deleted().filter(order=order).exists()
+            order.has_products_requiring_shipment()
+            or Shipment.objects.all_except_deleted().filter(order=order).exists()
         )
 
     @staticmethod
@@ -85,8 +85,7 @@ class ShipmentSection(Section):
         delete_permission = "order.delete-shipment"
         set_sent_permission = "order.set-shipment-sent"
         missing_permissions = get_missing_permissions(
-            request.user,
-            [create_permission, delete_permission, set_sent_permission]
+            request.user, [create_permission, delete_permission, set_sent_permission]
         )
         create_urls = {}
         delete_urls = {}
@@ -95,7 +94,8 @@ class ShipmentSection(Section):
         if create_permission not in missing_permissions:
             for supplier in suppliers:
                 create_urls[supplier.pk] = reverse(
-                    "shuup_admin:order.create-shipment", kwargs={"pk": order.pk, "supplier_pk": supplier.pk})
+                    "shuup_admin:order.create-shipment", kwargs={"pk": order.pk, "supplier_pk": supplier.pk}
+                )
 
         for shipment_id in order.shipments.all_except_deleted().values_list("id", flat=True):
             if delete_permission not in missing_permissions:

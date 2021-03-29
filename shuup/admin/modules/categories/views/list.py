@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,21 +21,20 @@ class CategoryListView(PicotableListView):
     default_columns = [
         Column("image", _("Image"), sortable=False, linked=True, raw=True),
         Column(
-            "name", _(u"Name"), sort_field="translations__name", display="format_name",
-            linked=True, allow_highlight=False,
-            filter_config=MPTTFilter(
-                choices="get_name_filter_choices",
-                filter_field="id"
-            )
+            "name",
+            _("Name"),
+            sort_field="translations__name",
+            display="format_name",
+            linked=True,
+            allow_highlight=False,
+            filter_config=MPTTFilter(choices="get_name_filter_choices", filter_field="id"),
         ),
         Column(
-            "status", _(u"Status"),
-            filter_config=ChoicesFilter(
-                choices=category_status_choices,
-                default=CategoryStatus.VISIBLE.value
-            )
+            "status",
+            _("Status"),
+            filter_config=ChoicesFilter(choices=category_status_choices, default=CategoryStatus.VISIBLE.value),
         ),
-        Column("visibility", _(u"Visibility"), filter_config=ChoicesFilter(choices=CategoryVisibility.choices)),
+        Column("visibility", _("Visibility"), filter_config=ChoicesFilter(choices=CategoryVisibility.choices)),
     ]
     toolbar_buttons_provider_key = "category_list_toolbar_provider"
     mass_actions_provider_key = "category_list_mass_actions_provider"
@@ -53,10 +52,10 @@ class CategoryListView(PicotableListView):
 
     def format_name(self, instance, *args, **kwargs):
         level = getattr(instance, instance._mptt_meta.level_attr)
-        return ('---' * level) + ' ' + instance.name
+        return ("---" * level) + " " + instance.name
 
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance.name, "class": "header"},
-            {"title": _(u"Status"), "text": item.get("status")},
+            {"title": _("Status"), "text": item.get("status")},
         ]

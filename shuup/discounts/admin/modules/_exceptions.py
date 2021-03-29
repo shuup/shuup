@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,16 +21,17 @@ class AvailabilityExceptionModule(AdminModule):
 
     def get_urls(self):
         from shuup.admin.urls import admin_url
+
         delete = admin_url(
             r"^discounts_availability_exception/(?P<pk>\d+)/delete/$",
             "shuup.discounts.admin.views.AvailabilityExceptionDeleteView",
-            name="discounts_availability_exception.delete"
+            name="discounts_availability_exception.delete",
         )
 
         return [delete] + get_edit_and_list_urls(
             url_prefix="^discounts_availability_exception",
             view_template="shuup.discounts.admin.views.AvailabilityException%sView",
-            name_template="discounts_availability_exception.%s"
+            name_template="discounts_availability_exception.%s",
         )
 
     def get_menu_entries(self, request):
@@ -40,7 +41,7 @@ class AvailabilityExceptionModule(AdminModule):
                 icon="fa fa-percent",
                 url="shuup_admin:discounts_availability_exception.list",
                 category=CAMPAIGNS_MENU_CATEGORY,
-                ordering=6
+                ordering=6,
             )
         ]
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -27,6 +27,7 @@ class ProductOrdersSection(Section):
             return has_product_id
 
         from shuup.admin.utils.permissions import has_permission
+
         return bool(has_product_id) and has_permission(request.user, "shop_product.edit")
 
     @classmethod

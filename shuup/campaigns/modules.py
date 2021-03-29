@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import ugettext_lazy as _
 from uuid import uuid4
 
-from django.utils.translation import ugettext_lazy as _
-
-from shuup.campaigns.models.campaigns import (
-    BasketCampaign, CatalogCampaign, CouponUsage
-)
+from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign, CouponUsage
 from shuup.core.models import OrderLineType, ShopProduct
 from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.order_creator._source import LineSource
@@ -87,15 +84,12 @@ class BasketCampaignModule(OrderSourceModifierModule):
             discount_amount=campaign.shop.create_price(highest_discount),
             text=text,
             line_source=LineSource.DISCOUNT_MODULE,
-            supplier=supplier
+            supplier=supplier,
         )
 
     def can_use_code(self, order_source, code):
         campaigns = BasketCampaign.objects.filter(
-            active=True,
-            shop=order_source.shop,
-            coupon__code__iexact=code,
-            coupon__active=True
+            active=True, shop=order_source.shop, coupon__code__iexact=code, coupon__active=True
         )
 
         for campaign in campaigns:
@@ -123,10 +117,7 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def use_code(self, order, code):
         campaigns = BasketCampaign.objects.filter(
-            active=True,
-            shop=order.shop,
-            coupon__code__iexact=code,
-            coupon__active=True
+            active=True, shop=order.shop, coupon__code__iexact=code, coupon__active=True
         )
         for campaign in campaigns:
             campaign.coupon.use(order)
@@ -159,8 +150,7 @@ class BasketCampaignModule(OrderSourceModifierModule):
                     best_discount = best_discount_for_supplier.get(campaign_supplier)
                     if not best_discount or discount_amount > best_discount["discount_amount"]:
                         best_discount_for_supplier[campaign_supplier] = dict(
-                            discount_amount=discount_amount,
-                            campaign=campaign
+                            discount_amount=discount_amount, campaign=campaign
                         )
 
         for supplier, best_discount_info in best_discount_for_supplier.items():
@@ -177,8 +167,6 @@ class BasketCampaignModule(OrderSourceModifierModule):
             campaign_supplier = getattr(campaign, "supplier", None)
             for effect in campaign.line_effects.all():
                 lines += effect.get_discount_lines(
-                    order_source=order_source,
-                    original_lines=original_lines,
-                    supplier=campaign_supplier
+                    order_source=order_source, original_lines=original_lines, supplier=campaign_supplier
                 )
         return lines

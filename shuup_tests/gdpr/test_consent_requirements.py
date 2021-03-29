@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,10 +11,13 @@ from django.utils.translation import activate
 
 from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
 from shuup.gdpr.utils import (
-    create_user_consent_for_all_documents, ensure_gdpr_privacy_policy,
-    get_active_consent_pages, get_possible_consent_pages,
-    get_privacy_policy_page, should_reconsent_privacy_policy,
-    is_documents_consent_in_sync
+    create_user_consent_for_all_documents,
+    ensure_gdpr_privacy_policy,
+    get_active_consent_pages,
+    get_possible_consent_pages,
+    get_privacy_policy_page,
+    is_documents_consent_in_sync,
+    should_reconsent_privacy_policy,
 )
 from shuup.simple_cms.models import Page
 from shuup.testing import factories

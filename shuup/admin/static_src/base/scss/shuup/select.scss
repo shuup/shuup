@@ -2,6 +2,11 @@
     display: flex;
     margin-right: 0.5rem;
 
+    @include media-breakpoint-down(md){
+        width: 100%!important;
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
     .select2-selection {
         box-shadow: $shadow-md;
         background-image: none;

@@ -1,27 +1,30 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
 import pytest
 
-from shuup.core.models import (
-    get_person_contact, OrderLineType, CountryLimitBehaviorComponent
-)
+from shuup.core.models import CountryLimitBehaviorComponent, OrderLineType, get_person_contact
 from shuup.testing.factories import (
-    create_product, get_address, get_payment_method,
-    get_shipping_method, get_default_supplier,
-    get_initial_order_status, get_shop
+    create_product,
+    get_address,
+    get_default_supplier,
+    get_initial_order_status,
+    get_payment_method,
+    get_shipping_method,
+    get_shop,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "countries,european_countries,not_in_countries,not_in_european_countries,shipping_country,available", [
+    "countries,european_countries,not_in_countries,not_in_european_countries,shipping_country,available",
+    [
         (["FI"], False, [], False, "FI", True),
         (["FI"], False, [], False, "SE", False),
         (["FI"], True, [], False, "SE", True),
@@ -32,15 +35,16 @@ from shuup_tests.utils.basketish_order_source import BasketishOrderSource
         (["US"], True, [], False, "US", True),
         ([], False, [], True, "USA", True),
         ([], False, [], True, "FI", False),
-        (["SE","DK","EE"], False, [], False, "DK", True),
-        (["SE","DK","EE"], False, [], False, "FI", False),
-        ([], True, ["SE","DK","EE","FI"], False, "FR", True),
-        ([], True, ["SE","DK","EE","FI"], False, "CA", False),
-        ([], True, ["SE","DK","EE","FI"], False, "EE", False),
-])
+        (["SE", "DK", "EE"], False, [], False, "DK", True),
+        (["SE", "DK", "EE"], False, [], False, "FI", False),
+        ([], True, ["SE", "DK", "EE", "FI"], False, "FR", True),
+        ([], True, ["SE", "DK", "EE", "FI"], False, "CA", False),
+        ([], True, ["SE", "DK", "EE", "FI"], False, "EE", False),
+    ],
+)
 def test_coutries_availability_for_shipping_method(
-        admin_user, countries, european_countries, not_in_countries, not_in_european_countries,
-        shipping_country, available):
+    admin_user, countries, european_countries, not_in_countries, not_in_european_countries, shipping_country, available
+):
     source = _get_source(admin_user, shipping_country, "FI")
     shipping_method = source.shipping_method
     assert shipping_method.behavior_components.count() == 0
@@ -48,7 +52,8 @@ def test_coutries_availability_for_shipping_method(
         available_in_countries=countries,
         available_in_european_countries=european_countries,
         unavailable_in_countries=not_in_countries,
-        unavailable_in_european_countries=not_in_european_countries)
+        unavailable_in_european_countries=not_in_european_countries,
+    )
     shipping_method.behavior_components.add(component)
 
     assert shipping_method.behavior_components.count() == 1
@@ -59,7 +64,8 @@ def test_coutries_availability_for_shipping_method(
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "countries,european_countries,not_in_countries,not_in_european_countries,billing_country,available", [
+    "countries,european_countries,not_in_countries,not_in_european_countries,billing_country,available",
+    [
         (["FI"], False, [], False, "FI", True),
         (["FI"], False, [], False, "SE", False),
         (["FI"], True, [], False, "SE", True),
@@ -68,11 +74,12 @@ def test_coutries_availability_for_shipping_method(
         ([], False, [], True, "USA", True),
         ([], False, [], True, "FI", False),
         (["FI", "SE"], False, ["SE"], False, "FI", True),
-        (["FI", "SE"], False, ["SE"], False, "SE", False)
-])
+        (["FI", "SE"], False, ["SE"], False, "SE", False),
+    ],
+)
 def test_coutries_availability_for_payment_method(
-        admin_user, countries, european_countries, not_in_countries, not_in_european_countries,
-        billing_country, available):
+    admin_user, countries, european_countries, not_in_countries, not_in_european_countries, billing_country, available
+):
     source = _get_source(admin_user, "FI", billing_country)
     payment_method = source.payment_method
     assert payment_method.behavior_components.count() == 0
@@ -80,7 +87,8 @@ def test_coutries_availability_for_payment_method(
         available_in_countries=countries,
         available_in_european_countries=european_countries,
         unavailable_in_countries=not_in_countries,
-        unavailable_in_european_countries=not_in_european_countries)
+        unavailable_in_european_countries=not_in_european_countries,
+    )
     payment_method.behavior_components.add(component)
 
     assert payment_method.behavior_components.count() == 1
@@ -102,10 +110,7 @@ def _get_source(user, shipping_country, billing_country):
 
     supplier = get_default_supplier()
     product = create_product(
-        sku="test-%s--%s" % (prices_include_taxes, 10),
-        shop=source.shop,
-        supplier=supplier,
-        default_price=10
+        sku="test-%s--%s" % (prices_include_taxes, 10), shop=source.shop, supplier=supplier, default_price=10
     )
     source.add_line(
         type=OrderLineType.PRODUCT,

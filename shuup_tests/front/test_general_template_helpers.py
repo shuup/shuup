@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,15 +9,16 @@ import mock
 import pytest
 
 from shuup.core import cache
-from shuup.core.models import (
-    AnonymousContact, Manufacturer, Product, ShopProduct,
-    ShopProductVisibility, Supplier
-)
+from shuup.core.models import AnonymousContact, Manufacturer, Product, ShopProduct, ShopProductVisibility, Supplier
 from shuup.core.utils import context_cache
 from shuup.front.apps.auth.forms import EmailAuthenticationForm
 from shuup.testing.factories import (
-    create_order_with_product, create_product, get_default_category,
-    get_default_shop, get_default_supplier, get_shop
+    create_order_with_product,
+    create_product,
+    get_default_category,
+    get_default_shop,
+    get_default_supplier,
+    get_shop,
 )
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.utils import apply_request_middleware
@@ -28,7 +29,8 @@ from shuup_tests.simple_supplier.utils import get_simple_supplier
 @pytest.mark.django_db
 def test_get_login_form(rf):
     from shuup.front.template_helpers import general
-    request = apply_request_middleware(rf.get("/"),shop=get_default_shop())
+
+    request = apply_request_middleware(rf.get("/"), shop=get_default_shop())
     form = general.get_login_form(request=request)
     assert isinstance(form, EmailAuthenticationForm)
 
@@ -38,6 +40,7 @@ def test_get_root_categories():
     populate_if_required()
     context = get_jinja_context()
     from shuup.front.template_helpers import general
+
     for root in general.get_root_categories(context=context):
         assert not root.parent_id
 
@@ -50,11 +53,7 @@ def test_get_listed_products_orderable_only():
     n_products = 2
 
     # Create product without stock
-    product = create_product(
-        "test-sku",
-        supplier=simple_supplier,
-        shop=shop
-    )
+    product = create_product("test-sku", supplier=simple_supplier, shop=shop)
 
     create_product("test-sku-2", supplier=simple_supplier, shop=shop)
     create_product("test-sku-3", supplier=simple_supplier, shop=shop)
@@ -105,6 +104,7 @@ def test_get_listed_products_filter():
 
     cache.clear()
     from shuup.front.template_helpers import general
+
     filter_dict = {"id": product_1.id}
     for cache_test in range(2):
         product_list = general.get_listed_products(context, n_products=2, filter_dict=filter_dict)
@@ -121,15 +121,21 @@ def test_get_listed_products_filter():
 def test_get_listed_products_cache_bump():
     supplier = get_default_supplier()
     shop = get_default_shop()
-    product_1 = create_product("test-sku-1", supplier=supplier, shop=shop,)
+    product_1 = create_product(
+        "test-sku-1",
+        supplier=supplier,
+        shop=shop,
+    )
 
     from shuup.front.template_helpers import general
+
     filter_dict = {"id": product_1.pk}
 
     cache.clear()
     context = get_jinja_context()
 
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "listed_products" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -149,6 +155,7 @@ def test_get_listed_products_cache_bump():
 
         # use other filters
         from django.db.models import Q
+
         for cache_test in range(2):
             assert general.get_listed_products(context, n_products=2, extra_filters=Q(translations__name__isnull=False))
             assert set_cached_value_mock.call_count == 3
@@ -157,6 +164,7 @@ def test_get_listed_products_cache_bump():
 @pytest.mark.django_db
 def test_get_best_selling_products():
     from shuup.front.template_helpers import general
+
     context = get_jinja_context()
 
     # No products sold
@@ -198,11 +206,9 @@ def test_get_best_selling_products():
     product3 = create_product("product3", supplier=supplier, shop=shop, default_price=30)
     create_order_with_product(product3, supplier, quantity=1, taxless_base_unit_price=30, shop=shop)
     from shuup.customer_group_pricing.models import CgpDiscount
+
     CgpDiscount.objects.create(
-        shop=shop,
-        product=product3,
-        group=AnonymousContact.get_default_group(),
-        discount_amount_value=5
+        shop=shop, product=product3, group=AnonymousContact.get_default_group(), discount_amount_value=5
     )
     cache.clear()
     for cache_test in range(2):
@@ -216,6 +222,7 @@ def test_get_best_selling_products():
 @pytest.mark.django_db
 def test_get_best_selling_products_per_supplier():
     from shuup.front.template_helpers import general
+
     context = get_jinja_context()
 
     # No products sold
@@ -245,7 +252,6 @@ def test_get_best_selling_products_per_supplier():
         assert len(best_selling_products) == 1
         assert product1 not in best_selling_products
         assert product2 in best_selling_products
-
 
     # Make product 1 also sold by supplier2
     shop_product = product1.get_shop_instance(shop)
@@ -283,9 +289,11 @@ def test_get_best_selling_products_cache_bump():
 
     cache.clear()
     from shuup.front.template_helpers import general
+
     context = get_jinja_context()
 
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "best_selling_products" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -362,11 +370,9 @@ def test_best_selling_products_with_multiple_orders():
     product_4 = create_product("test-sku-4", supplier=supplier, shop=shop, default_price=price)
     create_order_with_product(product_4, supplier, quantity=2, taxless_base_unit_price=price, shop=shop)
     from shuup.customer_group_pricing.models import CgpDiscount
+
     CgpDiscount.objects.create(
-        shop=shop,
-        product=product_4,
-        group=AnonymousContact.get_default_group(),
-        discount_amount_value=(price * 0.1)
+        shop=shop, product=product_4, group=AnonymousContact.get_default_group(), discount_amount_value=(price * 0.1)
     )
 
 
@@ -405,6 +411,7 @@ def test_get_newest_products():
 @pytest.mark.django_db
 def test_get_newest_products_cache_bump():
     from shuup.front.template_helpers import general
+
     supplier = get_default_supplier()
     shop = get_default_shop()
     products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
@@ -416,6 +423,7 @@ def test_get_newest_products_cache_bump():
     context = get_jinja_context()
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "newest_products" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -474,6 +482,7 @@ def test_get_random_products_cache_bump():
     context = get_jinja_context()
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "random_products" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -523,6 +532,7 @@ def test_products_for_category():
 @pytest.mark.django_db
 def test_products_for_category_cache_bump():
     from shuup.front.template_helpers import general
+
     supplier = get_default_supplier()
     shop = get_default_shop()
     category = get_default_category()
@@ -540,6 +550,7 @@ def test_products_for_category_cache_bump():
 
     cache.clear()
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "products_for_category" in key:
             return set_cached_value_mock(key, value, timeout)
@@ -563,6 +574,7 @@ def test_products_for_category_cache_bump():
 @pytest.mark.django_db
 def test_get_all_manufacturers():
     from shuup.front.template_helpers import general
+
     context = get_jinja_context()
 
     supplier = get_default_supplier()
@@ -573,14 +585,16 @@ def test_get_all_manufacturers():
     manuf1.shops.add(shop)
     manuf2.shops.add(shop)
 
-    products = [
-        create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(3)
-    ]
-    products[0].manufacturer = manuf1; products[0].save()
-    products[1].manufacturer = manuf2; products[1].save()
-    products[2].manufacturer = manuf3; products[2].save()
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(3)]
+    products[0].manufacturer = manuf1
+    products[0].save()
+    products[1].manufacturer = manuf2
+    products[1].save()
+    products[2].manufacturer = manuf3
+    products[2].save()
 
     set_cached_value_mock = mock.Mock(wraps=context_cache.set_cached_value)
+
     def set_cache_value(key, value, timeout=None):
         if "all_manufacturers" in key:
             return set_cached_value_mock(key, value, timeout)

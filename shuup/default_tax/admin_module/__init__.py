@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -23,7 +23,7 @@ class TaxRulesAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^default-tax/rules",
             view_template="shuup.default_tax.admin_module.views.TaxRule%sView",
-            name_template="default_tax.tax_rule.%s"
+            name_template="default_tax.tax_rule.%s",
         )
 
     def get_menu_entries(self, request):
@@ -34,7 +34,7 @@ class TaxRulesAdminModule(AdminModule):
                 url="shuup_admin:default_tax.tax_rule.list",
                 category=SETTINGS_MENU_CATEGORY,
                 ordering=4,
-                aliases=[_("Show tax rules")]
+                aliases=[_("Show tax rules")],
             )
         ]
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,5 +26,5 @@ class MockContactSection(Section):
     @classmethod
     def get_context_data(cls, contact, request=None):
         context = {}
-        context['mock_context'] = "mock section context data"
+        context["mock_context"] = "mock section context data"
         return context

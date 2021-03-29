@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,9 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.modules.services.forms import (
-    PaymentMethodForm, ShippingMethodForm
-)
+from shuup.admin.modules.services.forms import PaymentMethodForm, ShippingMethodForm
 
 
 class ServiceBaseFormPart(FormPart):
@@ -28,7 +26,7 @@ class ServiceBaseFormPart(FormPart):
             self.form,
             required=True,
             template_name="shuup/admin/services/_edit_base_form.jinja",
-            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):

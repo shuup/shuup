@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier
 from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 
@@ -55,9 +54,9 @@ def test_product_detail(client):
 
             # Bonus! Let's say Johnny gets mad and starts to supply this product for 5 euros
             johnny_the_supplier = Supplier.objects.filter(name="Johnny Inc").first()
-            SupplierPrice.objects.filter(
-                supplier=johnny_the_supplier, shop=shop, product=product
-            ).update(amount_value=5)
+            SupplierPrice.objects.filter(supplier=johnny_the_supplier, shop=shop, product=product).update(
+                amount_value=5
+            )
 
             # This means that product detail get new default supplier and new price
             assert shop_product.get_supplier() == johnny_the_supplier
@@ -113,13 +112,13 @@ def test_supplier_product_detail(client):
 
 
 def _get_product_detail_soup(client, product):
-    url = reverse('shuup:product', kwargs={'pk': product.pk, 'slug': product.slug})
+    url = reverse("shuup:product", kwargs={"pk": product.pk, "slug": product.slug})
     response = client.get(url)
     return BeautifulSoup(response.content)
 
 
 def _get_supplier_product_detail_soup(client, product, supplier):
-    url = reverse('shuup:supplier-product', kwargs={'supplier_pk': supplier.pk, 'pk': product.pk, 'slug': product.slug})
+    url = reverse("shuup:supplier-product", kwargs={"supplier_pk": supplier.pk, "pk": product.pk, "slug": product.slug})
     response = client.get(url)
     return BeautifulSoup(response.content)
 

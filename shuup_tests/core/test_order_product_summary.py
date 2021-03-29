@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import defaultdict
-
 import pytest
 import six
+from collections import defaultdict
 
 from shuup.core.models import ShippingMode, Supplier
-from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product, get_default_shop
-)
+from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
 
 
 @pytest.mark.django_db
@@ -39,18 +36,9 @@ def test_order_product_summary_with_multiple_suppliers():
     shop_product3.suppliers.set([supplier3])
 
     product_quantities = {
-        supplier1.pk: {
-            product1.pk: 5,
-            product2.pk: 6
-        },
-        supplier2.pk: {
-            product1.pk: 3,
-            product2.pk: 13
-        },
-        supplier3.pk: {
-            product1.pk: 1,
-            product3.pk: 50
-        }
+        supplier1.pk: {product1.pk: 5, product2.pk: 6},
+        supplier2.pk: {product1.pk: 3, product2.pk: 13},
+        supplier3.pk: {product1.pk: 1, product3.pk: 50},
     }
 
     def get_quantity(supplier, product):
@@ -124,16 +112,16 @@ def test_order_product_summary_with_multiple_suppliers():
     # Let's make suer all good with unshipped products
     unshipped_products = order.get_unshipped_products()
     assert unshipped_products[product1.pk]["unshipped"] == 9
-    assert unshipped_products[product2.pk]["unshipped"]  == 19
+    assert unshipped_products[product2.pk]["unshipped"] == 19
     assert unshipped_products.get(product3.pk) is None
 
     unshipped_products = order.get_unshipped_products(supplier1)
-    assert unshipped_products[product1.pk]["unshipped"]  == 5
-    assert unshipped_products[product2.pk]["unshipped"]  == 6
+    assert unshipped_products[product1.pk]["unshipped"] == 5
+    assert unshipped_products[product2.pk]["unshipped"] == 6
 
     unshipped_products = order.get_unshipped_products(supplier2)
-    assert unshipped_products[product1.pk]["unshipped"]  == 3
-    assert unshipped_products[product2.pk]["unshipped"]  == 13
+    assert unshipped_products[product1.pk]["unshipped"] == 3
+    assert unshipped_products[product2.pk]["unshipped"] == 13
 
     unshipped_products = order.get_unshipped_products(supplier3)
     assert unshipped_products[product1.pk]["unshipped"] == 1
@@ -153,7 +141,6 @@ def test_order_product_summary_with_multiple_suppliers():
     _assert_product_summary(product_summary, product3.pk, 50, 0, 0, 50)
     product_summary = order.get_product_summary(supplier3.pk)
     _assert_product_summary(product_summary, product3.pk, 50, 0, 0, 50)
-
 
     # Then ship product 1 for all suppliers one by one
     order.create_shipment({product1: 1}, supplier=supplier3)

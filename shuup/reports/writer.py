@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from decimal import Decimal
-from pprint import pformat
-
 import six
 from babel.dates import format_datetime
+from decimal import Decimal
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import HttpResponse
@@ -22,6 +20,7 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
+from pprint import pformat
 from six import BytesIO
 
 from shuup.apps.provides import get_provide_objects
@@ -46,7 +45,7 @@ class ReportWriter(object):
     writer_type = "base"
 
     def __init__(self):
-        self.title = u""
+        self.title = ""
 
     def __unicode__(self):
         return self.writer_type
@@ -79,7 +78,8 @@ class ReportWriter(object):
                 "{title} {start} - {end}".format(
                     title=report.title,
                     start=format_datetime(report_data["start"], format="short", locale=get_current_babel_locale()),
-                    end=format_datetime(report_data["end"], format="short", locale=get_current_babel_locale()))
+                    end=format_datetime(report_data["end"], format="short", locale=get_current_babel_locale()),
+                )
             )
             report.ensure_texts()
             self.write_data_table(report, report_data["data"], has_totals=report_data["has_totals"])
@@ -119,10 +119,7 @@ class ReportWriter(object):
 
     def get_filename(self, report):
         fmt_data = dict(report.options, time=now().isoformat())
-        return "%s%s" % (
-            (report.filename_template % fmt_data).replace(":", "_"),
-            self.extension
-        )
+        return "%s%s" % ((report.filename_template % fmt_data).replace(":", "_"), self.extension)
 
 
 class ExcelReportWriter(ReportWriter):
@@ -186,21 +183,25 @@ class HTMLReportWriter(ReportWriter):
     extension = ".html"
     writer_type = "html"
 
-    INLINE_TEMPLATE = u"""
+    INLINE_TEMPLATE = """
     <style type="text/css">%(style)s</style>
     %(body)s
     """.strip()
 
-    TEMPLATE = u"""
+    TEMPLATE = (
+        """
 <html>
 <head>
 <meta charset="UTF-8">
 <title>%(title)s</title>
 %(extrahead)s
-</head>""".strip() + INLINE_TEMPLATE + u"""</html>"""
+</head>""".strip()
+        + INLINE_TEMPLATE
+        + """</html>"""
+    )
 
-    styles = u"""@page { prince-shrink-to-fit: auto }""".strip()
-    extra_header = u""
+    styles = """@page { prince-shrink-to-fit: auto }""".strip()
+    extra_header = ""
 
     def __init__(self):
         super(HTMLReportWriter, self).__init__()
@@ -231,7 +232,7 @@ class HTMLReportWriter(ReportWriter):
         self._w_raw("<hr>")
 
     def write_data_table(self, report, report_data, has_totals=True):
-        self._w_raw("<table class=\"table table-striped table-bordered\">")
+        self._w_raw('<table class="table table-striped table-bordered">')
         self._w_raw("<thead><tr>")
         for c in report.schema:
             self._w_tag("th", c["title"])
@@ -266,9 +267,9 @@ class HTMLReportWriter(ReportWriter):
         self._w_tag(tag, text)
 
     def get_rendered_output(self):
-        body = u"".join(conditional_escape(smart_text(piece)) for piece in self.output)
+        body = "".join(conditional_escape(smart_text(piece)) for piece in self.output)
         styles = self.styles
-        extrahead = (self.extra_header or u"")
+        extrahead = self.extra_header or ""
 
         if self.inline:
             template = self.INLINE_TEMPLATE
@@ -316,10 +317,13 @@ class JSONReportWriter(ReportWriter):
     def write_data_table(self, report, report_data, has_totals=True):
         table = {
             "columns": report.schema,
-            "data": [dict(
-                (c["key"], force_text(val)) for (c, val)  # TODO: do not force all text
-                in zip(report.schema, report.read_datum(datum))
-            ) for datum in report_data]
+            "data": [
+                dict(
+                    (c["key"], force_text(val))
+                    for (c, val) in zip(report.schema, report.read_datum(datum))  # TODO: do not force all text
+                )
+                for datum in report_data
+            ],
         }
 
         if has_totals:
@@ -350,6 +354,7 @@ class ReportWriterPopulator(object):
     """
     A class which populates the report writers map.
     """
+
     report_writers_map = {}
 
     def populate(self):

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
-from collections import OrderedDict
-
 import six
+from collections import OrderedDict
 from django import forms
 from django.conf import settings
 from django.db.models import Q
-from django.forms import (
-    ChoiceField, ModelChoiceField, ModelMultipleChoiceField,
-    MultipleChoiceField
-)
+from django.forms import ChoiceField, ModelChoiceField, ModelMultipleChoiceField, MultipleChoiceField
 
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
@@ -176,15 +172,14 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
 
 
 class ProductListForm(forms.Form):
-
     def __init__(self, request, shop, category, *args, **kwargs):
         super(ProductListForm, self).__init__(*args, **kwargs)
         for extend_obj in _get_active_modifiers(shop, category):
             for field_key, field in extend_obj.get_fields(request, category) or []:
-                is_choice_field = isinstance(field, (
-                    ModelMultipleChoiceField, ModelChoiceField, ChoiceField, MultipleChoiceField
-                ))
-                has_choices = (is_choice_field and len(field.choices))
+                is_choice_field = isinstance(
+                    field, (ModelMultipleChoiceField, ModelChoiceField, ChoiceField, MultipleChoiceField)
+                )
+                has_choices = is_choice_field and len(field.choices)
 
                 if field_key not in self.fields:
                     if is_choice_field and has_choices:
@@ -205,7 +200,8 @@ class ProductListForm(forms.Form):
 
 def get_configuration(shop=None, category=None, force_category_override=False):
     default_configuration = configuration.get(
-        shop, FACETED_DEFAULT_CONF_KEY, settings.SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION)
+        shop, FACETED_DEFAULT_CONF_KEY, settings.SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION
+    )
 
     category_config = configuration.get(None, _get_category_configuration_key(category))
     # when override_default_configuration is True, we override the default configuration
@@ -226,6 +222,7 @@ def set_configuration(shop=None, category=None, data=None):
     context_cache.bump_cache_for_item(category)
     if not category:
         from shuup.core.models import Category
+
         for cat_pk in Category.objects.all().values_list("pk", flat=True):
             context_cache.bump_cache_for_pk(Category, cat_pk)
 
@@ -258,10 +255,7 @@ def bump_product_queryset_cache():
 def get_product_queryset(queryset, request, category, data):
     # pass the request and category down to the `get_queryset` method
     queryset_data = data.copy()
-    queryset_data.update({
-        "request": request,
-        "category": category
-    })
+    queryset_data.update({"request": request, "category": category})
     for extend_obj in _get_active_modifiers(request.shop, category):
         new_queryset = extend_obj.get_queryset(queryset, queryset_data)
         if new_queryset is not None:
@@ -289,11 +283,7 @@ def cached_product_queryset(queryset, request, category, data):
         item = "%sC%s" % (item, category.pk)
 
     key, products = context_cache.get_cached_value(
-        identifier="product_queryset",
-        item=item,
-        allow_cache=True,
-        context=request,
-        data=key_data
+        identifier="product_queryset", item=item, allow_cache=True, context=request, data=key_data
     )
 
     if products is not None:
@@ -305,14 +295,15 @@ def cached_product_queryset(queryset, request, category, data):
 
 
 def _get_category_configuration_key(category):
-    return (FACETED_CATEGORY_CONF_KEY_PREFIX % category.pk if category and category.pk else None)
+    return FACETED_CATEGORY_CONF_KEY_PREFIX % category.pk if category and category.pk else None
 
 
 def _get_active_modifiers(shop=None, category=None):
     key = None
     if category:
         key, val = context_cache.get_cached_value(
-            identifier="active_modifiers", item=category, allow_cache=True, context={"shop": shop})
+            identifier="active_modifiers", item=category, allow_cache=True, context={"shop": shop}
+        )
         if val is not None:
             return val
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -35,12 +35,12 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     group_ids = list(context.customer.groups_ids)
 
     # Product condition is always applied
-    condition_query = (Q(product__isnull=True) | Q(product_id=product_id))
+    condition_query = Q(product__isnull=True) | Q(product_id=product_id)
 
     # Supplier condition is always applied
     supplier = context.supplier
     if supplier:
-        condition_query &= (Q(supplier=supplier) | Q(supplier__isnull=True))
+        condition_query &= Q(supplier=supplier) | Q(supplier__isnull=True)
     else:
         # No supplier in context means no discounts limited to specific
         # suppliers
@@ -49,32 +49,32 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     # Apply category conditions
     if len(category_ids) == 1:
         condition_query &= (
-            Q(category__isnull=True) |
-            (Q(exclude_selected_category=False) & Q(category__id=category_ids[0])) |
-            (Q(exclude_selected_category=True) & ~Q(category__id=category_ids[0]))
+            Q(category__isnull=True)
+            | (Q(exclude_selected_category=False) & Q(category__id=category_ids[0]))
+            | (Q(exclude_selected_category=True) & ~Q(category__id=category_ids[0]))
         )
     else:
         condition_query &= (
-            Q(category__isnull=True) |
-            (Q(exclude_selected_category=False) & Q(category__id__in=category_ids)) |
-            (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
+            Q(category__isnull=True)
+            | (Q(exclude_selected_category=False) & Q(category__id__in=category_ids))
+            | (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
         )
 
     # Apply contact conditions
-    condition_query &= (Q(contact__isnull=True) | Q(contact_id=context.customer.pk))
+    condition_query &= Q(contact__isnull=True) | Q(contact_id=context.customer.pk)
 
     # Apply contact group conditions
     if len(group_ids) == 1:
         condition_query &= (
-            Q(contact_group__isnull=True) |
-            (Q(exclude_selected_contact_group=False) & Q(contact_group__id=group_ids[0])) |
-            (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id=group_ids[0]))
+            Q(contact_group__isnull=True)
+            | (Q(exclude_selected_contact_group=False) & Q(contact_group__id=group_ids[0]))
+            | (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id=group_ids[0]))
         )
     else:
         condition_query &= (
-            Q(contact_group__isnull=True) |
-            (Q(exclude_selected_contact_group=False) & Q(contact_group__id__in=group_ids)) |
-            (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id__in=group_ids))
+            Q(contact_group__isnull=True)
+            | (Q(exclude_selected_contact_group=False) & Q(contact_group__id__in=group_ids))
+            | (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id__in=group_ids))
         )
 
     # Apply coupon code condition
@@ -82,19 +82,14 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     if basket and basket.codes:
         coupon_queries = Q()
         for code in basket.codes:  # TODO: Revise! Likely there is not too many codes in basket.
-            coupon_queries |= Q(
-                Q(coupon_code__active=True) &
-                Q(coupon_code__code__iexact=code)
-            )
+            coupon_queries |= Q(Q(coupon_code__active=True) & Q(coupon_code__code__iexact=code))
 
-        condition_query &= (
-            Q(coupon_code__isnull=True) |
-            coupon_queries
-        )
+        condition_query &= Q(coupon_code__isnull=True) | coupon_queries
     else:
         condition_query &= Q(coupon_code__isnull=True)
 
     from shuup.discounts.models import Discount
+
     if available_only:
         base_queryset = Discount.objects.available(shop)
     else:
@@ -106,11 +101,11 @@ def get_potential_discounts_for_product(context, product, available_only=True):
 
 def get_active_discount_for_code(order_or_order_source, code):
     from shuup.discounts.models import Discount
+
     shop = order_or_order_source.shop
-    return Discount.objects.available(shop).filter(
-        Q(coupon_code__active=True) &
-        Q(coupon_code__code__iexact=code)
-    ).first()
+    return (
+        Discount.objects.available(shop).filter(Q(coupon_code__active=True) & Q(coupon_code__code__iexact=code)).first()
+    )
 
 
 def get_next_dates_for_range(weekday, from_hour, to_hour):
@@ -133,16 +128,18 @@ def get_next_dates_for_range(weekday, from_hour, to_hour):
     next_date = now_datetime + datetime.timedelta(days=(abs(weekday - now_datetime.weekday()) % 7))
     ranges = [
         next_date.replace(hour=from_hour.hour, minute=from_hour.minute),
-        next_date.replace(hour=to_hour.hour, minute=to_hour.minute)
+        next_date.replace(hour=to_hour.hour, minute=to_hour.minute),
     ]
 
     # the next date is the same as today, let's return also the next week ranges
     if next_date.date() == now().date():
         next_week_date = next_date + datetime.timedelta(days=7)
-        ranges.extend([
-            next_week_date.replace(hour=from_hour.hour, minute=from_hour.minute),
-            next_week_date.replace(hour=to_hour.hour, minute=to_hour.minute)
-        ])
+        ranges.extend(
+            [
+                next_week_date.replace(hour=from_hour.hour, minute=from_hour.minute),
+                next_week_date.replace(hour=to_hour.hour, minute=to_hour.minute),
+            ]
+        )
 
     return ranges
 
@@ -154,6 +151,7 @@ def bump_price_expiration(shops):
     :param itetable[int|Shop] shops: list of shops to bump caches
     """
     from shuup.core.models import Shop
+
     shop_ids = [shop.pk if isinstance(shop, Shop) else int(shop) for shop in shops]
 
     for shop_id in shop_ids:
@@ -185,9 +183,7 @@ def get_price_expiration(context, product):
     :returns the price expiration time timestamp
     """
     cache_params = dict(
-        identifier="price_expiration",
-        item=_get_price_expiration_cache_key(context.shop.pk),
-        context={}
+        identifier="price_expiration", item=_get_price_expiration_cache_key(context.shop.pk), context={}
     )
 
     if settings.SHUUP_DISCOUNTS_PER_PRODUCT_EXPIRATION_DATES:
@@ -220,12 +216,11 @@ def get_price_expiration(context, product):
         event_dates.extend(get_next_dates_for_range(weekday, from_hour, to_hour))
 
     from django.utils.timezone import now
+
     now_datetime = now()
 
     if event_dates:
-        min_event_date = (
-            min(event_date for event_date in event_dates if event_date > now_datetime)
-        )
+        min_event_date = min(event_date for event_date in event_dates if event_date > now_datetime)
         min_event_date_timestamp = to_timestamp(min_event_date)
 
         # cache the value in the context cache, setting the timeout as the price expiration time

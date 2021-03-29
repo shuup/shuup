@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,12 +19,7 @@ from shuup.utils.form_group import FormDef, FormGroup
 class TemplatedFormDef(FormDef):
     def __init__(self, name, form_class, template_name, required=True, kwargs=None):
         self.template_name = template_name
-        super(TemplatedFormDef, self).__init__(
-            name=name,
-            form_class=form_class,
-            required=required,
-            kwargs=kwargs
-        )
+        super(TemplatedFormDef, self).__init__(name=name, form_class=form_class, required=required, kwargs=kwargs)
 
 
 class FormPart(object):
@@ -51,9 +46,8 @@ class FormPartsViewMixin(object):
         return None  # Dealt with by `get_form`; this will just squelch Django warnings
 
     def get_form_part_classes(self):
-        form_part_classes = (
-            list(self.base_form_part_classes) +
-            list(get_provide_objects(self.form_part_class_provide_key))
+        form_part_classes = list(self.base_form_part_classes) + list(
+            get_provide_objects(self.form_part_class_provide_key)
         )
         return form_part_classes
 
@@ -89,7 +83,7 @@ class SaveFormPartsMixin(object):
         except ValidationError:
             return self.form_invalid(form)
 
-        is_new = (not self.object.pk)
+        is_new = not self.object.pk
         form_parts = self.get_form_parts(self.object)
         for form_part in form_parts:
             retval = form_part.form_valid(form)

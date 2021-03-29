@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -8,13 +8,27 @@ import pytest
 from django.db.models import ProtectedError
 
 from shuup.core.models import (
-    CustomerTaxGroup, Manufacturer, PaymentMethod, PersonContact, Product,
-    SalesUnit, ShippingMethod, Shop, ShopProduct, Tax, TaxClass
+    CustomerTaxGroup,
+    Manufacturer,
+    PaymentMethod,
+    PersonContact,
+    Product,
+    SalesUnit,
+    ShippingMethod,
+    Shop,
+    ShopProduct,
+    Tax,
+    TaxClass,
 )
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_order_with_product, create_product, DEFAULT_NAME,
-    get_default_category, get_default_shop, get_default_supplier, get_test_tax
+    DEFAULT_NAME,
+    create_order_with_product,
+    create_product,
+    get_default_category,
+    get_default_shop,
+    get_default_supplier,
+    get_test_tax,
 )
 
 
@@ -130,15 +144,20 @@ def test_taxrule_tax_removal():
         tax.delete()
     assert TaxRule.objects.filter(pk=taxrule.pk).exists()
 
+
 @pytest.mark.django_db
 def test_orderlinetax_tax_removal():
-    #todo fix
+    # todo fix
     product = get_product()
     tax_rate = 1
     order = create_order_with_product(
-        product=product, supplier=get_default_supplier(),
-        quantity=1, taxless_base_unit_price=10,
-        tax_rate=tax_rate, shop=get_default_shop())
+        product=product,
+        supplier=get_default_supplier(),
+        quantity=1,
+        taxless_base_unit_price=10,
+        tax_rate=tax_rate,
+        shop=get_default_shop(),
+    )
     tax = get_test_tax(tax_rate)
     with pytest.raises(ProtectedError):
         tax.delete()

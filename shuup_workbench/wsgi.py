@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application  # noqa (E402)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shuup_workbench.settings")  # noqa

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,9 +12,7 @@ from django.db.models.signals import m2m_changed, post_save, pre_delete
 from shuup.core.models import Category, ShopProduct
 from shuup.core.utils.price_cache import bump_all_price_caches
 from shuup.discounts.exceptions import DiscountM2MChangeError
-from shuup.discounts.models import (
-    AvailabilityException, CouponCode, Discount, HappyHour, TimeRange
-)
+from shuup.discounts.models import AvailabilityException, CouponCode, Discount, HappyHour, TimeRange
 from shuup.discounts.utils import bump_price_expiration
 
 
@@ -84,26 +82,22 @@ def handle_generic_m2m_changed(sender, instance, **kwargs):
 
 # Bump price info and price expiration caches when Discount related models are changed
 m2m_changed.connect(
-    handle_generic_m2m_changed,
-    sender=Discount.shops.through,
-    dispatch_uid="discounts:changed_shops_m2m"
+    handle_generic_m2m_changed, sender=Discount.shops.through, dispatch_uid="discounts:changed_shops_m2m"
 )
 m2m_changed.connect(
-    handle_generic_m2m_changed,
-    sender=Discount.happy_hours.through,
-    dispatch_uid="discounts:changed_happy_hours_m2m"
+    handle_generic_m2m_changed, sender=Discount.happy_hours.through, dispatch_uid="discounts:changed_happy_hours_m2m"
 )
 m2m_changed.connect(
     handle_generic_m2m_changed,
     sender=Discount.availability_exceptions.through,
-    dispatch_uid="discounts:changed_availability_exceptions_m2m"
+    dispatch_uid="discounts:changed_availability_exceptions_m2m",
 )
 
 # Bump price info and price expiration caches when categories from shop products change
 m2m_changed.connect(
     handle_generic_m2m_changed,
     sender=ShopProduct.categories.through,
-    dispatch_uid="discounts:changed_shop_product_categories"
+    dispatch_uid="discounts:changed_shop_product_categories",
 )
 
 # Bump price info and price expiration caches when Discount instances are changed
@@ -125,5 +119,5 @@ pre_delete.connect(handle_coupon_post_save, sender=CouponCode, dispatch_uid="dis
 post_save.connect(
     handle_availability_exception_post_save,
     sender=AvailabilityException,
-    dispatch_uid="discounts:availability_exception"
+    dispatch_uid="discounts:availability_exception",
 )

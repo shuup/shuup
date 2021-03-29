@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import pytest
 from collections import defaultdict
 from decimal import Decimal
-
-import pytest
 
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import OrderLine, OrderLineType, Supplier
@@ -27,7 +26,7 @@ def bround(value):
 @pytest.mark.parametrize("include_tax", [True, False])
 @pytest.mark.django_db
 def test_order_full_refund_with_taxes(include_tax):
-    tax_rate = Decimal(0.2)   # 20%
+    tax_rate = Decimal(0.2)  # 20%
     product_price = 100
     discount_amount = 30
     random_line_price = 5
@@ -58,7 +57,7 @@ def test_order_full_refund_with_taxes(include_tax):
         quantity=1,
         base_unit_price=source.create_price(0),
         discount_amount=source.create_price(discount_amount),
-        parent_line_id=line.line_id
+        parent_line_id=line.line_id,
     )
     raw_total_price = Decimal(product_price - discount_amount)
     total_taxful = bround(source.taxful_total_price.value)
@@ -72,10 +71,7 @@ def test_order_full_refund_with_taxes(include_tax):
 
     # Lines without quantity shouldn't affect refunds
     other_line = source.add_line(
-        text="This random line for textual information",
-        line_id="other-line",
-        type=OrderLineType.OTHER,
-        quantity=0
+        text="This random line for textual information", line_id="other-line", type=OrderLineType.OTHER, quantity=0
     )
     # Lines with quantity again should be able to be refunded normally.
     other_line_with_quantity = source.add_line(
@@ -83,7 +79,7 @@ def test_order_full_refund_with_taxes(include_tax):
         type=OrderLineType.OTHER,
         text="Special service $5/h",
         quantity=1,
-        base_unit_price=source.create_price(random_line_price)
+        base_unit_price=source.create_price(random_line_price),
     )
 
     raw_total_price = Decimal(product_price - discount_amount + random_line_price)
@@ -121,7 +117,7 @@ def test_order_full_refund_with_taxes(include_tax):
 @pytest.mark.parametrize("include_tax", [True, False])
 @pytest.mark.django_db
 def test_order_partial_refund_with_taxes(include_tax):
-    tax_rate = Decimal(0.2)   # 20%
+    tax_rate = Decimal(0.2)  # 20%
     product_price = 100
     discount_amount = 30
     random_line_price = 5
@@ -153,7 +149,7 @@ def test_order_partial_refund_with_taxes(include_tax):
         quantity=1,
         base_unit_price=source.create_price(0),
         discount_amount=source.create_price(discount_amount),
-        parent_line_id=line.line_id
+        parent_line_id=line.line_id,
     )
     raw_total_price = Decimal(product_price - discount_amount)
     total_taxful = bround(source.taxful_total_price.value)
@@ -173,16 +169,18 @@ def test_order_partial_refund_with_taxes(include_tax):
     order.create_payment(order.taxful_total_price)
     assert order.is_paid()
 
-    refund_data = [dict(
-        amount=Money(refunded_amount, shop.currency),
-        quantity=1,
-        line=order.lines.products().first(),
-    )]
+    refund_data = [
+        dict(
+            amount=Money(refunded_amount, shop.currency),
+            quantity=1,
+            line=order.lines.products().first(),
+        )
+    ]
     order.create_refund(refund_data)
 
     total_taxful = bround(order.taxful_total_price.value)
     total_taxless = bround(order.taxless_total_price.value)
-    taxless_refunded_amount = (refunded_amount / (1 + tax_rate))
+    taxless_refunded_amount = refunded_amount / (1 + tax_rate)
 
     if include_tax:
         raw_total_price = Decimal(product_price - discount_amount - refunded_amount)

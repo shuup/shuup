@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import shuup.utils.properties
+
 import shuup.core.fields
+import shuup.utils.properties
 
 
 class Migration(migrations.Migration):

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,46 +26,47 @@ class TaxRuleQuerySet(models.QuerySet):
 
 @python_2_unicode_compatible
 class TaxRule(models.Model):
-    enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True, help_text=_(
-            "Enable this if this tax rule is active."
-        )
+    enabled = models.BooleanField(
+        default=True, verbose_name=_("enabled"), db_index=True, help_text=_("Enable this if this tax rule is active.")
     )
     tax_classes = models.ManyToManyField(
-        TaxClass,
-        verbose_name=_("tax classes"), help_text=_(
-            "Tax classes of the items to be taxed"))
+        TaxClass, verbose_name=_("tax classes"), help_text=_("Tax classes of the items to be taxed")
+    )
     customer_tax_groups = models.ManyToManyField(
-        CustomerTaxGroup, blank=True,
+        CustomerTaxGroup,
+        blank=True,
         verbose_name=_("customer tax groups"),
-        help_text=_("The customer tax groups for which this tax rule is limited."))
-    country_codes_pattern = models.CharField(
-        max_length=300, blank=True,
-        verbose_name=_("country codes pattern"))
-    region_codes_pattern = models.CharField(
-        max_length=500, blank=True,
-        verbose_name=_("region codes pattern"))
-    postal_codes_pattern = models.TextField(
-        blank=True, verbose_name=_("postal codes pattern"))
+        help_text=_("The customer tax groups for which this tax rule is limited."),
+    )
+    country_codes_pattern = models.CharField(max_length=300, blank=True, verbose_name=_("country codes pattern"))
+    region_codes_pattern = models.CharField(max_length=500, blank=True, verbose_name=_("region codes pattern"))
+    postal_codes_pattern = models.TextField(blank=True, verbose_name=_("postal codes pattern"))
 
     _postal_codes_min = models.CharField(max_length=100, blank=True, null=True)
     _postal_codes_max = models.CharField(max_length=100, blank=True, null=True)
 
     priority = models.IntegerField(
         default=0,
-        verbose_name=_("priority"), help_text=_(
+        verbose_name=_("priority"),
+        help_text=_(
             "Rules with same priority define added taxes (e.g. US taxes) "
             "and rules with different priority define compound taxes "
-            "(e.g. Canada Quebec PST case)"))
+            "(e.g. Canada Quebec PST case)"
+        ),
+    )
     override_group = models.IntegerField(
         default=0,
-        verbose_name=_("override group number"), help_text=_(
+        verbose_name=_("override group number"),
+        help_text=_(
             "If several rules match, only the rules with the highest "
             "override group number will be effective.  This can be "
             "used, for example, to implement tax exemption by adding "
-            "a rule with very high override group that sets a zero tax."))
-    tax = models.ForeignKey(Tax, on_delete=models.PROTECT, verbose_name=_('tax'), help_text=_(
-        "The tax to apply when this rule is applied."
-    ))
+            "a rule with very high override group that sets a zero tax."
+        ),
+    )
+    tax = models.ForeignKey(
+        Tax, on_delete=models.PROTECT, verbose_name=_("tax"), help_text=_("The tax to apply when this rule is applied.")
+    )
 
     objects = TaxRuleQuerySet.as_manager()
 

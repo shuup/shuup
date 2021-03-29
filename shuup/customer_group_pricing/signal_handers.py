@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -37,10 +37,7 @@ def handle_contact_group_m2m_changed(sender, instance, **kwargs):
 @receiver(product_copied, dispatch_uid="customer_group_pricing_product_copied")
 def handle_product_copy(sender, shop, copied, copy, **kwargs):
     for price in CgpPrice.objects.filter(product=copied, shop=shop):
-        CgpPrice.objects.create(
-            product=copy, shop=shop, group=price.group,
-            price_value=price.price_value
-        )
+        CgpPrice.objects.create(product=copy, shop=shop, group=price.group, price_value=price.price_value)
 
 
 # Bump prices cache when CgpDiscount is changed or deleted
@@ -55,5 +52,5 @@ pre_delete.connect(handle_cgp_price_post_save, sender=CgpPrice, dispatch_uid="cg
 m2m_changed.connect(
     handle_contact_group_m2m_changed,
     sender=ContactGroup.members.through,
-    dispatch_uid="cgp:change_contact_group_members"
+    dispatch_uid="cgp:change_contact_group_members",
 )

@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import activate
-from selenium.common.exceptions import (
-    ElementNotVisibleException, StaleElementReferenceException
-)
+from selenium.common.exceptions import ElementNotVisibleException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
@@ -35,7 +33,8 @@ def wait_until_disappeared(browser, css_selector, timeout=10, frequency=1.0):
         browser,
         condition=lambda x: not x.driver.find_element_by_css_selector(css_selector).is_displayed(),
         timeout=timeout,
-        frequency=frequency)
+        frequency=frequency,
+    )
 
 
 def wait_until_appeared(browser, css_selector, timeout=10, frequency=1.0):
@@ -55,7 +54,8 @@ def wait_until_appeared(browser, css_selector, timeout=10, frequency=1.0):
         browser,
         condition=lambda x: x.driver.find_element_by_css_selector(css_selector).is_displayed(),
         timeout=timeout,
-        frequency=frequency)
+        frequency=frequency,
+    )
 
 
 def wait_until_appeared_xpath(browser, xpath, timeout=10, frequency=1.0):
@@ -63,7 +63,8 @@ def wait_until_appeared_xpath(browser, xpath, timeout=10, frequency=1.0):
         browser,
         condition=lambda x: x.driver.find_element_by_xpath(xpath).is_displayed(),
         timeout=timeout,
-        frequency=frequency)
+        frequency=frequency,
+    )
 
 
 def wait_until_condition(browser, condition, timeout=10, frequency=1.0):
@@ -84,7 +85,7 @@ def wait_until_condition(browser, condition, timeout=10, frequency=1.0):
         browser.driver,
         timeout=timeout,
         poll_frequency=frequency,
-        ignored_exceptions=(ElementNotVisibleException, StaleElementReferenceException)
+        ignored_exceptions=(ElementNotVisibleException, StaleElementReferenceException),
     ).until(lambda x: condition(browser))
 
 
@@ -124,7 +125,8 @@ def click_element(browser, css_selector, timeout=10, frequency=1.0, header_heigh
         browser,
         condition=lambda x: EC.element_to_be_clickable((By.CSS_SELECTOR, css_selector))(browser.driver),
         timeout=timeout,
-        frequency=frequency)
+        frequency=frequency,
+    )
     browser.find_by_css(css_selector).click()
 
 
@@ -150,8 +152,17 @@ def initialize_front_browser_test(browser, live_server):
     return browser
 
 
-def initialize_admin_browser_test(browser, live_server, settings, username="admin", password="password",
-                                  onboarding=False, language="en", shop=None, tour_complete=True):
+def initialize_admin_browser_test(
+    browser,
+    live_server,
+    settings,
+    username="admin",
+    password="password",
+    onboarding=False,
+    language="en",
+    shop=None,
+    tour_complete=True,
+):
     if not onboarding:
         settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
@@ -161,6 +172,7 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
 
     if tour_complete:
         from django.contrib.auth import get_user_model
+
         user = get_user_model().objects.get(username=username)
         set_tour_complete(shop, "dashboard", True, user)
         set_tour_complete(shop, "home", True, user)
@@ -169,8 +181,8 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
 
     url = live_server + "/sa"
     browser.visit(url)
-    browser.fill('username', username)
-    browser.fill('password', password)
+    browser.fill("username", username)
+    browser.fill("password", password)
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
 
     if not onboarding:

@@ -1,21 +1,21 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 import decimal
 import pytest
-
 from django.conf import settings
 
-from shuup.core.models import (
-    Shipment, ShipmentProduct, ShippingMode, ShippingStatus
-)
+from shuup.core.models import Shipment, ShipmentProduct, ShippingMode, ShippingStatus
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.utils.excs import Problem
 
@@ -157,11 +157,7 @@ def test_shipment_with_unshippable_products():
     shop = get_default_shop()
     supplier = get_default_supplier()
 
-    product = create_product(
-        "unshippable",
-        shop=shop,
-        supplier=supplier,
-        default_price=5.55)
+    product = create_product("unshippable", shop=shop, supplier=supplier, default_price=5.55)
     product.shipping_mode = ShippingMode.NOT_SHIPPED
     product.save()
     order = _get_order(shop, supplier, stocked=False)
@@ -175,7 +171,7 @@ def test_shipment_with_unshippable_products():
     assert order.can_create_shipment()
     assert not order.can_set_complete()
     order.create_shipment_of_all_products(supplier=supplier)
-    assert (order.lines.products().count() == initial_product_line_count + 1)
+    assert order.lines.products().count() == initial_product_line_count + 1
 
     assert order.shipments.count() == 1
     assert ShipmentProduct.objects.filter(shipment__order_id=order.id).count() == initial_product_line_count
@@ -192,11 +188,7 @@ def test_order_with_only_unshippable_products():
     order.full_clean()
     order.save()
 
-    product = create_product(
-        "unshippable",
-        shop=shop,
-        supplier=supplier,
-        default_price=5.55)
+    product = create_product("unshippable", shop=shop, supplier=supplier, default_price=5.55)
     product.shipping_mode = ShippingMode.NOT_SHIPPED
     product.save()
     add_product_to_order(order, supplier, product, quantity=4, taxless_base_unit_price=3)
@@ -215,11 +207,8 @@ def _get_order(shop, supplier, stocked=False):
     for product_data in _get_product_data(stocked):
         quantity = product_data.pop("quantity")
         product = create_product(
-            sku=product_data.pop("sku"),
-            shop=shop,
-            supplier=supplier,
-            default_price=3.33,
-            **product_data)
+            sku=product_data.pop("sku"), shop=shop, supplier=supplier, default_price=3.33, **product_data
+        )
         add_product_to_order(order, supplier, product, quantity=quantity, taxless_base_unit_price=1)
     order.cache_prices()
     order.check_all_verified()

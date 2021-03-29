@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,10 +18,9 @@ from shuup.utils.i18n import get_current_babel_locale
 
 
 class CouponsUsageForm(OrderReportForm):
-    coupon = Select2MultipleField(label=_("Coupon"),
-                                  model=Coupon,
-                                  required=False,
-                                  help_text=_("Filter report results by coupon."))
+    coupon = Select2MultipleField(
+        label=_("Coupon"), model=Coupon, required=False, help_text=_("Filter report results by coupon.")
+    )
 
     def __init__(self, *args, **kwargs):
         super(CouponsUsageForm, self).__init__(*args, **kwargs)
@@ -64,13 +63,15 @@ class CouponsUsageReport(OrderReportMixin, ShuupReportBase):
             for discount in coupon_usage.order.lines.discounts():
                 total_discount += discount.taxful_price
 
-            data.append({
-                "date": format_date(coupon_usage.order.order_date, locale=get_current_babel_locale()),
-                "coupon": coupon_usage.coupon.code,
-                "order": coupon_usage.order,
-                "taxful_total": coupon_usage.order.taxful_total_price.as_rounded().value,
-                "taxful_subtotal": (coupon_usage.order.taxful_total_price - total_discount).as_rounded().value,
-                "total_discount": total_discount.as_rounded().value
-            })
+            data.append(
+                {
+                    "date": format_date(coupon_usage.order.order_date, locale=get_current_babel_locale()),
+                    "coupon": coupon_usage.coupon.code,
+                    "order": coupon_usage.order,
+                    "taxful_total": coupon_usage.order.taxful_total_price.as_rounded().value,
+                    "taxful_subtotal": (coupon_usage.order.taxful_total_price - total_discount).as_rounded().value,
+                    "total_discount": total_discount.as_rounded().value,
+                }
+            )
 
         return self.get_return_data(data)

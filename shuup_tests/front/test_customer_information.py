@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,28 +14,23 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
-from shuup.utils.django_compat import reverse
 from django.shortcuts import resolve_url
 from django.test import override_settings
 
 from shuup import configuration
-from shuup.core.models import (
-    CompanyContact, get_company_contact, get_person_contact
-)
+from shuup.core.models import CompanyContact, get_company_contact, get_person_contact
 from shuup.core.utils.users import force_anonymous_contact_for_user
 from shuup.front.apps.customer_information.forms import PersonContactForm
 from shuup.front.views.dashboard import DashboardView
-from shuup.testing.factories import (
-    generate_image, get_default_shop, create_random_user
-)
+from shuup.testing.factories import create_random_user, generate_image, get_default_shop
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
-from shuup_tests.utils.fixtures import (
-    regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
-)
+from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME, regular_user
 
 User = get_user_model()
+
 
 def default_customer_data():
     return {
@@ -57,7 +52,7 @@ def default_company_data():
 
 def default_address_data(address_type):
     return {
-        "{}-name".format(address_type) : "Fakerr",
+        "{}-name".format(address_type): "Fakerr",
         "{}-phone".format(address_type): "11-111-111-1110",
         "{}-email".format(address_type): "captain@shuup.local",
         "{}-street".format(address_type): "123 Fake St.",
@@ -107,11 +102,10 @@ def test_new_user_information_edit(allow_image_uploads):
             form["%s-country" % prefix] = "FI"
 
         if allow_image_uploads:
-            tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+            tmp_file = tempfile.NamedTemporaryFile(suffix=".jpg")
             generate_image(120, 120).save(tmp_file)
-            with open(tmp_file.name, 'rb') as data:
-                response = client.post(
-                    reverse("shuup:media-upload"), data=dict({"file": data}), format="multipart")
+            with open(tmp_file.name, "rb") as data:
+                response = client.post(reverse("shuup:media-upload"), data=dict({"file": data}), format="multipart")
             assert response.status_code == 200
             data = json.loads(response.content.decode("utf-8"))
             file_id = data["file"]["id"]
@@ -132,7 +126,6 @@ def test_new_user_information_edit(allow_image_uploads):
             assert int(soup.find(attrs={"id": "id_contact-picture-dropzone"})["data-id"]) == file_id
         else:
             assert contact.picture is None
-
 
 
 @pytest.mark.django_db
@@ -200,11 +193,14 @@ def test_company_still_linked_if_customer_contact_edited(regular_user):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("password_value,new_password_2,expected", [
-    (REGULAR_USER_PASSWORD, "12345", True),
-    ("some_other_password", "12345", False),
-    (REGULAR_USER_PASSWORD, "12345678", False),
-])
+@pytest.mark.parametrize(
+    "password_value,new_password_2,expected",
+    [
+        (REGULAR_USER_PASSWORD, "12345", True),
+        ("some_other_password", "12345", False),
+        (REGULAR_USER_PASSWORD, "12345678", False),
+    ],
+)
 def test_user_change_password(regular_user, password_value, new_password_2, expected):
     get_default_shop()
     assert check_password(REGULAR_USER_PASSWORD, regular_user.password)
@@ -302,10 +298,7 @@ def test_person_contact_form_field_overrides():
         assert form.fields["phone"].required is False
 
     with override_settings(
-        SHUUP_PERSON_CONTACT_FIELD_PROPERTIES={
-            "gender": {"widget": forms.HiddenInput()},
-            "phone": {"required": True}
-        }
+        SHUUP_PERSON_CONTACT_FIELD_PROPERTIES={"gender": {"widget": forms.HiddenInput()}, "phone": {"required": True}}
     ):
         form = PersonContactForm()
         assert type(form.fields["gender"].widget) == forms.HiddenInput

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,9 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 from enumfields import EnumIntegerField
 
-from shuup.admin.forms.widgets import (
-    QuickAddCategoryMultiSelect, QuickAddCategorySelect
-)
+from shuup.admin.forms.widgets import QuickAddCategoryMultiSelect, QuickAddCategorySelect
 from shuup.admin.utils.views import MassEditMixin
 from shuup.core.models import Category, Product, ShopProductVisibility
 from shuup.utils.django_compat import reverse
@@ -25,11 +23,17 @@ class MassEditForm(forms.Form):
     default_price_value = forms.DecimalField(label="Default Price", required=False)
     visibility = EnumIntegerField(ShopProductVisibility).formfield(label=_("Visibility"), required=False)
     primary_category = forms.ModelChoiceField(
-        label=_("Primary Category"), queryset=Category.objects.all_except_deleted(), required=False,
-        widget=QuickAddCategorySelect())
+        label=_("Primary Category"),
+        queryset=Category.objects.all_except_deleted(),
+        required=False,
+        widget=QuickAddCategorySelect(),
+    )
     categories = forms.ModelMultipleChoiceField(
-        label=_("Additional Categories"), queryset=Category.objects.all_except_deleted(), required=False,
-        widget=QuickAddCategoryMultiSelect())
+        label=_("Additional Categories"),
+        queryset=Category.objects.all_except_deleted(),
+        required=False,
+        widget=QuickAddCategoryMultiSelect(),
+    )
     purchasable = forms.BooleanField(label=_("Purchasable"), required=False)
 
 

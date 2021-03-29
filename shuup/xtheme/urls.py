@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,8 +11,10 @@ from shuup.xtheme.views.command import command_dispatch
 from shuup.xtheme.views.editor import EditorView
 from shuup.xtheme.views.extra import extra_view_dispatch
 from shuup.xtheme.views.plugins import (
-    get_category_products_highlight, get_product_cross_sell_highlight,
-    get_product_highlight, get_prouduct_selections_highlight
+    get_category_products_highlight,
+    get_product_cross_sell_highlight,
+    get_product_highlight,
+    get_prouduct_selections_highlight,
 )
 
 urlpatterns = [

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,9 +19,7 @@ from ._shops import Shop
 @python_2_unicode_compatible
 class ConfigurationItem(ShuupModel):
     shop = models.ForeignKey(
-        on_delete=models.CASCADE,
-        to=Shop, related_name="+",
-        null=True, blank=True, verbose_name=_("shop")
+        on_delete=models.CASCADE, to=Shop, related_name="+", null=True, blank=True, verbose_name=_("shop")
     )
     key = models.CharField(verbose_name=_("key"), max_length=100)
     value = JSONField(verbose_name=_("value"))

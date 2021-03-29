@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,21 +19,17 @@ class GDPRModule(AdminModule):
 
     def get_urls(self):
         return [
-            admin_url(
-                r"^gdpr/$",
-                "shuup.gdpr.admin_module.views.GDPRView",
-                name="gdpr.settings"
-            ),
+            admin_url(r"^gdpr/$", "shuup.gdpr.admin_module.views.GDPRView", name="gdpr.settings"),
             admin_url(
                 r"^gdpr/contact/(?P<pk>\d+)/anonymize/$",
                 "shuup.gdpr.admin_module.views.GDPRAnonymizeView",
-                name="gdpr.anonymize"
+                name="gdpr.anonymize",
             ),
             admin_url(
                 r"^gdpr/contact/(?P<pk>\d+)/download/$",
                 "shuup.gdpr.admin_module.views.GDPRDownloadDataView",
-                name="gdpr.download_data"
-            )
+                name="gdpr.download_data",
+            ),
         ]
 
     def get_menu_entries(self, request):

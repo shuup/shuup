@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core import cache
 from shuup.testing.factories import get_default_shop
-from shuup.testing.themes import (
-    ShuupTestingTheme, ShuupTestingThemeWithCustomBase
-)
+from shuup.testing.themes import ShuupTestingTheme, ShuupTestingThemeWithCustomBase
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import SmartClient
 
 
 @pytest.mark.django_db
 def test_theme_without_default_template_dir():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
 
         with override_current_theme_class(ShuupTestingTheme, get_default_shop()):
@@ -37,12 +37,14 @@ def test_theme_without_default_template_dir():
 
 @pytest.mark.django_db
 def test_theme_with_default_template_dir():
-    with override_settings(CACHES={
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'test_configuration_cache',
+    with override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_configuration_cache",
+            }
         }
-    }):
+    ):
         cache.init_cache()
         get_default_shop()
         with override_current_theme_class(ShuupTestingThemeWithCustomBase, get_default_shop()):

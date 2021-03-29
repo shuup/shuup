@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,11 +20,12 @@ class ProductTypeListView(PicotableListView):
     default_columns = [
         Column(
             "name",
-            _(u"Name"),
+            _("Name"),
             sort_field="translations__name",
             display="name",
-            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))),
-        Column("n_attributes", _(u"Number of Attributes")),
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name...")),
+        ),
+        Column("n_attributes", _("Number of Attributes")),
     ]
     toolbar_buttons_provider_key = "product_type_list_toolbar_provider"
     mass_actions_provider_key = "product_type_list_mass_actions_provider"

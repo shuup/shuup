@@ -1,29 +1,31 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
-
-from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 
 from shuup.core import cache
-from shuup.core.models import (
-    Order, OrderStatus, OrderStatusRole, PersonContact, Product
-)
+from shuup.core.models import Order, OrderStatus, OrderStatusRole, PersonContact, Product
 from shuup.testing.browser_utils import (
-    click_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element,
+    initialize_front_browser_test,
+    wait_until_appeared,
+    wait_until_condition,
+    wait_until_disappeared,
 )
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_default_supplier
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
 )
-from shuup.testing.browser_utils import initialize_front_browser_test
+from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -35,9 +37,8 @@ def create_orderable_product(name, sku, price):
     return product
 
 
-
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
-@pytest.mark.urls('shuup.testing.checkout_with_login_and_register_urls')
+@pytest.mark.urls("shuup.testing.checkout_with_login_and_register_urls")
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_checkout_with_login_and_register(browser, live_server, settings):
@@ -48,12 +49,7 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
     get_default_payment_method()
     get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
-    OrderStatus.objects.create(
-        identifier="initial",
-        role=OrderStatusRole.INITIAL,
-        name="initial",
-        default=True
-    )
+    OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # Initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -76,7 +72,7 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
 
 
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
-@pytest.mark.urls('shuup.testing.single_page_checkout_with_login_and_register_conf')
+@pytest.mark.urls("shuup.testing.single_page_checkout_with_login_and_register_conf")
 @pytest.mark.browser
 @pytest.mark.djangodb
 @pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
@@ -89,12 +85,7 @@ def test_single_page_checkout_with_login_and_register(browser, live_server, sett
     get_default_payment_method()
     get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
-    OrderStatus.objects.create(
-        identifier="initial",
-        role=OrderStatusRole.INITIAL,
-        name="initial",
-        default=True
-    )
+    OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # Initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -127,7 +118,7 @@ def navigate_to_checkout(browser, product):
     wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
     wait_until_condition(browser, lambda x: x.is_text_present(product.name))  # product is in basket
 
-    click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
+    click_element(browser, "a[href='/checkout/']")  # click link that leads to checkout
 
 
 def guest_ordering_test(browser, live_server):

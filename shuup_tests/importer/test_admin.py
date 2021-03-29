@@ -1,28 +1,30 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import mock
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
-from shuup.utils.django_compat import reverse
 from django.utils.translation import activate
 
 from shuup.core.models import Product
 from shuup.default_importer.importers import ProductImporter
 from shuup.importer.utils.importer import ImportMode
 from shuup.testing.factories import (
-    get_default_product_type, get_default_sales_unit, get_default_shop,
-    get_default_tax_class
+    get_default_product_type,
+    get_default_sales_unit,
+    get_default_shop,
+    get_default_tax_class,
 )
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 try:
-    from urllib.parse import urlparse, parse_qs
+    from urllib.parse import parse_qs, urlparse
 except ImportError:
-     from urlparse import urlparse, parse_qs
+    from urlparse import parse_qs, urlparse
 
 
 def do_importing(sku, name, lang, shop, import_mode=ImportMode.CREATE_UPDATE, client=None):
@@ -46,7 +48,7 @@ def do_importing(sku, name, lang, shop, import_mode=ImportMode.CREATE_UPDATE, cl
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
-        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv")
+        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
@@ -153,14 +155,14 @@ def test_invalid_files(rf, admin_user):
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
-        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv")
+        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
     query_string = urlparse(response["location"]).query
     query = parse_qs(query_string)
 
-    data = { # data with missing `n`
+    data = {  # data with missing `n`
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
@@ -194,14 +196,14 @@ def test_invalid_file_type(rf, admin_user):
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
-        "file": SimpleUploadedFile("file.derp", csv_content, content_type="text/csv")
+        "file": SimpleUploadedFile("file.derp", csv_content, content_type="text/csv"),
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
     query_string = urlparse(response["location"]).query
     query = parse_qs(query_string)
 
-    data = { # data with missing `n`
+    data = {  # data with missing `n`
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
@@ -265,18 +267,18 @@ def test_remap(rf, admin_user):
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
-        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv")
+        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
     query_string = urlparse(response["location"]).query
     query = parse_qs(query_string)
 
-    data = { # data with missing `n`
+    data = {  # data with missing `n`
         "importer": "product_importer",
         "shop": shop.pk,
         "language": lang,
-        "n": query.get("n")
+        "n": query.get("n"),
     }
     soup = client.soup(process_path, data=data)
     assert "The following fields must be manually tied" in str(soup)
@@ -341,9 +343,7 @@ def test_download_examples(rf, admin_user):
 
                 # download file
                 download_url = "{}?importer={}&file_name={}".format(
-                    reverse("shuup_admin:importer.download_example"),
-                    importer_cls.identifier,
-                    example_file.file_name
+                    reverse("shuup_admin:importer.download_example"), importer_cls.identifier, example_file.file_name
                 )
                 response = client.get(download_url)
 
@@ -352,10 +352,14 @@ def test_download_examples(rf, admin_user):
                 else:
                     assert response.status_code == 200
                     assert response._headers["content-type"] == ("Content-Type", str(example_file.content_type))
-                    assert response._headers["content-disposition"] == ("Content-Disposition", 'attachment; filename=%s' % example_file.file_name)
+                    assert response._headers["content-disposition"] == (
+                        "Content-Disposition",
+                        "attachment; filename=%s" % example_file.file_name,
+                    )
 
                     if example_file.template_name:
                         from django.template.loader import get_template
+
                         template_file = get_template(example_file.template_name).template.filename
                         assert open(template_file, "r").read().strip() == response.content.decode("utf-8").strip()
                     else:
@@ -384,7 +388,7 @@ def test_import_error(admin_user):
         "importer": "product_importer",
         "shop": shop.pk,
         "language": "en",
-        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv")
+        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
@@ -441,4 +445,7 @@ def test_custom_file_transformer_import(admin_user):
         }
         response = client.post(process_submit_path, data=data)
         assert response.status_code == 302
-        assert "Error! Not implemented: `DataImporter` -> `transform_file()`." in list(response.wsgi_request._messages)[0].message
+        assert (
+            "Error! Not implemented: `DataImporter` -> `transform_file()`."
+            in list(response.wsgi_request._messages)[0].message
+        )

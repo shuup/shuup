@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,12 +10,8 @@ from __future__ import unicode_literals
 from django.db.transaction import atomic
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
-from shuup.admin.modules.services.base_form_part import (
-    PaymentMethodBaseFormPart, ShippingMethodBaseFormPart
-)
-from shuup.admin.modules.services.behavior_form_part import (
-    BehaviorComponentFormPart
-)
+from shuup.admin.modules.services.base_form_part import PaymentMethodBaseFormPart, ShippingMethodBaseFormPart
+from shuup.admin.modules.services.behavior_form_part import BehaviorComponentFormPart
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView

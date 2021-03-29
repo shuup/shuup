@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 
 from shuup.core.models import StaffOnlyBehaviorComponent
-from shuup.testing.factories import (
-    get_default_payment_method, get_default_shop
-)
+from shuup.testing.factories import get_default_payment_method, get_default_shop
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 from shuup_tests.utils.fixtures import regular_user
 
-regular_user = regular_user # noqa
+regular_user = regular_user  # noqa
 
 
 @pytest.mark.django_db

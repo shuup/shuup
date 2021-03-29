@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from operator import itemgetter
-
 from django.utils.translation import ugettext_lazy as _
+from operator import itemgetter
 
 from shuup.core.models import Contact
 from shuup.default_reports.forms import NewCustomersReportForm
@@ -29,9 +28,11 @@ class NewCustomersReport(ShuupReportBase):
     ]
 
     def get_data(self):
-        contacts = Contact.objects.filter(
-            created_on__range=(self.start_date, self.end_date)
-        ).select_related("polymorphic_ctype").order_by("created_on")[:self.queryset_row_limit]
+        contacts = (
+            Contact.objects.filter(created_on__range=(self.start_date, self.end_date))
+            .select_related("polymorphic_ctype")
+            .order_by("created_on")[: self.queryset_row_limit]
+        )
 
         data = {}
         users = set()
@@ -42,12 +43,7 @@ class NewCustomersReport(ShuupReportBase):
             user = getattr(contact, "user_id", 0)
 
             if created_on not in data:
-                data[created_on] = {
-                    "date": created_on,
-                    "users": 0,
-                    "personcontact": 0,
-                    "companycontact": 0
-                }
+                data[created_on] = {"date": created_on, "users": 0, "personcontact": 0, "companycontact": 0}
 
             data[created_on][model] += 1
 

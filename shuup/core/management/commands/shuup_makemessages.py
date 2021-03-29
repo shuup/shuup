@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -52,6 +52,6 @@ class Command(makemessages.Command):
         self.stdout.write("Doing makemessages for django domain")
         super(Command, self).handle(*args, domain="django", **options)
 
-        options["extensions"] = []
+        options["extensions"] = ["js", "jsx"]
         self.stdout.write("Doing makemessages for djangojs domain")
         super(Command, self).handle(*args, domain="djangojs", **options)

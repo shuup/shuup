@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -40,7 +40,7 @@ class ManufacturerForm(ShuupAdminFormNoTranslation):
                 model=Shop,
                 required=False,
             )
-            initial_shops = (self.instance.shops.all() if self.instance.pk else [])
+            initial_shops = self.instance.shops.all() if self.instance.pk else []
             self.fields["shops"].widget.choices = [(shop.pk, force_text(shop)) for shop in initial_shops]
         else:
             # drop shops fields
@@ -78,15 +78,13 @@ class ManufacturerEditView(CreateOrUpdateView):
 
     def get_toolbar(self):
         object = self.get_object()
-        delete_url = (
-            reverse_lazy("shuup_admin:manufacturer.delete", kwargs={"pk": object.pk})
-            if object.pk else None)
+        delete_url = reverse_lazy("shuup_admin:manufacturer.delete", kwargs={"pk": object.pk}) if object.pk else None
         return get_default_edit_toolbar(self, self.get_save_form_id(), delete_url=delete_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if context['front_url'] == '/None':
-            context['front_url'] = None
+        if context["front_url"] == "/None":
+            context["front_url"] = None
 
         return context
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -61,9 +61,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         password = self.cleaned_data.get("password")
 
         if username and password:
-            self.user_cache = authenticate(
-                request=self.request, username=username, password=password
-            )
+            self.user_cache = authenticate(request=self.request, username=username, password=password)
 
             # So here even with invalid login and user cache being None
             # we want to check whether the user we are trying to
@@ -91,18 +89,14 @@ class EmailAuthenticationForm(AuthenticationForm):
         """
         if not get_person_contact(user).is_active:
             raise forms.ValidationError(
-                self.error_messages["inactive"], code="inactive",
+                self.error_messages["inactive"],
+                code="inactive",
             )
-        if (
-            settings.SHUUP_ENABLE_MULTIPLE_SHOPS
-            and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
-        ):
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
             if not user.is_superuser:
                 shop = self.request.shop
                 if shop not in user.contact.shops.all():
-                    raise forms.ValidationError(
-                        _("You are not allowed to log in to this shop.")
-                    )
+                    raise forms.ValidationError(_("You are not allowed to log in to this shop."))
 
         super(EmailAuthenticationForm, self).confirm_login_allowed(user)
 

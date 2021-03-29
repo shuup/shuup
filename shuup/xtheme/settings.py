@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,9 +13,7 @@
 #: `shuup.core.models.Shop` and should return `current_theme_classes`
 #: and `current_theme` for context, where `current_theme_classes`
 #: is a list of `shuup.xtheme.models.ThemeSettings`.
-SHUUP_XTHEME_ADMIN_THEME_CONTEXT = (
-    "shuup.xtheme.admin_module.utils.get_theme_context"
-)
+SHUUP_XTHEME_ADMIN_THEME_CONTEXT = "shuup.xtheme.admin_module.utils.get_theme_context"
 
 #: Spec to control Xtheme resource injections.
 #:

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,11 +9,14 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import PercentageField
 from shuup.campaigns.models.basket_effects import (
-    BasketDiscountAmount, BasketDiscountPercentage,
-    DiscountPercentageFromUndiscounted
+    BasketDiscountAmount,
+    BasketDiscountPercentage,
+    DiscountPercentageFromUndiscounted,
 )
 from shuup.campaigns.models.basket_line_effects import (
-    DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
+    DiscountFromCategoryProducts,
+    DiscountFromProduct,
+    FreeProductLine,
 )
 from shuup.core.models import Category, Product, ShopProduct
 
@@ -27,9 +30,11 @@ class BasketDiscountAmountForm(BaseEffectModelForm):
 
 class BasketDiscountPercentageForm(BaseEffectModelForm):
     discount_percentage = PercentageField(
-        max_digits=6, decimal_places=5,
+        max_digits=6,
+        decimal_places=5,
         label=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     class Meta(BaseEffectModelForm.Meta):
         model = BasketDiscountPercentage
@@ -37,9 +42,11 @@ class BasketDiscountPercentageForm(BaseEffectModelForm):
 
 class DiscountPercentageFromUndiscountedForm(BaseEffectModelForm):
     discount_percentage = PercentageField(
-        max_digits=6, decimal_places=5,
+        max_digits=6,
+        decimal_places=5,
         label=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     class Meta(BaseEffectModelForm.Meta):
         model = DiscountPercentageFromUndiscounted
@@ -60,12 +67,12 @@ class FreeProductLineForm(BaseEffectModelForm):
             try:
                 shop_product = product.get_shop_instance(campaign.shop)
             except ShopProduct.DoesNotExist:
-                raise ValidationError(_("Product %(product)s is not available in the %(shop)s shop.") % {
-                    "product": product.name,
-                    "shop": campaign.shop.name
-                })
+                raise ValidationError(
+                    _("Product %(product)s is not available in the %(shop)s shop.")
+                    % {"product": product.name, "shop": campaign.shop.name}
+                )
             for error in shop_product.get_quantity_errors(self.cleaned_data["quantity"], False):
-                raise ValidationError({'quantity': error.message})
+                raise ValidationError({"quantity": error.message})
 
 
 class DiscountFromProductForm(BaseEffectModelForm):
@@ -75,9 +82,12 @@ class DiscountFromProductForm(BaseEffectModelForm):
 
 class DiscountFromCategoryProductsForm(BaseEffectModelForm):
     discount_percentage = PercentageField(
-        max_digits=6, decimal_places=5,
-        label=_("discount percentage"), required=False,
-        help_text=_("The discount percentage for this campaign."))
+        max_digits=6,
+        decimal_places=5,
+        label=_("discount percentage"),
+        required=False,
+        help_text=_("The discount percentage for this campaign."),
+    )
 
     class Meta(BaseEffectModelForm.Meta):
         model = DiscountFromCategoryProducts

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -30,19 +30,16 @@ class PermissionChangeFormBase(forms.ModelForm):
         help_text=_(
             "In order to allow making significant changes to accounts, we need "
             "to confirm that you know the password for the account you are using."
-        )
+        ),
     )
 
     def __init__(self, changing_user, *args, **kwargs):
         super(PermissionChangeFormBase, self).__init__(*args, **kwargs)
         self.changing_user = changing_user
-        if not getattr(self.changing_user, 'is_superuser', False):
+        if not getattr(self.changing_user, "is_superuser", False):
             self.fields.pop("is_superuser")
 
-        if not (
-            self.changing_user == self.instance
-            or getattr(self.instance, 'is_superuser', False)
-        ):
+        if not (self.changing_user == self.instance or getattr(self.instance, "is_superuser", False)):
             # Only require old password when editing
             self.fields.pop("old_password")
 
@@ -73,7 +70,7 @@ class PermissionChangeFormBase(forms.ModelForm):
                 "Permissions` to add them to a specific user. Will not influence "
                 "Superusers as they already have all the rights and can't be "
                 "stripped of them without removing Superuser status first."
-            )
+            ),
         )
         initial_groups = self._get_initial_groups()
         permission_groups_field.initial = [group.pk for group in initial_groups]
@@ -94,7 +91,7 @@ class PermissionChangeFormBase(forms.ModelForm):
         if not self.changing_user.check_password(old_password):
             raise forms.ValidationError(
                 _("Your old password was entered incorrectly. Please enter it again."),
-                code='password_incorrect',
+                code="password_incorrect",
             )
         return old_password
 
@@ -113,10 +110,13 @@ class PermissionChangeFormBase(forms.ModelForm):
 
             flag = self.cleaned_data[field]
             if self.changing_user == self.instance and not flag:
-                self.add_error(field, _(
-                    "You can't unset this status for yourself "
-                    "due to security reasons. Use another account if you want to "
-                    "remove permissions for this particular account.")
+                self.add_error(
+                    field,
+                    _(
+                        "You can't unset this status for yourself "
+                        "due to security reasons. Use another account if you want to "
+                        "remove permissions for this particular account."
+                    ),
                 )
         return self.cleaned_data
 
@@ -133,9 +133,7 @@ class UserChangePermissionsView(UpdateView):
 
     def get_form_class(self):
         return modelform_factory(
-            model=get_user_model(),
-            form=PermissionChangeFormBase,
-            fields=("is_staff", "is_superuser")
+            model=get_user_model(), form=PermissionChangeFormBase, fields=("is_staff", "is_superuser")
         )
 
     def get_queryset(self):

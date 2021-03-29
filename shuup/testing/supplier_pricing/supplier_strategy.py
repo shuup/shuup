@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,7 +10,6 @@ from shuup.testing.models import SupplierPrice
 
 
 class CheapestSupplierPriceSupplierStrategy(object):
-
     def get_supplier(self, **kwargs):
         # Here we did some trick and passed different
         # kwargs than is passed from shop product get
@@ -39,11 +38,12 @@ class CheapestSupplierPriceSupplierStrategy(object):
         # with front.
         enabled_suppliers = Supplier.objects.enabled(shop=shop)
 
-        supplier_price = SupplierPrice.objects.filter(
-            shop=shop,
-            product_id=product_id,
-            supplier__in=enabled_suppliers
-        ).select_related("supplier").order_by("amount_value").first()
+        supplier_price = (
+            SupplierPrice.objects.filter(shop=shop, product_id=product_id, supplier__in=enabled_suppliers)
+            .select_related("supplier")
+            .order_by("amount_value")
+            .first()
+        )
 
         if supplier_price:
             return supplier_price.supplier
