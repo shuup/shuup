@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 07:50+0000\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,21 @@ msgid "Orderer"
 msgstr ""
 
 msgid "Filter report results by the person that made the order."
+msgstr ""
+
+msgid "Order Line Type"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Filter order lines by suppliers."
+msgstr ""
+
+msgid "Order status"
+msgstr ""
+
+msgid "Filter order lines by status of their order."
 msgstr ""
 
 msgid "Quantity"
@@ -104,6 +119,54 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
+msgid "Orders Report"
+msgstr ""
+
+msgid "Order ref."
+msgstr ""
+
+msgid "Order date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Order line quantity"
+msgstr ""
+
+msgid "Payment status"
+msgstr ""
+
+msgid "Shipment status"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Order Line Report"
+msgstr ""
+
+msgid "Order Line SKU"
+msgstr ""
+
+msgid "Order Line Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxful Unit Price"
+msgstr ""
+
+msgid "Taxful Price"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
 msgid "Product Total Sales"
 msgstr ""
 
@@ -159,9 +222,6 @@ msgid "Pre-tax Total"
 msgstr ""
 
 msgid "Total Tax Amount"
-msgstr ""
-
-msgid "Total"
 msgstr ""
 
 msgid "Shop Name"

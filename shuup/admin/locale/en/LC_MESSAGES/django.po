@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -611,6 +611,12 @@ msgstr ""
 msgid "Show orders"
 msgstr ""
 
+msgid "Shipments"
+msgstr ""
+
+msgid "Show shipments"
+msgstr ""
+
 msgid "Outstanding Orders"
 msgstr ""
 
@@ -684,9 +690,6 @@ msgid "Details"
 msgstr ""
 
 msgid "Payments"
-msgstr ""
-
-msgid "Shipments"
 msgstr ""
 
 msgid "Log Entries"
@@ -904,6 +907,9 @@ msgstr ""
 msgid "Full refund created."
 msgstr ""
 
+msgid "Tracking URL"
+msgstr ""
+
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr ""
@@ -927,6 +933,25 @@ msgstr ""
 
 #, python-format
 msgid "Shipment %s has been deleted."
+msgstr ""
+
+msgid "Shipment has been marked as sent."
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr ""
+
+#, python-brace-format
+msgid "Shipment {shipment_id}"
+msgstr ""
+
+msgid "Tracking code"
 msgstr ""
 
 msgid "Identifier already exists."
@@ -1063,14 +1088,11 @@ msgstr ""
 msgid "Set invisible"
 msgstr ""
 
-msgid "Export CSV"
-msgstr ""
-
 msgid "Edit products"
 msgstr ""
 
-#, python-format
-msgid "Product %s copy successfull."
+#, python-brace-format
+msgid "{product_name} was successfully copied"
 msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
@@ -3123,10 +3145,10 @@ msgstr ""
 msgid "Create new shipment for %(supplier_name)s"
 msgstr ""
 
-msgid "Tracking Code"
+msgid "Created"
 msgstr ""
 
-msgid "Created"
+msgid "Mark as sent"
 msgstr ""
 
 msgid ""
@@ -3134,10 +3156,16 @@ msgid ""
 "physical stock count. Delete anyway?"
 msgstr ""
 
+msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
 msgid "Line #"
 msgstr ""
 
 msgid "Refunded Quantity"
+msgstr ""
+
+msgid " Mark as sent "
 msgstr ""
 
 msgid "Refund Amount"
@@ -3576,6 +3604,9 @@ msgstr ""
 
 #, python-format
 msgid "Are you sure you wish to delete %s?"
+msgstr ""
+
+msgid "Export as CSV file"
 msgstr ""
 
 #, python-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -550,6 +550,15 @@ msgid "Order Shipping Status"
 msgstr ""
 
 msgid "Shipment Status"
+msgstr ""
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
 msgstr ""
 
 msgid "Shipment Deleted"

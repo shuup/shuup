@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1031,13 +1031,6 @@ msgstr ""
 msgid "Success! Shipment #%d was created."
 msgstr ""
 
-#, python-format
-msgid "Refund for %s"
-msgstr ""
-
-msgid "Misc refund"
-msgstr ""
-
 msgid "All rows requiring verification have been verified."
 msgstr ""
 
@@ -1966,16 +1959,16 @@ msgstr ""
 msgid "Manually processed shipment"
 msgstr ""
 
-msgid "not sent"
+msgid "Not sent"
 msgstr ""
 
-msgid "sent"
+msgid "Sent"
 msgstr ""
 
-msgid "received"
+msgid "Error"
 msgstr ""
 
-msgid "error"
+msgid "Deleted"
 msgstr ""
 
 msgid "outgoing"
@@ -1985,6 +1978,9 @@ msgid "incoming"
 msgstr ""
 
 msgid "tracking code"
+msgstr ""
+
+msgid "tracking url"
 msgstr ""
 
 msgid "volume ({})"
@@ -2380,6 +2376,13 @@ msgid "restock"
 msgstr ""
 
 msgid "restock logical"
+msgstr ""
+
+#, python-format
+msgid "Refund for %s"
+msgstr ""
+
+msgid "Misc refund"
 msgstr ""
 
 msgid "Untaxed"
