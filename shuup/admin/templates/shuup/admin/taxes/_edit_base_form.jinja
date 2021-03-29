@@ -1,0 +1,9 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% set base_form = form["base"] %}
+
+{% call content_block(_("General Information"), "fa-info-circle", id="base-tax-section") %}
+    {{ language_dependent_content_tabs(base_form, ["name"]) }}
+    <div class="form-divider"></div>
+    {{ bs3.field(base_form.enabled) }}
+{% endcall %}
