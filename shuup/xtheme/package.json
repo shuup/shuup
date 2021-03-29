@@ -15,6 +15,9 @@
   "private": true,
   "license": "OSL-3.0",
   "dependencies": {
+    "@babel/cli": "7.12.7",
+    "@babel/core": "7.12.7",
+    "@babel/preset-env": "7.12.7",
     "autoprefixer": "^9.8.6",
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.1",
