@@ -2,14 +2,21 @@ version: "3.7"
 
 services:
   shuup:
-    container_name: shuup
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      args:
+        editable: 1
     ports:
       - "8000:8000"
     volumes:
       - .:/app
       - /app/.sqlite
+      - /app/shuup/admin/static
+      - /app/shuup/front/static
+      - /app/shuup/gdpr/static
+      - /app/shuup/notify/static
+      - /app/shuup/regions/static
+      - /app/shuup/themes/classic_gray/static
+      - /app/shuup/xtheme/static
     tty: true
     restart: unless-stopped
