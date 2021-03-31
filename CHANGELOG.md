@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Admin: change so TaxClassEditView is a FormPartView
+- Admin: Don't require typing any characters to show all options in Select2 fields.
 
 ### Fixed
 
