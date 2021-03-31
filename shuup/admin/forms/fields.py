@@ -42,8 +42,10 @@ class PercentageField(DecimalField):
 class Select2ModelField(Field):
     widget = Select
 
-    def __init__(self, model, *args, **kwargs):
+    def __init__(self, model, search_mode=None, *args, **kwargs):
         self.model = model
+        if search_mode:
+            self.search_mode = search_mode
         super(Select2ModelField, self).__init__(*args, **kwargs)
 
     def prepare_value(self, value):
@@ -57,6 +59,8 @@ class Select2ModelField(Field):
         attrs = super(Select2ModelField, self).widget_attrs(widget)
         model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
         attrs.update({"data-model": model_name})
+        if getattr(self, "search_mode", None):
+            attrs.update({"data-search-mode": self.search_mode})
         if not self.required:
             attrs["data-allow-clear"] = "true"
             attrs["data-placeholder"] = _("Select an option")
