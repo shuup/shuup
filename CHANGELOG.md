@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: change so TaxClassEditView is a FormPartView
 
+### Fixed
+
+- Core: Fix error that occurred when creating an order with a product which SKU was longer than 48 characters. 
+
 ## [2.6.0] - 2021-03-29
 
 ### Changed
