@@ -146,8 +146,8 @@ class ProductBaseForm(MultiLanguageModelForm):
         return sku
 
     def save(self):
-        instance = super(ProductBaseForm, self).save()
-        if self.cleaned_data.get("file"):
+        instance = super().save()
+        if self.cleaned_data.get("file") and instance.primary_image is None:
             image = ProductMedia.objects.create(
                 product=instance,
                 file_id=self.cleaned_data["file"],
