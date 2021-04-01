@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
-from django.contrib.auth import get_user_model, REDIRECT_FIELD_NAME
+from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
 from django.contrib.auth.models import AnonymousUser
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 from django.utils.translation import activate
 
 from shuup.gdpr.models import GDPRSettings
 from shuup.gdpr.providers import GDPRFieldProvider
 from shuup.gdpr.utils import (
-    create_user_consent_for_all_documents, ensure_gdpr_privacy_policy,
-    is_documents_consent_in_sync
+    create_user_consent_for_all_documents,
+    ensure_gdpr_privacy_policy,
+    is_documents_consent_in_sync,
 )
 from shuup.simple_cms.admin_module.views import PageForm
 from shuup.simple_cms.models import Page
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils import printable_gibberish, SmartClient
+from shuup.utils.django_compat import reverse
+from shuup_tests.utils import SmartClient, printable_gibberish
 
 User = get_user_model()
+
 
 @pytest.mark.django_db
 def test_authenticate_form(client):
@@ -54,20 +55,21 @@ def test_authenticate_form(client):
     assert len(login_form.findAll("input")) == 5  # 4 + privacy policy checkbox
 
     # user didn't check the privacy policy agreement
-    response = client.post(reverse("shuup:login"), data={
-        "username": user.email,
-        "password": "1234",
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    response = client.post(
+        reverse("shuup:login"), data={"username": user.email, "password": "1234", REDIRECT_FIELD_NAME: redirect_target}
+    )
     assert response.status_code == 200
     assert "You must accept this in order to authenticate." in response.content.decode("utf-8")
 
-    response = client.post(reverse("shuup:login"), data={
-        "username": user.email,
-        "password": "1234",
-        "accept_%d" % privacy_policy.id: "on",
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    response = client.post(
+        reverse("shuup:login"),
+        data={
+            "username": user.email,
+            "password": "1234",
+            "accept_%d" % privacy_policy.id: "on",
+            REDIRECT_FIELD_NAME: redirect_target,
+        },
+    )
     assert response.status_code == 302
     assert response.get("location")
     assert response.get("location").endswith(redirect_target)
@@ -103,11 +105,9 @@ def test_authenticate_form_without_consent_checkboxes(client):
     assert consent_text in login_form.text
 
     # user didn't check the privacy policy agreement
-    response = client.post(login_url, data={
-        "username": user.email,
-        "password": "1234",
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    response = client.post(
+        login_url, data={"username": user.email, "password": "1234", REDIRECT_FIELD_NAME: redirect_target}
+    )
     assert response.status_code == 302
 
 
@@ -127,24 +127,30 @@ def test_register_form(client):
     client = SmartClient()
 
     # user didn't checked the privacy policy agreement
-    response = client.post(reverse("shuup:registration_register"), data={
-        "username": "user",
-        "email": "user@admin.com",
-        "password1": "1234",
-        "password2": "1234",
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    response = client.post(
+        reverse("shuup:registration_register"),
+        data={
+            "username": "user",
+            "email": "user@admin.com",
+            "password1": "1234",
+            "password2": "1234",
+            REDIRECT_FIELD_NAME: redirect_target,
+        },
+    )
     assert response.status_code == 200
     assert "You must accept this in order to register." in response.content.decode("utf-8")
 
-    response = client.post(reverse("shuup:registration_register"), data={
-        "username": "user",
-        "email": "user@admin.com",
-        "password1": "1234",
-        "password2": "1234",
-        "accept_%d" % privacy_policy.id: "on",
-        REDIRECT_FIELD_NAME: redirect_target
-    })
+    response = client.post(
+        reverse("shuup:registration_register"),
+        data={
+            "username": "user",
+            "email": "user@admin.com",
+            "password1": "1234",
+            "password2": "1234",
+            "accept_%d" % privacy_policy.id: "on",
+            REDIRECT_FIELD_NAME: redirect_target,
+        },
+    )
     assert response.status_code == 302
     assert response.get("location")
     assert response.get("location").endswith(redirect_target)
@@ -165,32 +171,21 @@ def test_pageform_urls(rf, admin_user):
     activate("en")
     request = apply_request_middleware(rf.post("/"), user=admin_user, shop=shop)
     with override_settings(LANGUAGES=[("en", "en"), ("fi", "fi")]):
-        form = PageForm(request=request, data={
-            "title__en": "test",
-            "content__en": "test",
-            "url__en": en_url
-        })
+        form = PageForm(request=request, data={"title__en": "test", "content__en": "test", "url__en": en_url})
         assert form.is_valid()
         assert form.is_url_valid("en", "url__en", en_url)
         assert form.is_url_valid("fi", "url__fi", fi_url)
 
         # create a page
         Page.objects.create(shop=shop, content="test", url=en_url, title="test")
-        form = PageForm(request=request, data={
-            "title__en": "test",
-            "content__en": "test",
-            "url__en": en_url,
-            "url__fi": fi_url
-        })
+        form = PageForm(
+            request=request, data={"title__en": "test", "content__en": "test", "url__en": en_url, "url__fi": fi_url}
+        )
         assert not form.is_valid()
         assert not form.is_url_valid("en", "url__en", en_url)
         assert form.is_url_valid("fi", "url__fi", fi_url)  # no changes in finnish, should be valid
 
-        form = PageForm(request=request, data={
-            "title__en": "test",
-            "content__en": "test",
-            "url__en": "new-url"
-        })
+        form = PageForm(request=request, data={"title__en": "test", "content__en": "test", "url__en": "new-url"})
         assert form.is_valid()
         assert form.is_url_valid("en", "url__en", "new-url")
         assert form.is_url_valid("fi", "url__fi", fi_url)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,7 +17,7 @@ __all__ = ["BaseCheckoutView"]
 
 
 class BaseCheckoutView(View):
-    url_namespace = 'shuup:checkout'
+    url_namespace = "shuup:checkout"
     phase_specs = []
     empty_phase_spec = None
     initial_phase = None
@@ -31,9 +31,8 @@ class BaseCheckoutView(View):
             phase_identifier = kwargs.get("phase", self.initial_phase)
 
         process = self.process_class(
-            phase_specs=self.phase_specs,
-            phase_kwargs=dict(request=request, args=args, kwargs=kwargs),
-            view=self)
+            phase_specs=self.phase_specs, phase_kwargs=dict(request=request, args=args, kwargs=kwargs), view=self
+        )
         request.basket = process.basket
         if phase_identifier == "reset":
             process.reset()

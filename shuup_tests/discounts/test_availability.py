@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
 import pytz
 from mock import patch
@@ -78,7 +77,8 @@ def test_availability_simple():
     exclude_end = datetime.datetime(2017, 12, 10, 12, 0, tzinfo=pytz.UTC)
 
     exception = AvailabilityException.objects.create(
-        name="Anti-Midsummer", start_datetime=exclude_start, end_datetime=exclude_end)
+        name="Anti-Midsummer", start_datetime=exclude_start, end_datetime=exclude_end
+    )
     exception.discounts.add(Discount.objects.first())
 
     def valid_just_before_exclude():
@@ -134,9 +134,7 @@ def test_with_multiple_exceptions():
         exclude_end = datetime.datetime(2017, 12, day, 12, 0, tzinfo=pytz.UTC)
 
         exception = AvailabilityException.objects.create(
-            name="Disable basic discounts for december",
-            start_datetime=exclude_start,
-            end_datetime=exclude_end
+            name="Disable basic discounts for december", start_datetime=exclude_start, end_datetime=exclude_end
         )
         exception.discounts.add(Discount.objects.first())
 

@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -49,9 +49,9 @@ class BaseCampaignForm(ShuupAdminForm):
 
 class CampaignsSelectMultipleField(Select2MultipleField):
     def __init__(self, campaign_model, field, *args, **kwargs):
-        field_count = len([f for f
-                           in campaign_model._meta.get_fields(include_parents=False)
-                           if isinstance(f, ManyToManyField)])
+        field_count = len(
+            [f for f in campaign_model._meta.get_fields(include_parents=False) if isinstance(f, ManyToManyField)]
+        )
         label = field.verbose_name if field_count > 1 else campaign_model.name
         help_text = field.help_text if field_count > 1 else campaign_model().description
         super(CampaignsSelectMultipleField, self).__init__(
@@ -86,7 +86,7 @@ def _process_fields(form, **kwargs):
             continue
 
         formfield = CampaignsSelectMultipleField(model_obj, field)
-        objects = (getattr(instance, field.name).all() if instance else model_obj.model.objects.none())
+        objects = getattr(instance, field.name).all() if instance else model_obj.model.objects.none()
         formfield.required = False
         formfield.initial = objects
         formfield.widget.choices = [(obj.pk, obj.name) for obj in objects]

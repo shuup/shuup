@@ -1,18 +1,15 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from uuid import uuid4
-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from uuid import uuid4
 
 from shuup.core.fields import MoneyValueField, QuantityField
-from shuup.core.models import (
-    Category, OrderLineType, PolymorphicShuupModel, Product, ShopProduct
-)
+from shuup.core.models import Category, OrderLineType, PolymorphicShuupModel, Product, ShopProduct
 from shuup.core.order_creator._source import LineSource
 
 
@@ -22,7 +19,8 @@ class BasketLineEffect(PolymorphicShuupModel):
     admin_form_class = None
 
     campaign = models.ForeignKey(
-        on_delete=models.CASCADE, to="BasketCampaign", related_name='line_effects', verbose_name=_("campaign"))
+        on_delete=models.CASCADE, to="BasketCampaign", related_name="line_effects", verbose_name=_("campaign")
+    )
 
     def get_discount_lines(self, order_source, original_lines, supplier):
         """
@@ -65,14 +63,12 @@ class FreeProductLine(BasketLineEffect):
 
             if not supplier:
                 supplier = shop_product.get_supplier(
-                    order_source.customer,
-                    self.quantity,
-                    order_source.shipping_address
+                    order_source.customer, self.quantity, order_source.shipping_address
                 )
 
             if not shop_product.is_orderable(
-                    supplier=supplier, customer=order_source.customer,
-                    quantity=self.quantity, allow_cache=False):
+                supplier=supplier, customer=order_source.customer, quantity=self.quantity, allow_cache=False
+            ):
                 continue
 
             line_data = dict(
@@ -85,7 +81,7 @@ class FreeProductLine(BasketLineEffect):
                 product=product,
                 sku=product.sku,
                 supplier=supplier,
-                line_source=LineSource.DISCOUNT_MODULE
+                line_source=LineSource.DISCOUNT_MODULE,
             )
             lines.append(order_source.create_line(**line_data))
         return lines
@@ -99,12 +95,12 @@ class DiscountFromProduct(BasketLineEffect):
     per_line_discount = models.BooleanField(
         default=True,
         verbose_name=_("per line discount"),
-        help_text=_("Disable this if you want to give discount for each matched product."))
+        help_text=_("Disable this if you want to give discount for each matched product."),
+    )
 
     discount_amount = MoneyValueField(
-        default=None, blank=True, null=True,
-        verbose_name=_("discount amount"),
-        help_text=_("Flat amount of discount."))
+        default=None, blank=True, null=True, verbose_name=_("discount amount"), help_text=_("Flat amount of discount.")
+    )
 
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
@@ -147,22 +143,26 @@ class DiscountFromCategoryProducts(BasketLineEffect):
     name = _("Discount from Category products")
 
     discount_amount = MoneyValueField(
-        default=None, blank=True, null=True,
-        verbose_name=_("discount amount"),
-        help_text=_("Flat amount of discount."))
+        default=None, blank=True, null=True, verbose_name=_("discount amount"), help_text=_("Flat amount of discount.")
+    )
     discount_percentage = models.DecimalField(
-        max_digits=6, decimal_places=5, blank=True, null=True,
+        max_digits=6,
+        decimal_places=5,
+        blank=True,
+        null=True,
         verbose_name=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
+        help_text=_("The discount percentage for this campaign."),
+    )
     category = models.ForeignKey(on_delete=models.CASCADE, to=Category, verbose_name=_("category"))
 
     @property
     def description(self):
         return _(
-            'Select discount amount and category. '
-            'Please note that the discount will be given to all matching products in basket.')
+            "Select discount amount and category. "
+            "Please note that the discount will be given to all matching products in basket."
+        )
 
-    def get_discount_lines(self, order_source, original_lines, supplier):     # noqa (C901)
+    def get_discount_lines(self, order_source, original_lines, supplier):  # noqa (C901)
         if not (self.discount_percentage or self.discount_amount):
             return []
 

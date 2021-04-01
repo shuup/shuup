@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,10 +21,10 @@ class RecentlyViewedProductsPlugin(TemplatedPlugin):
         context = super(RecentlyViewedProductsPlugin, self).get_context_data(context)
         request = context["request"]
         product_ids = [int(pid) for pid in request.COOKIES.get("rvp", "").split(",") if pid != ""]
-        context["products"] = sorted(Product.objects.listed(
-            customer=request.customer,
-            shop=request.shop
-        ).filter(id__in=product_ids), key=lambda p: product_ids.index(p.pk))
+        context["products"] = sorted(
+            Product.objects.listed(customer=request.customer, shop=request.shop).filter(id__in=product_ids),
+            key=lambda p: product_ids.index(p.pk),
+        )
         return context
 
 

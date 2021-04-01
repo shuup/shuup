@@ -1,21 +1,18 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
 import json
-
 import pytest
 from django.http.response import Http404
 from django.test import override_settings
 
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Shop
-from shuup.discounts.admin.views import (
-    HappyHourDeleteView, HappyHourEditView, HappyHourListView
-)
+from shuup.discounts.admin.views import HappyHourDeleteView, HappyHourEditView, HappyHourListView
 from shuup.discounts.models import Discount, HappyHour
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -44,9 +41,9 @@ def test_happy_hours_admin_edit_view(rf, staff_user, admin_user):
         # Staff user gets shop automatically
         data = {
             "name": "Happiest Hour 2pm",
-            "weekdays": [6], # Sun
+            "weekdays": [6],  # Sun
             "from_hour": datetime.time(hour=14, minute=0),
-            "to_hour": datetime.time(hour=14, minute=0)
+            "to_hour": datetime.time(hour=14, minute=0),
         }
         request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
         set_shop(request, shop)
@@ -96,12 +93,7 @@ def test_happy_hours_admin_edit_view_over_midnight(rf, staff_user, admin_user):
     # Staff user gets shop automatically
     from_hour = datetime.time(hour=21, minute=0)
     to_hour = datetime.time(hour=3, minute=0)
-    data = {
-        "name": "Happiest Hour 2pm",
-        "weekdays": [1],  # Tue
-        "from_hour": from_hour,
-        "to_hour": to_hour
-    }
+    data = {"name": "Happiest Hour 2pm", "weekdays": [1], "from_hour": from_hour, "to_hour": to_hour}  # Tue
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     set_shop(request, shop)
     assert request.shop == shop
@@ -132,12 +124,7 @@ def test_happy_hours_admin_edit_view_just_before_midnight(rf, staff_user, admin_
     # Staff user gets shop automatically
     from_hour = datetime.time(hour=21, minute=0)
     to_hour = datetime.time(hour=23, minute=58)
-    data = {
-        "name": "Happiest Hour Before Twilight",
-        "weekdays": [1],  # Tue
-        "from_hour": from_hour,
-        "to_hour": to_hour
-    }
+    data = {"name": "Happiest Hour Before Twilight", "weekdays": [1], "from_hour": from_hour, "to_hour": to_hour}  # Tue
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     set_shop(request, shop)
     assert request.shop == shop
@@ -167,7 +154,7 @@ def test_happy_hours_admin_edit_form_set_discount(rf, staff_user, admin_user):
         "name": "Happiest Hour 2pm",
         "weekdays": [6],  # Sun
         "from_hour": datetime.time(hour=14, minute=0),
-        "to_hour": datetime.time(hour=14, minute=0)
+        "to_hour": datetime.time(hour=14, minute=0),
     }
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     set_shop(request, shop)
@@ -214,11 +201,8 @@ def _test_happy_hours_list_view(rf, index):
 
     view_func = HappyHourListView.as_view()
     request = apply_request_middleware(
-        rf.get("/", {
-            "jq": json.dumps({"perPage": 100, "page": 1})
-        }),
-        user=staff_user,
-        shop=shop)
+        rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=staff_user, shop=shop
+    )
     set_shop(request, shop)
     response = view_func(request)
     if hasattr(response, "render"):
@@ -243,11 +227,8 @@ def test_discount_admin_list_view(rf, admin_user):
         # Superuser gets same data as shop staff
         shop = Shop.objects.exclude(identifier=factories.DEFAULT_IDENTIFIER).order_by("?").first()
         request = apply_request_middleware(
-            rf.get("/", {
-                "jq": json.dumps({"perPage": 100, "page": 1})
-            }),
-            user=admin_user,
-            shop=shop)
+            rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user, shop=shop
+        )
         set_shop(request, shop)
         view_instance = HappyHourListView()
         view_instance.request = request
@@ -262,7 +243,7 @@ def _test_happy_hours_delete_view(rf, index):
     happy_hour_name = "The Hour %s" % index
     happy_hour = HappyHour.objects.create(name=happy_hour_name)
     happy_hour.shops.add(shop)
-    extra_happy_hour= HappyHour.objects.create(name="Extra Hour %s" % index)
+    extra_happy_hour = HappyHour.objects.create(name="Extra Hour %s" % index)
     extra_happy_hour.shops.add(shop)
 
     assert HappyHour.objects.filter(name=happy_hour_name).exists()

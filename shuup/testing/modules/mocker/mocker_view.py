@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 import datetime
 import random
-
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -17,8 +16,11 @@ from django.utils.timezone import now
 from django.views.generic import FormView
 
 from shuup.testing.factories import (
-    create_random_company, create_random_contact_group, create_random_order,
-    create_random_person, create_random_product_attribute
+    create_random_company,
+    create_random_contact_group,
+    create_random_order,
+    create_random_person,
+    create_random_product_attribute,
 )
 from shuup.utils.django_compat import force_text
 
@@ -35,8 +37,7 @@ class Mockers(object):
         shop = kwargs.pop("shop")
 
         try:
-            return create_random_order(
-                completion_probability=0.6, shop=shop)
+            return create_random_order(completion_probability=0.6, shop=shop)
         except Exception:
             pass
 
@@ -45,8 +46,7 @@ class Mockers(object):
         shop = kwargs.pop("shop")
 
         try:
-            return create_random_order(
-                completion_probability=0.2, shop=shop)
+            return create_random_order(completion_probability=0.2, shop=shop)
         except Exception:
             pass
 
@@ -55,8 +55,7 @@ class Mockers(object):
         shop = kwargs.pop("shop")
 
         try:
-            return create_random_order(
-                completion_probability=1, shop=shop, create_payment_for_order_total=True)
+            return create_random_order(completion_probability=1, shop=shop, create_payment_for_order_total=True)
         except Exception:
             pass
 
@@ -66,7 +65,8 @@ class Mockers(object):
         order_date = now() - datetime.timedelta(minutes=random.uniform(0, 360))
         try:
             return create_random_order(
-                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
+                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date
+            )
         except Exception:
             pass
 
@@ -76,7 +76,8 @@ class Mockers(object):
         order_date = now() - datetime.timedelta(hours=random.uniform(0, 720))
         try:
             return create_random_order(
-                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date)
+                completion_probability=1, shop=shop, create_payment_for_order_total=True, order_date=order_date
+            )
         except Exception:
             pass
 
@@ -111,10 +112,9 @@ class MockerView(FormView):
 
     def get_mockers(self):
         return [
-            (
-                name,
-                force_text(getattr(getattr(self.mockers, name, None), "__doc__") or name).strip()
-            ) for name in dir(self.mockers) if name.startswith("mock_")
+            (name, force_text(getattr(getattr(self.mockers, name, None), "__doc__") or name).strip())
+            for name in dir(self.mockers)
+            if name.startswith("mock_")
         ]
 
     def get_form(self, form_class=None):

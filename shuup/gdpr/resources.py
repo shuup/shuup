@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,13 +11,10 @@ from django.template import loader
 from shuup.core.shop_provider import get_shop
 from shuup.core.utils.static import get_shuup_static_url
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
-from shuup.gdpr.utils import (
-    get_active_consent_pages, get_privacy_policy_page,
-    should_reconsent_privacy_policy
-)
+from shuup.gdpr.utils import get_active_consent_pages, get_privacy_policy_page, should_reconsent_privacy_policy
 from shuup.utils.django_compat import is_anonymous, reverse
 from shuup.utils.djangoenv import has_installed
-from shuup.xtheme.resources import add_resource, InlineMarkupResource
+from shuup.xtheme.resources import InlineMarkupResource, add_resource
 
 
 def valid_view(context):
@@ -60,7 +57,7 @@ def add_gdpr_consent_resources(context, content):
             "request": request,
             "csrf_token": context["csrf_token"],
             "url": "/%s" % consent_page.url,
-            "accept_url": reverse("shuup:gdpr_policy_consent", kwargs=dict(page_id=consent_page.id))
+            "accept_url": reverse("shuup:gdpr_policy_consent", kwargs=dict(page_id=consent_page.id)),
         }
         update_resource = InlineMarkupResource(
             loader.render_to_string("shuup/gdpr/privacy_policy_update.jinja", context=render_context)
@@ -80,7 +77,7 @@ def add_gdpr_consent_resources(context, content):
         "csrf_token": context["csrf_token"],
         "gdpr_settings": gdpr_settings,
         "gdpr_documents": gdpr_documents,
-        "gdpr_cookie_categories": GDPRCookieCategory.objects.filter(shop=shop)
+        "gdpr_cookie_categories": GDPRCookieCategory.objects.filter(shop=shop),
     }
     html_resource = InlineMarkupResource(
         loader.render_to_string("shuup/gdpr/gdpr_consent.jinja", context=render_context)

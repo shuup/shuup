@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -25,15 +25,16 @@ class ShuupModel(models.Model):
     """
     Shuup Model.
     """
-    identifier_attr = 'identifier'
+
+    identifier_attr = "identifier"
 
     def __repr__(self):
         identifier = getattr(self, self.identifier_attr, None)
         if identifier:
-            identifier_suf = '-{}'.format(text.force_ascii(identifier))
+            identifier_suf = "-{}".format(text.force_ascii(identifier))
         else:
-            identifier_suf = ''
-        return '<{}:{}{}>'.format(type(self).__name__, self.pk, identifier_suf)
+            identifier_suf = ""
+        return "<{}:{}{}>".format(type(self).__name__, self.pk, identifier_suf)
 
     class Meta:
         abstract = True
@@ -41,7 +42,7 @@ class ShuupModel(models.Model):
 
 @python_2_unicode_compatible
 class TranslatableShuupModel(ShuupModel, parler.models.TranslatableModel):
-    name_attr = 'name'
+    name_attr = "name"
 
     def __str__(self):
         name = self.safe_translation_getter(self.name_attr, any_language=True)
@@ -51,7 +52,7 @@ class TranslatableShuupModel(ShuupModel, parler.models.TranslatableModel):
         if not name:
             # Ensure no empty value is returned
             identifier = getattr(self, self.identifier_attr, None)
-            suffix = ' "{}"'.format(identifier) if identifier else ''
+            suffix = ' "{}"'.format(identifier) if identifier else ""
             return self._meta.verbose_name + suffix
         return name
 
@@ -77,21 +78,21 @@ class PolyTransModelBase(PolymorphicModelBase):
         parent = super(PolyTransModelBase, self)
         result = []
         for (base_name, key, manager) in parent.get_inherited_managers(attrs):
-            if base_name == 'PolymorphicModel':
+            if base_name == "PolymorphicModel":
                 model = manager.model
-                if key == 'objects':
+                if key == "objects":
                     manager = _PolyTransManager()
                     manager.model = model
-                elif key == 'base_objects':
+                elif key == "base_objects":
                     manager = parler.models.TranslatableManager()
                     manager.model = model
             result.append((base_name, key, manager))
         return result
 
 
-class PolymorphicTranslatableShuupModel(six.with_metaclass(
-        PolyTransModelBase,
-        PolymorphicShuupModel, TranslatableShuupModel)):
+class PolymorphicTranslatableShuupModel(
+    six.with_metaclass(PolyTransModelBase, PolymorphicShuupModel, TranslatableShuupModel)
+):
 
     objects = _PolyTransManager()
 
@@ -135,9 +136,7 @@ class ChangeProtected(object):
             protected_fields = self.protected_fields
         else:
             protected_fields = [
-                x.name for x in self._meta.get_fields()
-                if not x.is_relation and x.name not in self.unprotected_fields]
+                x.name for x in self._meta.get_fields() if not x.is_relation and x.name not in self.unprotected_fields
+            ]
         in_db = type(self).objects.get(pk=self.pk)
-        return [
-            field for field in protected_fields
-            if getattr(self, field) != getattr(in_db, field)]
+        return [field for field in protected_fields if getattr(self, field) != getattr(in_db, field)]

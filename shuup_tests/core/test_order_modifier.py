@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.core.exceptions import ValidationError
 
-from shuup.core.models import (
-    get_person_contact, MutableAddress, Order, OrderLineType, Shop, ShopStatus
-)
+from shuup.core.models import MutableAddress, Order, OrderLineType, Shop, ShopStatus, get_person_contact
 from shuup.core.order_creator import OrderCreator
 from shuup.core.order_creator._modifier import OrderModifier
 from shuup.testing.factories import (
-    create_package_product, get_default_payment_method, get_default_product,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_initial_order_status
+    create_package_product,
+    get_default_payment_method,
+    get_default_product,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_initial_order_status,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -92,10 +94,7 @@ def test_shop_change(rf, admin_user):
     order, source = get_order_and_source(admin_user, get_default_product())
 
     shop = Shop.objects.create(
-        name="Another shop",
-        identifier="another-shop",
-        status=ShopStatus.ENABLED,
-        public_name="Another shop"
+        name="Another shop", identifier="another-shop", status=ShopStatus.ENABLED, public_name="Another shop"
     )
 
     source.shop = shop

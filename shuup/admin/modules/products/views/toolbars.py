@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,8 +11,12 @@ from django.utils.translation import ugettext as _
 from enumfields import Enum
 
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem,
-    get_default_edit_toolbar, Toolbar
+    DropdownActionButton,
+    DropdownDivider,
+    DropdownHeader,
+    DropdownItem,
+    Toolbar,
+    get_default_edit_toolbar,
 )
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
@@ -33,12 +37,15 @@ class EditProductToolbar(Toolbar):
         self.view = view
         self.request = view.request
         self.product = view.object.product
-        self.extend(get_default_edit_toolbar(
-            self.view, "product_form",
-            delete_url="shuup_admin:shop_product.delete",
-            with_save_as_copy=True,
-            copy_url="shuup_admin:shop_product.copy"
-        ))
+        self.extend(
+            get_default_edit_toolbar(
+                self.view,
+                "product_form",
+                delete_url="shuup_admin:shop_product.delete",
+                with_save_as_copy=True,
+                copy_url="shuup_admin:shop_product.copy",
+            )
+        )
         if self.product.pk:
             self._build_existing_product()
 
@@ -54,10 +61,14 @@ class EditProductToolbar(Toolbar):
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
-            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk})
+            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk}),
         )
-        menu_items = [menu_item for menu_item in self._get_header_items(
-                header=_("Cross-Selling"), divider=False, identifier=ProductActionCategory.CHILD_CROSS_SELL)]
+        menu_items = [
+            menu_item
+            for menu_item in self._get_header_items(
+                header=_("Cross-Selling"), divider=False, identifier=ProductActionCategory.CHILD_CROSS_SELL
+            )
+        ]
         menu_items.append(cross_sell_button)
 
         # packages
@@ -74,13 +85,15 @@ class EditProductToolbar(Toolbar):
                     menu_items.append(button(product))
 
         # add the actual Action button
-        self.append(DropdownActionButton(
-            menu_items,
-            icon="fa fa-star",
-            text=_(u"Actions"),
-            extra_css_class="btn-inverse btn-actions",
-            identifier=ProductActionCategory.MAIN
-        ))
+        self.append(
+            DropdownActionButton(
+                menu_items,
+                icon="fa fa-star",
+                text=_("Actions"),
+                extra_css_class="btn-inverse btn-actions",
+                identifier=ProductActionCategory.MAIN,
+            )
+        )
 
     def _get_header_items(self, header, divider=True, identifier=None):
         if divider:
@@ -127,11 +140,12 @@ class EditProductToolbar(Toolbar):
         elif product.is_package_child():
             for parent in product.get_all_package_parents():
                 for item in self._get_parent_and_sibling_items(
-                        parent, [sib for sib in parent.get_all_package_children() if sib != product]):
+                    parent, [sib for sib in parent.get_all_package_children() if sib != product]
+                ):
                     yield item
 
     def _get_variation_and_package_menu_items(self, product):
-        is_package_product = (product.is_container() or product.is_package_child())
+        is_package_product = product.is_container() or product.is_package_child()
         if is_package_product:
             for item in self._get_package_menu_items(product):
                 yield item

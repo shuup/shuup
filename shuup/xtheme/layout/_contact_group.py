@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -34,7 +34,7 @@ class CompanyContactLayout(Layout):
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
-        return (isinstance(customer, CompanyContact) if customer else False)
+        return isinstance(customer, CompanyContact) if customer else False
 
     def get_layout_data_suffix(self, context):
         return self.identifier
@@ -62,7 +62,7 @@ class PersonContactLayout(Layout):
 
     def is_valid_context(self, context):
         customer = get_customer_from_context(context)
-        return (isinstance(customer, PersonContact) if customer else False)
+        return isinstance(customer, PersonContact) if customer else False
 
     def get_layout_data_suffix(self, context):
         return self.identifier

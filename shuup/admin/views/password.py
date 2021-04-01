@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -26,6 +26,7 @@ class RequestPasswordView(FormView):
 
     def get_form_class(self):
         from shuup.admin.forms._auth import RequestPasswordForm
+
         return RequestPasswordForm
 
     def get_success_url(self):
@@ -50,6 +51,7 @@ class ResetPasswordView(FormView):
 
     def get_form_class(self):
         from django.contrib.auth.forms import SetPasswordForm
+
         return SetPasswordForm
 
     def get_form_kwargs(self):
@@ -71,7 +73,7 @@ class ResetPasswordView(FormView):
         user = self.get_target_user()
         token = self.kwargs["token"]
 
-        valid = (user is not None and self.token_generator.check_token(user, token))
+        valid = user is not None and self.token_generator.check_token(user, token)
         if not valid:
             raise Problem(_("This recovery link is invalid."))
 

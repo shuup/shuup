@@ -1,23 +1,18 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.test import override_settings
 from django.test.client import RequestFactory
 
 from shuup.campaigns.models.campaigns import CatalogCampaign
-from shuup.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition
-)
+from shuup.campaigns.models.context_conditions import ContactCondition, ContactGroupCondition
 from shuup.campaigns.models.product_effects import ProductDiscountAmount
 from shuup.core.models import AnonymousContact
-from shuup.testing.factories import (
-    create_product, create_random_person, get_default_customer_group, get_shop
-)
+from shuup.testing.factories import create_product, create_random_person, get_default_customer_group, get_shop
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -29,8 +24,7 @@ def get_request_for_contact_tests(rf):
 
 
 def create_random_product_and_campaign(shop, conditions, original_price_value, discount_value):
-    campaign = CatalogCampaign.objects.create(
-        shop=shop, name="test", active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     ProductDiscountAmount.objects.create(discount_amount=discount_value, campaign=campaign)
     for condition in conditions:
         campaign.conditions.add(condition)
@@ -43,7 +37,7 @@ def create_random_product_and_campaign(shop, conditions, original_price_value, d
 def assert_product_price_value_with_customer(request, customer, product, price_value):
     request.customer = customer
     price = request.shop.create_price
-    assert (product.get_price_info(request, quantity=1).price == price(price_value))
+    assert product.get_price_info(request, quantity=1).price == price(price_value)
 
 
 @pytest.mark.django_db

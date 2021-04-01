@@ -1,25 +1,21 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-
 import pytest
+from bs4 import BeautifulSoup
 from django.contrib.auth.models import Group
 from django.core.cache import cache
 from django.http.response import Http404
 from django.utils import translation
 
-from bs4 import BeautifulSoup
-
 from shuup.core.models import ShopStatus
 from shuup.simple_cms.models import Page
 from shuup.simple_cms.views import PageView
-from shuup.testing.factories import (
-        create_random_user, get_default_shop, get_shop
-)
+from shuup.testing.factories import create_random_user, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import is_anonymous
 from shuup_tests.simple_cms.utils import create_multilanguage_page, create_page
@@ -128,8 +124,9 @@ def test_multilanguage_page_redirect(rf):
 def test_multilanguage_page_404_no_xlate(rf):
     # https://github.com/edoburu/django-parler/issues/50
     cache.clear()  # this is here, because parler cache is enabled and tests use same pk with page
-    page = create_multilanguage_page(eternal=True, url="no_content", shop=get_default_shop(),
-                                     languages=("udm",))  # create page with udm language
+    page = create_multilanguage_page(
+        eternal=True, url="no_content", shop=get_default_shop(), languages=("udm",)
+    )  # create page with udm language
     get_default_shop()
     request = apply_request_middleware(rf.get("/"))
     with translation.override("fi"):  # change language of the page to fi
@@ -147,7 +144,7 @@ def test_render_page_title(rf):
     response = view_func(request, url=page.url)
     response.render()
     soup = BeautifulSoup(response.content)
-    title = soup.find("h1", class_= "page-header").text
+    title = soup.find("h1", class_="page-header").text
     assert title == "\n"
 
 

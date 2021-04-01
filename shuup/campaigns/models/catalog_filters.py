@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -39,7 +39,7 @@ class ProductTypeFilter(CatalogFilter):
         return ShopProduct.objects.filter(product__type_id__in=ids)
 
     def matches(self, shop_product):
-        return (shop_product.product.type_id in self.values.values_list("id", flat=True))
+        return shop_product.product.type_id in self.values.values_list("id", flat=True)
 
     def filter_queryset(self, queryset):
         return queryset.filter(product__type_id__in=self.values.values_list("id", flat=True))
@@ -70,12 +70,11 @@ class ProductFilter(CatalogFilter):
 
     def matches(self, shop_product):
         product_ids = self.values.values_list("pk", flat=True)
-        return (shop_product.product.pk in product_ids or shop_product.product.variation_parent_id in product_ids)
+        return shop_product.product.pk in product_ids or shop_product.product.variation_parent_id in product_ids
 
     def filter_queryset(self, queryset):
         product_ids = self.products.values_list("id", flat=True)
-        return queryset.filter(
-            Q(product_id__in=product_ids) | Q(product__variation_parent_id__in=product_ids))
+        return queryset.filter(Q(product_id__in=product_ids) | Q(product__variation_parent_id__in=product_ids))
 
     @property
     def description(self):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -29,7 +29,6 @@ otherwise it will return with exit code 1.
 """
 
 import argparse
-
 from sanity_utils import find_files
 
 
@@ -58,7 +57,7 @@ def check_sanity_of_files(paths, ignored_paths):
 
 def check_sanity_of_file(path):
     reported = set()  # reported codes
-    with open(path, 'rb') as fp:
+    with open(path, "rb") as fp:
         for (num, line) in enumerate(fp, 1):
             for insanity_cls in INSANITY_CLASSES:
                 obj = insanity_cls.create_if_present(path, num, line)
@@ -77,10 +76,10 @@ def insanity_class(cls):
 
 
 class InsanityInLine(object):
-    code = 'S000'
-    insanity = 'insane'
+    code = "S000"
+    insanity = "insane"
     only_once = False
-    message_format = '{s.path}:{s.num}:{s.column}: {s.code} {s.insanity}'
+    message_format = "{s.path}:{s.num}:{s.column}: {s.code} {s.insanity}"
 
     @classmethod
     def create_if_present(cls, path, num, line):
@@ -103,8 +102,8 @@ class InsanityInLine(object):
 
 @insanity_class
 class CrLfInLine(InsanityInLine):
-    code = 'S101'
-    insanity = 'CRLF line end'
+    code = "S101"
+    insanity = "CRLF line end"
     only_once = True
 
     @property
@@ -113,12 +112,12 @@ class CrLfInLine(InsanityInLine):
 
     @classmethod
     def check_line(cls, line):
-        return line.endswith(b'\r\n')
+        return line.endswith(b"\r\n")
 
 
 class ControlCharacterInLine(InsanityInLine):
-    code = 'S102'
-    insanity = 'Contains control character'
+    code = "S102"
+    insanity = "Contains control character"
     char = None  # Filled in by the class creation later
     char_description = None  # Filled in by the class creation later
 
@@ -126,7 +125,7 @@ class ControlCharacterInLine(InsanityInLine):
     def create_if_present(cls, path, num, line):
         charbyte = cls.char
 
-        if line.endswith(b'\r\n') and charbyte == b'\r':
+        if line.endswith(b"\r\n") and charbyte == b"\r":
             # Handled in CrLfInLine
             return
 
@@ -141,13 +140,13 @@ class ControlCharacterInLine(InsanityInLine):
 
     def __str__(self):
         super_str = super(ControlCharacterInLine, self).__str__()
-        return super_str + ': ' + self.char_description
+        return super_str + ": " + self.char_description
 
 
 @insanity_class
 class NoEolInLine(InsanityInLine):
-    code = 'S103'
-    insanity = 'End-of-line character missing'
+    code = "S103"
+    insanity = "End-of-line character missing"
 
     @property
     def column(self):
@@ -155,13 +154,13 @@ class NoEolInLine(InsanityInLine):
 
     @classmethod
     def check_line(cls, line):
-        return (not line.rstrip(b'\r').endswith(b'\n'))
+        return not line.rstrip(b"\r").endswith(b"\n")
 
 
 @insanity_class
 class MergeConflictMarkerInLine(InsanityInLine):
-    code = 'S104'
-    insanity = 'Merge conflict marker found'
+    code = "S104"
+    insanity = "Merge conflict marker found"
 
     @property
     def column(self):
@@ -169,30 +168,53 @@ class MergeConflictMarkerInLine(InsanityInLine):
 
     @classmethod
     def check_line(cls, line):
-        return line.startswith((b'<<<<', b'>>>>'))
+        return line.startswith((b"<<<<", b">>>>"))
 
 
 def register_control_character_insanities():
     for char, description in {
-        b'\x00': 'NUL', b'\x01': 'SOH', b'\x02': 'STX', b'\x03': 'ETX',
-        b'\x04': 'EOT', b'\x05': 'ENQ', b'\x06': 'ACK', b'\x07': 'BEL',
-        b'\x08': 'BS', b'\x09': 'TAB (HT)',
+        b"\x00": "NUL",
+        b"\x01": "SOH",
+        b"\x02": "STX",
+        b"\x03": "ETX",
+        b"\x04": "EOT",
+        b"\x05": "ENQ",
+        b"\x06": "ACK",
+        b"\x07": "BEL",
+        b"\x08": "BS",
+        b"\x09": "TAB (HT)",
         # \x0a is not included, since it is LF i.e. '\n'
-        b'\x0b': 'VT', b'\x0c': 'FF', b'\r': 'CR', b'\x0e': 'SO',
-        b'\x0f': 'SI', b'\x10': 'DLE', b'\x11': 'DC1', b'\x12': 'DC2',
-        b'\x13': 'DC3', b'\x14': 'DC4', b'\x15': 'NAK', b'\x16': 'SYN',
-        b'\x17': 'ETB', b'\x18': 'CAN', b'\x19': 'EM', b'\x1a': 'SUB',
-        b'\x1b': 'ESC', b'\x1c': 'FS', b'\x1d': 'GS', b'\x1e': 'RS',
-        b'\x1f': 'US',
+        b"\x0b": "VT",
+        b"\x0c": "FF",
+        b"\r": "CR",
+        b"\x0e": "SO",
+        b"\x0f": "SI",
+        b"\x10": "DLE",
+        b"\x11": "DC1",
+        b"\x12": "DC2",
+        b"\x13": "DC3",
+        b"\x14": "DC4",
+        b"\x15": "NAK",
+        b"\x16": "SYN",
+        b"\x17": "ETB",
+        b"\x18": "CAN",
+        b"\x19": "EM",
+        b"\x1a": "SUB",
+        b"\x1b": "ESC",
+        b"\x1c": "FS",
+        b"\x1d": "GS",
+        b"\x1e": "RS",
+        b"\x1f": "US",
     }.items():
-        cls = type("%sControlCharacterInLine" % description, (ControlCharacterInLine,), {
-            "char": char,
-            "char_description": description
-        })
+        cls = type(
+            "%sControlCharacterInLine" % description,
+            (ControlCharacterInLine,),
+            {"char": char, "char_description": description},
+        )
         insanity_class(cls)
 
 
 register_control_character_insanities()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

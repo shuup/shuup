@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,23 +11,30 @@ import six
 from django.contrib.auth.models import AbstractUser, Group
 
 from shuup.admin.menu import get_menu_entry_categories
+from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
 from shuup.admin.modules.sales_dashboard import SalesDashboardModule
-from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownItem, JavaScriptActionButton,
-    PostActionButton, URLActionButton,
-    NewActionButton, SettingsActionButton)
+    DropdownActionButton,
+    DropdownItem,
+    JavaScriptActionButton,
+    NewActionButton,
+    PostActionButton,
+    SettingsActionButton,
+    URLActionButton,
+)
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permission_object_from_string,
-    get_permissions_from_urls, set_permissions_for_group, get_missing_permissions
+    get_default_model_permissions,
+    get_missing_permissions,
+    get_permission_object_from_string,
+    get_permissions_from_urls,
+    set_permissions_for_group,
 )
 from shuup.core.models import Product, ShopProduct
 from shuup.testing import factories
 from shuup.utils.django_compat import reverse, reverse_lazy
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
 from shuup_tests.utils.faux_users import StaffUser
-
 
 migrated_permissions = {
     CustomersDashboardModule: ("shuup.view_customers_dashboard"),
@@ -45,8 +52,7 @@ def test_permissions_for_menu_entries(rf, admin_user):
     request.user = factories.get_default_staff_user()
     permission_group = request.user.groups.first()
     set_permissions_for_group(
-        permission_group,
-        set("dashboard") | set(ARestrictedTestModule().get_required_permissions())
+        permission_group, set("dashboard") | set(ARestrictedTestModule().get_required_permissions())
     )
 
     with replace_modules([ARestrictedTestModule]):
@@ -75,20 +81,23 @@ def test_valid_permissions_for_all_modules():
     for module in get_modules():
         url_permissions = set(get_permissions_from_urls(module.get_urls()))
         module_permissions = set(module.get_required_permissions())
-        for permission in (url_permissions | module_permissions):
+        for permission in url_permissions | module_permissions:
             # Only requirement for permissions are that they
             # are list of strings
             assert isinstance(permission, six.string_types)
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("button_class, kwargs", [
-    (URLActionButton, {"url": "/test/url/"}),
-    (JavaScriptActionButton, {"onclick": None}),
-    (PostActionButton, {}),
-    (DropdownActionButton, {"items": [DropdownItem()]}),
-    (DropdownItem, {})
-])
+@pytest.mark.parametrize(
+    "button_class, kwargs",
+    [
+        (URLActionButton, {"url": "/test/url/"}),
+        (JavaScriptActionButton, {"onclick": None}),
+        (PostActionButton, {}),
+        (DropdownActionButton, {"items": [DropdownItem()]}),
+        (DropdownItem, {}),
+    ],
+)
 def test_toolbar_button_permissions(rf, button_class, kwargs):
     permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
 
@@ -104,17 +113,18 @@ def test_toolbar_button_permissions(rf, button_class, kwargs):
     assert rendered_button
 
 
-@pytest.mark.parametrize("button, permission, instance", [
-    (URLActionButton(url=reverse("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
-    (URLActionButton(url=reverse_lazy("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
-
-    (NewActionButton.for_model(ShopProduct), "shop_product.new", URLActionButton),
-    (SettingsActionButton.for_model(ShopProduct, return_url="/"), "shop_product.list_settings", URLActionButton),
-
-    # for_model without shuup_admin url returns None
-    (NewActionButton.for_model(AbstractUser), "abstract_user.new", type(None)),
-    (SettingsActionButton.for_model(AbstractUser), "abstract_user.list_settings", type(None)),
-])
+@pytest.mark.parametrize(
+    "button, permission, instance",
+    [
+        (URLActionButton(url=reverse("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
+        (URLActionButton(url=reverse_lazy("shuup_admin:shop_product.new")), "shop_product.new", URLActionButton),
+        (NewActionButton.for_model(ShopProduct), "shop_product.new", URLActionButton),
+        (SettingsActionButton.for_model(ShopProduct, return_url="/"), "shop_product.list_settings", URLActionButton),
+        # for_model without shuup_admin url returns None
+        (NewActionButton.for_model(AbstractUser), "abstract_user.new", type(None)),
+        (SettingsActionButton.for_model(AbstractUser), "abstract_user.list_settings", type(None)),
+    ],
+)
 def test_url_buttons_permission(rf, button, permission, instance):
     request = rf.get("/")
 

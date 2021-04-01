@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
-
 import pytest
+from decimal import Decimal
 from django.conf import settings
 from django.db.models import Sum
 from django.utils.translation import activate
@@ -17,10 +16,18 @@ from shuup.default_tax.models import TaxRule
 from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
-    create_default_tax_rule, create_product, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_default_tax, get_default_tax_class, get_shipping_method, get_tax,
-    create_random_address, create_random_user
+    create_default_tax_rule,
+    create_product,
+    create_random_address,
+    create_random_user,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
+    get_default_tax,
+    get_default_tax_class,
+    get_shipping_method,
+    get_tax,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.money import Money
@@ -89,12 +96,7 @@ def test_basket_dirtying_with_fnl(rf):
     apply_request_middleware(request)
     basket = get_basket(request)
     line = basket.add_product(
-        supplier=supplier,
-        shop=shop,
-        product=product,
-        quantity=1,
-        force_new_line=True,
-        extra={"foo": "foo"}
+        supplier=supplier, shop=shop, product=product, quantity=1, force_new_line=True, extra={"foo": "foo"}
     )
     assert basket.dirty  # The change should have dirtied the basket
 
@@ -105,12 +107,10 @@ def test_basket_shipping_error(rf):
     shop = get_default_shop()
     supplier = get_default_supplier()
     shipped_product = create_product(
-        printable_gibberish(), shop=shop, supplier=supplier, default_price=50,
-        shipping_mode=ShippingMode.SHIPPED
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=50, shipping_mode=ShippingMode.SHIPPED
     )
     unshipped_product = create_product(
-        printable_gibberish(), shop=shop, supplier=supplier, default_price=50,
-        shipping_mode=ShippingMode.NOT_SHIPPED
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=50, shipping_mode=ShippingMode.NOT_SHIPPED
     )
 
     request = rf.get("/")
@@ -162,12 +162,7 @@ def test_basket_orderability_change(rf):
     apply_request_middleware(request)
     basket = get_basket(request)
     line = basket.add_product(
-        supplier=supplier,
-        shop=shop,
-        product=product,
-        quantity=1,
-        force_new_line=True,
-        extra={"foo": "foo"}
+        supplier=supplier, shop=shop, product=product, quantity=1, force_new_line=True, extra={"foo": "foo"}
     )
     assert len(basket.get_lines()) == 1
     assert len(basket.get_unorderable_lines()) == 0
@@ -190,12 +185,7 @@ def test_basket_orderability_change_shop_product(rf):
     apply_request_middleware(request)
     basket = get_basket(request)
     line = basket.add_product(
-        supplier=supplier,
-        shop=shop,
-        product=product,
-        quantity=1,
-        force_new_line=True,
-        extra={"foo": "foo"}
+        supplier=supplier, shop=shop, product=product, quantity=1, force_new_line=True, extra={"foo": "foo"}
     )
     assert len(basket.get_lines()) == 1
     assert len(basket.get_unorderable_lines()) == 0
@@ -224,22 +214,12 @@ def test_basket_package_product_orderability_change(rf):
 
     # Add the package parent
     basket.add_product(
-        supplier=supplier,
-        shop=shop,
-        product=product,
-        quantity=1,
-        force_new_line=True,
-        extra={"foo": "foo"}
+        supplier=supplier, shop=shop, product=product, quantity=1, force_new_line=True, extra={"foo": "foo"}
     )
 
     # Also add the child product separately
     basket.add_product(
-        supplier=supplier,
-        shop=shop,
-        product=child,
-        quantity=1,
-        force_new_line=True,
-        extra={"foo": "foo"}
+        supplier=supplier, shop=shop, product=child, quantity=1, force_new_line=True, extra={"foo": "foo"}
     )
 
     # Should be stock for both

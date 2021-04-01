@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,10 +11,9 @@ This module is installed as the `shuup_admin` template function namespace.
 """
 
 import itertools
-from functools import lru_cache
-
 from django.conf import settings
 from django.middleware.csrf import get_token
+from functools import lru_cache
 from jinja2.utils import contextfunction
 
 from shuup import configuration
@@ -23,12 +22,12 @@ from shuup.admin.breadcrumbs import Breadcrumbs
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.menu import is_menu_open
-from shuup.admin.utils.urls import manipulate_query_string, NoModelUrl
+from shuup.admin.utils.urls import NoModelUrl, manipulate_query_string
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
 from shuup.utils import django_compat
-from shuup.utils.django_compat import force_text, NoReverseMatch, reverse
+from shuup.utils.django_compat import NoReverseMatch, force_text, reverse
 from shuup.utils.importing import cached_load
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -49,14 +48,14 @@ def get_menu_entry_categories(context):
 
 @lru_cache()
 def get_all_target_urls(request, target_url, breadcrumbs):
-    breadcrumbs_entries = (breadcrumbs.get_entries(request) or [] if breadcrumbs else [])
+    breadcrumbs_entries = breadcrumbs.get_entries(request) or [] if breadcrumbs else []
     return [entry.url for entry in breadcrumbs_entries] + [target_url]
 
 
 @contextfunction
 def is_menu_category_active(context, category, target_url, breadcrumbs=None):
     def does_identifier_match(always_active_identifier):
-        return (force_text(category.identifier) == force_text(always_active_identifier))
+        return force_text(category.identifier) == force_text(always_active_identifier)
 
     identifiers = settings.SHUUP_ALWAYS_ACTIVE_MENU_CATEGORY_IDENTIFIERS
     if any([identifier for identifier in identifiers if does_identifier_match(identifier)]):
@@ -73,11 +72,10 @@ def is_menu_item_active(context, entry_url, target_url, breadcrumbs=None):
 
 @contextfunction
 def get_menu_entries(context):
-    return sorted(itertools.chain(*(
-        c.entries
-        for c
-        in menu.get_menu_entry_categories(request=context["request"]).values()
-    )), key=(lambda m: m.text))
+    return sorted(
+        itertools.chain(*(c.entries for c in menu.get_menu_entry_categories(request=context["request"]).values())),
+        key=(lambda m: m.text),
+    )
 
 
 @contextfunction
@@ -136,7 +134,7 @@ def get_config(context):
         "csrf": get_token(request),
         "docsPage": settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE,
         "menuOpen": is_menu_open(request),
-        "settings": get_settings(request)
+        "settings": get_settings(request),
     }
 
 
@@ -150,6 +148,7 @@ def get_docs_help_url(context, page=""):
     """
     if page:
         from six.moves.urllib.parse import urljoin
+
         return urljoin(settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE, page)
     return settings.SHUUP_ADMIN_MERCHANT_DOCS_PAGE
 
@@ -216,6 +215,7 @@ def is_multishop_enabled(context):
 @contextfunction
 def get_current_language(context):
     from django.utils.translation import get_language
+
     return get_language()
 
 
@@ -243,7 +243,7 @@ def get_logout_url(context):
     if "impersonator_user_id" in request.session:
         stop_impersonate_url = get_url("shuup_admin:stop-impersonating-staff")
 
-    return (stop_impersonate_url if stop_impersonate_url else get_url("shuup_admin:logout") or "/logout")
+    return stop_impersonate_url if stop_impersonate_url else get_url("shuup_admin:logout") or "/logout"
 
 
 def is_authenticated(user):

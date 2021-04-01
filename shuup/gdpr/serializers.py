@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,10 +11,23 @@ from enumfields.drf.fields import EnumField
 from rest_framework import serializers
 
 from shuup.core.models import (
-    Basket, CompanyContact, CompanyContactLogEntry, Contact,
-    ContactGroupLogEntry, Gender, MutableAddress, Order, OrderLine,
-    OrderLineType, PaymentStatus, PersonContact, PersonContactLogEntry,
-    SavedAddress, SavedAddressRole, SavedAddressStatus, ShippingStatus
+    Basket,
+    CompanyContact,
+    CompanyContactLogEntry,
+    Contact,
+    ContactGroupLogEntry,
+    Gender,
+    MutableAddress,
+    Order,
+    OrderLine,
+    OrderLineType,
+    PaymentStatus,
+    PersonContact,
+    PersonContactLogEntry,
+    SavedAddress,
+    SavedAddressRole,
+    SavedAddressStatus,
+    ShippingStatus,
 )
 from shuup.front.models import StoredBasket
 from shuup.gdpr.models import GDPRCookieCategory, GDPRUserConsent
@@ -66,7 +79,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        exclude = ("password",)     # TODO: should we also return this?
+        exclude = ("password",)  # TODO: should we also return this?
 
 
 class AddressSerializer(serializers.ModelSerializer):

@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import itertools
 import json
-from datetime import date
-from decimal import Decimal
-
 import pytest
 import pytz
 import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
+from datetime import date
+from decimal import Decimal
 from django.test.utils import override_settings
-from django.utils.timezone import activate
 from django.utils.encoding import force_text
 from django.utils.functional import lazy
 from django.utils.safestring import SafeText
+from django.utils.timezone import activate
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import override_provides
@@ -29,13 +28,20 @@ from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
 from shuup.reports.writer import (
-    ExcelReportWriter, get_writer_instance, HTMLReportWriter, JSONReportWriter,
-    PDFReportWriter, PprintReportWriter, REPORT_WRITERS_MAP,
-    ReportWriterPopulator
+    REPORT_WRITERS_MAP,
+    ExcelReportWriter,
+    HTMLReportWriter,
+    JSONReportWriter,
+    PDFReportWriter,
+    PprintReportWriter,
+    ReportWriterPopulator,
+    get_writer_instance,
 )
 from shuup.testing.factories import (
-    create_order_with_product, get_default_product, get_default_shop,
-    get_default_supplier
+    create_order_with_product,
+    get_default_product,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import get_current_babel_locale
@@ -48,12 +54,24 @@ def initialize_report_test(product_price, product_count, tax_rate, line_count):
     expected_taxless_total = product_count * product_price
     expected_taxful_total = product_count * product_price * (1 + tax_rate)
     order = create_order_with_product(
-        product=product, supplier=supplier, quantity=product_count,
-        taxless_base_unit_price=product_price, tax_rate=tax_rate, n_lines=line_count, shop=shop)
+        product=product,
+        supplier=supplier,
+        quantity=product_count,
+        taxless_base_unit_price=product_price,
+        tax_rate=tax_rate,
+        n_lines=line_count,
+        shop=shop,
+    )
     order.create_payment(order.taxful_total_price.amount)
     order2 = create_order_with_product(
-        product=product, supplier=supplier, quantity=product_count,
-        taxless_base_unit_price=product_price, tax_rate=tax_rate, n_lines=line_count, shop=shop)
+        product=product,
+        supplier=supplier,
+        quantity=product_count,
+        taxless_base_unit_price=product_price,
+        tax_rate=tax_rate,
+        n_lines=line_count,
+        shop=shop,
+    )
     order2.create_payment(order2.taxful_total_price.amount)
     order2.set_canceled()  # Shouldn't affect reports
     return expected_taxful_total, expected_taxless_total, shop, order
@@ -73,8 +91,12 @@ class SalesTestReport(ShuupReportBase):
     ]
 
     def get_objects(self):
-        return Order.objects.filter(
-            shop=self.shop, order_date__range=(self.start_date, self.end_date)).valid().paid().order_by("order_date")
+        return (
+            Order.objects.filter(shop=self.shop, order_date__range=(self.start_date, self.end_date))
+            .valid()
+            .paid()
+            .order_by("order_date")
+        )
 
     def extract_date(self, entity):
         # extracts the starting date from an entity
@@ -97,13 +119,15 @@ class SalesTestReport(ShuupReportBase):
                 if order.payment_date:
                     paid_total += order.taxful_total_price
 
-            data.append({
-                "date": format_date(order_date, format="short", locale=get_current_babel_locale()),
-                "order_count": order_count,
-                "product_count": int(product_count),
-                "taxless_total": taxless_total,
-                "taxful_total": taxful_total,
-            })
+            data.append(
+                {
+                    "date": format_date(order_date, format="short", locale=get_current_babel_locale()),
+                    "order_count": order_count,
+                    "product_count": int(product_count),
+                    "taxless_total": taxless_total,
+                    "taxful_total": taxful_total,
+                }
+            )
 
         return self.get_return_data(data)
 
@@ -126,10 +150,9 @@ def test_reporting(rf, admin_user):
     tax_rate = Decimal("0.10")
     line_count = 1
 
-    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(product_price,
-                                                                                        product_count,
-                                                                                        tax_rate,
-                                                                                        line_count)
+    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(
+        product_price, product_count, tax_rate, line_count
+    )
 
     with override_provides("reports", [__name__ + ":SalesTestReportForRequestTets"]):
         data = {
@@ -176,7 +199,7 @@ def test_reporting(rf, admin_user):
         assert response.status_code == 200
 
         soup = BeautifulSoup(response.render().content)
-        response_text = str(six.u(soup.encode('ascii')))
+        response_text = str(six.u(soup.encode("ascii")))
         assert force_text(SalesTestReport.title) in response_text
         assert str(expected_taxless_total) in response_text
         assert str(expected_taxful_total) in response_text
@@ -227,9 +250,7 @@ def test_excel_writer(rf):
 
 
 def test_report_writer_populator_provide():
-    with override_provides("report_writer_populator", [
-        "shuup.reports.writer.populate_default_writers"
-    ]):
+    with override_provides("report_writer_populator", ["shuup.reports.writer.populate_default_writers"]):
         populator = ReportWriterPopulator()
         populator.populate()
 
@@ -245,7 +266,8 @@ def test_report_writers():
     product = get_default_product()
     supplier = get_default_supplier()
     order = create_order_with_product(
-        product=product, supplier=supplier, quantity=1, taxless_base_unit_price=10, tax_rate=0, n_lines=2, shop=shop)
+        product=product, supplier=supplier, quantity=1, taxless_base_unit_price=10, tax_rate=0, n_lines=2, shop=shop
+    )
     order.create_payment(order.taxful_total_price.amount)
 
     data = {
@@ -281,19 +303,22 @@ def test_get_totals_return_correct_totals():
         "writer": "html",
         "force_download": 1,
     }
-    data = [{
-        "date": "",
-        "order_count": None,
-        "product_count": 10,
-        "taxless_total": TaxlessPrice("10", "EUR"),
-        "taxful_total": TaxfulPrice("5", "EUR"),
-    }, {
-        "date": "",
-        "order_count": 12,
-        "product_count": None,
-        "taxless_total": TaxlessPrice("20", "EUR"),
-        "taxful_total": None,
-    }]
+    data = [
+        {
+            "date": "",
+            "order_count": None,
+            "product_count": 10,
+            "taxless_total": TaxlessPrice("10", "EUR"),
+            "taxful_total": TaxfulPrice("5", "EUR"),
+        },
+        {
+            "date": "",
+            "order_count": 12,
+            "product_count": None,
+            "taxless_total": TaxlessPrice("20", "EUR"),
+            "taxful_total": None,
+        },
+    ]
     report = SalesTestReport(**report_data)
     totals = report.get_totals(data)
     expected = {
@@ -301,16 +326,12 @@ def test_get_totals_return_correct_totals():
         "order_count": 12,
         "product_count": 10,
         "taxless_total": TaxlessPrice("30", "EUR"),
-        "taxful_total": TaxfulPrice("5", "EUR")
+        "taxful_total": TaxfulPrice("5", "EUR"),
     }
     assert totals == expected
 
 
-@pytest.mark.parametrize("start_date,end_date", [
-    (None, None),
-    ("1990-01-01", None),
-    (None, "2100-01-01")
-])
+@pytest.mark.parametrize("start_date,end_date", [(None, None), ("1990-01-01", None), (None, "2100-01-01")])
 @pytest.mark.django_db
 def test_none_dates(start_date, end_date):
     _, _, shop, order = initialize_report_test(10, 2, 0, 1)
@@ -325,7 +346,7 @@ def test_none_dates(start_date, end_date):
                 "start_date": start_date,
                 "end_date": end_date,
                 "writer": "json",
-                "force_download": 1
+                "force_download": 1,
             }
             report = SalesTestReport(**data)
             data = report.get_data()

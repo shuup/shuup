@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -20,7 +20,7 @@ class ArchivedDiscountListView(DiscountListView):
 
     mass_actions = [
         "shuup.discounts.admin.mass_actions:UnarchiveMassAction",
-        "shuup.discounts.admin.mass_actions:DeleteMassAction"
+        "shuup.discounts.admin.mass_actions:DeleteMassAction",
     ]
 
     def get_queryset(self):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -29,22 +29,13 @@ class BasicInfoContactSection(Section):
     def get_context_data(cls, contact, request=None):
         context = {}
 
-        context['groups'] = sorted(
-            contact.groups.all_except_defaults(),
-            key=(lambda x: force_text(x))
-        )
+        context["groups"] = sorted(contact.groups.all_except_defaults(), key=(lambda x: force_text(x)))
 
-        context['shops'] = sorted(
-            contact.shops.all(),
-            key=(lambda x: force_text(x))
-        )
+        context["shops"] = sorted(contact.shops.all(), key=(lambda x: force_text(x)))
 
         context["companies"] = []
         if isinstance(contact, PersonContact):
-            context["companies"] = sorted(
-                contact.company_memberships.all(),
-                key=(lambda x: force_text(x))
-            )
+            context["companies"] = sorted(contact.company_memberships.all(), key=(lambda x: force_text(x)))
 
         return context
 
@@ -58,8 +49,7 @@ class AddressesContactSection(Section):
 
     @classmethod
     def visible_for_object(cls, contact, request=None):
-        return (contact.default_shipping_address_id or
-                contact.default_billing_address_id)
+        return contact.default_shipping_address_id or contact.default_billing_address_id
 
     @classmethod
     def get_context_data(cls, contact, request=None):
@@ -91,7 +81,7 @@ class MembersContactSection(Section):
 
     @classmethod
     def visible_for_object(cls, contact, request=None):
-        return hasattr(contact, 'members')
+        return hasattr(contact, "members")
 
     @classmethod
     def get_context_data(cls, contact, request=None):

@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 
 import django
 import django.core.validators
-from django.db import migrations, models
 import re
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

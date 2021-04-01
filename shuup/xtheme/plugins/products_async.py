@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,17 +12,15 @@ from enumfields import Enum
 
 from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
-    get_best_selling_products, get_newest_products,
-    get_products_for_categories, get_random_products
+    get_best_selling_products,
+    get_newest_products,
+    get_products_for_categories,
+    get_random_products,
 )
-from shuup.front.template_helpers.product import (
-    get_product_cross_sells, map_relation_type
-)
+from shuup.front.template_helpers.product import get_product_cross_sells, map_relation_type
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
-from shuup.xtheme.plugins.widgets import (
-    XThemeSelect2ModelChoiceField, XThemeSelect2ModelMultipleChoiceField
-)
+from shuup.xtheme.plugins.widgets import XThemeSelect2ModelChoiceField, XThemeSelect2ModelMultipleChoiceField
 
 
 class HighlightType(Enum):
@@ -42,11 +40,10 @@ class ProductHighlightPlugin(TemplatedPlugin):
     template_name = "shuup/xtheme/plugins/highlight_plugin_async.jinja"
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
-        ("type", forms.ChoiceField(
-            label=_("Type"),
-            choices=HighlightType.choices(),
-            initial=HighlightType.NEWEST.value
-        )),
+        (
+            "type",
+            forms.ChoiceField(label=_("Type"), choices=HighlightType.choices(), initial=HighlightType.NEWEST.value),
+        ),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=5)),
         ("cutoff_days", forms.IntegerField(label=_("Cutoff days"), min_value=1, initial=30)),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
@@ -75,12 +72,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
             "products": products,
             "data_url": reverse(
                 "shuup:xtheme-product-highlight",
-                kwargs=dict(
-                    plugin_type=plugin_type,
-                    cutoff_days=cutoff_days,
-                    count=count,
-                    cache_timeout=cache_timeout
-                )
+                kwargs=dict(plugin_type=plugin_type, cutoff_days=cutoff_days, count=count, cache_timeout=cache_timeout),
             ),
         }
 
@@ -94,11 +86,15 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("type", ProductCrossSell.type.field.formfield()),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=5)),
-        ("use_variation_parents", forms.BooleanField(
-            label=_("Show variation parents"),
-            help_text=_("Render variation parents instead of the children."),
-            initial=False, required=False
-        )),
+        (
+            "use_variation_parents",
+            forms.BooleanField(
+                label=_("Show variation parents"),
+                help_text=_("Render variation parents instead of the children."),
+                initial=False,
+                required=False,
+            ),
+        ),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
 
@@ -139,7 +135,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
                     relation_type,
                     count=count,
                     orderable_only=orderable_only,
-                    use_variation_parents=use_variation_parents
+                    use_variation_parents=use_variation_parents,
                 )
 
         return {
@@ -153,9 +149,11 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
                     relation_type=relation_type.label,
                     use_parents=(1 if use_variation_parents else 0),
                     count=count,
-                    cache_timeout=cache_timeout
-                )
-            ) if product else "/"
+                    cache_timeout=cache_timeout,
+                ),
+            )
+            if product
+            else "/",
         }
 
 
@@ -171,7 +169,7 @@ class ProductsFromCategoryForm(GenericPluginForm):
             model="shuup.category",
             label=_("Category"),
             required=False,
-            initial=self.plugin.config.get("category") if self.plugin else None
+            initial=self.plugin.config.get("category") if self.plugin else None,
         )
 
 
@@ -196,10 +194,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
 
         if request.is_ajax() and category_id:
             products = get_products_for_categories(
-                context,
-                [category_id],
-                n_products=count,
-                orderable_only=orderable_only
+                context, [category_id], n_products=count, orderable_only=orderable_only
             )
 
         return {
@@ -208,12 +203,8 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
             "products": products,
             "data_url": reverse(
                 "shuup:xtheme-category-products-highlight",
-                kwargs=dict(
-                    category_id=category_id,
-                    count=count,
-                    cache_timeout=cache_timeout
-                )
-            )
+                kwargs=dict(category_id=category_id, count=count, cache_timeout=cache_timeout),
+            ),
         }
 
 
@@ -221,6 +212,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
     """
     A configuration form for the ProductSelectionPlugin
     """
+
     def populate(self):
         """
         A custom populate method to display product choices
@@ -237,9 +229,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
             help_text=_("Select all products you want to show"),
             required=True,
             initial=self.plugin.config.get("products"),
-            extra_widget_attrs={
-                "data-search-mode": "main"
-            }
+            extra_widget_attrs={"data-search-mode": "main"},
         )
 
 
@@ -247,18 +237,14 @@ class ProductSelectionPlugin(TemplatedPlugin):
     """
     A plugin that renders a selection of products
     """
+
     identifier = "async_product_selection"
     name = _("Product Selection (asynchronous)")
     template_name = "shuup/xtheme/plugins/highlight_plugin_async.jinja"
     editor_form_class = ProductSelectionConfigForm
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
-        (
-            "cache_timeout",
-            forms.IntegerField(
-                label=_("Cache timeout (seconds)"), min_value=0, initial=120
-            )
-        )
+        ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
 
     def get_context_data(self, context):
@@ -268,10 +254,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
         products_qs = Product.objects.none()
 
         if request.is_ajax() and products:
-            products_qs = Product.objects.listed(
-                shop=request.shop,
-                customer=request.customer
-            ).filter(pk__in=products)
+            products_qs = Product.objects.listed(shop=request.shop, customer=request.customer).filter(pk__in=products)
 
         return {
             "request": request,
@@ -280,11 +263,8 @@ class ProductSelectionPlugin(TemplatedPlugin):
             "data_url": reverse(
                 "shuup:xtheme-product-selections-highlight",
                 kwargs=dict(
-                    product_ids=",".join([
-                        (str(prod.pk) if hasattr(prod, "pk") else str(prod))
-                        for prod in products
-                    ]),
-                    cache_timeout=cache_timeout
-                )
-            )
+                    product_ids=",".join([(str(prod.pk) if hasattr(prod, "pk") else str(prod)) for prod in products]),
+                    cache_timeout=cache_timeout,
+                ),
+            ),
         }

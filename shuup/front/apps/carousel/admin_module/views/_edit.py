@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,15 +10,11 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db.transaction import atomic
 
-from shuup.admin.form_part import (
-    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
-)
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.front.apps.carousel.admin_module.forms import (
-    CarouselForm, SlideFormSet
-)
+from shuup.front.apps.carousel.admin_module.forms import CarouselForm, SlideFormSet
 from shuup.front.apps.carousel.models import Carousel
 
 
@@ -35,7 +31,7 @@ class CarouselFormPart(FormPart):
             required=True,
             kwargs={
                 "instance": self.object,
-            }
+            },
         )
 
     def form_valid(self, form):
@@ -55,7 +51,7 @@ class SlideFormPart(FormPart):
             self.formset,
             template_name="shuup/carousel/admin/_edit_slide_form.jinja",
             required=False,
-            kwargs={"carousel": self.object, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"carousel": self.object, "languages": settings.LANGUAGES, "request": self.request},
         )
 
     def form_valid(self, form):

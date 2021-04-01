@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,7 +18,7 @@ class HighlightTestPlugin(TemplatedPlugin):
     template_name = "shuup_testing/highlight_plugin.jinja"
     fields = [
         ("title", forms.CharField(required=False, initial="")),
-        ("count", forms.IntegerField(min_value=1, initial=8))
+        ("count", forms.IntegerField(min_value=1, initial=8)),
     ]
 
     def get_context_data(self, context):
@@ -27,5 +27,5 @@ class HighlightTestPlugin(TemplatedPlugin):
         return {
             "request": context["request"],
             "title": self.config.get("title"),
-            "products": Product.objects.all()[:count]
+            "products": Product.objects.all()[:count],
         }

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,7 +10,7 @@ from django.middleware.csrf import get_token
 from shuup.core.utils.static import get_shuup_static_url
 from shuup.front.utils.user import is_admin_user
 from shuup.utils.django_compat import NoReverseMatch, reverse
-from shuup.xtheme.resources import add_resource, InlineScriptResource
+from shuup.xtheme.resources import InlineScriptResource, add_resource
 
 from ._theme import get_current_theme
 
@@ -101,16 +101,24 @@ def add_edit_resources(context):
         return
 
     from .rendering import get_view_config  # avoid circular import
+
     view_config = get_view_config(context)
     theme = getattr(request, "theme", None) or get_current_theme(request.shop)
-    add_resource(context, "body_end", InlineScriptResource.from_vars("XthemeEditorConfig", {
-        "commandUrl": command_url,
-        "editUrl": edit_url,
-        "injectSnipperUrl": inject_snipper,
-        "themeIdentifier": theme.identifier,
-        "viewName": view_config.view_name,
-        "edit": is_edit_mode(request),
-        "csrfToken": get_token(request),
-    }))
+    add_resource(
+        context,
+        "body_end",
+        InlineScriptResource.from_vars(
+            "XthemeEditorConfig",
+            {
+                "commandUrl": command_url,
+                "editUrl": edit_url,
+                "injectSnipperUrl": inject_snipper,
+                "themeIdentifier": theme.identifier,
+                "viewName": view_config.view_name,
+                "edit": is_edit_mode(request),
+                "csrfToken": get_token(request),
+            },
+        ),
+    )
     add_resource(context, "head_end", get_shuup_static_url("xtheme/editor-injection.css"))
     add_resource(context, "body_end", get_shuup_static_url("xtheme/editor-injection.js"))

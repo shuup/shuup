@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import decimal
-
 from django.http import Http404
 
 from shuup.core.models import ProductVariationResult, Supplier
@@ -22,7 +21,7 @@ class ProductPriceView(ProductDetailView):
     def get_object(self, queryset=None):
         product = super(ProductPriceView, self).get_object(queryset)
         vars = self.get_variation_variables()
-        return (ProductVariationResult.resolve(product, vars) if vars else product)
+        return ProductVariationResult.resolve(product, vars) if vars else product
 
     def get_context_data(self, **kwargs):
         product = self.get_object()
@@ -43,8 +42,7 @@ class ProductPriceView(ProductDetailView):
             context["supplier"] = Supplier.objects.enabled(shop=shop_product.shop).filter(pk=int(supplier_pk)).first()
         else:
             context["supplier"] = shop_product.get_supplier(
-                customer=self.request.customer,
-                quantity=(quantity or shop_product.minimum_purchase_quantity)
+                customer=self.request.customer, quantity=(quantity or shop_product.minimum_purchase_quantity)
             )
 
         is_orderable = shop_product.is_orderable(context["supplier"], self.request.customer, context["quantity"])
@@ -55,22 +53,18 @@ class ProductPriceView(ProductDetailView):
         return context
 
     def _get_quantity(self, shop_product):
-        quantity_text = self.request.GET.get("quantity", '')
+        quantity_text = self.request.GET.get("quantity", "")
         quantity = parse_simple_decimal(quantity_text, None)
         if quantity is None or quantity < 0:
             return None
-        unit_type = self.request.GET.get('unitType', 'internal')
-        if unit_type == 'internal':
+        unit_type = self.request.GET.get("unitType", "internal")
+        if unit_type == "internal":
             return quantity
         else:
             return shop_product.unit.from_display(decimal.Decimal(quantity))
 
     def get_variation_variables(self):
-        return dict(
-            (int(k.split("_")[-1]), int(v))
-            for (k, v) in self.request.GET.items()
-            if k.startswith("var_")
-        )
+        return dict((int(k.split("_")[-1]), int(v)) for (k, v) in self.request.GET.items() if k.startswith("var_"))
 
     def get(self, request, *args, **kwargs):
         # Skipping ProductPriceView.super for a reason.

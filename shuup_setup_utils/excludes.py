@@ -2,10 +2,15 @@ import os
 from fnmatch import fnmatch
 
 _EXCLUDE_PATTERNS = [
-    '__pycache__', '*.py[cod]',
-    'node_modules', 'bower_components',
-    '.tox', '.cache', 'venv*',
-    '.git', '.gitignore',
+    "__pycache__",
+    "*.py[cod]",
+    "node_modules",
+    "bower_components",
+    ".tox",
+    ".cache",
+    "venv*",
+    ".git",
+    ".gitignore",
 ]
 
 

@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
 import re
-
 import six
 from django.contrib.auth.models import AnonymousUser
 from django.http.response import HttpResponse
@@ -19,7 +18,7 @@ from django_jinja.builtins import DEFAULT_EXTENSIONS
 from shuup.apps.provides import override_provides
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
-from shuup.xtheme import parsing, Theme
+from shuup.xtheme import Theme, parsing
 from shuup.xtheme.editing import is_edit_mode, set_edit_mode
 from shuup.xtheme.view_config import Layout
 from shuup_tests.utils import printable_gibberish
@@ -31,17 +30,19 @@ TEST_TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "templates")
 
 def get_jinja2_engine():
     extensions = list(DEFAULT_EXTENSIONS) + list(parsing.EXTENSIONS)
-    return Jinja2({
-        "DIRS": [TEST_TEMPLATE_DIR],
-        "APP_DIRS": False,
-        "OPTIONS": {
-            "match_extension": ".jinja",
-            "context_processors": (),
-            "environment": "shuup.xtheme.engine.XthemeEnvironment",
-            "extensions": extensions
-        },
-        "NAME": "jinja2",
-    })
+    return Jinja2(
+        {
+            "DIRS": [TEST_TEMPLATE_DIR],
+            "APP_DIRS": False,
+            "OPTIONS": {
+                "match_extension": ".jinja",
+                "context_processors": (),
+                "environment": "shuup.xtheme.engine.XthemeEnvironment",
+                "extensions": extensions,
+            },
+            "NAME": "jinja2",
+        }
+    )
 
 
 def close_enough(sa, sb):
@@ -50,7 +51,7 @@ def close_enough(sa, sb):
     """
     sa = CLOSE_ENOUGH_FIX_RE.sub("", six.text_type(sa)).lower()
     sb = CLOSE_ENOUGH_FIX_RE.sub("", six.text_type(sb)).lower()
-    return (sa == sb)
+    return sa == sb
 
 
 class FauxView(View):
@@ -69,17 +70,12 @@ def greeting_view(request):
     return HttpResponse("So long, and thanks for all the fish, %s" % request.GET.get("name", "Humanity"))
 
 
-
 class H2G2Theme(Theme):
     template_dir = "h2g2"
     identifier = "h2g2"
 
     def get_view(self, view_name):
-        return {
-            "greeting": greeting_view,
-            "faux": FauxView,
-            "true": True
-        }.get(view_name)
+        return {"greeting": greeting_view, "faux": FauxView, "true": True}.get(view_name)
 
 
 def get_test_template_bits(request, pass_view=True, **extra_ctx):
@@ -90,10 +86,7 @@ def get_test_template_bits(request, pass_view=True, **extra_ctx):
     jeng = get_jinja2_engine()
     template = jeng.from_string("")
     template.template.name = "test"
-    vars = {
-        "view": pass_view and FauxView(),
-        "request": request
-    }
+    vars = {"view": pass_view and FauxView(), "request": request}
     vars.update(extra_ctx)
     ctx = template.template.new_context(vars)
     return (template, layout, gibberish, ctx)
@@ -113,10 +106,10 @@ def get_request(edit=False):
 
 
 def plugin_override():
-    return override_provides("xtheme_plugin", [
-        "shuup.xtheme.plugins.text:TextPlugin",
-        "shuup_tests.xtheme.test_resources:ResourceInjectorPlugin"
-    ])
+    return override_provides(
+        "xtheme_plugin",
+        ["shuup.xtheme.plugins.text:TextPlugin", "shuup_tests.xtheme.test_resources:ResourceInjectorPlugin"],
+    )
 
 
 def layout_override():

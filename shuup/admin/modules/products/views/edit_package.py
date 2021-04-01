@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -12,25 +12,21 @@ from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.modules.products.forms import (
-    PackageChildForm, PackageChildFormSet
-)
+from shuup.admin.modules.products.forms import PackageChildForm, PackageChildFormSet
 from shuup.admin.modules.products.utils import clear_existing_package
 from shuup.admin.toolbar import PostActionButton
 from shuup.core.models import ProductMode
 from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 
-from .edit_parent import (
-    ProductChildrenBaseFormPart, ProductParentBaseToolbar,
-    ProductParentBaseView
-)
+from .edit_parent import ProductChildrenBaseFormPart, ProductParentBaseToolbar, ProductParentBaseView
 
 
 class ProductChildrenFormPart(ProductChildrenBaseFormPart):
     invalid_modes = [
-        ProductMode.VARIATION_CHILD, ProductMode.VARIABLE_VARIATION_PARENT,
-        ProductMode.SIMPLE_VARIATION_PARENT
+        ProductMode.VARIATION_CHILD,
+        ProductMode.VARIABLE_VARIATION_PARENT,
+        ProductMode.SIMPLE_VARIATION_PARENT,
     ]
     priority = 1
 
@@ -54,15 +50,17 @@ class ProductPackageViewToolbar(ProductParentBaseToolbar):
     def __init__(self, view):
         super(ProductPackageViewToolbar, self).__init__(view)
         if self.parent_product.get_package_child_to_quantity_map():
-            self.append(PostActionButton(
-                post_url=self.request.path,
-                name="command",
-                value="clear_package",
-                confirm=self.confirm_text,
-                text=self.button_text,
-                extra_css_class="btn-danger",
-                icon="fa fa-times"
-            ))
+            self.append(
+                PostActionButton(
+                    post_url=self.request.path,
+                    name="command",
+                    value="clear_package",
+                    confirm=self.confirm_text,
+                    text=self.button_text,
+                    extra_css_class="btn-danger",
+                    icon="fa fa-times",
+                )
+            )
 
 
 class ProductPackageView(ProductParentBaseView):
@@ -75,9 +73,7 @@ class ProductPackageView(ProductParentBaseView):
         parent = self.object.get_all_package_parents().first()
         if parent:
             # By default, redirect to the first parent
-            return HttpResponseRedirect(
-                reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": parent.id})
-            )
+            return HttpResponseRedirect(reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": parent.id}))
         return super(ProductPackageView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

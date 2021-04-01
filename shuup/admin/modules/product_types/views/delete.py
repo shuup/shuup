@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -31,7 +31,7 @@ class ProductTypeDeleteView(DetailView):
         product_type_repr = str(product_type)
         for product in product_type.products.all().iterator():
             product.type = None
-            product.save(update_fields=['type'])
+            product.save(update_fields=["type"])
         product_type.delete()
-        messages.success(request, _(u"%s has been marked deleted.") % product_type_repr)
+        messages.success(request, _("%s has been marked deleted.") % product_type_repr)
         return HttpResponseRedirect(reverse("shuup_admin:product_type.list"))

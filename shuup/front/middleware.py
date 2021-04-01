@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from functools import lru_cache
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -16,18 +14,15 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone, translation
 from django.utils.translation import ugettext_lazy as _
+from functools import lru_cache
 
 from shuup.core.middleware import ExceptionMiddleware
-from shuup.core.models import (
-    AnonymousContact, Contact, get_company_contact, get_person_contact
-)
+from shuup.core.models import AnonymousContact, Contact, get_company_contact, get_person_contact
 from shuup.core.shop_provider import get_shop
-from shuup.core.utils.users import (
-    should_force_anonymous_contact, should_force_person_contact
-)
+from shuup.core.utils.users import should_force_anonymous_contact, should_force_person_contact
 from shuup.front.basket import get_basket
 from shuup.front.utils.user import is_admin_user
-from shuup.utils.django_compat import get_middleware_classes, MiddlewareMixin
+from shuup.utils.django_compat import MiddlewareMixin, get_middleware_classes
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 
@@ -71,8 +66,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         if settings.DEBUG and (
-            request.path.startswith(settings.MEDIA_URL) or
-            request.path.startswith(settings.STATIC_URL)
+            request.path.startswith(settings.MEDIA_URL) or request.path.startswith(settings.STATIC_URL)
         ):
             return None
 
@@ -109,7 +103,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
         else:
             company = get_company_contact(request.user)
 
-        request.customer = (company or request.person)
+        request.customer = company or request.person
         request.is_company_member = bool(company)
         request.customer_groups = (company or request.person).groups.all()
 
@@ -165,6 +159,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     @lru_cache()
     def _get_front_urlpatterns_callbacks(self):
         from shuup.front.urls import urlpatterns
+
         return [urlpattern.callback for urlpattern in urlpatterns]
 
     def process_view(self, request, view_func, *view_args, **view_kwargs):
@@ -182,6 +177,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
         If the current language is not in the available ones, change it to the first available.
         """
         from shuup.front.utils.translation import get_language_choices
+
         current_language = translation.get_language()
         available_languages = [code for (code, name, local_name) in get_language_choices(request.shop)]
         if current_language not in available_languages:
@@ -195,8 +191,7 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     def _get_maintenance_response(self, request, view_func):
         # Allow media and static accesses in debug mode
         if settings.DEBUG and (
-            request.path.startswith(settings.MEDIA_URL) or
-            request.path.startswith(settings.STATIC_URL)
+            request.path.startswith(settings.MEDIA_URL) or request.path.startswith(settings.STATIC_URL)
         ):
             return None
 
@@ -213,8 +208,8 @@ class ShuupFrontMiddleware(MiddlewareMixin):
 
 
 if (
-    "django.contrib.auth" in settings.INSTALLED_APPS and
-    "shuup.front.middleware.ShuupFrontMiddleware" in get_middleware_classes()
+    "django.contrib.auth" in settings.INSTALLED_APPS
+    and "shuup.front.middleware.ShuupFrontMiddleware" in get_middleware_classes()
 ):
     user_logged_in.connect(ShuupFrontMiddleware.refresh_on_user_change, dispatch_uid="shuup_front_refresh_on_login")
     user_logged_out.connect(ShuupFrontMiddleware.refresh_on_logout, dispatch_uid="shuup_front_refresh_on_logout")

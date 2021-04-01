@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shuup.utils.django_compat import reverse
 
 from shuup.core.models import Category
 from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
+from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
@@ -29,10 +29,10 @@ def test_product_price_range_filter():
         "filter_products_by_price": True,
         "filter_products_by_price_range_min": 5,
         "filter_products_by_price_range_max": 15,
-        "filter_products_by_price_range_size": 5
+        "filter_products_by_price_range_size": 5,
     }
     set_configuration(category=category, data=config)
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
     assert soup.find(id="product-%d" % product.id)
@@ -44,7 +44,7 @@ def test_product_price_range_filter():
     # make the category configuration override the shop's default config
     config.update({"override_default_configuration": True})
     set_configuration(category=category, data=config)
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
     assert soup.find(id="product-%d" % product.id)
@@ -61,7 +61,7 @@ def test_product_price_range_filter():
     # explicitly disable the override
     config.update({"override_default_configuration": False})
     set_configuration(category=category, data=config)
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
     assert soup.find(id="product-%d" % product.id)
@@ -89,7 +89,7 @@ def test_category_filter():
     config = {"filter_products_by_category": True}
     set_configuration(shop=shop, data=config)
 
-    url = reverse('shuup:all-categories')
+    url = reverse("shuup:all-categories")
 
     # 1) go to all categories view and list products
     # no filters being applied should list all products

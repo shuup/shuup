@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 
 from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme._theme import get_current_theme, override_current_theme_class
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
-from shuup.xtheme.views.forms import (
-    LayoutCellFormGroup, LayoutCellGeneralInfoForm
-)
-from shuup.testing.utils import apply_request_middleware
+from shuup.xtheme.views.forms import LayoutCellFormGroup, LayoutCellGeneralInfoForm
 from shuup_tests.xtheme.utils import plugin_override
 
 
@@ -42,11 +40,11 @@ def test_formless_plugin_in_lcfg(rf):
                 data={
                     "general-cell_width": "%d" % two_thirds,
                     "general-cell_align": "pull-right",
-                    "general-cell_extra_classes" : "newClass",
+                    "general-cell_extra_classes": "newClass",
                 },
                 layout_cell=cell,
                 theme=theme,
-                request=apply_request_middleware(rf.get("/"))
+                request=apply_request_middleware(rf.get("/")),
             )
 
             assert "plugin" not in lcfg.forms
@@ -72,12 +70,12 @@ def test_lcfg(rf):
                 data={
                     "general-cell_width": "%d" % two_thirds,
                     "general-cell_align": " ",
-                    "general-cell_extra_classes" : "newClass",
-                    "plugin-text_*": "Hello, world!"
+                    "general-cell_extra_classes": "newClass",
+                    "plugin-text_*": "Hello, world!",
                 },
                 layout_cell=cell,
                 theme=theme,
-                request=apply_request_middleware(rf.get("/"))
+                request=apply_request_middleware(rf.get("/")),
             )
             assert lcfg.is_valid()  # Let's see now!
             lcfg.save()
@@ -97,12 +95,12 @@ def test_custom_cell_size(rf):
                 data={
                     "general-cell_width": None,
                     "general-cell_align": " ",
-                    "general-cell_extra_classes" : "newClass",
-                    "plugin-text_*": "Hello, world!"
+                    "general-cell_extra_classes": "newClass",
+                    "plugin-text_*": "Hello, world!",
                 },
                 layout_cell=cell,
                 theme=theme,
-                request=apply_request_middleware(rf.get("/"))
+                request=apply_request_middleware(rf.get("/")),
             )
             assert lcfg.is_valid()
             lcfg.save()

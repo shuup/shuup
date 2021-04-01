@@ -1,13 +1,12 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import abc
-
 import six
 from django.http import HttpRequest
 
@@ -66,8 +65,7 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         :type time: datetime.datetime|None
         :rtype: PricingContext
         """
-        return self.pricing_context_class(
-            shop=shop, customer=customer, time=time, **kwargs)
+        return self.pricing_context_class(shop=shop, customer=customer, time=time, **kwargs)
 
     @abc.abstractmethod
     def get_price_info(self, context, product, quantity=1):
@@ -135,6 +133,5 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         """
         product_map = {getattr(x, "pk", x): x for x in products}
         return {
-            product_id: self.get_pricing_steps(context, product)
-            for (product_id, product) in six.iteritems(product_map)
+            product_id: self.get_pricing_steps(context, product) for (product_id, product) in six.iteritems(product_map)
         }

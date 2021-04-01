@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -21,17 +21,19 @@ class CurrencyListView(PicotableListView):
     default_columns = [
         Column("name", _("Name"), display="get_currency_display", sortable=False),
         Column(
-            "code", _(u"Code"), sort_field="code",
+            "code",
+            _("Code"),
+            sort_field="code",
             filter_config=TextFilter(
                 filter_field="code",
                 placeholder=_("Filter by code"),
-            )
+            ),
         ),
         Column(
             "decimal_places",
             _("Decimal places"),
             display="format_decimal_places",
-        )
+        ),
     ]
     toolbar_buttons_provider_key = "currency_list_toolbar_provider"
     mass_actions_provider_key = "currency_list_mass_actions_provider"

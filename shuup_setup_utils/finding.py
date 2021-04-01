@@ -1,11 +1,10 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-
 import setuptools
 
 from . import excludes
@@ -27,7 +26,7 @@ if hasattr(setuptools, "PackageFinder"):
             """
             items = excludes.walk_excl(base_path, followlinks=True)
             for (root, dirs, files) in items:
-                dirs[:] = [x for x in dirs if '.' not in x]
+                dirs[:] = [x for x in dirs if "." not in x]
                 for dir in dirs:
                     yield os.path.relpath(os.path.join(root, dir), base_path)
 
@@ -37,9 +36,12 @@ if hasattr(setuptools, "PackageFinder"):
             return FastFindPackages._candidate_dirs(base_path)
 
     def find_packages(*args, **kwargs):
-        kwargs.setdefault('exclude', excludes.get_exclude_patterns())
+        kwargs.setdefault("exclude", excludes.get_exclude_patterns())
         return FastFindPackages.find(*args, **kwargs)
+
+
 else:
+
     def find_packages(*args, **kwargs):
-        kwargs.setdefault('exclude', excludes.get_exclude_patterns())
+        kwargs.setdefault("exclude", excludes.get_exclude_patterns())
         return setuptools.find_packages(*args, **kwargs)

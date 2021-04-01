@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,13 +19,7 @@ class SettingsModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:settings.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "^settings/$",
-                "shuup.admin.modules.settings.views.SystemSettingsView",
-                name="settings.list"
-            )
-        ]
+        return [admin_url("^settings/$", "shuup.admin.modules.settings.views.SystemSettingsView", name="settings.list")]
 
     def get_menu_entries(self, request):
         return [
@@ -34,6 +28,6 @@ class SettingsModule(AdminModule):
                 icon="fa fa-home",
                 url="shuup_admin:settings.list",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=4
+                ordering=4,
             )
         ]

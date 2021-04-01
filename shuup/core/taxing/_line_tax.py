@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -45,7 +45,7 @@ class LineTax(object):
     def rate(self):
         if not self.base_amount:
             return self.tax.rate
-        return (self.amount / self.base_amount)
+        return self.amount / self.base_amount
 
     @classmethod
     def from_tax(cls, tax, base_amount, **kwargs):
@@ -56,13 +56,7 @@ class LineTax(object):
         :type tax: shuup.core.models.Tax
         :type base_amount: shuup.utils.money.Money
         """
-        return cls(
-            tax=tax,
-            name=tax.name,
-            base_amount=base_amount,
-            amount=tax.calculate_amount(base_amount),
-            **kwargs
-        )
+        return cls(tax=tax, name=tax.name, base_amount=base_amount, amount=tax.calculate_amount(base_amount), **kwargs)
 
 
 class SourceLineTax(LineTax):
@@ -85,6 +79,4 @@ class SourceLineTax(LineTax):
         self.base_amount = base_amount
 
     def __repr__(self):
-        return '%s(%r, %r, %r, %r)' % (
-            type(self).__name__,
-            self.tax, self.name, self.amount, self.base_amount)
+        return "%s(%r, %r, %r, %r)" % (type(self).__name__, self.tax, self.name, self.amount, self.base_amount)

@@ -1,47 +1,57 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from collections import defaultdict
-
 import bleach
+from collections import defaultdict
 from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 from filer.models import Image
 
-from shuup.admin.forms.fields import (
-    Select2ModelField, Select2ModelMultipleField
-)
+from shuup.admin.forms.fields import Select2ModelField, Select2ModelMultipleField
 from shuup.admin.forms.quick_select import NoModel
 from shuup.admin.forms.widgets import (
-    FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
-    QuickAddDisplayUnitSelect, QuickAddManufacturerSelect,
-    QuickAddPaymentMethodsSelect, QuickAddProductTypeSelect,
-    QuickAddSalesUnitSelect, QuickAddShippingMethodsSelect,
-    QuickAddSupplierMultiSelect, QuickAddTaxClassSelect, TextEditorWidget
+    FileDnDUploaderWidget,
+    QuickAddCategoryMultiSelect,
+    QuickAddCategorySelect,
+    QuickAddDisplayUnitSelect,
+    QuickAddManufacturerSelect,
+    QuickAddPaymentMethodsSelect,
+    QuickAddProductTypeSelect,
+    QuickAddSalesUnitSelect,
+    QuickAddShippingMethodsSelect,
+    QuickAddSupplierMultiSelect,
+    QuickAddTaxClassSelect,
+    TextEditorWidget,
 )
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
-    Attribute, AttributeType, Category, Manufacturer, PaymentMethod, Product,
-    ProductMedia, ProductMediaKind, ProductType, ShippingMethod, ShopProduct,
-    Supplier
+    Attribute,
+    AttributeType,
+    Category,
+    Manufacturer,
+    PaymentMethod,
+    Product,
+    ProductMedia,
+    ProductMediaKind,
+    ProductType,
+    ShippingMethod,
+    ShopProduct,
+    Supplier,
 )
 from shuup.utils.i18n import get_language_name
-from shuup.utils.multilanguage_model_form import (
-    MultiLanguageModelForm, to_language_codes
-)
+from shuup.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
 
 
 class ProductBaseForm(MultiLanguageModelForm):
@@ -49,7 +59,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         label=_("Primary Product Image"),
         widget=FileDnDUploaderWidget(kind="images", upload_path="/products/images"),
         help_text=_("The main product image. You can add additional images in the `Product Images` tab."),
-        required=False
+        required=False,
     )
 
     class Meta:
@@ -83,14 +93,16 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput(),
             "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
             "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
-            "description": (TextEditorWidget()
-                            if settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
-                            else forms.Textarea(attrs={"rows": 5})),
+            "description": (
+                TextEditorWidget()
+                if settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
+                else forms.Textarea(attrs={"rows": 5})
+            ),
             "short_description": forms.TextInput(),
         }
 
     def __init__(self, **kwargs):
-        self.request = kwargs.pop('request', None)
+        self.request = kwargs.pop("request", None)
         super(ProductBaseForm, self).__init__(**kwargs)
         self.fields["sales_unit"].required = True  # TODO: Move this to model
         self.fields["type"].required = True
@@ -104,8 +116,8 @@ class ProductBaseForm(MultiLanguageModelForm):
             widget=QuickAddManufacturerSelect(
                 initial=(self.instance.manufacturer if self.instance.pk else None),
                 editable_model="shuup.Manufacturer",
-                attrs={"data-placeholder": ugettext("Select a manufacturer")}
-            )
+                attrs={"data-placeholder": ugettext("Select a manufacturer")},
+            ),
         )
         if self.instance.pk:
             initial_type = self.instance.type
@@ -116,10 +128,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             label=_("Product type"),
             initial=initial_type,
             model=ProductType,
-            widget=QuickAddProductTypeSelect(
-                editable_model="shuup.ProductType",
-                initial=initial_type
-            )
+            widget=QuickAddProductTypeSelect(editable_model="shuup.ProductType", initial=initial_type),
         )
 
     def clean_sku(self):
@@ -132,7 +141,8 @@ class ProductBaseForm(MultiLanguageModelForm):
         # Make sure sku is unique and raise proper validation error if not
         if sku_unique_qs.exists():
             raise ValidationError(
-                _("Given value is already in use, please use unique SKU and try again."), code="sku_not_unique")
+                _("Given value is already in use, please use unique SKU and try again."), code="sku_not_unique"
+            )
         return sku
 
     def save(self):
@@ -150,8 +160,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         return instance
 
     def clean(self):
-        form_pre_clean.send(
-            Product, instance=self.instance, cleaned_data=self.cleaned_data)
+        form_pre_clean.send(Product, instance=self.instance, cleaned_data=self.cleaned_data)
         super(ProductBaseForm, self).clean()
 
         if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
@@ -159,8 +168,7 @@ class ProductBaseForm(MultiLanguageModelForm):
                 if key.startswith("description__"):
                     self.cleaned_data[key] = bleach.clean(value, tags=[])
 
-        form_post_clean.send(
-            Product, instance=self.instance, cleaned_data=self.cleaned_data)
+        form_post_clean.send(Product, instance=self.instance, cleaned_data=self.cleaned_data)
 
 
 class ShopProductForm(MultiLanguageModelForm):
@@ -190,8 +198,10 @@ class ShopProductForm(MultiLanguageModelForm):
             # TODO: "shop_primary_image",
         )
         help_texts = {
-            "backorder_maximum": _("Number of units that can be purchased after the product is out of stock. "
-                                   "Set to blank for product to be purchasable without limits.")
+            "backorder_maximum": _(
+                "Number of units that can be purchased after the product is out of stock. "
+                "Set to blank for product to be purchasable without limits."
+            )
         }
         widgets = {
             "display_unit": QuickAddDisplayUnitSelect(editable_model="shuup.DisplayUnit"),
@@ -225,18 +235,15 @@ class ShopProductForm(MultiLanguageModelForm):
             initial_suppliers = self.instance.suppliers.all()
         elif not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
             supplier = Supplier.objects.first()
-            initial_suppliers = ([supplier] if supplier else [])
+            initial_suppliers = [supplier] if supplier else []
 
         if settings.SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC.get("suppliers"):
             self.fields["suppliers"] = Select2ModelMultipleField(
                 initial=initial_suppliers,
                 model=Supplier,
-                widget=QuickAddSupplierMultiSelect(
-                    initial=initial_suppliers,
-                    attrs={"data-search-mode": "enabled"}
-                ),
+                widget=QuickAddSupplierMultiSelect(initial=initial_suppliers, attrs={"data-search-mode": "enabled"}),
                 label=self.fields["suppliers"].label,
-                required=False
+                required=False,
             )
         else:
             self.fields["suppliers"].widget = QuickAddSupplierMultiSelect(initial=initial_suppliers)
@@ -248,17 +255,17 @@ class ShopProductForm(MultiLanguageModelForm):
                 widget=QuickAddCategorySelect(
                     editable_model="shuup.Category",
                     initial=(self.instance.primary_category if self.instance.pk else None),
-                    attrs={"data-placeholder": ugettext("Select a category")}
+                    attrs={"data-placeholder": ugettext("Select a category")},
                 ),
                 label=self.fields["primary_category"].label,
-                required=False
+                required=False,
             )
             self.fields["categories"] = Select2ModelMultipleField(
                 initial=initial_categories,
                 model=Category,
                 widget=QuickAddCategoryMultiSelect(initial=initial_categories),
                 label=self.fields["categories"].label,
-                required=False
+                required=False,
             )
         else:
             categories_choices = [
@@ -272,12 +279,10 @@ class ShopProductForm(MultiLanguageModelForm):
                 editable_model="shuup.Category",
                 attrs={"data-placeholder": ugettext("Select a category")},
                 choices=categories_choices,
-                model=NoModel()
+                model=NoModel(),
             )
             self.fields["categories"].widget = QuickAddCategoryMultiSelect(
-                initial=initial_categories,
-                choices=categories_choices,
-                model=NoModel()
+                initial=initial_categories, choices=categories_choices, model=NoModel()
             )
 
     # TODO: Move this to model
@@ -294,8 +299,7 @@ class ShopProductForm(MultiLanguageModelForm):
         return backorder_maximum
 
     def clean(self):
-        form_pre_clean.send(
-            ShopProduct, instance=self.instance, cleaned_data=self.cleaned_data)
+        form_pre_clean.send(ShopProduct, instance=self.instance, cleaned_data=self.cleaned_data)
         data = super(ShopProductForm, self).clean()
         if not getattr(settings, "SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES", False):
             return data
@@ -316,15 +320,13 @@ class ShopProductForm(MultiLanguageModelForm):
         data["primary_category"] = primary_category
         data["categories"] = categories
 
-        form_post_clean.send(
-            ShopProduct, instance=self.instance, cleaned_data=data)
+        form_post_clean.send(ShopProduct, instance=self.instance, cleaned_data=data)
         return data
 
 
 class ProductAttributesForm(forms.Form):
     def __init__(self, **kwargs):
-        self.default_language = kwargs.pop(
-            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        self.default_language = kwargs.pop("default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         self.language_names = dict((lang, get_language_name(lang)) for lang in self.languages)
         self.product = kwargs.pop("product")
@@ -370,9 +372,7 @@ class ProductAttributesForm(forms.Form):
             self.translated_field_names.append(field_name)
 
             if pa and lang in extant_languages:
-                self.initial[field_name] = getattr(
-                    pa.get_translation(lang), "translated_string_value", None
-                )
+                self.initial[field_name] = getattr(pa.get_translation(lang), "translated_string_value", None)
             self._field_languages[attribute.identifier][lang] = field_name
 
     def save(self):
@@ -398,16 +398,7 @@ class ProductAttributesForm(forms.Form):
 class BaseProductMediaForm(MultiLanguageModelForm):
     class Meta:
         model = ProductMedia
-        fields = (
-            "file",
-            "ordering",
-            "external_url",
-            "public",
-            "title",
-            "description",
-            "purchased",
-            "kind"
-        )
+        fields = ("file", "ordering", "external_url", "public", "title", "description", "purchased", "kind")
 
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product")
@@ -421,9 +412,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
             # multiple media kinds allowed, filter the choices list to reflect the `self.allowed_media_kinds`
             allowed_kinds_values = set(v.value for v in self.allowed_media_kinds)
             self.fields["kind"].choices = [
-                (value, choice)
-                for value, choice in self.fields["kind"].choices
-                if value in allowed_kinds_values
+                (value, choice) for value, choice in self.fields["kind"].choices if value in allowed_kinds_values
             ]
 
             if len(self.allowed_media_kinds) == 1:
@@ -471,8 +460,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         self.product = kwargs.pop("product")
         self.request = kwargs.pop("request", None)
-        self.default_language = kwargs.pop(
-            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        self.default_language = kwargs.pop("default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         kwargs.pop("empty_permitted", None)  # this is unknown to formset
         super(BaseProductMediaFormSet, self).__init__(*args, **kwargs)

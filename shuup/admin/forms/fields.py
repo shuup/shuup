@@ -1,17 +1,14 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
-from numbers import Number
-
-from django.forms import (
-    DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
-)
+from django.forms import DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from numbers import Number
 
 
 class PercentageField(DecimalField):
@@ -33,9 +30,9 @@ class PercentageField(DecimalField):
     def widget_attrs(self, widget):
         attrs = super(PercentageField, self).widget_attrs(widget)
         if self.min_value is not None:
-            attrs['min'] = self.min_value * self.MULTIPLIER
+            attrs["min"] = self.min_value * self.MULTIPLIER
         if self.max_value is not None:
-            attrs['max'] = self.max_value * self.MULTIPLIER
+            attrs["max"] = self.max_value * self.MULTIPLIER
         return attrs
 
 
@@ -81,9 +78,9 @@ class Select2MultipleField(Field):
         # make sure to add the initial values as choices to the field
         if values and not self.widget.choices:
             from django.utils.encoding import force_text
+
             self.widget.choices = [
-                (instance.pk, force_text(instance))
-                for instance in self.model.objects.filter(pk__in=values)
+                (instance.pk, force_text(instance)) for instance in self.model.objects.filter(pk__in=values)
             ]
         return values
 
@@ -108,6 +105,7 @@ class Select2ModelMultipleField(Select2MultipleField):
     """
     Just like Select2MultipleField, but return instances instead of ids.
     """
+
     def prepare_value(self, value):
         return [getattr(v, "pk", v) for v in value or []]
 
@@ -121,6 +119,7 @@ class Select2ModelMultipleField(Select2MultipleField):
 
 class Select2MultipleMainProductField(Select2MultipleField):
     """Search only from parent and normal products."""
+
     def widget_attrs(self, widget):
         attrs = super(Select2MultipleMainProductField, self).widget_attrs(widget)
         attrs.update({"data-search-mode": "main"})
@@ -138,7 +137,7 @@ class WeekdaysSelectMultiple(SelectMultiple):
         if not isinstance(value, (tuple, list)):
             value = [value]
 
-        return [force_text(v) if v is not None else '' for v in value]
+        return [force_text(v) if v is not None else "" for v in value]
 
 
 class WeekdayField(MultipleChoiceField):
@@ -154,7 +153,7 @@ class WeekdayField(MultipleChoiceField):
         (6, _("Sunday")),
     ]
 
-    def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text='', *args, **kwargs):
+    def __init__(self, choices=(), required=True, widget=None, label=None, initial=None, help_text="", *args, **kwargs):
         if not choices:
             choices = self.DAYS_OF_THE_WEEK
 

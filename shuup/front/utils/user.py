@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -14,10 +14,10 @@ def _is_admin_user(request):
     if not (user and shop):
         return False
 
-    if getattr(user, 'is_superuser', False):
+    if getattr(user, "is_superuser", False):
         return True
 
-    return bool(getattr(user, 'is_staff', False) and shop.staff_members.filter(id=user.id).exists())
+    return bool(getattr(user, "is_staff", False) and shop.staff_members.filter(id=user.id).exists())
 
 
 def is_admin_user(request):

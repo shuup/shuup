@@ -1,23 +1,28 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 
 from shuup.core.models import get_person_contact
 from shuup.front.apps.saved_carts.views import (
-    CartAddAllProductsView, CartDeleteView, CartDetailView, CartListView,
-    CartSaveView
+    CartAddAllProductsView,
+    CartDeleteView,
+    CartDetailView,
+    CartListView,
+    CartSaveView,
 )
 from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
-    create_product, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_default_supplier
+    create_product,
+    get_default_payment_method,
+    get_default_shipping_method,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
@@ -57,26 +62,20 @@ def _save_cart_with_products(rf, user):
 @pytest.mark.django_db
 def test_save_cart_errors(rf, regular_user):
     get_default_shop()
-    request = apply_request_middleware(rf.post("/", {
-        "title": "test"
-    }))
+    request = apply_request_middleware(rf.post("/", {"title": "test"}))
     response = CartSaveView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert response.status_code == 403, "can't save cart as anonymous user"
     assert not data["ok"], "can't save cart without title"
 
     customer = get_person_contact(regular_user)
-    request = apply_request_middleware(rf.post("/", {
-        "title": ""
-    }), customer=customer, user=regular_user)
+    request = apply_request_middleware(rf.post("/", {"title": ""}), customer=customer, user=regular_user)
     response = CartSaveView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert response.status_code == 400
     assert not data["ok"], "can't save cart without title"
 
-    request = apply_request_middleware(rf.post("/", {
-        "title": "test"
-    }), customer=customer, user=regular_user)
+    request = apply_request_middleware(rf.post("/", {"title": "test"}), customer=customer, user=regular_user)
     response = CartSaveView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert response.status_code == 400

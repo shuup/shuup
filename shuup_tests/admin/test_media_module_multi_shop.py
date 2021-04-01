@@ -1,11 +1,10 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
@@ -21,7 +20,6 @@ from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
-
 
 
 @pytest.mark.django_db

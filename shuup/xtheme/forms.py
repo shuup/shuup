@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import warnings
 from copy import deepcopy
-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -33,12 +32,16 @@ class GenericThemeForm(forms.ModelForm):
             else:
                 warnings.warn(
                     "Warning! Using list of tuples in `theme.stylesheets` will deprecate "
-                    "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+                    "in Shuup 0.5.7. Use list of dictionaries instead.",
+                    RemovedInFutureShuupWarning,
+                )
                 choices = self.theme.stylesheets
             self.fields["stylesheet"] = forms.ChoiceField(
-                label=_("Stylesheets"), choices=choices, initial=choices[0], required=True, help_text=_(
-                    "The fonts, colors, and styles to use with your theme."
-                )
+                label=_("Stylesheets"),
+                choices=choices,
+                initial=choices[0],
+                required=True,
+                help_text=_("The fonts, colors, and styles to use with your theme."),
             )
 
         fields = self.theme.fields

@@ -19,11 +19,11 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (c) 2012-2021 by Shoop Commerce Ltd. <support@shuup.com>
+Copyright (c) 2012-2021 by Shuup Commerce Inc. <support@shuup.com>
 
-Shuup is International Registered Trademark & Property of Shoop Commerce Ltd.,
-Business ID: FI27184225,
-Business Address: Iso-Roobertinkatu 20-22, 00120 HELSINKI, Finland.
+Shuup is International Registered Trademark & Property of Shuup Commerce Inc.,
+Business ID: BC1126729,
+Business Address: 1500 West Georgia Suite 1300, Vancouver, BC, V6G-2Z6, Canada.
 
 CLA
 ---

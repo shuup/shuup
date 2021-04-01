@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -71,7 +71,8 @@ class OrderSetStatusView(DetailView):
         order.status = new_status
         order.save(update_fields=("status",))
         message = _("Order status changed: from `{old_status}` to `{new_status}`.").format(
-            old_status=old_status, new_status=new_status)
+            old_status=old_status, new_status=new_status
+        )
         order.add_log_entry(message, user=request.user, identifier="status_change")
         messages.success(self.request, message)
 

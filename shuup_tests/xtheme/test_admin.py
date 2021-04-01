@@ -1,6 +1,6 @@
 from shuup.apps.provides import override_provides
 from shuup.testing.utils import apply_request_middleware
-from shuup.xtheme.admin_module.views import ThemeConfigView, ThemeConfigDetailView, ThemeGuideTemplateView
+from shuup.xtheme.admin_module.views import ThemeConfigDetailView, ThemeConfigView, ThemeGuideTemplateView
 from shuup_tests.xtheme.utils import FauxTheme
 
 

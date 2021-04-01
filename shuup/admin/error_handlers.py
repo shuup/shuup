@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -23,14 +23,18 @@ class AdminPageErrorHandler(ErrorPageHandler):
         # we can't handle 404 errors, neither static or media files
         # since 404 errors means no URL match,
         # how can we figure out, in a elegant way if we are in the Admin?
-        if (error_status == 404 or request.path.startswith(settings.STATIC_URL) or
-                request.path.startswith(settings.MEDIA_URL)):
+        if (
+            error_status == 404
+            or request.path.startswith(settings.STATIC_URL)
+            or request.path.startswith(settings.MEDIA_URL)
+        ):
             return False
 
         # we are in a view which belongs to the Admin
         elif request.resolver_match:
             from shuup.admin import ShuupAdminAppConfig
-            return (request.resolver_match.app_name == ShuupAdminAppConfig.label)
+
+            return request.resolver_match.app_name == ShuupAdminAppConfig.label
 
         return False
 

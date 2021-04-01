@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 import uuid
 from datetime import timedelta
-
-import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
@@ -17,25 +16,33 @@ from django.utils.translation import activate
 from parler.models import TranslationDoesNotExist
 
 from shuup import configuration
-from shuup.core.excs import (
-    ProductNotOrderableProblem, ProductNotVisibleProblem
-)
+from shuup.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
 from shuup.core.models import (
-    AnonymousContact, Category, get_person_contact, ProductMode,
-    ProductVariationResult, ProductVariationVariable,
-    ProductVariationVariableValue, ProductVisibility, ShopProduct,
-    ShopProductVisibility, Supplier
+    AnonymousContact,
+    Category,
+    ProductMode,
+    ProductVariationResult,
+    ProductVariationVariable,
+    ProductVariationVariableValue,
+    ProductVisibility,
+    ShopProduct,
+    ShopProductVisibility,
+    Supplier,
+    get_person_contact,
 )
 from shuup.core.models._product_variation import hash_combination
 from shuup.testing.factories import (
-    CategoryFactory, create_product, get_all_seeing_key,
-    get_default_customer_group, get_default_product, get_default_shop,
-    get_default_shop_product, get_default_supplier
+    CategoryFactory,
+    create_product,
+    get_all_seeing_key,
+    get_default_customer_group,
+    get_default_product,
+    get_default_shop,
+    get_default_shop_product,
+    get_default_supplier,
 )
 from shuup_tests.core.utils import modify
-from shuup_tests.utils import (
-    error_does_not_exist, error_exists, printable_gibberish
-)
+from shuup_tests.utils import error_does_not_exist, error_exists, printable_gibberish
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -86,9 +93,17 @@ def test_product_minimum_order_quantity(admin_user):
     supplier = get_default_supplier(shop_product.shop)
     admin_contact = get_person_contact(admin_user)
 
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True, minimum_purchase_quantity=10):
-        assert any(ve.code == "purchase_quantity_not_met" for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=1))
-        assert not any(ve.code == "purchase_quantity_not_met" for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=15))
+    with modify(
+        shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True, minimum_purchase_quantity=10
+    ):
+        assert any(
+            ve.code == "purchase_quantity_not_met"
+            for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=1)
+        )
+        assert not any(
+            ve.code == "purchase_quantity_not_met"
+            for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=15)
+        )
 
 
 @pytest.mark.django_db
@@ -98,9 +113,18 @@ def test_product_order_multiple(admin_user):
     admin_contact = get_person_contact(admin_user)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True, purchase_multiple=7):
-        assert any(ve.code == "invalid_purchase_multiple" for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=4))
-        assert any(ve.code == "invalid_purchase_multiple" for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=25))
-        assert not any(ve.code == "invalid_purchase_multiple" for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=49))
+        assert any(
+            ve.code == "invalid_purchase_multiple"
+            for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=4)
+        )
+        assert any(
+            ve.code == "invalid_purchase_multiple"
+            for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=25)
+        )
+        assert not any(
+            ve.code == "invalid_purchase_multiple"
+            for ve in shop_product.get_orderability_errors(supplier=supplier, customer=admin_contact, quantity=49)
+        )
 
 
 @pytest.mark.django_db
@@ -111,7 +135,11 @@ def test_product_unsupplied(admin_user):
     admin_contact = get_person_contact(admin_user)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True):
-        assert any(ve.code == "invalid_supplier" for ve in shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1))
+        assert any(
+            ve.code == "invalid_supplier"
+            for ve in shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1)
+        )
+
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
@@ -123,32 +151,54 @@ def test_product_visibility(rf, admin_user, regular_user):
 
     configuration.set(None, get_all_seeing_key(admin_contact), True)
 
-    with modify(shop_product.product, deleted=True):  # NB: assigning to `product` here works because `get_shop_instance` populates `_product_cache`
+    with modify(
+        shop_product.product, deleted=True
+    ):  # NB: assigning to `product` here works because `get_shop_instance` populates `_product_cache`
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_deleted")
         assert error_exists(shop_product.get_visibility_errors(customer=admin_contact), "product_deleted")
         with pytest.raises(ProductNotVisibleProblem):
             shop_product.raise_if_not_visible(anon_contact)
         assert not shop_product.is_list_visible()
 
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, visibility=ShopProductVisibility.NOT_VISIBLE):
+    with modify(
+        shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, visibility=ShopProductVisibility.NOT_VISIBLE
+    ):
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_visible")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible")
         assert not shop_product.is_list_visible()
 
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_LOGGED_IN, visibility=ShopProductVisibility.ALWAYS_VISIBLE):
-        assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_visible_to_anonymous")
-        assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_anonymous")
+    with modify(
+        shop_product,
+        visibility_limit=ProductVisibility.VISIBLE_TO_LOGGED_IN,
+        visibility=ShopProductVisibility.ALWAYS_VISIBLE,
+    ):
+        assert error_exists(
+            shop_product.get_visibility_errors(customer=anon_contact), "product_not_visible_to_anonymous"
+        )
+        assert error_does_not_exist(
+            shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_anonymous"
+        )
 
     customer_group = get_default_customer_group()
     grouped_user = get_user_model().objects.create_user(username=printable_gibberish(20))
     grouped_contact = get_person_contact(grouped_user)
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_GROUPS, visibility=ShopProductVisibility.ALWAYS_VISIBLE):
+    with modify(
+        shop_product,
+        visibility_limit=ProductVisibility.VISIBLE_TO_GROUPS,
+        visibility=ShopProductVisibility.ALWAYS_VISIBLE,
+    ):
         shop_product.visibility_groups.add(customer_group)
         customer_group.members.add(grouped_contact)
         customer_group.members.remove(get_person_contact(regular_user))
-        assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_visible_to_group")
-        assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_group")
-        assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
+        assert error_does_not_exist(
+            shop_product.get_visibility_errors(customer=grouped_contact), "product_not_visible_to_group"
+        )
+        assert error_does_not_exist(
+            shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_group"
+        )
+        assert error_exists(
+            shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group"
+        )
 
     configuration.set(None, get_all_seeing_key(admin_contact), False)
 
@@ -167,9 +217,13 @@ def test_product_visibility_available_until(rf, admin_user, regular_user):
 
     with modify(shop_product, available_until=(now() + timedelta(seconds=200))):
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=anon_contact), "product_not_available")
-        assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_available")
+        assert error_does_not_exist(
+            shop_product.get_visibility_errors(customer=grouped_contact), "product_not_available"
+        )
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_available")
-        assert error_does_not_exist(shop_product.get_visibility_errors(customer=regular_contact), "product_not_available")
+        assert error_does_not_exist(
+            shop_product.get_visibility_errors(customer=regular_contact), "product_not_available"
+        )
 
     with modify(shop_product, available_until=(now() - timedelta(seconds=150))):
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_available")
@@ -188,7 +242,9 @@ def test_complex_orderability(admin_user):
 
     parent = create_product("SuperComplexVarParent")
 
-    shop_product = ShopProduct.objects.create(product=parent, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+    shop_product = ShopProduct.objects.create(
+        product=parent, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE
+    )
     shop_product.suppliers.add(fake_supplier)
     shop_product.visibility = ShopProductVisibility.ALWAYS_VISIBLE
     shop_product.save()
@@ -217,14 +273,16 @@ def test_complex_orderability(admin_user):
     brown_color_value = ProductVariationVariableValue.objects.get(variable=color_var, identifier="brown")
 
     result1 = ProductVariationResult.resolve(parent, {color_var: brown_color_value, size_var: small_size_value})
-    result2 = ProductVariationResult.resolve(parent,
-                                             {color_var.pk: brown_color_value.pk, size_var.pk: small_size_value.pk})
+    result2 = ProductVariationResult.resolve(
+        parent, {color_var.pk: brown_color_value.pk, size_var.pk: small_size_value.pk}
+    )
     assert result1 and result2
     assert result1.pk == result2.pk
 
     assert error_does_not_exist(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     # result 1 is no longer sellable
     sp = result1.get_shop_instance(shop)
@@ -233,7 +291,8 @@ def test_complex_orderability(admin_user):
 
     assert error_does_not_exist(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     # no sellable children
     for combo in combinations:
@@ -244,7 +303,8 @@ def test_complex_orderability(admin_user):
 
     assert error_exists(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     # no sellable children with no shop product
     for combo in combinations:
@@ -255,7 +315,8 @@ def test_complex_orderability(admin_user):
 
     assert error_exists(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
 
 def test_simple_orderability(admin_user):
@@ -281,7 +342,8 @@ def test_simple_orderability(admin_user):
     shop_product = parent.get_shop_instance(shop)
     assert error_does_not_exist(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     first_child = children[0]
     child_sp = first_child.get_shop_instance(shop)
@@ -290,7 +352,8 @@ def test_simple_orderability(admin_user):
 
     assert error_does_not_exist(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     for child in children:
         child_sp = child.get_shop_instance(shop)
@@ -299,7 +362,8 @@ def test_simple_orderability(admin_user):
 
     assert error_exists(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
     # delete all children shop products
     for child in children:
@@ -308,7 +372,8 @@ def test_simple_orderability(admin_user):
 
     assert error_exists(
         shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
-        code="no_sellable_children")
+        code="no_sellable_children",
+    )
 
 
 @pytest.mark.django_db
@@ -398,6 +463,7 @@ def test_get_safe_strings(key):
 @pytest.mark.django_db
 def test_shop_instance_cache():
     from shuup.core import cache
+
     cache.clear()
 
     shop = get_default_shop()

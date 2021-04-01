@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.utils.translation import activate
 
-from shuup.admin.modules.contacts.views import (
-    ContactGroupMassEditView, ContactMassEditView
-)
+from shuup.admin.modules.contacts.views import ContactGroupMassEditView, ContactMassEditView
 from shuup.core.models import Contact, ContactGroup, Gender
 from shuup.testing.factories import create_random_person, get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -43,12 +41,9 @@ def test_mass_edit_contacts2(rf, admin_user):
     contact1 = create_random_person()
     contact2 = create_random_person()
     contact_group = ContactGroup.objects.create(name="test", shop=shop)
-    data = {
-        "contact_group": contact_group.pk
-    }
+    data = {"contact_group": contact_group.pk}
     request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
     request.session["mass_action_ids"] = [contact1.pk, contact2.pk]
-
 
     view = ContactGroupMassEditView.as_view()
     response = view(request=request)

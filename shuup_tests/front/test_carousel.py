@@ -5,23 +5,20 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from datetime import datetime, timedelta
-
 import pytest
 from bs4 import BeautifulSoup
+from datetime import datetime, timedelta
 from django.conf import settings
+from django.test.client import Client
 from django.utils import translation
 from filer.models import Image
 
 from shuup.front.apps.carousel.admin_module.forms import SlideForm
 from shuup.front.apps.carousel.models import Carousel, LinkTargetType, Slide
 from shuup.front.apps.carousel.plugins import BannerBoxPlugin, CarouselPlugin
-from shuup.testing.factories import (
-    get_default_category, get_default_product, get_default_shop, get_shop
-)
+from shuup.testing.factories import get_default_category, get_default_product, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_jinja_context
-from django.test.client import Client
 from shuup_tests.simple_cms.utils import create_page
 
 
@@ -32,34 +29,24 @@ def test_carousel_plugin_form(rf):
     form_class = plugin.get_editor_form_class()
 
     checks = [
-        (
-            {},
-            {"carousel": None, "active": False, 'render_image_text': False}
-        ),
-        (
-            {"carousel": test_carousel.pk},
-            {"carousel": test_carousel.pk, "active": False, 'render_image_text': False}
-        ),
+        ({}, {"carousel": None, "active": False, "render_image_text": False}),
+        ({"carousel": test_carousel.pk}, {"carousel": test_carousel.pk, "active": False, "render_image_text": False}),
         (
             {"carousel": test_carousel.pk, "active": False},
-            {"carousel": test_carousel.pk, "active": False, 'render_image_text': False}
+            {"carousel": test_carousel.pk, "active": False, "render_image_text": False},
         ),
         (
-            {"carousel": test_carousel.pk, "active": True, 'render_image_text': False},
-            {"carousel": test_carousel.pk, "active": True, 'render_image_text': False}
+            {"carousel": test_carousel.pk, "active": True, "render_image_text": False},
+            {"carousel": test_carousel.pk, "active": True, "render_image_text": False},
         ),
         (
-            {"carousel": test_carousel.pk, "active": True, 'render_image_text': True},
-            {"carousel": test_carousel.pk, "active": True, 'render_image_text': True}
-        )
+            {"carousel": test_carousel.pk, "active": True, "render_image_text": True},
+            {"carousel": test_carousel.pk, "active": True, "render_image_text": True},
+        ),
     ]
 
     for data, expected in checks:
-        form = form_class(
-            data=data,
-            plugin=plugin,
-            request=apply_request_middleware(rf.get("/"))
-        )
+        form = form_class(data=data, plugin=plugin, request=apply_request_middleware(rf.get("/")))
         assert form.is_valid()
         assert form.get_config() == expected
 
@@ -223,10 +210,13 @@ def test_is_visible():
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("target_type,expected_target", [
-    (LinkTargetType.CURRENT, "_self"),
-    (LinkTargetType.NEW, "_blank"),
-])
+@pytest.mark.parametrize(
+    "target_type,expected_target",
+    [
+        (LinkTargetType.CURRENT, "_self"),
+        (LinkTargetType.NEW, "_blank"),
+    ],
+)
 def test_get_link_target(target_type, expected_target):
     test_carousel = Carousel.objects.create(name="test")
     test_image = Image.objects.create(original_filename="slide.jpg")
@@ -250,7 +240,7 @@ def test_slide_admin_form(rf, admin_user):
         carousel=test_carousel,
         languages=settings.LANGUAGES,
         default_language=settings.PARLER_DEFAULT_LANGUAGE_CODE,
-        request=request
+        request=request,
     )
 
     soup = BeautifulSoup(slide_form.as_table())
@@ -273,7 +263,7 @@ def test_slide_admin_form(rf, admin_user):
         carousel=test_carousel,
         languages=settings.LANGUAGES,
         default_language=settings.PARLER_DEFAULT_LANGUAGE_CODE,
-        request=request
+        request=request,
     )
 
     soup = BeautifulSoup(slide_form.as_table())
@@ -290,9 +280,9 @@ def test_slide_admin_form(rf, admin_user):
 def test_carousel_custom_colors(rf):
     from shuup.front.apps.carousel.plugins import CarouselPlugin
     from shuup.utils.django_compat import reverse
-    from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
-    from shuup.xtheme.layout import Layout
     from shuup.xtheme._theme import get_current_theme
+    from shuup.xtheme.layout import Layout
+    from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
 
     shop = get_default_shop()
     shop.maintenance_mode = False
@@ -302,9 +292,11 @@ def test_carousel_custom_colors(rf):
     carousel.shops.add(shop)
     test_image = Image.objects.create(original_filename="slide.jpg")
     test_slide = Slide.objects.create(
-        carousel=carousel, name="test",
+        carousel=carousel,
+        name="test",
         available_from=(datetime.now() - timedelta(days=1)),
-        image=test_image, target=LinkTargetType.CURRENT
+        image=test_image,
+        target=LinkTargetType.CURRENT,
     )
 
     theme = get_current_theme(shop)
@@ -315,10 +307,7 @@ def test_carousel_custom_colors(rf):
     layout.begin_column({"md": 12})
     layout.add_plugin(CarouselPlugin.identifier, {"carousel": carousel.pk})
     svc = SavedViewConfig(
-        theme_identifier=theme.identifier,
-        shop=shop,
-        view_name="IndexView",
-        status=SavedViewConfigStatus.CURRENT_DRAFT
+        theme_identifier=theme.identifier, shop=shop, view_name="IndexView", status=SavedViewConfigStatus.CURRENT_DRAFT
     )
     svc.set_layout_data(layout.placeholder_name, layout)
     svc.save()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -87,19 +87,22 @@ def get_orderability_errors(product, shop_products):
         return orderability_errors
     for shop_product in shop_products:
         orderability_errors.extend(
-            ["%s: %s" % (shop_product.shop.name, msg.message)
-             for msg in shop_product.get_orderability_errors(
-                supplier=None,
-                quantity=shop_product.minimum_purchase_quantity,
-                customer=None)]
+            [
+                "%s: %s" % (shop_product.shop.name, msg.message)
+                for msg in shop_product.get_orderability_errors(
+                    supplier=None, quantity=shop_product.minimum_purchase_quantity, customer=None
+                )
+            ]
         )
         for supplier in shop_product.suppliers.enabled(shop=shop_product.shop):
             orderability_errors.extend(
-                ["%s: %s" % (supplier.name, msg.message)
-                 for msg in supplier.get_orderability_errors(
-                    shop_product=shop_product,
-                    quantity=shop_product.minimum_purchase_quantity,
-                    customer=None)])
+                [
+                    "%s: %s" % (supplier.name, msg.message)
+                    for msg in supplier.get_orderability_errors(
+                        shop_product=shop_product, quantity=shop_product.minimum_purchase_quantity, customer=None
+                    )
+                ]
+            )
     return orderability_errors
 
 
@@ -113,9 +116,8 @@ class PackageChildFormSet(ProductChildBaseFormSet):
                 "child": product,
                 "quantity": quantity,
             }
-            for (product, quantity)
-            in six.iteritems(self.parent_product.get_package_child_to_quantity_map())
-            ]
+            for (product, quantity) in six.iteritems(self.parent_product.get_package_child_to_quantity_map())
+        ]
         super(PackageChildFormSet, self).__init__(**kwargs)
 
     def save(self):
@@ -130,9 +132,9 @@ class PackageChildFormSet(ProductChildBaseFormSet):
             except ImpossibleProductModeException as ipme:
                 six.raise_from(
                     Problem(
-                        _("Unable to make package %(product)s: %(error)s.") %
-                        {"product": parent_product, "error": ipme}
-                    ), ipme
+                        _("Unable to make package %(product)s: %(error)s.") % {"product": parent_product, "error": ipme}
+                    ),
+                    ipme,
                 )
 
         products_to_add = selected_products - current_products
@@ -165,8 +167,7 @@ class PackageChildFormSet(ProductChildBaseFormSet):
             selected_product_quantities[child_product] = quantity
         selected_quantities = {
             product: quantity
-            for product, quantity
-            in selected_product_quantities.items()
+            for product, quantity in selected_product_quantities.items()
             if (product not in removed_products and product != self.parent_product)
         }
 

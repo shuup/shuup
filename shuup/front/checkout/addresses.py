@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,13 +13,9 @@ from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
-from shuup.core.models import (
-    CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
-)
+from shuup.core.models import CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
 from shuup.front.checkout import CheckoutPhaseViewMixin
-from shuup.front.utils.companies import (
-    allow_company_registration, TaxNumberCleanMixin
-)
+from shuup.front.utils.companies import TaxNumberCleanMixin, allow_company_registration
 from shuup.utils.django_compat import force_text
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
@@ -28,7 +24,10 @@ from shuup.utils.importing import cached_load
 class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
     class Meta:
         model = CompanyContact
-        fields = ("name", "tax_number",)
+        fields = (
+            "name",
+            "tax_number",
+        )
 
     def __init__(self, **kwargs):
         self.request = kwargs.pop("request")
@@ -49,25 +48,22 @@ class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
 
 
 class SavedAddressForm(forms.Form):
-    kind_to_role_map = {
-        "shipping": SavedAddressRole.SHIPPING,
-        "billing": SavedAddressRole.BILLING
-    }
+    kind_to_role_map = {"shipping": SavedAddressRole.SHIPPING, "billing": SavedAddressRole.BILLING}
 
     addresses = forms.ChoiceField(label=_("Use a saved address"), required=False, choices=(), initial=None)
 
     def __init__(self, owner, kind, **kwargs):
         super(SavedAddressForm, self).__init__(**kwargs)
-        saved_addr_qs = SavedAddress.objects.filter(owner=owner,
-                                                    role=self.kind_to_role_map[kind],
-                                                    status=SavedAddressStatus.ENABLED)
+        saved_addr_qs = SavedAddress.objects.filter(
+            owner=owner, role=self.kind_to_role_map[kind], status=SavedAddressStatus.ENABLED
+        )
         saved_addr_choices = BLANK_CHOICE_DASH + [(addr.pk, addr.title) for addr in saved_addr_qs]
         self.fields["addresses"].choices = saved_addr_choices
 
 
 class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     identifier = "addresses"
-    title = _(u"Addresses")
+    title = _("Addresses")
 
     template_name = "shuup/front/checkout/addresses.jinja"
 
@@ -90,10 +86,12 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         default_address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         for kind in self.address_kinds:
             fg.add_form_def(kind, form_class=self.address_form_classes.get(kind, default_address_form_class))
-            fg.add_form_def("saved_{}".format(kind),
-                            form_class=SavedAddressForm,
-                            required=False,
-                            kwargs={"kind": kind, "owner": self.basket.customer})
+            fg.add_form_def(
+                "saved_{}".format(kind),
+                form_class=SavedAddressForm,
+                required=False,
+                kwargs={"kind": kind, "owner": self.basket.customer},
+            )
 
         if self.company_form_class and allow_company_registration(self.request.shop) and not self.request.customer:
             fg.add_form_def("company", self.company_form_class, required=False, kwargs={"request": self.request})
@@ -116,12 +114,12 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         return initial
 
     def _get_address_of_contact(self, contact, kind):
-        if kind == 'billing':
+        if kind == "billing":
             return contact.default_billing_address
-        elif kind == 'shipping':
+        elif kind == "shipping":
             return contact.default_shipping_address
         else:
-            raise TypeError('Error! Unknown address kind: %r.' % (kind,))
+            raise TypeError("Error! Unknown address kind: %r." % (kind,))
 
     def is_valid(self):
         return self.storage.has_all(self.address_kinds)
@@ -162,8 +160,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         context = super(AddressesPhase, self).get_context_data(**kwargs)
 
         # generate all the available saved addresses if user wants to use some
-        saved_addr_qs = SavedAddress.objects.filter(owner=self.basket.customer,
-                                                    status=SavedAddressStatus.ENABLED)
+        saved_addr_qs = SavedAddress.objects.filter(owner=self.basket.customer, status=SavedAddressStatus.ENABLED)
         context["saved_address"] = {}
         for saved_address in saved_addr_qs:
             data = {}

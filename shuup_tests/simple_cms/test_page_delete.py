@@ -1,11 +1,10 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 import pytest
 
 from shuup.simple_cms.admin_module.views import PageDeleteView, PageListView
@@ -32,6 +31,7 @@ def test_page_delete(rf, admin_user):
 
     page_two = create_page(url="bacon", shop=get_default_shop())
     assert Page.objects.filter(pk=page_two.pk).exists()
+
 
 @pytest.mark.django_db
 def test_ensure_deleted_inlist(rf, admin_user):

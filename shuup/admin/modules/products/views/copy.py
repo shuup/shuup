@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -13,9 +13,7 @@ from django.views.generic import DetailView
 
 from shuup.admin.signals import product_copied
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import (
-    Product, ProductAttribute, ProductMedia, ShopProduct
-)
+from shuup.core.models import Product, ProductAttribute, ProductMedia, ShopProduct
 from shuup.utils.models import get_data_dict
 
 
@@ -28,9 +26,7 @@ class ProductCopyView(DetailView):
         shop_product = self.get_object()
         product = shop_product.product
         product_data = get_data_dict(product)
-        product_data.update({
-            "sku": "{}-{}".format(product.sku, Product.objects.count())
-        })
+        product_data.update({"sku": "{}-{}".format(product.sku, Product.objects.count())})
         new_product = Product.objects.create(**product_data)
         new_product.name = product.name
         new_product.short_description = product.short_description

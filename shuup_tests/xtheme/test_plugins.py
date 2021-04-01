@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -11,9 +11,13 @@ from filer.models import File
 
 from shuup.core.models import CategoryStatus, CategoryVisibility
 from shuup.testing.factories import (
-    CategoryFactory, create_product, create_random_person,
-    get_default_category, get_default_customer_group, get_default_shop,
-    get_default_supplier
+    CategoryFactory,
+    create_product,
+    create_random_person,
+    get_default_category,
+    get_default_customer_group,
+    get_default_shop,
+    get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme import resources
@@ -22,8 +26,10 @@ from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.category_links import CategoryLinksPlugin
 from shuup.xtheme.plugins.image import ImageIDField, ImagePluginChoiceWidget
 from shuup.xtheme.plugins.products import (
-    HighlightType, ProductHighlightPlugin, ProductSelectionPlugin,
-    ProductsFromCategoryPlugin
+    HighlightType,
+    ProductHighlightPlugin,
+    ProductSelectionPlugin,
+    ProductsFromCategoryPlugin,
 )
 from shuup.xtheme.plugins.snippets import SnippetsPlugin
 from shuup.xtheme.plugins.social_media_links import SocialMediaLinksPlugin
@@ -215,9 +221,7 @@ def test_product_selection_plugin_v1(rf):
     sp3 = p3.get_shop_instance(shop)
 
     context = get_context(rf)
-    plugin = ProductSelectionPlugin({
-        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]
-    })
+    plugin = ProductSelectionPlugin({"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]})
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products
     assert p2 in context_products
@@ -233,25 +237,25 @@ def test_product_selection_plugin_v1(rf):
         assert not lcfg.is_valid()
 
         lcfg = LayoutCellFormGroup(
-            data={
-                "general-cell_width": "8",
-                "general-cell_align": "pull-right",
-                "plugin-products": [p1.pk, p2.pk]
-            },
+            data={"general-cell_width": "8", "general-cell_align": "pull-right", "plugin-products": [p1.pk, p2.pk]},
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()
         assert cell.config["products"] == [str(p1.pk), str(p2.pk)]
 
-@pytest.mark.parametrize("highlight_type,orderable", [
-    (HighlightType.NEWEST.value, True),
-    (HighlightType.RANDOM.value, True),
-    (HighlightType.NEWEST.value, False),
-    (HighlightType.RANDOM.value, False),
-])
+
+@pytest.mark.parametrize(
+    "highlight_type,orderable",
+    [
+        (HighlightType.NEWEST.value, True),
+        (HighlightType.RANDOM.value, True),
+        (HighlightType.NEWEST.value, False),
+        (HighlightType.RANDOM.value, False),
+    ],
+)
 @pytest.mark.django_db
 def test_product_hightlight_plugin(rf, highlight_type, orderable):
     shop = get_default_shop()
@@ -265,11 +269,7 @@ def test_product_hightlight_plugin(rf, highlight_type, orderable):
     sp4.save()
 
     context = get_context(rf)
-    plugin = ProductHighlightPlugin({
-        "type": highlight_type,
-        "count": 4,
-        "orderable_only": orderable
-    })
+    plugin = ProductHighlightPlugin({"type": highlight_type, "count": 4, "orderable_only": orderable})
     context_products = plugin.get_context_data(context)["products"]
 
     assert p1 in context_products
@@ -294,9 +294,7 @@ def test_product_selection_plugin_v2(rf):
     sp3 = p3.get_shop_instance(shop)
 
     context = get_context(rf)
-    plugin = ProductSelectionPlugin({
-        "products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]
-    })
+    plugin = ProductSelectionPlugin({"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]})
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products
     assert p2 in context_products
@@ -312,14 +310,10 @@ def test_product_selection_plugin_v2(rf):
         assert not lcfg.is_valid()
 
         lcfg = LayoutCellFormGroup(
-            data={
-                "general-cell_width": "8",
-                "general-cell_align": "pull-right",
-                "plugin-products": [p1.pk, p2.pk]
-            },
+            data={"general-cell_width": "8", "general-cell_align": "pull-right", "plugin-products": [p1.pk, p2.pk]},
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()
@@ -348,9 +342,7 @@ def test_product_from_category_plugin(rf):
     sp3.categories.add(category2)
 
     context = get_context(rf)
-    plugin = ProductsFromCategoryPlugin({
-        "category": category1.pk
-    })
+    plugin = ProductsFromCategoryPlugin({"category": category1.pk})
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products
     assert p2 in context_products
@@ -368,11 +360,11 @@ def test_product_from_category_plugin(rf):
                 "general-cell_width": "8",
                 "general-cell_align": "pull-right",
                 "plugin-count": 4,
-                "plugin-category": category2.pk
+                "plugin-category": category2.pk,
             },
             layout_cell=cell,
             theme=theme,
-            request=apply_request_middleware(rf.get("/"))
+            request=apply_request_middleware(rf.get("/")),
         )
         assert lcfg.is_valid()
         lcfg.save()

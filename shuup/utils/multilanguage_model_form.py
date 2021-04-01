@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import copy
-from collections import defaultdict
-
 import six
+from collections import defaultdict
 from django.conf import settings
-from django.forms.models import model_to_dict, ModelForm
-from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.forms.models import ModelForm, model_to_dict
+from django.utils.translation import get_language, ugettext_lazy as _
 from parler.forms import TranslatableModelForm
 from parler.utils.context import switch_language
 
@@ -38,7 +36,8 @@ class MultiLanguageModelForm(TranslatableModelForm):
 
     def __init__(self, **kwargs):
         self.default_language = kwargs.pop(
-            "default_language", getattr(self, 'language', getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE")))
+            "default_language", getattr(self, "language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        )
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
 
         self.required_languages = kwargs.pop("required_languages", [self.default_language])
@@ -50,8 +49,9 @@ class MultiLanguageModelForm(TranslatableModelForm):
         # We're not mutating the existing fields, so the shallow copy should be okay
         self.base_fields = self.base_fields.copy()
         self.translation_fields = [
-            f for f in translations_model._meta.get_fields()
-            if f.name not in ('language_code', 'master', 'id') and f.name in self.base_fields
+            f
+            for f in translations_model._meta.get_fields()
+            if f.name not in ("language_code", "master", "id") and f.name in self.base_fields
         ]
         self.trans_field_map = defaultdict(dict)
         self.trans_name_map = defaultdict(dict)
@@ -81,8 +81,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
         if instance is not None:
             assert isinstance(instance, self._meta.model)
             current_translations = dict(
-                (trans.language_code, trans)
-                for trans in translations_model.objects.filter(master=instance)
+                (trans.language_code, trans) for trans in translations_model.objects.filter(master=instance)
             )
             object_data = {}
             for lang, trans in six.iteritems(current_translations):
@@ -118,8 +117,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
         translations_model = self._get_translation_model()
         current_translations = dict(
             (trans.language_code, trans)
-            for trans
-            in translations_model.objects.filter(master_id=instance.id, language_code__in=self.languages)
+            for trans in translations_model.objects.filter(master_id=instance.id, language_code__in=self.languages)
         )
         for lang, field_map in six.iteritems(self.trans_field_map):
             translation_fields = dict((src_name, data.get(src_name)) for src_name in field_map)
@@ -129,8 +127,8 @@ class MultiLanguageModelForm(TranslatableModelForm):
                 if translation:
                     translation.delete()  # No translations set so delete the object also.
                 continue
-            current_translations[lang] = translation = (
-                translation or translations_model(master=instance, language_code=lang)
+            current_translations[lang] = translation = translation or translations_model(
+                master=instance, language_code=lang
             )
             for src_name, field in six.iteritems(field_map):
                 field.save_form_data(translation, translation_fields[src_name])
@@ -184,9 +182,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
         Get cleaned data without translated fields.
         """
         translated_field_names = set(self.translated_field_names)
-        return dict(
-            (k, v) for (k, v) in six.iteritems(self.cleaned_data)
-            if k not in translated_field_names)
+        return dict((k, v) for (k, v) in six.iteritems(self.cleaned_data) if k not in translated_field_names)
 
     def _get_label(self, field_name, field, lang):
         label = field.label

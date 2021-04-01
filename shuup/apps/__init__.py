@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -96,7 +96,7 @@ __all__ = ["AppConfig", "get_known_settings"]
 
 class AppConfig(django.apps.AppConfig):
     #: Name of the settings module for this app
-    default_settings_module = '.settings'
+    default_settings_module = ".settings"
 
     #: Apps that are required to be in INSTALLED_APPS for this app
     #:
@@ -135,9 +135,8 @@ class AppConfig(django.apps.AppConfig):
         installed_apps = set(django.conf.settings.INSTALLED_APPS)
         missing_apps = required_apps - installed_apps
         if missing_apps:
-            information = ', '.join(
-                "%s (%s)" % (app_name, self._get_app_require_reason(app_name))
-                for app_name in sorted(missing_apps)
+            information = ", ".join(
+                "%s (%s)" % (app_name, self._get_app_require_reason(app_name)) for app_name in sorted(missing_apps)
             )
             raise ImproperlyConfigured(
                 "Error! `%s` requires the following INSTALLED_APPS: `%s`" % (self.name, information)

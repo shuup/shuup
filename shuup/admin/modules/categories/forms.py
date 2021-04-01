@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -16,9 +16,7 @@ from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import QuickAddCategorySelect, TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.forms import filter_form_field_choices
-from shuup.core.models import (
-    Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
-)
+from shuup.core.models import Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
 from shuup.utils.django_compat import force_text
 
 
@@ -42,7 +40,7 @@ class CategoryBaseForm(ShuupAdminForm):
             "status": forms.RadioSelect,
             "visibility": forms.RadioSelect,
             "description": TextEditorWidget(),
-            "parent": QuickAddCategorySelect(editable_model="shuup.Category")
+            "parent": QuickAddCategorySelect(editable_model="shuup.Category"),
         }
 
     def __init__(self, request, **kwargs):
@@ -74,16 +72,17 @@ class CategoryProductForm(forms.Form):
         label=_("Primary Category"),
         help_text=_("Set this category as a primary category for selected products."),
         model=Product,
-        required=False)
+        required=False,
+    )
     additional_products = Select2MultipleField(
         label=_("Additional Category"),
         help_text=_("Add selected products to this category."),
         model=Product,
-        required=False)
+        required=False,
+    )
     remove_products = forms.MultipleChoiceField(
-        label=_("Remove Products"),
-        help_text=_("Remove selected products from this category."),
-        required=False)
+        label=_("Remove Products"), help_text=_("Remove selected products from this category."), required=False
+    )
 
     def __init__(self, shop, category, **kwargs):
         self.shop = shop
@@ -100,8 +99,9 @@ class CategoryProductForm(forms.Form):
         visibility_groups = self.category.visibility_groups.all()
         primary_product_ids = [int(product_id) for product_id in data.get("primary_products", [])]
         for shop_product in ShopProduct.objects.filter(
-                Q(shop_id=self.shop.id),
-                Q(product_id__in=primary_product_ids) | Q(product__variation_parent_id__in=primary_product_ids)):
+            Q(shop_id=self.shop.id),
+            Q(product_id__in=primary_product_ids) | Q(product__variation_parent_id__in=primary_product_ids),
+        ):
             shop_product.primary_category = self.category
             shop_product.visibility = (
                 ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
@@ -113,13 +113,15 @@ class CategoryProductForm(forms.Form):
 
         additional_product_ids = [int(product_id) for product_id in data.get("additional_products", [])]
         for shop_product in ShopProduct.objects.filter(
-                Q(shop_id=self.shop.id),
-                Q(product_id__in=additional_product_ids) | Q(product__variation_parent_id__in=additional_product_ids)):
+            Q(shop_id=self.shop.id),
+            Q(product_id__in=additional_product_ids) | Q(product__variation_parent_id__in=additional_product_ids),
+        ):
             shop_product.categories.add(self.category)
 
         remove_product_ids = [int(product_id) for product_id in data.get("remove_products", [])]
         for shop_product in ShopProduct.objects.filter(
-                Q(product_id__in=remove_product_ids) | Q(product__variation_parent_id__in=remove_product_ids)):
+            Q(product_id__in=remove_product_ids) | Q(product__variation_parent_id__in=remove_product_ids)
+        ):
             if shop_product.primary_category == self.category:
                 if self.category in shop_product.categories.all():
                     shop_product.categories.remove(self.category)

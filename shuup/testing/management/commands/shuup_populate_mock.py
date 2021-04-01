@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -18,8 +18,7 @@ from shuup.testing.mock_population import Populator
 class Command(BaseCommand):
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
-        parser.add_argument(
-            "--with-superuser", default=None)
+        parser.add_argument("--with-superuser", default=None)
 
     def handle(self, *args, **options):
         translation.activate(settings.LANGUAGES[0][0])

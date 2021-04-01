@@ -1,23 +1,20 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 from django.test import override_settings
 
 from shuup.core.models import Supplier
-from shuup.front.utils.sorts_and_filters import (
-    set_configuration
-)
+from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
 from shuup.themes.classic_gray.theme import ClassicGrayTheme
+from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 
@@ -39,16 +36,12 @@ def test_category_detail(client):
         data={
             "filter_products_by_supplier": True,
             "filter_products_by_supplier_ordering": 1,
-        }
+        },
     )
 
     category = factories.get_default_category()
 
-    product_data = [
-        ("laptop", 1500),
-        ("keyboard", 150),
-        ("mouse", 150)
-    ]
+    product_data = [("laptop", 1500), ("keyboard", 150), ("mouse", 150)]
     products = []
     for sku, price_value in product_data:
         products.append(factories.create_product(sku, shop=shop, default_price=price_value))
@@ -69,7 +62,8 @@ def test_category_detail(client):
             shop_product.save()
 
             supplier_price = (
-                percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0])
+                percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0]
+            )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
@@ -116,7 +110,7 @@ def test_category_detail(client):
 
 
 def _get_category_detail_soup(client, category):
-    url = reverse('shuup:category', kwargs={'pk': category.pk, 'slug': category.slug})
+    url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url)
     return BeautifulSoup(response.content)
 

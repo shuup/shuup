@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
 from django.utils.http import urlencode
@@ -124,7 +123,7 @@ class EditorView(TemplateView):
             layout_cls=layout_cls,
             placeholder_name=self.placeholder_name,
             default_layout=self.default_layout,
-            layout_data_key=self.layout_data_key
+            layout_data_key=self.layout_data_key,
         )
         (x, y) = self.current_cell_coords = (
             int(self.request.GET.get("x", -1)),
@@ -137,21 +136,14 @@ class EditorView(TemplateView):
         if not self.current_cell:
             self.form = None
             return
-        kwargs = {
-            "layout_cell": self.current_cell,
-            "theme": self.view_config.theme,
-            "request": self.request
-        }
+        kwargs = {"layout_cell": self.current_cell, "theme": self.view_config.theme, "request": self.request}
         if self.request.method == "POST":
             kwargs["data"] = self.request.POST
             kwargs["files"] = self.request.FILES
         self.form = LayoutCellFormGroup(**kwargs)
 
     def save_layout(self, layout=None):
-        self.view_config.save_placeholder_layout(
-            layout_data_key=self.layout_data_key,
-            layout=(layout or self.layout)
-        )
+        self.view_config.save_placeholder_layout(layout_data_key=self.layout_data_key, layout=(layout or self.layout))
         self.changed = True
 
     def dispatch_add_cell(self, y, **kwargs):

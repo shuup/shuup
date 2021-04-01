@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import OrderedDict
-
 import pytest
 from babel.numbers import format_decimal, format_percent
+from collections import OrderedDict
 
-from shuup.admin.dashboard.charts import (
-    BarChart, Chart, ChartDataType, ChartType, MixedChart
-)
+from shuup.admin.dashboard.charts import BarChart, Chart, ChartDataType, ChartType, MixedChart
 from shuup.utils.i18n import format_money
 from shuup.utils.money import Money
 
@@ -58,7 +55,7 @@ def test_bar_chart_percent():
     chart = BarChart("ma biultiful xart %", labels, data_type=ChartDataType.PERCENT, locale=locale)
 
     dataset1 = OrderedDict({"type": ChartType.BAR, "label": "some bars #1", "data": [0.1, 0.2, 0.3]})
-    dataset2 = OrderedDict({"type": ChartType.BAR, "label": "some bars #2", "data": [0.45, 0.55, .999]})
+    dataset2 = OrderedDict({"type": ChartType.BAR, "label": "some bars #2", "data": [0.45, 0.55, 0.999]})
     datasets = [dataset1, dataset2]
 
     chart.add_data(dataset1["label"], dataset1["data"], dataset1["type"])

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,9 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.modules.suppliers.forms import (
-    SupplierBaseForm, SupplierContactAddressForm
-)
+from shuup.admin.modules.suppliers.forms import SupplierBaseForm, SupplierContactAddressForm
 
 
 class SupplierBaseFormPart(FormPart):
@@ -28,8 +26,7 @@ class SupplierBaseFormPart(FormPart):
                 "instance": self.object,
                 "request": self.request,
                 "languages": settings.LANGUAGES,
-
-            }
+            },
         )
 
     def form_valid(self, form):
@@ -46,10 +43,7 @@ class SupplierContactAddressFormPart(FormPart):
             SupplierContactAddressForm,
             template_name="shuup/admin/suppliers/_edit_contact_address_form.jinja",
             required=False,
-            kwargs={
-                "instance": self.object.contact_address,
-                "initial": initial
-            }
+            kwargs={"instance": self.object.contact_address, "initial": initial},
         )
 
     def form_valid(self, form):

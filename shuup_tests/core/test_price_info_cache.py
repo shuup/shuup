@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -10,8 +10,10 @@ Tests for utils.price_display and the price filters.
 import pytest
 
 from shuup.core.utils.price_cache import (
-    cache_many_price_info, cache_price_info, get_cached_price_info,
-    get_many_cached_price_info
+    cache_many_price_info,
+    cache_price_info,
+    get_cached_price_info,
+    get_many_cached_price_info,
 )
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -24,10 +26,7 @@ def test_price_info_cache_bump(rf):
     tax = factories.get_default_tax()
     tax_class = factories.get_default_tax_class()
     product = factories.create_product(
-        "product",
-        shop=shop,
-        supplier=factories.get_default_supplier(),
-        default_price=initial_price
+        "product", shop=shop, supplier=factories.get_default_supplier(), default_price=initial_price
     )
     request = apply_request_middleware(rf.get("/"))
 
@@ -80,23 +79,10 @@ def test_many_price_info_cache_bump(rf):
     tax = factories.get_default_tax()
     tax_class = factories.get_default_tax_class()
     product = factories.create_product(
-        "product",
-        shop=shop,
-        supplier=factories.get_default_supplier(),
-        default_price=initial_price
+        "product", shop=shop, supplier=factories.get_default_supplier(), default_price=initial_price
     )
-    child1 = factories.create_product(
-        "child1",
-        shop=shop,
-        supplier=factories.get_default_supplier(),
-        default_price=5
-    )
-    child2 = factories.create_product(
-        "child2",
-        shop=shop,
-        supplier=factories.get_default_supplier(),
-        default_price=9
-    )
+    child1 = factories.create_product("child1", shop=shop, supplier=factories.get_default_supplier(), default_price=5)
+    child2 = factories.create_product("child2", shop=shop, supplier=factories.get_default_supplier(), default_price=9)
     child1.link_to_parent(product, variables={"color": "red"})
     child2.link_to_parent(product, variables={"color": "blue"})
 

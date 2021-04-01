@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -19,10 +19,7 @@ class DummyScriptTemplate(ScriptTemplate):
     help_text = "A good help here"
 
     def create_script(self, shop, form=None):
-        condition = BooleanEqual({
-            "v1": {"constant": True},
-            "v2": {"constant": False}
-        })
+        condition = BooleanEqual({"v1": {"constant": True}, "v2": {"constant": False}})
         script = Script(event_identifier=AlertLimitReached.identifier, name="Dummy Alert", enabled=True, shop=shop)
         script.set_steps([Step(next=StepNext.STOP, conditions=(condition,))])
         script.save()

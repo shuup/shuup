@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
 import datetime
+import django
 import itertools
 import logging
-from operator import iand, ior
-
-import django
 import six
 import xlrd
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
@@ -22,6 +20,7 @@ from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
+from operator import iand, ior
 
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError
@@ -105,7 +104,7 @@ class DataImporter(object):
 
         meta_class_getter = getattr(self.model, self.meta_class_getter_name, None)
         meta_class = meta_class_getter() if meta_class_getter else self.meta_base_class
-        self._meta = (meta_class(self, self.model) if meta_class else None)
+        self._meta = meta_class(self, self.model) if meta_class else None
 
         self.field_defaults = self._meta.get_import_defaults()
 
@@ -125,7 +124,8 @@ class DataImporter(object):
         """
         raise NotImplementedError(
             "Error! Not implemented: `DataImporter` -> `transform_file()`. "
-            "Implement `transform_file()` function or set `custom_file_transformer` to False")
+            "Implement `transform_file()` function or set `custom_file_transformer` to False"
+        )
 
     def process_data(self):
         mapping = self.create_mapping()
@@ -256,6 +256,7 @@ class DataImporter(object):
                     field = "%s__%s" % (cls._parler_meta.root_rel_name, field)
                 else:
                     from django.core.exceptions import FieldDoesNotExist
+
                     try:
                         cls._meta.get_field(field)
                     except FieldDoesNotExist:
@@ -280,10 +281,8 @@ class DataImporter(object):
             new = False
             if self.import_mode == ImportMode.CREATE:
                 self.other_log_messages.append(
-                    _("Row ignored (object already exists (%(object_name)s with id: %(object_id)s).") % {
-                        "object_name": str(obj),
-                        "object_id": obj.pk
-                    }
+                    _("Row ignored (object already exists (%(object_name)s with id: %(object_id)s).")
+                    % {"object_name": str(obj), "object_id": obj.pk}
                 )
                 return (None, False)
 
@@ -389,10 +388,8 @@ class DataImporter(object):
                 LOGGER.exception("Failed to convert field")
 
                 row_session.log(
-                    _("Failed while setting value for field %(field_name)s. (%(exception)s)") % {
-                        "field_name": (field.verbose_name or field.name),
-                        "exception": exc
-                    }
+                    _("Failed while setting value for field %(field_name)s. (%(exception)s)")
+                    % {"field_name": (field.verbose_name or field.name), "exception": exc}
                 )
             else:
                 value = self._meta.mutate_normal_field_set(row_session, field, value, original=orig_value)
@@ -410,10 +407,8 @@ class DataImporter(object):
         value = self.process_related_value(row_session, field, value, multi=True)
         if orig_value and not value:
             row_session.log(
-                _("Couldn't set value %(original_value)s for field %(field_name)s.") % {
-                    "original_value": orig_value,
-                    "field_name": (field.verbose_name or field.name)
-                }
+                _("Couldn't set value %(original_value)s for field %(field_name)s.")
+                % {"original_value": orig_value, "field_name": (field.verbose_name or field.name)}
             )
 
         row_session.defer("m2m_%s" % field.name, target, {field.name: value})
@@ -422,10 +417,8 @@ class DataImporter(object):
         value = self.process_related_value(row_session, field, value, multi=False)
         if orig_value and not value:
             row_session.log(
-                _("Couldn't set value %(original_value)s for field %(field_name)s.") % {
-                    "original_value": orig_value,
-                    "field_name": (field.verbose_name or field.name)
-                }
+                _("Couldn't set value %(original_value)s for field %(field_name)s.")
+                % {"original_value": orig_value, "field_name": (field.verbose_name or field.name)}
             )
         return value
 
@@ -442,10 +435,7 @@ class DataImporter(object):
                     func(fields, row_session)
 
             if row_session.log_messages:
-                self.log_messages.append({
-                    "instance": row_session.instance,
-                    "messages": row_session.log_messages
-                })
+                self.log_messages.append({"instance": row_session.instance, "messages": row_session.log_messages})
         except ImporterError as e:
             LOGGER.exception(e.message)
             self.other_log_messages.append(e.message)
@@ -474,8 +464,8 @@ class DataImporter(object):
         return fields
 
     def _get_map_base(self, field, mode):
-        is_translation = (mode == 2)
-        is_m2m = (mode == 1)
+        is_translation = mode == 2
+        is_m2m = mode == 1
         is_fk = isinstance(field, ForeignKey)
         is_enum_field = isinstance(field, EnumIntegerField)
         return {
@@ -524,9 +514,16 @@ class DataImporter(object):
         return itertools.chain(
             zip(model._meta.local_fields, itertools.repeat(0)),
             zip(model._meta.local_many_to_many, itertools.repeat(1)),
-            zip((f for f in model._parler_meta.root_model._meta.get_fields()
-                 if f.name not in ("id", "master", "language_code")), itertools.repeat(2))
-            if hasattr(model, "_parler_meta") else ()
+            zip(
+                (
+                    f
+                    for f in model._parler_meta.root_model._meta.get_fields()
+                    if f.name not in ("id", "master", "language_code")
+                ),
+                itertools.repeat(2),
+            )
+            if hasattr(model, "_parler_meta")
+            else (),
         )
 
     def get_related_models(self):
@@ -552,7 +549,7 @@ class DataImporter(object):
 
     @property
     def is_multi_model(self):
-        return (len(self.get_related_models()) > 1)
+        return len(self.get_related_models()) > 1
 
     def find_matching_model(self, row):
         if not self.is_multi_model:
@@ -618,10 +615,9 @@ class DataImporter(object):
         if example_file.template_name:
             from django.template import loader
             from six import StringIO
+
             file_content = StringIO()
-            file_content.write(loader.render_to_string(
-                template_name=example_file.template_name,
-                context={},
-                request=request)
+            file_content.write(
+                loader.render_to_string(template_name=example_file.template_name, context={}, request=request)
             )
             return file_content

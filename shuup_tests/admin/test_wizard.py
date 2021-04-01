@@ -1,29 +1,32 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
 import pytest
 from bs4 import BeautifulSoup
-from shuup.utils.django_compat import reverse
 from django.test.utils import override_settings
 
-from shuup.core import cache
 from shuup.admin.views.wizard import WizardView
 from shuup.apps.provides import override_provides
+from shuup.core import cache
 from shuup.core.models import (
-    CustomCarrier, CustomPaymentProcessor, PaymentMethod, ServiceProvider,
-    ShippingMethod, Shop, TaxClass
+    CustomCarrier,
+    CustomPaymentProcessor,
+    PaymentMethod,
+    ServiceProvider,
+    ShippingMethod,
+    Shop,
+    TaxClass,
 )
 from shuup.core.telemetry import is_opt_out
-from shuup.testing.factories import (
-    get_currency, get_default_shop, get_default_tax_class
-)
+from shuup.testing.factories import get_currency, get_default_shop, get_default_tax_class
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.django_compat import reverse
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.xtheme.utils import FauxTheme
@@ -53,9 +56,7 @@ def test_get_wizard_no_panes(rf, settings, admin_user):
 
 @pytest.mark.django_db
 def test_shop_wizard_pane(rf, admin_user, settings):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.shops.views:ShopWizardPane"
-    ]
+    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = ["shuup.admin.modules.shops.views:ShopWizardPane"]
     shop = Shop.objects.create()
     get_currency("USD")
     assert not shop.contact_address
@@ -93,9 +94,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
 
 @pytest.mark.django_db
 def test_shipping_method_wizard_pane(rf, admin_user, settings):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.service_providers.views.CarrierWizardPane"
-    ]
+    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = ["shuup.admin.modules.service_providers.views.CarrierWizardPane"]
     shop = get_default_shop()
     get_default_tax_class()
     fields = _extract_fields(rf, admin_user)
@@ -115,9 +114,7 @@ def test_shipping_method_wizard_pane(rf, admin_user, settings):
 
 @pytest.mark.django_db
 def test_payment_method_wizard_pane(rf, admin_user, settings):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.service_providers.views.PaymentWizardPane"
-    ]
+    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = ["shuup.admin.modules.service_providers.views.PaymentWizardPane"]
     shop = get_default_shop()
     get_default_tax_class()
     fields = _extract_fields(rf, admin_user)
@@ -138,20 +135,19 @@ def test_payment_method_wizard_pane(rf, admin_user, settings):
 @pytest.mark.django_db
 def test_xtheme_wizard_pane(rf, admin_user):
     with override_settings(
-        SHUUP_SETUP_WIZARD_PANE_SPEC = [
-            "shuup.xtheme.admin_module.views.ThemeWizardPane"
-        ],
+        SHUUP_SETUP_WIZARD_PANE_SPEC=["shuup.xtheme.admin_module.views.ThemeWizardPane"],
         CACHES={
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'test_simple_set_and_get_with_shop',
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "test_simple_set_and_get_with_shop",
             }
-        }
+        },
     ):
         cache.init_cache()
         shop = get_default_shop()
         with override_provides("xtheme", ["shuup_tests.xtheme.utils:FauxTheme"]):
             from shuup_tests.xtheme.utils import FauxTheme
+
             assert get_current_theme(shop) is None
             fields = _extract_fields(rf, admin_user)
             fields["theme-activate"] = FauxTheme.identifier
@@ -177,7 +173,7 @@ def test_telemetry_wizard_pane(rf, admin_user):
             "About Shuup Telemetry",
             "Telemetry Data",
             "Opt-in / opt-out",
-            "Last Telemetry"
+            "Last Telemetry",
         ]
         assert len(h2_elements) == len(expected_h2_element_titles)
         for h2_element in h2_elements:

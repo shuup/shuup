@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import datetime
-
 from django.db.models import Count, Sum
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -46,8 +45,7 @@ def get_unfinalized_cart_block(request, days=14):
         value=(data.get("sum") or 0),
         currency=shop.currency,
         icon="fa fa-calculator",
-        subtitle=_("Based on {b} carts over the last {d} days").format(
-            b=data.get("count"), d=days)
+        subtitle=_("Based on {b} carts over the last {d} days").format(b=data.get("count"), d=days),
     )
 
 
@@ -61,15 +59,9 @@ class CartAdminModule(AdminModule):
 
     def get_urls(self):
         return [
+            admin_url(r"^carts/$", "shuup.front.admin_module.carts.views.CartListView", name="cart.list"),
             admin_url(
-                r"^carts/$",
-                "shuup.front.admin_module.carts.views.CartListView",
-                name="cart.list"
-            ),
-            admin_url(
-                r"^carts/(?P<pk>\d+)/$",
-                "shuup.front.admin_module.carts.views.CartDetailView",
-                name="cart.detail"
+                r"^carts/(?P<pk>\d+)/$", "shuup.front.admin_module.carts.views.CartDetailView", name="cart.detail"
             ),
         ]
 
@@ -83,7 +75,7 @@ class CartAdminModule(AdminModule):
                 icon="fa fa-shopping-cart",
                 url="shuup_admin:cart.list",
                 category=ORDERS_MENU_CATEGORY,
-                aliases=[_("Show carts")]
+                aliases=[_("Show carts")],
             ),
         ]
 

@@ -3,8 +3,11 @@ import random
 
 from shuup.core.models import Product
 from shuup.testing.factories import (
-    create_order_with_product, create_product, create_random_person,
-    get_default_shop, get_default_supplier
+    create_order_with_product,
+    create_product,
+    create_random_person,
+    get_default_shop,
+    get_default_supplier,
 )
 
 
@@ -13,6 +16,7 @@ def create_orders_for_dates(dates, as_paid=False):
     supplier = get_default_supplier()
     customer = create_random_person()
     products = []
+
     def get_sku():
         return "test-%s" % random.randint(10000, 999999)
 
@@ -45,5 +49,5 @@ def create_orders_for_dates(dates, as_paid=False):
         "created_orders": orders,
         "shop": shop,
         "customer": customer,
-        "orders": orders
+        "orders": orders,
     }

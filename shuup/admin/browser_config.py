@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -37,8 +37,9 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
             "menu_toggle": "shuup_admin:menu_toggle",
             "add_media": (
                 ("shuup_admin:shop_product.add_media", (), {"pk": 99999})
-                if has_permission(request.user, "shop_product.add_media") else None
-            )
+                if has_permission(request.user, "shop_product.add_media")
+                else None
+            ),
         }
 
     @classmethod
