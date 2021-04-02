@@ -7,7 +7,9 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.breadcrumbs import BreadcrumbedView
+from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.forms.fields import PercentageField
+from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -33,6 +35,23 @@ class TaxClassForm(MultiLanguageModelForm):
         fields = ["name", "enabled"]
 
 
+class TaxClassFormPart(FormPart):
+    priority = -1000  # Show this first, no matter what
+
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            "base",
+            TaxClassForm,
+            template_name="shuup/admin/taxes/_edit_base_form.jinja",
+            required=True,
+            kwargs={"instance": self.object},
+        )
+
+    def form_valid(self, form):
+        self.object = form["base"].save()
+        return self.object
+
+
 class TaxEditView(BreadcrumbedView, CreateOrUpdateView):
     model = Tax
     form_class = TaxForm
@@ -52,10 +71,19 @@ class CustomerTaxGroupEditView(BreadcrumbedView, CreateOrUpdateView):
     parent_url = "shuup_admin:customer_tax_group.list"
 
 
-class TaxClassEditView(BreadcrumbedView, CreateOrUpdateView):
+class TaxClassEditView(SaveFormPartsMixin, FormPartsViewMixin, BreadcrumbedView, CreateOrUpdateView):
     model = TaxClass
     template_name = "shuup/admin/taxes/edit_tax_class.jinja"
-    form_class = TaxClassForm
+    base_form_part_classes = [TaxClassFormPart]
     context_object_name = "tax_class"
     parent_name = _("Tax Classes")
     parent_url = "shuup_admin:tax_class.list"
+    form_part_class_provide_key = "admin_tax_class_form_part"
+    add_form_errors_as_messages = True
+
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        return get_default_edit_toolbar(self, save_form_id, delete_url=None)
+
+    def form_valid(self, form):
+        return self.save_form_parts(form)

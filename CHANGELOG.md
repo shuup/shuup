@@ -11,6 +11,12 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Admin: show the product picture in order item list
+- Admin: change so TaxClassEditView is a FormPartView
+- Admin: Picotable to scroll in container on overflow rather, than entire screen scroll
+
+### Fixed
+
+- Core: Fix error that occurred when creating an order with a product which SKU was longer than 48 characters. 
 
 ## [2.6.0] - 2021-03-29
 
