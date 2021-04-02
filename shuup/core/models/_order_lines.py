@@ -96,7 +96,7 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     )
     ordering = models.IntegerField(default=0, verbose_name=_("ordering"))
     type = EnumIntegerField(OrderLineType, default=OrderLineType.PRODUCT, verbose_name=_("line type"))
-    sku = models.CharField(max_length=48, blank=True, verbose_name=_("line SKU"))
+    sku = models.CharField(max_length=128, blank=True, verbose_name=_("line SKU"))
     text = models.CharField(max_length=256, verbose_name=_("line text"))
     accounting_identifier = models.CharField(max_length=32, blank=True, verbose_name=_("accounting identifier"))
     require_verification = models.BooleanField(default=False, verbose_name=_("require verification"))

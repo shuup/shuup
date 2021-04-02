@@ -1,11 +1,14 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
-{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
 
+{% block body_class %}shuup-details{% endblock %}
 {% block content %}
-    {% call single_section_form("tax_class_form", form) %}
-        {{ language_dependent_content_tabs(form, ["name"]) }}
-        <div class="form-divider"></div>
-        {{ bs3.field(form.enabled) }}
+    {% call content_with_sidebar(content_id="tax_class_form") %}
+        <form method="post" id="tax_class_form" novalidate>
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
     {% endcall %}
 {% endblock %}
