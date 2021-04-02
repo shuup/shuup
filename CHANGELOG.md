@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: show the product picture in order item list
 - Admin: change so TaxClassEditView is a FormPartView
 - Admin: Picotable to scroll in container on overflow rather, than entire screen scroll
 
