@@ -764,8 +764,7 @@ class Order(MoneyPropped, models.Model):
         return (
             (unrefunded_amount.value > 0 or unrefunded_quantity > 0)
             and not self.is_canceled()
-            and not self.is_complete()
-            and (self.payment_status != PaymentStatus.NOT_PAID)
+            and (self.payment_status not in (PaymentStatus.NOT_PAID, PaymentStatus.CANCELED))
         )
 
     @atomic
