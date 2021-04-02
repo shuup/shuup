@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
+import time
 from selenium.common.exceptions import ElementNotInteractableException
 
 from shuup.admin.utils.tour import is_tour_complete
@@ -21,8 +22,7 @@ from shuup.testing.browser_utils import (
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_dashbord_tour(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")
@@ -67,9 +67,8 @@ def test_dashbord_tour(browser, admin_user, live_server, settings):
     assert is_tour_complete(shop2, "dashboard", admin_user_2) is False
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_home_tour(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")
@@ -124,8 +123,7 @@ def test_home_tour(browser, admin_user, live_server, settings):
         assert is_tour_complete(shop2, "home", user) is False
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_product_tour(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")
@@ -167,6 +165,8 @@ def test_product_tour(browser, admin_user, live_server, settings):
         # config which does not work in real world.
         browser.execute_script("window.scrollTo(0,0)")
         for target in category_targets:
+            time.sleep(0.25)
+
             try:
                 wait_until_condition(browser, lambda x: x.is_element_present_by_css(target))
                 browser.find_by_css(".shepherd-button.btn-primary").last.click()
@@ -187,8 +187,7 @@ def test_product_tour(browser, admin_user, live_server, settings):
         browser.visit(live_server + "/sa")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_category_tour(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     shop2 = factories.get_shop(identifier="shop2")

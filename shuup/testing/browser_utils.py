@@ -165,7 +165,8 @@ def initialize_admin_browser_test(
 ):
     if not onboarding:
         settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
-    activate("en")
+
+    activate(language)
     cache.clear()
 
     shop = shop or get_default_shop()
@@ -186,6 +187,8 @@ def initialize_admin_browser_test(
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
 
     if not onboarding:
+        wait_until_condition(browser, lambda x: x.find_by_id("dropdownMenu"))
+
         # set shop language to eng
         browser.find_by_id("dropdownMenu").click()
         browser.find_by_xpath('//a[@data-value="%s"]' % language).first.click()

@@ -42,3 +42,4 @@ node_modules
 .vscode
 .sqlite
 .python-version
+.browser_tests

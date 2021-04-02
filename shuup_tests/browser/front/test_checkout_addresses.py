@@ -38,8 +38,7 @@ def create_orderable_product(name, sku, price):
     return product
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_browser_checkout_addresses_horizontal(browser, live_server, settings):
     # initialize
     product_name = "Test Product"
@@ -187,8 +186,7 @@ def test_browser_checkout_addresses_horizontal(browser, live_server, settings):
 
 
 @pytest.mark.urls("shuup.testing.single_page_checkout_test_urls")
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_browser_checkout_addresses_vertical(browser, live_server, settings):
     with override_settings(SHUUP_CHECKOUT_VIEW_SPEC=("shuup.front.views.checkout:SinglePageCheckoutView")):
         # initialize

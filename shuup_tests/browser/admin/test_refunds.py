@@ -30,7 +30,6 @@ from shuup.utils.i18n import format_money
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
 @pytest.mark.django_db
 def test_refunds(browser, admin_user, live_server, settings):
     order = create_order_with_product(

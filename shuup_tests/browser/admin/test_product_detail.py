@@ -21,9 +21,8 @@ from shuup.utils.django_compat import reverse
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     product = create_product("test_sku", shop, default_price=10)
@@ -57,10 +56,12 @@ def test_product_detail(browser, admin_user, live_server, settings):
     click_element(browser, "a[href='#%s']" % product.sku)
 
     # Make sure that the tabs are clickable in small devices
+    original_size = browser.driver.get_window_size()
     browser.driver.set_window_size(480, 960)
     time.sleep(0.5)  # Otherwise other elements are still in the way, obscuring
     click_element(browser, "#product-images-section", header_height=960)
     click_element(browser, "#additional-details-section", header_height=960)
+    browser.driver.set_window_size(original_size["width"], original_size["height"])
 
 
 def check_product_name(browser, product, target_name):

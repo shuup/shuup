@@ -115,17 +115,6 @@ REQUIRES = [
     "xlrd>=1",
 ]
 
-
-EXTRAS_REQUIRE = {
-    "docs": [
-        "Sphinx>=1.3,<2",
-    ],
-    "testing": utils.get_test_requirements_from_tox_ini(TOPDIR),
-    "coding-style": ["black==20.8b1", "isort==5.6.4", "flake8==3.8.4"],
-}
-EXTRAS_REQUIRE["everything"] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
-
-
 if __name__ == "__main__":
     if "upload" in sys.argv:
         raise EnvironmentError("Uploading is blacklisted")
@@ -145,8 +134,6 @@ if __name__ == "__main__":
         license=LICENSE,
         classifiers=CLASSIFIERS,
         install_requires=REQUIRES,
-        tests_require=EXTRAS_REQUIRE["testing"],
-        extras_require=EXTRAS_REQUIRE,
         packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
         cmdclass=utils.COMMANDS,

@@ -62,8 +62,7 @@ list_view_settings = {
 }
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 @pytest.mark.parametrize("visit_type", list_view_settings.keys())
 def test_list_views(browser, admin_user, live_server, settings, visit_type):
     shop = get_default_shop()
@@ -144,7 +143,7 @@ def _set_settings(browser, setting_type, creator):
     for idx, text in addable_fields:
         assert not browser.is_text_present(text)
 
-    browser.find_by_css(".shuup-toolbar .btn.btn-inverse").first.click()
+    click_element(browser, ".shuup-toolbar .btn.btn-inverse")
 
     # select settings
     for idx, (index_key, text) in enumerate(addable_fields):
@@ -154,6 +153,7 @@ def _set_settings(browser, setting_type, creator):
         wait_until_appeared_xpath(browser, "//ul[@id='target-sortable']/li[%d]/button" % expected_index)
 
     # save settings
+    # scroll to top
     move_to_element(browser, ".shuup-toolbar .btn.btn-success")
     browser.find_by_css(".shuup-toolbar .btn.btn-success").first.click()
     _check_picotable_item_info(browser, creator)
@@ -163,14 +163,13 @@ def _set_settings(browser, setting_type, creator):
             wait_until_condition(browser, lambda x: x.is_text_present(text))
 
     # go back to settings
-    browser.find_by_css(".shuup-toolbar .btn.btn-inverse").first.click()
+    click_element(browser, ".shuup-toolbar .btn.btn-inverse")
 
     wait_until_appeared_xpath(browser, "//a[contains(text(),'Reset Defaults')]")
 
     # reset to defaults
     browser.find_by_xpath("//a[contains(text(),'Reset Defaults')]").click()
 
-    # wait
     _check_picotable_item_info(browser, creator)
 
     # not selected by default
@@ -180,7 +179,9 @@ def _set_settings(browser, setting_type, creator):
 
 
 def _check_picotable_item_info(browser, creator):
+    time.sleep(1)
     if creator:
+        move_to_element(browser, ".picotable-item-info")
         wait_until_appeared(browser, ".picotable-item-info")
     else:
         wait_until_condition(

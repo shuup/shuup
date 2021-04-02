@@ -24,9 +24,8 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 
 @pytest.mark.parametrize("default_language", ["it", "pt-br", "fi"])
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_plugin_form_language_order(admin_user, browser, live_server, settings, default_language):
     """
     Test that the first language option is the Parler default
@@ -90,9 +89,8 @@ def test_xtheme_plugin_form_language_order(admin_user, browser, live_server, set
 
 
 @pytest.mark.parametrize("language", ["it", "pt-br", "fi", "en"])
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_plugin_form_selected_language_pane(admin_user, browser, live_server, settings, language):
     """
     Test that the current language is selected by default
@@ -144,9 +142,8 @@ def test_xtheme_plugin_form_selected_language_pane(admin_user, browser, live_ser
         assert language == iframe.find_by_css("ul.editor-tabs li.active a").first.text
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_editor_form_picture(admin_user, browser, live_server, settings):
     """
     Test that is is possible to add image fron media browser

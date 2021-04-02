@@ -33,8 +33,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_product_create(browser, admin_user, live_server, settings):
     activate("en")
     shop = get_default_shop()
@@ -45,6 +44,8 @@ def test_product_create(browser, admin_user, live_server, settings):
         _add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test"
     )
     initialize_admin_browser_test(browser, live_server, settings)
+    original_size = browser.driver.get_window_size()
+    browser.driver.set_window_size(1920, 1080)
 
     url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
@@ -79,6 +80,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     object_created.disconnect(sender=Product, dispatch_uid="object_created_signal_test")
     shop_product = product.get_shop_instance(shop)
     assert shop_product.categories.count() == 2
+    browser.driver.set_window_size(original_size["width"], original_size["height"])
 
 
 def _add_custom_product_created_message(sender, object, **kwargs):

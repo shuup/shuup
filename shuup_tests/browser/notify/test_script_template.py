@@ -47,8 +47,6 @@ def post_initialize():
     Script.objects.all().delete()
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "script_template_cls",
@@ -106,8 +104,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     assert "NEW CONTENT" in serialized_steps[0]["actions"][0]["template_data"]["en"]["body"]
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     "script_template_cls",
     [
@@ -216,8 +213,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     assert "Changed" in serialized_steps[0]["actions"][0]["template_data"]["en"]["body"]
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_stock_alert_limit_script_template(browser, admin_user, live_server, settings):
     initialize(browser, live_server, settings)
 
@@ -292,8 +288,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     assert serialized_steps[0]["actions"][0]["template_data"]["en"]["subject"] == subject
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_dummy_script_editor(browser, admin_user, live_server, settings):
     initialize(browser, live_server, settings)
 

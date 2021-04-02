@@ -45,8 +45,7 @@ CATEGORY_PRODUCT_DATA = [
 ]
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_coupon(browser, live_server, settings):
     activate("en")
     # initialize

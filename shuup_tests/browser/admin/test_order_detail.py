@@ -23,8 +23,7 @@ from shuup.utils.django_compat import reverse
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_product_detail(browser, admin_user, live_server, settings):
     activate(settings.PARLER_DEFAULT_LANGUAGE_CODE)
     shop = get_default_shop()
