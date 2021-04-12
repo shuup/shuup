@@ -41,7 +41,8 @@ class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
         self.fields["name"].required = True
         self.fields["tax_number"].required = True
         address_form = cached_load("SHUUP_ADDRESS_MODEL_FORM")()
-        for field in self.fields:
+
+        for field in list(self.fields):
             if field not in ("name", "tax_number", "www"):
                 address_formfield = address_form.fields.get(field)
                 if address_formfield:
