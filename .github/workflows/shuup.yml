@@ -47,3 +47,5 @@ jobs:
       run: python -m shuup_workbench migrate
     - name: Run makemessages
       run: python -m shuup_workbench shuup_makemessages -l en
+    - name: Run compilemessages
+      run: python -m shuup_workbench compilemessages

@@ -2,10 +2,10 @@
 # Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-# 
+#
 # Translators:
 # Jiechao Li <jiechao.li@sesamechat.com>, 2019
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -891,7 +891,7 @@ msgstr "GDPR：匿名联系人"
 
 #, python-brace-format
 msgid "Customer ID {customer_id} requested to be anonymized."
-msgstr "客户ID{Customer_id}请求匿名。"
+msgstr "客户ID{customer_id}请求匿名。"
 
 msgid "Anonymization requested."
 msgstr "匿名请求"

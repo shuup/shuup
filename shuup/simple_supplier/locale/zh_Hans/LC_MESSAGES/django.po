@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jessica Wang <jessica.wang@shoop.io>, 2016
 # Jiechao Li <jiechao.li@sesamechat.com>, 2019
@@ -224,11 +224,11 @@ msgstr ""
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr "物理计数({销售单位})"
+msgstr "物理计数({sales_unit})"
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr "逻辑计数({销售单位})"
+msgstr "逻辑计数({sales_unit})"
 
 msgid "Value per unit"
 msgstr "单位价值"
@@ -238,7 +238,7 @@ msgstr "总价值"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr "警告限制({销售单位})"
+msgstr "警告限制({sales_unit})"
 
 msgid "No stock information available."
 msgstr "没有库存信息。"

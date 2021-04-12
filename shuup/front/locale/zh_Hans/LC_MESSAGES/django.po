@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 # Jiechao Li <jiechao.li@sesamechat.com>, 2019
@@ -1056,11 +1056,11 @@ msgstr "切换导航"
 
 #, python-brace-format
 msgid "Edit '{object_title}' in administration page"
-msgstr "在管理页面中编辑“{对象标题}”"
+msgstr "在管理页面中编辑“{object_title}”"
 
 #, python-brace-format
 msgid "Edit {object_name} in Admin"
-msgstr "在管理中编辑{对象名称}"
+msgstr "在管理中编辑{object_name}"
 
 msgid "Shop Administration"
 msgstr "商店管理员"
@@ -1075,7 +1075,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
-msgstr "可用时间：: <span class=\"availability-date\">{日期} </span></small>"
+msgstr "可用时间：: <span class=\"availability-date\">{date} </span></small>"
 
 msgid "Edit account details"
 msgstr "账号详情编辑"
@@ -1224,7 +1224,7 @@ msgstr "添加到购物车"
 
 #, python-brace-format
 msgid "Available until: {date}"
-msgstr "可供使用直到: {日期}"
+msgstr "可供使用直到: {date}"
 
 msgid "Maintenance mode"
 msgstr "维护模式"

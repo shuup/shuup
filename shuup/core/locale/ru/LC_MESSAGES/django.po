@@ -1,6 +1,6 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # An Nesterov <arch.nesterov@gmail.com>, 2021
 # Eugene <eugene.mechanism@gmail.com>, 2016
@@ -1369,13 +1369,13 @@ msgstr "Количество покупок должно быть не мене�
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{amount}."
-msgstr "Продукт можно заказать только в кратных количествах {пакет_размер}, например {количество}."
+msgstr "Продукт можно заказать только в кратных количествах {package_size}, например {amount}."
 
 #, python-brace-format
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{smaller_amount} or {larger_amount}."
-msgstr "Продукт можно заказать только в кратных количествах {пакет_размер}, например {маленький_маленький} или {большой_маленький}."
+msgstr "Продукт можно заказать только в кратных количествах {package_size}, например {smaller_amount} или {larger_amount}."
 
 msgid "The product has no supplier."
 msgstr "У данного товара нет поставщика."
@@ -2343,7 +2343,7 @@ msgstr "шт."
 #, python-brace-format
 msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
-msgstr "{значение}{символ}"
+msgstr "{value}{symbol}"
 
 msgid "No Choice"
 msgstr "Без Выбора"
