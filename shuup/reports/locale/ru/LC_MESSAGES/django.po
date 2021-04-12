@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# George Voronin <sonictorment@gmail.com>, 2017
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 08:36+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: George Voronin <sonictorment@gmail.com>, 2017\n"
+"POT-Creation-Date: 2020-06-22 17:59+0000\n"
+"PO-Revision-Date: 2017-01-06 15:35+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +44,7 @@ msgid "Running Month (last 30 days)"
 msgstr "Месяц (последние 30 дней)"
 
 msgid "This Week"
-msgstr ""
+msgstr "На этой неделе"
 
 msgid "This Month"
 msgstr "Этот Месяц"
@@ -50,6 +54,18 @@ msgstr "Этот Год"
 
 msgid "All Time"
 msgstr "За всё время"
+
+msgid "Output Format"
+msgstr "Формат"
+
+msgid "The format to show the report results."
+msgstr "Формат отображения результатов отчёта."
+
+msgid "Download"
+msgstr "Загрузить результат"
+
+msgid "Enable this to download the report."
+msgstr "Включите эту опцию, чтобы загрузить отчет."
 
 msgid "Shop"
 msgstr "Магазин"
@@ -72,23 +88,11 @@ msgstr "Если выбран настраиваемый временной ин
 msgid "End Date"
 msgstr "Конец Интервала"
 
-msgid "Output Format"
-msgstr "Формат"
-
-msgid "The format to show the report results."
-msgstr "Формат отображения результатов отчёта."
-
-msgid "Download"
-msgstr "Загрузить результат"
-
-msgid "Check this to download the report."
-msgstr "Выберите этот пункт для загрузки результата отчёта."
-
 msgid "Toggle Filters"
-msgstr ""
+msgstr "Переключать фильтры"
 
 msgid "Get Report"
 msgstr "Сформировать Отчёт"
 
 msgid "No reports available"
-msgstr ""
+msgstr "Отчеты не доступны"

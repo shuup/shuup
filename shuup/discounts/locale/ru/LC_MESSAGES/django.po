@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,331 +22,394 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 msgid "Archive Product Discounts"
-msgstr ""
+msgstr "Архив скидок на товары"
 
 msgid "Unarchive Discounts"
-msgstr ""
+msgstr "Разархивировать скидки"
 
 msgid "Delete Discounts"
-msgstr ""
+msgstr "Удалить скидки"
 
 msgid "Product Discounts Coupon Codes"
-msgstr ""
+msgstr "Коды скидок на товары"
 
 msgid "Discounts"
-msgstr ""
+msgstr "Скидки"
 
 msgid "Product Discounts"
-msgstr ""
+msgstr "Скидки на товары"
 
 msgid "Archived Product Discounts"
-msgstr ""
+msgstr "Архивные скидки на товары"
 
 msgid "Discounts Availability Exceptions"
-msgstr ""
+msgstr "Скидки Доступность Исключение "
 
 msgid "Product Discounts Availability Exceptions"
-msgstr ""
+msgstr "Скидки на товар Доступность Исключение"
 
 msgid "Discounts Happy Hours"
-msgstr ""
+msgstr "Скидки в счастливые часы "
 
 msgid "Product Discounts Happy Hours"
-msgstr ""
+msgstr "Скидки на товар в счастливые часы "
 
 msgid "Discount Name"
-msgstr ""
+msgstr "Название скидки"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Фильтр по названию ..."
 
 msgid "Product"
-msgstr ""
+msgstr "Товар"
 
 msgid "Filter by product..."
-msgstr ""
+msgstr "Фильтровать по товару ..."
 
 msgid "Category"
-msgstr ""
+msgstr "Категория"
 
 msgid "Filter by category..."
-msgstr ""
+msgstr "Фильтровать по категории..."
 
 msgid "Contact Group"
-msgstr ""
+msgstr "Группа контактов"
 
 msgid "Filter by contact group..."
-msgstr ""
+msgstr "Фильтровать по группе контактов..."
 
 msgid "Contact"
-msgstr ""
+msgstr "Контакт"
 
 msgid "Filter by contact..."
-msgstr ""
+msgstr "Фильтровать по контактам..."
 
 msgid "Coupon code"
-msgstr ""
+msgstr "Код купона"
 
 msgid "Filter by coupon code..."
-msgstr ""
+msgstr "Фильтровать по коду купона..."
 
 msgid "Effect"
-msgstr ""
+msgstr "Результат."
 
 msgid "End Date and Time"
-msgstr ""
+msgstr "Дата и время окончания"
 
 msgid "Code"
-msgstr ""
+msgstr "Код"
 
 msgid "Usages"
-msgstr ""
+msgstr "Использование"
 
 msgid "Usages Limit per contact"
-msgstr ""
+msgstr "Ограничение использования на контакт"
 
 msgid "Usage Limit"
-msgstr ""
+msgstr "Лимит использования"
 
 msgid "Active"
-msgstr ""
+msgstr "Активен"
 
 msgid "Created by"
-msgstr ""
+msgstr "Созданный "
 
 msgid "Date created"
-msgstr ""
+msgstr "Дата создания"
 
 msgid "Select discounts linked to this coupon code."
-msgstr ""
-
-msgid "Shops"
-msgstr ""
-
-msgid "Select shops for this discount. Keep it blank to share with all shops."
-msgstr ""
+msgstr "Выберите скидки, связанные с этим кодом купона."
 
 #, python-format
 msgid "%s has been deleted."
-msgstr ""
+msgstr "%sбыл удален."
 
 msgid "Discount percentage"
-msgstr ""
+msgstr "Процент скидки"
 
 msgid "The discount percentage for this discount."
-msgstr ""
+msgstr "Процент скидки для данной скидки."
 
 msgid "Exception Name"
-msgstr ""
+msgstr "Название исключения "
 
 msgid "Start Date and Time"
-msgstr ""
+msgstr "Дата и время начала"
 
 msgid "Select discounts to be ignored on given time frame."
 msgstr ""
+"Выберите скидки, которые будут игнорироваться в указанный период времени."
 
 msgid "Happy Hour Name"
-msgstr ""
+msgstr "Название счастливого часа "
 
 msgid "Select discounts for this happy hour."
-msgstr ""
+msgstr "Выберите скидки для этого счастливого часа."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. Start hour is included to the "
 "discount."
 msgstr ""
+"12 вечера считается полднем, а 12 утра - полуночью. Час начала включен в "
+"скидку."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. End hours is included to the "
 "discount."
 msgstr ""
+"12 вечера считается полднем, а 12 утра - полуночью. Время окончания включено"
+" в скидку."
 
 msgid "Weekdays the happy hour is active."
-msgstr ""
+msgstr "В будние дни активен счастливый час."
 
 msgid "shops"
-msgstr ""
+msgstr "магазины"
 
 msgid "name"
-msgstr ""
+msgstr "название"
 
 msgid ""
 "The name for this exception. Used internally with exception lists for "
 "filtering."
 msgstr ""
+"Название для этого исключения. Используется внутри со списками исключений "
+"для фильтрации."
 
-msgid "start"
-msgstr ""
+msgid "start since"
+msgstr "начать с"
 
-msgid "end"
+msgid ""
+"Set to restrict the availability exception to be available only after a "
+"certain date and time."
 msgstr ""
+"Установите, чтобы исключение доступности было возможно только после "
+"определенной даты и времени."
+
+msgid "end until"
+msgstr "конец до"
+
+msgid ""
+"Set to restrict the availability exception to be available only until a "
+"certain date and time."
+msgstr ""
+"Настройка на ограничение доступности исключения только до определенной даты "
+"и времени."
 
 msgid "availability exception"
-msgstr ""
+msgstr "наличие исключения"
 
 msgid "availability exceptions"
-msgstr ""
+msgstr "наличие исключений "
 
 msgid "created on"
-msgstr ""
+msgstr "создано"
 
 msgid "usage limit per customer"
-msgstr ""
+msgstr "лимит использования на одного покупателя"
 
 msgid "Limit the amount of usages per a single customer."
-msgstr ""
+msgstr "Ограничьте количество использований для одного клиента."
 
 msgid "usage limit"
-msgstr ""
+msgstr "предел использования"
 
 msgid ""
 "Set the absolute limit of usages for this coupon. If the limit is zero (0) "
 "coupon cannot be used."
 msgstr ""
+"Установите абсолютный предел использования этого купона. Если лимит равен "
+"нулю (0), то купон не может быть использован."
 
 msgid "active"
-msgstr ""
+msgstr "действующий "
 
 msgid "created by"
-msgstr ""
+msgstr "созданный"
 
 msgid "modified by"
-msgstr ""
+msgstr "изменённый"
 
 msgid "modified on"
-msgstr ""
+msgstr "изменено"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
 "filtering."
 msgstr ""
+"Название этой скидки. Используется внутри со списками скидок для "
+"фильтрования."
+
+msgid "supplier"
+msgstr "поставщик"
+
+msgid "Select supplier for this discount."
+msgstr "Выберите поставщика для этой скидки."
 
 msgid ""
-"Check this if the discount is currently active. Please also set a start and "
-"end date."
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
 msgstr ""
+"Включите эту опцию, если скидка в данный момент активна. Пожалуйста, также "
+"установите дату начала и окончания."
 
 msgid "start date and time"
-msgstr ""
+msgstr "дата и время начала"
 
 msgid ""
 "The date and time the discount starts. This is only applicable if the "
 "discount is marked as active."
 msgstr ""
+"Дата и время начала действия скидки. Это применимо только в том случае, если"
+" скидка отмечена как активная."
 
 msgid "end date and time"
-msgstr ""
+msgstr "дата и время окончания"
 
 msgid ""
 "The date and time the discount ends. This is only applicable if the discount"
 " is marked as active."
 msgstr ""
+"Дата и время окончания скидки. Это применимо только в том случае, если "
+"скидка отмечена как активная."
 
 msgid "happy hours"
-msgstr ""
+msgstr "счастливые часы "
 
 msgid "Select happy hours for this discount."
-msgstr ""
+msgstr "Выберите счастливые часы для этой скидки."
 
 msgid "Select availability for this discount."
-msgstr ""
+msgstr "Выберите доступность для этой скидки."
 
 msgid "product"
-msgstr ""
+msgstr "товар"
 
 msgid "Select product for this discount."
-msgstr ""
+msgstr "Выберите товар для этой скидки."
 
 msgid "exclude selected category"
-msgstr ""
+msgstr "исключить выбранную категорию"
 
 msgid "Exclude products in selected category from this discount."
-msgstr ""
+msgstr "Исключить товары выбранной категории из этой скидки."
 
 msgid "category"
-msgstr ""
+msgstr "категория "
 
 msgid "Select category for this discount."
-msgstr ""
+msgstr "Выберите категорию для этой скидки."
 
 msgid "contact"
-msgstr ""
+msgstr "контакт"
 
 msgid "Select contact for this discount."
-msgstr ""
+msgstr "Выберите контакт для этой скидки."
 
 msgid "exclude selected contact group"
-msgstr ""
+msgstr "исключить выбранную группу контактов"
 
 msgid "Exclude contacts in selected contact group from this discount."
-msgstr ""
+msgstr "Убрать контакты из выбранной группы контактов с этой скидкой."
 
 msgid "contact group"
-msgstr ""
+msgstr "Группа контактов "
 
 msgid "Select contact group for this discount."
-msgstr ""
+msgstr "Выберите группу контактов для этой скидки."
 
 msgid "coupon code"
-msgstr ""
+msgstr "код купона "
 
 msgid "Select coupon code for this discount."
-msgstr ""
+msgstr "Выберите код купона для этой скидки."
 
 msgid "discounted price"
-msgstr ""
+msgstr "Цена со скидкой"
 
 msgid "Discounted product price for this discount."
-msgstr ""
+msgstr "Цена продукта со скидкой."
 
 msgid "discount amount"
-msgstr ""
+msgstr "сумма скидки "
 
 msgid "Discount amount value for this discount."
-msgstr ""
+msgstr "Значение суммы скидки для данного снижения цены."
 
 msgid "discount percentage"
-msgstr ""
+msgstr "процент скидки"
 
 msgid "Discount percentage for this discount."
-msgstr ""
+msgstr "Процент скидки для данного снижения цены."
 
 msgid "product discount"
-msgstr ""
+msgstr "скидка на товар "
 
 msgid "product discounts"
-msgstr ""
+msgstr "скидка на товары"
 
 msgid ""
-"The name for this . Used internally with exception lists for filtering."
+"The name for this HappyHour. Used internally with exception lists for "
+"filtering."
 msgstr ""
+"Название этого счастливого часа. Используется внутри со списками исключений "
+"для фильтрации."
 
 msgid "happy hour"
-msgstr ""
+msgstr "счастливый час"
 
 msgid "parent"
-msgstr ""
+msgstr "исходный"
 
 msgid "from hour"
-msgstr ""
+msgstr "с часа"
 
 msgid "to hour"
-msgstr ""
+msgstr "до часа"
 
-msgid "weekdays"
-msgstr ""
+msgid "weekday"
+msgstr "будний день"
 
 msgid "time range"
-msgstr ""
+msgstr "временной диапазон"
 
 msgid "time ranges"
-msgstr ""
+msgstr "временные диапазоны "
 
-msgid "To hour has to be after from hour"
+msgid ""
+"The value of the field `to hour` has to be later than that of `from hour`."
+msgstr "Значение поля с `часа` должно быть позже, чем значение `до часа`."
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
 msgstr ""
+"Выберите все скидки для предоставления товаров. Доступны только активные "
+"скидки, привязанные к продукту или категории."
+
+msgid "Discounted Products"
+msgstr "Товары со скидкой "
+
+msgid "Title"
+msgstr "Название"
+
+msgid "Count"
+msgstr "Счет "
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+"Показывать только те товары, которые есть в наличии и которые можно заказать"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+"Предупреждение: окончательное количество товаров может быть меньше, чем "
+"'Количество', поскольку оно отфильтрует не подлежащие заказу продукты из "
+"набора товаров 'Количество'."
 
 msgid "Availability"
-msgstr ""
+msgstr "В наличии "
 
 msgid "Condition"
-msgstr ""
+msgstr "Условие "

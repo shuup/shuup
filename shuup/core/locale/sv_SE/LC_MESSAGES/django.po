@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-23 14:16+0000\n"
-"PO-Revision-Date: 2020-10-04 19:40+0000\n"
-"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1035,13 +1035,6 @@ msgstr "Beställningen markerades som delvis betald."
 msgid "Success! Shipment #%d was created."
 msgstr "Framgång! Sändning # %d skapades."
 
-#, python-format
-msgid "Refund for %s"
-msgstr "Återbetalning för %s"
-
-msgid "Misc refund"
-msgstr "Diverse återmetalning"
-
 msgid "All rows requiring verification have been verified."
 msgstr "Alla rader som kräver verifiering har verifierats."
 
@@ -1337,6 +1330,12 @@ msgid ""
 "in a month)"
 msgstr "Denna text visas tillsammans med produkten i butiken. Det är användbart för att informera kunder om speciella lagernummer eller förbeställningar. (Ex .: Finns om en månad)"
 
+msgid "shop product"
+msgstr ""
+
+msgid "shop products"
+msgstr ""
+
 msgid ""
 "Error! Invalid display unit: Internal unit of the selected display unit does"
 " not match with the sales unit of the product."
@@ -1479,12 +1478,6 @@ msgstr "Välj attribut som passar din produkttyp. För att ändra tillgängliga 
 
 msgid "product type"
 msgstr "produkttyp"
-
-msgid "shop product"
-msgstr "butik produkt"
-
-msgid "shop products"
-msgstr "butik produkter"
 
 msgid "product types"
 msgstr "produkttyper"
@@ -1888,14 +1881,14 @@ msgstr "Begränsa tillgängligheten baserat på valda länder."
 msgid "available in countries"
 msgstr "tillgängligt i länder"
 
-msgid "available in european countries"
-msgstr "tillgängligt i europeiska länder"
+msgid "available in european union"
+msgstr ""
 
 msgid "unavailable in countries"
 msgstr "inte tillgänglig i länder"
 
-msgid "unavailable in european countries"
-msgstr "inte tillgängligt i europeiska länder"
+msgid "unavailable in european union"
+msgstr ""
 
 msgid "Service is not available without a defined country."
 msgstr "Tjänsten är inte tillgänglig utan ett definierat land."
@@ -1972,17 +1965,17 @@ msgstr "anpassade bärare"
 msgid "Manually processed shipment"
 msgstr "Manuellt behandlade frakter"
 
-msgid "not sent"
-msgstr "inte skickad"
+msgid "Not sent"
+msgstr ""
 
-msgid "sent"
-msgstr "skickad"
+msgid "Sent"
+msgstr ""
 
-msgid "received"
-msgstr "mottaget"
+msgid "Error"
+msgstr ""
 
-msgid "error"
-msgstr "fel"
+msgid "Deleted"
+msgstr ""
 
 msgid "outgoing"
 msgstr "utgående"
@@ -1992,6 +1985,9 @@ msgstr "inkommande"
 
 msgid "tracking code"
 msgstr "spårningskod"
+
+msgid "tracking url"
+msgstr ""
 
 msgid "volume ({})"
 msgstr "volym ({})"
@@ -2162,20 +2158,18 @@ msgid ""
 "participate fully, the supplier also needs to be `Approved`."
 msgstr "Anger om denna leverantör för närvarande är aktiverad. För att kunna delta fullt ut måste också leverantören godkännas."
 
-msgid "approved"
-msgstr "godkänd"
-
-msgid ""
-"Indicates whether this supplier is currently approved for work. In order to "
-"participate fully, the supplier also needs to be `Enabled`."
-msgstr "Anger om denna leverantör för närvarande är godkänd för arbete. För att kunna delta fullt ut måste leverantören också vara \"Aktiverad\"."
-
 msgid ""
 "Enter a URL slug for your supplier. Slug is user- and search engine-friendly"
 " short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your supplier page URL in the browser address bar "
 "will look like. A default will be created using the supplier name."
 msgstr "Ange en URL-slug för din leverantör. Slug är användar- och sökmotorvänlig kort text som används i en URL för att identifiera och beskriva en resurs. I så fall kommer det att avgöra hur din webbadress till leverantörssidan i webbläsarens adressfält kommer att se ut. En standard skapas med hjälp av leverantörens namn."
+
+msgid "Approved"
+msgstr ""
+
+msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
 msgstr "Det går inte att ändra de affärskritiska fälten för den skatt som används."
@@ -2392,6 +2386,13 @@ msgstr "fyll på lager"
 
 msgid "restock logical"
 msgstr "fyll på lager (logiskt)"
+
+#, python-format
+msgid "Refund for %s"
+msgstr "Återbetalning för %s"
+
+msgid "Misc refund"
+msgstr "Diverse återmetalning"
 
 msgid "Untaxed"
 msgstr "Obeskattade"

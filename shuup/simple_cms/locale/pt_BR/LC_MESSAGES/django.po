@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2020
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-28 23:41+0000\n"
-"PO-Revision-Date: 2016-07-30 12:33+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"POT-Creation-Date: 2020-11-09 17:10+0000\n"
+"PO-Revision-Date: 2020-11-10 17:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,8 +20,8 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Simple CMS"
-msgstr "CMS Simples"
+msgid "Content Pages"
+msgstr "Páginas de conteúdo"
 
 msgid "Pages"
 msgstr "Páginas"
@@ -28,14 +29,26 @@ msgstr "Páginas"
 msgid "Show pages"
 msgstr "Mostrar páginas"
 
-msgid "Available from"
-msgstr "Disponível a partir de"
+msgid "Add a web page"
+msgstr "Adicionar uma página da web"
 
-msgid "Available to"
+msgid "New page"
+msgstr "Nova página"
+
+msgid "Available since"
+msgstr "Disponível desde"
+
+msgid "Available until"
 msgstr "Disponível até"
+
+msgid "Template"
+msgstr "Modelo"
 
 msgid "URL already exists."
 msgstr "URL já existe."
+
+msgid "URL must be unique."
+msgstr "O URL deve ser exclusivo."
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -59,11 +72,52 @@ msgstr "Data de criação"
 msgid "Page"
 msgstr "Página"
 
-msgid "available from"
-msgstr "disponível a partir de"
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s foi marcado como excluído."
 
-msgid "available to"
+msgid "Content in this placeholder is shown for this page only."
+msgstr "O conteúdo neste espaço reservado é mostrado apenas para esta página."
+
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
+msgstr "O conteúdo neste marcador de posição é mostrado apenas para %(title)s."
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Article"
+msgstr "Artigo"
+
+msgid "shop"
+msgstr "loja"
+
+msgid "supplier"
+msgstr "fornecedor"
+
+msgid "available since"
+msgstr "disponível desde"
+
+msgid ""
+"Set an available date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "Defina uma data disponível para restringir a página para ficar disponível somente após uma determinada data e hora. Isso é útil para páginas que descrevem campanhas de vendas ou outras páginas sensíveis ao tempo."
+
+msgid "available until"
 msgstr "disponível até"
+
+msgid ""
+"Set an available date to restrict the page to be available only until a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr "Defina uma data disponível para restringir a página para ficar disponível apenas até uma determinada data e hora. Isso é útil para páginas que descrevem campanhas de vendas ou outras páginas sensíveis ao tempo."
+
+msgid "Available for permission groups"
+msgstr ""
+
+msgid "Select the permission groups that can have access to this page."
+msgstr ""
 
 msgid "created by"
 msgstr "criado por"
@@ -83,20 +137,69 @@ msgstr "Este identificador pode ser utilizado em templates para criar URLs"
 msgid "visible in menu"
 msgstr "visível no menu"
 
+msgid ""
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
+msgstr "Ative-o se esta página tiver um link visível no menu superior da fachada da loja."
+
 msgid "parent"
 msgstr "pai"
 
-msgid "list children on page"
-msgstr "listar filhos na página"
+msgid ""
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
+msgstr "Defina como uma página pai se esta página deve ser subcategorizada (submenu) em outra página."
+
+msgid "display children on page"
+msgstr "exibir páginas filhas"
+
+msgid "Enable this if this page should display all of its children pages."
+msgstr "Ative-o se esta página deve exibir todas as suas páginas filhas."
+
+msgid "show child page timestamps"
+msgstr "mostrar carimbos de data / hora da página filha"
+
+msgid ""
+"Enable this if you want to show timestamps on the child pages. Please note, "
+"that this requires the children to be listed on the page as well."
+msgstr "Ative-o se quiser mostrar carimbos de data / hora nas páginas filhas. Observe que isso exige que as páginas filhas também sejam listadas na página."
+
+msgid "deleted"
+msgstr "apagado"
 
 msgid "title"
 msgstr "título"
 
+msgid "The page title. This is shown anywhere links to your page are shown."
+msgstr "O título da página. Isso é mostrado em qualquer lugar que os links para sua página sejam mostrados."
+
 msgid "URL"
 msgstr "URL"
 
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr "O url da página. Escolha um URL descritivo para que os mecanismos de pesquisa possam classificar sua página em posições superiores. Frequentemente, o melhor url é simplesmente o título da página com espaços substituídos por travessões."
+
 msgid "content"
 msgstr "conteúdo"
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on"
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr "O conteúdo da página. Este é o texto que é exibido quando os clientes clicam no link da sua página. Você pode deixar em branco e adicionar todo o conteúdo da página por meio do editor de espaço reservado na frente da loja. Para editar o estilo da página, você pode usar o plugin Snippet que está na frente da loja editor."
+
+msgid "Template path"
+msgstr "Caminho do modelo"
+
+msgid "render title"
+msgstr "exibir título"
+
+msgid "Enable this if this page should have a visible title."
+msgstr "Ative-o se esta página tiver um título visível."
 
 msgid "page"
 msgstr "página"
@@ -106,6 +209,50 @@ msgstr "páginas"
 
 msgid "Untitled"
 msgstr "Sem título"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "The image of your object."
+msgstr "A imagem do seu objeto."
+
+msgid "type"
+msgstr "tipo"
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr "O título do seu objeto como deve aparecer no gráfico, por exemplo, The Rock."
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "A one to two sentence description of your object."
+msgstr "Uma descrição de uma a duas frases do seu objeto."
+
+msgid "Section"
+msgstr "Seção"
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr "Um nome de seção de alto nível, por exemplo, Tecnologia. Aplicável apenas quando o tipo é Artigo."
+
+msgid "Tags"
+msgstr "Tag"
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr "Palavras de tag associadas a este artigo. Aplicável apenas quando o tipo é Artigo."
+
+msgid "Article author"
+msgstr "Autor do artigo"
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr "O nome do autor do artigo. Aplicável apenas quando o tipo é Artigo."
 
 msgid "CMS Page Links"
 msgstr "Links de Páginas CMS"
@@ -119,14 +266,19 @@ msgstr "Todas as páginas são mostradas, mesmo se não estiverem selecionadas"
 msgid "Hide expired pages"
 msgstr "Ocultar páginas expiradas"
 
+msgid "Default Page"
+msgstr "Página padrão"
+
+msgid "Page with sidebar"
+msgstr "Página com barra lateral"
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr "Preencha os campos abaixo para adicionar informações extras do OpenGraph ao meta da página. Caso não seja informado, alguns valores serão inferidos a partir dos atributos da página."
+
 msgid "New Page"
 msgstr "Nova Página"
 
-msgid "General Information"
-msgstr "Informações Gerais"
-
-msgid "Availability"
-msgstr "Disponibilidade"
-
-msgid "Extras"
-msgstr "Extras"
+msgid "Home"
+msgstr "Casa"

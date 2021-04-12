@@ -1,32 +1,61 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-04-19 08:32+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
-"language/ja_JP/)\n"
-"Language: ja_JP\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:21+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "HTML"
+msgstr ""
+
+msgid "Plain text"
+msgstr ""
+
 msgid "Subject"
+msgstr ""
+
+msgid "Email Template"
 msgstr ""
 
 msgid "Email Body"
 msgstr ""
 
+msgid "Content type"
+msgstr ""
+
 msgid "Recipient"
+msgstr ""
+
+msgid "Reply-To"
+msgstr ""
+
+msgid "Carbon Copy (CC)"
+msgstr ""
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr ""
+
+msgid "From email"
+msgstr ""
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
 msgstr ""
 
 msgid "Language"
@@ -46,10 +75,10 @@ msgstr ""
 msgid "Notifications"
 msgstr "通知"
 
-msgid "Notification scripts"
+msgid "Show notification scripts"
 msgstr ""
 
-msgid "Show notification scripts"
+msgid "Email Templates"
 msgstr ""
 
 msgid "Event"
@@ -71,7 +100,7 @@ msgid "Choose whether this script should be activated when its event fires."
 msgstr ""
 
 msgid ""
-"Warning: Changing the event for an existing script may have unexpected "
+"Warning! Changing the event for an existing script may have unexpected "
 "effects."
 msgstr ""
 
@@ -81,13 +110,58 @@ msgstr "テンプレート"
 msgid "Bind to Variable"
 msgstr ""
 
-msgid "Edit Script Contents..."
-msgstr "スクリプトの内容を編集する..."
+msgid "This field is missing content."
+msgstr ""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+msgid "Edit Script Contents"
+msgstr ""
+
+msgid "Edit Script (advanced)"
+msgstr ""
+
+msgid "Edit Template"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
 
 msgid "Name"
 msgstr "名前"
 
 msgid "Enabled"
+msgstr ""
+
+msgid "New Script"
+msgstr ""
+
+msgid "New From Template"
+msgstr ""
+
+msgid "Script created from template."
+msgstr ""
+
+msgid "Template Script not found."
+msgstr ""
+
+msgid "Templated script not found."
+msgstr ""
+
+msgid "Script updated."
 msgstr ""
 
 msgid ""
@@ -151,6 +225,14 @@ msgstr ""
 msgid "critical"
 msgstr ""
 
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
 msgid "recipient type"
 msgstr ""
 
@@ -184,6 +266,96 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
+msgid "template identifier"
+msgstr ""
+
+msgid "the template identifier used to create this script"
+msgstr ""
+
+msgid "Password Reset"
+msgstr ""
+
+msgid "This event is triggered when password reset is requested."
+msgstr ""
+
+msgid "Site name"
+msgstr ""
+
+msgid "User secret"
+msgstr ""
+
+msgid "User to recover"
+msgstr ""
+
+msgid "Token"
+msgstr ""
+
+msgid "Recovery URL"
+msgstr ""
+
+msgid "To Email"
+msgstr ""
+
+msgid "The subject of the email"
+msgstr ""
+
+msgid "Email content"
+msgstr ""
+
+msgid "The content of the email."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Other destination"
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Fill with the destination email address."
+msgstr ""
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr ""
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr ""
+
+msgid "Send Password Reset Link"
+msgstr ""
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is requested\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr ""
+
 msgid "Edit Script Information"
 msgstr ""
 
@@ -196,14 +368,26 @@ msgstr "スクリプト詳細"
 msgid "OK"
 msgstr ""
 
+msgid "Show available variables"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Select the script template to be created"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
 msgid "Edit Script"
 msgstr "スクリプトを編集する"
 
 msgid "Edit Step"
 msgstr ""
 
-msgid "Done"
-msgstr "完了"
+msgid "Save changes"
+msgstr "変更を保存する"
 
 msgid "Please correct the errors below."
 msgstr "以下のエラーを修正してください。"
@@ -211,8 +395,20 @@ msgstr "以下のエラーを修正してください。"
 msgid "Variables"
 msgstr "変数"
 
-msgid "Save changes"
-msgstr "変更を保存する"
+msgid "Script Template: {}"
+msgstr ""
+
+msgid "Configure the Script Template"
+msgstr ""
+
+msgid "Modify Script"
+msgstr ""
+
+msgid "Create Script"
+msgstr ""
+
+msgid "Create"
+msgstr ""
 
 msgid "Boolean"
 msgstr "ブーリアン"

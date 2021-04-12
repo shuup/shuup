@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 19:23+0000\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: 2018-05-29 19:55+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -42,8 +42,8 @@ msgstr "保存"
 msgid "General Data Protection Regulation"
 msgstr "通用数据保护条例"
 
-msgid "Contact anonymized!"
-msgstr "匿名联系人！"
+msgid "Contact was anonymized."
+msgstr ""
 
 msgid "My Data"
 msgstr "我的数据"
@@ -56,6 +56,12 @@ msgstr "启用"
 
 msgid "Define if the GDPR is active."
 msgstr "定义GDPR是否处于活动状态。"
+
+msgid "skip consent on login"
+msgstr ""
+
+msgid "Do not require consent on login when GDPR is activated."
+msgstr ""
 
 msgid "privacy policy page"
 msgstr "隐私政策页面"
@@ -85,6 +91,14 @@ msgstr "cookie隐私摘录"
 msgid "The summary text to be presented about cookie privacy."
 msgstr "关于cookie隐私的摘要文本。"
 
+msgid "login consent text"
+msgstr ""
+
+msgid ""
+"Shown in login page between the form and the button. Optional, but should be"
+" considered when the consent on login is disabled."
+msgstr ""
+
 msgid "GDPR settings"
 msgstr "GDPR设置"
 
@@ -93,6 +107,12 @@ msgstr "GDPR 为了 {}"
 
 msgid "always active"
 msgstr "总是活跃"
+
+msgid "active by default"
+msgstr ""
+
+msgid "whether this cookie category is active by default"
+msgstr ""
 
 msgid "cookies used"
 msgstr "cookies已使用"
@@ -144,14 +164,14 @@ msgid ""
 msgstr ""
 "我已阅读并接受 <a href='{}' target='_blank' class='gdpr_consent_doc_check'>{}</a>"
 
-msgid "You must accept to this to register."
-msgstr "你必须接受这个来注册。"
+msgid "You must accept this in order to register."
+msgstr ""
 
-msgid "You must accept to this to order."
-msgstr "你必须接受这个来订购。"
+msgid "You must accept this to order."
+msgstr ""
 
-msgid "You must accept to this to authenticate."
-msgstr "您必须接受此身份验证。"
+msgid "You must accept this in order to authenticate."
+msgstr ""
 
 msgid ""
 "<p>This website stores cookies on your computer. These cookies are used to "
@@ -816,8 +836,8 @@ msgstr "确定吗?这是不能取消的。"
 msgid "Privacy Preferences"
 msgstr "隐私偏好"
 
-msgid "I Agree"
-msgstr "我同意"
+msgid "I Understand"
+msgstr ""
 
 msgid "Privacy Preference Center"
 msgstr "隐私偏好中心"
@@ -871,7 +891,7 @@ msgstr "GDPR：匿名联系人"
 
 #, python-brace-format
 msgid "Customer ID {customer_id} requested to be anonymized."
-msgstr "客户ID{customer_id}请求匿名。"
+msgstr "客户ID{Customer_id}请求匿名。"
 
 msgid "Anonymization requested."
 msgstr "匿名请求"

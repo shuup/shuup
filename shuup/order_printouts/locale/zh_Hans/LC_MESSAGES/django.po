@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 22:14+0000\n"
+"POT-Creation-Date: 2020-06-22 17:58+0000\n"
 "PO-Revision-Date: 2016-06-28 12:30+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -20,6 +20,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Printouts"
+msgstr "打印件"
 
 msgid "To"
 msgstr "到"
@@ -38,15 +41,17 @@ msgid ""
 "%(shop)s"
 msgstr "关于您的订单的重要信息，见附件。最佳问候语，%(shop)s的"
 
-msgid "Printouts"
-msgstr "打印件"
-
 #, python-format
 msgid "%(shop)s: Order %(pk)s"
 msgstr "%(shop)s：订单%(pk)s"
 
-msgid "Not allowed"
-msgstr "不允许"
+msgid ""
+"The current shop doesn't match the order shop. Please change to the shop "
+"that is currently active."
+msgstr ""
+
+msgid "Non-POST request methods are forbidden."
+msgstr ""
 
 msgid "Delivery slip"
 msgstr "送货单"
@@ -160,8 +165,8 @@ msgstr "发送订单确认"
 msgid "Send Delivery Slip (Shipment %(id)s)"
 msgstr "发送送货单(装运%(id)s)"
 
-msgid "Email sent successfully!"
-msgstr "电子邮件发送成功！"
+msgid "Email was sent."
+msgstr ""
 
 msgid "Could not sent the email, please try again."
 msgstr "无法发送电子邮件，请再试一次。"

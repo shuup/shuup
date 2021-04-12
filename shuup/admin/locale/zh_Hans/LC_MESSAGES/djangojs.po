@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-12 05:50+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Unexpected error while uploading files."
-msgstr "上传文件时发生意外错误。"
+msgid "Error! Unexpected error while uploading files."
+msgstr ""
 
-msgid "Error:"
-msgstr "错误："
+msgid "Error!"
+msgstr ""
 
 msgid "Uploaded:"
 msgstr "已上传："
@@ -45,9 +45,6 @@ msgstr "您确定要删除 %s 文件夹吗？ "
 
 msgid "New folder"
 msgstr "新文件夹"
-
-msgid "current"
-msgstr "当前"
 
 msgid "Oldest first"
 msgstr "最老优先"
@@ -96,12 +93,15 @@ msgstr "文件夹重命名"
 msgid "Delete folder"
 msgstr "删除文件夹"
 
-#, javascript-format
-msgid "Order %s created."
-msgstr "订单 %s 已形成。"
+msgid "Edit folder access"
+msgstr ""
 
-msgid "An unspecified error occurred.\n"
-msgstr "出现未知错误。\n"
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr ""
+
+msgid "Error! An unspecified error occurred.\n"
+msgstr ""
 
 msgid "SKU"
 msgstr "SKU"
@@ -165,8 +165,8 @@ msgstr "选中此选项将使送货地址与帐单邮寄地址相同"
 msgid "Order for company"
 msgstr "为公司订购"
 
-msgid "Check this if the order is for a company or business with a tax ID."
-msgstr "选中此选项将使送货地址与帐单邮寄地址相同"
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr ""
 
 msgid "Billing Address"
 msgstr "账单地址"
@@ -482,45 +482,8 @@ msgstr "输入%s地址的国家/地区"
 msgid "No records found."
 msgstr "没有找到记录"
 
-msgid "Missing JavaScript dependencies detected"
-msgstr "检测到缺少JavaScript依赖项"
-
-msgid "Identifier"
-msgstr "标识符"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr "值%s名"
-
-msgid "Delete value"
-msgstr "删除值"
-
-msgid "Are you sure?"
-msgstr "您确定吗？"
-
-msgid "Delete Variable"
-msgstr "删除变量"
-
-msgid "Add new value"
-msgstr "添加新值"
-
-msgid "Variable Name"
-msgstr "变量名"
-
-msgid "Variable"
-msgstr "变量"
-
-msgid "Identifer"
-msgstr "识别码"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "显示标识符域 (供高级用户)"
-
-msgid "There are no variables defined."
-msgstr "变量未定义"
-
-msgid "Add new variable"
-msgstr "添加新变量"
+msgid "Warning! Missing JavaScript dependencies detected."
+msgstr ""
 
 msgid "No browser URL for kind:"
 msgstr "无浏览器URL："
@@ -533,6 +496,16 @@ msgstr "在此处删除文件或单击以浏览"
 
 msgid "only images can be uploaded!"
 msgstr "只能上传图片！"
+
+msgid "Error happened while uploading file."
+msgstr ""
+
+msgid "Browse media"
+msgstr ""
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
+msgstr ""
 
 msgid "No results."
 msgstr "无搜索结果。"
@@ -695,6 +668,9 @@ msgstr "重置过滤器"
 msgid "Reset"
 msgstr "重新设置"
 
+msgid "Apply filters"
+msgstr ""
+
 msgid "Sort by"
 msgstr "排列依据"
 
@@ -715,55 +691,58 @@ msgstr "下一页"
 
 #, javascript-format
 msgid "Filter by %s"
-msgstr "按%s过滤"
+msgstr ""
+
+msgid " Select"
+msgstr ""
 
 msgid "Filters"
-msgstr "过滤器"
+msgstr ""
 
 msgid "Show filters"
-msgstr "显示过滤器"
+msgstr ""
 
 msgid "Select Action"
-msgstr "选择行动"
+msgstr ""
 
 msgid "Clear Selections"
-msgstr "清楚选项"
+msgstr ""
 
 msgid "Select All"
-msgstr "全选"
+msgstr ""
 
 #, javascript-format
 msgid "Select All %s Items"
-msgstr "选择所有%s项目"
+msgstr ""
 
 #, javascript-format
 msgid "There are no %s to show"
-msgstr "没有%s要显示"
+msgstr ""
 
 msgid "There is no item to show"
-msgstr "没有项目要展示"
+msgstr ""
 
 msgid "with selected filters"
-msgstr "选择过滤器"
+msgstr ""
 
 msgid "How about creating a new entry?"
-msgstr "如何创建新条目？"
+msgstr ""
 
-msgid "Mass Action complete."
-msgstr "群众行动完成"
+msgid "Success! Mass Action was completed."
+msgstr ""
 
-msgid "Something went wrong."
-msgstr "出了点问题"
+msgid "Error! Something went wrong with the Mass Action."
+msgstr ""
 
 #, javascript-format
 msgid "All %s Items Selected"
-msgstr "所有%s项目已选中"
+msgstr ""
 
-msgid "You haven't selected anything"
-msgstr "你没有选择任何东西"
+msgid "Warning! You didn't select anything."
+msgstr ""
 
 msgid "Confirm action by clicking OK!"
-msgstr "单击确定确认操作！"
+msgstr ""
 
 msgid "Are you sure you want to delete this media?"
 msgstr "您确定要删除该媒体吗？"

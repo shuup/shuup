@@ -2,14 +2,18 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 23:43+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Translator HIO.E <translater@hiqe.ru>, 2017\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"PO-Revision-Date: 2016-06-28 10:48+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,12 +23,6 @@ msgstr ""
 
 msgid "Campaigns"
 msgstr "Акции"
-
-msgid "Catalog Campaigns"
-msgstr "Акции для каталога"
-
-msgid "Show Catalog Campaigns"
-msgstr "Показать акции для каталога"
 
 msgid "Basket Campaigns"
 msgstr "Акции для корзины"
@@ -38,14 +36,17 @@ msgstr "Купоны"
 msgid "Show Coupons"
 msgstr "Показать купоны"
 
+msgid "Catalog Campaigns"
+msgstr "Акции для каталога"
+
+msgid "Show Catalog Campaigns"
+msgstr "Показать акции для каталога"
+
 msgid "Set up a sales campaign"
 msgstr "Настроить акцию для продаж"
 
 msgid "New basket campaign"
 msgstr "Новая акция для корзины"
-
-msgid "New catalog campaign"
-msgstr "Новая акция для каталога"
 
 msgid "New coupon"
 msgstr "Новый купон"
@@ -59,8 +60,8 @@ msgstr "Максимальное значение"
 msgid "Leave empty for no maximum"
 msgstr "Оставьте поле незаполненным, чтобы не устанавливать максимум"
 
-msgid "Campaign end date can't be before start date."
-msgstr "Дата конца акции не может быть до даты её начала."
+msgid "Campaign end date can't be before a start date."
+msgstr "Дата окончания кампании не может быть раньше даты начала."
 
 msgid "Define the required coupon for this campaign."
 msgstr "Определите необходимый купон для этой акции."
@@ -76,19 +77,21 @@ msgstr "Процент скидки для этой акции."
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
-msgstr ""
+msgstr "Товар %(product)s недоступен в %(shop)s магазине."
 
-msgid "Only amount or percentage can be set."
-msgstr "Только количество или процент могут быть установлены."
+msgid "Only amount or percentage can be set, not both."
+msgstr ""
+"Можно установить только количество или процент, но не то и другое "
+"одновременно."
 
 msgid "Autogenerate code"
 msgstr "Сгенерировать код"
 
-msgid "Discount Code already in use."
-msgstr "Скидочный код уже используется."
+msgid "Discount Code is already in use."
+msgstr "Код скидки уже используется."
 
-msgid "Active Campaigns"
-msgstr "Активные акции"
+msgid "Active Basket Campaigns"
+msgstr "Активные корзины покупок"
 
 msgid "Catalog Campaign"
 msgstr "Акция для каталога"
@@ -174,12 +177,14 @@ msgstr ""
 "значение, введенное здесь, равное сумме продуктов."
 
 msgid "Undiscounted basket total value"
-msgstr ""
+msgstr "Общая стоимость недисконтированной корзины"
 
 msgid ""
 "Limit the campaign to match when it has at least the total value entered "
 "here worth of products which doesn't have already discounts."
 msgstr ""
+"Ограничьте кампанию до соответствия, если в ней введена хотя бы общая "
+"стоимость товаров, на которые уже нет скидок."
 
 msgid "Basket maximum product count"
 msgstr "Максимальное количество товаров корзины"
@@ -270,27 +275,38 @@ msgstr ""
 "категорий."
 
 msgid "Day and hour"
-msgstr ""
+msgstr "День и час"
 
 msgid "start time"
-msgstr ""
+msgstr "начальное время"
 
 msgid "12pm is considered noon and 12am as midnight."
-msgstr ""
+msgstr "12 вечера считается полднем, а 12 утра - полуночью. "
 
 msgid "end time"
-msgstr ""
+msgstr "время окончания"
 
 msgid ""
 "12pm is considered noon and 12am as midnight. End time is not considered "
 "match."
 msgstr ""
+"12 вечера считается полднем, а 12 утра - полуночью. Время окончания не "
+"считается совпадением."
 
 msgid "days"
-msgstr ""
+msgstr "дней"
 
 msgid "Limit the campaign to selected days."
+msgstr "Ограничьте кампанию выбранными днями."
+
+msgid "Product Variation Child"
+msgstr "Вариант продукта Дочерний"
+
+msgid ""
+"Limit the campaign to match only variation children of the selected product."
 msgstr ""
+"Ограничьте кампанию сопоставлением только дочерних вариантов выбранного "
+"продукта."
 
 msgid "campaign"
 msgstr "Кампания"
@@ -314,10 +330,11 @@ msgid "Give percentage discount."
 msgstr "Дать процентную скидку."
 
 msgid "Discount amount percentage from undiscounted amount"
-msgstr ""
+msgstr "Процент суммы скидки от недисконтированной суммы"
 
 msgid "Give percentage discount based on undiscounted product prices."
 msgstr ""
+"Предоставляйте процентную скидку на основе недисконтированных цен на товары."
 
 msgid "Free Product(s)"
 msgstr "Бесплатный товар(ы)"
@@ -334,10 +351,10 @@ msgstr "Вычесть из товара"
 msgid "per line discount"
 msgstr "Скидка на позицию"
 
-msgid "Uncheck this if you want to give discount for each matched product."
+msgid "Disable this if you want to give discount for each matched product."
 msgstr ""
-"Снимите этот флажок, если хотите предоставить скидку для каждого выбранного "
-"продукта."
+"Отключите эту опцию, если вы хотите предоставить скидку на каждый "
+"подобранный продукт."
 
 msgid "Select discount amount and products."
 msgstr "Выбрать размер скидки и товары."
@@ -371,11 +388,11 @@ msgid "active"
 msgstr "активно"
 
 msgid ""
-"Check this if the campaign is currently active. Please also set a start and "
-"end date."
+"Enable this if the campaign is currently active. Please also set a start and"
+" an end date."
 msgstr ""
-"Проверьте, активна ли кампания в данный момент. Укажите также дату начала и "
-"окончания."
+"Включите эту опцию, если кампания в настоящее время активна. Пожалуйста, "
+"также установите дату начала и окончания."
 
 msgid "start date and time"
 msgstr "Дата и время начала"
@@ -384,6 +401,8 @@ msgid ""
 "The date and time the campaign starts. This is only applicable if the "
 "campaign is marked as active."
 msgstr ""
+"Дата и время начала кампании. Это применимо только в том случае, если "
+"кампания отмечена как активная."
 
 msgid "end date and time"
 msgstr "Дата и время завершения"
@@ -392,6 +411,8 @@ msgid ""
 "The date and time the campaign ends. This is only applicable if the campaign"
 " is marked as active."
 msgstr ""
+"The date and time the campaign ends. This is only applicable if the campaign"
+" is marked as active."
 
 msgid "created by"
 msgstr "Создано"
@@ -413,26 +434,38 @@ msgstr "Название акции для изображения на витр�
 
 #, python-format
 msgid "Catalog Campaign: %(name)s"
-msgstr ""
+msgstr "Кампания по каталогу:%(name)s"
 
 msgid "basket line text"
 msgstr "Текст корзины"
 
-msgid "This text will be shown in basket."
-msgstr "Этот текст будет отображаться в корзине."
+msgid "This text will be shown in a basket."
+msgstr "Этот текст будет показан в корзине."
 
 msgid "coupon"
 msgstr "Купон"
+
+msgid "supplier"
+msgstr "поставщик"
+
+msgid ""
+"When set, this campaign will match only products from the selected supplier."
+" Rules and Effects will also be restricted to include only the products of "
+"this supplier."
+msgstr ""
+"При установке, эта кампания будет соответствовать только продуктам "
+"выбранного поставщика. Правила и эффекты также будут ограничены, чтобы "
+"включить только продукцию этого поставщика."
 
 msgid "public name"
 msgstr "публичное имя"
 
 #, python-format
 msgid "Basket Campaign: %(name)s"
-msgstr ""
+msgstr "Корзиночная кампания: %(name)s"
 
-msgid "Can not have multiple active campaigns with same code."
-msgstr ""
+msgid "Can't have multiple active campaigns with same code."
+msgstr "Нельзя иметь несколько активных кампаний с одним и тем же кодом."
 
 msgid "usage limit per customer"
 msgstr "Лимит использования на одного клиента"
@@ -444,14 +477,20 @@ msgid "usage limit"
 msgstr "лимит использования"
 
 msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
+"Set the absolute limit of usages for this coupon. If the limit is zero (0), "
+"coupon can't be used."
 msgstr ""
-"Установите абсолютный предел использования для этого купона. Если лимит "
-"равен нулю (0), купон нельзя использовать."
+"Установите абсолютный предел использования этого купона. Если предел равен "
+"нулю (0), купон не может быть использован."
 
 msgid "is active"
 msgstr "активно"
+
+msgid "The shop where the coupon is active."
+msgstr "Магазин, где действует купон."
+
+msgid "Can not have multiple active campaigns with the same code."
+msgstr "Не может быть нескольких активных кампаний с одним и тем же кодом."
 
 msgid "Base Catalog Filter"
 msgstr "Фильтр базового каталога"
@@ -462,20 +501,20 @@ msgstr "тип товара"
 msgid "product Types"
 msgstr "типы товаров"
 
-msgid "Limit the campaign to selected product types."
-msgstr "Ограничить кампанию для выбранных типов товаров."
+msgid "Limit the campaign only to selected product types."
+msgstr "Ограничьте кампанию только выбранными типами товаров."
 
 msgid "Product"
 msgstr "Товар"
 
-msgid "Limit the campaign to selected products."
-msgstr "Ограничить кампанию для выбранных товаров."
+msgid "Limit the campaign only to selected products."
+msgstr "Ограничьте кампанию только выбранными продуктами."
 
 msgid "Product Category"
 msgstr "Категория товаров"
 
-msgid "Limit the campaign to products in selected categories."
-msgstr "Ограничьте кампанию до товаров из выбранных категорий."
+msgid "Limit the campaign only to products in selected categories."
+msgstr "Ограничьте кампанию только продуктами в выбранных категориях."
 
 msgid "group"
 msgstr "Группа"
@@ -486,8 +525,8 @@ msgstr "Минимальное количество"
 msgid "max amount"
 msgstr "Максимальное количество"
 
-msgid "Can not add sales limits for default contact groups"
-msgstr "Нельзя добавить лимиты продаж для групп контактов по умолчанию"
+msgid "Can not add sales limits for default contact groups."
+msgstr "Невозможно добавить лимиты продаж для групп контактов по умолчанию."
 
 msgid "Context Condition"
 msgstr "Состояние контекста"
@@ -536,10 +575,8 @@ msgstr "Акции не анйдены"
 
 msgid "This section shows all the <b>active</b> campaigns this product is in."
 msgstr ""
-
-#, python-format
-msgid "Active campaings for shop: %(shop)s"
-msgstr ""
+"В этом разделе показаны все <b>активные</b> кампании, в которых участвует "
+"данный продукт."
 
 msgid "Rules"
 msgstr "Правила"
@@ -573,7 +610,7 @@ msgstr "Сгенерировать"
 
 #, python-format
 msgid "%(coupons)s used"
-msgstr ""
+msgstr "%(coupons)s использован"
 
 msgid "Sales Ranges"
 msgstr "Диапазоны продаж"

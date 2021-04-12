@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 07:50+0000\n"
-"PO-Revision-Date: 2019-03-13 09:02+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +29,21 @@ msgstr "订货人"
 
 msgid "Filter report results by the person that made the order."
 msgstr "由订货人筛选报告结果。"
+
+msgid "Order Line Type"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Filter order lines by suppliers."
+msgstr ""
+
+msgid "Order status"
+msgstr ""
+
+msgid "Filter order lines by status of their order."
+msgstr ""
 
 msgid "Quantity"
 msgstr "数量"
@@ -105,6 +120,54 @@ msgstr "活动"
 msgid "Users"
 msgstr "用户"
 
+msgid "Orders Report"
+msgstr ""
+
+msgid "Order ref."
+msgstr ""
+
+msgid "Order date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Order line quantity"
+msgstr ""
+
+msgid "Payment status"
+msgstr ""
+
+msgid "Shipment status"
+msgstr ""
+
+msgid "Total"
+msgstr "总"
+
+msgid "Order Line Report"
+msgstr ""
+
+msgid "Order Line SKU"
+msgstr ""
+
+msgid "Order Line Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxful Unit Price"
+msgstr ""
+
+msgid "Taxful Price"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
 msgid "Product Total Sales"
 msgstr "产品销售总额"
 
@@ -161,9 +224,6 @@ msgstr "税前总计"
 
 msgid "Total Tax Amount"
 msgstr "总税额"
-
-msgid "Total"
-msgstr "总"
 
 msgid "Shop Name"
 msgstr "商店名称"

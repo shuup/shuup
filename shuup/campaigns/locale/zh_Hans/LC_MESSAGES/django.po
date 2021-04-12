@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 23:43+0000\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -22,12 +22,6 @@ msgstr ""
 
 msgid "Campaigns"
 msgstr "活动"
-
-msgid "Catalog Campaigns"
-msgstr "目录活动"
-
-msgid "Show Catalog Campaigns"
-msgstr "目录展示活动"
 
 msgid "Basket Campaigns"
 msgstr "购物篮活动"
@@ -41,14 +35,17 @@ msgstr "优惠券"
 msgid "Show Coupons"
 msgstr "显示优惠券"
 
+msgid "Catalog Campaigns"
+msgstr "目录活动"
+
+msgid "Show Catalog Campaigns"
+msgstr "目录展示活动"
+
 msgid "Set up a sales campaign"
 msgstr "开展销售活动"
 
 msgid "New basket campaign"
 msgstr "新购物篮活动"
-
-msgid "New catalog campaign"
-msgstr "新目录活动"
 
 msgid "New coupon"
 msgstr "新优惠券"
@@ -62,8 +59,8 @@ msgstr "最大值"
 msgid "Leave empty for no maximum"
 msgstr "没有任何最大值"
 
-msgid "Campaign end date can't be before start date."
-msgstr "活动系列结束日期不能早于开始日期。"
+msgid "Campaign end date can't be before a start date."
+msgstr ""
 
 msgid "Define the required coupon for this campaign."
 msgstr "定义此活动所需的优惠券。"
@@ -81,17 +78,17 @@ msgstr "此活动的折扣率"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "%(shop)s商店不提供产品%(product)s"
 
-msgid "Only amount or percentage can be set."
-msgstr "只能设置金额或百分比"
+msgid "Only amount or percentage can be set, not both."
+msgstr ""
 
 msgid "Autogenerate code"
 msgstr "自动生成代码"
 
-msgid "Discount Code already in use."
-msgstr "折扣代码已经在使用"
+msgid "Discount Code is already in use."
+msgstr ""
 
-msgid "Active Campaigns"
-msgstr "有效的活动"
+msgid "Active Basket Campaigns"
+msgstr ""
 
 msgid "Catalog Campaign"
 msgstr "目录活动"
@@ -282,6 +279,13 @@ msgstr "天数"
 msgid "Limit the campaign to selected days."
 msgstr "将活动限制在选定的日子内。"
 
+msgid "Product Variation Child"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match only variation children of the selected product."
+msgstr ""
+
 msgid "campaign"
 msgstr "活动"
 
@@ -324,8 +328,8 @@ msgstr "产品折扣"
 msgid "per line discount"
 msgstr "每行折扣"
 
-msgid "Uncheck this if you want to give discount for each matched product."
-msgstr "如果您想为每个匹配的产品提供折扣，请取消此选项。"
+msgid "Disable this if you want to give discount for each matched product."
+msgstr ""
 
 msgid "Select discount amount and products."
 msgstr "选择折扣金额和产品"
@@ -357,9 +361,9 @@ msgid "active"
 msgstr "活跃"
 
 msgid ""
-"Check this if the campaign is currently active. Please also set a start and "
-"end date."
-msgstr "如果该活动当前处于活动状态，请检查此选项。也请设定一个开始和结束日期。"
+"Enable this if the campaign is currently active. Please also set a start and"
+" an end date."
+msgstr ""
 
 msgid "start date and time"
 msgstr "开始日期和时间"
@@ -402,11 +406,20 @@ msgstr "目录活动：%(name)s"
 msgid "basket line text"
 msgstr "购物篮文本行"
 
-msgid "This text will be shown in basket."
-msgstr "文本将在购物篮显示"
+msgid "This text will be shown in a basket."
+msgstr ""
 
 msgid "coupon"
 msgstr "优惠券"
+
+msgid "supplier"
+msgstr ""
+
+msgid ""
+"When set, this campaign will match only products from the selected supplier."
+" Rules and Effects will also be restricted to include only the products of "
+"this supplier."
+msgstr ""
 
 msgid "public name"
 msgstr "公用名称"
@@ -415,8 +428,8 @@ msgstr "公用名称"
 msgid "Basket Campaign: %(name)s"
 msgstr "购物篮活动: %(name)s"
 
-msgid "Can not have multiple active campaigns with same code."
-msgstr "不能使用相同的代码进行多个活动"
+msgid "Can't have multiple active campaigns with same code."
+msgstr ""
 
 msgid "usage limit per customer"
 msgstr "每个客户的使用限制"
@@ -428,12 +441,18 @@ msgid "usage limit"
 msgstr "使用限制"
 
 msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
-msgstr "设置此优惠券的绝对使用限制。如果限制为零(0)，则不能使用优惠券。"
+"Set the absolute limit of usages for this coupon. If the limit is zero (0), "
+"coupon can't be used."
+msgstr ""
 
 msgid "is active"
 msgstr "正活跃"
+
+msgid "The shop where the coupon is active."
+msgstr ""
+
+msgid "Can not have multiple active campaigns with the same code."
+msgstr ""
 
 msgid "Base Catalog Filter"
 msgstr "基础目录过滤器"
@@ -444,20 +463,20 @@ msgstr "产品类型"
 msgid "product Types"
 msgstr "产品类型"
 
-msgid "Limit the campaign to selected product types."
-msgstr "将活动限制在选定的产品类型"
+msgid "Limit the campaign only to selected product types."
+msgstr ""
 
 msgid "Product"
 msgstr "产品"
 
-msgid "Limit the campaign to selected products."
-msgstr "仅限于选定的产品"
+msgid "Limit the campaign only to selected products."
+msgstr ""
 
 msgid "Product Category"
 msgstr "产品类别"
 
-msgid "Limit the campaign to products in selected categories."
-msgstr "仅限于选定类别中的产品"
+msgid "Limit the campaign only to products in selected categories."
+msgstr ""
 
 msgid "group"
 msgstr "组"
@@ -468,8 +487,8 @@ msgstr "最小量"
 msgid "max amount"
 msgstr "最大量"
 
-msgid "Can not add sales limits for default contact groups"
-msgstr "无法为默认联系人组添加销售限制"
+msgid "Can not add sales limits for default contact groups."
+msgstr ""
 
 msgid "Context Condition"
 msgstr "背景条件"
@@ -518,10 +537,6 @@ msgstr "未找到活动"
 
 msgid "This section shows all the <b>active</b> campaigns this product is in."
 msgstr "此部分显示了此产品所在的所有<b>活跃</b>活动系列。"
-
-#, python-format
-msgid "Active campaings for shop: %(shop)s"
-msgstr "商店的活跃活动：%(shop)s"
 
 msgid "Rules"
 msgstr "规则"

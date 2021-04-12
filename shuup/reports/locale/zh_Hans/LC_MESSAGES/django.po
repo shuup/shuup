@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 08:36+0000\n"
+"POT-Creation-Date: 2020-06-22 17:59+0000\n"
 "PO-Revision-Date: 2017-01-06 15:35+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -54,6 +54,18 @@ msgstr "本年"
 msgid "All Time"
 msgstr "所有时间"
 
+msgid "Output Format"
+msgstr "输出格式"
+
+msgid "The format to show the report results."
+msgstr "显示报告结果的格式。"
+
+msgid "Download"
+msgstr "下载"
+
+msgid "Enable this to download the report."
+msgstr ""
+
 msgid "Shop"
 msgstr "商店"
 
@@ -74,18 +86,6 @@ msgstr "用于自定义日期范围"
 
 msgid "End Date"
 msgstr "结束日期"
-
-msgid "Output Format"
-msgstr "输出格式"
-
-msgid "The format to show the report results."
-msgstr "显示报告结果的格式。"
-
-msgid "Download"
-msgstr "下载"
-
-msgid "Check this to download the report."
-msgstr "检查这个下载报告。"
 
 msgid "Toggle Filters"
 msgstr "切换过滤器"

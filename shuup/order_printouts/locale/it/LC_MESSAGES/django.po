@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 23:57+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-06-22 17:58+0000\n"
+"PO-Revision-Date: 2016-06-28 12:30+0000\n"
 "Last-Translator: Marco Badan <marco.badan@gmail.com>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/shuup/teams/55306/it/)\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +21,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Printouts"
+msgstr "Stampe"
 
 msgid "To"
 msgstr "A"
@@ -40,15 +47,17 @@ msgstr ""
 "Distinti saluti,\n"
 "%(shop)s"
 
-msgid "Printouts"
-msgstr "Stampe"
-
 #, python-format
 msgid "%(shop)s: Order %(pk)s"
 msgstr "%(shop)s: Ordine %(pk)s"
 
-msgid "Not allowed"
-msgstr "Non consentito"
+msgid ""
+"The current shop doesn't match the order shop. Please change to the shop "
+"that is currently active."
+msgstr ""
+
+msgid "Non-POST request methods are forbidden."
+msgstr ""
 
 msgid "Delivery slip"
 msgstr "Documento di trasporto"
@@ -80,6 +89,10 @@ msgstr "Stato pagamento"
 msgid "Shipping status"
 msgstr "Stato spedizione"
 
+#, python-format
+msgid "Tracking code #%(index)s"
+msgstr ""
+
 msgid "Order date"
 msgstr "Data ordine"
 
@@ -91,6 +104,9 @@ msgstr "Identificativo"
 
 msgid "Shipment date"
 msgstr "Data spedizione"
+
+msgid "Tracking code"
+msgstr ""
 
 msgid "SKU"
 msgstr "SKU"
@@ -155,8 +171,8 @@ msgstr "Invia Conferma d'ordine"
 msgid "Send Delivery Slip (Shipment %(id)s)"
 msgstr "Invia Documento di Trasporto (Spedizione %(id)s)"
 
-msgid "Email sent successfully!"
-msgstr "Email inviata con successo!"
+msgid "Email was sent."
+msgstr ""
 
 msgid "Could not sent the email, please try again."
 msgstr "Impossibile inviare l'email, riprova ancora."

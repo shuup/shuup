@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
 # George Voronin <sonictorment@gmail.com>, 2017
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
@@ -10,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 11:18+0000\n"
-"PO-Revision-Date: 2017-09-22 18:23+0000\n"
-"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2021-02-19 09:00+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,11 +63,11 @@ msgstr "Перезагрузка."
 msgid "Addon file (ZIP)"
 msgstr "файл дополнения (ZIP)"
 
-msgid "Only upload addon files you trust."
-msgstr "Загружайте только те файлы дополнений, которые вызывают доверие"
+msgid "Only upload the addon files you trust."
+msgstr "Загружайте только те файлы, которые вызывают доверие"
 
-msgid "Only wheel files are supported"
-msgstr "Поддерживаются только .whl файлы"
+msgid "Only wheel files (`.whl`) are supported."
+msgstr "Поддерживаются только файлы формата \".whl\""
 
 msgid "Upload"
 msgstr "Загрузить"
@@ -111,11 +112,11 @@ msgstr "Закончить установку новых дополнений (�
 msgid "Reload application server"
 msgstr "Перезагрузить сервер приложения"
 
-msgid "Reload initiated."
+msgid "Reload was initiated."
 msgstr "Перезагрузка началась."
 
-msgid "Error while reloading application."
-msgstr "При перезагрузки приложения произошла ошибка."
+msgid "Reloading application failed."
+msgstr "При перезагрузке приложения произошла ошибка."
 
 msgid "Finalizing installations."
 msgstr "Установка заканчивается."

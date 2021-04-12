@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Pablo Burgos <hispar@gmail.com>, 2020
+# Panu Tulimäki <panu@shuup.com>, 2020
 # Peter King <webmaster@waterrower.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:37+0000\n"
-"PO-Revision-Date: 2020-10-15 10:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,14 +43,14 @@ msgid ""
 "Orders > Carts"
 msgstr "Establezca la cantidad de horas que el carrito debe estar inactivo antes de que se muestre en Pedidos> Carritos"
 
-msgid "Created on"
-msgstr "Creado en"
+msgid "Key"
+msgstr ""
 
 msgid "Last updated on"
 msgstr "Última actualización en"
 
-msgid "Abandoned"
-msgstr "Abandonado"
+msgid "Completed"
+msgstr ""
 
 msgid "yes"
 msgstr "si"
@@ -60,17 +61,20 @@ msgstr "no"
 msgid "Shop"
 msgstr "Tienda"
 
-msgid "Product count"
-msgstr "Cuenta de productos"
+msgid "Supplier"
+msgstr ""
 
 msgid "Customer"
 msgstr "Cliente"
 
-msgid "Orderer"
-msgstr "Solicitante del pedido"
+msgid "Product count"
+msgstr "Cuenta de productos"
 
 msgid "Total"
 msgstr "Total"
+
+msgid "Created on"
+msgstr "Creado en"
 
 msgid "Ordered"
 msgstr "Pedido realizado"
@@ -150,6 +154,9 @@ msgstr "Usar una dirección guardada"
 msgid "Addresses"
 msgstr "Direcciones"
 
+msgid "Saved addresses."
+msgstr ""
+
 msgid "Checkout as Guest"
 msgstr "Pagar como invitado"
 
@@ -179,6 +186,9 @@ msgstr "Ha habido un cambio en la disponibilidad de un producto. Por favor revis
 msgid "Confirmation"
 msgstr "Confirmación"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "Cesta vacía"
 
@@ -190,6 +200,9 @@ msgstr "método de pago"
 
 msgid "Shipping & Payment"
 msgstr "Envío y Pago"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "Ordenar productos por nombre"
@@ -422,6 +435,9 @@ msgstr "clave"
 msgid "shop"
 msgstr "tienda"
 
+msgid "supplier"
+msgstr ""
+
 msgid "customer"
 msgstr "cliente"
 
@@ -470,6 +486,9 @@ msgstr "producto_cuenta"
 msgid "products"
 msgstr "productos"
 
+msgid "class spec"
+msgstr ""
+
 msgid "stored basket"
 msgstr "cestas almacenada"
 
@@ -477,22 +496,22 @@ msgid "stored baskets"
 msgstr "cestas almacenadas"
 
 msgid "ID"
-msgstr ""
+msgstr "CARNÉ DE IDENTIDAD"
 
 msgid "Reference Number"
-msgstr ""
+msgstr "Número de referencia"
 
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 msgid "Customer Name"
-msgstr ""
+msgstr "Nombre del cliente"
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Shipping Method"
-msgstr ""
+msgstr "Método de envío"
 
 msgid "Order Received"
 msgstr "Pedido Recibido"
@@ -535,6 +554,15 @@ msgstr "Estado del pedido de envío"
 
 msgid "Shipment Status"
 msgstr "Estado del envío"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "Envío eliminado"
@@ -655,6 +683,106 @@ msgstr "Configuración de pago"
 msgid "Product list sorts and filters"
 msgstr "Clasificaciones y filtros de la lista de productos"
 
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "Dirección de facturación"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "Dirección de envío"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "Cantidad"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "Impuestos"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
 msgid "Storefront Languages"
 msgstr "Idiomas del escaparate"
 
@@ -672,6 +800,9 @@ msgstr "No puedes continuar con el pago!"
 
 msgid "Checkout"
 msgstr "Pago"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "Acceder"
@@ -761,6 +892,10 @@ msgstr "Añadir el producto a la cesta ha fallado."
 msgid "Remove product from basket"
 msgstr "Elimina un producto de la cesta"
 
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
+
 msgid ""
 "The following items are not currently available (or are not available in the"
 " desired quantity) and cannot be included in your order."
@@ -829,17 +964,11 @@ msgstr "Vista de cuadrícula/lista"
 msgid "Continue"
 msgstr "Continuar"
 
-msgid "Billing address"
-msgstr "Dirección de facturación"
-
 msgid "Ordering for a company?"
 msgstr "¿Comprando para una empresa?"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "Por favor rellena estos campos si estás comprando para una empresa."
-
-msgid "Shipping address"
-msgstr "Dirección de envío"
 
 msgid "Ship to my billing address"
 msgstr "Enviar a mi dirección de facturación"
@@ -1000,9 +1129,6 @@ msgstr "Producto"
 msgid "Unit Price"
 msgstr "Precio unitario"
 
-msgid "Quantity"
-msgstr "Cantidad"
-
 msgid "excl. tax"
 msgstr "Impuestos excluidos"
 
@@ -1011,9 +1137,6 @@ msgstr "Productos solicitados"
 
 msgid "Tax breakdown"
 msgstr "Desglose de impuestos"
-
-msgid "Tax"
-msgstr "Impuestos"
 
 msgid "Tax percentage"
 msgstr "Porcentaje de impuestos"
@@ -1052,9 +1175,6 @@ msgstr "Incluye estos productos"
 msgid "No product description available"
 msgstr "Sin descripción de producto disponible"
 
-msgid "SKU"
-msgstr "SKU"
-
 msgid "Barcode"
 msgstr "Código de barras"
 
@@ -1090,6 +1210,15 @@ msgstr "Seleccionar"
 
 msgid "Select product"
 msgstr "Seleccionar producto"
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
 
 msgid "Add to cart"
 msgstr "Añadir al carrito"

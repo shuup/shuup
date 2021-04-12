@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-29 07:50+0000\n"
-"PO-Revision-Date: 2020-11-02 13:42+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +29,21 @@ msgstr "Client"
 
 msgid "Filter report results by the person that made the order."
 msgstr "Filtrez les résultats du rapport par la personne qui a passé la commande."
+
+msgid "Order Line Type"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Filter order lines by suppliers."
+msgstr ""
+
+msgid "Order status"
+msgstr ""
+
+msgid "Filter order lines by status of their order."
+msgstr ""
 
 msgid "Quantity"
 msgstr "Quantité"
@@ -105,6 +120,54 @@ msgstr "Entreprises"
 msgid "Users"
 msgstr "Utilisateurs"
 
+msgid "Orders Report"
+msgstr ""
+
+msgid "Order ref."
+msgstr ""
+
+msgid "Order date"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Order line quantity"
+msgstr ""
+
+msgid "Payment status"
+msgstr ""
+
+msgid "Shipment status"
+msgstr ""
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Order Line Report"
+msgstr ""
+
+msgid "Order Line SKU"
+msgstr ""
+
+msgid "Order Line Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxful Unit Price"
+msgstr ""
+
+msgid "Taxful Price"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
 msgid "Product Total Sales"
 msgstr "Ventes totales de produits"
 
@@ -161,9 +224,6 @@ msgstr "Total avant impôt"
 
 msgid "Total Tax Amount"
 msgstr "Montant total de la taxe"
-
-msgid "Total"
-msgstr "Total"
 
 msgid "Shop Name"
 msgstr "Nom de la boutique"

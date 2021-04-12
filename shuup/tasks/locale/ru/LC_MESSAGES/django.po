@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-05 20:21+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,155 +22,155 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 msgid "Tasks"
-msgstr ""
+msgstr "Задачи"
 
 msgid "Show Tasks"
-msgstr ""
+msgstr "Показать задачи"
 
 msgid "Task Types"
-msgstr ""
+msgstr "Типы задач"
 
 msgid "Show Task Types"
-msgstr ""
+msgstr "Показать типы задач"
 
 #, python-brace-format
 msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
-msgstr ""
+msgstr "Изменена ассигментация с {from_contact_name} на {to_contact_name}."
 
 msgid "Set In Progress"
-msgstr ""
+msgstr "В процессе выполнения"
 
 msgid "Set Completed"
-msgstr ""
+msgstr "Набор завершен"
 
 msgid "Invalid status."
-msgstr ""
+msgstr "Неверный статус."
 
 msgid "Status changed."
-msgstr ""
+msgstr "Статус изменен."
 
 msgid "Name"
-msgstr ""
+msgstr "Название "
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Фильтр по названию ..."
 
 msgid "Creator"
-msgstr ""
+msgstr "Создатель"
 
 msgid "Filter by creator..."
-msgstr ""
+msgstr "Фильтр по создателю ..."
 
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 msgid "Priority"
-msgstr ""
+msgstr "Приоритет"
 
 msgid "Comments"
-msgstr ""
+msgstr "Коментарии"
 
 msgid "New"
-msgstr ""
+msgstr "Новый"
 
 msgid "In progress"
-msgstr ""
+msgstr "В процессе выполнения"
 
 msgid "Completed"
-msgstr ""
+msgstr "Выполнено"
 
 msgid "Deleted"
-msgstr ""
+msgstr "Удалено"
 
 msgid "Public"
-msgstr ""
+msgstr "Общественный"
 
 msgid "Staff Only"
-msgstr ""
+msgstr "Только для сотрудников"
 
 msgid "Admins Only"
-msgstr ""
+msgstr "Только для администраторов"
 
 msgid "shop"
-msgstr ""
+msgstr "магазин"
 
 msgid "name"
-msgstr ""
+msgstr "название"
 
 msgid "task type"
-msgstr ""
+msgstr "тип задачи"
 
 msgid "task types"
-msgstr ""
+msgstr "типы задач"
 
 msgid "status"
-msgstr ""
+msgstr "статус"
 
 msgid "priority"
-msgstr ""
+msgstr "приоритет"
 
 msgid "creator"
-msgstr ""
+msgstr "создатель"
 
 msgid "assigned to"
-msgstr ""
+msgstr "предназначенный для"
 
 msgid "completed by"
-msgstr ""
+msgstr "завершенный"
 
 msgid "completed on"
-msgstr ""
+msgstr "выполненный"
 
 msgid "created on"
-msgstr ""
+msgstr "созданный"
 
 msgid "modified on"
-msgstr ""
+msgstr "изменённый"
 
 msgid "task"
-msgstr ""
+msgstr "задача"
 
 msgid "author"
-msgstr ""
+msgstr "автор"
 
 msgid "visibility"
-msgstr ""
+msgstr "видимость"
 
 msgid "body"
-msgstr ""
+msgstr "тело"
 
 msgid "New Task"
-msgstr ""
+msgstr "Новая задача"
 
 msgid "General Information"
-msgstr ""
+msgstr "Общая информация"
 
 msgid "Created on"
-msgstr ""
+msgstr "создано"
 
 msgid "Completed on"
-msgstr ""
+msgstr "Выполненный"
 
 msgid "Completed by"
-msgstr ""
+msgstr "Завершенный"
 
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 msgid "Visibility"
-msgstr ""
+msgstr "Видимость"
 
 msgid "Comment"
-msgstr ""
+msgstr "Комментарий"
 
 msgid "Post a new comment"
-msgstr ""
+msgstr "Опубликовать новый комментарий"
 
 msgid "New Task Type"
-msgstr ""
+msgstr "Новый тип задачи"
 
 msgid "Last 10 pending tasks assigned for you"
-msgstr ""
+msgstr "Последние 10 нерешенных задач, поставленных перед вами"
 
 msgid "Task"
-msgstr ""
+msgstr "Задача"

@@ -3,14 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 # 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+# Алекс Прометеев <promet.alex@gmail.com>, 2017
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 13:42+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Алекс Прометеев <promet.alex@gmail.com>, 2017\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,16 +33,7 @@ msgstr "Цена (%(shop)s/%(group)s)"
 
 #, python-format
 msgid "Discount (%(shop)s/%(group)s)"
-msgstr ""
-
-msgid "Customer Group Price"
-msgstr "Цена для группы контактов"
-
-msgid ""
-"Customer group prices can be listed, fetched, created, updated and deleted."
-msgstr ""
-"Цены для группы клиентов могут быть указаны, получены, созданы, обновлены и "
-"удалены."
+msgstr "Скидка (%(shop)s/%(group)s)"
 
 msgid "product"
 msgstr "Товар"
@@ -58,28 +54,31 @@ msgid "product prices"
 msgstr "стоимости товаров"
 
 msgid "discount amount"
-msgstr ""
+msgstr "сумма скидки"
 
 msgid "product discount"
-msgstr ""
+msgstr "скидка на товар"
 
 msgid "product discounts"
-msgstr ""
+msgstr "скидка на товары"
 
 msgid "Customer Group Pricing"
 msgstr "Цена для группы клиентов"
 
 msgid "Customer Group Discount"
-msgstr ""
+msgstr "Скидка для группы клиентов"
 
 msgid "Contact Group Discount"
-msgstr ""
+msgstr "Скидка для контактной группы"
 
 msgid ""
 "Here you can set individual discount amounts for different contact groups. "
 "The discount amount may be visible on storefront. These groups are defined "
 "in Contacts Settings – Contact Groups"
 msgstr ""
+"Здесь Вы можете установить индивидуальные суммы скидок для различных "
+"контактных групп. Сумма скидки может быть видна в магазине. Эти группы "
+"определяются в разделе Настройки контактов - Группы контактов."
 
 msgid "Contact Group Pricing"
 msgstr "Цена для группы контактов"

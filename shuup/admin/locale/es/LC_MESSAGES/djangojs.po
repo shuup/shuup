@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# Edwin Angulo <edwin.angulo@megaterios.co>, 2020
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:59+0000\n"
-"PO-Revision-Date: 2020-10-15 10:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,152 +21,152 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Error! Unexpected error while uploading files."
-msgstr ""
+msgstr "¡Error! Error inesperado al cargar archivos."
 
 msgid "Error!"
-msgstr ""
+msgstr "¡Error!"
 
 msgid "Uploaded:"
-msgstr ""
+msgstr "Subido:"
 
 msgid "New file name?"
-msgstr ""
+msgstr "¿Nuevo nombre de archivo?"
 
 #, javascript-format
 msgid "Are you sure you want to delete the file %s?"
-msgstr ""
+msgstr "¿Está seguro de que desea eliminar el archivo %s?"
 
 msgid "New folder name?"
-msgstr ""
+msgstr "¿Nuevo nombre de carpeta?"
 
 #, javascript-format
 msgid "Are you sure you want to delete the %s folder?"
-msgstr ""
+msgstr "¿Está seguro de que desea eliminar la carpeta %s?"
 
 msgid "New folder"
-msgstr ""
+msgstr "Nueva carpeta"
 
 msgid "Oldest first"
-msgstr ""
+msgstr "Los más viejos primero"
 
 msgid "Newest first"
-msgstr ""
+msgstr "El más reciente primero"
 
 msgid "Smallest first"
-msgstr ""
+msgstr "El más pequeño primero"
 
 msgid "Largest first"
-msgstr ""
+msgstr "Más grande primero"
 
 msgid "Drop your files here"
-msgstr ""
+msgstr "Suelta tus archivos aquí"
 
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 msgid "Size"
-msgstr ""
+msgstr "Talla"
 
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr ""
+msgstr "Haga clic en el botón <strong>Cargar</strong> para cargar archivos."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
 "button."
-msgstr ""
+msgstr "<span>Arrastra y suelta</span> archivos aquí<br> o haga clic en el botón <span>Cargar</span> ."
 
 msgid "Rename file"
-msgstr ""
+msgstr "Renombrar archivo"
 
 msgid "Delete file"
-msgstr ""
+msgstr "Borrar archivo"
 
 msgid "Rename folder"
-msgstr ""
+msgstr "Renombrar carpeta"
 
 msgid "Delete folder"
-msgstr ""
+msgstr "Eliminar carpeta"
 
 msgid "Edit folder access"
-msgstr ""
+msgstr "Editar acceso a la carpeta"
 
 #, javascript-format
 msgid "Success! Order %s was created."
-msgstr ""
+msgstr "¡Éxito! Se creó el pedido %s."
 
 msgid "Error! An unspecified error occurred.\n"
-msgstr ""
+msgstr "¡Error! Se produjo un error no especificado.\n"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 msgid "Unit Price"
-msgstr ""
+msgstr "Precio unitario"
 
 msgid "Discounted Unit Price"
-msgstr ""
+msgstr "Precio unitario con descuento"
 
 msgid "Discount amount"
-msgstr ""
+msgstr "Importe de descuento"
 
 msgid "Discount percent"
-msgstr ""
+msgstr "Porcentaje de descuento"
 
 msgid "Total (excluding taxes)"
-msgstr ""
+msgstr "Total (sin impuestos)"
 
 msgid "Tax percent"
-msgstr ""
+msgstr "Porcentaje de impuestos"
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 msgid "Billing address"
-msgstr ""
+msgstr "Dirección de Envio"
 
 msgid "Shipping address"
-msgstr ""
+msgstr "Dirección de Envío"
 
 #, javascript-format
 msgid "Customer with same %s already exists."
-msgstr ""
+msgstr "Ya existe un cliente con el mismo %s."
 
 #, javascript-format
 msgid "Click to select user %s."
-msgstr ""
+msgstr "Haga clic para seleccionar el usuario %s."
 
 msgid "Save customer details while creating order"
-msgstr ""
+msgstr "Guarde los detalles del cliente mientras crea el pedido"
 
 msgid ""
 "Checking this box will save entered customer data to your contacts list."
-msgstr ""
+msgstr "Al marcar esta casilla, se guardarán los datos del cliente ingresados en su lista de contactos."
 
 msgid "Ship to billing address"
-msgstr ""
+msgstr "Enviar a la dirección de cobro"
 
 msgid ""
 "Checking this will make the shipping address the same as the billing "
 "address."
-msgstr ""
+msgstr "Al marcar esto, la dirección de envío será la misma que la dirección de facturación."
 
 msgid "Order for company"
-msgstr ""
+msgstr "Pedido para empresa"
 
 msgid "Enable this if the order is for a company or business with a tax ID."
-msgstr ""
+msgstr "Habilite esta opción si el pedido es para una empresa o negocio con un número de identificación fiscal."
 
 msgid "Billing Address"
 msgstr "Direccion de facturacion"
@@ -179,7 +181,7 @@ msgid "Phone"
 msgstr "Telefono"
 
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 msgid "Tax Number"
 msgstr "Identificador fiscal"
@@ -191,7 +193,7 @@ msgid "Companies"
 msgstr "Empresas"
 
 msgid "Merchant Notes"
-msgstr ""
+msgstr "Notas comerciales"
 
 msgid "Year"
 msgstr "Año"
@@ -218,7 +220,7 @@ msgid ""
 "Search for existing customers by searching by name or email or click the "
 "magnifying glass for more fine-grained filtering. Clear the search filter to"
 " create an order for a new customer."
-msgstr ""
+msgstr "Busque clientes existentes mediante la búsqueda por nombre o correo electrónico o haga clic en la lupa para un filtrado más detallado. Borre el filtro de búsqueda para crear un pedido para un nuevo cliente."
 
 msgid "Customer"
 msgstr "Cliente"
@@ -483,57 +485,6 @@ msgstr "No se encontraron registros."
 msgid "Warning! Missing JavaScript dependencies detected."
 msgstr "¡Advertencia! Faltan dependencias de JavaScript detectadas."
 
-msgid "Identifier"
-msgstr "Identificador"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr "Valor %s Nombre"
-
-msgid "Delete value"
-msgstr "Borrar valor"
-
-msgid "Are you sure?"
-msgstr "¿Estás seguro?"
-
-msgid "Delete Variable"
-msgstr "Borrar Variable"
-
-msgid "Add new value"
-msgstr "Añadir nuevo valor"
-
-msgid "Variable Name"
-msgstr "Nombre de variable"
-
-msgid "Variable"
-msgstr "Variable"
-
-msgid "Identifer"
-msgstr "Identificador"
-
-msgid "New template"
-msgstr "Nueva plantilla"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "Mostrar campos de identificación (para usuarios avanzados)"
-
-msgid "There are no variables defined."
-msgstr "No hay variables definidas."
-
-msgid "Variation Template"
-msgstr "Plantilla de variante"
-
-msgid "Select Template"
-msgstr "Seleccionar plantilla"
-
-msgid ""
-"Selecting and saving a template will clear all variable children selections "
-"for this product."
-msgstr ""
-
-msgid "Add new variable"
-msgstr "Añadir nueva variable"
-
 msgid "No browser URL for kind:"
 msgstr "Sin URL de navegador para el tipo:"
 
@@ -719,6 +670,9 @@ msgstr "Restablecer filtros"
 msgid "Reset"
 msgstr "Reiniciar"
 
+msgid "Apply filters"
+msgstr ""
+
 msgid "Sort by"
 msgstr "Ordenar por"
 
@@ -742,13 +696,10 @@ msgid "Filter by %s"
 msgstr "Filtrar por %s"
 
 msgid " Select"
-msgstr ""
+msgstr "Seleccione"
 
 msgid "Filters"
 msgstr "Filtros"
-
-msgid "Done"
-msgstr "Hecho"
 
 msgid "Show filters"
 msgstr "Mostrar filtros"

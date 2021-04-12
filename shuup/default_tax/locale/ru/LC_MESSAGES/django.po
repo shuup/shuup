@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
 # Translator HIO.E <translater@hiqe.ru>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 23:17+0000\n"
-"PO-Revision-Date: 2017-09-22 18:24+0000\n"
-"Last-Translator: Translator HIO.E <translater@hiqe.ru>\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2021-03-09 08:54+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,8 +68,8 @@ msgstr "Включено"
 msgid "enabled"
 msgstr "включено"
 
-msgid "Check this if this tax rule is active."
-msgstr "Поставьте галочку, если правило налогообложения активно."
+msgid "Enable this if this tax rule is active."
+msgstr "Включите эту опцию, если это налоговое правило активно."
 
 msgid "tax classes"
 msgstr "налоговые классы"
@@ -116,7 +117,7 @@ msgid "The tax to apply when this rule is applied."
 msgstr "Налог, применяемый при применении этого правила."
 
 msgid "Tax rule {} ({})"
-msgstr ""
+msgstr "Налоговое правило {}({})"
 
 msgid "Default Taxation"
 msgstr "Налогообложение по умолчанию"

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-11-02 13:42+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1032,13 +1032,6 @@ msgstr "La commande a été marquée comme partiellement payée."
 msgid "Success! Shipment #%d was created."
 msgstr "Succès! L'expédition n ° %d a été créée."
 
-#, python-format
-msgid "Refund for %s"
-msgstr "Remboursement pour %s"
-
-msgid "Misc refund"
-msgstr "Remboursement divers"
-
 msgid "All rows requiring verification have been verified."
 msgstr "Toutes les lignes nécessitant une vérification ont été vérifiées."
 
@@ -1333,6 +1326,12 @@ msgid ""
 "informing customers of special stock numbers or preorders. (Ex.: Available "
 "in a month)"
 msgstr "Ce texte sera affiché à côté du produit dans la boutique. Il est utile pour informer les clients des numéros de stock spéciaux ou des précommandes. (Ex: disponible dans un mois)"
+
+msgid "shop product"
+msgstr ""
+
+msgid "shop products"
+msgstr ""
 
 msgid ""
 "Error! Invalid display unit: Internal unit of the selected display unit does"
@@ -1879,14 +1878,14 @@ msgstr "Limitez la disponibilité du service en fonction des pays sélectionnés
 msgid "available in countries"
 msgstr "disponible dans les pays"
 
-msgid "available in european countries"
-msgstr "disponible dans les pays européens"
+msgid "available in european union"
+msgstr ""
 
 msgid "unavailable in countries"
 msgstr "indisponible dans les pays"
 
-msgid "unavailable in european countries"
-msgstr "indisponible dans les pays européens"
+msgid "unavailable in european union"
+msgstr ""
 
 msgid "Service is not available without a defined country."
 msgstr "Le service n'est pas disponible sans un pays défini."
@@ -1963,17 +1962,17 @@ msgstr "transporteurs personnalisés"
 msgid "Manually processed shipment"
 msgstr "Envoi traité manuellement"
 
-msgid "not sent"
-msgstr "pas envoyé"
+msgid "Not sent"
+msgstr ""
 
-msgid "sent"
-msgstr "envoyé"
+msgid "Sent"
+msgstr ""
 
-msgid "received"
-msgstr "reçu"
+msgid "Error"
+msgstr ""
 
-msgid "error"
-msgstr "Erreur"
+msgid "Deleted"
+msgstr ""
 
 msgid "outgoing"
 msgstr "sortant"
@@ -1983,6 +1982,9 @@ msgstr "entrant"
 
 msgid "tracking code"
 msgstr "code de suivi"
+
+msgid "tracking url"
+msgstr ""
 
 msgid "volume ({})"
 msgstr "le volume ({})"
@@ -2153,20 +2155,18 @@ msgid ""
 "participate fully, the supplier also needs to be `Approved`."
 msgstr "Indique si ce fournisseur est actuellement activé. Afin de participer pleinement, le fournisseur doit également être «approuvé»."
 
-msgid "approved"
-msgstr "approuvé"
-
-msgid ""
-"Indicates whether this supplier is currently approved for work. In order to "
-"participate fully, the supplier also needs to be `Enabled`."
-msgstr "Indique si ce fournisseur est actuellement approuvé pour le travail. Afin de participer pleinement, le fournisseur doit également être «Activé»."
-
 msgid ""
 "Enter a URL slug for your supplier. Slug is user- and search engine-friendly"
 " short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your supplier page URL in the browser address bar "
 "will look like. A default will be created using the supplier name."
 msgstr "Saisissez un slug d'URL pour votre fournisseur. Slug est un court texte convivial pour l'utilisateur et les moteurs de recherche utilisé dans une URL pour identifier et décrire une ressource. Dans ce cas, il déterminera à quoi ressemblera l'URL de votre page fournisseur dans la barre d'adresse du navigateur. Une valeur par défaut sera créée en utilisant le nom du fournisseur."
+
+msgid "Approved"
+msgstr ""
+
+msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
 msgstr "Impossible de modifier les champs critiques de la taxe en cours d'utilisation."
@@ -2383,6 +2383,13 @@ msgstr "réapprovisionner"
 
 msgid "restock logical"
 msgstr "réapprovisionnement logique"
+
+#, python-format
+msgid "Refund for %s"
+msgstr "Remboursement pour %s"
+
+msgid "Misc refund"
+msgstr "Remboursement divers"
 
 msgid "Untaxed"
 msgstr "Non taxé"

@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
 # Eugene <eugene.mechanism@gmail.com>, 2016
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
@@ -10,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 17:12+0000\n"
-"PO-Revision-Date: 2019-03-07 05:52+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,14 +36,22 @@ msgstr "Корзины"
 msgid "Show carts"
 msgstr "Показать корзины"
 
-msgid "Created on"
-msgstr "создано"
+msgid "Cart Inactivity Delay (hours)"
+msgstr ""
+
+msgid ""
+"Set the number of hours the cart must be inactive before it's displayed in "
+"Orders > Carts"
+msgstr ""
+
+msgid "Key"
+msgstr "Ключевой"
 
 msgid "Last updated on"
 msgstr "Обновлено"
 
-msgid "Abandoned"
-msgstr "Оставлено"
+msgid "Completed"
+msgstr "Завершенный"
 
 msgid "yes"
 msgstr "Да"
@@ -53,17 +62,20 @@ msgstr "Нет"
 msgid "Shop"
 msgstr "Магазин"
 
-msgid "Product count"
-msgstr "Количество товаров"
+msgid "Supplier"
+msgstr "Поставщик"
 
 msgid "Customer"
 msgstr "Клиент"
 
-msgid "Orderer"
-msgstr "Заказчик"
+msgid "Product count"
+msgstr "Количество товаров"
 
 msgid "Total"
 msgstr "Итого"
+
+msgid "Created on"
+msgstr "создано"
 
 msgid "Ordered"
 msgstr "Заказано"
@@ -120,15 +132,11 @@ msgid ""
 " that all languages should be available."
 msgstr ""
 
-#, python-format
-msgid "Basket loading failed: Incompatible basket (%s)"
-msgstr ""
-
 msgid "Try to remove some products from the basket and order them separately."
 msgstr ""
 
 #, python-format
-msgid "Products in basket cannot be shipped together. %s"
+msgid "Products in basket can't be shipped together. %s"
 msgstr ""
 
 #, python-format
@@ -146,6 +154,9 @@ msgstr "Использовать сохранённый адрес"
 
 msgid "Addresses"
 msgstr "Адреса"
+
+msgid "Saved addresses."
+msgstr ""
 
 msgid "Checkout as Guest"
 msgstr "Перейти к оплате, как гость"
@@ -176,6 +187,9 @@ msgstr "Произошло изменение в доступности прод
 msgid "Confirmation"
 msgstr "Подтверждение"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "Пустая Корзина"
 
@@ -187,6 +201,9 @@ msgstr "способ оплаты"
 
 msgid "Shipping & Payment"
 msgstr "Доставка и Оплата"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "Сортировать товары по имени"
@@ -203,8 +220,8 @@ msgstr "Имя А-Я"
 msgid "Name - Z-A"
 msgstr "Имя Я-А"
 
-msgid "Check this to allow products to be sortable by product name."
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по названию."
+msgid "Enable this to allow products to be sortable by product name."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the the filter will appear on "
@@ -224,9 +241,9 @@ msgid "Price - High to Low"
 msgstr "Цена - по убыванию"
 
 msgid ""
-"Check this to allow products to be sortable by price (from low to high and "
-"high to low)."
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по цене (от низкой до высокой и высокой к низкой)"
+"Enable this to allow products to be sortable by price (from low to high; "
+"from high to low)."
+msgstr ""
 
 msgid "Sort products by date created"
 msgstr "Сортировать товары по дате создания"
@@ -238,8 +255,8 @@ msgid "Date created"
 msgstr "Дата создания"
 
 msgid ""
-"Check this to allow products to be sortable from newest to oldest products."
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров от самых старых до новейших продуктов."
+"Enable this to allow products to be sortable from newest to oldest products."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the filter will appear on the "
@@ -256,8 +273,8 @@ msgid "Date created - oldest first"
 msgstr "Дата создания - сначала старые"
 
 msgid ""
-"Check this to allow products to be sortable from oldest to newest products."
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров от самых старых до новейших продуктов."
+"Enable this to allow products to be sortable from oldest to newest products."
+msgstr ""
 
 msgid "Filter products by manufacturer"
 msgstr "Фильтровать товары по производителю"
@@ -269,9 +286,9 @@ msgid "Manufacturers"
 msgstr "Производители"
 
 msgid ""
-"Check this to allow products to be filterable by manufacturer for this "
+"Enable this to allow products to be filterable by manufacturer for this "
 "category."
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по производителю для данной категории."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the manufacturer filters will "
@@ -288,9 +305,9 @@ msgid "Categories"
 msgstr "Категории"
 
 msgid ""
-"Check this to allow products to be filterable by any visible product "
+"Enable this to allow products to be filterable by any visible product "
 "category. "
-msgstr "Поставьте галочку, чтобы разрешить сортировку товаров по любой существующей категории."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the category list filters will"
@@ -307,9 +324,9 @@ msgid "Products per page"
 msgstr "Количество наименований на страницу"
 
 msgid ""
-"Check this to allow the customer to be able to select the number of products"
-" to display."
-msgstr "Поставьте галочку, чтобы разрешить клиенту выбирать количество товаров для показа."
+"Enable this to allow the customer to be able to select the number of "
+"products to display."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the page size filter will "
@@ -323,9 +340,9 @@ msgid "Ordering for filter by variation"
 msgstr "Упорядочить для фильтра по вариации"
 
 msgid ""
-"Check this to allow products to be filterable by their different variations."
-" For example, size or color."
-msgstr "Поставьте галочку, чтобы разрешить фильтрацию товара по его различным вариациям. Например в размере и цвете."
+"Enable this to allow products to be filterable by their different "
+"variations. For example, size or color."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the variation filters will "
@@ -342,10 +359,10 @@ msgid "Price"
 msgstr "Стоимость"
 
 msgid ""
-"Check this to allow products to be filtered by price. Prices will be listed "
-"in groups from the price range minimum to price range maximum in increments "
-"of the configured price range step."
-msgstr "Поставьте галочку, чтобы продукты можно было фильтровать по цене. Цены будут перечислены в группах от минимального диапазона цен до максимального с учётом шага повшения цены."
+"Enable this to allow products to be filtered by price. Prices will be listed"
+" in groups from the price range minimum to price range maximum in increments"
+" of the configured price range step."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the price range filters will "
@@ -396,12 +413,18 @@ msgstr ""
 msgid "Suppliers"
 msgstr ""
 
-msgid "Check this to allow products to be filterable by supplier."
+msgid "Enable this to allow products to be filterable by supplier."
 msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the supplier filters will "
 "appear."
+msgstr ""
+
+msgid "Allow multiselect suppliers"
+msgstr ""
+
+msgid "Filter by multiple suppliers at a time."
 msgstr ""
 
 msgid "Logged out since this account is inactive."
@@ -412,6 +435,9 @@ msgstr "ключ"
 
 msgid "shop"
 msgstr "магазин"
+
+msgid "supplier"
+msgstr ""
 
 msgid "customer"
 msgstr "покупатель"
@@ -461,11 +487,32 @@ msgstr "подсчёт товаров"
 msgid "products"
 msgstr "товары"
 
+msgid "class spec"
+msgstr ""
+
 msgid "stored basket"
 msgstr "сохранённая корзина"
 
 msgid "stored baskets"
 msgstr "сохранённые корзины"
+
+msgid "ID"
+msgstr ""
+
+msgid "Reference Number"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customer Name"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
 
 msgid "Order Received"
 msgstr "Заказ получен"
@@ -488,6 +535,15 @@ msgstr ""
 msgid "Language"
 msgstr "Язык"
 
+msgid "Order Status Changed"
+msgstr ""
+
+msgid "Old Status"
+msgstr ""
+
+msgid "New Status"
+msgstr ""
+
 msgid "Shipment Created"
 msgstr "Доставка оформлена"
 
@@ -499,6 +555,15 @@ msgstr "Статус отправления заказа"
 
 msgid "Shipment Status"
 msgstr "Статус доставки"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "Отправление удалено"
@@ -610,11 +675,114 @@ msgid ""
 "well as other informations like shipping method and payment method."
 msgstr "Этот скрипт отправит электронное сообщение клиенту или любому настроенному электронному письму сразу после создания заказа. Содержимое заказа может быть размещено в основной части письма, а также в других частях, таких как способ доставки и способ оплаты."
 
+msgid "Cart Inactivity Delay"
+msgstr ""
+
 msgid "Checkout configuration"
 msgstr ""
 
 msgid "Product list sorts and filters"
 msgstr "Параметры сортировки и фильтры товара"
+
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "Платежный адрес"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "Адрес доставки"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "Артикул"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "Налог"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr "Поставлено %(supplier)s"
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr "Журнал действий"
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
 
 msgid "Storefront Languages"
 msgstr ""
@@ -633,6 +801,9 @@ msgstr "Вы не можете вывести товар на оплату"
 
 msgid "Checkout"
 msgstr "Оплата"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "Войти на сайт"
@@ -716,11 +887,15 @@ msgstr "Интерфейс администратора не доступен. �
 msgid "Product added to cart"
 msgstr "Товар добавлен в корзину"
 
-msgid "There was an error adding the product to the basket"
-msgstr "Произошла ошибка при добавлении товара в корзину"
+msgid "Adding the product to the basket failed."
+msgstr ""
 
 msgid "Remove product from basket"
 msgstr "Удалить товары из корзины."
+
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
 
 msgid ""
 "The following items are not currently available (or are not available in the"
@@ -736,8 +911,8 @@ msgstr "Вывести на оплату"
 msgid "Coupons applied"
 msgstr ""
 
-msgid "Have a coupon code? Enter it here"
-msgstr "Есть купон с кодом? Введите код сюда"
+msgid "Do you have a coupon code? Enter it here. "
+msgstr ""
 
 msgid "Coupon Code"
 msgstr "Код купона"
@@ -757,20 +932,26 @@ msgstr "Сохранить"
 msgid "Back to Products"
 msgstr "Вернуться к товарам"
 
+msgid "Error!"
+msgstr ""
+
 msgid "Invalid coupon code."
 msgstr ""
 
-msgid "Error when removing coupon."
+msgid "Removing a coupon failed."
 msgstr ""
 
 msgid "Coupon is not available."
 msgstr "Купон недоступен."
 
-msgid "Error when adding coupon."
-msgstr "Ошибка при добавлении купона."
+msgid "Adding a coupon failed."
+msgstr ""
 
-msgid "Cart saved!"
-msgstr "Корзина сохрванена!"
+msgid "Success!"
+msgstr ""
+
+msgid "Cart saved."
+msgstr ""
 
 msgid "Filter Products"
 msgstr "Фильтровать товары"
@@ -784,17 +965,11 @@ msgstr "Сетка / список"
 msgid "Continue"
 msgstr "Продолжить"
 
-msgid "Billing address"
-msgstr "Платежный адрес"
-
 msgid "Ordering for a company?"
 msgstr "Совершаете заказ для компании?"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "Пожалуйста, заполните эти поля, если вы совершаете заказ для компании."
-
-msgid "Shipping address"
-msgstr "Адрес доставки"
 
 msgid "Ship to my billing address"
 msgstr "Отправить по моему платёжному адресу"
@@ -897,7 +1072,7 @@ msgid ""
 msgstr "В представленных полях формы были ошибки. Проверьте их и повторите попытку."
 
 #, python-format
-msgid "By %(supplier_name)s"
+msgid "By <strong>%(supplier_name)s</strong>"
 msgstr ""
 
 #, python-brace-format
@@ -955,9 +1130,6 @@ msgstr "Товар"
 msgid "Unit Price"
 msgstr "Цена за единицу"
 
-msgid "Quantity"
-msgstr "Количество"
-
 msgid "excl. tax"
 msgstr "Исключая налог"
 
@@ -966,9 +1138,6 @@ msgstr "Заказанные товары"
 
 msgid "Tax breakdown"
 msgstr "Налоговая разбивка"
-
-msgid "Tax"
-msgstr "Налог"
 
 msgid "Tax percentage"
 msgstr "Процент налога"
@@ -1007,9 +1176,6 @@ msgstr "Включает в себя данные товары"
 msgid "No product description available"
 msgstr "Описание товара недоступно"
 
-msgid "SKU"
-msgstr "Артикул"
-
 msgid "Barcode"
 msgstr "Штрих-код"
 
@@ -1045,6 +1211,15 @@ msgstr "Выбрать"
 
 msgid "Select product"
 msgstr "Выбрать товар"
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
 
 msgid "Add to cart"
 msgstr "Добавить в корзину"
@@ -1095,9 +1270,6 @@ msgstr "Комбинация недоступна"
 msgid "Open product page"
 msgstr "Открыть страницу товара"
 
-msgid "Newest products"
-msgstr "Новейшие товары"
-
 msgid "Hide prices"
 msgstr ""
 
@@ -1115,8 +1287,16 @@ msgid "Show Product Details"
 msgstr ""
 
 msgid ""
-"If you check this, extra information will be shown on product page in "
+"If you enable this, extra information will be shown on product page in "
 "frontend."
+msgstr ""
+
+msgid "Show Variations as Buttons"
+msgstr ""
+
+msgid ""
+"If you enable this, the variations will be shown as buttons instead of "
+"dropdowns."
 msgstr ""
 
 msgid "Product detail extra tab title"
@@ -1146,7 +1326,7 @@ msgstr ""
 msgid "Product detail tabs"
 msgstr ""
 
-msgid "Select all tabs that should be renderd in product details."
+msgid "Select all tabs that should be rendered in product details."
 msgstr ""
 
 msgid "Tax number is not valid."
@@ -1156,8 +1336,12 @@ msgid "Edit"
 msgstr "Редактировать"
 
 #, python-brace-format
-msgid "{language_code} is an invalid language code"
+msgid "`{language_code}` is an invalid language code."
 msgstr ""
 
-msgid "This product is not available in this shop."
-msgstr "Данный товар недоступен в этом магазине"
+msgid "Error! This product is not available in this shop."
+msgstr ""
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr ""

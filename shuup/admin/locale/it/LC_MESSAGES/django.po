@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
 # Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-21 18:42+0000\n"
-"PO-Revision-Date: 2016-10-23 10:06+0000\n"
-"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"POT-Creation-Date: 2021-04-12 10:42+0000\n"
+"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,9 +27,9 @@ msgstr "Inizio"
 #, python-format
 msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
-"be case-sensitive. In case of multiple accounts with same email only "
-"username can be used to login."
-msgstr "Inserire %(username)s e password corretti. Nota che entrambi i campi distinguono tra maiuscolo e minuscolo. In caso di account multipli con la stessa email, può essere utilizzato solo il Nome Utente per accedere."
+"be case-sensitive. In case of multiple accounts with the same email, only "
+"username can be used to log in."
+msgstr ""
 
 msgid "This account is inactive."
 msgstr "Questo account non è attivo."
@@ -37,14 +37,47 @@ msgstr "Questo account non è attivo."
 msgid "Username or email address"
 msgstr "Nome utente o indirizzo email"
 
-msgid "Browse"
-msgstr "Esplora"
+msgid "Create New"
+msgstr ""
 
-msgid "Clear"
-msgstr "Svuota"
+msgid "Select an option"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
 
 msgid "Select"
-msgstr "Scegli"
+msgstr ""
+
+msgid "Select Media"
+msgstr ""
+
+msgid "Select Image"
+msgstr ""
+
+msgid "Select Product"
+msgstr ""
+
+msgid "Select Contact"
+msgstr ""
 
 msgid "Orders"
 msgstr "Ordini"
@@ -55,14 +88,17 @@ msgstr "Prodotti"
 msgid "Contacts"
 msgstr "Contatti"
 
-msgid "Reports"
-msgstr "Report"
-
 msgid "Campaigns"
 msgstr "Campagne"
 
-msgid "Storefront"
-msgstr "Negozio"
+msgid "Content"
+msgstr ""
+
+msgid "Reports"
+msgstr "Report"
+
+msgid "Shops"
+msgstr "Negozi"
 
 msgid "Addons"
 msgstr "Addon"
@@ -70,8 +106,18 @@ msgstr "Addon"
 msgid "Settings"
 msgstr "Impostazioni"
 
+msgid "Logs"
+msgstr ""
+
+msgid "Messages"
+msgstr ""
+
 msgid "Attributes"
 msgstr "Attributi"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s è stato cancellato."
 
 msgid "Identifier"
 msgstr "Identificativo"
@@ -100,35 +146,32 @@ msgstr "Usato in # Tipo di prodotto"
 msgid "Categories"
 msgstr "Categorie"
 
-msgid "Add a product category to organize your products"
-msgstr "Aggiungi una categoria prodotto per organizzare i tuoi articoli"
+msgid "Add a product category to organize your products."
+msgstr ""
 
-msgid "Add a category"
-msgstr "Aggiungi una categoria"
+msgid "New category"
+msgstr ""
+
+msgid "Can't use this category as a parent for this shop."
+msgstr ""
 
 msgid "Primary Category"
 msgstr "Categoria Primaria"
 
-msgid "Set this category as a primary for selected products."
-msgstr "Imposta questa categoria come primaria per i prodotti selezionati."
-
-msgid "Default Category"
-msgstr "Categoria Predefinita"
-
-msgid "Update product default category while setting primary category."
-msgstr "Aggiorna la categoria predefinita del prodotto impostando la categoria primaria."
+msgid "Set this category as a primary category for selected products."
+msgstr ""
 
 msgid "Additional Category"
 msgstr "Categoria Aggiuntiva"
 
-msgid "Add selected products to this category"
-msgstr "Aggiungi i prodotti selezionati alla categoria"
+msgid "Add selected products to this category."
+msgstr ""
 
 msgid "Remove Products"
 msgstr "Rimuovi Prodotti"
 
-msgid "Remove selected products from this category"
-msgstr "Rimuovi i prodotti selezionati da questa categoria"
+msgid "Remove selected products from this category."
+msgstr ""
 
 msgid "Invalid category"
 msgstr "Categoria non valida"
@@ -137,9 +180,8 @@ msgstr "Categoria non valida"
 msgid "Visibility settings copied to %d product(s)"
 msgstr "Impostazioni di visibilita copiate per %d prodotti"
 
-#, python-format
-msgid "%s has been deleted."
-msgstr "%s è stato cancellato."
+msgid "Image"
+msgstr ""
 
 msgid "Status"
 msgstr "Stato"
@@ -147,11 +189,8 @@ msgstr "Stato"
 msgid "Visibility"
 msgstr "Visualizzazione"
 
-msgid "Contact Groups"
-msgstr "Gruppi di Contatti"
-
-msgid "Price display mode"
-msgstr "Modalità visulizzazione prezzo"
+msgid "Contact Group Pricing Display"
+msgstr ""
 
 msgid "unspecified"
 msgstr "non specificato"
@@ -165,6 +204,27 @@ msgstr "mostra prezzi IVA esclusa"
 msgid "hide prices"
 msgstr "nascondi prezzi"
 
+msgid "shop"
+msgstr ""
+
+msgid "Price display mode"
+msgstr "Modalità visulizzazione prezzo"
+
+msgid "Set how prices are displayed to contacts in this group."
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Display Mode"
+msgstr ""
+
+msgid "Unspecified"
+msgstr ""
+
+msgid "Contact Groups"
+msgstr "Gruppi di Contatti"
+
 msgid "member"
 msgstr "membri"
 
@@ -173,22 +233,44 @@ msgstr "Cancella"
 
 #, python-format
 msgid "%(count)s member added"
-msgid_plural "%(count)s members added"
-msgstr[0] "%(count)s membro aggiunto"
-msgstr[1] "%(count)s membri aggiunti"
+msgid_plural "%(count)s members added."
+msgstr[0] ""
+msgstr[1] ""
 
 #, python-format
 msgid "%(count)s member removed"
-msgid_plural "%(count)s members removed"
-msgstr[0] "%(count)s membro cancellato"
-msgstr[1] "%(count)s membri cancellati"
+msgid_plural "%(count)s members removed."
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Number of Members"
 msgstr "Numero di membri"
 
 #, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "L'utente %(bind_user)s ha già un contatto"
+msgid "User `%(bind_user)s` already has a contact."
+msgstr ""
+
+msgid ""
+"The contact groups this contact belongs to. Contact groups are defined in "
+"Contacts - Contact Groups and are used to configure sales, campaigns, and "
+"product pricing tailored for a set of users."
+msgstr ""
+
+msgid "The shops this contact belongs to"
+msgstr ""
+
+msgid "Language"
+msgstr "Lingua"
+
+msgid ""
+"The primary language to be used in all communications with the contact."
+msgstr ""
+
+msgid "The company name."
+msgstr ""
+
+msgid "The contacts that are members of this company."
+msgstr ""
 
 msgid "Gender"
 msgstr "Sesso"
@@ -210,9 +292,6 @@ msgstr "Azienda: Componenti"
 
 msgid "Select Language"
 msgstr "Seleziona Lingua"
-
-msgid "Language"
-msgstr "Lingua"
 
 msgid "Contact Group"
 msgstr "Gruppo Contatti"
@@ -255,7 +334,7 @@ msgid "New User"
 msgstr "Nuovo Utente"
 
 msgid "Create a user for the contact."
-msgstr "Crea un utente per il contatto"
+msgstr ""
 
 msgid "New Order"
 msgstr "Nuovo Ordine"
@@ -269,17 +348,28 @@ msgstr "Disattiva Contatto"
 msgid "Activate Contact"
 msgstr "Attiva Contatto"
 
+msgid "Options"
+msgstr ""
+
 msgid "Actions"
 msgstr "Azioni"
 
-msgid "Edit..."
-msgstr "Modifica..."
+msgid "Login as User"
+msgstr "Accesso come Utente"
 
-msgid "You can not deactivate a superuser."
-msgstr "Non puoi disattivare un superutente"
+msgid "Login as Staff User"
+msgstr ""
 
-msgid "You can not deactivate yourself."
-msgstr "Non puoi disattivare il tuo utente"
+msgid "Edit"
+msgstr "Modifica"
+
+msgid "You can not deactivate a superuser. Remove superuser permission first."
+msgstr ""
+
+msgid ""
+"You can not deactivate yourself. Use another account to deactivate the "
+"current one."
+msgstr ""
 
 #, python-format
 msgid "%(contact)s is now %(state)s."
@@ -303,6 +393,9 @@ msgstr "Persona"
 msgid "Company"
 msgstr "Azienda"
 
+msgid "Staff"
+msgstr "Staff"
+
 msgid "Email"
 msgstr "Email"
 
@@ -324,8 +417,17 @@ msgstr "# Ordini"
 msgid "Groups"
 msgstr "Grupppi"
 
+msgid "Registered in"
+msgstr ""
+
 msgid "Contact"
 msgstr "Contatto"
+
+msgid "No group"
+msgstr ""
+
+msgid "No shops"
+msgstr ""
 
 msgid "Inactive"
 msgstr "Inattivo"
@@ -345,17 +447,29 @@ msgstr "%d ordini"
 msgid "Mass Edit: Contacts"
 msgstr "Modifica di Massa: Contatti "
 
-msgid "Contacts changed successfully"
-msgstr "Contatti modificati con successo"
+msgid "Contacts were changed."
+msgstr ""
 
 msgid "Mass Edit: Contact Groups"
 msgstr "Modifica di Gruppo: Gruppi Contatti"
 
-msgid "Contacts Groups changed successfully"
-msgstr "Gruppi Contati modificati con successo"
+msgid "Contacts Groups were changed."
+msgstr ""
 
 msgid "The contact does not have an associated user."
 msgstr "Il contatto non ha un utente associato"
+
+msgid "Currencies"
+msgstr ""
+
+msgid "Code"
+msgstr "Codice"
+
+msgid "Filter by code"
+msgstr ""
+
+msgid "Decimal places"
+msgstr ""
 
 msgid "Customers Dashboard"
 msgstr "Dashboard Clienti"
@@ -366,17 +480,36 @@ msgstr "Clienti attivi"
 msgid "Based on orders within 30 days"
 msgstr "Basato sugli ordini degli ultimi 30 giorni"
 
-msgid "Demo"
-msgstr "Demo"
+msgid "Labels"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Modified on"
+msgstr ""
 
 msgid "Manufacturers"
 msgstr "Produttori"
+
+msgid ""
+"Select shops for this manufacturer. Keep it blank to share with all shops."
+msgstr ""
+
+msgid "You have no permission to change a shared Manufacturer."
+msgstr ""
+
+msgid "Logo"
+msgstr ""
 
 msgid "Media"
 msgstr "Media"
 
 msgid "Media browser"
 msgstr "Esplora Media"
+
+msgid "Visible for all everyone in the media browser"
+msgstr ""
 
 msgid "Root"
 msgstr "Inizio"
@@ -390,28 +523,102 @@ msgid "{num} files moved to {folder}."
 msgstr "{num} file spostati in {folder}."
 
 #, python-format
-msgid "Folder %s deleted."
-msgstr "Cartella %s cancellata."
+msgid "Folder `%s` was deleted."
+msgstr ""
+
+msgid "Browse Media"
+msgstr ""
+
+msgid "You do not have permissions to create a subfolder here."
+msgstr ""
+
+msgid "Folder was renamed."
+msgstr ""
 
 #, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s caricati in %(folder)s"
+msgid "Folder can't be renamed to %s."
+msgstr ""
 
-msgid "Folder renamed."
-msgstr "Cartella rinominata."
+msgid ""
+"Can't rename this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop or it has a owner"
+msgstr ""
 
-msgid "File renamed."
-msgstr "File rinominato."
+msgid "This folder is protected and cannot be deleted."
+msgstr ""
 
-msgid "File deleted."
-msgstr "File cancellato."
+msgid ""
+"Can't delete this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop"
+msgstr ""
+
+msgid "File was renamed."
+msgstr ""
+
+msgid "Can not rename this file."
+msgstr ""
+
+msgid "File was deleted."
+msgstr ""
+
+msgid "Can not delete this file."
+msgstr ""
+
+msgid "Can't move a shared file."
+msgstr ""
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s spostati da %(old)s a %(new)s."
 
+#, python-format
+msgid "%(file)s uploaded to %(folder)s."
+msgstr ""
+
+msgid "You do not have permission to upload content to this folder"
+msgstr ""
+
+msgid "You don't have access to preform this action."
+msgstr ""
+
+msgid "Customize Your Admin Menu"
+msgstr ""
+
+msgid "Arrange Your Admin Menu"
+msgstr ""
+
+msgid "Customize SuperUser Admin Menu"
+msgstr ""
+
+msgid "Arrange SuperUser Admin Menu"
+msgstr ""
+
+msgid "Customize Staff Admin Menu"
+msgstr ""
+
+msgid "Arrange Staff Admin Menu"
+msgstr ""
+
+msgid "Customize Supplier Admin Menu"
+msgstr ""
+
+msgid "Arrange Supplier Admin Menu"
+msgstr ""
+
+msgid "Menu saved"
+msgstr ""
+
+msgid "Menu reset"
+msgstr ""
+
 msgid "Show orders"
 msgstr "Mostra Ordini"
+
+msgid "Shipments"
+msgstr "Spedizioni"
+
+msgid "Show shipments"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "Ordini in sospeso"
@@ -420,24 +627,37 @@ msgstr "Ordini in sospeso"
 msgid "%d outstanding orders"
 msgstr "%d ordini in sospeso"
 
-#, python-format
-msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "La quantità '%(quantity)s' (per la linea %(text)s) non è valida (%(error)s)"
+msgid "New order"
+msgstr ""
+
+msgid "Order Status"
+msgstr "Stato Ordine"
+
+msgid "List Statuses"
+msgstr ""
 
 #, python-format
-msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "Il prezzo '%(price)s' (per la linea %(text)s) non è valida (%(error)s)"
+msgid ""
+"The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr ""
 
 #, python-format
-msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr "Lo sconto '%(discount)s' (per la linea %(text)s non è valido (%(error)s)"
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr ""
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)."
+msgstr ""
+
+msgid "Product line does not have a supplier."
+msgstr ""
 
 msgid "Product line does not have a product set."
 msgstr "La linea di prodotti non ha un insieme di prodotto"
 
 #, python-format
-msgid "Product %s does not exist."
-msgstr "Il Prodotto %s non esiste."
+msgid "Product `%s` does not exist."
+msgstr ""
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
@@ -462,25 +682,28 @@ msgid "Cancel"
 msgstr "Annulla"
 
 msgid "Print Confirmation PDF(s)"
-msgstr "Stampa Conferma PDF"
+msgstr ""
+
+msgid "Error! Selecting all is not supported."
+msgstr ""
 
 msgid "Print Delivery PDF(s)"
-msgstr "Stampa PDF Consegna"
+msgstr ""
+
+msgid "Details"
+msgstr ""
 
 msgid "Payments"
 msgstr "Pagamenti"
 
-msgid "Order Contents"
-msgstr "Contenuto Ordini"
-
 msgid "Log Entries"
 msgstr "Log"
 
-msgid "Shipments"
-msgstr "Spedizioni"
-
 msgid "Admin comment/notes"
 msgstr "commento/note amministratore"
+
+msgid "Set Status"
+msgstr ""
 
 msgid "Set Complete"
 msgstr "Set Completo"
@@ -503,39 +726,70 @@ msgstr "Questo ordine non può essere modificato, ora."
 msgid "Create Payment"
 msgstr "Crea Pagamento"
 
-msgid "Create Shipment"
-msgstr "Crea Spedizione"
+msgid "Set Paid"
+msgstr ""
 
 msgid "Create Refund"
 msgstr "Crea Rimborso"
 
-msgid "Unable to set order as completed at this point"
-msgstr "Non è stato possibile segnare l'ordine come completo"
+msgid "Edit Addresses"
+msgstr ""
+
+msgid "Billing Address"
+msgstr "Indirizzi Fatturazione"
+
+msgid "Shipping Address"
+msgstr "Indirizzi Spedizione"
+
+#, python-format
+msgid "%(field)s updated from: %(old_address)s"
+msgstr ""
+
+#, python-format
+msgid "%(field)s were saved."
+msgstr ""
+
+#, python-format
+msgid "Save -- %s"
+msgstr ""
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Unable to set order as completed at this point."
+msgstr ""
+
+msgid "You can't cancel orders that are paid, shipped, or already canceled."
+msgstr ""
 
 #, python-brace-format
-msgid "Order status changed: {old_status} to {new_status}"
-msgstr "Stato ordine modificato: {old_status} a {new_status}"
+msgid "Order status changed: from `{old_status}` to `{new_status}`."
+msgstr ""
 
 msgid "Create Order"
 msgstr "Crea Ordine"
 
 #, python-format
-msgid "Contact %s does not exist."
-msgstr "Il Contatto %s non esiste."
+msgid "Contact `%s` does not exist."
+msgstr ""
 
 #, python-format
-msgid "Order %(identifier)s updated."
-msgstr "L'Ordine %(identifier)s aggiornato."
+msgid "Product `%(product)s` is not available in the `%(shop)s` shop."
+msgstr ""
 
 #, python-format
-msgid "Order %(identifier)s created."
-msgstr "LàOrdine %(identifier)s è stato creato."
+msgid "Order `%(identifier)s` was updated."
+msgstr ""
 
-msgid "Could not proceed with order:"
-msgstr "Non è possibile procedere con l'ordine:"
+#, python-format
+msgid "Order `%(identifier)s` created."
+msgstr ""
 
-msgid "Could not finalize order:"
-msgstr "Non è possibile concludere l'ordine:"
+msgid "Could not proceed with the order: "
+msgstr ""
+
+msgid "Could not finalize the order: "
+msgstr ""
 
 msgid "Order"
 msgstr "Ordine"
@@ -562,30 +816,68 @@ msgstr "Crea Pagamento -- %s"
 msgid "Payment amount"
 msgstr "Ammontare Pagamento"
 
-msgid "Payment amount cannot be 0"
-msgstr "L'ammontare del pagamento non può essere 0"
+msgid "Payment amount cannot be 0."
+msgstr ""
 
 #, python-format
 msgid "Payment %s created."
 msgstr "Il Pagamento %s è stato creato."
 
-msgid "Order has already been paid"
-msgstr "L'ordine è gia stato saldato"
+msgid "Order has already been paid."
+msgstr ""
 
-msgid "Line number"
-msgstr "Numero linea"
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr ""
+
+msgid "Only zero price orders can be set as paid without creating a payment."
+msgstr ""
+
+msgid "Zero amount payment"
+msgstr ""
+
+msgid "Order marked as paid."
+msgstr ""
+
+msgid "Payment doesn't exist."
+msgstr ""
+
+msgid "Payment deleted."
+msgstr ""
+
+msgid "Line"
+msgstr ""
+
+msgid ""
+"The line to refund. To refund an amount not associated with any line, select"
+" 'Refund arbitrary amount'."
+msgstr ""
 
 msgid "Quantity"
 msgstr "Quantità"
 
+msgid "The number of units to refund."
+msgstr ""
+
+msgid "Line Text/Comment"
+msgstr ""
+
+msgid ""
+"The text describing the nature of the refund and/or the reason for the "
+"refund."
+msgstr ""
+
 msgid "Amount"
 msgstr "Ammontare"
 
-msgid "Total incl. tax to refund"
-msgstr "Totale IVA inclusa da rimborsare"
+msgid "The amount including tax to refund."
+msgstr ""
 
 msgid "Restock products"
 msgstr "Reimmagazzina il prodotto"
+
+msgid ""
+"If checked, the quantity is adding back into the sellable product inventory."
+msgstr ""
 
 #, python-format
 msgid "Create Refund -- %s"
@@ -597,8 +889,8 @@ msgstr "Rimborsa l'intero Ordine"
 msgid "This order already has existing refunds"
 msgstr "Questo ordine ha già un rimborso."
 
-msgid "Refund amount cannot be 0"
-msgstr "L'ammontare del rimborso non può essere 0"
+msgid "Refund arbitrary amount"
+msgstr ""
 
 msgid "Refund amount exceeds order amount."
 msgstr "L'ammontare del rimborso è maggiore dell'ammontare dell'ordine."
@@ -613,18 +905,25 @@ msgstr "Rimborso creato."
 msgid "Create Full Refund -- %s"
 msgstr "Crea Completo Rimborso -- %s"
 
-msgid "Could not create full refund."
-msgstr "Non è stato possibile creare il rimborso."
+msgid "Could not create a full refund."
+msgstr ""
 
 msgid "Full refund created."
 msgstr "Rimborso Completo creato"
+
+msgid "Tracking URL"
+msgstr ""
 
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr "Crea Spedizione -- %s"
 
-msgid "Supplier"
-msgstr "Fornitore"
+msgid "Create Shipment"
+msgstr "Crea Spedizione"
+
+#, python-format
+msgid "%(product_name)s (%(supplier)s)"
+msgstr ""
 
 msgid "No products to ship."
 msgstr "Nessun prodotto da spedire."
@@ -633,29 +932,79 @@ msgid "Shipping address is not set."
 msgstr "L'indirizzo di spedizione non è configurato."
 
 #, python-format
-msgid "Shipment %s created."
-msgstr "La spedizione %s è stata creata."
+msgid "Shipment %s was created."
+msgstr ""
 
 #, python-format
 msgid "Shipment %s has been deleted."
 msgstr "La spedizione %s è stata cancellata."
 
-msgid "Permission Groups"
-msgstr "Gruppo di Permessi"
+msgid "Shipment has been marked as sent."
+msgstr ""
 
-msgid "Module Permissions"
-msgstr "Modulo Permessi"
+msgid "ID"
+msgstr ""
 
-msgid ""
-"Modules with the same permissions as selected modules will be added "
-"automatically."
-msgstr "Il Moduli con gli stessi permessi del modulo selezionato saranno aggiunti in automatico."
+msgid "Supplier"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr "Codice di Tracking"
+
+#, python-brace-format
+msgid "Shipment {shipment_id}"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
+
+msgid "Identifier already exists."
+msgstr ""
+
+msgid "Public Name"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Granular Permission Groups"
+msgstr ""
+
+msgid "The Permission Group name."
+msgstr ""
+
+msgid "Set the users that belong to this Permission Group."
+msgstr ""
+
+msgid "Create new Permission Group"
+msgstr ""
 
 msgid "Product Types"
 msgstr "Tipi di Prodotto"
 
 msgid "Product types"
 msgstr "Tipi di Prodotto"
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s è stato segnato come da cancellare."
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings - Attributes."
+msgstr ""
+
+msgid "Delete"
+msgstr "Cancella"
+
+#, python-format
+msgid ""
+"Are you sure you wish to delete %s? Warrning: all related products will "
+"disappear from storefront until new value for product type is set!"
+msgstr ""
 
 msgid "Number of Attributes"
 msgstr "Numero di Attributi"
@@ -668,22 +1017,39 @@ msgstr "Crea un Prodotto chiamato \"%s\""
 msgid "Create Product with SKU \"%s\""
 msgstr "Crea un Prodotto con SKU \"%s\""
 
-msgid "Add a product"
-msgstr "Aggiungi un prodotto"
+msgid "New product"
+msgstr ""
 
-msgid "Import products"
-msgstr "Importa prodotti"
+msgid "Import"
+msgstr ""
 
 msgid "Add a product to see it in your store"
-msgstr "Aggiungi un prodotto per vederlo nel tuo negozio"
+msgstr ""
+
+msgid "Primary Product Image"
+msgstr ""
+
+msgid ""
+"The main product image. You can add additional images in the `Product "
+"Images` tab."
+msgstr ""
+
+msgid "Select a manufacturer"
+msgstr ""
+
+msgid "Product type"
+msgstr ""
 
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr "Il valore fornito è già in uso, utilizza uno SKU univoco e riprova."
 
 msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
-" to blank for product to be purchasable without limits"
-msgstr "Il numero di unità che possono essere acquistate dopo che il prodotto è esaurito. Lascia il campo vuoto se il prodotto può esssere acquistato senza limiti"
+" to blank for product to be purchasable without limits."
+msgstr ""
+
+msgid "Select a category"
+msgstr ""
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "La Quantità Minima d'Acquisto deve essere maggiore di 0."
@@ -692,46 +1058,33 @@ msgid "Backorder maximum must be greater than or equal to 0."
 msgstr "Il massimo numero di riordino deve essere maggiore o uguale a 0."
 
 #, python-format
-msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr "La generazione delle miniature per %(media)s è fallita: %(error)s"
+msgid "Thumbnail generation of %(media)s failed: %(error)s."
+msgstr ""
 
-msgid "Use only URL or file, not both"
-msgstr "Inserisci o un URL o un file, non entrambi"
+msgid "Use only URL or file, not both."
+msgstr ""
 
 msgid "Is primary"
 msgstr "E' primario"
 
-msgid "Only images allowed in this field"
-msgstr "Sono consentite solo immagini in questo campo"
+msgid "Only images are allowed in this field."
+msgstr ""
 
 #, python-format
-msgid "Unable to make package %(product)s: %(error)s"
-msgstr "Impossibile creare il pacchetto %(product)s: %(error)s"
+msgid "Unable to make package %(product)s: %(error)s."
+msgstr ""
 
 #, python-format
-msgid "New: %d"
-msgstr "Nuovo: %d"
+msgid "New products: %d."
+msgstr ""
 
 #, python-format
-msgid "Removed: %d"
-msgstr "Cancellato: %d"
+msgid "Removed products: %d."
+msgstr ""
 
 #, python-format
-msgid "Couldn't add product %s to own package"
-msgstr "Non è stato possibile aggiungere il prodotto %s al pacchetto"
-
-msgid "child"
-msgstr "figlio"
-
-msgid "Unlink"
-msgstr "Scollega"
-
-#, python-format
-msgid "Unable to link %(product)s: %(error)s"
-msgstr "Impossibile collegare %(product)s: %(error)s"
-
-msgid "variable combination"
-msgstr "Combinazione variabile"
+msgid "Couldn't add product %s to its own package."
+msgstr ""
 
 msgid "Set visible"
 msgstr "Imposta visibile"
@@ -739,22 +1092,19 @@ msgstr "Imposta visibile"
 msgid "Set invisible"
 msgstr "Imposta non visibile"
 
-msgid "Export CSV"
-msgstr "Esporta CSV"
-
 msgid "Edit products"
 msgstr "Modifica prodotti"
 
-#, python-format
-msgid "%s has been marked deleted."
-msgstr "%s è stato segnato come da cancellare."
+#, python-brace-format
+msgid "{product_name} was successfully copied"
+msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
 msgstr "La Quantità Minima d'Acquisto è stata arrotondata per essere compatibile con le Unita di Vendita"
 
 #, python-format
-msgid "Changes to shop instance for %s saved"
-msgstr "Addebito per il negozio %s salvato"
+msgid "Changes to shop instance for %s saved."
+msgstr ""
 
 msgid "Product is not available."
 msgstr "Il Prodotto non è disponibile."
@@ -766,9 +1116,6 @@ msgstr "Prodotto"
 msgid "Edit Cross-Sell: %s"
 msgstr "Modifica Cross-Sell: %s"
 
-msgid "Save"
-msgstr "Salva"
-
 msgid "Changes saved."
 msgstr "Modifiche salvate."
 
@@ -776,11 +1123,17 @@ msgstr "Modifiche salvate."
 msgid "Edit Media: %s"
 msgstr "Modifica Media: %s"
 
-msgid "Are you sure? This will remove all products from package."
-msgstr "Sei sicuro? Cancellerai tutti i prodotti dal pacchetto."
+msgid "Changes were saved."
+msgstr ""
+
+msgid "Files added to the product."
+msgstr ""
 
 msgid "Clear package"
 msgstr "Pulisci pacchetto"
+
+msgid "Are you sure? This will remove all products from the package."
+msgstr ""
 
 #, python-format
 msgid "Edit Package: %s"
@@ -789,37 +1142,11 @@ msgstr "Modifica Pacchetto: %s"
 msgid "Package cleared."
 msgstr "Pacchetto pulito."
 
-msgid ""
-"Are you sure? This will unlink all children and remove all variation "
-"variables."
-msgstr "Sei sicuro? Scollegherai tutti i figli e cancellerai tutte le variabili delle variazioni."
-
-msgid "Clear variation"
-msgstr "Pulisci variazione"
-
-msgid ""
-"Are you sure? This will remove all variation variables, converting children "
-"to direct links."
-msgstr "Sei sicuro? Cancellerai tutte le variabili delle variazioni, convertendo i figli in collegamenti diretti."
-
-msgid "Convert to simple variation"
-msgstr "Converi a variazione semplice"
-
-#, python-format
-msgid "Edit Variation: %s"
-msgstr "Modifica Variazione: %s"
-
-msgid "Variation cleared."
-msgstr "Variazione pulita."
-
-msgid "Variation simplified."
-msgstr "Variazione semplificata."
+msgid "Primary Image"
+msgstr ""
 
 msgid "SKU"
 msgstr "SKU"
-
-msgid "Filter by SKU..."
-msgstr "Filtra per SKU..."
 
 msgid "Barcode"
 msgstr "Codice a Barre"
@@ -830,23 +1157,35 @@ msgstr "Filtra per Codice a Barre"
 msgid "Mode"
 msgstr "Modalità"
 
+msgid "Filter by category name..."
+msgstr ""
+
+msgid "Filter by supplier name..."
+msgstr ""
+
+msgid "Suppliers"
+msgstr "Fornitori"
+
+msgid "Additional Categories"
+msgstr ""
+
 msgid "Purchasable"
 msgstr "Acquistabile"
 
 msgid "Mass Edit: Products"
 msgstr "Modifica di Gruppo: Prodotti"
 
-msgid "Products changed successfully"
-msgstr "Prodotti modificati con successo"
-
-msgid "Save as a copy"
-msgstr "Salva una copia"
+msgid "Products changed."
+msgstr ""
 
 msgid "Manage Cross-Selling"
 msgstr "Gestisci Prodotti Cross-Selling"
 
 msgid "Cross-Selling"
 msgstr "Cross-Selling"
+
+msgid "Other"
+msgstr ""
 
 #, python-format
 msgid "Child: %s"
@@ -860,12 +1199,6 @@ msgstr "Genitore: %s"
 msgid "Sibling: %s"
 msgstr "Fratello: %s"
 
-msgid "Variations"
-msgstr "Variazioni"
-
-msgid "Manage Variations"
-msgstr "Gestisci Variazioni"
-
 msgid "Packages"
 msgstr "Pacchetti"
 
@@ -875,18 +1208,20 @@ msgstr "Gestisci Pacchetti"
 msgid "Convert to Package Parent"
 msgstr "Converti in Pacchetto Genitore"
 
-msgid "Convert to Variation Parent"
-msgstr "Converti in Variazione Genitore"
-
 msgid "Sales Dashboard"
 msgstr "Dashboard Saldi"
 
-msgid "Sales per Month (last year)"
-msgstr "Vendite per Mese (ultimo anno)"
+msgid "Sales per Month (past 12 months)"
+msgstr ""
 
-#, python-format
-msgid "Sales (%(currency)s)"
-msgstr "Vendite (%(currency)s)"
+msgid "Average Sales"
+msgstr ""
+
+msgid "Sales"
+msgstr ""
+
+msgid "Cumulative Total Sales"
+msgstr ""
 
 #, python-format
 msgid "Based on %d orders"
@@ -907,6 +1242,12 @@ msgstr "Valore degli Ordini Aperti"
 msgid "Sales Units"
 msgstr "Unità di Vendita"
 
+msgid "Display Units"
+msgstr ""
+
+msgid "Symbol"
+msgstr ""
+
 msgid "Allowed decimals"
 msgstr "Decimali consentiti"
 
@@ -916,61 +1257,105 @@ msgstr "Fornitori di Servizi"
 msgid "Payment and Shipping"
 msgstr "Fornitore di Servizi"
 
-msgid "Service name"
-msgstr "Nome servizio"
-
-msgid "The name shown in the shop checkout process."
-msgstr "Il nome mostrato durante il processo di checkout del negozio."
-
-msgid "Instructions"
-msgstr "Istruzioni"
-
-msgid "additional instructions shown in the shop checkout process."
-msgstr "istruzioni aggiuntive mostrate nel processo di checkout del negozio."
-
 #, python-format
 msgid "Edit %(model)s"
 msgstr "Modifica %(model)s"
+
+msgid ""
+"The service provider type. This can be any of the shipping carriers or "
+"payment processors configured for your shop."
+msgstr ""
 
 #, python-brace-format
 msgid "Create {service_name}"
 msgstr "Crea {service_name}"
 
 msgid "Provider"
-msgstr "Fornitore"
+msgstr ""
 
-msgid "Please add shipping methods for your shop"
-msgstr "Aggiungi metodi di spedizione per il tuo negozio"
+#, python-format
+msgid "Please activate at least one %s."
+msgstr ""
 
 msgid "Carrier"
 msgstr "Spedizioniere"
 
-msgid "Payment Methods"
-msgstr "Metodi di Pagamento"
+msgid ""
+"To start shipping products right away, please add shipping methods for your "
+"shop"
+msgstr ""
 
-msgid "Please add payment methods for your shop"
-msgstr "Aggiungi metodi di pagamento per il tuo negozio"
+msgid "shipping method"
+msgstr ""
 
-msgid "Payment Processor"
-msgstr "Processore di pagamenti"
+msgid "Payment Provider"
+msgstr ""
+
+msgid ""
+"To start accepting payments right away, please add payment methods for your "
+"shop"
+msgstr ""
+
+msgid "payment method"
+msgstr ""
+
+msgid "Service name"
+msgstr ""
+
+msgid "The name shown in the shop checkout process."
+msgstr ""
+
+msgid "Instructions"
+msgstr ""
+
+msgid "Additional instructions shown in the shop checkout process."
+msgstr ""
 
 msgid "Shipping Methods"
 msgstr "Metodi di Spedizione"
 
+msgid "Payment Methods"
+msgstr "Metodi di Pagamento"
+
 msgid "Service"
 msgstr "Servizio"
 
-msgid "Select carrier before filling other fields."
-msgstr "Seleziona lo spedizioneiere prima di riempire gli altri campi"
+msgid "Select a service to use for this service provider."
+msgstr ""
 
-msgid "Select payment processor before filling other fields."
-msgstr "Seleziona un processore di pagamenti prima di riempire gli altri campi"
+msgid ""
+"The carrier to use for this shipping method. Select a carrier before filling"
+" other fields."
+msgstr ""
+
+msgid ""
+"The payment processor to use for this payment method. Select a payment "
+"processor before filling out the other fields."
+msgstr ""
 
 msgid "Price"
 msgstr "Prezzo"
 
 msgid "Waive limit"
 msgstr "Limite di recesso"
+
+msgid "Available in countries"
+msgstr ""
+
+msgid "Unavailable in countries"
+msgstr ""
+
+msgid "Select accepted countries for this service."
+msgstr ""
+
+msgid "Select this to accept all countries in EU."
+msgstr ""
+
+msgid "Select restricted countries for this service."
+msgstr ""
+
+msgid "Select this to restrict this service for countries in EU"
+msgstr ""
 
 msgid "Service choice"
 msgstr "Selezione Servizio"
@@ -981,14 +1366,89 @@ msgstr "Attivo"
 msgid "Shop"
 msgstr "Negozio"
 
+msgid "Payment Processor"
+msgstr "Processore di pagamenti"
+
 msgid "Weight-based pricing range"
 msgstr "Intervallo di prezzi basato sul peso"
 
-msgid "Settings saved"
-msgstr "Impostazioni salvate"
+msgid "System Settings"
+msgstr ""
 
-msgid "Shops"
-msgstr "Negozi"
+msgid "unique"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "shop running"
+msgstr ""
+
+msgid "Reference number length"
+msgstr ""
+
+msgid ""
+"Length of the order reference number not including the checksum number. This"
+" can vary based on the country your shop is in. If you set the length to 19,"
+" the actual length is going to be 20 because the checksum is being added."
+msgstr ""
+
+msgid "Reference number prefix"
+msgstr ""
+
+msgid "Order minimum total"
+msgstr ""
+
+msgid "The minimum sum that an order needs to reach to be created."
+msgstr ""
+
+msgid "Order Settings"
+msgstr ""
+
+msgid "Order Reference number method"
+msgstr ""
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system"
+" wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of "
+"shops.<br><br><b>Shop Running</b><br>Every shop has its own running numbers "
+"for reference."
+msgstr ""
+
+msgid "Settings saved."
+msgstr ""
+
+msgid "Reset Defaults"
+msgstr ""
+
+msgid "No changes detected."
+msgstr ""
+
+msgid "Save system settings"
+msgstr ""
+
+msgid "Add a logo to make your store stand out"
+msgstr ""
+
+msgid "Add logo"
+msgstr ""
+
+msgid "Publish your store"
+msgstr ""
+
+msgid "Let customers browse your store and make purchases"
+msgstr ""
+
+msgid "Publish shop"
+msgstr ""
+
+msgid "Set \"{}\" as the active shop"
+msgstr ""
+
+msgid "Available Shops [currently active: {}]"
+msgstr ""
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
@@ -997,56 +1457,107 @@ msgstr "Questo campo non può essere modificato in quanto sono presenti degli or
 msgid "Currency"
 msgstr "Valuta"
 
-msgid "Languages"
-msgstr "Lingue"
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr ""
 
-msgid "Supported Languages"
-msgstr "Lingue Supportate"
+msgid "Select staff members for this shop."
+msgstr ""
+
+msgid "Domain is unique. Please enter a unique value."
+msgstr ""
 
 msgid "Shop name"
-msgstr "Nome Negozio"
+msgstr ""
 
-msgid ""
-"Show storefront products with tax pre-calculated into the price. Note this "
-"behavior can be overridden for customer groups."
-msgstr "Mostra i prodotti con iva precalcolata nel prezzo.\nNota che questo comportamento può essere sovrascritto per gruppi cliente."
+msgid "First name"
+msgstr ""
 
-msgid "Shop Owner Name"
-msgstr "Nome Proprietario Negozio"
+msgid "Your first name."
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Your last name."
+msgstr ""
 
 msgid "Zip/Postal code"
-msgstr "Zip/Codice Postale"
+msgstr ""
 
 msgid "State/Province"
-msgstr "Stato/Provincia"
+msgstr ""
 
-msgid "There are still some pending actions to complete!"
-msgstr "Ci sono ancora alcune azioni in corso da completare!"
+msgid "Address"
+msgstr ""
 
-msgid "Your store is now live!"
-msgstr "Il tuo negozio è aperto ora!"
+msgid "Address (2)"
+msgstr ""
+
+msgid ""
+"The shop street address. This may be used to provide estimated shipping "
+"costs."
+msgstr ""
+
+msgid "The shop zip/postal code."
+msgstr ""
+
+msgid "The city in which your shop is located."
+msgstr ""
+
+msgid "The country in which your shop is located."
+msgstr ""
+
+msgid "There are still some pending actions to complete."
+msgstr ""
+
+msgid "Your store is now live."
+msgstr ""
+
+msgid "Shop {} is now active."
+msgstr ""
 
 msgid "Domain"
 msgstr "Dominio"
 
-msgid "Please select the languages supported by your shop"
-msgstr "Seleziona le lingue supportate dal tuo negozio"
+msgid "Shop Details"
+msgstr ""
 
-msgid "Please enter your shop details"
-msgstr "Inserisci le informazioni sul tuo negozio"
+msgid "Add an address so you can get paid"
+msgstr ""
 
 msgid "Default Tax Class"
-msgstr "Aliquota Iva Predefinita"
+msgstr ""
 
-msgid "Suppliers"
-msgstr "Fornitori"
+msgid "Select shops for this supplier. Keep it blank to share with all shops."
+msgstr ""
+
+msgid "Is approved for {}"
+msgstr ""
+
+msgid "Indicates whether this supplier is approved for the shop."
+msgstr ""
 
 #, python-format
 msgid "No %s module"
 msgstr "Nessun modulo %s"
 
+msgid "It is not possible to manage inventory when no module is selected."
+msgstr ""
+
+msgid "{} is not in the Shops field."
+msgstr ""
+
+#, python-format
+msgid "Success! %s has been marked deleted."
+msgstr ""
+
 msgid "Module"
 msgstr "Modulo"
+
+msgid "Shuup Support"
+msgstr ""
 
 msgid "System"
 msgstr "Sistema"
@@ -1059,6 +1570,9 @@ msgid ""
 " for more information."
 msgstr "Le statistiche saranno periodicamente inviate a Shuup.com dopo 24 ore. Clicca qui per maggiori informazioni."
 
+msgid "Opt-in for telemetry"
+msgstr ""
+
 msgid "Taxes"
 msgstr "IVA"
 
@@ -1068,9 +1582,6 @@ msgstr "Gruppo Tasse per Clienti"
 msgid "Tax Classes"
 msgstr "Classi di Tassazione"
 
-msgid "Code"
-msgstr "Codice"
-
 msgid "Rate"
 msgstr "Tasso"
 
@@ -1078,31 +1589,84 @@ msgid "Users"
 msgstr "Utenti"
 
 msgid "Add some users to help manage your shop"
-msgstr "Aggiungi alcuni utenti per autarti a gestire il tuo negozio"
+msgstr ""
 
-msgid "Add a user"
-msgstr "Aggiungi un utente"
+msgid "New user"
+msgstr ""
+
+msgid "Send Reset Password Email"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"    Welcome %(first_name)s!\n"
+"\n"
+"    You've been added as an administrator to %(shop_url)s. Here are some details:\n"
+"        Shop url: %(shop_url)s\n"
+"        Login url: %(admin_url)s\n"
+"        Your username: '%(username)s'\n"
+"        Your password: Please contact your admin.\n"
+msgstr ""
 
 msgid "Password"
 msgstr "Password"
 
-msgid "Permissions"
-msgstr "Permessi"
+msgid "The user password."
+msgstr ""
 
-msgid "See the permissions view to change these."
-msgstr "Consulta la vista dei permessi per modificarli."
+msgid "Main Permissions"
+msgstr ""
 
-msgid "staff"
-msgstr "staff"
+msgid ""
+"Two fundamental permissions: Access to Admin Panel and Superuser status "
+"rights. Go to user account -> `Actions` -> `Edit Main Permissions` to change"
+" these."
+msgstr ""
 
-msgid "superuser"
-msgstr "superutente"
+msgid ""
+"Use Permission Groups to granularly give more permissions. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr ""
 
-msgid "No special permissions"
-msgstr "Nessun permesso speciale"
+msgid "The user email address. Used for password resets."
+msgstr ""
 
-msgid "No permission groups"
-msgstr "Nessun gruppo di permessi"
+msgid "The first name of the user."
+msgstr ""
+
+msgid "The last name of the user."
+msgstr ""
+
+msgid "Access to Admin Panel"
+msgstr ""
+
+msgid "Superuser (Full rights)"
+msgstr ""
+
+msgid "No Main Permissions selected."
+msgstr ""
+
+msgid "No Granular Permission Groups selected."
+msgstr ""
+
+msgid "No Granular Permission Groups available."
+msgstr ""
+
+msgid "Send email confirmation"
+msgstr ""
+
+msgid ""
+"Send an email to the user to let them know they've been added as a shop "
+"user. Applicable only for users with Access to Admin Panel status."
+msgstr ""
+
+msgid "Please enter an email to send a confirmation to."
+msgstr ""
 
 msgid "Change Password"
 msgstr "Modifica Password"
@@ -1113,8 +1677,8 @@ msgstr "L'Utente non ha un indirizzo email"
 msgid "Send Password Reset Email"
 msgstr "Invia Email di Recupero Password"
 
-msgid "Edit Permissions"
-msgstr "Modifica Permessi"
+msgid "Edit Main Permissions"
+msgstr ""
 
 msgid "Contact Details"
 msgstr "Dettagli Contatto"
@@ -1128,12 +1692,22 @@ msgstr "Attiva Utente"
 msgid "Deactivate User"
 msgstr "Disattiva Utente"
 
-msgid "Login as User"
-msgstr "Accesso come Utente"
+#, python-format
+msgid "Info! User bound to contact %(contact)s."
+msgstr ""
 
 #, python-format
-msgid "User bound to contact %(contact)s."
-msgstr "Utente collegato al contatto %(contact)s."
+msgid "You've been added as an admin user to `%s`."
+msgstr ""
+
+msgid "User"
+msgstr "Utente"
+
+msgid "You can not deactivate a Superuser. Remove Superuser status first."
+msgstr ""
+
+msgid "You can not deactivate yourself. Use another account."
+msgstr ""
 
 #, python-format
 msgid "%(user)s is now %(state)s."
@@ -1149,8 +1723,8 @@ msgid "This user is not active."
 msgstr "Questo utente non è attivo."
 
 #, python-brace-format
-msgid "You're now logged in as {username}"
-msgstr "Ora hai effettuato l'accesso come {username}"
+msgid "You're now logged in as `{username}`."
+msgstr ""
 
 msgid "Username"
 msgstr "Nome utente"
@@ -1161,12 +1735,6 @@ msgstr "Nome"
 msgid "Last Name"
 msgstr "Cognom"
 
-msgid "Staff"
-msgstr "Staff"
-
-msgid "Superuser"
-msgstr "Superutente"
-
 #, python-format
 msgid "First Name: %s"
 msgstr "Nome: %s"
@@ -1174,9 +1742,6 @@ msgstr "Nome: %s"
 #, python-format
 msgid "Last Name: %s"
 msgstr "Cognome: %s"
-
-msgid "User"
-msgstr "Utente"
 
 msgid "The two password fields didn't match."
 msgstr "Le due password non combaciano"
@@ -1210,29 +1775,73 @@ msgid "Reset User Password"
 msgstr "Resetta la Password Utente"
 
 msgid ""
-"The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr "L'applicazione `shuup.front.apps.auth` deve essere  abilitata al ripristino della password."
+"Error! The `shuup.front.apps.auth` app needs to be enabled for password "
+"reset."
+msgstr ""
 
 #, python-format
-msgid "Password recovery email sent to %(email)s"
-msgstr "Mail di recupero password inviata a %(email)s"
+msgid "Password recovery email sent to %(email)s."
+msgstr ""
 
-msgid "Sending the password recovery email failed."
-msgstr "L'invia della mail di recupero password è fallito."
+msgid "Error! Sending the password recovery email failed."
+msgstr ""
 
-msgid "You can't unset this status for yourself."
-msgstr "Non puoi disabilitare questo stato per te stesso"
+msgid ""
+"In order to allow making significant changes to accounts, we need to confirm"
+" that you know the password for the account you are using."
+msgstr ""
+
+msgid "Superuser (Full rights) status"
+msgstr ""
+
+msgid ""
+"Designates whether this user has all permissions without explicitly "
+"assigning them. Assigning Granular Permission Groups to a Superuser will not"
+" have any effect because Granular Permission Groups are only  able to give "
+"more rights, but Superuser already has them all."
+msgstr ""
+
+msgid "Access to Admin Panel status"
+msgstr ""
+
+msgid ""
+"Designates whether this user can log into this admin site. Even Superusers "
+"should have this status enabled, otherwise they won't be able to access the "
+"Admin Panel."
+msgstr ""
+
+msgid ""
+"Use Permission Groups to granularly give more permissions. User can belong "
+"to many groups and their permissions add and stack together. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr ""
+
+msgid ""
+"You can't unset this status for yourself due to security reasons. Use "
+"another account if you want to remove permissions for this particular "
+"account."
+msgstr ""
 
 msgid "Change User Permissions"
 msgstr "Modifica i Permessi Utente"
 
 #, python-format
-msgid "Change Permissions: %s"
-msgstr "Modifica Permessi: %s"
+msgid "Change Main Permissions: %s"
+msgstr ""
 
 #, python-format
 msgid "Permissions changed for %s."
 msgstr "Permessi modificati per %s."
+
+msgid "You must have the Access to Admin Panel permission."
+msgstr ""
+
+msgid "You must have the Access to Admin Panel permissions to this shop."
+msgstr ""
 
 msgid "New Attribute"
 msgstr "Nuovo Attributo"
@@ -1240,11 +1849,17 @@ msgstr "Nuovo Attributo"
 msgid "Login"
 msgstr "Entra"
 
+msgid "Welcome back"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
 msgid "Logged out"
 msgstr "Disconnesso"
 
-msgid "You have been logged out. Good bye!"
-msgstr "Sei stato disconnesso. Alla prossima!"
+msgid "You have been securely logged out. Hope to see you soon!"
+msgstr ""
 
 msgid "Log in again"
 msgstr "Entra di nuovo"
@@ -1252,23 +1867,61 @@ msgstr "Entra di nuovo"
 msgid "Visit shop"
 msgstr "Visita il negozio"
 
-msgid "Quicklinks"
-msgstr "Link Veloci"
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
 
-msgid "Menu"
-msgstr "Menu"
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+msgid "Password Recovery"
+msgstr ""
+
+msgid "Reset Password"
+msgstr ""
+
+msgid "Send password recovery instructions"
+msgstr ""
+
+msgid "Active shop:"
+msgstr ""
+
+msgid "Active vendor:"
+msgstr ""
 
 msgid "Dashboard"
 msgstr "Dashboard"
 
+msgid "Quicklinks"
+msgstr ""
+
+msgid "Menu"
+msgstr "Menu"
+
 msgid "Search for"
 msgstr "Cerca"
 
-msgid "Support ID: "
-msgstr "ID Supporto:"
-
 msgid "Hello"
 msgstr "Ciao"
+
+msgid "Stop Auto Refresh"
+msgstr ""
+
+msgid "Auto Refresh Every 30s"
+msgstr ""
+
+msgid "Show Tour"
+msgstr ""
 
 msgid "Log out"
 msgstr "Esci"
@@ -1282,8 +1935,22 @@ msgstr "Copia le impostazioni di visibilità ai prodotti"
 msgid "Category Image"
 msgstr "Immagine categoria"
 
-msgid "* Products that has this category as a primary category."
-msgstr "* I prodotti che hanno questa categoria come primaria."
+msgid "* Products that have this category as a primary category."
+msgstr ""
+
+msgid "Add a new product category"
+msgstr ""
+
+msgid ""
+"You are adding a new product category. When people search your store, they "
+"can find your product under the category you choose for it, like the aisle "
+"signs at the supermarket."
+msgstr ""
+
+msgid ""
+"You can add a name, description, picture or anything you want to make it "
+"stand out."
+msgstr ""
 
 msgid "General information"
 msgstr "Informazioni Generali"
@@ -1324,14 +1991,909 @@ msgstr "Nessun membro"
 msgid "Use billing address as shipping address"
 msgstr "Utilizza l'indirizzo di fatturazione come indirizzo di spedizione"
 
-msgid "Billing Address"
-msgstr "Indirizzi Fatturazione"
-
-msgid "Shipping Address"
-msgstr "Indirizzi Spedizione"
-
 msgid "Basic details"
 msgstr "Dettagli base"
+
+msgid "COMPANY NAME"
+msgstr ""
+
+#, python-format
+msgid ""
+"You can enter here the information about <strong>%(public_name)s</strong>."
+msgstr ""
+
+msgid ""
+"Your order has been received and will be processed as soon as possible."
+msgstr ""
+
+msgid "For reference, here's a list of your order's contents."
+msgstr ""
+
+msgid "Please note that no record of your order being paid currently exists."
+msgstr ""
+
+msgid "Thank you for shopping with us!"
+msgstr ""
+
+msgid "YOUR E-MAIL HERE"
+msgstr ""
+
+msgid "YOUR ADDRESS HERE"
+msgstr ""
+
+msgid "SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?"
+msgstr ""
+
+msgid ""
+"When you purchase something from our store, as part of the buying and "
+"selling process, we collect the personal information you give us such as "
+"your name, address and email address."
+msgstr ""
+
+msgid ""
+"When you browse our store, we also automatically receive your computer’s "
+"internet protocol (IP) address in order to provide us with information that "
+"helps us learn about your browser and operating system."
+msgstr ""
+
+msgid ""
+"Email marketing (if applicable): With your permission, we may send you "
+"emails about our store, new products and other updates."
+msgstr ""
+
+msgid "SECTION 2 - CONSENT"
+msgstr ""
+
+msgid "How do you get my consent?"
+msgstr ""
+
+msgid ""
+"When you provide us with personal information to complete a transaction, "
+"verify your credit card, place an order, arrange for a delivery or return a "
+"purchase, we imply that you consent to our collecting it and using it for "
+"that specific reason only."
+msgstr ""
+
+msgid ""
+"If we ask for your personal information for a secondary reason, like "
+"marketing, we will either ask you directly for your expressed consent, or "
+"provide you with an opportunity to say no."
+msgstr ""
+
+msgid "How do I withdraw my consent?"
+msgstr ""
+
+#, python-format
+msgid ""
+"If after you opt-in, you change your mind, you may withdraw your consent for"
+" us to contact you, for the continued collection, use or disclosure of your "
+"information, at anytime, by contacting us at <strong>%(shop_email)s</strong>"
+" or mailing us at: <strong>%(shop_address)s</strong>"
+msgstr ""
+
+msgid "SECTION 3 - DISCLOSURE"
+msgstr ""
+
+msgid ""
+"We may disclose your personal information if we are required by law to do so"
+" or if you violate our Terms of Service."
+msgstr ""
+
+msgid "SECTION 4 - SHUUP"
+msgstr ""
+
+msgid ""
+"Our store is hosted on Shuup. They provide us with the online e-commerce "
+"platform that allows us to sell our products and services to you."
+msgstr ""
+
+msgid ""
+"Your data is stored through Shuup’s data storage, databases and the general "
+"Shuup application. They store your data on a secure server behind a "
+"firewall."
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid ""
+"If you choose a direct payment gateway to complete your purchase, then Shuup"
+" stores your credit card data. It is encrypted through the Payment Card "
+"Industry Data Security Standard (PCI-DSS). Your purchase transaction data is"
+" stored only as long as is necessary to complete your purchase transaction. "
+"After that is complete, your purchase transaction information is deleted."
+msgstr ""
+
+msgid ""
+"All direct payment gateways adhere to the standards set by PCI-DSS as "
+"managed by the PCI Security Standards Council, which is a joint effort of "
+"brands like Visa, MasterCard, American Express and Discover."
+msgstr ""
+
+msgid ""
+"PCI-DSS requirements help ensure the secure handling of credit card "
+"information by our store and its service providers."
+msgstr ""
+
+msgid ""
+"For more insight, you may also want to read Shuup’s Terms of Service here or"
+" Privacy Statement here."
+msgstr ""
+
+msgid "SECTION 5 - THIRD-PARTY SERVICES"
+msgstr ""
+
+msgid ""
+"In general, the third-party providers used by us will only collect, use and "
+"disclose your information to the extent necessary to allow them to perform "
+"the services they provide to us."
+msgstr ""
+
+msgid ""
+"However, certain third-party service providers, such as payment gateways and"
+" other payment transaction processors, have their own privacy policies in "
+"respect to the information we are required to provide to them for your "
+"purchase-related transactions."
+msgstr ""
+
+msgid ""
+"For these providers, we recommend that you read their privacy policies so "
+"you can understand the manner in which your personal information will be "
+"handled by these providers."
+msgstr ""
+
+msgid ""
+"In particular, remember that certain providers may be located in or have "
+"facilities that are located in a different jurisdiction than either you or "
+"us. So if you elect to proceed with a transaction that involves the services"
+" of a third-party service provider, then your information may become subject"
+" to the laws of the jurisdiction(s) in which that service provider or its "
+"facilities are located."
+msgstr ""
+
+msgid ""
+"As an example, if you are located in Canada and your transaction is "
+"processed by a payment gateway located in the United States, then your "
+"personal information used in completing that transaction may be subject to "
+"disclosure under United States legislation, including the Patriot Act."
+msgstr ""
+
+msgid ""
+"Once you leave our store’s website or are redirected to a third-party "
+"website or application, you are no longer governed by this Privacy Policy or"
+" our website’s Terms of Service."
+msgstr ""
+
+msgid "Links"
+msgstr ""
+
+msgid ""
+"When you click on links on our store, they may direct you away from our "
+"site. We are not responsible for the privacy practices of other sites and "
+"encourage you to read their privacy statements."
+msgstr ""
+
+msgid "SECTION 6 - SECURITY"
+msgstr ""
+
+msgid ""
+"To protect your personal information, we take reasonable precautions and "
+"follow industry best practices to make sure it is not inappropriately lost, "
+"misused, accessed, disclosed, altered or destroyed."
+msgstr ""
+
+#, python-format
+msgid ""
+"If you provide us with your credit card information, the information is "
+"encrypted using secure socket layer technology (SSL) and stored with a "
+"AES-256 encryption.  Although no method of transmission over the Internet or"
+" electronic storage is 100%% secure, we follow all PCI-DSS requirements and "
+"implement additional generally accepted industry standards."
+msgstr ""
+
+msgid "COOKIES"
+msgstr ""
+
+msgid ""
+"Here is a list of cookies that we use. We’ve listed them here so you can "
+"choose if you want to opt-out of cookies or not."
+msgstr ""
+
+msgid ""
+"unique token, sessional, Allows Shuup to store information about your "
+"session (referrer, landing page, etc)."
+msgstr ""
+
+msgid "SECTION 7 - AGE OF CONSENT"
+msgstr ""
+
+msgid ""
+"By using this site, you represent that you are at least the age of majority "
+"in your state or province of residence, or that you are the age of majority "
+"in your state or province of residence and you have given us your consent to"
+" allow any of your minor dependents to use this site."
+msgstr ""
+
+msgid "SECTION 8 - CHANGES TO THIS PRIVACY POLICY"
+msgstr ""
+
+msgid ""
+"We reserve the right to modify this privacy policy at any time, so please "
+"review it frequently. Changes and clarifications will take effect "
+"immediately upon their posting on the website. If we make material changes "
+"to this policy, we will notify you here that it has been updated, so that "
+"you are aware of what information we collect, how we use it, and under what "
+"circumstances, if any, we use and/or disclose it."
+msgstr ""
+
+msgid ""
+"If our store is acquired or merged with another company, your information "
+"may be transferred to the new owners so that we may continue to sell "
+"products to you."
+msgstr ""
+
+msgid "QUESTIONS AND CONTACT INFORMATION"
+msgstr ""
+
+#, python-format
+msgid ""
+"If you would like to: access, correct, amend or delete any personal "
+"information we have about you, register a complaint, or simply want more "
+"information contact our Privacy Compliance Officer at "
+"<strong>%(shop_email)s</strong> or by mail at "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "YOUR COMPANY NAME HERE"
+msgstr ""
+
+msgid ""
+"Our policy lasts 30 days. If 30 days have gone by since your purchase, "
+"unfortunately we can’t offer you a refund or exchange."
+msgstr ""
+
+msgid ""
+"To be eligible for a return, your item must be unused and in the same "
+"condition that you received it. It must also be in the original packaging."
+msgstr ""
+
+msgid ""
+"Several types of goods are exempt from being returned. Perishable goods such"
+" as food, flowers, newspapers or magazines cannot be returned. We also do "
+"not accept products that are intimate or sanitary goods, hazardous "
+"materials, or flammable liquids or gases."
+msgstr ""
+
+msgid "Additional non-returnable items:"
+msgstr ""
+
+msgid "Gift cards"
+msgstr ""
+
+msgid "Downloadable software products"
+msgstr ""
+
+msgid "Some health and personal care items"
+msgstr ""
+
+msgid "To complete your return, we require a receipt or proof of purchase."
+msgstr ""
+
+msgid "Please do not send your purchase back to the manufacturer."
+msgstr ""
+
+msgid ""
+"There are certain situations where only partial refunds are granted: (if "
+"applicable)"
+msgstr ""
+
+msgid "Book with obvious signs of use"
+msgstr ""
+
+msgid ""
+"CD, DVD, VHS tape, software, video game, cassette tape, or vinyl record that"
+" has been opened."
+msgstr ""
+
+msgid ""
+"Any item not in its original condition, is damaged or missing parts for "
+"reasons not due to our error."
+msgstr ""
+
+msgid "Any item that is returned more than 30 days after delivery"
+msgstr ""
+
+msgid "Refunds (if applicable)"
+msgstr ""
+
+msgid ""
+"Once your return is received and inspected, we will send you an email to "
+"notify you that we have received your returned item. We will also notify you"
+" of the approval or rejection of your refund."
+msgstr ""
+
+msgid ""
+"If you are approved, then your refund will be processed, and a credit will "
+"automatically be applied to your credit card or original method of payment, "
+"within a certain amount of days."
+msgstr ""
+
+msgid "Late or missing refunds (if applicable)"
+msgstr ""
+
+msgid ""
+"If you haven’t received a refund yet, first check your bank account again."
+msgstr ""
+
+msgid ""
+"Then contact your credit card company, it may take some time before your "
+"refund is officially posted."
+msgstr ""
+
+msgid ""
+"Next contact your bank. There is often some processing time before a refund "
+"is posted."
+msgstr ""
+
+#, python-format
+msgid ""
+"If you’ve done all of this and you still have not received your refund yet, "
+"please contact us at <strong>%(shop_email)s</strong>."
+msgstr ""
+
+msgid "Sale items (if applicable)"
+msgstr ""
+
+msgid ""
+"Only regular priced items may be refunded, unfortunately sale items cannot "
+"be refunded."
+msgstr ""
+
+msgid "Exchanges (if applicable)"
+msgstr ""
+
+#, python-format
+msgid ""
+"We only replace items if they are defective or damaged.  If you need to "
+"exchange it for the same item, send us an email at "
+"<strong>%(shop_email)s</strong> and send your item to: "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "Gifts"
+msgstr ""
+
+msgid ""
+"If the item was marked as a gift when purchased and shipped directly to you,"
+" you’ll receive a gift credit for the value of your return. Once the "
+"returned item is received, a gift certificate will be mailed to you."
+msgstr ""
+
+msgid ""
+"If the item wasn’t marked as a gift when purchased, or the gift giver had "
+"the order shipped to themselves to give to you later, we will send a refund "
+"to the gift giver and he will find out about your return."
+msgstr ""
+
+msgid "Shipping"
+msgstr ""
+
+#, python-format
+msgid ""
+"To return your product, you should mail your product to: "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid ""
+"You will be responsible for paying for your own shipping costs for returning"
+" your item. Shipping costs are non-refundable. If you receive a refund, the "
+"cost of return shipping will be deducted from your refund."
+msgstr ""
+
+msgid ""
+"Depending on where you live, the time it may take for your exchanged product"
+" to reach you, may vary."
+msgstr ""
+
+msgid ""
+"If you are shipping an item over $75, you should consider using a trackable "
+"shipping service or purchasing shipping insurance. We don’t guarantee that "
+"we will receive your returned item."
+msgstr ""
+
+msgid "OVERVIEW"
+msgstr ""
+
+#, python-format
+msgid ""
+"This website is operated by <strong>%(public_name)s</strong>. Throughout the"
+" site, the terms “we”, “us” and “our” refer to "
+"<strong>%(public_name)s</strong>. <strong>%(public_name)s</strong> offers "
+"this website, including all information, tools and services available from "
+"this site to you, the user, conditioned upon your acceptance of all terms, "
+"conditions, policies and notices stated here."
+msgstr ""
+
+msgid ""
+"By visiting our site and/ or purchasing something from us, you engage in our"
+" “Service” and agree to be bound by the following terms and conditions "
+"(“Terms of Service”, “Terms”), including those additional terms and "
+"conditions and policies referenced herein and/or available by hyperlink. "
+"These Terms of Service apply  to all users of the site, including without "
+"limitation users who are browsers, vendors, customers, merchants, and/ or "
+"contributors of content."
+msgstr ""
+
+msgid ""
+"Please read these Terms of Service carefully before accessing or using our "
+"website. By accessing or using any part of the site, you agree to be bound "
+"by these Terms of Service. If you do not agree to all the terms and "
+"conditions of this agreement, then you may not access the website or use any"
+" services. If these Terms of Service are considered an offer, acceptance is "
+"expressly limited to these Terms of Service."
+msgstr ""
+
+msgid ""
+"Any new features or tools which are added to the current store shall also be"
+" subject to the Terms of Service. You can review the most current version of"
+" the Terms of Service at any time on this page. We reserve the right to "
+"update, change or replace any part of these Terms of Service by posting "
+"updates and/or changes to our website. It is your responsibility to check "
+"this page periodically for changes. Your continued use of or access to the "
+"website following the posting of any changes constitutes acceptance of those"
+" changes."
+msgstr ""
+
+msgid "SECTION 1 - ONLINE STORE TERMS"
+msgstr ""
+
+msgid ""
+"By agreeing to these Terms of Service, you represent that you are at least "
+"the age of majority in your state or province of residence, or that you are "
+"the age of majority in your state or province of residence and you have "
+"given us your consent to allow any of your minor dependents to use this "
+"site."
+msgstr ""
+
+msgid ""
+"You may not use our products for any illegal or unauthorized purpose nor may"
+" you, in the use of the Service, violate any laws in your jurisdiction "
+"(including but not limited to copyright laws)."
+msgstr ""
+
+msgid ""
+"You must not transmit any worms or viruses or any code of a destructive "
+"nature."
+msgstr ""
+
+msgid ""
+"A breach or violation of any of the Terms will result in an immediate "
+"termination of your Services."
+msgstr ""
+
+msgid "SECTION 2 - GENERAL CONDITIONS"
+msgstr ""
+
+msgid ""
+"We reserve the right to refuse service to anyone for any reason at any time."
+msgstr ""
+
+msgid ""
+"You understand that your content (not including credit card information), "
+"may be transferred unencrypted and involve (a) transmissions over various "
+"networks; and (b) changes to conform and adapt to technical requirements of "
+"connecting networks or devices. Credit card information is always encrypted "
+"during transfer over networks."
+msgstr ""
+
+msgid ""
+"You agree not to reproduce, duplicate, copy, sell, resell or exploit any "
+"portion of the Service, use of the Service, or access to the Service or any "
+"contact on the website through which the service is provided, without "
+"express written permission by us."
+msgstr ""
+
+msgid ""
+"The headings used in this agreement are included for convenience only and "
+"will not limit or otherwise affect these Terms."
+msgstr ""
+
+msgid "SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION"
+msgstr ""
+
+msgid ""
+"We are not responsible if information made available on this site is not "
+"accurate, complete or current. The material on this site is provided for "
+"general information only and should not be relied upon or used as the sole "
+"basis for making decisions without consulting primary, more accurate, more "
+"complete or more timely sources of information. Any reliance on the material"
+" on this site is at your own risk."
+msgstr ""
+
+msgid ""
+"This site may contain certain historical information. Historical "
+"information, necessarily, is not current and is provided for your reference "
+"only. We reserve the right to modify the contents of this site at any time, "
+"but we have no obligation to update any information on our site. You agree "
+"that it is your responsibility to monitor changes to our site."
+msgstr ""
+
+msgid "SECTION 4 - MODIFICATIONS TO THE SERVICE AND PRICES"
+msgstr ""
+
+msgid "Prices for our products are subject to change without notice."
+msgstr ""
+
+msgid ""
+"We reserve the right at any time to modify or discontinue the Service (or "
+"any part or content thereof) without notice at any time."
+msgstr ""
+
+msgid ""
+"We shall not be liable to you or to any third-party for any modification, "
+"price change, suspension or discontinuance of the Service."
+msgstr ""
+
+msgid "SECTION 5 - PRODUCTS OR SERVICES (if applicable)"
+msgstr ""
+
+msgid ""
+"Certain products or services may be available exclusively online through the"
+" website. These products or services may have limited quantities and are "
+"subject to return or exchange only according to our Return Policy."
+msgstr ""
+
+msgid ""
+"We have made every effort to display as accurately as possible the colors "
+"and images of our products that appear at the store. We cannot guarantee "
+"that your computer monitor's display of any color will be accurate."
+msgstr ""
+
+msgid ""
+"We reserve the right, but are not obligated, to limit the sales of our "
+"products or Services to any person, geographic region or jurisdiction. We "
+"may exercise this right on a case-by-case basis. We reserve the right to "
+"limit the quantities of any products or services that we offer. All "
+"descriptions of products or product pricing are subject to change at anytime"
+" without notice, at the sole discretion of us. We reserve the right to "
+"discontinue any product at any time. Any offer for any product or service "
+"made on this site is void where prohibited."
+msgstr ""
+
+msgid ""
+"We do not warrant that the quality of any products, services, information, "
+"or other material purchased or obtained by you will meet your expectations, "
+"or that any errors in the Service will be corrected."
+msgstr ""
+
+msgid "SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION"
+msgstr ""
+
+msgid ""
+"We reserve the right to refuse any order you place with us. We may, in our "
+"sole discretion, limit or cancel quantities purchased per person, per "
+"household or per order. These restrictions may include orders placed by or "
+"under the same customer account, the same credit card, and/or orders that "
+"use the same billing and/or shipping address. In the event that we make a "
+"change to or cancel an order, we may attempt to notify you by contacting the"
+" e-mail and/or billing address/phone number provided at the time the order "
+"was made. We reserve the right to limit or prohibit orders that, in our sole"
+" judgment, appear to be placed by dealers, resellers or distributors."
+msgstr ""
+
+msgid ""
+"You agree to provide current, complete and accurate purchase and account "
+"information for all purchases made at our store. You agree to promptly "
+"update your account and other information, including your email address and "
+"credit card numbers and expiration dates, so that we can complete your "
+"transactions and contact you as needed."
+msgstr ""
+
+msgid "For more detail, please review our Returns Policy."
+msgstr ""
+
+msgid "SECTION 7 - OPTIONAL TOOLS"
+msgstr ""
+
+msgid ""
+"We may provide you with access to third-party tools over which we neither "
+"monitor nor have any control nor input."
+msgstr ""
+
+msgid ""
+"You acknowledge and agree that we provide access to such tools ”as is” and "
+"“as available” without any warranties, representations or conditions of any "
+"kind and without any endorsement. We shall have no liability whatsoever "
+"arising from or relating to your use of optional third-party tools."
+msgstr ""
+
+msgid ""
+"Any use by you of optional tools offered through the site is entirely at "
+"your own risk and discretion and you should ensure that you are familiar "
+"with and approve of the terms on which tools are provided by the relevant "
+"third-party provider(s)."
+msgstr ""
+
+msgid ""
+"We may also, in the future, offer new services and/or features through the "
+"website (including, the release of new tools and resources). Such new "
+"features and/or services shall also be subject to these Terms of Service."
+msgstr ""
+
+msgid "SECTION 8 - THIRD-PARTY LINKS"
+msgstr ""
+
+msgid ""
+"Certain content, products and services available via our Service may include"
+" materials from third-parties."
+msgstr ""
+
+msgid ""
+"Third-party links on this site may direct you to third-party websites that "
+"are not affiliated with us. We are not responsible for examining or "
+"evaluating the content or accuracy and we do not warrant and will not have "
+"any liability or responsibility for any third-party materials or websites, "
+"or for any other materials, products, or services of third-parties."
+msgstr ""
+
+msgid ""
+"We are not liable for any harm or damages related to the purchase or use of "
+"goods, services, resources, content, or any other transactions made in "
+"connection with any third-party websites. Please review carefully the third-"
+"party's policies and practices and make sure you understand them before you "
+"engage in any transaction. Complaints, claims, concerns, or questions "
+"regarding third-party products should be directed to the third-party."
+msgstr ""
+
+msgid "SECTION 9 - USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS"
+msgstr ""
+
+msgid ""
+"If, at our request, you send certain specific submissions (for example "
+"contest entries) or without a request from us you send creative ideas, "
+"suggestions, proposals, plans, or other materials, whether online, by email,"
+" by postal mail, or otherwise (collectively, 'comments'), you agree that we "
+"may, at any time, without restriction, edit, copy, publish, distribute, "
+"translate and otherwise use in any medium any comments that you forward to "
+"us. We are and shall be under no obligation (1) to maintain any comments in "
+"confidence; (2) to pay compensation for any comments; or (3) to respond to "
+"any comments."
+msgstr ""
+
+msgid ""
+"We may, but have no obligation to, monitor, edit or remove content that we "
+"determine in our sole discretion are unlawful, offensive, threatening, "
+"libelous, defamatory, pornographic, obscene or otherwise objectionable or "
+"violates any party’s intellectual property or these Terms of Service."
+msgstr ""
+
+msgid ""
+"You agree that your comments will not violate any right of any third-party, "
+"including copyright, trademark, privacy, personality or other personal or "
+"proprietary right. You further agree that your comments will not contain "
+"libelous or otherwise unlawful, abusive or obscene material, or contain any "
+"computer virus or other malware that could in any way affect the operation "
+"of the Service or any related website. You may not use a false e-mail "
+"address, pretend to be someone other than yourself, or otherwise mislead us "
+"or third-parties as to the origin of any comments. You are solely "
+"responsible for any comments you make and their accuracy. We take no "
+"responsibility and assume no liability for any comments posted by you or any"
+" third-party."
+msgstr ""
+
+msgid "SECTION 10 - PERSONAL INFORMATION"
+msgstr ""
+
+msgid ""
+"Your submission of personal information through the store is governed by our"
+" Privacy Policy. To view our Privacy Policy."
+msgstr ""
+
+msgid "SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS"
+msgstr ""
+
+msgid ""
+"Occasionally there may be information on our site or in the Service that "
+"contains typographical errors, inaccuracies or omissions that may relate to "
+"product descriptions, pricing, promotions, offers, product shipping charges,"
+" transit times and availability. We reserve the right to correct any errors,"
+" inaccuracies or omissions, and to change or update information or cancel "
+"orders if any information in the Service or on any related website is "
+"inaccurate at any time without prior notice (including after you have "
+"submitted your order)."
+msgstr ""
+
+msgid ""
+"We undertake no obligation to update, amend or clarify information in the "
+"Service or on any related website, including without limitation, pricing "
+"information, except as required by law. No specified update or refresh date "
+"applied in the Service or on any related website, should be taken to "
+"indicate that all information in the Service or on any related website has "
+"been modified or updated."
+msgstr ""
+
+msgid "SECTION 12 - PROHIBITED USES"
+msgstr ""
+
+msgid ""
+"In addition to other prohibitions as set forth in the Terms of Service, you "
+"are prohibited from using the site or its content: (a) for any unlawful "
+"purpose; (b) to solicit others to perform or participate in any unlawful "
+"acts; (c) to violate any international, federal, provincial or state "
+"regulations, rules, laws, or local ordinances; (d) to infringe upon or "
+"violate our intellectual property rights or the intellectual property rights"
+" of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, "
+"intimidate, or discriminate based on gender, sexual orientation, religion, "
+"ethnicity, race, age, national origin, or disability; (f) to submit false or"
+" misleading information; (g) to upload or transmit viruses or any other type"
+" of malicious code that will or may be used in any way that will affect the "
+"functionality or operation of the Service or of any related website, other "
+"websites, or the Internet; (h) to collect or track the personal information "
+"of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j)"
+" for any obscene or immoral purpose; or (k) to interfere with or circumvent "
+"the security features of the Service or any related website, other websites,"
+" or the Internet. We reserve the right to terminate your use of the Service "
+"or any related website for violating any of the prohibited uses."
+msgstr ""
+
+msgid "SECTION 13 - DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY"
+msgstr ""
+
+msgid ""
+"We do not guarantee, represent or warrant that your use of our service will "
+"be uninterrupted, timely, secure or error-free."
+msgstr ""
+
+msgid ""
+"We do not warrant that the results that may be obtained from the use of the "
+"service will be accurate or reliable."
+msgstr ""
+
+msgid ""
+"You agree that from time to time we may remove the service for indefinite "
+"periods of time or cancel the service at any time, without notice to you."
+msgstr ""
+
+msgid ""
+"You expressly agree that your use of, or inability to use, the service is at"
+" your sole risk. The service and all products and services delivered to you "
+"through the service are (except as expressly stated by us) provided 'as is' "
+"and 'as available' for your use, without any representation, warranties or "
+"conditions of any kind, either express or implied, including all implied "
+"warranties or conditions of merchantability, merchantable quality, fitness "
+"for a particular purpose, durability, title, and non-infringement."
+msgstr ""
+
+#, python-format
+msgid ""
+"In no case shall <strong>%(public_name)s</strong>, our directors, officers, "
+"employees, affiliates, agents, contractors, interns, suppliers, service "
+"providers or licensors be liable for any injury, loss, claim, or any direct,"
+" indirect, incidental, punitive, special, or consequential damages of any "
+"kind, including, without limitation lost profits, lost revenue, lost "
+"savings, loss of data, replacement costs, or any similar damages, whether "
+"based in contract, tort (including negligence), strict liability or "
+"otherwise, arising from your use of any of the service or any products "
+"procured using the service, or for any other claim related in any way to "
+"your use of the service or any product, including, but not limited to, any "
+"errors or omissions in any content, or any loss or damage of any kind "
+"incurred as a result of the use of the service or any content (or product) "
+"posted, transmitted, or otherwise made available via the service, even if "
+"advised of their possibility. Because some states or jurisdictions do not "
+"allow the exclusion or the limitation of liability for consequential or "
+"incidental damages, in such states or jurisdictions, our liability shall be "
+"limited to the maximum extent permitted by law."
+msgstr ""
+
+msgid "SECTION 14 - INDEMNIFICATION"
+msgstr ""
+
+#, python-format
+msgid ""
+"You agree to indemnify, defend and hold harmless "
+"<strong>%(public_name)s</strong> and our parent, subsidiaries, affiliates, "
+"partners, officers, directors, agents, contractors, licensors, service "
+"providers, subcontractors, suppliers, interns and employees, harmless from "
+"any claim or demand, including reasonable attorneys’ fees, made by any "
+"third-party due to or arising out of your breach of these Terms of Service "
+"or the documents they incorporate by reference, or your violation of any law"
+" or the rights of a third-party."
+msgstr ""
+
+msgid "SECTION 15 - SEVERABILITY"
+msgstr ""
+
+msgid ""
+"In the event that any provision of these Terms of Service is determined to "
+"be unlawful, void or unenforceable, such provision shall nonetheless be "
+"enforceable to the fullest extent permitted by applicable law, and the "
+"unenforceable portion shall be deemed to be severed from these Terms of "
+"Service, such determination shall not affect the validity and enforceability"
+" of any other remaining provisions."
+msgstr ""
+
+msgid "SECTION 16 - TERMINATION"
+msgstr ""
+
+msgid ""
+"The obligations and liabilities of the parties incurred prior to the "
+"termination date shall survive the termination of this agreement for all "
+"purposes."
+msgstr ""
+
+msgid ""
+"These Terms of Service are effective unless and until terminated by either "
+"you or us. You may terminate these Terms of Service at any time by notifying"
+" us that you no longer wish to use our Services, or when you cease using our"
+" site."
+msgstr ""
+
+msgid ""
+"If in our sole judgment you fail, or we suspect that you have failed, to "
+"comply with any term or provision of these Terms of Service, we also may "
+"terminate this agreement at any time without notice and you will remain "
+"liable for all amounts due up to and including the date of termination; "
+"and/or accordingly may deny you access to our Services (or any part "
+"thereof)."
+msgstr ""
+
+msgid "SECTION 17 - ENTIRE AGREEMENT"
+msgstr ""
+
+msgid ""
+"The failure of us to exercise or enforce any right or provision of these "
+"Terms of Service shall not constitute a waiver of such right or provision."
+msgstr ""
+
+msgid ""
+"These Terms of Service and any policies or operating rules posted by us on "
+"this site or in respect to The Service constitutes the entire agreement and "
+"understanding between you and us and govern your use of the Service, "
+"superseding any prior or contemporaneous agreements, communications and "
+"proposals, whether oral or written, between you and us (including, but not "
+"limited to, any prior versions of the Terms of Service)."
+msgstr ""
+
+msgid ""
+"Any ambiguities in the interpretation of these Terms of Service shall not be"
+" construed against the drafting party."
+msgstr ""
+
+msgid "SECTION 18 - GOVERNING LAW"
+msgstr ""
+
+#, python-format
+msgid ""
+"These Terms of Service and any separate agreements whereby we provide you "
+"Services shall be governed by and construed in accordance with the laws of "
+"<strong>%(shop_address)s</strong>."
+msgstr ""
+
+msgid "SECTION 19 - CHANGES TO TERMS OF SERVICE"
+msgstr ""
+
+msgid ""
+"You can review the most current version of the Terms of Service at any time "
+"at this page."
+msgstr ""
+
+msgid ""
+"We reserve the right, at our sole discretion, to update, change or replace "
+"any part of these Terms of Service by posting updates and changes to our "
+"website. It is your responsibility to check our website periodically for "
+"changes. Your continued use of or access to our website or the Service "
+"following the posting of any changes to these Terms of Service constitutes "
+"acceptance of those changes."
+msgstr ""
+
+msgid "SECTION 20 - CONTACT INFORMATION"
+msgstr ""
+
+#, python-format
+msgid ""
+"Questions about the Terms of Service should be sent to us at "
+"<strong>%(shop_email)s</strong>."
+msgstr ""
 
 msgid "Remove block"
 msgstr "Rimuovi blocco"
@@ -1355,8 +2917,62 @@ msgstr "Flusso di attività"
 msgid "Shuup %(version)s"
 msgstr "Shuup %(version)s"
 
+msgid ""
+"This is the dashboard for your store. It’s like the flight deck for your "
+"ecommerce spaceship. You can control everything from here."
+msgstr ""
+
+msgid ""
+"Check out your shoppers’ info, add more products or categories, setup "
+"marketing campaigns, see orders and sales stats, and track the money you’ve "
+"made."
+msgstr ""
+
+msgid "Every setting you could possibly need is in here."
+msgstr ""
+
 msgid "Table Columns"
 msgstr "Colonne Tabella"
+
+msgid "Active headers"
+msgstr ""
+
+msgid "Selectable headers"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Bad Request"
+msgstr ""
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr ""
+
+msgid "Permission Denied"
+msgstr ""
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr ""
+
+msgid "Internal Server Error"
+msgstr ""
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr ""
+
+msgid "Edit the selected object"
+msgstr ""
+
+#, python-brace-format
+msgid "Required. {field_help}"
+msgstr ""
+
+#, python-brace-format
+msgid "Optional. {field_help}"
+msgstr ""
 
 msgid "Welcome to Shuup!"
 msgstr "Benvenuti in Shuup!"
@@ -1366,20 +2982,49 @@ msgid ""
 "online"
 msgstr "Hai quasi finito! Completa i passaggi seguenti per vendere i tuoi prodotti online."
 
+msgid "Hi, new shop owner!"
+msgstr ""
+
+msgid "Welcome to your store admin!"
+msgstr ""
+
+msgid ""
+"Let’s go through some of the things you can do here. Click next to begin."
+msgstr ""
+
 msgid "Date"
 msgstr "Data"
-
-msgid "Order Status"
-msgstr "Stato Ordine"
 
 msgid "Save and Exit"
 msgstr "Salva ed Esci"
 
-msgid "Edit"
-msgstr "Modifica"
+msgid "This action effects on all items."
+msgstr ""
+
+#, python-format
+msgid "This action affects %(item_count)s item(s)."
+msgstr ""
 
 msgid "Upload"
 msgstr "Carica"
+
+msgid "Copy folder path"
+msgstr ""
+
+msgid "Access to folder"
+msgstr ""
+
+msgid "Customize admin menu"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Folder"
+msgstr ""
+
+msgid "Drag me"
+msgstr ""
 
 msgid "Comment"
 msgstr "Commento"
@@ -1387,118 +3032,26 @@ msgstr "Commento"
 msgid "Save comment"
 msgstr "Salva commento"
 
-msgid "There was an error updating the admin comment."
-msgstr "C'è stato un errore durante l'aggiornamento del commento amministratore."
+msgid "Comment was saved."
+msgstr ""
+
+msgid "Updating the admin comment failed."
+msgstr ""
 
 msgid "Description"
 msgstr "Descrizion"
 
-msgid "Text"
-msgstr "Testo"
+msgid "No payments have been created yet."
+msgstr ""
 
-msgid "Taxless Unit Price"
-msgstr "Prezzo Unitario  IVA Esclusa"
+msgid "Are you sure you want to delete this payment?"
+msgstr ""
 
-msgid "Taxless Discount"
-msgstr "Sconto IVA esclusa"
+msgid "Order Details"
+msgstr ""
 
-msgid "Taxless Discount Percentage"
-msgstr "Percentuale Sconto IVA esclusa"
-
-msgid "Tax"
-msgstr "IVA"
-
-msgid "Taxless Total"
-msgstr "Totale IVA Esclusa"
-
-msgid "Total incl. Tax"
-msgstr "Totale IVA Inclusa"
-
-msgid "Discount"
-msgstr "Sconto"
-
-msgid "Taxless"
-msgstr "IVA Esclusa"
-
-msgid "Message"
-msgstr "MEssaggio"
-
-msgid "No log entries have been added yet."
-msgstr "Non è stata ancora inserita nessuna riga di log."
-
-msgid "Use the input below to add new log entries."
-msgstr "Usa l'input qui sotto per aggiungere nuovi log."
-
-msgid "Add to Log"
-msgstr "Aggiungi al Log"
-
-msgid "There was an error adding the log entry."
-msgstr "C'e' stato un errore inserendo la riga di log."
-
-msgid "Tracking Code"
-msgstr "Codice di Tracking"
-
-msgid "Created"
-msgstr "Creato"
-
-msgid "Delete"
-msgstr "Cancella"
-
-msgid "No shipments have been created yet."
-msgstr "Nessuna spedizione è stata creata finora."
-
-msgid ""
-"Shipped shipments should not be deleted. Deletion will affect products "
-"physical stock count. Delete anyway?"
-msgstr "La spedizioni già spedite non dovrebbero essere eliminate. La cancellazione avrà effetto sul conteggio della merce a magazzino.\nSei sicuro di cancellare?"
-
-msgid "Line #"
-msgstr "Linea #"
-
-msgid "Refunded Quantity"
-msgstr "Quantità Rimborsata"
-
-msgid "Refund Amount"
-msgstr "Ammontare Rimborso"
-
-msgid "Are you sure you want to create a full refund?"
-msgstr "Sei sicuro di voler creare un rimborso completo?"
-
-msgid "Confirm Refund"
-msgstr "Conferma Rimborso"
-
-msgid "Paid"
-msgstr "Pagato"
-
-msgid "Remaining"
-msgstr "Rimanenti"
-
-msgid "Refunded"
-msgstr "Rimborsato"
-
-msgid "Add More Refunds "
-msgstr "Aggiungi altri Rimborsi"
-
-msgid "To Ship"
-msgstr "Da Spedire"
-
-msgid "Ordered"
-msgstr "Ordinato"
-
-msgid "Shipped"
-msgstr "Spedito"
-
-msgid "Unshipped"
-msgstr "Non Spedito"
-
-msgid "Set All Products To Ship"
-msgstr "Segna tutti Da Spedire"
-
-msgid "Ship All"
-msgstr "Spedisci Tutti"
-
-msgid "Details & Status"
-msgstr "Dettagli e Stato"
+msgid "Order Shop"
+msgstr ""
 
 msgid "Order Number"
 msgstr "Numero Ordine"
@@ -1508,6 +3061,12 @@ msgstr "Referenza"
 
 msgid "Label"
 msgstr "Etichetta"
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
 
 msgid "Ordered by"
 msgstr "Ordinato da"
@@ -1530,17 +3089,199 @@ msgstr "Commento Cliente"
 msgid "Tracking codes"
 msgstr "Codici di Tracking"
 
+msgid "Address Information"
+msgstr ""
+
+msgid "Picture"
+msgstr ""
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Taxless Unit Price"
+msgstr "Prezzo Unitario  IVA Esclusa"
+
+msgid "Taxless Discount"
+msgstr "Sconto IVA esclusa"
+
+msgid "Taxless Discount Percentage"
+msgstr "Percentuale Sconto IVA esclusa"
+
+msgid "Tax"
+msgstr "IVA"
+
+msgid "Taxless Total"
+msgstr "Totale IVA Esclusa"
+
+msgid "Total incl. Tax"
+msgstr "Totale IVA Inclusa"
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr "Sconto"
+
+msgid "Taxless"
+msgstr "IVA Esclusa"
+
+msgid "Message"
+msgstr "MEssaggio"
+
+msgid "No log entries have been added yet."
+msgstr "Non è stata ancora inserita nessuna riga di log."
+
+msgid "Use the input below to add new log entries."
+msgstr "Usa l'input qui sotto per aggiungere nuovi log."
+
+msgid "Add to Log"
+msgstr "Aggiungi al Log"
+
+msgid "Log entry was added."
+msgstr ""
+
+msgid "Adding the log entry failed."
+msgstr ""
+
+msgid "Unshipped"
+msgstr "Non Spedito"
+
+msgid "Shipped"
+msgstr "Spedito"
+
+msgid "Ordered"
+msgstr "Ordinato"
+
+msgid "Refunded"
+msgstr "Rimborsato"
+
+#, python-format
+msgid "Create new shipment for %(supplier_name)s"
+msgstr ""
+
+msgid "Created"
+msgstr "Creato"
+
+msgid "Mark as sent"
+msgstr ""
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "La spedizioni già spedite non dovrebbero essere eliminate. La cancellazione avrà effetto sul conteggio della merce a magazzino.\nSei sicuro di cancellare?"
+
+msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
+msgid "Line #"
+msgstr "Linea #"
+
+msgid "Refunded Quantity"
+msgstr "Quantità Rimborsata"
+
+msgid " Mark as sent "
+msgstr ""
+
+msgid "Refund Amount"
+msgstr "Ammontare Rimborso"
+
+msgid "Are you sure you want to create a full refund?"
+msgstr "Sei sicuro di voler creare un rimborso completo?"
+
+msgid "Confirm Refund"
+msgstr "Conferma Rimborso"
+
+msgid "Order Contents"
+msgstr "Contenuto Ordini"
+
+msgid "Paid"
+msgstr "Pagato"
+
+msgid "Remaining"
+msgstr "Rimanenti"
+
+msgid "Add Another Refund"
+msgstr ""
+
+msgid "Order Line"
+msgstr ""
+
+msgid "To Ship"
+msgstr "Da Spedire"
+
+msgid "Set All Products To Ship"
+msgstr "Segna tutti Da Spedire"
+
+msgid "Ship All"
+msgstr "Spedisci Tutti"
+
+msgid "Permissions"
+msgstr "Permessi"
+
+msgid "Select all permissions"
+msgstr ""
+
+msgid "Deselect all permissions"
+msgstr ""
+
+msgid "Open all permission groups"
+msgstr ""
+
+msgid "(All permissions granted)"
+msgstr ""
+
+msgid "(Partial permissions granted)"
+msgstr ""
+
+msgid "Module permission"
+msgstr ""
+
+msgid "Select the following permission to enable users to access this module."
+msgstr ""
+
+msgid "Select all permissions for this module"
+msgstr ""
+
+msgid "Features permissions"
+msgstr ""
+
+msgid ""
+"Select the permissions to enable access to specific features of the module."
+msgstr ""
+
+msgid "Close all permission groups"
+msgstr ""
+
 msgid "Error!"
 msgstr "Errore!"
+
+msgid "All the required product information."
+msgstr ""
 
 msgid "Additional Details"
 msgstr "Dettagli Aggiuntivi"
 
+msgid "Product features such as size, weight and keywords are located here."
+msgstr ""
+
 msgid "Manufacturer"
 msgstr "Produttore"
 
-msgid "Shipping & Payment"
-msgstr "Spedizione & Pagamento"
+msgid "If you know the manufacturer of the product select it here."
+msgstr ""
+
+msgid "Additional"
+msgstr ""
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr ""
+
+#, python-format
+msgid "These settings apply only for shop: <b>%(shop_name)s</b>."
+msgstr ""
 
 #, python-format
 msgid "Product image %(index)s"
@@ -1556,29 +3297,71 @@ msgstr "Immagine Primaria"
 msgid "Set as primary image"
 msgstr "Segna come immagine primaria"
 
-msgid "No image"
-msgstr "Nessuna immagine"
-
-msgid "Advanced options"
-msgstr "Opzioni avanzate"
-
 msgid "Product Images"
 msgstr "Immagini prodotto"
 
-msgid "Product Media"
-msgstr "Media Prodotto"
+msgid "Product Files"
+msgstr ""
 
-msgid "Add new image"
-msgstr "Aggiungi nuova immagine"
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr ""
 
-msgid "Add new media"
-msgstr "Aggiungi nuovo media"
+msgid "Showcase your merchandise here."
+msgstr ""
+
+msgid "Drop files here or click to <a href=\"#\">browse</a>."
+msgstr ""
+
+msgid "All the orders that have this product."
+msgstr ""
 
 msgid "No orders found"
 msgstr "Nessun ordine trovato"
 
 msgid "This product is currently not orderable."
 msgstr "Questo prodotto non è acquistabile al momento"
+
+msgid "Add a new product"
+msgstr ""
+
+msgid "You are adding a product."
+msgstr ""
+
+msgid ""
+"To make it stand out, give it an awesome description and picture. This is "
+"what will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr ""
+
+msgid ""
+"You can set its price or size and many other things in the option boxes for "
+"each product."
+msgstr ""
+
+msgid "If you know the product manufacturer, it can be set here."
+msgstr ""
+
+msgid "Additional Information"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "Contact Group Pricing"
+msgstr ""
+
+msgid ""
+"Set specific prices for your customer segments such as loyalty, tier status "
+"or season here."
+msgstr ""
+
+msgid "Contact Group Discounts"
+msgstr ""
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. \" +\n"
+"                    \"The discount amount may be visible on storefront. These groups are defined in"
+msgstr ""
 
 msgid "Cross-sells"
 msgstr "Coss-sells."
@@ -1588,9 +3371,6 @@ msgstr "Cross-sell"
 
 msgid "File "
 msgstr "File"
-
-msgid "Package Products"
-msgstr "Pacchetti Prodotto"
 
 #, python-format
 msgid "Logical count: %(logical_count)s %(sales_unit)s"
@@ -1606,46 +3386,76 @@ msgstr "Questo prodotto non è ancora un pacchetto."
 msgid "To create a package, choose products below."
 msgstr "Per creare un pacchetto, scegli dei prodotti qui sotto."
 
-msgid "Simple Variation Children"
-msgstr "Figlio Variazione Semplice"
+msgid "Package Products"
+msgstr "Pacchetti Prodotto"
 
-msgid "Variable Children"
-msgstr "Variabile Figlia"
+msgid "Recent Orders"
+msgstr ""
 
-msgid "Combination"
-msgstr "Combinazione"
+msgid "Store Overview"
+msgstr ""
 
-msgid "Variables"
-msgstr "Variabili"
+msgid "Customers"
+msgstr ""
 
-msgid "This product is not yet a variation."
-msgstr "Questo prodotto non è ancora una variazione."
+msgid "Today"
+msgstr ""
 
-msgid "To create a simple variation, choose products below."
-msgstr "Per creare una Variazione Semplice, segli dei prodotto qui sotto"
+msgid "Month to date (MTD)"
+msgstr ""
+
+msgid "Year to date (YTD)"
+msgstr ""
+
+msgid "Totals"
+msgstr ""
+
+msgid "Consolidate Data"
+msgstr ""
 
 msgid ""
-"To create a variation with multiple variables, create the variables on the "
-"Variables tab and then link them to products here."
-msgstr "Per creare una Variazione con variabili multiple, crea le variabili nella sezione Variabili e poi collegale ai prodotti qui."
+"Your shop currently has some sample data installed. Select below which "
+"objects you want to uninstall."
+msgstr ""
+
+msgid ""
+"After the consolidation, preserved objects will lose their status of Sample "
+"Object and it will be no longer possible to distinguish them from the "
+"others."
+msgstr ""
+
+msgid "Caution: this action cannot be undone."
+msgstr ""
+
+msgid "Consolidate"
+msgstr ""
+
+msgid "Your shop has no sample data installed!"
+msgstr ""
+
+msgid "Select the objects you want to install"
+msgstr ""
 
 msgid "Manually process payments"
-msgstr "Pagamenti processati manualmente"
+msgstr ""
 
 msgid "Manage payments outside of Shuup"
-msgstr "Gestisci i pagamenti al di fuori di Shuup"
+msgstr ""
 
 msgid "Manual"
-msgstr "Manuale"
+msgstr ""
 
 msgid "Manual process shipping"
-msgstr "Spedizione gestita manualmente"
+msgstr ""
 
 msgid "Handle shipping outside of Shuup"
-msgstr "Gestisci le spedizioni al di fuori di Shuup"
+msgstr ""
+
+msgid "Deactivate"
+msgstr ""
 
 msgid "Activate"
-msgstr "Attiva"
+msgstr ""
 
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
@@ -1658,17 +3468,50 @@ msgstr "Comportamento"
 msgid "Behavior component type"
 msgstr "Comportamento tipo di componente"
 
+msgid ""
+"The behaviors for this service. These behaviors can be used to add costs to "
+"the order or can be used to restrict availability of the service."
+msgstr ""
+
 msgid "Add component"
 msgstr "Aggiungi componente"
 
-msgid "Shop Logo"
-msgstr "Logo del Negozio"
+msgid "Order Configuration"
+msgstr ""
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
+msgstr ""
+
+msgid "Shop Images"
+msgstr ""
 
 msgid "Maintenance Mode"
 msgstr "Modalità di di Manutenzione"
 
 msgid "Contact Address"
 msgstr "Indirizzo di Contatto"
+
+msgid "News &amp; Updates"
+msgstr ""
+
+msgid "Support"
+msgstr ""
+
+msgid "Community Links"
+msgstr ""
+
+msgid "Community Forums"
+msgstr ""
+
+msgid "Shuup Blog"
+msgstr ""
+
+msgid "Contact Us"
+msgstr ""
 
 msgid "About Shuup Telemetry"
 msgstr "A proposito della Telemetria di Shuup"
@@ -1678,10 +3521,10 @@ msgstr "Shuup invierà occasionalmente dati telemetrici al server di Shuup.com."
 
 #, python-format
 msgid ""
-"The data contains an unique installation key, as well as the hostname of the"
-" installation (as sent by the visiting browser; currently "
+"The data contains a unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "I dati contengono una chiave unica d'installazione, il nome dell'host dell'installzione (come inviato dal browser; in questo momento è <code>%(host)s</code>)."
+msgstr ""
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
@@ -1749,10 +3592,13 @@ msgstr "Invia Email Recupero Passwor"
 
 msgid ""
 "Please fill out the following information to get your store up and running"
-msgstr "Completa le seguenti informazioni per avere il tuo negozio attivo e funzionante"
+msgstr ""
 
-msgid "Setup can be continued later from the admin dashboard"
-msgstr "Il setup può essere completato più tardi dalla dashboard di amministrazione"
+msgid "All information entered here can be edited later."
+msgstr ""
+
+msgid "Click here for help"
+msgstr ""
 
 msgid "Create new"
 msgstr "Crea nuovo"
@@ -1764,12 +3610,18 @@ msgstr "Nuovo %(model)s"
 msgid "Discard Changes"
 msgstr "Annulla Modifiche"
 
+msgid "Save as a copy"
+msgstr "Salva una copia"
+
 msgid "Save and Create New"
 msgstr "Salva e Crea Nuovo"
 
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr "Sei sicuro di voler cancelllare %s?"
+
+msgid "Export as CSV file"
+msgstr ""
 
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
@@ -1778,8 +3630,8 @@ msgstr " %(per_page)s di %(n_items)s %(verbose_name_plural)s"
 msgid "objects"
 msgstr "oggetti"
 
-msgid "Unknown error"
-msgstr "Errore sconosciuto"
+msgid "Mass Action encountered an unknown error."
+msgstr ""
 
 msgid "Mass Action"
 msgstr "Azione di Gruppo"
@@ -1791,23 +3643,40 @@ msgstr "Non è possibile visualizzare la pagina. %(reason)s"
 msgid "Log in with different credentials..."
 msgstr "Entra con altre credenziali..."
 
-msgid "You must be logged in."
-msgstr "Devi essere autenticato."
+msgid "Sign in to continue."
+msgstr ""
 
-msgid "You must be a staff member."
-msgstr "Dei essere un membro dello staff."
+msgid ""
+"Your account must have `Access to Admin Panel` permissions to access this "
+"page."
+msgstr ""
+
+msgid "There is no active shop available. Contact support for more details."
+msgstr ""
 
 #, python-format
 msgid "You do not have the required permissions: %s"
 msgstr "Non hai i permessi necessari: %s"
 
-#, python-format
-msgid "New %s created."
-msgstr "Nuovo %s è stato creato."
+#, python-brace-format
+msgid ""
+"Can't view this page. You do not have the required permission(s): "
+"`{permissions}`."
+msgstr ""
+
+msgid "Unnamed"
+msgstr ""
+
+msgid "Item"
+msgstr ""
 
 #, python-format
-msgid "%s edited."
-msgstr "%s modificato."
+msgid "New %s was created."
+msgstr ""
+
+#, python-format
+msgid "%s was edited."
+msgstr ""
 
 #, python-format
 msgid "New %s"
@@ -1824,27 +3693,41 @@ msgstr "Solo un %(model)s è permesso."
 msgid "Mass Edit"
 msgstr "Modifica di Gruppo"
 
-msgid "Complete the setup wizard"
-msgstr "Completa la configurazione guidata"
+msgid "Invalid object."
+msgstr ""
+
+msgid "Invalid model."
+msgstr ""
+
+msgid "Object not found."
+msgstr ""
+
+msgid "Storefront"
+msgstr "Negozio"
+
+msgid "General"
+msgstr ""
 
 msgid "Complete wizard"
-msgstr "Completa la procedura guidata"
+msgstr ""
 
-msgid "Publish your store"
-msgstr "Pubblica il tuo negozio"
+msgid "Complete the setup wizard"
+msgstr ""
 
-msgid "Let customers browse your store and make purchases"
-msgstr "Fai in modo che i clienti visitino il tuo negozio e facciano acquisti"
+msgid "All set. Nothing to be configured"
+msgstr ""
 
-msgid "Publish shop"
-msgstr "Pubblica Negozio"
+msgid ""
+"A reset password email was sent. Please, follow the instructions to set a "
+"new password."
+msgstr ""
+
+msgid "This recovery link is invalid."
+msgstr ""
+
+msgid "Password was changed."
+msgstr ""
 
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "Non posso prendere la selezione per %s."
-
-msgid "not shipped (non-deliverable)"
-msgstr "non spedito"
-
-msgid "shipped (deliverable)"
-msgstr "spedito"

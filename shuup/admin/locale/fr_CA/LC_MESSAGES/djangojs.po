@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:59+0000\n"
-"PO-Revision-Date: 2020-11-02 13:42+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -484,57 +484,6 @@ msgstr "Aucun enregistrement trouvé."
 msgid "Warning! Missing JavaScript dependencies detected."
 msgstr "Avertissement! Dépendances JavaScript manquantes détectées."
 
-msgid "Identifier"
-msgstr "Identifiant"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr "Valeur %s Nom"
-
-msgid "Delete value"
-msgstr "Supprimer la valeur"
-
-msgid "Are you sure?"
-msgstr "Êtes-vous sûr?"
-
-msgid "Delete Variable"
-msgstr "Supprimer la variable"
-
-msgid "Add new value"
-msgstr "Ajouter une nouvelle valeur"
-
-msgid "Variable Name"
-msgstr "Nom de variable"
-
-msgid "Variable"
-msgstr "Variable"
-
-msgid "Identifer"
-msgstr "Identifiant"
-
-msgid "New template"
-msgstr "Nouveau modèle"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "Afficher les champs d'identifiant (pour les utilisateurs avancés)"
-
-msgid "There are no variables defined."
-msgstr "Aucune variable n'est définie."
-
-msgid "Variation Template"
-msgstr "Modèle de variation"
-
-msgid "Select Template"
-msgstr "Sélectionnez un modèle"
-
-msgid ""
-"Selecting and saving a template will clear all variable children selections "
-"for this product."
-msgstr "La sélection et l'enregistrement d'un modèle effaceront toutes les sélections d'enfants variables pour ce produit."
-
-msgid "Add new variable"
-msgstr "Ajouter une nouvelle variable"
-
 msgid "No browser URL for kind:"
 msgstr "Aucune URL de navigateur pour le genre:"
 
@@ -720,6 +669,9 @@ msgstr "Réinitialiser les filtres"
 msgid "Reset"
 msgstr "Réinitialiser"
 
+msgid "Apply filters"
+msgstr ""
+
 msgid "Sort by"
 msgstr "Trier par"
 
@@ -747,9 +699,6 @@ msgstr "Sélectionner"
 
 msgid "Filters"
 msgstr "Filtres"
-
-msgid "Done"
-msgstr "Terminé"
 
 msgid "Show filters"
 msgstr "Afficher les filtres"

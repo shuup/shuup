@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2020
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2016-08-08 14:42+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2020-09-28 11:47+0000\n"
+"Last-Translator: Christian Hess <christianhess.rlz@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,9 +25,6 @@ msgstr "Imposto Padrão do Shuup"
 
 msgid "Tax Rules"
 msgstr "Regras Fiscais"
-
-msgid "Taxes"
-msgstr "Impostos"
 
 msgid "Show tax rules"
 msgstr "Mostrar regras fiscais"
@@ -70,6 +68,9 @@ msgstr "Habilitado"
 msgid "enabled"
 msgstr "habilitado"
 
+msgid "Enable this if this tax rule is active."
+msgstr "Ative isto se esta regra de imposto estiver ativa."
+
 msgid "tax classes"
 msgstr "classes fiscais"
 
@@ -78,6 +79,9 @@ msgstr "Classes fiscais dos itens a ser tributados"
 
 msgid "customer tax groups"
 msgstr "grupos de impostos do cliente"
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr "O grupo de impostos de clientes para qual esta regra de imposto está limitada."
 
 msgid "country codes pattern"
 msgstr "padrão de códigos de países"
@@ -108,6 +112,9 @@ msgstr "Se várias regras corresponderem, apenas as regras com o maior número d
 
 msgid "tax"
 msgstr "imposto"
+
+msgid "The tax to apply when this rule is applied."
+msgstr "O imposto a ser aplicado quando a regra é aplicada."
 
 msgid "Tax rule {} ({})"
 msgstr "Regra fiscal {} ({})"

@@ -3,13 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Translator HIO.E <translater@hiqe.ru>, 2017
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:39+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2017-03-30 06:49+0000\n"
 "Last-Translator: Translator HIO.E <translater@hiqe.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -63,15 +66,15 @@ msgstr "Очистить корзину"
 msgid "Please enter a basket title."
 msgstr "Пожалуйста, введите название корзины"
 
-msgid "Cannot save an empty basket."
-msgstr "Нельзя сохранить пустую корзину"
+msgid "Can't save an empty basket."
+msgstr ""
 
-msgid "Product not available in this shop"
-msgstr "Товар недоступен в данном магазине"
+msgid "Product is not available in this shop."
+msgstr ""
 
-msgid "Invalid supplier"
-msgstr "Неверный поставщик"
+msgid "Invalid supplier."
+msgstr ""
 
 #, python-format
-msgid "%d product(s) added to cart"
+msgid "%d product(s) added to cart."
 msgstr ""

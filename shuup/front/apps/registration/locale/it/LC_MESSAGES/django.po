@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 11:58+0000\n"
-"PO-Revision-Date: 2016-09-07 07:46+0000\n"
-"Last-Translator: Fabrizio Arzeni <fabrizio.arz@gmail.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-06-30 02:16+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +20,97 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Name of the company"
+msgstr ""
+
 msgid "Registration Received"
-msgstr "Registrazione Ricevuta"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
 
 msgid "Customer Email"
-msgstr "Email Cliente"
+msgstr ""
+
+msgid "Activation URL"
+msgstr ""
+
+msgid "Is User Active"
+msgstr ""
+
+msgid "Account Reactivation"
+msgstr ""
+
+msgid "Company Registration Received"
+msgstr ""
+
+msgid "Company Approved"
+msgstr ""
+
+msgid "Account Activation"
+msgstr ""
+
+msgid "Company has been activated."
+msgstr ""
+
+msgid "Send Registration Received Email"
+msgstr ""
+
+msgid "Send email when a user registers."
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr ""
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr ""
+
+msgid "Send account reactivation email"
+msgstr ""
+
+msgid "Send email when a user account gets reactivated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr ""
+
+msgid "{{ customer.username }} is now active again!"
+msgstr ""
+
+msgid "Send Company Registration Received Email"
+msgstr ""
+
+msgid "Send email when a user registers as a company."
+msgstr ""
+
+msgid "Send Company Activated Email"
+msgstr ""
+
+msgid "Notify company's contact person that company account is activated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr ""
+
+msgid "Send account activation email"
+msgstr ""
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr ""
+
+msgid "{{ customer.username }} is now active!"
+msgstr ""
 
 msgid "Account activation"
 msgstr "Attivazione Account"
@@ -32,14 +118,41 @@ msgstr "Attivazione Account"
 msgid "Account activation failed."
 msgstr "Attivazione account fallita."
 
+msgid "Register as a Company"
+msgstr ""
+
+msgid "Company Registration"
+msgstr ""
+
+msgid "Company information"
+msgstr ""
+
+msgid "Company billing information"
+msgstr ""
+
+msgid "Contact person"
+msgstr ""
+
+msgid "Contact information for primary company contact"
+msgstr ""
+
+msgid "Login information"
+msgstr ""
+
+msgid "The information you will log in with."
+msgstr ""
+
 msgid "Register"
 msgstr "Registra"
 
 msgid "Registration"
 msgstr "Registrazione"
 
-msgid "Activation successful!"
-msgstr "Attivazione avvenuta!"
+msgid "Register as a company."
+msgstr ""
+
+msgid "Activation successful"
+msgstr ""
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "

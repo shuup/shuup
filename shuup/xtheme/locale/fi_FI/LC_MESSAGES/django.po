@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Aarni Koskela, 2015
+# Andreas Modinos <andreas@shuup.com>, 2021
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
@@ -14,8 +15,8 @@
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
-# Rauli L. <rauli.laine@iki.fi>, 2015-2016
-# Rauli L. <rauli.laine@iki.fi>, 2016
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Rauli Laine <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -25,9 +26,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-09-29 08:53+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-03-01 09:12+0000\n"
+"Last-Translator: Andreas Modinos <andreas@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -151,6 +152,9 @@ msgstr "CSS-upotus"
 msgid "Inline HTML"
 msgstr "HTML-upotus"
 
+msgid "Inline Jinja HTML"
+msgstr ""
+
 msgid "current draft"
 msgstr "nykyinen vedos"
 
@@ -168,6 +172,9 @@ msgstr "näytä nimi"
 
 msgid "created on"
 msgstr "luotu"
+
+msgid "modified on"
+msgstr ""
 
 msgid "status"
 msgstr "tila"
@@ -288,6 +295,24 @@ msgstr "Valitse kaikki tuotteet, jotka haluat näyttää"
 
 msgid "Product Selection"
 msgstr "Tuotteen valinta"
+
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr "Puskurin aikakatkaisu (sekunneissa)"
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
+msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "Kohdalla olevat koodinpätkät"
@@ -471,6 +496,9 @@ msgstr "Julkaistu"
 
 msgid "Reverted"
 msgstr "Palautettu"
+
+msgid "Custom"
+msgstr ""
 
 msgid "Full Width"
 msgstr "Täysi leveys"

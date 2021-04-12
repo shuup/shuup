@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-18 22:57+0000\n"
-"PO-Revision-Date: 2019-03-14 06:29+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Language: cmn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Theme identifier must match"
-msgstr "主题标识符必须匹配"
+msgid "Theme identifiers must match."
+msgstr ""
 
-msgid "Either theme_settings or shop should be informed"
-msgstr "应通知主题_设置或商店"
+msgid "Either theme_settings or shop should be informed."
+msgstr ""
 
 msgid "Global plugins"
 msgstr "全局插件"
@@ -97,25 +97,27 @@ msgstr "样式表"
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "与主题一起使用的字体、颜色和样式。"
 
-msgid "Content in this placeholder is shown without limitations."
-msgstr "此占位符中的内容不受限制地显示"
+msgid "Content in this box is shown to all user types without limitations."
+msgstr ""
 
 #, python-format
 msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
 msgstr "此占位符中的内容仅显示在%(category_name)s的类别中。"
 
-msgid "Content in this placeholder is shown for guests."
-msgstr "此占位符中的内容将显示给访客。"
+msgid "Content in this box is shown to guests (anonymous users) only."
+msgstr ""
 
-msgid "Content in this placeholder is shown for company contacts."
-msgstr "此占位符中的内容显示为公司联系人。"
+msgid "Content in this box is shown to company contacts only."
+msgstr ""
 
-msgid "Content in this placeholder is shown for all logged in contacts."
-msgstr "此占位符中的内容显示在所有登录联系人中。"
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
+msgstr ""
 
-msgid "Content in this placeholder is shown for person contacts."
-msgstr "此占位符中的内容显示在人员联系人中。"
+msgid "Content in this box is shown to person contacts only."
+msgstr ""
 
 #, python-format
 msgid "Content in this placeholder is shown for %(product_name)s only."
@@ -132,6 +134,9 @@ msgstr "内联CSS"
 
 msgid "Inline HTML"
 msgstr "内联 HTML"
+
+msgid "Inline Jinja HTML"
+msgstr ""
 
 msgid "current draft"
 msgstr "目前的草案"
@@ -150,6 +155,9 @@ msgstr "浏览名称"
 
 msgid "created on"
 msgstr "创建"
+
+msgid "modified on"
+msgstr ""
 
 msgid "status"
 msgstr "状态"
@@ -212,14 +220,14 @@ msgstr "图片链接URL"
 msgid "Full width"
 msgstr "全宽"
 
-msgid "Set image to full width of cell"
-msgstr "将图像设置为单元格的全宽度"
+msgid "Set image to the full width of cell."
+msgstr ""
 
 msgid "Width (px)"
 msgstr "宽度(px)"
 
-msgid "Leave blank for default width"
-msgstr "留空默认宽度"
+msgid "Leave blank for default width."
+msgstr ""
 
 msgid "Height (px)"
 msgstr "高度(px)"
@@ -250,6 +258,12 @@ msgstr "警告：产品的最终数量可能低于“计数”，因为它将从
 msgid "Product Cross Sells"
 msgstr "产品交叉销售"
 
+msgid "Show variation parents"
+msgstr ""
+
+msgid "Render variation parents instead of the children."
+msgstr ""
+
 msgid "Category"
 msgstr "类别"
 
@@ -265,6 +279,24 @@ msgstr "选择要显示的所有产品。"
 msgid "Product Selection"
 msgstr "产品选择"
 
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr ""
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
+msgstr ""
+
 msgid "In-Place Snippet"
 msgstr "在广场上"
 
@@ -279,6 +311,10 @@ msgstr "身体末端资源"
 
 msgid "URL"
 msgstr "URL"
+
+#, python-format
+msgid "%(name)s Ordering"
+msgstr ""
 
 msgid "Ordering"
 msgstr "订单"
@@ -339,6 +375,9 @@ msgstr "内容启动"
 
 msgid "Content end"
 msgstr "内容结束"
+
+msgid "(Error while rendering.)"
+msgstr ""
 
 msgid "Delete This Cell"
 msgstr "删除该单元格"
@@ -421,25 +460,28 @@ msgstr "还原改变"
 msgid "Publish Changes"
 msgstr "发布更改"
 
-msgid "No access to editing"
-msgstr "无法编辑"
+msgid "No access to editing."
+msgstr ""
 
 #, python-format
-msgid "Unknown command %s"
-msgstr "未知命令%s"
+msgid "Unknown command: `%s`."
+msgstr ""
 
-msgid "Unable to determine current theme."
-msgstr "无法确定当前主题。"
+msgid "Unable to determine the current theme."
+msgstr ""
 
 #, python-format
-msgid "Cannot add more than %d cells in one row."
-msgstr "无法在同一行添加 %d 以上的单元格。"
+msgid "Can't add more than %d cells in one row."
+msgstr ""
 
 msgid "Published"
 msgstr "发行"
 
 msgid "Reverted"
 msgstr "回复"
+
+msgid "Custom"
+msgstr ""
 
 msgid "Full Width"
 msgstr "最大化"

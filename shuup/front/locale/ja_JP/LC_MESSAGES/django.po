@@ -1,29 +1,29 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 19:11+0000\n"
-"PO-Revision-Date: 2016-08-04 12:58-0700\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
-"language/ja_JP/)\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja_JP\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 1.8.8\n"
 
 msgid "Abandoned Cart Value"
 msgstr ""
 
+#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr ""
 
@@ -33,13 +33,21 @@ msgstr ""
 msgid "Show carts"
 msgstr ""
 
-msgid "Created on"
+msgid "Cart Inactivity Delay (hours)"
+msgstr ""
+
+msgid ""
+"Set the number of hours the cart must be inactive before it's displayed in "
+"Orders > Carts"
+msgstr ""
+
+msgid "Key"
 msgstr ""
 
 msgid "Last updated on"
 msgstr ""
 
-msgid "Abandoned"
+msgid "Completed"
 msgstr ""
 
 msgid "yes"
@@ -51,125 +59,132 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
-msgid "Product count"
+msgid "Supplier"
 msgstr ""
 
 msgid "Customer"
-msgstr "カスタマー"
+msgstr ""
 
-msgid "Orderer"
+msgid "Product count"
 msgstr ""
 
 msgid "Total"
-msgstr "合計"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
 
 msgid "Ordered"
 msgstr ""
 
-msgid "Shuup Frontend - Saved Baskets"
+msgid "Require shipping method"
 msgstr ""
 
-msgid "Home"
-msgstr "ホーム"
-
-msgid "My Saved Carts"
+msgid "Whether to require the shipping method in checkout phases."
 msgstr ""
 
-msgid "Add all products to cart"
+msgid "Require payment method"
 msgstr ""
 
-msgid "Delete cart"
+msgid "Whether to require the payment method in checkout phases."
 msgstr ""
 
-msgid "Product"
-msgstr "商品"
-
-msgid "Quantity"
-msgstr "数量"
-
-msgid "Price"
-msgstr "価格"
-
-msgid "Saved Carts"
+msgid "Registration Settings"
 msgstr ""
 
-msgid "Title"
-msgstr "タイトル"
-
-msgid "Product Count"
+msgid "Allow company registration"
 msgstr ""
 
-msgid "Details"
-msgstr "詳細"
-
-msgid "You haven't saved any carts yet."
+msgid "If you select this, companies can register into your store."
 msgstr ""
 
-msgid "Please enter a basket title."
+msgid "Company registration requires approval"
 msgstr ""
 
-msgid "Cannot save an empty basket."
+msgid ""
+"Registered companies must be manually approved by admin if this is checked. "
+"This option has no effect if company registration is not allowed on your "
+"site."
 msgstr ""
 
-msgid "Product not available in this shop"
+msgid "Company tax number validation"
 msgstr ""
 
-msgid "Invalid supplier"
+msgid "Company tax number format is validated for European countries."
 msgstr ""
 
-#, python-format
-msgid "%d product(s) added to cart"
+msgid "Override shop's default configuration"
 msgstr ""
 
-#, python-format
-msgid "Invalid command %s"
+msgid ""
+"If checked, this configuration will be used instead of the shop's default "
+"configuration."
 msgstr ""
 
-#, python-format
-msgid "The quantity %f is not allowed. Please use an integer value."
+msgid "Available languages in storefront"
 msgstr ""
 
-#, python-format
-msgid "The quantity %s is not valid."
-msgstr ""
-
-msgid "This variation is not available."
-msgstr ""
-
-#, python-format
-msgid "Basket loading failed: Incompatible basket (%s)"
+msgid ""
+"Select all the languages that should be available in storefront. Blank means"
+" that all languages should be available."
 msgstr ""
 
 msgid "Try to remove some products from the basket and order them separately."
 msgstr ""
 
 #, python-format
-msgid "Products in basket cannot be shipped together. %s"
+msgid "Products in basket can't be shipped together. %s"
 msgstr ""
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
-msgid "Tax number required for companies"
+msgid "Tax number is required with the company name."
 msgstr ""
 
-msgid "Cannot use tax number without company name"
+msgid "Company name is required with the tax number."
+msgstr ""
+
+msgid "Use a saved address"
 msgstr ""
 
 msgid "Addresses"
 msgstr "住所"
 
+msgid "Saved addresses."
+msgstr ""
+
+msgid "Checkout as Guest"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Register with us for future convenience"
+msgstr ""
+
+msgid "Checkout Method Choice"
+msgstr ""
+
 msgid "I accept the terms and conditions"
 msgstr ""
 
-msgid "I want to subscribe to your newsletter"
+msgid "I want to receive marketing material"
 msgstr ""
 
 msgid "Comment"
 msgstr ""
 
+msgid ""
+"There has been a change in product availability. Please review your cart and"
+" reconfirm your order."
+msgstr ""
+
 msgid "Confirmation"
+msgstr ""
+
+msgid "Starting to create order."
 msgstr ""
 
 msgid "Empty Basket"
@@ -184,19 +199,229 @@ msgstr ""
 msgid "Shipping & Payment"
 msgstr "配送料と配送情報"
 
-msgid "Company name"
-msgstr "会社名"
-
-msgid "Tax number"
-msgstr "税番号"
-
-msgid "Shipping method"
+msgid "Saved services."
 msgstr ""
 
-msgid "Payment method"
+msgid "Sort products by name"
 msgstr ""
 
-msgid "Please send me marketing correspondence"
+msgid "Ordering for sort by name"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Name - A-Z"
+msgstr ""
+
+msgid "Name - Z-A"
+msgstr ""
+
+msgid "Enable this to allow products to be sortable by product name."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the the filter will appear on "
+"the product listing page."
+msgstr ""
+
+msgid "Sort products by price"
+msgstr ""
+
+msgid "Ordering for sort by price"
+msgstr ""
+
+msgid "Price - Low to High"
+msgstr ""
+
+msgid "Price - High to Low"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be sortable by price (from low to high; "
+"from high to low)."
+msgstr ""
+
+msgid "Sort products by date created"
+msgstr ""
+
+msgid "Ordering for sort by date created"
+msgstr ""
+
+msgid "Date created"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be sortable from newest to oldest products."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the filter will appear on the "
+"product listing page."
+msgstr ""
+
+msgid "Sort products by date created - oldest first"
+msgstr ""
+
+msgid "Ordering for sort by date created - oldest first"
+msgstr ""
+
+msgid "Date created - oldest first"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be sortable from oldest to newest products."
+msgstr ""
+
+msgid "Filter products by manufacturer"
+msgstr ""
+
+msgid "Ordering for filter by manufacturer"
+msgstr ""
+
+msgid "Manufacturers"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be filterable by manufacturer for this "
+"category."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the manufacturer filters will "
+"appear on the product listing page."
+msgstr ""
+
+msgid "Filter products by category"
+msgstr ""
+
+msgid "Ordering for filter by category"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be filterable by any visible product "
+"category. "
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the category list filters will"
+" appear on the product listing page."
+msgstr ""
+
+msgid "Limit page size"
+msgstr ""
+
+msgid "Ordering for limit page size"
+msgstr ""
+
+msgid "Products per page"
+msgstr ""
+
+msgid ""
+"Enable this to allow the customer to be able to select the number of "
+"products to display."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the page size filter will "
+"appear on the product listing page."
+msgstr ""
+
+msgid "Filter products by variation"
+msgstr ""
+
+msgid "Ordering for filter by variation"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be filterable by their different "
+"variations. For example, size or color."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the variation filters will "
+"appear on the product listing page."
+msgstr ""
+
+msgid "Filter products by price"
+msgstr ""
+
+msgid "Ordering for filter by price"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid ""
+"Enable this to allow products to be filtered by price. Prices will be listed"
+" in groups from the price range minimum to price range maximum in increments"
+" of the configured price range step."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the price range filters will "
+"appear on the product listing page."
+msgstr ""
+
+msgid "Price range minimum"
+msgstr ""
+
+msgid ""
+"Set the minimum price for the filter. The first range will be from zero to "
+"this value."
+msgstr ""
+
+msgid "Price range maximum"
+msgstr ""
+
+msgid ""
+"Set the maximum price for the filter. The last range will include this value"
+" and above."
+msgstr ""
+
+msgid "Price range step"
+msgstr ""
+
+msgid ""
+"Set the price step for each range. Each range will increment by this value."
+msgstr ""
+
+#, python-format
+msgid "Under %(min_limit)s"
+msgstr ""
+
+#, python-format
+msgid "%(min)s to %(max)s"
+msgstr ""
+
+#, python-format
+msgid "%(max_limit)s & Above"
+msgstr ""
+
+msgid "Filter products by supplier"
+msgstr ""
+
+msgid "Ordering for filter by supplier"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Enable this to allow products to be filterable by supplier."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the supplier filters will "
+"appear."
+msgstr ""
+
+msgid "Allow multiselect suppliers"
+msgstr ""
+
+msgid "Filter by multiple suppliers at a time."
 msgstr ""
 
 msgid "Logged out since this account is inactive."
@@ -206,6 +431,9 @@ msgid "key"
 msgstr ""
 
 msgid "shop"
+msgstr ""
+
+msgid "supplier"
 msgstr ""
 
 msgid "customer"
@@ -256,27 +484,311 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-msgid "Shop is currently in maintenance mode."
-msgstr "ショップは現在メンテナンスモードになっています。"
-
-msgid ""
-"There were errors on submitted form fields. Please check them and try again."
+msgid "class spec"
 msgstr ""
 
-msgid "Product added to cart"
-msgstr "商品はカートに追加されました"
+msgid "stored basket"
+msgstr ""
 
-msgid "There was an error adding the product to the basket"
+msgid "stored baskets"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Reference Number"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customer Name"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
+
+msgid "Order Received"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Customer Email"
+msgstr ""
+
+msgid "Customer Phone"
+msgstr ""
+
+msgid "Shop Email"
+msgstr ""
+
+msgid "Shop Phone"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Order Status Changed"
+msgstr ""
+
+msgid "Old Status"
+msgstr ""
+
+msgid "New Status"
+msgstr ""
+
+msgid "Shipment Created"
+msgstr ""
+
+msgid "Shipment"
+msgstr ""
+
+msgid "Order Shipping Status"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
+
+msgid "Shipment Deleted"
+msgstr ""
+
+msgid "Payment Created"
+msgstr ""
+
+msgid "Order Payment Status"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Refund Created"
+msgstr ""
+
+msgid ""
+"<p>Dear {{ order.customer }},</p>\n"
+"<p>A shipment has been created for your order and here are the details:</p>\n"
+"\n"
+"{% if shipment.tracking_code %}\n"
+"<p>Tracking code: {{ shipment.tracking_code }}</p>\n"
+"{% endif %}\n"
+"\n"
+"<p>Contents:</p>\n"
+"<table>\n"
+"    <thead>\n"
+"        <tr>\n"
+"            <th>Product</th>\n"
+"            <th>Quantity</th>\n"
+"        </tr>\n"
+"    </thead>\n"
+"    <tbody>\n"
+"{% for shipment_product in shipments.total_products %}\n"
+"        <tr>\n"
+"            <td>{{ shipment_product.product }}</td>\n"
+"            <td>{{ shipment_product.quantity }}</td>\n"
+"        </tr>\n"
+"{% endif %}\n"
+"    </tbody>\n"
+"</table>\n"
+msgstr ""
+
+msgid "Send Shipment Created Email"
+msgstr ""
+
+msgid "Send an email to customer when a shipment is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer when a shipment of his order has "
+"been created."
+msgstr ""
+
+msgid "{{ order.shop }} - Shipment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Shipment Deleted Email"
+msgstr ""
+
+msgid "Send email when a shipment is deleted."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a shipment gets deleted."
+msgstr ""
+
+msgid "{{ order.shop }} - Shipment deleted for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Payment Created Email"
+msgstr ""
+
+msgid "Send email to customer when a payment is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a payment gets created."
+msgstr ""
+
+msgid "{{ order.shop }} - Payment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Refund Created Email"
+msgstr ""
+
+msgid "Send email when a refund is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a refund gets created."
+msgstr ""
+
+msgid "{{ order.shop }} - Refund created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Order Confirmation Email"
+msgstr ""
+
+msgid "Send a confirmation email when the order is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after an order is created. The order contents can be put on email body as "
+"well as other informations like shipping method and payment method."
+msgstr ""
+
+msgid "Cart Inactivity Delay"
+msgstr ""
+
+msgid "Checkout configuration"
+msgstr ""
+
+msgid "Product list sorts and filters"
+msgstr ""
+
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr ""
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
+msgid "Storefront Languages"
 msgstr ""
 
 msgid "Shopping cart"
-msgstr "ショッピングカート"
+msgstr ""
 
 msgid "Your shopping cart is empty."
 msgstr ""
-
-msgid "Back to Products"
-msgstr "商品に戻る"
 
 msgid "There were errors on following items"
 msgstr ""
@@ -284,11 +796,126 @@ msgstr ""
 msgid "You are unable to proceed to checkout!"
 msgstr ""
 
+msgid "Checkout"
+msgstr ""
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "There are errors"
+msgstr ""
+
+msgid "Please wait..."
+msgstr ""
+
+msgid "My Dashboard"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Bad Request"
+msgstr ""
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr ""
+
+msgid "Back to Homepage"
+msgstr ""
+
+msgid "Permission Denied"
+msgstr ""
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr ""
+
+msgid "Page Not Found"
+msgstr ""
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr ""
+
+msgid "Go Back"
+msgstr ""
+
+msgid "Internal Server Error"
+msgstr "内部サーバーエラー"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr ""
+
+msgid "Welcome to Shuup!"
+msgstr ""
+
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr ""
+
+msgid "your shop"
+msgstr ""
+
+msgid ""
+"You are seeing this page because there is no theme selected for the default "
+"frontend."
+msgstr ""
+
+msgid "Log in to the administration interface"
+msgstr ""
+
+msgid "to choose a theme and set up your shop."
+msgstr ""
+
+msgid ""
+"The administration interface does not seem to be available. Use other means "
+"to choose a theme."
+msgstr ""
+
+msgid "Product added to cart"
+msgstr ""
+
+msgid "Adding the product to the basket failed."
+msgstr ""
+
+msgid "Remove product from basket"
+msgstr ""
+
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
+
+msgid ""
+"The following items are not currently available (or are not available in the"
+" desired quantity) and cannot be included in your order."
+msgstr ""
+
 msgid "Continue Shopping"
-msgstr "買い物を続ける"
+msgstr ""
 
 msgid "Proceed to checkout"
-msgstr "レジに進む"
+msgstr ""
+
+msgid "Coupons applied"
+msgstr ""
+
+msgid "Do you have a coupon code? Enter it here. "
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
+msgstr ""
 
 msgid "Save cart"
 msgstr ""
@@ -299,47 +926,41 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "Back to Products"
+msgstr ""
+
+msgid "Error!"
+msgstr ""
+
+msgid "Invalid coupon code."
+msgstr ""
+
+msgid "Removing a coupon failed."
+msgstr ""
+
 msgid "Coupon is not available."
 msgstr ""
 
-msgid "Error when adding coupon."
+msgid "Adding a coupon failed."
 msgstr ""
 
-msgid "Cart"
-msgstr "カート"
-
-msgid "Items"
+msgid "Success!"
 msgstr ""
 
-msgid "View cart"
-msgstr "カートを見る"
-
-msgid "Qty"
+msgid "Cart saved."
 msgstr ""
 
-msgid "Remove product from basket"
-msgstr "商品をカートから削除する"
-
-msgid "Have a coupon code? Enter it here"
+msgid "Filter Products"
 msgstr ""
 
-msgid "Coupon Code"
+msgid "Show Grid/List"
 msgstr ""
 
-msgid "Submit Code"
+msgid "Grid/list view"
 msgstr ""
-
-msgid "Checkout"
-msgstr "チェックアウト"
 
 msgid "Continue"
-msgstr "続ける"
-
-msgid "excl. tax"
 msgstr ""
-
-msgid "Billing address"
-msgstr " 請求先住所"
 
 msgid "Ordering for a company?"
 msgstr ""
@@ -347,10 +968,16 @@ msgstr ""
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr ""
 
-msgid "Shipping address"
-msgstr "お届け先住所"
-
 msgid "Ship to my billing address"
+msgstr ""
+
+msgid "Choose Shipping Method"
+msgstr ""
+
+msgid "Choose Payment Method"
+msgstr ""
+
+msgid "No method is available."
 msgstr ""
 
 msgid "Delivery"
@@ -362,67 +989,95 @@ msgstr ""
 msgid "Billing"
 msgstr ""
 
+msgid "Payment method"
+msgstr ""
+
 msgid "Add comment"
-msgstr "コメントを追加する"
-
-msgid "Place Order"
-msgstr "注文する"
-
-msgid "There are errors"
-msgstr "サーバエラー"
-
-msgid "Choose Shipping Method"
 msgstr ""
-
-msgid "Choose Payment Method"
-msgstr ""
-
-msgid "Errors"
-msgstr "エラー"
-
-msgid "Ordering for a company"
-msgstr "会社のために注文"
 
 msgid "Other information"
-msgstr "その他の情報"
-
-msgid "Place the order"
-msgstr "注文する"
-
-msgid "Bad Request"
 msgstr ""
 
-msgid "Unfortunately the server couldn't process your request."
-msgstr "残念ながら、サーバがリクエストを処理できませんでした。"
-
-msgid "Back to Homepage"
-msgstr "ホームページに戻る"
-
-msgid "Permission Denied"
+msgid "Place Order"
 msgstr ""
 
-msgid "Unfortunately you didn't have permission to display this page."
-msgstr "残念ながら、あなたはこのページを表示する権限がありませんでした。"
+msgid "Previous"
+msgstr ""
 
-msgid "Page not Found"
-msgstr "ページが見つかりません"
+msgid "Next"
+msgstr ""
 
-msgid "Unfortunately the page you were looking for does not exist."
-msgstr "残念ながらお探しのページは見つかりません。"
+#, python-format
+msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
+msgstr ""
 
-msgid "Internal Server Error"
-msgstr "内部サーバーエラー"
+msgid "Change visibility limit to"
+msgstr ""
+
+msgid "show only visible products and categories"
+msgstr ""
+
+msgid "show all products and categories"
+msgstr ""
+
+msgid "Change customer to person contact mode"
+msgstr ""
+
+msgid "Change customer to company contact mode"
+msgstr ""
+
+msgid "Change customer mode to guest"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Maintenance"
+msgstr ""
+
+msgid "Live"
+msgstr ""
+
+msgid "Customer mode"
+msgstr ""
+
+msgid "GUEST"
+msgstr ""
+
+msgid "COMPANY CONTACT"
+msgstr ""
+
+msgid "PERSON CONTACT"
+msgstr ""
+
+msgid "Toggle navigation"
+msgstr ""
+
+#, python-brace-format
+msgid "Edit '{object_title}' in administration page"
+msgstr ""
+
+#, python-brace-format
+msgid "Edit {object_name} in Admin"
+msgstr ""
+
+msgid "Shop Administration"
+msgstr ""
 
 msgid ""
-"Unfortunately an internal server error occurred. Try refreshing the page or "
-"try again later."
+"There were errors on submitted form fields. Please check them and try again."
 msgstr ""
 
-msgid "Categories"
-msgstr "カテゴリー"
+#, python-format
+msgid "By <strong>%(supplier_name)s</strong>"
+msgstr ""
+
+#, python-brace-format
+msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
+msgstr ""
 
 msgid "Edit account details"
-msgstr "アカウント詳細の編集"
+msgstr ""
 
 msgid "Edit company details"
 msgstr ""
@@ -440,86 +1095,49 @@ msgid "Admin panel"
 msgstr ""
 
 msgid "Log out"
-msgstr "ログアウト"
-
-msgid "Log in"
-msgstr "ログイン"
-
-msgid "Username or email address"
-msgstr "ユーザーネーム又はEメールアドレス"
-
-msgid "Password"
-msgstr "パスワード"
-
-msgid "Forgot your password?"
-msgstr "パスワードをお忘れですか？"
+msgstr ""
 
 msgid "New user? Register here!"
 msgstr ""
 
-msgid "Menu"
-msgstr "メニュー"
-
-msgid "Products"
-msgstr "商品"
-
-#, python-format
-msgid "Welcome to %(shop_name)s!"
+msgid "Cart"
 msgstr ""
 
-msgid "Preview"
-msgstr "プレビュー"
+msgid "Items"
+msgstr ""
+
+msgid "View cart"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Products"
+msgstr ""
 
 msgid "Files"
-msgstr "ファイル"
+msgstr ""
+
+msgid "No method selected"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Unit Price"
+msgstr ""
+
+msgid "excl. tax"
+msgstr ""
 
 msgid "Products ordered"
-msgstr "商品は注文されました"
+msgstr ""
 
 msgid "Tax breakdown"
 msgstr ""
 
-msgid "Payment"
-msgstr "お支払い"
-
-msgid "Company"
-msgstr "会社"
-
-msgid "Previous"
-msgstr "前"
-
-msgid "Next"
-msgstr "次"
-
-msgid "Maintenance mode"
-msgstr ""
-
-msgid "Shop is currently down for maintenance."
-msgstr ""
-
-msgid "Thank you for your order!"
-msgstr "ご注文ありがとうございます！"
-
-msgid ""
-"Your order has been received. You can see the details of your order below."
-msgstr ""
-
-msgid "User account activation"
-msgstr "ユーザーアカウントのアクティブ化"
-
-msgid ""
-"If you want to be able to see your order history, please create a password "
-"for your account: "
-msgstr ""
-
-msgid "Send"
-msgstr "送る"
-
-msgid "Tax"
-msgstr "税"
-
 msgid "Tax percentage"
-msgstr "税の割合"
+msgstr ""
 
 msgid "Based on amount"
 msgstr ""
@@ -528,113 +1146,199 @@ msgid "Amount of tax"
 msgstr ""
 
 msgid "Total including tax"
-msgstr "合計税込価格"
+msgstr ""
 
-msgid "Payment canceled"
-msgstr "お支払いはキャンセルされました"
+msgid "Company"
+msgstr ""
 
-msgid "You have canceled payment"
-msgstr "お支払いをキャンセルしました"
+msgid "Tax number"
+msgstr "税番号"
 
-msgid "Retry payment"
-msgstr "支払いを再試行"
+msgid "Preview"
+msgstr ""
 
-msgid "SKU"
-msgstr "最小管理単位"
-
-msgid "Barcode"
-msgstr "バーコード"
-
-msgid "Manufacturer"
-msgstr "メーカー"
-
-msgid "Package Size"
-msgstr "パッケージの寸法"
-
-msgid "Width"
-msgstr "幅"
-
-msgid "Height"
-msgstr "高さ"
-
-msgid "Depth"
-msgstr "奥行き"
-
-msgid "Net Weight"
-msgstr "正味重量"
-
-msgid "Gross Weight"
-msgstr "総重量"
-
-msgid "External link"
-msgstr "外部リンク"
-
-msgid "Add to cart"
-msgstr "カートに入れる"
-
-msgid "Product is not orderable."
-msgstr "商品は注文できません。"
-
-msgid "Select"
-msgstr "選ぶ"
-
-msgid "Select product"
-msgstr "商品を選ぶ"
-
-msgid "Combination not available"
-msgstr "組み合わせはできません"
-
-msgid "Show Grid/List"
-msgstr "グリッド/リストを表示する"
-
-msgid "Grid/list view"
-msgstr "グリッド/リストビュー"
+msgid "Also available in"
+msgstr ""
 
 #, python-format
 msgid "Save %(discount_percent)s"
 msgstr ""
 
 msgid "Product Information"
-msgstr "商品情報"
-
-msgid "Description"
-msgstr "記述"
-
-msgid "Attributes"
-msgstr "属性"
+msgstr ""
 
 msgid "Includes these products"
-msgstr "これらの商品が含まれています"
+msgstr ""
 
 msgid "No product description available"
-msgstr "商品の説明はありません"
+msgstr ""
 
-msgid "Also available in"
+msgid "Barcode"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Package Size"
+msgstr ""
+
+msgid "Available Until"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Depth"
+msgstr ""
+
+msgid "Net Weight"
+msgstr ""
+
+msgid "Gross Weight"
+msgstr ""
+
+msgid "External link"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Select product"
+msgstr ""
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
+
+msgid "Add to cart"
+msgstr ""
+
+#, python-brace-format
+msgid "Available until: {date}"
+msgstr ""
+
+msgid "Maintenance mode"
+msgstr ""
+
+msgid "Shop is currently down for maintenance."
+msgstr ""
+
+msgid "Thank you for your order!"
+msgstr ""
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr ""
+
+msgid "User account activation"
+msgstr ""
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Payment canceled"
+msgstr ""
+
+msgid "You have canceled payment"
+msgstr ""
+
+msgid "Retry payment"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Combination not available"
 msgstr ""
 
 msgid "Open product page"
-msgstr "商品ページを開ける"
-
-msgid "Newest products"
-msgstr "最新の商品"
-
-msgid "Show Frontpage Welcome Text"
 msgstr ""
 
-msgid "This product is not available in this shop."
+msgid "Hide prices"
 msgstr ""
 
-msgid "Name - A-Z"
+msgid "Set shop in catalog mode"
 msgstr ""
 
-msgid "Name - Z-A"
+msgid "Show supplier info"
 msgstr ""
 
-msgid "Price - Low to High"
+msgid ""
+"Show supplier name in product-box, product-detail, basket- and order-lines"
 msgstr ""
 
-msgid "Price - High to Low"
+msgid "Show Product Details"
 msgstr ""
 
-msgid "Sort"
+msgid ""
+"If you enable this, extra information will be shown on product page in "
+"frontend."
+msgstr ""
+
+msgid "Show Variations as Buttons"
+msgstr ""
+
+msgid ""
+"If you enable this, the variations will be shown as buttons instead of "
+"dropdowns."
+msgstr ""
+
+msgid "Product detail extra tab title"
+msgstr ""
+
+msgid "Enter the title for the product detail extra tab."
+msgstr ""
+
+msgid "Product detail extra tab content"
+msgstr ""
+
+msgid "Enter the content for the product detail extra tab."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Product reviews"
+msgstr ""
+
+msgid "Product detail tabs"
+msgstr ""
+
+msgid "Select all tabs that should be rendered in product details."
+msgstr ""
+
+msgid "Tax number is not valid."
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+#, python-brace-format
+msgid "`{language_code}` is an invalid language code."
+msgstr ""
+
+msgid "Error! This product is not available in this shop."
+msgstr ""
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
 msgstr ""

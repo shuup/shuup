@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:37+0000\n"
-"PO-Revision-Date: 2020-10-15 13:29+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,14 +43,14 @@ msgid ""
 "Orders > Carts"
 msgstr "Ställ in hur många timmar vagnen måste vara inaktiv innan den visas i Order > Vagnar"
 
-msgid "Created on"
-msgstr "Skapad den"
+msgid "Key"
+msgstr ""
 
 msgid "Last updated on"
 msgstr "Senast uppdaterad den"
 
-msgid "Abandoned"
-msgstr "Övergiven"
+msgid "Completed"
+msgstr ""
 
 msgid "yes"
 msgstr "ja"
@@ -61,17 +61,20 @@ msgstr "nej"
 msgid "Shop"
 msgstr "Butik"
 
-msgid "Product count"
-msgstr "Antal produkter"
+msgid "Supplier"
+msgstr ""
 
 msgid "Customer"
 msgstr "Kund"
 
-msgid "Orderer"
-msgstr "Beställaren"
+msgid "Product count"
+msgstr "Antal produkter"
 
 msgid "Total"
 msgstr "Summa"
+
+msgid "Created on"
+msgstr "Skapad den"
 
 msgid "Ordered"
 msgstr "Beställd"
@@ -151,6 +154,9 @@ msgstr "Använd en sparad adress"
 msgid "Addresses"
 msgstr "Adresser"
 
+msgid "Saved addresses."
+msgstr ""
+
 msgid "Checkout as Guest"
 msgstr "Gå till kassan som gäst"
 
@@ -180,6 +186,9 @@ msgstr "Produktens tillgänglighet har ändrats. Vänliga gå över din varukort
 msgid "Confirmation"
 msgstr "Bekräftelse"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "Töm varukorg"
 
@@ -191,6 +200,9 @@ msgstr "betalnigssätt"
 
 msgid "Shipping & Payment"
 msgstr "Leverans & Betalning"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "Sortera produkter enligt namn"
@@ -423,6 +435,9 @@ msgstr "nyckel"
 msgid "shop"
 msgstr "butik"
 
+msgid "supplier"
+msgstr ""
+
 msgid "customer"
 msgstr "kund"
 
@@ -470,6 +485,9 @@ msgstr "produktantal"
 
 msgid "products"
 msgstr "produkter"
+
+msgid "class spec"
+msgstr ""
 
 msgid "stored basket"
 msgstr "lagrad korg"
@@ -536,6 +554,15 @@ msgstr "Beställningens leveransstatus"
 
 msgid "Shipment Status"
 msgstr "Leveransstatus"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "Leverans borttagen"
@@ -656,6 +683,106 @@ msgstr "Kassa konfiguration"
 msgid "Product list sorts and filters"
 msgstr "Produktlistans sorterings och filtreringsmöjligheter"
 
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "Faktureringsadress"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "Leveransadress"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "Skatt"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
 msgid "Storefront Languages"
 msgstr "Webbplatsens Språk"
 
@@ -673,6 +800,9 @@ msgstr "Du kan inte gå vidare till kassan!"
 
 msgid "Checkout"
 msgstr "Kassa"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "Logga in"
@@ -762,6 +892,10 @@ msgstr "Det gick inte att lägga till produkten i korgen."
 msgid "Remove product from basket"
 msgstr "Ta bort produkten från korgen"
 
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
+
 msgid ""
 "The following items are not currently available (or are not available in the"
 " desired quantity) and cannot be included in your order."
@@ -830,17 +964,11 @@ msgstr "rutnät/lista"
 msgid "Continue"
 msgstr "Fortsätt"
 
-msgid "Billing address"
-msgstr "Faktureringsadress"
-
 msgid "Ordering for a company?"
 msgstr "Beställning för ett företag?"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "Fyll i dessa fält om du beställer för ett företag."
-
-msgid "Shipping address"
-msgstr "Leveransadress"
 
 msgid "Ship to my billing address"
 msgstr "Leverera till faktureringsadressen"
@@ -1001,9 +1129,6 @@ msgstr "Produkt"
 msgid "Unit Price"
 msgstr "Enhetspris"
 
-msgid "Quantity"
-msgstr "Antal"
-
 msgid "excl. tax"
 msgstr "exkl. skatt"
 
@@ -1012,9 +1137,6 @@ msgstr "Beställda produkter"
 
 msgid "Tax breakdown"
 msgstr "Skattuppdelning"
-
-msgid "Tax"
-msgstr "Skatt"
 
 msgid "Tax percentage"
 msgstr "Skatteprocent"
@@ -1053,9 +1175,6 @@ msgstr "Innehåller dessa produkter"
 msgid "No product description available"
 msgstr "Ingen produktbeskrivning tillgänglig"
 
-msgid "SKU"
-msgstr "Artikelnummer"
-
 msgid "Barcode"
 msgstr "Streckkod"
 
@@ -1091,6 +1210,15 @@ msgstr "Välj"
 
 msgid "Select product"
 msgstr "Välj produkt"
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
 
 msgid "Add to cart"
 msgstr "Lägg i kundvagnen"

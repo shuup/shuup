@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-11-02 13:42+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-04-12 10:42+0000\n"
+"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -542,6 +542,9 @@ msgid ""
 " shared folder between more then one shop or it has a owner"
 msgstr "Impossible de renommer ce dossier, soit vous n'avez pas l'autorisation de le faire, soit il s'agit d'un dossier partagé entre plusieurs magasins ou il a un propriétaire"
 
+msgid "This folder is protected and cannot be deleted."
+msgstr ""
+
 msgid ""
 "Can't delete this folder, either you don't have permssion to do it or it's a"
 " shared folder between more then one shop"
@@ -608,6 +611,12 @@ msgstr "Réinitialisation du menu"
 
 msgid "Show orders"
 msgstr "Afficher les commandes"
+
+msgid "Shipments"
+msgstr "Expéditions"
+
+msgid "Show shipments"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "Commandes en suspens"
@@ -684,9 +693,6 @@ msgstr "Détails"
 
 msgid "Payments"
 msgstr "Paiements"
-
-msgid "Shipments"
-msgstr "Expéditions"
 
 msgid "Log Entries"
 msgstr "Entrées de journal"
@@ -903,6 +909,9 @@ msgstr "Impossible de créer un remboursement complet."
 msgid "Full refund created."
 msgstr "Remboursement complet créé."
 
+msgid "Tracking URL"
+msgstr ""
+
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr "Créer un envoi - %s"
@@ -927,6 +936,25 @@ msgstr "L'expédition %s a été créée."
 #, python-format
 msgid "Shipment %s has been deleted."
 msgstr "L'expédition %s a été supprimée."
+
+msgid "Shipment has been marked as sent."
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr "Code de suivi"
+
+#, python-brace-format
+msgid "Shipment {shipment_id}"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
 
 msgid "Identifier already exists."
 msgstr "L'identifiant existe déjà."
@@ -1056,38 +1084,18 @@ msgstr "Produits supprimés: %d."
 msgid "Couldn't add product %s to its own package."
 msgstr "Impossible d'ajouter le produit %s à son propre package."
 
-msgid "child"
-msgstr "enfant"
-
-msgid "Unlink"
-msgstr "Dissocier"
-
-#, python-format
-msgid "Unable to link %(product)s: %(error)s."
-msgstr "Impossible de lier %(product)s: %(error)s."
-
-msgid "variable combination"
-msgstr "combinaison variable"
-
-#, python-format
-msgid "Unnamed %s"
-msgstr "Sans nom %s"
-
 msgid "Set visible"
 msgstr "Définir visible"
 
 msgid "Set invisible"
 msgstr "Définir invisible"
 
-msgid "Export CSV"
-msgstr "Exporter au format CSV"
-
 msgid "Edit products"
 msgstr "Modifier les produits"
 
-#, python-format
-msgid "Product %s copy successfull."
-msgstr "Copie du produit %s réussie."
+#, python-brace-format
+msgid "{product_name} was successfully copied"
+msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
 msgstr "La quantité d'achat minimale a été arrondie pour correspondre à l'unité de vente."
@@ -1131,32 +1139,6 @@ msgstr "Modifier le package: %s"
 
 msgid "Package cleared."
 msgstr "Paquet effacé."
-
-msgid ""
-"Are you sure? This will unlink all children and remove all variation "
-"variables."
-msgstr "Êtes-vous sûr? Cela dissociera tous les enfants et supprimera toutes les variables de variation."
-
-msgid "Clear variation"
-msgstr "Variation claire"
-
-msgid ""
-"Are you sure? This will remove all variation variables, converting children "
-"to direct links."
-msgstr "Êtes-vous sûr? Cela supprimera toutes les variables de variation, convertissant les enfants en liens directs."
-
-msgid "Convert to simple variation"
-msgstr "Convertir en simple variation"
-
-#, python-format
-msgid "Edit Variation: %s"
-msgstr "Modifier la variante: %s"
-
-msgid "Variation cleared."
-msgstr "Variation effacée."
-
-msgid "Variation simplified."
-msgstr "Variation simplifiée."
 
 msgid "Primary Image"
 msgstr "Image principale"
@@ -1215,12 +1197,6 @@ msgstr "Parent: %s"
 msgid "Sibling: %s"
 msgstr "Frère et soeur: %s"
 
-msgid "Variations"
-msgstr "Variations"
-
-msgid "Manage Variations"
-msgstr "Gérer les variations"
-
 msgid "Packages"
 msgstr "Paquets"
 
@@ -1229,9 +1205,6 @@ msgstr "Gérer le package"
 
 msgid "Convert to Package Parent"
 msgstr "Convertir en parent de package"
-
-msgid "Convert to Variation Parent"
-msgstr "Convertir en parent de variante"
 
 msgid "Sales Dashboard"
 msgstr "Tableau de bord des ventes"
@@ -1558,12 +1531,21 @@ msgstr "Classe de taxe par défaut"
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Sélectionnez les magasins pour ce fournisseur. Gardez-le vide pour partager avec tous les magasins."
 
+msgid "Is approved for {}"
+msgstr ""
+
+msgid "Indicates whether this supplier is approved for the shop."
+msgstr ""
+
 #, python-format
 msgid "No %s module"
 msgstr "Pas de module %s"
 
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "Il n'est pas possible de gérer l'inventaire lorsqu'aucun module n'est sélectionné."
+
+msgid "{} is not in the Shops field."
+msgstr ""
 
 #, python-format
 msgid "Success! %s has been marked deleted."
@@ -1609,6 +1591,9 @@ msgstr "Ajoutez des utilisateurs pour vous aider à gérer votre boutique"
 
 msgid "New user"
 msgstr "Nouvel utilisateur"
+
+msgid "Send Reset Password Email"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -1923,12 +1908,6 @@ msgstr "Menu"
 
 msgid "Search for"
 msgstr "Rechercher"
-
-msgid "Go to dashboard"
-msgstr "Aller au tableau de bord"
-
-msgid "Go home"
-msgstr "rentrer chez soi"
 
 msgid "Hello"
 msgstr "Bonjour"
@@ -3111,6 +3090,9 @@ msgstr "Codes de suivi"
 msgid "Address Information"
 msgstr "Informations d'adresse"
 
+msgid "Picture"
+msgstr ""
+
 msgid "Text"
 msgstr "Texte"
 
@@ -3176,22 +3158,28 @@ msgstr "Remboursé"
 msgid "Create new shipment for %(supplier_name)s"
 msgstr "Créer un nouvel envoi pour %(supplier_name)s"
 
-msgid "Tracking Code"
-msgstr "Code de suivi"
-
 msgid "Created"
 msgstr "Créé"
+
+msgid "Mark as sent"
+msgstr ""
 
 msgid ""
 "Shipped shipments should not be deleted. Deletion will affect products "
 "physical stock count. Delete anyway?"
 msgstr "Les envois expédiés ne doivent pas être supprimés. La suppression affectera le décompte physique des produits. Supprimer quand même?"
 
+msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
 msgid "Line #"
 msgstr "Ligne #"
 
 msgid "Refunded Quantity"
 msgstr "Quantité remboursée"
+
+msgid " Mark as sent "
+msgstr ""
 
 msgid "Refund Amount"
 msgstr "Montant du remboursement"
@@ -3235,6 +3223,9 @@ msgstr "Sélectionnez toutes les autorisations"
 msgid "Deselect all permissions"
 msgstr "Désélectionnez toutes les autorisations"
 
+msgid "Open all permission groups"
+msgstr ""
+
 msgid "(All permissions granted)"
 msgstr "(Toutes les autorisations accordées)"
 
@@ -3256,6 +3247,9 @@ msgstr "Autorisations des fonctionnalités"
 msgid ""
 "Select the permissions to enable access to specific features of the module."
 msgstr "Sélectionnez les autorisations pour permettre l'accès à des fonctionnalités spécifiques du module."
+
+msgid "Close all permission groups"
+msgstr ""
 
 msgid "Error!"
 msgstr "Erreur!"
@@ -3392,35 +3386,6 @@ msgstr "Pour créer un package, choisissez les produits ci-dessous."
 
 msgid "Package Products"
 msgstr "Produits d'emballage"
-
-msgid "Simple Variation Children"
-msgstr "Enfants de variation simple"
-
-msgid "Variable Children"
-msgstr "Enfants variables"
-
-msgid "Combination"
-msgstr "Combinaison"
-
-msgid "Variables"
-msgstr "Variables"
-
-msgid "New template"
-msgstr "Nouveau modèle"
-
-msgid " Cancel "
-msgstr "Annuler"
-
-msgid "This product is not yet a variation."
-msgstr "Ce produit n'est pas encore une variante."
-
-msgid "To create a simple variation, choose products below."
-msgstr "Pour créer une variante simple, choisissez les produits ci-dessous."
-
-msgid ""
-"To create a variation with multiple variables, create the variables on the "
-"Variables tab and then link them to products here."
-msgstr "Pour créer une variante avec plusieurs variables, créez les variables dans l'onglet Variables, puis liez-les aux produits ici."
 
 msgid "Recent Orders"
 msgstr "Dernières commandes"
@@ -3653,6 +3618,9 @@ msgstr "Enregistrer et créer un nouveau"
 msgid "Are you sure you wish to delete %s?"
 msgstr "Êtes-vous sûr de vouloir supprimer %s?"
 
+msgid "Export as CSV file"
+msgstr ""
+
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr "Présentation de %(per_page)s de %(n_items)s %(verbose_name_plural)s"
@@ -3711,6 +3679,10 @@ msgstr "%s a été modifié."
 #, python-format
 msgid "New %s"
 msgstr "Nouveau %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Sans nom %s"
 
 #, python-format
 msgid "Only one %(model)s permitted."

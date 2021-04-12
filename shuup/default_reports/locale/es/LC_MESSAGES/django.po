@@ -1,178 +1,238 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 msgid "Filter report results by customer."
-msgstr ""
+msgstr "Filtrar los resultados del informe por cliente."
 
 msgid "Orderer"
-msgstr ""
+msgstr "Ordenador"
 
 msgid "Filter report results by the person that made the order."
+msgstr "Filtre los resultados del informe por la persona que realizó el pedido."
+
+msgid "Order Line Type"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Filter order lines by suppliers."
+msgstr ""
+
+msgid "Order status"
+msgstr ""
+
+msgid "Filter order lines by status of their order."
 msgstr ""
 
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 msgid "Taxless Total"
-msgstr ""
+msgstr "Total sin impuestos"
 
 msgid "Taxful Total"
-msgstr ""
+msgstr "Total imponible"
 
 msgid "Sort order"
-msgstr ""
+msgstr "Orden de clasificación"
 
 msgid "Year"
-msgstr ""
+msgstr "Año"
 
 msgid "Year/Month"
-msgstr ""
+msgstr "Año mes"
 
 msgid "Year/Month/Day"
-msgstr ""
+msgstr "Año mes dia"
 
 msgid "Group by"
-msgstr ""
+msgstr "Agrupar por"
 
 msgid "Order Count"
-msgstr ""
+msgstr "Recuento de pedidos"
 
 msgid "Average Sales"
-msgstr ""
+msgstr "Ventas promedio"
 
 msgid "Tax"
-msgstr ""
+msgstr "Impuesto"
 
 msgid "Filter report results by tax."
-msgstr ""
+msgstr "Filtrar los resultados del informe por impuestos."
 
 msgid "Tax Class"
-msgstr ""
+msgstr "Clase de impuestos"
 
 msgid "Filter report results by tax class."
-msgstr ""
+msgstr "Filtre los resultados del informe por clase de impuestos."
 
 msgid "Shipping Method"
-msgstr ""
+msgstr "Método de envío"
 
 msgid "Filter report results by shipping method."
-msgstr ""
+msgstr "Filtre los resultados del informe por método de envío."
 
 msgid "Carrier"
-msgstr ""
+msgstr "Portador"
 
 msgid "Filter report results by carrier."
-msgstr ""
+msgstr "Filtrar los resultados del informe por operador."
 
 msgid "Customer Sales"
-msgstr ""
+msgstr "Ventas al cliente"
 
 msgid "Orders"
-msgstr ""
+msgstr "Pedidos"
 
 msgid "New Customers"
-msgstr ""
+msgstr "nuevos clientes"
 
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 msgid "Persons"
-msgstr ""
+msgstr "Personas"
 
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 msgid "Users"
+msgstr "Usuarios"
+
+msgid "Orders Report"
 msgstr ""
 
-msgid "Product Total Sales"
+msgid "Order ref."
 msgstr ""
 
-msgid "Product"
+msgid "Order date"
 msgstr ""
 
-msgid "SKU"
+msgid "Status"
 msgstr ""
 
-msgid "Refunded Sales"
+msgid "Order line quantity"
 msgstr ""
 
-msgid "Refunded Orders"
+msgid "Payment status"
 msgstr ""
 
-msgid "Total Refunded"
-msgstr ""
-
-msgid "Sales Report"
-msgstr ""
-
-msgid "Products"
-msgstr ""
-
-msgid "Sales Per Hour"
-msgstr ""
-
-msgid "Hour"
-msgstr ""
-
-msgid "Order Amount"
-msgstr ""
-
-msgid "Total Sales"
-msgstr ""
-
-msgid "Shipping"
-msgstr ""
-
-msgid "Shipping method"
-msgstr ""
-
-msgid "Total Charged"
-msgstr ""
-
-msgid "Taxes"
-msgstr ""
-
-msgid "Rate (%)"
-msgstr ""
-
-msgid "Pre-tax Total"
-msgstr ""
-
-msgid "Total Tax Amount"
+msgid "Shipment status"
 msgstr ""
 
 msgid "Total"
+msgstr "Total"
+
+msgid "Order Line Report"
 msgstr ""
+
+msgid "Order Line SKU"
+msgstr ""
+
+msgid "Order Line Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxful Unit Price"
+msgstr ""
+
+msgid "Taxful Price"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Product Total Sales"
+msgstr "Ventas totales del producto"
+
+msgid "Product"
+msgstr "Producto"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Refunded Sales"
+msgstr "Ventas reembolsadas"
+
+msgid "Refunded Orders"
+msgstr "Pedidos reembolsados"
+
+msgid "Total Refunded"
+msgstr "Total reembolsado"
+
+msgid "Sales Report"
+msgstr "Reporte de ventas"
+
+msgid "Products"
+msgstr "Productos"
+
+msgid "Sales Per Hour"
+msgstr "Ventas por hora"
+
+msgid "Hour"
+msgstr "Hora"
+
+msgid "Order Amount"
+msgstr "Total de la orden"
+
+msgid "Total Sales"
+msgstr "Ventas totales"
+
+msgid "Shipping"
+msgstr "Envío"
+
+msgid "Shipping method"
+msgstr "Método de envío"
+
+msgid "Total Charged"
+msgstr "Total facturado"
+
+msgid "Taxes"
+msgstr "Impuestos"
+
+msgid "Rate (%)"
+msgstr "Velocidad (%)"
+
+msgid "Pre-tax Total"
+msgstr "Total antes de impuestos"
+
+msgid "Total Tax Amount"
+msgstr "Importe total de impuestos"
 
 msgid "Shop Name"
-msgstr ""
+msgstr "Nombre de tienda"
 
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 msgid "Customers"
-msgstr ""
+msgstr "Clientes"
 
 msgid "Customer Average Sale"
-msgstr ""
+msgstr "Venta promedio del cliente"

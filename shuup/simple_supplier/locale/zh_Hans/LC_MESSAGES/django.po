@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 13:55+0000\n"
-"PO-Revision-Date: 2019-03-15 06:17+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"PO-Revision-Date: 2020-06-30 02:24+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,37 +45,37 @@ msgstr "调整库存"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "为产品%(product_name)s的库存（%(supplier_name)s）添加%(delta)s%(unit_symbol)s"
+"Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
+"stock (%(supplier_name)s)."
+msgstr ""
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "从产品%(product_name)s的库存(%(supplier_name)s)中删除%(delta)s%(unit_symbol)s"
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s`"
+" stock (%(supplier_name)s)."
+msgstr ""
 
 #, python-format
-msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "产品%(product_name)s设置为%(value)s的警报限制。"
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
+msgstr ""
 
-msgid "Not allowed"
-msgstr "不允许"
+msgid "Non-POST request methods are forbidden."
+msgstr ""
 
-msgid "Error, please check submitted values and try again."
-msgstr "错误，请查看所提交的值并重试。"
+msgid "Please check submitted values and try again."
+msgstr ""
 
 #, python-format
-msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr "错误，请查看所提交的值并重试 (%(error)s)。"
+msgid "Please check submitted values and try again (%(error)s)."
+msgstr ""
 
 #, python-brace-format
-msgid "Stock management is now enabled for {product}"
-msgstr "现在启用了{product}的库存管理。"
+msgid "Stock management is now enabled for {product}."
+msgstr ""
 
 #, python-brace-format
-msgid "Stock management is now disabled for {product}"
-msgstr "库存管理现在禁用为{product}"
+msgid "Stock management is now disabled for {product}."
+msgstr ""
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
@@ -128,6 +128,12 @@ msgstr "达到警告限制"
 
 msgid "Product"
 msgstr "产品"
+
+msgid "Supplier Email"
+msgstr ""
+
+msgid "Shop Email"
+msgstr ""
 
 msgid "Fired in the last 24 hours?"
 msgstr "在过去的24小时内被解除了？"
@@ -199,8 +205,11 @@ msgid ""
 "does not have suppliers with %(module_name)s module."
 msgstr "产品<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a>没有供应商的%(module_name)s的模块。"
 
-msgid "Please set suppliers at Purchasing section."
-msgstr "请在采购部门设置供应商。"
+#, python-format
+msgid ""
+"Please go in this product's Additional tab section and add enabled Suppliers"
+" that have both %(module_name)s module and stock management enabled."
+msgstr ""
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
@@ -208,17 +217,18 @@ msgstr "没有可用%(module_name)s的供应商。"
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a "
-"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr "请为至少一个<a href=\"%(supplier_url)s\" target=\"_blank\">供应商</a>设置%(module_name)s的模块。"
+"Please set %(module_name)s module for at least one of the enabled <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the "
+"stock management for them."
+msgstr ""
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr "物理计数({sales_unit})"
+msgstr "物理计数({销售单位})"
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr "逻辑计数({sales_unit})"
+msgstr "逻辑计数({销售单位})"
 
 msgid "Value per unit"
 msgstr "单位价值"
@@ -228,7 +238,7 @@ msgstr "总价值"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr "警告限制({sales_unit})"
+msgstr "警告限制({销售单位})"
 
 msgid "No stock information available."
 msgstr "没有库存信息。"

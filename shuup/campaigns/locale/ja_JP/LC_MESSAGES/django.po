@@ -1,30 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Language-Team: Japanese (Japan) (https://www.transifex.com/shuup/teams/55306/"
-"ja_JP/)\n"
-"Language: ja_JP\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"PO-Revision-Date: 2016-06-28 10:48+0000\n"
+"Language-Team: Japanese (Japan) (https://www.transifex.com/shuup/teams/55306/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Campaigns"
-msgstr ""
-
-msgid "Catalog Campaigns"
-msgstr ""
-
-msgid "Show Catalog Campaigns"
 msgstr ""
 
 msgid "Basket Campaigns"
@@ -39,6 +31,21 @@ msgstr ""
 msgid "Show Coupons"
 msgstr ""
 
+msgid "Catalog Campaigns"
+msgstr ""
+
+msgid "Show Catalog Campaigns"
+msgstr ""
+
+msgid "Set up a sales campaign"
+msgstr ""
+
+msgid "New basket campaign"
+msgstr ""
+
+msgid "New coupon"
+msgstr ""
+
 msgid "Minimum value"
 msgstr ""
 
@@ -48,10 +55,13 @@ msgstr ""
 msgid "Leave empty for no maximum"
 msgstr ""
 
-msgid "Campaign end date can't be before start date."
+msgid "Campaign end date can't be before a start date."
 msgstr ""
 
 msgid "Define the required coupon for this campaign."
+msgstr ""
+
+msgid "Coupon"
 msgstr ""
 
 msgid "discount percentage"
@@ -60,19 +70,26 @@ msgstr ""
 msgid "The discount percentage for this campaign."
 msgstr ""
 
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+msgid "Only amount or percentage can be set, not both."
+msgstr ""
+
 msgid "Autogenerate code"
 msgstr ""
 
-msgid "Discount Code already in use."
+msgid "Discount Code is already in use."
+msgstr ""
+
+msgid "Active Basket Campaigns"
 msgstr ""
 
 msgid "Catalog Campaign"
 msgstr ""
 
 msgid "Basket Campaign"
-msgstr ""
-
-msgid "Coupon"
 msgstr ""
 
 msgid "Title"
@@ -96,16 +113,7 @@ msgstr ""
 msgid "CatalogCampaign"
 msgstr ""
 
-msgid "Used Conditions"
-msgstr ""
-
-msgid "Used filters"
-msgstr ""
-
 msgid "Create new Catalog Campaign"
-msgstr ""
-
-msgid "Discount Code"
 msgstr ""
 
 msgid "Create new Basket Campaign"
@@ -157,6 +165,14 @@ msgid ""
 "here worth of products."
 msgstr ""
 
+msgid "Undiscounted basket total value"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products which doesn't have already discounts."
+msgstr ""
+
 msgid "Basket maximum product count"
 msgstr ""
 
@@ -179,7 +195,16 @@ msgid ""
 "here worth of products."
 msgstr ""
 
+msgid "Exactly"
+msgstr ""
+
+msgid "Greater than or equal to"
+msgstr ""
+
 msgid "Products in basket"
+msgstr ""
+
+msgid "operator"
 msgstr ""
 
 msgid "quantity"
@@ -209,6 +234,54 @@ msgstr ""
 msgid "Limit the campaign to selected contacts."
 msgstr ""
 
+msgid "Category products in basket"
+msgstr ""
+
+msgid "categories"
+msgstr ""
+
+msgid "excluded categories"
+msgstr ""
+
+msgid ""
+"If the customer has even a single product in the basket from these "
+"categories this rule won't match thus the campaign cannot be applied to the "
+"basket."
+msgstr ""
+
+msgid "Limit the campaign to match the products from selected categories."
+msgstr ""
+
+msgid "Day and hour"
+msgstr ""
+
+msgid "start time"
+msgstr ""
+
+msgid "12pm is considered noon and 12am as midnight."
+msgstr ""
+
+msgid "end time"
+msgstr ""
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End time is not considered "
+"match."
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "Limit the campaign to selected days."
+msgstr ""
+
+msgid "Product Variation Child"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match only variation children of the selected product."
+msgstr ""
+
 msgid "campaign"
 msgstr ""
 
@@ -230,6 +303,12 @@ msgstr ""
 msgid "Give percentage discount."
 msgstr ""
 
+msgid "Discount amount percentage from undiscounted amount"
+msgstr ""
+
+msgid "Give percentage discount based on undiscounted product prices."
+msgstr ""
+
 msgid "Free Product(s)"
 msgstr ""
 
@@ -245,16 +324,27 @@ msgstr ""
 msgid "per line discount"
 msgstr ""
 
-msgid "Uncheck this if you want to give discount for each matched product."
+msgid "Disable this if you want to give discount for each matched product."
 msgstr ""
 
 msgid "Select discount amount and products."
 msgstr ""
 
+msgid "Discount from Category products"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid ""
+"Select discount amount and category. Please note that the discount will be "
+"given to all matching products in basket."
+msgstr ""
+
 msgid "shop"
 msgstr ""
 
-msgid "The shop where campaign is active."
+msgid "The shop where the campaign is active."
 msgstr ""
 
 msgid "name"
@@ -266,10 +356,25 @@ msgstr ""
 msgid "active"
 msgstr ""
 
+msgid ""
+"Enable this if the campaign is currently active. Please also set a start and"
+" an end date."
+msgstr ""
+
 msgid "start date and time"
 msgstr ""
 
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+
 msgid "end date and time"
+msgstr ""
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign"
+" is marked as active."
 msgstr ""
 
 msgid "created by"
@@ -287,6 +392,9 @@ msgstr ""
 msgid "Campaign"
 msgstr ""
 
+msgid "The campaign name to show in the store front."
+msgstr ""
+
 #, python-format
 msgid "Catalog Campaign: %(name)s"
 msgstr ""
@@ -294,11 +402,29 @@ msgstr ""
 msgid "basket line text"
 msgstr ""
 
-msgid "This text will be shown in basket."
+msgid "This text will be shown in a basket."
+msgstr ""
+
+msgid "coupon"
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid ""
+"When set, this campaign will match only products from the selected supplier."
+" Rules and Effects will also be restricted to include only the products of "
+"this supplier."
+msgstr ""
+
+msgid "public name"
 msgstr ""
 
 #, python-format
 msgid "Basket Campaign: %(name)s"
+msgstr ""
+
+msgid "Can't have multiple active campaigns with same code."
 msgstr ""
 
 msgid "usage limit per customer"
@@ -311,14 +437,17 @@ msgid "usage limit"
 msgstr ""
 
 msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
+"Set the absolute limit of usages for this coupon. If the limit is zero (0), "
+"coupon can't be used."
 msgstr ""
 
 msgid "is active"
 msgstr ""
 
-msgid "Cannot have two same codes active at the same time."
+msgid "The shop where the coupon is active."
+msgstr ""
+
+msgid "Can not have multiple active campaigns with the same code."
 msgstr ""
 
 msgid "Base Catalog Filter"
@@ -330,22 +459,19 @@ msgstr ""
 msgid "product Types"
 msgstr ""
 
-msgid "Limit the campaign to selected product types."
+msgid "Limit the campaign only to selected product types."
 msgstr ""
 
 msgid "Product"
 msgstr ""
 
-msgid "Limit the campaign to selected products."
+msgid "Limit the campaign only to selected products."
 msgstr ""
 
 msgid "Product Category"
 msgstr ""
 
-msgid "categories"
-msgstr ""
-
-msgid "Limit the campaign to products in selected categories."
+msgid "Limit the campaign only to products in selected categories."
 msgstr ""
 
 msgid "group"
@@ -357,7 +483,7 @@ msgstr ""
 msgid "max amount"
 msgstr ""
 
-msgid "Can not add sales limits for default contact groups"
+msgid "Can not add sales limits for default contact groups."
 msgstr ""
 
 msgid "Context Condition"
@@ -369,13 +495,52 @@ msgstr ""
 msgid "Coupon Code:"
 msgstr ""
 
+msgid "Filter report results by coupon."
+msgstr ""
+
+msgid "Coupons Usage"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Coupon code"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Taxful total"
+msgstr ""
+
+msgid "Taxful subtotal"
+msgstr ""
+
+msgid "Total discount"
+msgstr ""
+
 msgid "General Information"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Not set"
+msgstr ""
+
+msgid "No campaigns found"
+msgstr ""
+
+msgid "This section shows all the <b>active</b> campaigns this product is in."
 msgstr ""
 
 msgid "Rules"
 msgstr ""
 
 msgid "Rule type"
+msgstr ""
+
+msgid "The criteria used to determine whether this campaign is applied."
 msgstr ""
 
 msgid "Add rule"
