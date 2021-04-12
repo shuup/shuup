@@ -21,7 +21,7 @@
     "babel-preset-env": "^1.7.0",
     "less": "^3.0.4",
     "parcel-bundler": "^1.12.4",
-    "postcss-modules": "^1.1.0",
+    "postcss-modules": "^4.0.0",
     "shuup-static-build-tools": "^1.0.3"
   },
   "devDependencies": {
