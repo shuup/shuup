@@ -1,18 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 19:11+0000\n"
-"PO-Revision-Date: 2016-07-30 11:34+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
-"language/pt_BR/)\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-06-30 00:17+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,76 +22,201 @@ msgstr ""
 msgid "Shuup Frontend - Customer Information Editing"
 msgstr "Front-end do Shuup - Edição das Informações do Cliente"
 
-msgid "Will become default user email when linked"
-msgstr "Vai se tornar o e-mail de usuário padrão quando vinculado"
+msgid "Customer Information"
+msgstr ""
+
+msgid "Company Information"
+msgstr ""
+
+msgid "Edit Company Information."
+msgstr ""
+
+msgid "Address Book"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Will become default user email when linked."
+msgstr ""
 
 msgid "Given Tax Number already exists. Please contact support."
-msgstr ""
-"Número de Contribuinte fornecido já existe. Entre em contato com o suporte."
+msgstr "Número de Contribuinte fornecido já existe. Entre em contato com o suporte."
 
-msgid "Change Password"
-msgstr "Alterar Senha"
+msgid "Address Title"
+msgstr ""
+
+msgid "Address Type"
+msgstr ""
+
+msgid "Address Status"
+msgstr ""
+
+msgid "Company information was saved."
+msgstr ""
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr ""
+
+msgid "Customer Email"
+msgstr ""
 
 msgid "Home"
 msgstr ""
 
-#, fuzzy
-#| msgid "Change Password"
-msgid "Change password"
+msgid "Dashboard"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Contact Information"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Default Addresses"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Default Billing Address"
+msgstr ""
+
+msgid "No Default Billing Address set."
+msgstr ""
+
+msgid "Default Shipping Address"
+msgstr ""
+
+msgid "No Default Shipping Address set."
+msgstr ""
+
+msgid "Additional Addresses"
+msgstr ""
+
+msgid "Create new"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "You don't have any additional addresses"
+msgstr ""
+
+msgid "Change Password"
 msgstr "Alterar Senha"
 
-#, fuzzy
-#| msgid "User account information"
-msgid "Edit user account information"
-msgstr "Informações da conta de usuário"
+msgid "Change password"
+msgstr ""
 
-msgid "Save password"
-msgstr "Salvar senha"
+msgid "Basic Information"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Birth Date"
+msgstr ""
+
+msgid "Gender"
+msgstr ""
+
+msgid "Marketing Permission"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
 
 msgid "Company account information"
 msgstr "Informações da conta empresarial"
 
-msgid "Save changes"
-msgstr "Salvar alterações"
-
-msgid "Company information"
-msgstr "Informações da empresa"
+msgid ""
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr ""
 
 msgid "User account information"
 msgstr "Informações da conta de usuário"
 
-#, fuzzy
-#| msgid "Company information"
-msgid "Edit company information"
-msgstr "Informações da empresa"
-
-msgid "Link account to company"
+msgid "Not specified"
 msgstr ""
 
-msgid "User information"
-msgstr "Informações do usuário"
+msgid "Street"
+msgstr ""
+
+msgid "Postal code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Country"
+msgstr ""
 
 msgid "Billing information"
 msgstr "Informações de cobrança"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Copy to shipping information"
-msgstr "Informações de entrega"
+msgstr ""
 
 msgid "Shipping information"
 msgstr "Informações de entrega"
 
-#, fuzzy
-#| msgid "Billing information"
 msgid "Copy to billing information"
-msgstr "Informações de cobrança"
+msgstr ""
 
-msgid "Password successfully changed."
-msgstr "Senha alterada com sucesso."
+msgid "Edit user account information"
+msgstr ""
 
-msgid "Account information saved successfully."
-msgstr "Informações da conta salvas com sucesso."
+msgid "Save password"
+msgstr "Salvar senha"
 
-msgid "Company information saved successfully."
-msgstr "Informações da empresa salvas com sucesso."
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+msgid "Edit company information"
+msgstr ""
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "Company information"
+msgstr "Informações da empresa"
+
+msgid "User information"
+msgstr "Informações do usuário"
+
+msgid "Password changed."
+msgstr ""
+
+msgid "Account information was saved."
+msgstr ""
+
+msgid "Address information was saved."
+msgstr ""
+
+msgid "Cannot remove address because it doesn't exist."
+msgstr ""

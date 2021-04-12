@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 11:58+0000\n"
-"PO-Revision-Date: 2016-10-16 08:36+0000\n"
-"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"PO-Revision-Date: 2020-06-30 02:24+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,29 +45,37 @@ msgstr "Modifica disponibilità"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Aggiunti %(delta)s %(unit_symbol)s per il prodotto %(product_name)s scorte (%(supplier_name)s)"
+"Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
+"stock (%(supplier_name)s)."
+msgstr ""
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
-"(%(supplier_name)s)"
-msgstr "Rimossi %(delta)s %(unit_symbol)s per il prodotto dalle scorte di %(product_name)s (%(supplier_name)s)"
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s`"
+" stock (%(supplier_name)s)."
+msgstr ""
 
 #, python-format
-msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "La soglia limite per il prodotto %(product_name)s è impostata a %(value)s."
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
+msgstr ""
 
-msgid "Not allowed"
-msgstr "Non consentito"
+msgid "Non-POST request methods are forbidden."
+msgstr ""
 
-msgid "Error, please check submitted values and try again."
-msgstr "Errore, controllare il valore inserito e provare di nuovo."
+msgid "Please check submitted values and try again."
+msgstr ""
 
 #, python-format
-msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr "Errore, controllare il valori inseriti e provare di nuovo (%(error)s). "
+msgid "Please check submitted values and try again (%(error)s)."
+msgstr ""
+
+#, python-brace-format
+msgid "Stock management is now enabled for {product}."
+msgstr ""
+
+#, python-brace-format
+msgid "Stock management is now disabled for {product}."
+msgstr ""
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
@@ -103,6 +111,12 @@ msgstr "tipo"
 msgid "alert limit"
 msgstr "soglia limite"
 
+msgid "stock managed"
+msgstr ""
+
+msgid "Use this to override the supplier default stock behavior per product."
+msgstr ""
+
 msgid "logical count"
 msgstr "conto logico"
 
@@ -114,6 +128,58 @@ msgstr "Soglia Limite Raggiunta"
 
 msgid "Product"
 msgstr "Prodotto"
+
+msgid "Supplier Email"
+msgstr ""
+
+msgid "Shop Email"
+msgstr ""
+
+msgid "Fired in the last 24 hours?"
+msgstr ""
+
+msgid ""
+"This will be True if this event was already dispatched in the last 24 hours "
+"for the same product and supplier. This is useful to prevent sending "
+"identical notifications in a short period of time."
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid "Send email to whom?"
+msgstr ""
+
+msgid "Do not send the same email within 24 hours."
+msgstr ""
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr ""
+
+msgid "Send Stock Limit Alert Email"
+msgstr ""
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr ""
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr ""
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr ""
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from {{ supplier }} has a low stock."
+msgstr ""
 
 msgid "Add stock"
 msgstr "Aggiungi scorte"
@@ -127,23 +193,23 @@ msgstr "Gli <a href=\"%(notify_url)s\" target=\"_blank\">script di notifica</a> 
 msgid "Change alert limit"
 msgstr "Cambia soglia limite"
 
+msgid "Disable stock management"
+msgstr ""
+
+msgid "Enable stock management"
+msgstr ""
+
 #, python-format
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "does not have suppliers with %(module_name)s module."
 msgstr "Il prodotto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> non ha fornitori dal modulo %(module_name)s."
 
-msgid "Please set suppliers at Purchasing section."
-msgstr "Prego, impostare dei fornitori nella sezione Acquisti."
-
 #, python-format
 msgid ""
-"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
-"is not stocked."
-msgstr "Il prodotto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> non è gestito dal magazzino."
-
-msgid "Please set product stock behavior at Additional Details section."
-msgstr "Configurare il comportamento di assortimento nella sezione Dettagli Aggiuntivi."
+"Please go in this product's Additional tab section and add enabled Suppliers"
+" that have both %(module_name)s module and stock management enabled."
+msgstr ""
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
@@ -151,29 +217,28 @@ msgstr "Nessun fornitore disponibile per %(module_name)s."
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the <a "
-"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr "Configurare il modulo %(module_name)s per alemno uno dei <a href=\"%(supplier_url)s\" target=\"_blank\">Fornitori</a>."
+"Please set %(module_name)s module for at least one of the enabled <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the "
+"stock management for them."
+msgstr ""
 
-#, python-format
-msgid "Physical count: %(count)s %(sales_unit)s"
-msgstr "Conteggio fisico: %(count)s %(sales_unit)s"
+#, python-brace-format
+msgid "Physical count ({sales_unit})"
+msgstr ""
 
-#, python-format
-msgid "Logical count: %(count)s %(sales_unit)s"
-msgstr "Conteggio Logico: %(count)s %(sales_unit)s"
+#, python-brace-format
+msgid "Logical count ({sales_unit})"
+msgstr ""
 
-#, python-format
-msgid "Value per unit: %(value)s"
-msgstr "Valore per unità: %(value)s"
+msgid "Value per unit"
+msgstr ""
 
-#, python-format
-msgid "Total value: %(value)s"
-msgstr "Valore totale: %(value)s"
+msgid "Total value"
+msgstr ""
 
-#, python-format
-msgid "Alert limit: %(limit)s"
-msgstr "Soglia limite: %(limit)s"
+#, python-brace-format
+msgid "Alert limit ({sales_unit})"
+msgstr ""
 
 msgid "No stock information available."
 msgstr "Nessuna informazione di magazzino disponibile."

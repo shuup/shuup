@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-25 12:09+0000\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -30,49 +30,39 @@ msgstr "进口模式"
 msgid "Importing language"
 msgstr "进口语言"
 
-msgid "The language of the data you would like to import."
-msgstr "要导入的数据的语言。"
-
-msgid "Shop"
-msgstr "商店"
-
-msgid "Select a shop you want import into"
-msgstr "选择要导入的商店"
+msgid "The language of the data you want to import."
+msgstr ""
 
 msgid "Importer"
 msgstr "进口商"
 
-msgid "Select a importer type matching the data you would like to import"
-msgstr "选择与要导入的数据匹配的导入程序类型。"
+msgid "Select a importer type matching the data you want to import"
+msgstr ""
 
 msgid "File"
 msgstr "文件"
 
 #, python-format
-msgid "%s is not a file"
-msgstr "%s不是文件"
+msgid "%s is not a file."
+msgstr ""
 
-msgid "File missing."
-msgstr "文件丢失"
+msgid "File is missing."
+msgstr ""
 
 msgid "Failed to import the file."
 msgstr "导入文件失败。"
 
-#, python-format
-msgid "Failed while preparing the file: %s."
-msgstr "准备文件时失败：%s。"
+msgid "Invalid parameters."
+msgstr ""
 
-msgid "Invalid parameters"
-msgstr "无效参数"
+msgid "Invalid importer."
+msgstr ""
 
-msgid "Invalid importer"
-msgstr "无效进口商"
+msgid "Invalid file name."
+msgstr ""
 
-msgid "Invalid file name"
-msgstr "无效文件名"
-
-msgid "File not found"
-msgstr "找不到文件"
+msgid "File was not found."
+msgstr ""
 
 msgid "Import"
 msgstr "进口"
@@ -86,8 +76,8 @@ msgid ""
 msgstr "忽略行(对象已经存在(%(object_name)s具有id：%(object_id)s)。"
 
 #, python-format
-msgid "Error setting value for field %(field_name)s. (%(exception)s)"
-msgstr "字段%(field_name)s的设置值错误。(%(exception)s)"
+msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
+msgstr ""
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
@@ -99,6 +89,12 @@ msgstr "行导入失败(%s)。"
 
 msgid "Example files"
 msgstr "示例文件"
+
+msgid ""
+"If there is a 'Ignore' column in the example file you are using,\n"
+"                    make sure to leave the ignore column empty for all your rows,\n"
+"                    otherwise the rows won't be imported."
+msgstr ""
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr "此导入程序提供示例文件。点击下面下载："
@@ -236,8 +232,8 @@ msgid "Import errors"
 msgstr "导入错误"
 
 #, python-format
-msgid "Cannot import more than %s rows from one file."
-msgstr "不能从一个文件导入多个%s行。"
+msgid "Can't import more than %s rows from one file."
+msgstr ""
 
 msgid "Allow create and update"
 msgstr "允许创建和更新"

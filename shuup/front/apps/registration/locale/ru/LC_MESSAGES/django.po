@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2018-06-28 17:30+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-06-30 02:16+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,11 +39,17 @@ msgstr "Адрес активации"
 msgid "Is User Active"
 msgstr "Активен ли пользователь"
 
+msgid "Account Reactivation"
+msgstr ""
+
 msgid "Company Registration Received"
 msgstr "Регистрация компании прошла успешно"
 
 msgid "Company Approved"
 msgstr "Компания одобрена"
+
+msgid "Account Activation"
+msgstr ""
 
 msgid "Company has been activated."
 msgstr "Компания должна быть активирована."
@@ -62,6 +68,20 @@ msgstr "Этот скрипт отправит электронное сообщ
 msgid "{{ order.shop }} - Welcome!"
 msgstr "Добро пожаловать {{ order.shop }}!"
 
+msgid "Send account reactivation email"
+msgstr ""
+
+msgid "Send email when a user account gets reactivated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr ""
+
+msgid "{{ customer.username }} is now active again!"
+msgstr ""
+
 msgid "Send Company Registration Received Email"
 msgstr "Выслать электронное письмо о данных регистрации"
 
@@ -78,6 +98,20 @@ msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a company is activated."
 msgstr "Этот скрипт отправит электронное письмо пользователю или получателю, электронное письмо сконфигурировано и отправиться сразу после активации компании."
+
+msgid "Send account activation email"
+msgstr ""
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr ""
+
+msgid "{{ customer.username }} is now active!"
+msgstr ""
 
 msgid "Account activation"
 msgstr "Активация аккаунта"
@@ -118,8 +152,8 @@ msgstr "Регистрация"
 msgid "Register as a company."
 msgstr "Зарегистрироваться как компания"
 
-msgid "Activation successful!"
-msgstr "Активация завершена успешно!"
+msgid "Activation successful"
+msgstr ""
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "

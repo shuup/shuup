@@ -12,7 +12,7 @@
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2016,2018,2020
-# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2020-09-29 08:47+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2020-11-09 17:10+0000\n"
+"PO-Revision-Date: 2020-11-10 17:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -126,6 +126,12 @@ msgid ""
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
 msgstr "Määritä käytettävissä oleva päivämäärä rajoittaaksesi sivun saatavuuden vain tiettyyn päivämäärään ja aikaan. Tästä on hyötyä myyntikampanjoita kuvaaville sivuille tai muille aikaherkille sivuille."
+
+msgid "Available for permission groups"
+msgstr ""
+
+msgid "Select the permission groups that can have access to this page."
+msgstr ""
 
 msgid "created by"
 msgstr "luoja"

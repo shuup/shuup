@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:37+0000\n"
-"PO-Revision-Date: 2020-11-02 13:42+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,14 +41,14 @@ msgid ""
 "Orders > Carts"
 msgstr "Définissez le nombre d'heures pendant lesquelles le panier doit être inactif avant d'être affiché dans Commandes&gt; Chariots"
 
-msgid "Created on"
-msgstr "Créé sur"
+msgid "Key"
+msgstr ""
 
 msgid "Last updated on"
 msgstr "Dernière mise à jour le"
 
-msgid "Abandoned"
-msgstr "Abandonné"
+msgid "Completed"
+msgstr ""
 
 msgid "yes"
 msgstr "Oui"
@@ -59,17 +59,20 @@ msgstr "non"
 msgid "Shop"
 msgstr "Boutique"
 
-msgid "Product count"
-msgstr "Nombre de produits"
+msgid "Supplier"
+msgstr ""
 
 msgid "Customer"
 msgstr "Client"
 
-msgid "Orderer"
-msgstr "Client"
+msgid "Product count"
+msgstr "Nombre de produits"
 
 msgid "Total"
 msgstr "Total"
+
+msgid "Created on"
+msgstr "Créé sur"
 
 msgid "Ordered"
 msgstr "Commandé"
@@ -149,6 +152,9 @@ msgstr "Utiliser une adresse enregistrée"
 msgid "Addresses"
 msgstr "Adresses"
 
+msgid "Saved addresses."
+msgstr ""
+
 msgid "Checkout as Guest"
 msgstr "Commander en tant qu'invité"
 
@@ -178,6 +184,9 @@ msgstr "Il y a eu un changement dans la disponibilité des produits. Veuillez re
 msgid "Confirmation"
 msgstr "Confirmation"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "Panier vide"
 
@@ -189,6 +198,9 @@ msgstr "mode de paiement"
 
 msgid "Shipping & Payment"
 msgstr "Livraison et paiement"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "Trier les produits par nom"
@@ -421,6 +433,9 @@ msgstr "clé"
 msgid "shop"
 msgstr "boutique"
 
+msgid "supplier"
+msgstr ""
+
 msgid "customer"
 msgstr "client"
 
@@ -468,6 +483,9 @@ msgstr "product_count"
 
 msgid "products"
 msgstr "des produits"
+
+msgid "class spec"
+msgstr ""
 
 msgid "stored basket"
 msgstr "panier stocké"
@@ -534,6 +552,15 @@ msgstr "Statut d'expédition de la commande"
 
 msgid "Shipment Status"
 msgstr "Expédition statut"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "Expédition supprimée"
@@ -654,6 +681,106 @@ msgstr "Configuration de la caisse"
 msgid "Product list sorts and filters"
 msgstr "Liste de produits tris et filtres"
 
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "Adresse de facturation"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "Adresse de livraison"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "Quantité"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "Impôt"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
 msgid "Storefront Languages"
 msgstr "Langues de la vitrine"
 
@@ -671,6 +798,9 @@ msgstr "Vous ne pouvez pas passer à la caisse!"
 
 msgid "Checkout"
 msgstr "Check-out"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "S'identifier"
@@ -760,6 +890,10 @@ msgstr "L'ajout du produit au panier a échoué."
 msgid "Remove product from basket"
 msgstr "Retirer le produit du panier"
 
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
+
 msgid ""
 "The following items are not currently available (or are not available in the"
 " desired quantity) and cannot be included in your order."
@@ -828,17 +962,11 @@ msgstr "Vue grille / liste"
 msgid "Continue"
 msgstr "Continuer"
 
-msgid "Billing address"
-msgstr "Adresse de facturation"
-
 msgid "Ordering for a company?"
 msgstr "Vous commandez pour une entreprise?"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "Veuillez remplir ces champs si vous commandez pour une entreprise."
-
-msgid "Shipping address"
-msgstr "Adresse de livraison"
 
 msgid "Ship to my billing address"
 msgstr "Envoyer à mon adresse de facturation"
@@ -999,9 +1127,6 @@ msgstr "Produit"
 msgid "Unit Price"
 msgstr "Prix unitaire"
 
-msgid "Quantity"
-msgstr "Quantité"
-
 msgid "excl. tax"
 msgstr "excl. impôt"
 
@@ -1010,9 +1135,6 @@ msgstr "Produits commandés"
 
 msgid "Tax breakdown"
 msgstr "Ventilation fiscale"
-
-msgid "Tax"
-msgstr "Impôt"
 
 msgid "Tax percentage"
 msgstr "Pourcentage de taxe"
@@ -1051,9 +1173,6 @@ msgstr "Comprend ces produits"
 msgid "No product description available"
 msgstr "Aucune description de produit disponible"
 
-msgid "SKU"
-msgstr "SKU"
-
 msgid "Barcode"
 msgstr "code à barre"
 
@@ -1089,6 +1208,15 @@ msgstr "Sélectionner"
 
 msgid "Select product"
 msgstr "Sélectionner un produit"
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
 
 msgid "Add to cart"
 msgstr "Ajouter au chariot"

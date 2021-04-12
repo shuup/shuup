@@ -29,9 +29,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:37+0000\n"
-"PO-Revision-Date: 2020-10-15 13:39+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,14 +62,14 @@ msgid ""
 "Orders > Carts"
 msgstr "Määritä, kuinka monta tuntia ostokorin on oltava käyttämättä, ennen kuin se siirtyy 'Tilaukset > Ostoskorit'-osiossa."
 
-msgid "Created on"
-msgstr "Luotu"
+msgid "Key"
+msgstr ""
 
 msgid "Last updated on"
 msgstr "Viimeksi päivitetty"
 
-msgid "Abandoned"
-msgstr "Hylätty"
+msgid "Completed"
+msgstr ""
 
 msgid "yes"
 msgstr "kyllä"
@@ -80,17 +80,20 @@ msgstr "ei"
 msgid "Shop"
 msgstr "Kauppa"
 
-msgid "Product count"
-msgstr "Tuotteiden määrä"
+msgid "Supplier"
+msgstr ""
 
 msgid "Customer"
 msgstr "Asiakas"
 
-msgid "Orderer"
-msgstr "Tilaaja"
+msgid "Product count"
+msgstr "Tuotteiden määrä"
 
 msgid "Total"
 msgstr "Yhteensä"
+
+msgid "Created on"
+msgstr "Luotu"
 
 msgid "Ordered"
 msgstr "Tilattu"
@@ -170,6 +173,9 @@ msgstr "Käytä tallennettua osoitetta"
 msgid "Addresses"
 msgstr "Osoitteet"
 
+msgid "Saved addresses."
+msgstr ""
+
 msgid "Checkout as Guest"
 msgstr "Tilaa vieraana"
 
@@ -199,6 +205,9 @@ msgstr "Tuotteen saatavuus on muuttunut. Ole hyvä ja tarkista ostoskori ennen t
 msgid "Confirmation"
 msgstr "Vahvistus"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "Tyhjä ostoskori"
 
@@ -210,6 +219,9 @@ msgstr "maksutapa"
 
 msgid "Shipping & Payment"
 msgstr "Toimitukset & Maksaminen"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "Järjestä tuotteet nimen mukaan"
@@ -442,6 +454,9 @@ msgstr "avain"
 msgid "shop"
 msgstr "kauppa"
 
+msgid "supplier"
+msgstr ""
+
 msgid "customer"
 msgstr "asiakas"
 
@@ -489,6 +504,9 @@ msgstr "tuotteiden_määrä"
 
 msgid "products"
 msgstr "tuotteet"
+
+msgid "class spec"
+msgstr ""
 
 msgid "stored basket"
 msgstr "tallennettu kori"
@@ -555,6 +573,15 @@ msgstr "Tilauksen toimituksen tila"
 
 msgid "Shipment Status"
 msgstr "Toimituksen tila"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "Toimitus poistettu"
@@ -675,6 +702,106 @@ msgstr "Kassan asetukset"
 msgid "Product list sorts and filters"
 msgstr "Tuotelistojen järjestäminen ja suodatus"
 
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "Laskutusosoite"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "Toimitusosoite"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "Määrä"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
+
 msgid "Storefront Languages"
 msgstr "Kaupan kielet"
 
@@ -692,6 +819,9 @@ msgstr "Et voi siirtyä kassalle!"
 
 msgid "Checkout"
 msgstr "Kassa"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "Kirjaudu sisään"
@@ -781,6 +911,10 @@ msgstr "Tuotteen lisääminen koriin epäonnistui."
 msgid "Remove product from basket"
 msgstr "Poista tuote ostoskorista"
 
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
+
 msgid ""
 "The following items are not currently available (or are not available in the"
 " desired quantity) and cannot be included in your order."
@@ -849,17 +983,11 @@ msgstr "Ruudukko-/listanäkymä"
 msgid "Continue"
 msgstr "Jatka"
 
-msgid "Billing address"
-msgstr "Laskutusosoite"
-
 msgid "Ordering for a company?"
 msgstr "Oletko tilaamassa yritykselle?"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "Tilataksesi yrityksen nimissä, täytä nämä kentät."
-
-msgid "Shipping address"
-msgstr "Toimitusosoite"
 
 msgid "Ship to my billing address"
 msgstr "Toimita laskutusosoitteeseeni"
@@ -1020,9 +1148,6 @@ msgstr "Tuote"
 msgid "Unit Price"
 msgstr "Yksikköhinta"
 
-msgid "Quantity"
-msgstr "Määrä"
-
 msgid "excl. tax"
 msgstr "ei sis. veroja"
 
@@ -1031,9 +1156,6 @@ msgstr "Tilatut tuotteet"
 
 msgid "Tax breakdown"
 msgstr "Veroerittely"
-
-msgid "Tax"
-msgstr "Vero"
 
 msgid "Tax percentage"
 msgstr "Veroprosentti"
@@ -1072,9 +1194,6 @@ msgstr "Sisältää nämä tuotteet"
 msgid "No product description available"
 msgstr "Tuotekuvausta ei ole saatavilla"
 
-msgid "SKU"
-msgstr "Tuotekoodi"
-
 msgid "Barcode"
 msgstr "Viivakoodi"
 
@@ -1110,6 +1229,15 @@ msgstr "Valitse"
 
 msgid "Select product"
 msgstr "Valitse tuote"
+
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
 
 msgid "Add to cart"
 msgstr "Lisää ostoskoriin"

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2016-10-22 07:41+0000\n"
-"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2020-06-29 21:36+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,9 +25,6 @@ msgstr "Tassa Predefinita Shuup"
 
 msgid "Tax Rules"
 msgstr "Regole di tassazione"
-
-msgid "Taxes"
-msgstr "Tasse"
 
 msgid "Show tax rules"
 msgstr "Mostra regole di tassazione"
@@ -71,6 +68,9 @@ msgstr "Attivato"
 msgid "enabled"
 msgstr "attivato"
 
+msgid "Enable this if this tax rule is active."
+msgstr ""
+
 msgid "tax classes"
 msgstr "classi di tassazione"
 
@@ -79,6 +79,9 @@ msgstr "Classi di tassazione degli elementi da tassare"
 
 msgid "customer tax groups"
 msgstr "Gruppi di tassazione clienti"
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr ""
 
 msgid "country codes pattern"
 msgstr "modello di codici nazione"
@@ -109,6 +112,9 @@ msgstr "Se corrispondono diverse regole, saranno applicate solo quelle con il nu
 
 msgid "tax"
 msgstr "tassa"
+
+msgid "The tax to apply when this rule is applied."
+msgstr ""
 
 msgid "Tax rule {} ({})"
 msgstr "Regola di tassazione {} ({})"

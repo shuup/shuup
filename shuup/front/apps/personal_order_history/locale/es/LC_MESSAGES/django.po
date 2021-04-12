@@ -1,126 +1,133 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 16:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Personal Order History"
-msgstr ""
+msgstr "Shuup Frontend - Historial de pedidos personales"
 
 msgid "Order history"
-msgstr ""
+msgstr "Historial de pedidos"
 
 msgid "Show all"
-msgstr ""
+msgstr "Mostrar todo"
 
 msgid "Identifier"
-msgstr ""
+msgstr "Identificador"
 
 msgid "Order date"
-msgstr ""
+msgstr "Fecha de orden"
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Total price"
-msgstr ""
+msgstr "Precio total"
 
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 msgid "You haven't made any orders yet."
-msgstr ""
+msgstr "Aún no has realizado ningún pedido."
 
 msgid "Add all products to cart"
-msgstr ""
+msgstr "Agregar todos los productos al carrito"
 
 msgid "Basic Information"
-msgstr ""
+msgstr "Información básica"
 
 msgid "Order Number"
-msgstr ""
+msgstr "Número de orden"
 
 msgid "Order Date"
-msgstr ""
+msgstr "Fecha de orden"
 
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 msgid "Ordered by"
-msgstr ""
+msgstr "Ordenado por"
 
 msgid "Creator"
-msgstr ""
+msgstr "Creador"
 
 msgid "Phone"
-msgstr ""
+msgstr "Teléfono"
 
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 msgid "Tax Number"
-msgstr ""
+msgstr "Número de impuesto"
 
 msgid "Total Price"
-msgstr ""
+msgstr "Precio total"
 
 msgid "Total Price (taxless)"
-msgstr ""
-
-msgid "Tracking codes"
-msgstr ""
+msgstr "Precio total (sin impuestos)"
 
 msgid "Order Status"
-msgstr ""
+msgstr "Estado del pedido"
 
 msgid "Payment Status"
-msgstr ""
+msgstr "Estado de pago"
 
 msgid "Shipping Status"
-msgstr ""
+msgstr "Estado del envío"
 
 msgid "Shipping Address"
+msgstr "Dirección de Envío"
+
+msgid "Shipments"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Tracking code"
 msgstr ""
 
 msgid "Billing Address"
-msgstr ""
+msgstr "Dirección de Envio"
 
 msgid "Order Contents"
-msgstr ""
+msgstr "Contenido del pedido"
 
 #, python-format
 msgid "Order %(identifier)s"
-msgstr ""
+msgstr "Solicite %(identifier)s"
 
 #, python-format
 msgid "Details of order %(identifier)s"
-msgstr ""
+msgstr "Detalles del pedido %(identifier)s"
 
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
 msgid "Dashboard"
-msgstr ""
+msgstr "Tablero"
 
 msgid "Order History"
-msgstr ""
+msgstr "Historial de pedidos"

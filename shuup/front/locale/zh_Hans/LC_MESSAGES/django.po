@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 17:12+0000\n"
-"PO-Revision-Date: 2019-03-13 06:33+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,14 +34,22 @@ msgstr "购物车"
 msgid "Show carts"
 msgstr "显示购物车"
 
-msgid "Created on"
-msgstr "创建"
+msgid "Cart Inactivity Delay (hours)"
+msgstr ""
+
+msgid ""
+"Set the number of hours the cart must be inactive before it's displayed in "
+"Orders > Carts"
+msgstr ""
+
+msgid "Key"
+msgstr ""
 
 msgid "Last updated on"
 msgstr "最后更新"
 
-msgid "Abandoned"
-msgstr "放弃"
+msgid "Completed"
+msgstr ""
 
 msgid "yes"
 msgstr "是"
@@ -52,17 +60,20 @@ msgstr "不是"
 msgid "Shop"
 msgstr "商店"
 
-msgid "Product count"
-msgstr "产品数量"
+msgid "Supplier"
+msgstr ""
 
 msgid "Customer"
 msgstr "顾客"
 
-msgid "Orderer"
-msgstr "订货人"
+msgid "Product count"
+msgstr "产品数量"
 
 msgid "Total"
 msgstr "总共"
+
+msgid "Created on"
+msgstr "创建"
 
 msgid "Ordered"
 msgstr "已订购"
@@ -119,16 +130,12 @@ msgid ""
 " that all languages should be available."
 msgstr "选择店面上应该提供的所有语言。空白意味着所有语言都应该可用。"
 
-#, python-format
-msgid "Basket loading failed: Incompatible basket (%s)"
-msgstr "购物篮加载失败：不可兼容的购物篮 (%s)"
-
 msgid "Try to remove some products from the basket and order them separately."
 msgstr "请尝试清除购物篮里的一些产品，接着单独订购这些产品。"
 
 #, python-format
-msgid "Products in basket cannot be shipped together. %s"
-msgstr "购物篮里的产品不能一起配送。%s"
+msgid "Products in basket can't be shipped together. %s"
+msgstr ""
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
@@ -145,6 +152,9 @@ msgstr "使用保存的地址"
 
 msgid "Addresses"
 msgstr "地址"
+
+msgid "Saved addresses."
+msgstr ""
 
 msgid "Checkout as Guest"
 msgstr "结账为访客"
@@ -175,6 +185,9 @@ msgstr "产品的可用性发生了变化。请检查您的购物车，并再次
 msgid "Confirmation"
 msgstr "确认"
 
+msgid "Starting to create order."
+msgstr ""
+
 msgid "Empty Basket"
 msgstr "购物篮为空"
 
@@ -186,6 +199,9 @@ msgstr "支付方式"
 
 msgid "Shipping & Payment"
 msgstr "配送 & 支付"
+
+msgid "Saved services."
+msgstr ""
 
 msgid "Sort products by name"
 msgstr "按名称分类产品"
@@ -202,8 +218,8 @@ msgstr "名称 - A-Z"
 msgid "Name - Z-A"
 msgstr "名称- Z-A"
 
-msgid "Check this to allow products to be sortable by product name."
-msgstr "检查此选项，以允许产品按产品名称进行排序。"
+msgid "Enable this to allow products to be sortable by product name."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the the filter will appear on "
@@ -223,9 +239,9 @@ msgid "Price - High to Low"
 msgstr "价格 - 由高到低"
 
 msgid ""
-"Check this to allow products to be sortable by price (from low to high and "
-"high to low)."
-msgstr "检查这个，允许产品按价格分类(从低到高，从高到低)。"
+"Enable this to allow products to be sortable by price (from low to high; "
+"from high to low)."
+msgstr ""
 
 msgid "Sort products by date created"
 msgstr "按创建日期对产品进行排序"
@@ -237,8 +253,8 @@ msgid "Date created"
 msgstr "创建日期"
 
 msgid ""
-"Check this to allow products to be sortable from newest to oldest products."
-msgstr "检查这个，使产品可以从最新到最早的产品分类。"
+"Enable this to allow products to be sortable from newest to oldest products."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the filter will appear on the "
@@ -255,8 +271,8 @@ msgid "Date created - oldest first"
 msgstr "创建日期-最早的"
 
 msgid ""
-"Check this to allow products to be sortable from oldest to newest products."
-msgstr "检查这个，使产品可以从最早的产品分类到最新的产品。"
+"Enable this to allow products to be sortable from oldest to newest products."
+msgstr ""
 
 msgid "Filter products by manufacturer"
 msgstr "制造商过滤产品"
@@ -268,9 +284,9 @@ msgid "Manufacturers"
 msgstr "制造商"
 
 msgid ""
-"Check this to allow products to be filterable by manufacturer for this "
+"Enable this to allow products to be filterable by manufacturer for this "
 "category."
-msgstr "请检查此选项，以允许制造商对此类别的产品进行过滤。"
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the manufacturer filters will "
@@ -287,9 +303,9 @@ msgid "Categories"
 msgstr "分类"
 
 msgid ""
-"Check this to allow products to be filterable by any visible product "
+"Enable this to allow products to be filterable by any visible product "
 "category. "
-msgstr "检查此选项，以允许任何可见的产品类别都可以对产品进行过滤。"
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the category list filters will"
@@ -306,9 +322,9 @@ msgid "Products per page"
 msgstr "每页产品"
 
 msgid ""
-"Check this to allow the customer to be able to select the number of products"
-" to display."
-msgstr "检查此选项，使客户能够选择要显示的产品数量。"
+"Enable this to allow the customer to be able to select the number of "
+"products to display."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the page size filter will "
@@ -322,9 +338,9 @@ msgid "Ordering for filter by variation"
 msgstr "按变化排序过滤"
 
 msgid ""
-"Check this to allow products to be filterable by their different variations."
-" For example, size or color."
-msgstr "检查这一点，使产品可以通过其不同的变化进行过滤。例如，大小或颜色。"
+"Enable this to allow products to be filterable by their different "
+"variations. For example, size or color."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the variation filters will "
@@ -341,10 +357,10 @@ msgid "Price"
 msgstr "价格"
 
 msgid ""
-"Check this to allow products to be filtered by price. Prices will be listed "
-"in groups from the price range minimum to price range maximum in increments "
-"of the configured price range step."
-msgstr "检查此选项，以允许按价格对产品进行过滤。价格将按组列出，从价格范围最低到价格范围最大，以所配置的价格范围步骤的增量为单位。"
+"Enable this to allow products to be filtered by price. Prices will be listed"
+" in groups from the price range minimum to price range maximum in increments"
+" of the configured price range step."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the price range filters will "
@@ -395,13 +411,19 @@ msgstr "供应商订购过滤器"
 msgid "Suppliers"
 msgstr "供应商"
 
-msgid "Check this to allow products to be filterable by supplier."
-msgstr "对此进行检查，允许供应商对产品进行过滤。"
+msgid "Enable this to allow products to be filterable by supplier."
+msgstr ""
 
 msgid ""
 "Use a numeric value to set the order in which the supplier filters will "
 "appear."
 msgstr "使用数字值设置供应商筛选器的出现顺序。"
+
+msgid "Allow multiselect suppliers"
+msgstr ""
+
+msgid "Filter by multiple suppliers at a time."
+msgstr ""
 
 msgid "Logged out since this account is inactive."
 msgstr "此帐户处于非活动状态时已注销。"
@@ -411,6 +433,9 @@ msgstr "键"
 
 msgid "shop"
 msgstr "商店"
+
+msgid "supplier"
+msgstr ""
 
 msgid "customer"
 msgstr "顾客"
@@ -460,11 +485,32 @@ msgstr "产品计数"
 msgid "products"
 msgstr "产品"
 
+msgid "class spec"
+msgstr ""
+
 msgid "stored basket"
 msgstr "储存购物篮"
 
 msgid "stored baskets"
 msgstr "储存购物篮"
+
+msgid "ID"
+msgstr ""
+
+msgid "Reference Number"
+msgstr ""
+
+msgid "Currency"
+msgstr ""
+
+msgid "Customer Name"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
 
 msgid "Order Received"
 msgstr "订单已接收"
@@ -487,6 +533,15 @@ msgstr "商店电话"
 msgid "Language"
 msgstr "语言"
 
+msgid "Order Status Changed"
+msgstr ""
+
+msgid "Old Status"
+msgstr ""
+
+msgid "New Status"
+msgstr ""
+
 msgid "Shipment Created"
 msgstr "配送已创建"
 
@@ -498,6 +553,15 @@ msgstr "订单配送状态"
 
 msgid "Shipment Status"
 msgstr "配送状态"
+
+msgid "Shipment Tracking Code"
+msgstr ""
+
+msgid "Shipment Tracking URL"
+msgstr ""
+
+msgid "Shipment Sent"
+msgstr ""
 
 msgid "Shipment Deleted"
 msgstr "配送已删除"
@@ -609,11 +673,114 @@ msgid ""
 "well as other informations like shipping method and payment method."
 msgstr "此脚本将在创建订单后立即向客户或任何配置好的电子邮件发送电子邮件。定单内容可以放在电子邮件正文上，也可以放在其他信息上，如运输方式和付款方式。"
 
+msgid "Cart Inactivity Delay"
+msgstr ""
+
 msgid "Checkout configuration"
 msgstr "结帐配置"
 
 msgid "Product list sorts and filters"
 msgstr "产品列表排序和筛选器"
+
+msgid "Vendor"
+msgstr ""
+
+msgid "Created Date"
+msgstr ""
+
+msgid "Updated Date"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Address Information"
+msgstr ""
+
+msgid "Billing address"
+msgstr "账单地址"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr "收货地址"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Taxless Discount Percentage"
+msgstr ""
+
+msgid "Tax"
+msgstr "税收"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Extra"
+msgstr ""
 
 msgid "Storefront Languages"
 msgstr "店面语言"
@@ -632,6 +799,9 @@ msgstr "无法前进至结账！"
 
 msgid "Checkout"
 msgstr "结账"
+
+msgid "Error! Please reload the page or move to previous step."
+msgstr ""
 
 msgid "Log in"
 msgstr "登录"
@@ -715,11 +885,15 @@ msgstr "管理界面似乎不可用，请用其他方式选择主题。"
 msgid "Product added to cart"
 msgstr "已添加该产品至购物车"
 
-msgid "There was an error adding the product to the basket"
-msgstr "添加产品至购物篮出错"
+msgid "Adding the product to the basket failed."
+msgstr ""
 
 msgid "Remove product from basket"
 msgstr "从购物篮中删除该产品"
+
+#, python-brace-format
+msgid "{prop}:"
+msgstr ""
 
 msgid ""
 "The following items are not currently available (or are not available in the"
@@ -735,8 +909,8 @@ msgstr "去结账"
 msgid "Coupons applied"
 msgstr "优惠券适用"
 
-msgid "Have a coupon code? Enter it here"
-msgstr "有优惠券代码吗？在这里输入"
+msgid "Do you have a coupon code? Enter it here. "
+msgstr ""
 
 msgid "Coupon Code"
 msgstr "优惠券代码"
@@ -756,20 +930,26 @@ msgstr "保存"
 msgid "Back to Products"
 msgstr "返回产品"
 
+msgid "Error!"
+msgstr ""
+
 msgid "Invalid coupon code."
 msgstr "无效优惠券代码"
 
-msgid "Error when removing coupon."
-msgstr "删除优惠券时出错"
+msgid "Removing a coupon failed."
+msgstr ""
 
 msgid "Coupon is not available."
 msgstr "优惠券不可用"
 
-msgid "Error when adding coupon."
-msgstr "添加优惠券时出错"
+msgid "Adding a coupon failed."
+msgstr ""
 
-msgid "Cart saved!"
-msgstr "购物车已保存"
+msgid "Success!"
+msgstr ""
+
+msgid "Cart saved."
+msgstr ""
 
 msgid "Filter Products"
 msgstr "过滤产品"
@@ -783,17 +963,11 @@ msgstr "网格/列表视图"
 msgid "Continue"
 msgstr "继续"
 
-msgid "Billing address"
-msgstr "账单地址"
-
 msgid "Ordering for a company?"
 msgstr "为公司订购？"
 
 msgid "Please fill out these fields if you are ordering for a company."
 msgstr "如果您是为公司订购，请填写这些字段。"
-
-msgid "Shipping address"
-msgstr "收货地址"
 
 msgid "Ship to my billing address"
 msgstr "发货至我的账单地址"
@@ -836,7 +1010,7 @@ msgstr "下一页"
 
 #, python-format
 msgid "Items %(start_index)d to %(end_index)d of %(count)d total"
-msgstr "项目%(start_index)d%(end_index)d %(count)d总计"
+msgstr ""
 
 msgid "Change visibility limit to"
 msgstr "将可见性限制更改为"
@@ -882,11 +1056,11 @@ msgstr "切换导航"
 
 #, python-brace-format
 msgid "Edit '{object_title}' in administration page"
-msgstr "在管理页面中编辑“{object_title}”"
+msgstr "在管理页面中编辑“{对象标题}”"
 
 #, python-brace-format
 msgid "Edit {object_name} in Admin"
-msgstr "在管理中编辑{object_name}"
+msgstr "在管理中编辑{对象名称}"
 
 msgid "Shop Administration"
 msgstr "商店管理员"
@@ -896,12 +1070,12 @@ msgid ""
 msgstr "提交表格里的字段出错，请查看并重试。"
 
 #, python-format
-msgid "By %(supplier_name)s"
-msgstr "按%(supplier_name)s"
+msgid "By <strong>%(supplier_name)s</strong>"
+msgstr ""
 
 #, python-brace-format
 msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
-msgstr "可用时间：: <span class=\"availability-date\">{date} </span></small>"
+msgstr "可用时间：: <span class=\"availability-date\">{日期} </span></small>"
 
 msgid "Edit account details"
 msgstr "账号详情编辑"
@@ -954,9 +1128,6 @@ msgstr "产品"
 msgid "Unit Price"
 msgstr "单价"
 
-msgid "Quantity"
-msgstr "数量"
-
 msgid "excl. tax"
 msgstr "不包税"
 
@@ -965,9 +1136,6 @@ msgstr "产品已订购"
 
 msgid "Tax breakdown"
 msgstr "税收明细"
-
-msgid "Tax"
-msgstr "税收"
 
 msgid "Tax percentage"
 msgstr "税率"
@@ -1006,9 +1174,6 @@ msgstr "包含这些产品"
 msgid "No product description available"
 msgstr "没有产品描述"
 
-msgid "SKU"
-msgstr "SKU"
-
 msgid "Barcode"
 msgstr "条形码"
 
@@ -1045,12 +1210,21 @@ msgstr "选择"
 msgid "Select product"
 msgstr "选择产品"
 
+msgid "One-time purchase"
+msgstr ""
+
+msgid "Subscribe"
+msgstr ""
+
+msgid "Select frequency"
+msgstr ""
+
 msgid "Add to cart"
 msgstr "添加到购物车"
 
 #, python-brace-format
 msgid "Available until: {date}"
-msgstr "可供使用直到: {date}"
+msgstr "可供使用直到: {日期}"
 
 msgid "Maintenance mode"
 msgstr "维护模式"
@@ -1094,9 +1268,6 @@ msgstr "无法合并"
 msgid "Open product page"
 msgstr "打开产品页"
 
-msgid "Newest products"
-msgstr "最新产品"
-
 msgid "Hide prices"
 msgstr "隐藏价格"
 
@@ -1114,9 +1285,17 @@ msgid "Show Product Details"
 msgstr "显示产品细节"
 
 msgid ""
-"If you check this, extra information will be shown on product page in "
+"If you enable this, extra information will be shown on product page in "
 "frontend."
-msgstr "如果您检查这一点，额外的信息将显示在产品页面的前端。"
+msgstr ""
+
+msgid "Show Variations as Buttons"
+msgstr ""
+
+msgid ""
+"If you enable this, the variations will be shown as buttons instead of "
+"dropdowns."
+msgstr ""
 
 msgid "Product detail extra tab title"
 msgstr "产品详细信息附加标签标题"
@@ -1145,8 +1324,8 @@ msgstr "产品评论"
 msgid "Product detail tabs"
 msgstr "产品详细标签"
 
-msgid "Select all tabs that should be renderd in product details."
-msgstr "选择应在产品详细信息中呈现的所有选项卡。"
+msgid "Select all tabs that should be rendered in product details."
+msgstr ""
 
 msgid "Tax number is not valid."
 msgstr "税号无效"
@@ -1155,8 +1334,12 @@ msgid "Edit"
 msgstr "编辑"
 
 #, python-brace-format
-msgid "{language_code} is an invalid language code"
-msgstr "{language_code}是无效的语言代码"
+msgid "`{language_code}` is an invalid language code."
+msgstr ""
 
-msgid "This product is not available in this shop."
-msgstr "该商店没有此产品。"
+msgid "Error! This product is not available in this shop."
+msgstr ""
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr ""

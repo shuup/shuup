@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Christian Hess <christianhess.rlz@gmail.com>, 2016
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2016,2020
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 08:56+0000\n"
-"PO-Revision-Date: 2016-07-30 12:45+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-28 11:46+0000\n"
+"Last-Translator: Christian Hess <christianhess.rlz@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -78,7 +78,22 @@ msgstr[1] "%s dias"
 msgid "%(min)s--%(max)s days"
 msgstr "%(min)s--%(max)s dias"
 
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr "Tamanho máximo do arquivo atingido (%(size)s MB)."
+
+msgid "Root"
+msgstr "Raiz"
+
+msgid "This field is required."
+msgstr "Este campo é obrigatório."
+
 msgid ""
 "Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
 "marks to negate (A-Z,!G will not match G)."
 msgstr "Valores separados por vírgula ou intervalos, p. ex. A-Z,10000-19000. Use pontos de exclamação para negar (A-Z,!G não irá casar com G)."
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr "Não foi possível criar o PDF uma vez que a biblioteca Weasyprint não está disponível. Entre em contato com o suporte."

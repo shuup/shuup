@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-13 05:45+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-04-12 10:42+0000\n"
+"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,9 +26,9 @@ msgstr "主页"
 #, python-format
 msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
-"be case-sensitive. In case of multiple accounts with same email only "
-"username can be used to login."
-msgstr "请输入正确的%(username)s和密码。 两个地方都要注意大小写。 如果多个帐户使用相同的电子邮件，则只能使用用户名登录。"
+"be case-sensitive. In case of multiple accounts with the same email, only "
+"username can be used to log in."
+msgstr ""
 
 msgid "This account is inactive."
 msgstr "这个账号未激活"
@@ -38,6 +38,9 @@ msgstr "用户名或邮箱地址"
 
 msgid "Create New"
 msgstr "新建"
+
+msgid "Select an option"
+msgstr ""
 
 msgid "Monday"
 msgstr "星期一"
@@ -90,50 +93,30 @@ msgstr "活动"
 msgid "Content"
 msgstr "内容"
 
-msgid "Elements"
-msgstr "原理"
-
-msgid "Design"
-msgstr "设计"
-
-msgid "Other"
-msgstr "其他"
-
 msgid "Reports"
 msgstr "报告"
 
 msgid "Shops"
 msgstr "商店"
 
+msgid "Addons"
+msgstr "插件"
+
 msgid "Settings"
 msgstr "设置"
 
-msgid "Payment & Shipping"
-msgstr "付款和运送"
+msgid "Logs"
+msgstr ""
 
-msgid "Currency"
-msgstr "货币"
+msgid "Messages"
+msgstr ""
 
 msgid "Attributes"
 msgstr "属性"
 
-msgid "Other settings"
-msgstr "其他设置"
-
-msgid "Addons"
-msgstr "插件"
-
-msgid "Data Transfer"
-msgstr "数据传输"
-
-msgid "Taxes"
-msgstr "税收"
-
-msgid "Permissions"
-msgstr "许可"
-
-msgid "Other Settings"
-msgstr "其他设置"
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s已被删除"
 
 msgid "Identifier"
 msgstr "标识符"
@@ -162,32 +145,32 @@ msgstr "使用在# 产品类型"
 msgid "Categories"
 msgstr "商品分类"
 
-msgid "Add a product category to organize your products"
-msgstr "添加产品类别以组织您的产品"
+msgid "Add a product category to organize your products."
+msgstr ""
 
 msgid "New category"
 msgstr "新分类"
 
-msgid "Can not use this category as parent for this shop."
-msgstr "不能用这个分类作为此商店的总类"
+msgid "Can't use this category as a parent for this shop."
+msgstr ""
 
 msgid "Primary Category"
 msgstr "主分类"
 
-msgid "Set this category as a primary for selected products."
-msgstr "将此类别设置为所选产品的主要类别"
+msgid "Set this category as a primary category for selected products."
+msgstr ""
 
 msgid "Additional Category"
 msgstr "附加类别"
 
-msgid "Add selected products to this category"
-msgstr "将所选产品添加到此类别"
+msgid "Add selected products to this category."
+msgstr ""
 
 msgid "Remove Products"
 msgstr "删除产品"
 
-msgid "Remove selected products from this category"
-msgstr "将所选产品从此类别中删除"
+msgid "Remove selected products from this category."
+msgstr ""
 
 msgid "Invalid category"
 msgstr "无效的类别"
@@ -195,10 +178,6 @@ msgstr "无效的类别"
 #, python-format
 msgid "Visibility settings copied to %d product(s)"
 msgstr "可见性设置已复制到%d个（产品）"
-
-#, python-format
-msgid "%s has been deleted."
-msgstr "%s已被删除"
 
 msgid "Image"
 msgstr "图片"
@@ -253,20 +232,20 @@ msgstr "删除"
 
 #, python-format
 msgid "%(count)s member added"
-msgid_plural "%(count)s members added"
-msgstr[0] "%(count)s添加成员"
+msgid_plural "%(count)s members added."
+msgstr[0] ""
 
 #, python-format
 msgid "%(count)s member removed"
-msgid_plural "%(count)s members removed"
-msgstr[0] "%(count)s删除成员"
+msgid_plural "%(count)s members removed."
+msgstr[0] ""
 
 msgid "Number of Members"
 msgstr "成员数量"
 
 #, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "用户%(bind_user)s已有联系信息"
+msgid "User `%(bind_user)s` already has a contact."
+msgstr ""
 
 msgid ""
 "The contact groups this contact belongs to. Contact groups are defined in "
@@ -372,14 +351,22 @@ msgstr "选项"
 msgid "Actions"
 msgstr "操作"
 
+msgid "Login as User"
+msgstr "以用户身份登录"
+
+msgid "Login as Staff User"
+msgstr ""
+
 msgid "Edit"
 msgstr "编辑"
 
-msgid "You can not deactivate a superuser."
-msgstr "无法撤销超级用户。"
+msgid "You can not deactivate a superuser. Remove superuser permission first."
+msgstr ""
 
-msgid "You can not deactivate yourself."
-msgstr "无法撤销自己。"
+msgid ""
+"You can not deactivate yourself. Use another account to deactivate the "
+"current one."
+msgstr ""
 
 #, python-format
 msgid "%(contact)s is now %(state)s."
@@ -402,6 +389,9 @@ msgstr "人"
 
 msgid "Company"
 msgstr "公司"
+
+msgid "Staff"
+msgstr "员工"
 
 msgid "Email"
 msgstr "电子邮箱"
@@ -454,14 +444,14 @@ msgstr "%d 订单"
 msgid "Mass Edit: Contacts"
 msgstr "批量编辑：联系人"
 
-msgid "Contacts changed successfully"
-msgstr "联系人已成功更改"
+msgid "Contacts were changed."
+msgstr ""
 
 msgid "Mass Edit: Contact Groups"
 msgstr "批量编辑：联系人组"
 
-msgid "Contacts Groups changed successfully"
-msgstr "联系人组已成功更改"
+msgid "Contacts Groups were changed."
+msgstr ""
 
 msgid "The contact does not have an associated user."
 msgstr "该联系方式没有相关联的用户。"
@@ -515,6 +505,9 @@ msgstr "媒体"
 msgid "Media browser"
 msgstr "媒体浏览器"
 
+msgid "Visible for all everyone in the media browser"
+msgstr ""
+
 msgid "Root"
 msgstr "根"
 
@@ -527,46 +520,102 @@ msgid "{num} files moved to {folder}."
 msgstr "{num}个文件已移至{folder}"
 
 #, python-format
-msgid "Folder %s deleted."
-msgstr "文件夹 %s 已删除"
+msgid "Folder `%s` was deleted."
+msgstr ""
 
 msgid "Browse Media"
 msgstr "浏览媒体"
 
-msgid "Can not rename shared folder."
-msgstr "无法重命名共享文件夹"
+msgid "You do not have permissions to create a subfolder here."
+msgstr ""
 
-msgid "Folder renamed."
-msgstr "文件夹已重命名。"
+msgid "Folder was renamed."
+msgstr ""
 
-msgid "Can not delete shared folder."
-msgstr "无法删除共享文件夹"
+#, python-format
+msgid "Folder can't be renamed to %s."
+msgstr ""
 
-msgid "Can not rename shared file."
-msgstr "无法重命名共享文件"
+msgid ""
+"Can't rename this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop or it has a owner"
+msgstr ""
 
-msgid "File renamed."
-msgstr "文件已重命名。"
+msgid "This folder is protected and cannot be deleted."
+msgstr ""
 
-msgid "Can not delete shared file."
-msgstr "无法删除共享文件"
+msgid ""
+"Can't delete this folder, either you don't have permssion to do it or it's a"
+" shared folder between more then one shop"
+msgstr ""
 
-msgid "File deleted."
-msgstr "文件已删除。"
+msgid "File was renamed."
+msgstr ""
 
-msgid "Can not move shared file."
-msgstr "无法移动共享文件"
+msgid "Can not rename this file."
+msgstr ""
+
+msgid "File was deleted."
+msgstr ""
+
+msgid "Can not delete this file."
+msgstr ""
+
+msgid "Can't move a shared file."
+msgstr ""
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s 已转移从 %(old)s 至 %(new)s。"
 
 #, python-format
-msgid "%(file)s uploaded to %(folder)s"
-msgstr "%(file)s 已上传至 %(folder)s"
+msgid "%(file)s uploaded to %(folder)s."
+msgstr ""
+
+msgid "You do not have permission to upload content to this folder"
+msgstr ""
+
+msgid "You don't have access to preform this action."
+msgstr ""
+
+msgid "Customize Your Admin Menu"
+msgstr ""
+
+msgid "Arrange Your Admin Menu"
+msgstr ""
+
+msgid "Customize SuperUser Admin Menu"
+msgstr ""
+
+msgid "Arrange SuperUser Admin Menu"
+msgstr ""
+
+msgid "Customize Staff Admin Menu"
+msgstr ""
+
+msgid "Arrange Staff Admin Menu"
+msgstr ""
+
+msgid "Customize Supplier Admin Menu"
+msgstr ""
+
+msgid "Arrange Supplier Admin Menu"
+msgstr ""
+
+msgid "Menu saved"
+msgstr ""
+
+msgid "Menu reset"
+msgstr ""
 
 msgid "Show orders"
 msgstr "显示订单"
+
+msgid "Shipments"
+msgstr "装运"
+
+msgid "Show shipments"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "未处理订单"
@@ -585,23 +634,27 @@ msgid "List Statuses"
 msgstr "列表状态"
 
 #, python-format
-msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "该数量 '%(quantity)s' (行 %(text)s)无效(%(error)s)"
+msgid ""
+"The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr ""
 
 #, python-format
-msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "该价格 '%(price)s' (行 %(text)s) 无效 (%(error)s)"
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)."
+msgstr ""
 
 #, python-format
-msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr "该折扣 '%(discount)s' (行 %(text)s 无效(%(error)s)"
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)."
+msgstr ""
+
+msgid "Product line does not have a supplier."
+msgstr ""
 
 msgid "Product line does not have a product set."
 msgstr "该产品线没有产品组合。"
 
 #, python-format
-msgid "Product %s does not exist."
-msgstr "该产品 %s 不存在。"
+msgid "Product `%s` does not exist."
+msgstr ""
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
@@ -628,8 +681,8 @@ msgstr "取消"
 msgid "Print Confirmation PDF(s)"
 msgstr "打印确认PDF（s）"
 
-msgid "Selecting all is not supported."
-msgstr "不支持全选"
+msgid "Error! Selecting all is not supported."
+msgstr ""
 
 msgid "Print Delivery PDF(s)"
 msgstr "打印交付PDF（s）"
@@ -639,9 +692,6 @@ msgstr "详情"
 
 msgid "Payments"
 msgstr "支付"
-
-msgid "Shipments"
-msgstr "装运"
 
 msgid "Log Entries"
 msgstr "日志条目"
@@ -676,9 +726,6 @@ msgstr "创建支付"
 msgid "Set Paid"
 msgstr "设置付费"
 
-msgid "Create Shipment"
-msgstr "创建配送"
-
 msgid "Create Refund"
 msgstr "创建退款"
 
@@ -696,8 +743,8 @@ msgid "%(field)s updated from: %(old_address)s"
 msgstr "%(field)s更新自：%(old_address)s"
 
 #, python-format
-msgid "%(field)s saved successfully."
-msgstr "%(field)s已成功保存"
+msgid "%(field)s were saved."
+msgstr ""
 
 #, python-format
 msgid "Save -- %s"
@@ -706,33 +753,40 @@ msgstr "保存 -- %s"
 msgid "Save"
 msgstr "保存"
 
-msgid "Unable to set order as completed at this point"
-msgstr "无法在该阶段设置订单为完成"
+msgid "Unable to set order as completed at this point."
+msgstr ""
+
+msgid "You can't cancel orders that are paid, shipped, or already canceled."
+msgstr ""
 
 #, python-brace-format
-msgid "Order status changed: {old_status} to {new_status}"
-msgstr "订单状态已更改：{old_status}更改为{new_status}"
+msgid "Order status changed: from `{old_status}` to `{new_status}`."
+msgstr ""
 
 msgid "Create Order"
 msgstr "创建订单"
 
 #, python-format
-msgid "Contact %s does not exist."
-msgstr "该联系人%s不存在。"
+msgid "Contact `%s` does not exist."
+msgstr ""
 
 #, python-format
-msgid "Order %(identifier)s updated."
-msgstr "订单%(identifier)s已更新"
+msgid "Product `%(product)s` is not available in the `%(shop)s` shop."
+msgstr ""
 
 #, python-format
-msgid "Order %(identifier)s created."
-msgstr "订单 %(identifier)s 已形成。"
+msgid "Order `%(identifier)s` was updated."
+msgstr ""
 
-msgid "Could not proceed with order:"
-msgstr "无法处理订单："
+#, python-format
+msgid "Order `%(identifier)s` created."
+msgstr ""
 
-msgid "Could not finalize order:"
-msgstr "无法完成订单："
+msgid "Could not proceed with the order: "
+msgstr ""
+
+msgid "Could not finalize the order: "
+msgstr ""
 
 msgid "Order"
 msgstr "订单"
@@ -759,15 +813,15 @@ msgstr "创建支付-- %s"
 msgid "Payment amount"
 msgstr "付款金额"
 
-msgid "Payment amount cannot be 0"
-msgstr "付款金额不能为0"
+msgid "Payment amount cannot be 0."
+msgstr ""
 
 #, python-format
 msgid "Payment %s created."
 msgstr "已创建付款%s"
 
-msgid "Order has already been paid"
-msgstr "订单已支付"
+msgid "Order has already been paid."
+msgstr ""
 
 msgid "Only orders which are not paid or deferred can be set as paid."
 msgstr "只有未支付或延期的订单才能设置为已付款。"
@@ -848,23 +902,21 @@ msgstr "退款已创建"
 msgid "Create Full Refund -- %s"
 msgstr "创建全部退款 -- %s"
 
-msgid "Could not create full refund."
-msgstr "不能创建全部退款"
+msgid "Could not create a full refund."
+msgstr ""
 
 msgid "Full refund created."
 msgstr "全部退款已创建"
+
+msgid "Tracking URL"
+msgstr ""
 
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr "创建配送 -- %s"
 
-msgid "Supplier"
-msgstr "供应商"
-
-msgid ""
-"Select the shipment supplier. You can only ship the suppliers assigned to "
-"order lines."
-msgstr "选择货运供应商。 您只能运送分配给订单行的供应商。"
+msgid "Create Shipment"
+msgstr "创建配送"
 
 #, python-format
 msgid "%(product_name)s (%(supplier)s)"
@@ -877,18 +929,34 @@ msgid "Shipping address is not set."
 msgstr "收货地址未设置"
 
 #, python-format
-msgid "Shipment %s created."
-msgstr "配送 %s 已创建。"
+msgid "Shipment %s was created."
+msgstr ""
 
 #, python-format
 msgid "Shipment %s has been deleted."
 msgstr "装运%s已被删除"
 
-msgid "Identifier already exists"
-msgstr "标识符已存在"
+msgid "Shipment has been marked as sent."
+msgstr ""
 
-msgid "Order Statuses"
-msgstr "订单状态"
+msgid "ID"
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr "追踪编号"
+
+#, python-brace-format
+msgid "Shipment {shipment_id}"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
+
+msgid "Identifier already exists."
+msgstr ""
 
 msgid "Public Name"
 msgstr "公用名称"
@@ -899,14 +967,14 @@ msgstr "任务"
 msgid "Default"
 msgstr "默认"
 
-msgid "Permission Groups"
-msgstr "权限组"
+msgid "Granular Permission Groups"
+msgstr ""
 
-msgid "The permission group name."
-msgstr "权限组名称"
+msgid "The Permission Group name."
+msgstr ""
 
-msgid "Set the users that belong to this permission group."
-msgstr "设置属于此权限组的用户"
+msgid "Set the users that belong to this Permission Group."
+msgstr ""
 
 msgid "Create new Permission Group"
 msgstr "创建新的权限组"
@@ -917,10 +985,23 @@ msgstr "产品类型"
 msgid "Product types"
 msgstr "产品类型"
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s 已标注为删除。"
+
 msgid ""
 "Select attributes that go with your product type. These are defined in "
 "Products Settings - Attributes."
 msgstr "选择与您的产品类型一致的属性。 这些在“产品设置 - 属性”中定义。"
+
+msgid "Delete"
+msgstr "删除"
+
+#, python-format
+msgid ""
+"Are you sure you wish to delete %s? Warrning: all related products will "
+"disappear from storefront until new value for product type is set!"
+msgstr ""
 
 msgid "Number of Attributes"
 msgstr "属性数量"
@@ -946,9 +1027,9 @@ msgid "Primary Product Image"
 msgstr "产品主图"
 
 msgid ""
-"The main product image. You can add additional images on the Product Images "
-"tab."
-msgstr "产品主图， 您可以在“产品图像”选项卡上添加其他图像。"
+"The main product image. You can add additional images in the `Product "
+"Images` tab."
+msgstr ""
 
 msgid "Select a manufacturer"
 msgstr "选择制造商"
@@ -961,8 +1042,8 @@ msgstr "鉴于值已在使用中，请使用独特的SKU并重试。"
 
 msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
-" to blank for product to be purchasable without limits"
-msgstr "产品缺货后可以购买的单位数量。 设置为空白，以便可以无限制地购买产品。"
+" to blank for product to be purchasable without limits."
+msgstr ""
 
 msgid "Select a category"
 msgstr "选择一个分类"
@@ -974,46 +1055,33 @@ msgid "Backorder maximum must be greater than or equal to 0."
 msgstr "延期交货最大值必须大于或等于0"
 
 #, python-format
-msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr "%(media)s的缩略图生成失败：%(error)s"
+msgid "Thumbnail generation of %(media)s failed: %(error)s."
+msgstr ""
 
-msgid "Use only URL or file, not both"
-msgstr "请只使用URL或文件其一"
+msgid "Use only URL or file, not both."
+msgstr ""
 
 msgid "Is primary"
 msgstr "是 主要的"
 
-msgid "Only images allowed in this field"
-msgstr "该字段只允许图像"
+msgid "Only images are allowed in this field."
+msgstr ""
 
 #, python-format
-msgid "Unable to make package %(product)s: %(error)s"
-msgstr "无法生成包裹%(product)s：%(error)s"
+msgid "Unable to make package %(product)s: %(error)s."
+msgstr ""
 
 #, python-format
-msgid "New: %d"
-msgstr "新：%d"
+msgid "New products: %d."
+msgstr ""
 
 #, python-format
-msgid "Removed: %d"
-msgstr "已删除：%d"
+msgid "Removed products: %d."
+msgstr ""
 
 #, python-format
-msgid "Couldn't add product %s to own package"
-msgstr "无法将产品%s添加到自己的包裹中"
-
-msgid "child"
-msgstr "子"
-
-msgid "Unlink"
-msgstr "断开链接"
-
-#, python-format
-msgid "Unable to link %(product)s: %(error)s"
-msgstr "无法链接%(product)s：%(error)s"
-
-msgid "variable combination"
-msgstr "变量组合"
+msgid "Couldn't add product %s to its own package."
+msgstr ""
 
 msgid "Set visible"
 msgstr "设置可见性"
@@ -1021,22 +1089,19 @@ msgstr "设置可见性"
 msgid "Set invisible"
 msgstr "设置不可见性"
 
-msgid "Export CSV"
-msgstr "导出CSV"
-
 msgid "Edit products"
 msgstr "编辑产品"
 
-#, python-format
-msgid "%s has been marked deleted."
-msgstr "%s 已标注为删除。"
+#, python-brace-format
+msgid "{product_name} was successfully copied"
+msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
 msgstr "最小购买量已经舍入与销售单位匹配。"
 
 #, python-format
-msgid "Changes to shop instance for %s saved"
-msgstr "保存 %s 商店实例更改"
+msgid "Changes to shop instance for %s saved."
+msgstr ""
 
 msgid "Product is not available."
 msgstr "没有该产品。"
@@ -1055,14 +1120,17 @@ msgstr "更改已保存。"
 msgid "Edit Media: %s"
 msgstr "媒体编辑：%s"
 
-msgid "Files added to product."
-msgstr "文件已添加到产品中"
+msgid "Changes were saved."
+msgstr ""
+
+msgid "Files added to the product."
+msgstr ""
 
 msgid "Clear package"
 msgstr "清理包裹"
 
-msgid "Are you sure? This will remove all products from package."
-msgstr "你确定吗？ 这将从包中删除所有产品。"
+msgid "Are you sure? This will remove all products from the package."
+msgstr ""
 
 #, python-format
 msgid "Edit Package: %s"
@@ -1070,32 +1138,6 @@ msgstr "编辑包裹：%s"
 
 msgid "Package cleared."
 msgstr "包裹已清理"
-
-msgid ""
-"Are you sure? This will unlink all children and remove all variation "
-"variables."
-msgstr "您确定吗？该操作将取消所有的子级链接和删除所有的变体变量。 "
-
-msgid "Clear variation"
-msgstr "清除变体"
-
-msgid ""
-"Are you sure? This will remove all variation variables, converting children "
-"to direct links."
-msgstr "您确定吗？该操作将删除所有的变体变量，转换子级产品为直接链接形式。"
-
-msgid "Convert to simple variation"
-msgstr "转换为简单变体"
-
-#, python-format
-msgid "Edit Variation: %s"
-msgstr "变体编辑：%s"
-
-msgid "Variation cleared."
-msgstr "变体已清除。"
-
-msgid "Variation simplified."
-msgstr "变体已简化。"
 
 msgid "Primary Image"
 msgstr "主图"
@@ -1115,6 +1157,12 @@ msgstr "模式"
 msgid "Filter by category name..."
 msgstr "按分类名称过滤..."
 
+msgid "Filter by supplier name..."
+msgstr ""
+
+msgid "Suppliers"
+msgstr "供应商"
+
 msgid "Additional Categories"
 msgstr "附加类别"
 
@@ -1124,14 +1172,17 @@ msgstr "可购买的"
 msgid "Mass Edit: Products"
 msgstr "批量编辑：产品"
 
-msgid "Products changed successfully"
-msgstr "产品已成功更改"
+msgid "Products changed."
+msgstr ""
 
 msgid "Manage Cross-Selling"
 msgstr "交叉销售管理"
 
 msgid "Cross-Selling"
 msgstr "交叉销售"
+
+msgid "Other"
+msgstr "其他"
 
 #, python-format
 msgid "Child: %s"
@@ -1145,12 +1196,6 @@ msgstr "父：%s"
 msgid "Sibling: %s"
 msgstr "同级： %s"
 
-msgid "Variations"
-msgstr "变体"
-
-msgid "Manage Variations"
-msgstr "管理变体"
-
 msgid "Packages"
 msgstr "包裹"
 
@@ -1159,18 +1204,6 @@ msgstr "管理包"
 
 msgid "Convert to Package Parent"
 msgstr "转换为父包"
-
-msgid "Convert to Variation Parent"
-msgstr "转换为父级变体"
-
-msgid "Save and Exit"
-msgstr "保存并退出"
-
-msgid "Save and Create New"
-msgstr "保存并创建新的"
-
-msgid "Save as a copy"
-msgstr "保存为副本"
 
 msgid "Sales Dashboard"
 msgstr "销售控制面板"
@@ -1381,17 +1414,14 @@ msgid ""
 "for reference."
 msgstr "此选项定义如何构建订单的参考号。 选项有：<br><br><b>独特</b><br>订单参考编号是系统范围内唯一的，无论商店数量多少。<br><br><b>运行</b><br>订单编号在系统范围内运行，无论商店数量多少.<br><br><b>商店运行</b><br>每个商店有自己的运行编号供参考。"
 
-msgid "Settings saved"
-msgstr "设置已保存"
+msgid "Settings saved."
+msgstr ""
 
 msgid "Reset Defaults"
 msgstr "重置默认值"
 
-msgid "Changes saved successfully"
-msgstr "更改已成功保存"
-
-msgid "No changes detected"
-msgstr "未检测到任何更改"
+msgid "No changes detected."
+msgstr ""
 
 msgid "Save system settings"
 msgstr "保存系统设置"
@@ -1421,13 +1451,13 @@ msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "因为有该商店的现有订单，此字段无法更改。"
 
+msgid "Currency"
+msgstr "货币"
+
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
 msgstr "主要商店货币。 这是销售产品时使用的货币。"
-
-msgid "Staff"
-msgstr "员工"
 
 msgid "Select staff members for this shop."
 msgstr "选择这家商店的员工。"
@@ -1476,14 +1506,14 @@ msgstr "您的商店所在的城市"
 msgid "The country in which your shop is located."
 msgstr "您的商店所在的国家/地区"
 
-msgid "There are still some pending actions to complete!"
-msgstr "还有一些待完成的操作要完成！"
+msgid "There are still some pending actions to complete."
+msgstr ""
 
-msgid "Your store is now live!"
-msgstr "你的商店现在已入驻！"
+msgid "Your store is now live."
+msgstr ""
 
-msgid "Shop {} is now active!"
-msgstr "商店{}现已激活！"
+msgid "Shop {} is now active."
+msgstr ""
 
 msgid "Domain"
 msgstr "域名"
@@ -1497,11 +1527,14 @@ msgstr "添加地址以便获得付款"
 msgid "Default Tax Class"
 msgstr "默认税级"
 
-msgid "Suppliers"
-msgstr "供应商"
-
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "选择此制造商的商店。 保持公开与所有商店分享。"
+
+msgid "Is approved for {}"
+msgstr ""
+
+msgid "Indicates whether this supplier is approved for the shop."
+msgstr ""
 
 #, python-format
 msgid "No %s module"
@@ -1509,6 +1542,13 @@ msgstr "没有 %s 模块"
 
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "未选择模块时无法管理库存"
+
+msgid "{} is not in the Shops field."
+msgstr ""
+
+#, python-format
+msgid "Success! %s has been marked deleted."
+msgstr ""
 
 msgid "Module"
 msgstr "模块"
@@ -1530,6 +1570,9 @@ msgstr "统计数据将在24小时后定期发送至Shuup.com。 点击这里查
 msgid "Opt-in for telemetry"
 msgstr "选择接入遥测"
 
+msgid "Taxes"
+msgstr "税收"
+
 msgid "Customer Tax Groups"
 msgstr "顾客税组"
 
@@ -1548,6 +1591,9 @@ msgstr "添加一些用户来帮助管理您的商店"
 msgid "New user"
 msgstr "新用户"
 
+msgid "Send Reset Password Email"
+msgstr ""
+
 #, python-format
 msgid ""
 "\n"
@@ -1556,9 +1602,9 @@ msgid ""
 "    You've been added as an administrator to %(shop_url)s. Here are some details:\n"
 "        Shop url: %(shop_url)s\n"
 "        Login url: %(admin_url)s\n"
-"        Your username: %(username)s\n"
+"        Your username: '%(username)s'\n"
 "        Your password: Please contact your admin.\n"
-msgstr "\n欢迎%(first_name)s!\n\n您已被添加为%(shop_url)s的管理员。 以下是一些详细信息\n：商店网址：%(shop_url)s\n登录网址：%(admin_url)s您的用户名：%(username)s\n您的密码：请与您的管理员联系。\n"
+msgstr ""
 
 msgid "Password"
 msgstr "密码"
@@ -1566,11 +1612,23 @@ msgstr "密码"
 msgid "The user password."
 msgstr "用户密码"
 
-msgid "See the permissions view to change these."
-msgstr "查看权限视图并改变这些。"
+msgid "Main Permissions"
+msgstr ""
 
-msgid "See Contacts - Permission Groups to change these."
-msgstr "请参阅联系人 - 权限组以更改这些"
+msgid ""
+"Two fundamental permissions: Access to Admin Panel and Superuser status "
+"rights. Go to user account -> `Actions` -> `Edit Main Permissions` to change"
+" these."
+msgstr ""
+
+msgid ""
+"Use Permission Groups to granularly give more permissions. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr ""
 
 msgid "The user email address. Used for password resets."
 msgstr "用户电子邮件地址。 用于密码重置。"
@@ -1581,28 +1639,31 @@ msgstr "用户的名"
 msgid "The last name of the user."
 msgstr "用户的姓"
 
-msgid "staff"
-msgstr "员工"
+msgid "Access to Admin Panel"
+msgstr ""
 
-msgid "superuser"
-msgstr "超级用户"
+msgid "Superuser (Full rights)"
+msgstr ""
 
-msgid "No special permissions"
-msgstr "没有特权"
+msgid "No Main Permissions selected."
+msgstr ""
 
-msgid "No permission groups"
-msgstr "无权限组"
+msgid "No Granular Permission Groups selected."
+msgstr ""
+
+msgid "No Granular Permission Groups available."
+msgstr ""
 
 msgid "Send email confirmation"
 msgstr "发送电子邮件确认"
 
 msgid ""
 "Send an email to the user to let them know they've been added as a shop "
-"user. Applicable only for users with staff status."
-msgstr "发送电子邮件给用户，让他们知道他们已被添加为商店用户。 仅适用于具有员工身份的用户。"
+"user. Applicable only for users with Access to Admin Panel status."
+msgstr ""
 
-msgid "Please enter an email to send a confirmation"
-msgstr "请输入电子邮件以发送确认"
+msgid "Please enter an email to send a confirmation to."
+msgstr ""
 
 msgid "Change Password"
 msgstr "更改密码"
@@ -1613,8 +1674,8 @@ msgstr "该用户没有邮箱地址"
 msgid "Send Password Reset Email"
 msgstr "发送密码重置邮件"
 
-msgid "Edit Permissions"
-msgstr "权限编辑"
+msgid "Edit Main Permissions"
+msgstr ""
 
 msgid "Contact Details"
 msgstr "联系信息"
@@ -1628,19 +1689,22 @@ msgstr "激活用户"
 msgid "Deactivate User"
 msgstr "撤销用户"
 
-msgid "Login as User"
-msgstr "以用户身份登录"
+#, python-format
+msgid "Info! User bound to contact %(contact)s."
+msgstr ""
 
 #, python-format
-msgid "User bound to contact %(contact)s."
-msgstr "该用户与联系%(contact)s绑定。"
-
-#, python-format
-msgid "You've been added as an admin user to %s"
-msgstr "您已被添加为%s的管理员用户"
+msgid "You've been added as an admin user to `%s`."
+msgstr ""
 
 msgid "User"
 msgstr "用户"
+
+msgid "You can not deactivate a Superuser. Remove Superuser status first."
+msgstr ""
+
+msgid "You can not deactivate yourself. Use another account."
+msgstr ""
 
 #, python-format
 msgid "%(user)s is now %(state)s."
@@ -1656,8 +1720,8 @@ msgid "This user is not active."
 msgstr "此用户未激活"
 
 #, python-brace-format
-msgid "You're now logged in as {username}"
-msgstr "您现在以{username}身份登录"
+msgid "You're now logged in as `{username}`."
+msgstr ""
 
 msgid "Username"
 msgstr "用户名"
@@ -1667,9 +1731,6 @@ msgstr "名"
 
 msgid "Last Name"
 msgstr "姓"
-
-msgid "Superuser"
-msgstr "超级用户"
 
 #, python-format
 msgid "First Name: %s"
@@ -1711,40 +1772,73 @@ msgid "Reset User Password"
 msgstr "重置用户密码"
 
 msgid ""
-"The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr "需要启用`shuup.front.apps.auth`应用程序以进行密码重置。"
+"Error! The `shuup.front.apps.auth` app needs to be enabled for password "
+"reset."
+msgstr ""
 
 #, python-format
-msgid "Password recovery email sent to %(email)s"
-msgstr "密码恢复邮件已发至%(email)s"
+msgid "Password recovery email sent to %(email)s."
+msgstr ""
 
-msgid "Sending the password recovery email failed."
-msgstr "发送密码恢复邮件失败。"
+msgid "Error! Sending the password recovery email failed."
+msgstr ""
 
 msgid ""
-"The permission groups that this user belongs to. Permission groups are "
-"configured through Contacts - Permission Groups."
-msgstr "此用户所属的权限组。 权限组通过“联系人 - 权限组”进行配置。"
+"In order to allow making significant changes to accounts, we need to confirm"
+" that you know the password for the account you are using."
+msgstr ""
 
-msgid "You can't unset this status for yourself."
-msgstr "自己无法取消该状态设置。"
+msgid "Superuser (Full rights) status"
+msgstr ""
+
+msgid ""
+"Designates whether this user has all permissions without explicitly "
+"assigning them. Assigning Granular Permission Groups to a Superuser will not"
+" have any effect because Granular Permission Groups are only  able to give "
+"more rights, but Superuser already has them all."
+msgstr ""
+
+msgid "Access to Admin Panel status"
+msgstr ""
+
+msgid ""
+"Designates whether this user can log into this admin site. Even Superusers "
+"should have this status enabled, otherwise they won't be able to access the "
+"Admin Panel."
+msgstr ""
+
+msgid ""
+"Use Permission Groups to granularly give more permissions. User can belong "
+"to many groups and their permissions add and stack together. Search for "
+"`Permission Groups` to change these and add them to multiple users. Go to "
+"user account -> `Actions` -> `Edit Main Permissions` to add them to a "
+"specific user. Will not influence Superusers as they already have all the "
+"rights and can't be stripped of them without removing Superuser status "
+"first."
+msgstr ""
+
+msgid ""
+"You can't unset this status for yourself due to security reasons. Use "
+"another account if you want to remove permissions for this particular "
+"account."
+msgstr ""
 
 msgid "Change User Permissions"
 msgstr "更改用户权限"
 
 #, python-format
-msgid "Change Permissions: %s"
-msgstr "更改权限：%s"
+msgid "Change Main Permissions: %s"
+msgstr ""
 
 #, python-format
 msgid "Permissions changed for %s."
 msgstr "已更改 %s 的许可权限。"
 
-msgid "You must be a staff user"
-msgstr "您必须是员工用户"
+msgid "You must have the Access to Admin Panel permission."
+msgstr ""
 
-msgid "You are not a staff member of this shop"
-msgstr "您不是这家商店的工作人员"
+msgid "You must have the Access to Admin Panel permissions to this shop."
+msgstr ""
 
 msgid "New Attribute"
 msgstr "新属性"
@@ -1796,6 +1890,12 @@ msgstr "重置密码"
 msgid "Send password recovery instructions"
 msgstr "发送密码恢复说明"
 
+msgid "Active shop:"
+msgstr ""
+
+msgid "Active vendor:"
+msgstr ""
+
 msgid "Dashboard"
 msgstr "控制面板"
 
@@ -1808,11 +1908,14 @@ msgstr "菜单"
 msgid "Search for"
 msgstr "搜索"
 
-msgid "Go home"
-msgstr "返回主页"
-
 msgid "Hello"
 msgstr "您好"
+
+msgid "Stop Auto Refresh"
+msgstr ""
+
+msgid "Auto Refresh Every 30s"
+msgstr ""
 
 msgid "Show Tour"
 msgstr "显示游览"
@@ -1829,8 +1932,8 @@ msgstr "将可见性设置复制到产品"
 msgid "Category Image"
 msgstr "图像分类"
 
-msgid "* Products that has this category as a primary category."
-msgstr "*将此类别作为主要类别的产品。"
+msgid "* Products that have this category as a primary category."
+msgstr ""
 
 msgid "Add a new product category"
 msgstr "添加新产品类别"
@@ -2889,6 +2992,9 @@ msgstr "让我们来看看你在这里可以做的一些事情。 单击“下�
 msgid "Date"
 msgstr "日期"
 
+msgid "Save and Exit"
+msgstr "保存并退出"
+
 msgid "This action effects on all items."
 msgstr "此操作会影响所有项目。"
 
@@ -2899,23 +3005,38 @@ msgstr "此操作会影响%(item_count)s个项目(s)。"
 msgid "Upload"
 msgstr "上传"
 
+msgid "Copy folder path"
+msgstr ""
+
+msgid "Access to folder"
+msgstr ""
+
+msgid "Customize admin menu"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Folder"
+msgstr ""
+
+msgid "Drag me"
+msgstr ""
+
 msgid "Comment"
 msgstr "评论"
 
 msgid "Save comment"
 msgstr "保存评论"
 
-msgid "Comment saved."
-msgstr "评论已保存"
+msgid "Comment was saved."
+msgstr ""
 
-msgid "There was an error updating the admin comment."
-msgstr "更新管理员评论时出错。"
+msgid "Updating the admin comment failed."
+msgstr ""
 
 msgid "Description"
 msgstr "描述"
-
-msgid "Delete"
-msgstr "删除"
 
 msgid "No payments have been created yet."
 msgstr "尚未创建任何付款"
@@ -2925,6 +3046,9 @@ msgstr "您确定要删除此付款吗？"
 
 msgid "Order Details"
 msgstr "订单详情"
+
+msgid "Order Shop"
+msgstr ""
 
 msgid "Order Number"
 msgstr "订单号"
@@ -2965,6 +3089,9 @@ msgstr "追踪编号"
 msgid "Address Information"
 msgstr "地址信息"
 
+msgid "Picture"
+msgstr ""
+
 msgid "Text"
 msgstr "文本"
 
@@ -2986,6 +3113,10 @@ msgstr "免税合计"
 msgid "Total incl. Tax"
 msgstr "总含税 "
 
+#, python-format
+msgid "Supplied by %(supplier)s"
+msgstr ""
+
 msgid "Discount"
 msgstr "折扣"
 
@@ -3004,31 +3135,50 @@ msgstr "使用下面的输入添加新的日志条目"
 msgid "Add to Log"
 msgstr "添加到日志中"
 
-msgid "Log entry added."
-msgstr "添加日志条目"
+msgid "Log entry was added."
+msgstr ""
 
-msgid "There was an error adding the log entry."
-msgstr "添加日志条目时出错"
+msgid "Adding the log entry failed."
+msgstr ""
 
-msgid "Tracking Code"
-msgstr "追踪编号"
+msgid "Unshipped"
+msgstr "未发货"
+
+msgid "Shipped"
+msgstr "已发货"
+
+msgid "Ordered"
+msgstr "已订购"
+
+msgid "Refunded"
+msgstr "退款"
+
+#, python-format
+msgid "Create new shipment for %(supplier_name)s"
+msgstr ""
 
 msgid "Created"
 msgstr "创建"
 
-msgid "No shipments have been created yet."
-msgstr "尚未创建任何货件"
+msgid "Mark as sent"
+msgstr ""
 
 msgid ""
 "Shipped shipments should not be deleted. Deletion will affect products "
 "physical stock count. Delete anyway?"
 msgstr "不应删除已发货的货件。 删除将影响产品的实际库存数量。 删除无论如何？"
 
+msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
 msgid "Line #"
 msgstr "路线＃"
 
 msgid "Refunded Quantity"
 msgstr "退还数量"
+
+msgid " Mark as sent "
+msgstr ""
 
 msgid "Refund Amount"
 msgstr "退款额"
@@ -3048,9 +3198,6 @@ msgstr "付费"
 msgid "Remaining"
 msgstr "剩余"
 
-msgid "Refunded"
-msgstr "退款"
-
 msgid "Add Another Refund"
 msgstr "新增一次退款"
 
@@ -3060,26 +3207,23 @@ msgstr "订单行"
 msgid "To Ship"
 msgstr "需发货"
 
-msgid "Ordered"
-msgstr "已订购"
-
-msgid "Shipped"
-msgstr "已发货"
-
-msgid "Unshipped"
-msgstr "未发货"
-
 msgid "Set All Products To Ship"
 msgstr "设置所有产品至发货"
 
 msgid "Ship All"
 msgstr "全部发货"
 
+msgid "Permissions"
+msgstr "许可"
+
 msgid "Select all permissions"
 msgstr "选择所有权限"
 
 msgid "Deselect all permissions"
 msgstr "取消选择所有权限"
+
+msgid "Open all permission groups"
+msgstr ""
 
 msgid "(All permissions granted)"
 msgstr "(授予所有权限)"
@@ -3102,6 +3246,9 @@ msgstr "特性权限"
 msgid ""
 "Select the permissions to enable access to specific features of the module."
 msgstr "选择权限以启用对模块特定功能的访问。"
+
+msgid "Close all permission groups"
+msgstr ""
 
 msgid "Error!"
 msgstr "错误！"
@@ -3239,29 +3386,6 @@ msgstr "要创建包，请选择以下产品。"
 msgid "Package Products"
 msgstr "包装产品"
 
-msgid "Simple Variation Children"
-msgstr "简单变体子级"
-
-msgid "Variable Children"
-msgstr "子变量"
-
-msgid "Combination"
-msgstr "结合"
-
-msgid "Variables"
-msgstr "变量"
-
-msgid "This product is not yet a variation."
-msgstr "该产品还不是变体。"
-
-msgid "To create a simple variation, choose products below."
-msgstr "请选择下列产品来创建简单变体。"
-
-msgid ""
-"To create a variation with multiple variables, create the variables on the "
-"Variables tab and then link them to products here."
-msgstr "创建一个带有多个变量的变体，在变量栏创建变量，然后在这连结他们至产品。"
-
 msgid "Recent Orders"
 msgstr "最近订单"
 
@@ -3394,10 +3518,10 @@ msgstr "Shuup偶尔会将遥测数据发送到Shuup.com服务器。"
 
 #, python-format
 msgid ""
-"The data contains an unique installation key, as well as the hostname of the"
-" installation (as sent by the visiting browser; currently "
+"The data contains a unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "该数据含有独特的安装钥匙 ，以及安装的主机名 (如访问的浏览器所发送; 目前 <code>%(host)s</code>)。"
+msgstr ""
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
@@ -3483,9 +3607,18 @@ msgstr "新%(model)s"
 msgid "Discard Changes"
 msgstr "放弃修改"
 
+msgid "Save as a copy"
+msgstr "保存为副本"
+
+msgid "Save and Create New"
+msgstr "保存并创建新的"
+
 #, python-format
 msgid "Are you sure you wish to delete %s?"
 msgstr "您确定删除 %s？"
+
+msgid "Export as CSV file"
+msgstr ""
 
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
@@ -3494,8 +3627,8 @@ msgstr "显示 %(n_items)s %(verbose_name_plural)s的%(per_page)s "
 msgid "objects"
 msgstr "对象"
 
-msgid "Unknown error"
-msgstr "未知错误"
+msgid "Mass Action encountered an unknown error."
+msgstr ""
 
 msgid "Mass Action"
 msgstr "群众行动"
@@ -3507,11 +3640,13 @@ msgstr "无法显示该页面。%(reason)s"
 msgid "Log in with different credentials..."
 msgstr "其他方式登录……"
 
-msgid "Sign in to continue"
-msgstr "继续登录"
+msgid "Sign in to continue."
+msgstr ""
 
-msgid "You must be a staff member."
-msgstr "您必须是工作人员。"
+msgid ""
+"Your account must have `Access to Admin Panel` permissions to access this "
+"page."
+msgstr ""
 
 msgid "There is no active shop available. Contact support for more details."
 msgstr "没有活跃的商店。 联系支持部门了解更多详情"
@@ -3523,8 +3658,8 @@ msgstr "您没有所需的权限：%s"
 #, python-brace-format
 msgid ""
 "Can't view this page. You do not have the required permission(s): "
-"{permissions}"
-msgstr "无法查看此页面。 您没有所需的权限(s)：{permissions}"
+"`{permissions}`."
+msgstr ""
 
 msgid "Unnamed"
 msgstr "未命名"
@@ -3533,12 +3668,12 @@ msgid "Item"
 msgstr "物品"
 
 #, python-format
-msgid "New %s created."
-msgstr "新 %s已创建"
+msgid "New %s was created."
+msgstr ""
 
 #, python-format
-msgid "%s edited."
-msgstr "%s 已编辑。"
+msgid "%s was edited."
+msgstr ""
 
 #, python-format
 msgid "New %s"
@@ -3561,8 +3696,8 @@ msgstr "对象无效"
 msgid "Invalid model."
 msgstr "模型无效"
 
-msgid "Object not found"
-msgstr "无法找到对象"
+msgid "Object not found."
+msgstr ""
 
 msgid "Storefront"
 msgstr "店面"
@@ -3576,6 +3711,9 @@ msgstr "完成向导"
 msgid "Complete the setup wizard"
 msgstr "完成设置向导"
 
+msgid "All set. Nothing to be configured"
+msgstr ""
+
 msgid ""
 "A reset password email was sent. Please, follow the instructions to set a "
 "new password."
@@ -3584,8 +3722,8 @@ msgstr "已发送重置密码电子邮件， 请按照说明设置新密码。"
 msgid "This recovery link is invalid."
 msgstr "此恢复链接无效"
 
-msgid "Password changed successfully!"
-msgstr "密码更改成功！"
+msgid "Password was changed."
+msgstr ""
 
 #, python-format
 msgid "Couldn't get selections for %s."

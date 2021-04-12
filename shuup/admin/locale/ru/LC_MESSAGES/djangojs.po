@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
 # George Voronin <sonictorment@gmail.com>, 2017
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
@@ -10,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 17:25+0000\n"
-"PO-Revision-Date: 2019-03-10 05:37+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-03-02 07:59+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,11 +22,11 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-msgid "Unexpected error while uploading files."
-msgstr "Неожиданная ошибка при загрузке файлов."
+msgid "Error! Unexpected error while uploading files."
+msgstr "Ошибка! Неожиданная ошибка при загрузке файлов."
 
-msgid "Error:"
-msgstr "Ошибка:"
+msgid "Error!"
+msgstr "Ошибка!"
 
 msgid "Uploaded:"
 msgstr "Загружено:"
@@ -46,9 +47,6 @@ msgstr "Вы действительно хотите удалить папку %
 
 msgid "New folder"
 msgstr "Новая папка"
-
-msgid "current"
-msgstr "Настоящий"
 
 msgid "Oldest first"
 msgstr "Сначало старое"
@@ -78,12 +76,12 @@ msgid "Edit"
 msgstr "Редактировать"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr ""
+msgstr "Нажмите кнопку <strong>Загрузить</strong>, чтобы загрузить файлы."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
 "button."
-msgstr ""
+msgstr "<span>Перетащите</span> сюда файлы<br> или нажмите кнопку <span>Загрузить</span>."
 
 msgid "Rename file"
 msgstr "Переименовать файл"
@@ -97,12 +95,15 @@ msgstr "Переименовать папку"
 msgid "Delete folder"
 msgstr "Удалить папку"
 
-#, javascript-format
-msgid "Order %s created."
-msgstr ""
+msgid "Edit folder access"
+msgstr "Редактировать доступ к папке"
 
-msgid "An unspecified error occurred.\n"
-msgstr ""
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr "Успех! Заказ %s создан."
+
+msgid "Error! An unspecified error occurred.\n"
+msgstr "Ошибка! Произошла неопределенная ошибка.\n"
 
 msgid "SKU"
 msgstr "Артикул"
@@ -142,11 +143,11 @@ msgstr "Адрес доставки"
 
 #, javascript-format
 msgid "Customer with same %s already exists."
-msgstr ""
+msgstr "Клиент с таким же %s уже существует."
 
 #, javascript-format
 msgid "Click to select user %s."
-msgstr ""
+msgstr "Щелкните, чтобы выбрать пользователя %s."
 
 msgid "Save customer details while creating order"
 msgstr "Сохранить информацию клиента при оформлении заказа"
@@ -166,8 +167,8 @@ msgstr "Поставленная галочка в этом поле сдела�
 msgid "Order for company"
 msgstr "Заказ для компании"
 
-msgid "Check this if the order is for a company or business with a tax ID."
-msgstr "Поставьте галочку, если заказ оформляется для компании или бизнеса с налоговым идентификатором."
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr "Включите это, если заказ предназначен для компании или бизнеса с налоговым идентификатором."
 
 msgid "Billing Address"
 msgstr "Расчётный адрес"
@@ -337,7 +338,7 @@ msgstr "Процент скидки"
 msgid ""
 "Enter the discount percentage (%) for the line item. Discounted Unit Price, "
 "Total Discount Amount, and Line Total will be automatically."
-msgstr ""
+msgstr "Введите процент скидки (%) для позиции. Цена за единицу со скидкой, Общая сумма скидки и Итоговая сумма по строке будут указаны автоматически."
 
 msgid "Total Discount Amount"
 msgstr "Итоговая сумма скидки"
@@ -368,11 +369,11 @@ msgstr "Если цены на ваш продукт варьируются в �
 
 #, javascript-format
 msgid "All prices are in %s and include taxes."
-msgstr ""
+msgstr "Все цены %s указаны с учетом налогов."
 
 #, javascript-format
 msgid "All prices are in %s. Taxes not included"
-msgstr ""
+msgstr "Все цены указаны в%s . Налоги не включены"
 
 msgid "Product Quick Adder"
 msgstr "Быстро добавить товар"
@@ -421,7 +422,7 @@ msgstr "доставка"
 
 #, javascript-format
 msgid "Enter the name for the %s address."
-msgstr ""
+msgstr "Введите имя для %s адреса."
 
 msgid "Tax number"
 msgstr "Налоговый номер"
@@ -431,97 +432,60 @@ msgstr "Введите налоговый (идентификационный) �
 
 #, javascript-format
 msgid "Enter the best %s contact phone number."
-msgstr ""
+msgstr "Введите лучший%s контактный номер телефона."
 
 #, javascript-format
 msgid ""
 "Enter the %s email address for transaction receipts and communications."
-msgstr ""
+msgstr "Введите%s адрес электронной почты для квитанций о транзакциях и сообщений."
 
 msgid "Street"
 msgstr "Улица"
 
 #, javascript-format
 msgid "Enter the %s street address."
-msgstr ""
+msgstr "Введите %s почтовый адрес."
 
 msgid "Street (2)"
 msgstr "Улица (2)"
 
 #, javascript-format
 msgid "Enter the %s street address (2)."
-msgstr ""
+msgstr "Введите %s почтовый адрес (2)."
 
 msgid "ZIP / Postal code"
 msgstr "Почтовый индекс"
 
 #, javascript-format
 msgid "Enter the zip or postal code of the %s address."
-msgstr ""
+msgstr "Введите почтовый индекс%s адреса."
 
 msgid "City"
 msgstr "Город"
 
 #, javascript-format
 msgid "Enter the city of the %s address."
-msgstr ""
+msgstr "Введите город по указанному %s адресу."
 
 msgid "Region"
 msgstr "Регион"
 
 #, javascript-format
 msgid "Enter the region, state, or province of the %s address."
-msgstr ""
+msgstr "Введите регион, штат или провинцию по указанному %s адресу."
 
 msgid "Country"
 msgstr "Страна"
 
 #, javascript-format
 msgid "Enter the country of the %s address."
-msgstr ""
+msgstr "Введите страну по указанному %s адресу."
 
 msgid "No records found."
 msgstr "Записи не найдены."
 
-msgid "Missing JavaScript dependencies detected"
-msgstr "Отсутствующие зависимые элементы JavaScript найдены"
-
-msgid "Identifier"
-msgstr "Идентификатор"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr ""
-
-msgid "Delete value"
-msgstr "Удалить значение"
-
-msgid "Are you sure?"
-msgstr "Вы уверены?"
-
-msgid "Delete Variable"
-msgstr "Удалить переменную"
-
-msgid "Add new value"
-msgstr "Добавить новое значение"
-
-msgid "Variable Name"
-msgstr "Название переменной"
-
-msgid "Variable"
-msgstr "Переменная"
-
-msgid "Identifer"
-msgstr "Идентификатор"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "Показать поля идентификатора (для продвинутых пользователей)"
-
-msgid "There are no variables defined."
-msgstr "Нет указанных переменных"
-
-msgid "Add new variable"
-msgstr "Добавить новую переменную"
+msgid "Warning! Missing JavaScript dependencies detected."
+msgstr "Предупреждение! Обнаружены недостающие зависимости JavaScript."
 
 msgid "No browser URL for kind:"
 msgstr "Нет URL-адреса браузера для вида:"
@@ -534,6 +498,16 @@ msgstr "Перетащите файлы сюда или нажмите для п
 
 msgid "only images can be uploaded!"
 msgstr "Только изображения могут быть загружены!"
+
+msgid "Error happened while uploading file."
+msgstr "Ошибка при загрузке файла."
+
+msgid "Browse media"
+msgstr "Просмотр медиа"
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
+msgstr "Ошибка! Для изображений размером более %s КБ, используйте вместо этого медиа-браузер."
 
 msgid "No results."
 msgstr "Нет результатов."
@@ -551,7 +525,7 @@ msgstr[3] ""
 
 #, javascript-format
 msgid "Please enter %s or more characters"
-msgstr ""
+msgstr "Пожалуйста, введите%s или больше символов"
 
 msgid "Loading more results..."
 msgstr "Загрузка результатов..."
@@ -694,13 +668,16 @@ msgid "Items per page"
 msgstr "Количество наименований на страницу"
 
 msgid "Page"
-msgstr ""
+msgstr "Страница"
 
 msgid "Reset filters"
 msgstr "Сбросить фильтры"
 
 msgid "Reset"
 msgstr "Сброс"
+
+msgid "Apply filters"
+msgstr "Применить фильтры"
 
 msgid "Sort by"
 msgstr "Сортировать"
@@ -722,55 +699,58 @@ msgstr "Следующее"
 
 #, javascript-format
 msgid "Filter by %s"
-msgstr ""
+msgstr "Сортировать по%s"
+
+msgid " Select"
+msgstr "Выбрать"
 
 msgid "Filters"
-msgstr "Фильтры."
+msgstr "Фильтры"
 
 msgid "Show filters"
-msgstr ""
+msgstr "Показать фильтры"
 
 msgid "Select Action"
 msgstr "Выберите действие"
 
 msgid "Clear Selections"
-msgstr "Очистить Выбор"
+msgstr "Очистить выбор"
 
 msgid "Select All"
-msgstr "Выбрать Все"
+msgstr "Выбрать все"
 
 #, javascript-format
 msgid "Select All %s Items"
-msgstr ""
+msgstr "Выбрать все %s элементы"
 
 #, javascript-format
 msgid "There are no %s to show"
-msgstr ""
+msgstr "Нечего %sпоказывать"
 
 msgid "There is no item to show"
-msgstr ""
+msgstr "Нет элемента для показа"
 
 msgid "with selected filters"
-msgstr ""
+msgstr "с выбранными фильтрами"
 
 msgid "How about creating a new entry?"
-msgstr ""
+msgstr "Как насчет создания новой записи?"
 
-msgid "Mass Action complete."
-msgstr "Массовое действие завершено."
+msgid "Success! Mass Action was completed."
+msgstr "Успех! Mass Action завершена."
 
-msgid "Something went wrong."
-msgstr "Что-то пошло не так."
+msgid "Error! Something went wrong with the Mass Action."
+msgstr "Ошибка! Что-то пошло не так с Mass Action."
 
 #, javascript-format
 msgid "All %s Items Selected"
-msgstr ""
+msgstr "Все выбранные %s элементы"
 
-msgid "You haven't selected anything"
-msgstr "Вы ничего не выбрали"
+msgid "Warning! You didn't select anything."
+msgstr "Предупреждение! Вы ничего не выбрали."
 
 msgid "Confirm action by clicking OK!"
-msgstr "Подтвердите действие, кликнув OK!"
+msgstr "Подтвердите действие, нажав ОК!"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "Вы уверены, что хотите удалить эти медиа-данные?"

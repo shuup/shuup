@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-08 01:41+0000\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -120,12 +120,6 @@ msgstr "日期已创建"
 msgid "Select discounts linked to this coupon code."
 msgstr "选择链接到此优惠券代码的折扣。"
 
-msgid "Shops"
-msgstr "商店"
-
-msgid "Select shops for this discount. Keep it blank to share with all shops."
-msgstr "为这个折扣选择商店。保持公开，与所有商店分享。"
-
 #, python-format
 msgid "%s has been deleted."
 msgstr "%s已被删除。"
@@ -175,11 +169,21 @@ msgid ""
 "filtering."
 msgstr "此异常的名称。与用于筛选的异常列表一起在内部使用。"
 
-msgid "start"
-msgstr "开始"
+msgid "start since"
+msgstr ""
 
-msgid "end"
-msgstr "结束"
+msgid ""
+"Set to restrict the availability exception to be available only after a "
+"certain date and time."
+msgstr ""
+
+msgid "end until"
+msgstr ""
+
+msgid ""
+"Set to restrict the availability exception to be available only until a "
+"certain date and time."
+msgstr ""
 
 msgid "availability exception"
 msgstr "可用性异常"
@@ -221,10 +225,16 @@ msgid ""
 "filtering."
 msgstr "这个折扣的名字。与折扣列表一起使用，用于筛选。"
 
+msgid "supplier"
+msgstr ""
+
+msgid "Select supplier for this discount."
+msgstr ""
+
 msgid ""
-"Check this if the discount is currently active. Please also set a start and "
-"end date."
-msgstr "如果折扣当前处于活动状态，请检查此选项。也请设定一个开始和结束日期。"
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
+msgstr ""
 
 msgid "start date and time"
 msgstr "开始日期和时间"
@@ -318,8 +328,9 @@ msgid "product discounts"
 msgstr "产品折扣"
 
 msgid ""
-"The name for this . Used internally with exception lists for filtering."
-msgstr "这个名字。与用于筛选的异常列表一起在内部使用。"
+"The name for this HappyHour. Used internally with exception lists for "
+"filtering."
+msgstr ""
 
 msgid "happy hour"
 msgstr "欢乐时光"
@@ -333,8 +344,8 @@ msgstr "从小时开始"
 msgid "to hour"
 msgstr "到小时"
 
-msgid "weekdays"
-msgstr "工作日"
+msgid "weekday"
+msgstr ""
 
 msgid "time range"
 msgstr "时间范围"
@@ -342,8 +353,31 @@ msgstr "时间范围"
 msgid "time ranges"
 msgstr "时间范围"
 
-msgid "To hour has to be after from hour"
-msgstr "到小时必须从小时开始"
+msgid ""
+"The value of the field `to hour` has to be later than that of `from hour`."
+msgstr ""
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
+msgstr ""
+
+msgid "Discounted Products"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
 
 msgid "Availability"
 msgstr "可用性"

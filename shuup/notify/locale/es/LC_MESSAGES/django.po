@@ -1,77 +1,68 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: 2020-10-09 17:46+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:21+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.1\n"
-
-msgid "Plain text"
-msgstr "Texto plano"
 
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
+
+msgid "Plain text"
+msgstr "Texto sin formato"
 
 msgid "Subject"
-msgstr "Asunto"
+msgstr "Tema"
 
-msgid "Body Template"
-msgstr "Plantilla del contenido"
-
-msgid ""
-"You can use this template to wrap the HTML body with your custom static "
-"template.Mark the spot for the HTML body with %html_body%."
-msgstr ""
-"Puedes usar esta plantilla para envolver el cuerpo del HTML con tu plantilla "
-"personalizada. Indica el punto para el cuerpo del HTML con %html_body%."
+msgid "Email Template"
+msgstr "Plantilla de correo electrónico"
 
 msgid "Email Body"
-msgstr "Contenido del email"
+msgstr "Cuerpo del correo electronico"
 
 msgid "Content type"
 msgstr "Tipo de contenido"
 
 msgid "Recipient"
-msgstr "Receptor"
+msgstr "Recipiente"
 
 msgid "Reply-To"
-msgstr "Responder A"
+msgstr "Responder a"
 
 msgid "Carbon Copy (CC)"
-msgstr "Copia A (CC)"
+msgstr "Copia carbón (CC)"
 
 msgid "Blind Carbon Copy (BCC)"
-msgstr "Copia Oculta A (BCC)"
+msgstr "Copia carbón ciega (BCC)"
 
 msgid "From email"
-msgstr "Email Remitente"
+msgstr "Desde el e-mail"
 
 msgid ""
 "Override the default from email to be used. It can either be binded to a "
 "variable or be a constant like support@store.com or even \"Store Support\" "
 "<support@store.com>."
-msgstr ""
-"Anula el valor predeterminado del correo electrónico que se utilizará. Puede "
-"estar vinculado a una variable o ser una constante como support@store.com o "
-"incluso \"Store Support\" <support@store.com>."
+msgstr "Anula el valor predeterminado del correo electrónico que se utilizará. Puede estar vinculado a una variable o ser una constante como support@store.com o incluso &quot;Soporte de tienda&quot;<support@store.com> ."
 
 msgid "Language"
 msgstr "Idioma"
 
 msgid "Fallback language"
-msgstr "Idioma alternativo"
+msgstr "Lenguaje alternativo"
 
 msgid "Send Identifier"
 msgstr "Enviar identificador"
@@ -79,10 +70,7 @@ msgstr "Enviar identificador"
 msgid ""
 "If set, this identifier will be logged into the event's log target. If the "
 "identifier has already been logged, the e-mail won't be sent again."
-msgstr ""
-"Si se establece, este identificador se registrará en el destino del registro "
-"del evento. Si el identificador ya se ha registrado, el correo electrónico "
-"no se enviará de nuevo."
+msgstr "Si se establece, este identificador se registrará en el destino del registro del evento. Si el identificador ya se ha registrado, el correo electrónico no se enviará de nuevo."
 
 msgid "Notifications"
 msgstr "Notificaciones"
@@ -90,111 +78,113 @@ msgstr "Notificaciones"
 msgid "Show notification scripts"
 msgstr "Mostrar secuencias de comandos de notificación"
 
+msgid "Email Templates"
+msgstr "Plantillas de correo electrónico"
+
 msgid "Event"
 msgstr "Evento"
 
 msgid "Choose which event to bind this script to."
-msgstr "Elige que evento vincular a esta secuencia de comandos."
+msgstr "Elija a qué evento vincular este script."
 
 msgid "Script Name"
-msgstr "Nombre de la Secuencia de comandos"
+msgstr "Nombre de la secuencia de comandos"
 
 msgid "Type in a descriptive name for your new script."
-msgstr "Escribe un nombre descriptivo para la nueva secuencia de comandos."
+msgstr "Escriba un nombre descriptivo para su nuevo script."
 
 msgid "Enable Script"
-msgstr "Activar secuencia de comandos"
+msgstr "Habilitar secuencia de comandos"
 
 msgid "Choose whether this script should be activated when its event fires."
-msgstr ""
-"Elija si esta secuencia de comandos debe activarse cuando se active su "
-"evento."
+msgstr "Elija si este script debe activarse cuando se active su evento."
 
 msgid ""
 "Warning! Changing the event for an existing script may have unexpected "
 "effects."
-msgstr ""
-"¡Alerta! Cambiar el evento de una secuencia de comandos existente puede "
-"tener efectos inesperados."
+msgstr "¡Advertencia! Cambiar el evento de un script existente puede tener efectos inesperados."
 
 msgid "Template"
-msgstr "Plantilla"
+msgstr "Modelo"
 
 msgid "Bind to Variable"
-msgstr "Vincular a una Variable"
+msgstr "Enlazar a variable"
 
 msgid "This field is missing content."
 msgstr "A este campo le falta contenido."
 
 #, python-format
 msgid "%s has been marked deleted."
-msgstr "%s ha sido marcado como borrado."
+msgstr "%s se ha marcado como eliminado."
 
 msgid "Edit Script Contents"
-msgstr "Editar contenido de la secuencia de comandos"
+msgstr "Editar el contenido del script"
 
 msgid "Edit Script (advanced)"
-msgstr "Editar Secuencia de comandos (avanzado)"
+msgstr "Editar guión (avanzado)"
 
 msgid "Edit Template"
 msgstr "Editar plantilla"
 
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Eliminar"
 
 #, python-format
 msgid "Are you sure you wish to delete \"%s\" notification?"
-msgstr "¿Seguro que quieres borrar la notificación \"%s\"?"
+msgstr "¿Está seguro de que desea eliminar la notificación &quot;%s&quot;?"
 
 msgid "Save"
-msgstr "Guardar"
+msgstr "Salvar"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s se ha eliminado."
 
 msgid "Name"
 msgstr "Nombre"
 
 msgid "Enabled"
-msgstr "Activar"
+msgstr "Habilitado"
 
 msgid "New Script"
-msgstr "Nueva secuencia de comandos"
+msgstr "Nuevo guion"
 
 msgid "New From Template"
 msgstr "Nuevo desde plantilla"
 
 msgid "Script created from template."
-msgstr "Secuencia de comandos creada desde plantilla"
+msgstr "Script creado a partir de plantilla."
 
 msgid "Template Script not found."
-msgstr "Plantilla de secuencia de comandos no encontrada."
+msgstr "Script de plantilla no encontrado."
 
 msgid "Templated script not found."
 msgstr "No se encontró la secuencia de comandos con plantilla."
 
 msgid "Script updated."
-msgstr "Secuencia de comandos actualizada"
+msgstr "Script actualizado."
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
-msgstr ""
-"Verifique si el valor enlazado \"valor\" existe y no está vacío y no es cero."
+msgstr "Compruebe si el valor de límite &quot;valor&quot; existe y no está vacío ni es cero."
 
 msgid "Non-Empty"
-msgstr "No Vacío"
+msgstr "No vacío"
 
 msgid "Check whether the bound value `value` is empty or zero."
-msgstr "Verifique si el valor enlazado \"valor\" está vacío o es cero."
+msgstr "Compruebe si el valor límite &quot;valor&quot; está vacío o es cero."
 
 msgid "Empty"
 msgstr "Vacío"
 
 msgid "none"
-msgstr "nulo"
+msgstr "ninguna"
 
 msgid "unilingual"
-msgstr "unilingüe"
+msgstr "unilingue"
 
 msgid "multilingual"
-msgstr "multilingüe"
+msgstr "plurilingüe"
 
 msgid "variable only"
 msgstr "solo variable"
@@ -206,16 +196,16 @@ msgid "variable or constant"
 msgstr "variable o constante"
 
 msgid "continue to the next step"
-msgstr "continuar al siguiente paso"
+msgstr "continuar con el siguiente paso"
 
 msgid "stop processing"
-msgstr "parar el proceso"
+msgstr "detener el procesamiento"
 
 msgid "all"
-msgstr "todo"
+msgstr "todos"
 
 msgid "any"
-msgstr "cualquiera"
+msgstr "alguna"
 
 msgid "any shop administrator"
 msgstr "cualquier administrador de la tienda"
@@ -227,7 +217,7 @@ msgid "low"
 msgstr "bajo"
 
 msgid "normal"
-msgstr ""
+msgstr "normal"
 
 msgid "high"
 msgstr "alto"
@@ -235,24 +225,26 @@ msgstr "alto"
 msgid "critical"
 msgstr "crítico"
 
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr "Introduzca la plantilla HTML base que se utilizará en los correos electrónicos. Marque el lugar para inyectar el contenido del correo electrónico usando la variable `% html_body%` dentro del cuerpo."
+
 msgid "shop"
 msgstr "tienda"
 
 msgid "recipient type"
-msgstr "tipo de receptor"
+msgstr "tipo de destinatario"
 
 msgid "recipient"
-msgstr "receptor"
+msgstr "recipiente"
 
-#, fuzzy
 msgid "created on"
 msgstr "creado en"
 
-#, fuzzy
 msgid "message"
 msgstr "mensaje"
 
-#, fuzzy
 msgid "priority"
 msgstr "prioridad"
 
@@ -263,193 +255,157 @@ msgid "marked read by"
 msgstr "marcado como leído por"
 
 msgid "marked read on"
-msgstr "marcado como leído en"
+msgstr "marcado como leído"
 
 msgid "event identifier"
 msgstr "identificador de evento"
 
-#, fuzzy
 msgid "name"
 msgstr "nombre"
 
 msgid "enabled"
-msgstr "activar"
+msgstr "habilitado"
 
 msgid "template identifier"
 msgstr "identificador de plantilla"
 
 msgid "the template identifier used to create this script"
-msgstr ""
-"el identificador de plantilla utilizado para crear esta secuencia de comandos"
+msgstr "el identificador de plantilla utilizado para crear este script"
 
 msgid "Password Reset"
-msgstr "Restablecer contraseña"
+msgstr "Restablecimiento de contraseña"
 
 msgid "This event is triggered when password reset is requested."
-msgstr "Este evento se lanza cuando se solicita restablecer la contraseña."
+msgstr "Este evento se activa cuando se solicita el restablecimiento de la contraseña."
 
 msgid "Site name"
-msgstr "Nombre del sitio web"
+msgstr "Nombre del sitio"
 
 msgid "User secret"
-msgstr "Secreto del usuario"
+msgstr "Secreto de usuario"
 
 msgid "User to recover"
-msgstr "Usuario a recuperar"
+msgstr "Usuario para recuperar"
 
 msgid "Token"
-msgstr ""
+msgstr "Simbólico"
 
 msgid "Recovery URL"
 msgstr "URL de recuperación"
 
 msgid "To Email"
-msgstr "Email destino"
+msgstr "Al correo electrónico"
 
 msgid "The subject of the email"
-msgstr "El asunto del email"
+msgstr "El asunto del correo electrónico"
 
-#, fuzzy
 msgid "Email content"
-msgstr "Contenido del email"
+msgstr "Contenido de correo electrónico"
 
 msgid "The content of the email."
-msgstr "El contenido del email."
+msgstr "El contenido del correo electrónico."
 
 msgid "Customer"
 msgstr "Cliente"
 
 msgid "Other destination"
-msgstr "Otro destinatario"
+msgstr "Otro destino"
 
-#, fuzzy
 msgid "Send to?"
 msgstr "¿Enviar a?"
 
 msgid ""
 "You can send this email to the customer or to other email of your choice."
-msgstr "Puedes enviar este email al cliente y otro email de tu elección."
+msgstr "Puede enviar este correo electrónico al cliente oa otro correo electrónico de su elección."
 
 msgid "Destination"
-msgstr ""
-"Esta secuencia de comandos enviará un email a la dirección configurada "
-"alertando de que el producto de un proveedor tiene el inventario bajo. "
-"Puedes configurar para que no se envíe el mismo email varias veces en el "
-"periodo de 24 horas. Cada vez que el inventario del producto alcance el "
-"límite configurado, esta notificación se activará y se mandará un email."
+msgstr "Destino"
 
 msgid "Fill with the destination email address."
-msgstr "Rellenar con la dirección de correo electrónico de destino."
+msgstr "Complete con la dirección de correo electrónico de destino."
 
 msgid ""
 "Recipient is a required field when you don't want to send the email to "
 "customer."
-msgstr ""
-"Destinatario es un campo obligatorio cuando no desea enviar el correo "
-"electrónico al cliente."
+msgstr "Destinatario es un campo obligatorio cuando no desea enviar el correo electrónico al cliente."
 
 msgid ""
 "\n"
 "<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
 "\n"
-"<p>In case you've forgotten, your username is {{ user_to_recover.username }}."
-"</p>\n"
-"<p>You're receiving this email because you requested a password reset for "
-"your user account at {{ site_name }}.</p>\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
 "<p>Please go to the following page and choose a new password:</p>\n"
 "<br>\n"
 "<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
 msgstr ""
-"\n"
-"<p>Hola {{ user_to_recover.get_full_name() }},</p>\n"
-"\n"
-"<p>\n"
-"En caso de que lo haya olvidado, su nombre de usuario es {{ user_to_recover."
-"username }}.</p>\n"
-"<p>Recibió este correo electrónico porque solicitó un restablecimiento de "
-"contraseña para su cuenta de usuario en {{ site_name }}.</p>\n"
-"<p>Vaya a la página siguiente y elija una nueva contraseña:</p>\n"
-"<br>\n"
-"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
 
 msgid "Send Password Reset Link"
-msgstr "Enviar enlace de restablecer contraseña"
+msgstr "Enviar enlace de restablecimiento de contraseña"
 
 msgid ""
 "\n"
-"        Send an email to user when their account password reset is "
-"requested\n"
+"        Send an email to user when their account password reset is requested\n"
 "    "
 msgstr ""
-"\n"
-"Enviar un correo electrónico al usuario cuando se solicite el "
-"restablecimiento de la contraseña de su cuenta"
 
 msgid ""
 "\n"
-"        This script will send an email to user once their account password "
-"reset is\n"
+"        This script will send an email to user once their account password reset is\n"
 "        requested either by admin, staff or user.\n"
 "    "
 msgstr ""
-"\n"
-"        Esta secuencia de comandos enviará un email al usuario cuando se "
-"haya solicitado cambiar su contraseña.\n"
-"    "
 
 msgid "Edit Script Information"
-msgstr "Editar información de la secuencia de comandos"
+msgstr "Editar la información del script"
 
 msgid "Create a new script"
-msgstr "Crear nueva secuencia de comandos"
+msgstr "Crea una nueva secuencia de comandos"
 
 msgid "Script Details"
 msgstr "Detalles de la secuencia de comandos"
 
 msgid "OK"
-msgstr ""
+msgstr "Okay"
 
 msgid "Show available variables"
 msgstr "Mostrar variables disponibles"
 
 msgid "Close"
-msgstr "Cerrar"
+msgstr "Cerca"
 
 msgid "Select the script template to be created"
-msgstr "Selecciona la plantilla de secuencia de comandos para crear"
+msgstr "Seleccione la plantilla de secuencia de comandos que se creará"
 
 msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Edit Script"
-msgstr "Editar secuencia de comandos"
+msgstr "Editar guion"
 
 msgid "Edit Step"
 msgstr "Editar paso"
 
-msgid "Done"
-msgstr "Hecho"
-
-msgid "Please correct the errors below."
-msgstr "Por favor corrija los errores siguientes."
-
-msgid "Variables"
-msgstr ""
-
 msgid "Save changes"
 msgstr "Guardar cambios"
+
+msgid "Please correct the errors below."
+msgstr "Por favor corrija los siguientes errores."
+
+msgid "Variables"
+msgstr "Variables"
 
 msgid "Script Template: {}"
 msgstr "Plantilla de secuencia de comandos: {}"
 
 msgid "Configure the Script Template"
-msgstr "Configurar la plantilla de secuencia de comandos"
+msgstr "Configurar la plantilla de script"
 
 msgid "Modify Script"
 msgstr "Modificar secuencia de comandos"
 
 msgid "Create Script"
-msgstr "Crear secuencia de comandos"
+msgstr "Crear guion"
 
 msgid "Create"
 msgstr "Crear"
@@ -458,10 +414,10 @@ msgid "Boolean"
 msgstr "Booleano"
 
 msgid "Integer Number"
-msgstr "Número Entero"
+msgstr "Número entero"
 
 msgid "Decimal Number"
-msgstr "Numero Decimal"
+msgstr "Número decimal"
 
 msgid "Text"
 msgstr "Texto"

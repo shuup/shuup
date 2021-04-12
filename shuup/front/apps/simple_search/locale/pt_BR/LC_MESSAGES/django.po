@@ -1,19 +1,18 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Christian Hess <christianhess.rlz@gmail.com>, 2016
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2016,2020
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 19:11+0000\n"
-"PO-Revision-Date: 2016-04-09 17:36+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
-"language/pt_BR/)\n"
+"POT-Creation-Date: 2016-10-05 21:13+0000\n"
+"PO-Revision-Date: 2020-04-08 01:10+0000\n"
+"Last-Translator: Christian Hess <christianhess.rlz@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,10 +30,11 @@ msgstr "Procurar por produtos"
 msgid "No results found for \"<strong>%(query)s</strong>\"."
 msgstr "Nenhum resultado encontrado para \"<strong>%(query)s</strong>\"."
 
-#, fuzzy, python-format
-#| msgid "No results found for \"<strong>%(query)s</strong>\"."
-msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
-msgstr "Nenhum resultado encontrado para \"<strong>%(query)s</strong>\"."
+msgid ""
+"Limiting results to first 150 products. Refine search terms for better "
+"results."
+msgstr "Limitando os resultados para os primeiros 150 produtos. Refina os termos da busca para melhores resultados."
 
-msgid "Sort"
-msgstr "Ordenar"
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "%(n)sresultados encontrados para \"<strong>%(query)s</strong>\"."

@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-04 19:23+0000\n"
-"Last-Translator: William Lindholm <william.lindholm@shuup.com>\n"
+"POT-Creation-Date: 2021-04-12 10:42+0000\n"
+"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -545,6 +545,9 @@ msgid ""
 " shared folder between more then one shop or it has a owner"
 msgstr "Det går inte att byta namn på den här mappen, antingen har du inte tillstånd att göra det eller så är det en delad mapp mellan mer än en butik eller så har den en ägare"
 
+msgid "This folder is protected and cannot be deleted."
+msgstr ""
+
 msgid ""
 "Can't delete this folder, either you don't have permssion to do it or it's a"
 " shared folder between more then one shop"
@@ -611,6 +614,12 @@ msgstr "Menyåterställning"
 
 msgid "Show orders"
 msgstr "Visa beställningar"
+
+msgid "Shipments"
+msgstr "Transport"
+
+msgid "Show shipments"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "Utestående beställnigar"
@@ -687,9 +696,6 @@ msgstr "Detaljer"
 
 msgid "Payments"
 msgstr "Betalningar"
-
-msgid "Shipments"
-msgstr "Transport"
 
 msgid "Log Entries"
 msgstr "Loggposter"
@@ -906,6 +912,9 @@ msgstr "Det gick inte att skapa en fullständig återbetalning."
 msgid "Full refund created."
 msgstr "Fullständig återbetalnings skapad."
 
+msgid "Tracking URL"
+msgstr ""
+
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr "Skapa leverans -- %s"
@@ -930,6 +939,25 @@ msgstr "Leverans %s skapades."
 #, python-format
 msgid "Shipment %s has been deleted."
 msgstr "Leverans %s har tagits bort."
+
+msgid "Shipment has been marked as sent."
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr "Spårningskod"
+
+#, python-brace-format
+msgid "Shipment {shipment_id}"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
 
 msgid "Identifier already exists."
 msgstr "Identifierare finns redan."
@@ -1059,38 +1087,18 @@ msgstr "Borttagna produkter: %d."
 msgid "Couldn't add product %s to its own package."
 msgstr "Det gick inte att lägga till produkten %s i sitt eget paket."
 
-msgid "child"
-msgstr "underordnad"
-
-msgid "Unlink"
-msgstr "Ta bort koppling"
-
-#, python-format
-msgid "Unable to link %(product)s: %(error)s."
-msgstr "Det går inte att länka %(product)s: %(error)s."
-
-msgid "variable combination"
-msgstr "variabelkombination"
-
-#, python-format
-msgid "Unnamed %s"
-msgstr "Namnlös %s"
-
 msgid "Set visible"
 msgstr "Ställ in som synlig"
 
 msgid "Set invisible"
 msgstr "Ställ in som osynlig"
 
-msgid "Export CSV"
-msgstr "Exportera till CSV-fil"
-
 msgid "Edit products"
 msgstr "Redigera produkter"
 
-#, python-format
-msgid "Product %s copy successfull."
-msgstr "Produkt %s kopia framgångsrik."
+#, python-brace-format
+msgid "{product_name} was successfully copied"
+msgstr ""
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
 msgstr "Minsta inköpskvantitet har avrundats för att matcha försäljningsenheten."
@@ -1134,32 +1142,6 @@ msgstr "Redigera paket: %s"
 
 msgid "Package cleared."
 msgstr "Paketet tömt."
-
-msgid ""
-"Are you sure? This will unlink all children and remove all variation "
-"variables."
-msgstr "Är du säker? Detta kommer att ta bort kopplingar för alla underordnade saker och ta bort alla variantvariabler."
-
-msgid "Clear variation"
-msgstr "Töm variant"
-
-msgid ""
-"Are you sure? This will remove all variation variables, converting children "
-"to direct links."
-msgstr "Är du säker? Detta tar bort alla variantvariabler och konvertera underordnade artiklar till direkta länkar."
-
-msgid "Convert to simple variation"
-msgstr "Konvertera till enkel variant"
-
-#, python-format
-msgid "Edit Variation: %s"
-msgstr "Redigera variant: %s"
-
-msgid "Variation cleared."
-msgstr "Variant tömd."
-
-msgid "Variation simplified."
-msgstr "Variant ändrad till enkel variant."
 
 msgid "Primary Image"
 msgstr "Primärbild"
@@ -1218,12 +1200,6 @@ msgstr "Överordnad: %s"
 msgid "Sibling: %s"
 msgstr "Syskon: %s"
 
-msgid "Variations"
-msgstr "Varianter"
-
-msgid "Manage Variations"
-msgstr "Hantera varianter"
-
 msgid "Packages"
 msgstr "Paket"
 
@@ -1232,9 +1208,6 @@ msgstr "Hantera paket"
 
 msgid "Convert to Package Parent"
 msgstr "Konvertera till överordnat paket"
-
-msgid "Convert to Variation Parent"
-msgstr "Konvertera till överordnad variant"
 
 msgid "Sales Dashboard"
 msgstr "Försäljningsöversikt"
@@ -1561,12 +1534,21 @@ msgstr "Standard skatteklass"
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Välj butiker för denna leverantör. Håll den tom för att dela med alla butiker."
 
+msgid "Is approved for {}"
+msgstr ""
+
+msgid "Indicates whether this supplier is approved for the shop."
+msgstr ""
+
 #, python-format
 msgid "No %s module"
 msgstr "Ingen %s modul"
 
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "Det är inte möjligt att hantera inventering när ingen modul har valts."
+
+msgid "{} is not in the Shops field."
+msgstr ""
 
 #, python-format
 msgid "Success! %s has been marked deleted."
@@ -1612,6 +1594,9 @@ msgstr "Lägg till några användare att hantera din butik"
 
 msgid "New user"
 msgstr "Ny användare"
+
+msgid "Send Reset Password Email"
+msgstr ""
 
 #, python-format
 msgid ""
@@ -1926,12 +1911,6 @@ msgstr "Meny"
 
 msgid "Search for"
 msgstr "Sök efter"
-
-msgid "Go to dashboard"
-msgstr "Gå till instrumentpanelen"
-
-msgid "Go home"
-msgstr "Gå till startsidan"
 
 msgid "Hello"
 msgstr "Hej"
@@ -3114,6 +3093,9 @@ msgstr "Spårningskoder"
 msgid "Address Information"
 msgstr "Adressinformation"
 
+msgid "Picture"
+msgstr ""
+
 msgid "Text"
 msgstr "Text"
 
@@ -3179,22 +3161,28 @@ msgstr "Återbetald"
 msgid "Create new shipment for %(supplier_name)s"
 msgstr "Skapa ny leverans för %(supplier_name)s"
 
-msgid "Tracking Code"
-msgstr "Spårningskod"
-
 msgid "Created"
 msgstr "Skapad"
+
+msgid "Mark as sent"
+msgstr ""
 
 msgid ""
 "Shipped shipments should not be deleted. Deletion will affect products "
 "physical stock count. Delete anyway?"
 msgstr "Levereras beställningar bör inte tas bort. Radering kommer att påverka produkters fysisk lagerinventering. Radera ändå?"
 
+msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
 msgid "Line #"
 msgstr "Rad #"
 
 msgid "Refunded Quantity"
 msgstr "Återbetalat antal"
+
+msgid " Mark as sent "
+msgstr ""
 
 msgid "Refund Amount"
 msgstr "Återbetalningsbelopp."
@@ -3238,6 +3226,9 @@ msgstr "Välj alla behörigheter"
 msgid "Deselect all permissions"
 msgstr "Avmarkera alla behörigheter"
 
+msgid "Open all permission groups"
+msgstr ""
+
 msgid "(All permissions granted)"
 msgstr "(Alla behörigheter beviljade)"
 
@@ -3259,6 +3250,9 @@ msgstr "Funktions behörigheter"
 msgid ""
 "Select the permissions to enable access to specific features of the module."
 msgstr "Välj behörigheter för att möjliggöra åtkomst till specifika funktioner i modulen."
+
+msgid "Close all permission groups"
+msgstr ""
 
 msgid "Error!"
 msgstr "Fel!"
@@ -3395,35 +3389,6 @@ msgstr "Välj produkter nedan för att skapa ett paket."
 
 msgid "Package Products"
 msgstr "Paketprodukter"
-
-msgid "Simple Variation Children"
-msgstr "Enkelt underordnad variant"
-
-msgid "Variable Children"
-msgstr "Underordnade variabler"
-
-msgid "Combination"
-msgstr "Kombination"
-
-msgid "Variables"
-msgstr "Variabler"
-
-msgid "New template"
-msgstr "Ny mall"
-
-msgid " Cancel "
-msgstr "Avbryt"
-
-msgid "This product is not yet a variation."
-msgstr "Denna produkt är inte ännu en variant."
-
-msgid "To create a simple variation, choose products below."
-msgstr "Att skapa en enkel variant, välja produkter nedan."
-
-msgid ""
-"To create a variation with multiple variables, create the variables on the "
-"Variables tab and then link them to products here."
-msgstr "Att skapa en variant med flera variabler, skapa variabler på fliken Variabler och sedan länka dem till produkter här."
 
 msgid "Recent Orders"
 msgstr "Tidigare köp"
@@ -3656,6 +3621,9 @@ msgstr "Spara och skapa ny"
 msgid "Are you sure you wish to delete %s?"
 msgstr "Är du säker du vill ta bort %s?"
 
+msgid "Export as CSV file"
+msgstr ""
+
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr "Visar %(per_page)s av %(n_items)s %(verbose_name_plural)s"
@@ -3714,6 +3682,10 @@ msgstr "%s redigerades."
 #, python-format
 msgid "New %s"
 msgstr "Ny %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Namnlös %s"
 
 #, python-format
 msgid "Only one %(model)s permitted."

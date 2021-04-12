@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:59+0000\n"
-"PO-Revision-Date: 2020-10-15 13:39+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -495,57 +495,6 @@ msgstr "Tietoja ei löytynyt."
 msgid "Warning! Missing JavaScript dependencies detected."
 msgstr "Varoitus! Puuttuvat JavaScript-riippuvuudet havaittu."
 
-msgid "Identifier"
-msgstr "Tunniste"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr "Arvon %s nimi"
-
-msgid "Delete value"
-msgstr "Poista arvo"
-
-msgid "Are you sure?"
-msgstr "Oletko varma?"
-
-msgid "Delete Variable"
-msgstr "Poista muuttuja"
-
-msgid "Add new value"
-msgstr "Lisää uusi arvo"
-
-msgid "Variable Name"
-msgstr "Muuttujan nimi"
-
-msgid "Variable"
-msgstr "Muuttuja"
-
-msgid "Identifer"
-msgstr "Tunniste"
-
-msgid "New template"
-msgstr "Uusi malli"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "Näytä tunnistekentät (Edistyneille käyttäjille)"
-
-msgid "There are no variables defined."
-msgstr "Yhtään muuttujaa ei ole määritetty."
-
-msgid "Variation Template"
-msgstr "Muunnosmalli"
-
-msgid "Select Template"
-msgstr "Valitse malli"
-
-msgid ""
-"Selecting and saving a template will clear all variable children selections "
-"for this product."
-msgstr "Mallin valitseminen ja tallentaminen tyhjentää kaikki muuttujan alavalinnat tälle tuotteelle."
-
-msgid "Add new variable"
-msgstr "Lisää uusi muuttuja"
-
 msgid "No browser URL for kind:"
 msgstr "Ei URL-osoitetta selaimessa tyypille:"
 
@@ -731,6 +680,9 @@ msgstr "Tyhjennä suodattimet"
 msgid "Reset"
 msgstr "Tyhjennä"
 
+msgid "Apply filters"
+msgstr ""
+
 msgid "Sort by"
 msgstr "Järjestä"
 
@@ -758,9 +710,6 @@ msgstr "Valitse"
 
 msgid "Filters"
 msgstr "Suodattimet"
-
-msgid "Done"
-msgstr "Tehty"
 
 msgid "Show filters"
 msgstr "Näytä suodattimet"

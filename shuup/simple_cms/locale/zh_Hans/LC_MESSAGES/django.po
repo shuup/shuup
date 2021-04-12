@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-21 19:51+0000\n"
-"PO-Revision-Date: 2019-03-15 05:58+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2020-11-09 17:10+0000\n"
+"PO-Revision-Date: 2020-11-10 17:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,11 +35,11 @@ msgstr "添加网页"
 msgid "New page"
 msgstr "新页面"
 
-msgid "Available from"
-msgstr "可从"
+msgid "Available since"
+msgstr ""
 
-msgid "Available to"
-msgstr "可供"
+msgid "Available until"
+msgstr ""
 
 msgid "Template"
 msgstr "模板"
@@ -47,8 +47,8 @@ msgstr "模板"
 msgid "URL already exists."
 msgstr "URL已经存在。"
 
-msgid "URL must be unique"
-msgstr "URL必须是唯一的"
+msgid "URL must be unique."
+msgstr ""
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -72,6 +72,10 @@ msgstr "创建日期"
 msgid "Page"
 msgstr "页面"
 
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
 msgid "Content in this placeholder is shown for this page only."
 msgstr "此占位符中的内容仅为此页显示。"
 
@@ -88,23 +92,32 @@ msgstr "文章"
 msgid "shop"
 msgstr "商店"
 
-msgid "available from"
-msgstr "可从"
+msgid "supplier"
+msgstr ""
+
+msgid "available since"
+msgstr ""
 
 msgid ""
-"Set an available from date to restrict the page to be available only after a"
-" certain date and time. This is useful for pages describing sales campaigns "
-"or other time-sensitive pages."
-msgstr "将“可用日期”设置为“仅在某一日期和时间之后才可用”。这对于描述销售活动或其他对时间敏感的页面非常有用。"
-
-msgid "available to"
-msgstr "可供"
-
-msgid ""
-"Set an available to date to restrict the page to be available only after a "
+"Set an available date to restrict the page to be available only after a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
-msgstr "将“可用日期”设置为“仅在某一日期和时间之后才可用”。这对于描述销售活动或其他对时间敏感的页面非常有用。"
+msgstr ""
+
+msgid "available until"
+msgstr ""
+
+msgid ""
+"Set an available date to restrict the page to be available only until a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr ""
+
+msgid "Available for permission groups"
+msgstr ""
+
+msgid "Select the permission groups that can have access to this page."
+msgstr ""
 
 msgid "created by"
 msgstr "创建于"
@@ -125,31 +138,31 @@ msgid "visible in menu"
 msgstr "在菜单可见"
 
 msgid ""
-"Check this if this page should have a link in the top menu of the store "
-"front."
-msgstr "如果这个页面应该在商店正面的顶部菜单中有一个链接，请检查这个链接。"
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
+msgstr ""
 
 msgid "parent"
 msgstr "父类"
 
 msgid ""
-"Set this to a parent page if this page should be subcategorized under "
-"another page."
-msgstr "如果此页应在另一页下进行子分类，则将其设置为父页。"
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
+msgstr ""
 
-msgid "list children on page"
-msgstr "在页面上列出子页面"
+msgid "display children on page"
+msgstr ""
 
-msgid "Check this if this page should list its children pages."
-msgstr "如果此页面应列出其子页面，请检查此选项。"
+msgid "Enable this if this page should display all of its children pages."
+msgstr ""
 
 msgid "show child page timestamps"
 msgstr "显示子页时间戳"
 
 msgid ""
-"Check this if you want to show timestamps on the child pages. Please note, "
+"Enable this if you want to show timestamps on the child pages. Please note, "
 "that this requires the children to be listed on the page as well."
-msgstr "如果要在子页面上显示时间戳，请检查此选项。请注意，这要求孩子也被列在页面上。"
+msgstr ""
 
 msgid "deleted"
 msgstr "删除"
@@ -185,8 +198,8 @@ msgstr "模板路径"
 msgid "render title"
 msgstr "渲染标题"
 
-msgid "Check this if this page should have a visible title"
-msgstr "如果这个页面应该有一个可见的标题，请检查这个。"
+msgid "Enable this if this page should have a visible title."
+msgstr ""
 
 msgid "page"
 msgstr "页面"

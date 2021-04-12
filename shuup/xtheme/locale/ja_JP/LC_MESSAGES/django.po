@@ -1,25 +1,35 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 20:11+0000\n"
-"PO-Revision-Date: 2016-08-04 13:14-0700\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
-"language/ja_JP/)\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja_JP\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.8\n"
+
+msgid "Theme identifiers must match."
+msgstr ""
+
+msgid "Either theme_settings or shop should be informed."
+msgstr ""
+
+msgid "Global plugins"
+msgstr ""
+
+msgid "Theme plugins"
+msgstr ""
 
 msgid "Shuup Extensible Theme Engine"
 msgstr ""
@@ -27,19 +37,105 @@ msgstr ""
 msgid "Themes"
 msgstr "テーマ"
 
-msgid "No theme is active. Click here to activate one."
+msgid "Customize the look and feel of your shop"
 msgstr ""
-"テーマはアクティブではありません。 アクティブ化するにはここをクリック"
-"してください。"
+
+msgid "Customize theme"
+msgstr ""
+
+msgid "No theme is active. Click here to activate one."
+msgstr "テーマはアクティブではありません。 アクティブ化するにはここをクリックしてください。"
 
 msgid "Theming"
+msgstr ""
+
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "Theme Custom CSS/JS"
+msgstr ""
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr ""
+
+msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Filter by location..."
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "activate"
 msgstr ""
 
+msgid "Theme"
+msgstr ""
+
+msgid "Choose a theme for your shop"
+msgstr ""
+
 msgid "Theme activated."
 msgstr "テーマはアクティブ化されました。"
+
+msgid "Custom CSS/JS"
+msgstr ""
+
+msgid "Stylesheets"
+msgstr ""
+
+msgid "The fonts, colors, and styles to use with your theme."
+msgstr ""
+
+msgid "Content in this box is shown to all user types without limitations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr ""
+
+msgid "Content in this box is shown to guests (anonymous users) only."
+msgstr ""
+
+msgid "Content in this box is shown to company contacts only."
+msgstr ""
+
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
+msgstr ""
+
+msgid "Content in this box is shown to person contacts only."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr ""
+
+msgid "Shop '{}' has no active theme"
+msgstr ""
+
+msgid "Inline JavaScript"
+msgstr ""
+
+msgid "Inline CSS"
+msgstr ""
+
+msgid "Inline HTML"
+msgstr ""
+
+msgid "Inline Jinja HTML"
+msgstr ""
 
 msgid "current draft"
 msgstr ""
@@ -59,6 +155,9 @@ msgstr ""
 msgid "created on"
 msgstr ""
 
+msgid "modified on"
+msgstr ""
+
 msgid "status"
 msgstr ""
 
@@ -75,14 +174,35 @@ msgstr ""
 msgid "Theme configuration for %s"
 msgstr ""
 
+msgid "location"
+msgstr ""
+
+msgid "snippet type"
+msgstr ""
+
+msgid "snippet"
+msgstr ""
+
+msgid "themes"
+msgstr ""
+
+msgid "Snippet"
+msgstr ""
+
+msgid "Snippet for {} in {}"
+msgstr ""
+
 msgid "Plugin"
 msgstr "プラグイン"
+
+msgid "Categories"
+msgstr ""
 
 msgid "Category Links"
 msgstr ""
 
 msgid "Title"
-msgstr "タイトル"
+msgstr ""
 
 msgid "Show all categories"
 msgstr ""
@@ -99,22 +219,28 @@ msgstr ""
 msgid "Full width"
 msgstr ""
 
-msgid "Set image to full width of cell"
+msgid "Set image to the full width of cell."
 msgstr ""
 
 msgid "Width (px)"
 msgstr ""
 
-msgid "Leave blank for default width"
+msgid "Leave blank for default width."
 msgstr ""
 
 msgid "Height (px)"
 msgstr ""
 
-msgid "Product Highlights"
+msgid "Newest"
 msgstr ""
 
-msgid "Type"
+msgid "Best Selling"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
+msgid "Product Highlights"
 msgstr ""
 
 msgid "Count"
@@ -123,10 +249,51 @@ msgstr ""
 msgid "Only show in-stock and orderable items"
 msgstr ""
 
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+
 msgid "Product Cross Sells"
 msgstr ""
 
-msgid "Snippets"
+msgid "Show variation parents"
+msgstr ""
+
+msgid "Render variation parents instead of the children."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category Products Highlight"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
+msgstr ""
+
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr ""
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
 msgstr ""
 
 msgid "In-Place Snippet"
@@ -142,6 +309,10 @@ msgid "Resource for end of body"
 msgstr ""
 
 msgid "URL"
+msgstr ""
+
+#, python-format
+msgid "%(name)s Ordering"
 msgstr ""
 
 msgid "Ordering"
@@ -177,15 +348,41 @@ msgstr ""
 msgid "text"
 msgstr ""
 
-msgid "(Untranslated)"
-msgstr ""
-
 #, python-format
 msgid "Click to edit placeholder: %s"
 msgstr "プレースホルダーを編集するにはクリックしてください: %s"
 
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr ""
+
+msgid "End of head"
+msgstr ""
+
+msgid "Start of head"
+msgstr ""
+
+msgid "End of body"
+msgstr ""
+
+msgid "Start of body"
+msgstr ""
+
+msgid "Content start"
+msgstr ""
+
+msgid "Content end"
+msgstr ""
+
+msgid "(Error while rendering.)"
+msgstr ""
+
 msgid "Delete This Cell"
 msgstr "このセルを削除"
+
+msgid "Untranslated"
+msgstr ""
 
 msgid "There's nothing to configure in this plugin."
 msgstr ""
@@ -193,14 +390,28 @@ msgstr ""
 msgid "Save Plugin"
 msgstr "プラグインを保存する"
 
+msgid ""
+"Remember to publish your changes for this placeholder when you are done, by "
+"clicking the Publish Changes button at the top."
+msgstr ""
+
 msgid "Edit Placeholder"
 msgstr "プレースホルダーを編集する"
+
+msgid ""
+"Edit plugins inside this placeholder. By saving the individual plugin, the "
+"changes are saved as a draft, and only you are able to see the changes. To "
+"make your changes Public, Click the Publish Changes button."
+msgstr ""
 
 msgid "Add new cell"
 msgstr "新しいセルを追加"
 
 msgid "Delete row"
 msgstr "行を削除"
+
+msgid "Move row"
+msgstr ""
 
 msgid "Add new row"
 msgstr "新しい行を追加"
@@ -211,24 +422,6 @@ msgstr "テーマ設定"
 msgid "No themes are installed."
 msgstr "テーマはインストールされていません。"
 
-msgid "Theme"
-msgstr ""
-
-msgid "Actions"
-msgstr "アクション"
-
-msgid "Author"
-msgstr ""
-
-msgid "Currently active"
-msgstr "現在アクティブ"
-
-msgid "Activate"
-msgstr ""
-
-msgid "Configure"
-msgstr ""
-
 #, python-format
 msgid "Theme Configuration: %(name)s"
 msgstr ""
@@ -236,35 +429,58 @@ msgstr ""
 msgid "There's nothing to configure in this theme."
 msgstr ""
 
+msgid "Select theme"
+msgstr ""
+
+msgid "Theme Guide"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Configure"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Theme Name"
+msgstr ""
+
+msgid "Actions"
+msgstr "アクション"
+
+msgid "Currently active"
+msgstr "現在アクティブ"
+
 msgid "Revert Changes"
 msgstr "変更を元に戻す"
 
 msgid "Publish Changes"
 msgstr "変更を保存する"
 
-msgid "No access to editing"
+msgid "No access to editing."
 msgstr ""
 
 #, python-format
-msgid "Unknown command %s"
+msgid "Unknown command: `%s`."
 msgstr ""
 
-msgid "Unable to determine current theme."
+msgid "Unable to determine the current theme."
 msgstr ""
 
 #, python-format
-msgid "Cannot add more than %d cells in one row."
+msgid "Can't add more than %d cells in one row."
 msgstr ""
 
-#, fuzzy
-#| msgid "Publish Changes"
 msgid "Published"
-msgstr "変更を保存する"
+msgstr ""
 
-#, fuzzy
-#| msgid "Revert Changes"
 msgid "Reverted"
-msgstr "変更を元に戻す"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
 
 msgid "Full Width"
 msgstr "全幅"
@@ -284,8 +500,20 @@ msgstr " 三分の一 (1/3)"
 msgid "One Fourth (1/4)"
 msgstr "四分の一 (1/4)"
 
+msgid "Auto"
+msgstr ""
+
 msgid "Cell width"
 msgstr "セルの幅"
+
+msgid "Cell align"
+msgstr ""
+
+msgid "Extra classes"
+msgstr ""
+
+msgid "Add extra CSS classes names to the cell"
+msgstr ""
 
 msgid "No Plugin"
 msgstr ""

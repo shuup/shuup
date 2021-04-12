@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-10 16:38+0000\n"
-"PO-Revision-Date: 2016-07-30 11:57+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:21+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,14 +19,44 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "HTML"
+msgstr ""
+
+msgid "Plain text"
+msgstr ""
+
 msgid "Subject"
 msgstr "Assunto"
+
+msgid "Email Template"
+msgstr ""
 
 msgid "Email Body"
 msgstr "Corpo do E-mail"
 
+msgid "Content type"
+msgstr ""
+
 msgid "Recipient"
 msgstr "Destinatário"
+
+msgid "Reply-To"
+msgstr ""
+
+msgid "Carbon Copy (CC)"
+msgstr ""
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr ""
+
+msgid "From email"
+msgstr ""
+
+msgid ""
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
+msgstr ""
 
 msgid "Language"
 msgstr "Idioma"
@@ -45,11 +75,11 @@ msgstr "Se definido, este identificador será registrado no destino do log de ev
 msgid "Notifications"
 msgstr "Notificações"
 
-msgid "Notification scripts"
-msgstr "Scripts de notificação"
-
 msgid "Show notification scripts"
 msgstr "Mostrar scripts de notificação"
+
+msgid "Email Templates"
+msgstr ""
 
 msgid "Event"
 msgstr "Evento"
@@ -70,9 +100,9 @@ msgid "Choose whether this script should be activated when its event fires."
 msgstr "Escolha se este script deve ser ativado quando seus eventos forem disparados."
 
 msgid ""
-"Warning: Changing the event for an existing script may have unexpected "
+"Warning! Changing the event for an existing script may have unexpected "
 "effects."
-msgstr "Aviso: Alterar o evento de um script existente pode ter efeitos inesperados."
+msgstr ""
 
 msgid "Template"
 msgstr "Template"
@@ -80,14 +110,59 @@ msgstr "Template"
 msgid "Bind to Variable"
 msgstr "Vincular à Variável"
 
-msgid "Edit Script Contents..."
-msgstr "Editar Conteúdo do Script..."
+msgid "This field is missing content."
+msgstr ""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+msgid "Edit Script Contents"
+msgstr ""
+
+msgid "Edit Script (advanced)"
+msgstr ""
+
+msgid "Edit Template"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
 
 msgid "Name"
 msgstr "Nome"
 
 msgid "Enabled"
 msgstr "Habilitado"
+
+msgid "New Script"
+msgstr ""
+
+msgid "New From Template"
+msgstr ""
+
+msgid "Script created from template."
+msgstr ""
+
+msgid "Template Script not found."
+msgstr ""
+
+msgid "Templated script not found."
+msgstr ""
+
+msgid "Script updated."
+msgstr ""
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
@@ -150,6 +225,14 @@ msgstr "alto"
 msgid "critical"
 msgstr "crítico"
 
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
 msgid "recipient type"
 msgstr "tipo de destinatário"
 
@@ -183,6 +266,96 @@ msgstr "nome"
 msgid "enabled"
 msgstr "habilitado"
 
+msgid "template identifier"
+msgstr ""
+
+msgid "the template identifier used to create this script"
+msgstr ""
+
+msgid "Password Reset"
+msgstr ""
+
+msgid "This event is triggered when password reset is requested."
+msgstr ""
+
+msgid "Site name"
+msgstr ""
+
+msgid "User secret"
+msgstr ""
+
+msgid "User to recover"
+msgstr ""
+
+msgid "Token"
+msgstr ""
+
+msgid "Recovery URL"
+msgstr ""
+
+msgid "To Email"
+msgstr ""
+
+msgid "The subject of the email"
+msgstr ""
+
+msgid "Email content"
+msgstr ""
+
+msgid "The content of the email."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Other destination"
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Fill with the destination email address."
+msgstr ""
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr ""
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr ""
+
+msgid "Send Password Reset Link"
+msgstr ""
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is requested\n"
+"    "
+msgstr ""
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr ""
+
 msgid "Edit Script Information"
 msgstr "Editar Informações do Script"
 
@@ -195,14 +368,26 @@ msgstr "Detalhes do Script"
 msgid "OK"
 msgstr "OK"
 
+msgid "Show available variables"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Select the script template to be created"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
 msgid "Edit Script"
 msgstr "Editar Script"
 
 msgid "Edit Step"
 msgstr "Editar Instrução"
 
-msgid "Done"
-msgstr "Concluído"
+msgid "Save changes"
+msgstr "Salvar alterações"
 
 msgid "Please correct the errors below."
 msgstr "Por favor, corrija os erros abaixo."
@@ -210,8 +395,20 @@ msgstr "Por favor, corrija os erros abaixo."
 msgid "Variables"
 msgstr "Variáveis"
 
-msgid "Save changes"
-msgstr "Salvar alterações"
+msgid "Script Template: {}"
+msgstr ""
+
+msgid "Configure the Script Template"
+msgstr ""
+
+msgid "Modify Script"
+msgstr ""
+
+msgid "Create Script"
+msgstr ""
+
+msgid "Create"
+msgstr ""
 
 msgid "Boolean"
 msgstr "Booleano"

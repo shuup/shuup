@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
 # Алекс Прометеев <promet.alex@gmail.com>, 2017
 # Translator HIO.E <translater@hiqe.ru>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2018-06-25 20:19+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2021-03-11 12:57+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,25 +21,25 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-msgid "An error occurred."
-msgstr "Произошла ошибка."
+msgid "Error!"
+msgstr "Ошибка!"
 
-msgid "Success."
-msgstr "Успешно."
+msgid "Success!"
+msgstr "Успех!"
 
-msgid "An unspecified error occurred."
-msgstr "Произошла неизвестная ошибка."
+msgid "Error! An unspecified error occurred."
+msgstr "Ошибка! Произошла неопределенная ошибка."
 
-msgid "Unexpected edit data received."
-msgstr "Получены неожиданные данные редактирования."
+msgid "Warning! Unexpected edit data was received."
+msgstr "Внимание! Неожиданные данные редактирования были получены."
 
 msgid "Add new"
 msgstr "Добавить новый"
 
 msgid ""
 "Delete this item?\n"
-"This can not be undone."
-msgstr "Удалить этот элемент?\nОсторожно: данное действие не может быть отменено."
+"This is final and can't be undone."
+msgstr "Удалить этот элемент?\nЭто окончательно и не может быть отменено."
 
 msgid "New"
 msgstr "Новый"
@@ -58,14 +59,14 @@ msgstr "Включить"
 msgid "Delete"
 msgstr "Удалить"
 
-msgid "Are you sure you wish to delete this step?"
+msgid "Are you sure you want to delete this step?"
 msgstr "Вы уверены, что хотите удалить этот шаг?"
 
 msgid "If"
-msgstr ""
+msgstr "Если"
 
 msgid "of these conditions hold..."
-msgstr ""
+msgstr "этих условий выполняются ..."
 
 msgid "then execute these actions..."
 msgstr "Тогда выполните следующие действия..."

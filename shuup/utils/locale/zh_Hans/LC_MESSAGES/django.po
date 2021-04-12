@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-16 20:50+0000\n"
-"PO-Revision-Date: 2019-03-14 07:06+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2020-09-16 00:14+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,6 +76,13 @@ msgstr[0] "%s 天"
 #, python-format
 msgid "%(min)s--%(max)s days"
 msgstr "%(min)s--%(max)s天"
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr ""
+
+msgid "Root"
+msgstr ""
 
 msgid "This field is required."
 msgstr "这个字段是必需的。"

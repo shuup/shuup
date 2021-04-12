@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 21:27+0000\n"
-"PO-Revision-Date: 2016-10-22 08:44+0000\n"
-"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-06-30 00:17+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,8 +36,11 @@ msgstr "Modifica informazioni azienda."
 msgid "Address Book"
 msgstr "Rubrica indirizzi"
 
-msgid "Will become default user email when linked"
-msgstr "Diventerà l'indirizzo email di default quando collegato"
+msgid "Language"
+msgstr ""
+
+msgid "Will become default user email when linked."
+msgstr ""
 
 msgid "Given Tax Number already exists. Please contact support."
 msgstr "La partita iva inserita esiste già. Contatta il nostro supporto."
@@ -50,6 +53,17 @@ msgstr "Tipo Indirizzo"
 
 msgid "Address Status"
 msgstr "Stato Indirizzo"
+
+msgid "Company information was saved."
+msgstr ""
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr ""
+
+msgid "Customer Email"
+msgstr ""
 
 msgid "Home"
 msgstr "Pagina Iniziale"
@@ -65,27 +79,6 @@ msgstr "Informazioni di Contatto"
 
 msgid "Address"
 msgstr "Indirizzo"
-
-msgid "Name"
-msgstr "Nome"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Phone"
-msgstr "Telefono"
-
-msgid "Street"
-msgstr "Indirizzo"
-
-msgid "Postal code"
-msgstr "Codice postale"
-
-msgid "City"
-msgstr "Città"
-
-msgid "Region"
-msgstr "Provincia"
 
 msgid "Default Addresses"
 msgstr "Indirizzi Predefiniti"
@@ -132,6 +125,15 @@ msgstr "Cambia password"
 msgid "Basic Information"
 msgstr "Informazioni base"
 
+msgid "Name"
+msgstr "Nome"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Telefono"
+
 msgid "Tax Number"
 msgstr "Partita IVA"
 
@@ -153,8 +155,28 @@ msgstr "No"
 msgid "Company account information"
 msgstr "Informazioni Account Azienda"
 
+msgid ""
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr ""
+
 msgid "User account information"
 msgstr "Informazioni Account Utente"
+
+msgid "Not specified"
+msgstr ""
+
+msgid "Street"
+msgstr "Indirizzo"
+
+msgid "Postal code"
+msgstr "Codice postale"
+
+msgid "City"
+msgstr "Città"
+
+msgid "Country"
+msgstr ""
 
 msgid "Billing information"
 msgstr "Informazioni Fatturazione"
@@ -189,17 +211,14 @@ msgstr "Informazioni Azienda"
 msgid "User information"
 msgstr "Informazioni Utente"
 
-msgid "Password successfully changed."
-msgstr "La password è stata modificata"
+msgid "Password changed."
+msgstr ""
 
-msgid "Account information saved successfully."
-msgstr "Informazione Account salvate."
+msgid "Account information was saved."
+msgstr ""
 
-msgid "Company information saved successfully."
-msgstr "Informazioni Account Azienda salvate."
+msgid "Address information was saved."
+msgstr ""
 
-msgid "Address information saved successfully."
-msgstr "Informazioni indirizzo salvate con successo."
-
-msgid "Cannot remove address"
-msgstr "Impossibile rimuovere l'indirizzo"
+msgid "Cannot remove address because it doesn't exist."
+msgstr ""

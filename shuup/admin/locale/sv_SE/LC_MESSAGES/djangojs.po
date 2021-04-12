@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 11:59+0000\n"
-"PO-Revision-Date: 2020-10-15 13:29+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -485,57 +485,6 @@ msgstr "Kunde inte hitta några poster."
 msgid "Warning! Missing JavaScript dependencies detected."
 msgstr "Varning! Saknade JavaScript-beroenden har upptäckts."
 
-msgid "Identifier"
-msgstr "Identifierare"
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr "Värdet %s Namn"
-
-msgid "Delete value"
-msgstr "Ta bort värde"
-
-msgid "Are you sure?"
-msgstr "Är du säker?"
-
-msgid "Delete Variable"
-msgstr "Ta bort variabel"
-
-msgid "Add new value"
-msgstr "Lägga till nytt värde"
-
-msgid "Variable Name"
-msgstr "Variabelnamn"
-
-msgid "Variable"
-msgstr "Variabel"
-
-msgid "Identifer"
-msgstr "Identifierare"
-
-msgid "New template"
-msgstr "Ny mall"
-
-msgid "Show identifier fields (for advanced users)"
-msgstr "Visa identifieringsfält (för avancerade användare)"
-
-msgid "There are no variables defined."
-msgstr "Det finns inga definierade variabler."
-
-msgid "Variation Template"
-msgstr "Variationsmall"
-
-msgid "Select Template"
-msgstr "Välj mall"
-
-msgid ""
-"Selecting and saving a template will clear all variable children selections "
-"for this product."
-msgstr "Om du väljer och sparar en mall raderas alla variabler för barn för den här produkten."
-
-msgid "Add new variable"
-msgstr "Lägg till ny variabel"
-
 msgid "No browser URL for kind:"
 msgstr "Ingen webbläsar URL för typ:"
 
@@ -721,6 +670,9 @@ msgstr "Återställ filter"
 msgid "Reset"
 msgstr "Rensa"
 
+msgid "Apply filters"
+msgstr ""
+
 msgid "Sort by"
 msgstr "Sortera enligt"
 
@@ -748,9 +700,6 @@ msgstr "Välj"
 
 msgid "Filters"
 msgstr "Filter"
-
-msgid "Done"
-msgstr "Gjort"
 
 msgid "Show filters"
 msgstr "Visa filter"

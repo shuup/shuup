@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 # 
+# Translators:
+# An Nesterov <arch.nesterov@gmail.com>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 19:23+0000\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"PO-Revision-Date: 2018-05-29 19:55+0000\n"
+"Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +25,7 @@ msgid "GDPR"
 msgstr ""
 
 msgid "Anonymize"
-msgstr ""
+msgstr "Анонимизировать"
 
 msgid ""
 "This action will replace all contact personal data with random values making"
@@ -30,31 +34,37 @@ msgid ""
 msgstr ""
 
 msgid "Download data"
-msgstr ""
+msgstr "Скачать данные"
 
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 msgid "General Data Protection Regulation"
 msgstr ""
 
-msgid "Contact anonymized!"
+msgid "Contact was anonymized."
 msgstr ""
 
 msgid "My Data"
-msgstr ""
+msgstr "Мои данные"
 
 msgid "Customer data"
-msgstr ""
+msgstr "Данные клиента"
 
 msgid "enabled"
-msgstr ""
+msgstr "включено "
 
 msgid "Define if the GDPR is active."
 msgstr ""
 
-msgid "privacy policy page"
+msgid "skip consent on login"
+msgstr "пропустить согласие при входе в систему"
+
+msgid "Do not require consent on login when GDPR is activated."
 msgstr ""
+
+msgid "privacy policy page"
+msgstr "страница политики конфиденциальности"
 
 msgid ""
 "Choose your privacy policy page here. If this page changes, customers will "
@@ -62,7 +72,7 @@ msgid ""
 msgstr ""
 
 msgid "consent pages"
-msgstr ""
+msgstr "страницы согласия"
 
 msgid ""
 "Choose pages here which are being monitored for customer consent. If any of "
@@ -70,15 +80,23 @@ msgid ""
 msgstr ""
 
 msgid "cookie banner content"
-msgstr ""
+msgstr "содержание баннера cookie"
 
 msgid "The text to be presented to users in a pop-up warning."
 msgstr ""
 
 msgid "cookie privacy excerpt"
-msgstr ""
+msgstr "отрывок о конфиденциальности файлов cookie"
 
 msgid "The summary text to be presented about cookie privacy."
+msgstr ""
+
+msgid "login consent text"
+msgstr "текст соглашения о авторизации"
+
+msgid ""
+"Shown in login page between the form and the button. Optional, but should be"
+" considered when the consent on login is disabled."
 msgstr ""
 
 msgid "GDPR settings"
@@ -88,10 +106,16 @@ msgid "GDPR for {}"
 msgstr ""
 
 msgid "always active"
-msgstr ""
+msgstr "всегда активный"
+
+msgid "active by default"
+msgstr "по умолчанию активный"
+
+msgid "whether this cookie category is active by default"
+msgstr "активна ли данная категория файлов cookie по умолчанию"
 
 msgid "cookies used"
-msgstr ""
+msgstr "использованные cookie-файлы"
 
 msgid ""
 "Comma separated list of cookies names, prefix or suffix that will be "
@@ -99,10 +123,10 @@ msgid ""
 msgstr ""
 
 msgid "name"
-msgstr ""
+msgstr "название"
 
 msgid "how we use"
-msgstr ""
+msgstr "как мы используем"
 
 msgid "Describe the purpose of this category of cookies and how it is used."
 msgstr ""
@@ -117,10 +141,10 @@ msgid "GDPR cookie category for {}"
 msgstr ""
 
 msgid "created on"
-msgstr ""
+msgstr "созданный"
 
 msgid "consent documents"
-msgstr ""
+msgstr "документы согласия"
 
 msgid "GDPR user consent"
 msgstr ""
@@ -139,14 +163,14 @@ msgid ""
 "class='gdpr_consent_doc_check'>{}</a>"
 msgstr ""
 
-msgid "You must accept to this to register."
-msgstr ""
+msgid "You must accept this in order to register."
+msgstr "Вы должны принять это, чтобы зарегистрироваться."
 
-msgid "You must accept to this to order."
-msgstr ""
+msgid "You must accept this to order."
+msgstr "Вы должны принять это, чтобы заказать."
 
-msgid "You must accept to this to authenticate."
-msgstr ""
+msgid "You must accept this in order to authenticate."
+msgstr "Вы должны принять это, чтобы пройти аутентификацию."
 
 msgid ""
 "<p>This website stores cookies on your computer. These cookies are used to "
@@ -171,22 +195,22 @@ msgid ""
 msgstr ""
 
 msgid "General Settings"
-msgstr ""
+msgstr "Общие настройки"
 
 msgid "Cookie Categories"
-msgstr ""
+msgstr "Категории файлов cookie"
 
 msgid "Add new cookie category"
-msgstr ""
+msgstr "Добавить новую категорию файлов cookie"
 
 msgid "Use this form to create a new cookie category"
-msgstr ""
+msgstr "Используйте эту форму для создания новой категории файлов cookie"
 
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Политика конфиденциальности"
 
 msgid "Last updated"
-msgstr ""
+msgstr "Последнее обновление"
 
 #, python-format
 msgid ""
@@ -231,10 +255,10 @@ msgid ""
 msgstr ""
 
 msgid "Important Information"
-msgstr ""
+msgstr "Важная информация"
 
 msgid "Changes to this Privacy Policy"
-msgstr ""
+msgstr "Изменения в данной Политике конфиденциальности"
 
 #, python-format
 msgid ""
@@ -251,7 +275,7 @@ msgid ""
 msgstr ""
 
 msgid "Contact Us"
-msgstr ""
+msgstr "Свяжитесь с нами"
 
 #, python-format
 msgid ""
@@ -262,11 +286,11 @@ msgstr ""
 
 #, python-format
 msgid "Use of the Online Store by %(company_name)s and our Customers"
-msgstr ""
+msgstr "Использование интернет-магазина нашими%(company_name)s и клиентами"
 
 #, python-format
 msgid "The %(company_name)s Online Store"
-msgstr ""
+msgstr "%(company_name)sИнтернет-магазин"
 
 #, python-format
 msgid ""
@@ -275,13 +299,13 @@ msgid ""
 msgstr ""
 
 msgid "Customer has two ways of providing information to us:"
-msgstr ""
+msgstr "У клиента есть два способа предоставить нам информацию:"
 
 msgid "Registering to our page"
-msgstr ""
+msgstr "Регистрация на нашей странице"
 
 msgid "Ordering products from us"
-msgstr ""
+msgstr "Заказ товаров у нас"
 
 msgid ""
 "This, voluntarely given, information, which is stored and managed on our "
@@ -291,7 +315,7 @@ msgstr ""
 
 #, python-format
 msgid "Use by %(company_name)s"
-msgstr ""
+msgstr "Используется %(company_name)s"
 
 msgid ""
 "Information that we collect and manage using this Online Store belongs to us"
@@ -299,7 +323,7 @@ msgid ""
 msgstr ""
 
 msgid "Use by Our Customers"
-msgstr ""
+msgstr "Использование нашими клиентами"
 
 #, python-format
 msgid ""
@@ -314,7 +338,7 @@ msgid ""
 msgstr ""
 
 msgid "Sensitive Information"
-msgstr ""
+msgstr "Конфиденциальная информация"
 
 msgid ""
 "This refers to credit or debit card numbers, personal financial account "
@@ -325,10 +349,10 @@ msgid ""
 msgstr ""
 
 msgid "Information We Collect"
-msgstr ""
+msgstr "Информация, которую мы собираем"
 
 msgid "When You Visit our Online Store"
-msgstr ""
+msgstr "Когда вы посещаете наш интернет-магазин"
 
 msgid ""
 "You are free to explore the Online Store without providing any Personal "
@@ -338,7 +362,7 @@ msgid ""
 msgstr ""
 
 msgid "Personal Information"
-msgstr ""
+msgstr "Личная информация"
 
 msgid ""
 "This refers to any information that you voluntarily submit to us and that "
@@ -356,7 +380,7 @@ msgid ""
 msgstr ""
 
 msgid "Navigational Information"
-msgstr ""
+msgstr "Навигационная информация"
 
 msgid ""
 "This refers to information about your computer and your visits to this "
@@ -366,7 +390,7 @@ msgid ""
 msgstr ""
 
 msgid "Payment Information"
-msgstr ""
+msgstr "Информация по оплате"
 
 msgid ""
 "We collect and process payment information from you when you order from the "
@@ -376,7 +400,7 @@ msgid ""
 msgstr ""
 
 msgid "Information About Children"
-msgstr ""
+msgstr "Информация о людях"
 
 #, python-format
 msgid ""
@@ -388,24 +412,26 @@ msgid ""
 msgstr ""
 
 msgid "How We Use Information We Collect"
-msgstr ""
+msgstr "Как мы используем информацию, которую собираем"
 
 msgid "Compliance with Our Privacy Policy"
-msgstr ""
+msgstr "Соблюдение нашей Политики конфиденциальности"
 
 msgid ""
 "We use the information we collect only in compliance with this Privacy "
 "Policy."
 msgstr ""
+"Мы используем информацию, которую собираем, только в соответствии с "
+"настоящей Политикой конфиденциальности."
 
 msgid "We Never Sell Personal Information"
-msgstr ""
+msgstr "Мы никогда не разглашаем личную информацию"
 
 msgid "We will never sell your Personal Information to any third party."
-msgstr ""
+msgstr "Мы никогда не будем разглашать вашу личную информацию третьим лицам."
 
 msgid "Use of Personal Information"
-msgstr ""
+msgstr "Использование личной информации"
 
 #, python-format
 msgid ""
@@ -430,7 +456,7 @@ msgid ""
 msgstr ""
 
 msgid "Use of Navigational Information"
-msgstr ""
+msgstr "Использование навигационной информации"
 
 #, python-format
 msgid ""
@@ -441,7 +467,7 @@ msgid ""
 msgstr ""
 
 msgid "Customer Testimonials and Comments"
-msgstr ""
+msgstr "Отзывы и комментарии клиентов"
 
 msgid ""
 "We post customer testimonials and comments on our Online Store, which may "
@@ -450,7 +476,7 @@ msgid ""
 msgstr ""
 
 msgid "Use of Credit Card Information"
-msgstr ""
+msgstr "Использование информации о кредитных картах"
 
 msgid ""
 "We use a third-party service provider to manage credit card processing. This"
@@ -459,7 +485,7 @@ msgid ""
 msgstr ""
 
 msgid "Service Providers"
-msgstr ""
+msgstr "Поставщики услуг"
 
 msgid ""
 "We employ other companies and people to provide services to visitors to our "
@@ -475,7 +501,7 @@ msgid ""
 msgstr ""
 
 msgid "Security of your Personal Information"
-msgstr ""
+msgstr "Безопасность вашей личной информации"
 
 msgid ""
 "We use a variety of security technologies and procedures to help protect "
@@ -493,9 +519,11 @@ msgid ""
 "If you have any questions about the security of your Personal Information, "
 "you can contact us at %(store_email)s."
 msgstr ""
+"Если у вас есть какие-либо вопросы о безопасности вашей личной информации, "
+"вы можете связаться с нами по%(store_email)s."
 
 msgid "Social Media Features"
-msgstr ""
+msgstr "Особенности социальных сетей"
 
 msgid ""
 "Our Online Store may include Social Media Features, such as the Facebook "
@@ -513,7 +541,7 @@ msgid ""
 msgstr ""
 
 msgid "External Websites"
-msgstr ""
+msgstr "Внешние веб-сайты"
 
 msgid ""
 "Our Online Store provide links to other websites. We do not control, and are"
@@ -525,7 +553,7 @@ msgid ""
 msgstr ""
 
 msgid "Retention of Personal Information"
-msgstr ""
+msgstr "Сохранение личной информации"
 
 msgid ""
 "We retain Personal Information that you provide us as long as we consider it"
@@ -542,7 +570,7 @@ msgid ""
 msgstr ""
 
 msgid "International Transfer of Information"
-msgstr ""
+msgstr "Международная передача информации"
 
 msgid ""
 "To facilitate our possible global operations, we may transfer and access "
@@ -552,7 +580,7 @@ msgid ""
 msgstr ""
 
 msgid "Corporate Events"
-msgstr ""
+msgstr "Корпоративные мероприятия"
 
 #, python-format
 msgid ""
@@ -565,7 +593,7 @@ msgid ""
 msgstr ""
 
 msgid "Compelled Disclosure"
-msgstr ""
+msgstr "Вынужденное раскрытие информации"
 
 msgid ""
 "We reserve the right to use or disclose your Personal Information if "
@@ -576,7 +604,7 @@ msgid ""
 msgstr ""
 
 msgid "Cookies"
-msgstr ""
+msgstr "Cookie-файлы"
 
 #, python-format
 msgid ""
@@ -620,7 +648,7 @@ msgid ""
 msgstr ""
 
 msgid "Log Files"
-msgstr ""
+msgstr "Файлы журнала"
 
 #, python-format
 msgid ""
@@ -640,7 +668,7 @@ msgid ""
 msgstr ""
 
 msgid "Flash Cookies and Other Third Party Tracking Technologies"
-msgstr ""
+msgstr "Флэш-куки и другие сторонние технологии отслеживания"
 
 #, python-format
 msgid ""
@@ -663,10 +691,10 @@ msgid ""
 msgstr ""
 
 msgid "Opting Out and Unsubscribing"
-msgstr ""
+msgstr "Отказ от рассылки и подписки"
 
 msgid "Reviewing, Correcting and Removing Your Personal Information"
-msgstr ""
+msgstr "Просмотр, исправление и удаление вашей личной информации"
 
 #, python-format
 msgid ""
@@ -774,7 +802,7 @@ msgstr ""
 msgid "Privacy Preferences"
 msgstr ""
 
-msgid "I Agree"
+msgid "I Understand"
 msgstr ""
 
 msgid "Privacy Preference Center"

@@ -1,28 +1,27 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
-"language/ja_JP/)\n"
-"Language: ja_JP\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Unexpected error while uploading files."
+msgid "Error! Unexpected error while uploading files."
 msgstr ""
 
-msgid "Error:"
+msgid "Error!"
 msgstr ""
 
 msgid "Uploaded:"
@@ -43,9 +42,6 @@ msgid "Are you sure you want to delete the %s folder?"
 msgstr ""
 
 msgid "New folder"
-msgstr ""
-
-msgid "current"
 msgstr ""
 
 msgid "Oldest first"
@@ -95,11 +91,14 @@ msgstr ""
 msgid "Delete folder"
 msgstr ""
 
-#, javascript-format
-msgid "Order %s created."
+msgid "Edit folder access"
 msgstr ""
 
-msgid "An unspecified error occurred.\n"
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr ""
+
+msgid "Error! An unspecified error occurred.\n"
 msgstr ""
 
 msgid "SKU"
@@ -114,7 +113,13 @@ msgstr ""
 msgid "Unit Price"
 msgstr ""
 
+msgid "Discounted Unit Price"
+msgstr ""
+
 msgid "Discount amount"
+msgstr ""
+
+msgid "Discount percent"
 msgstr ""
 
 msgid "Total (excluding taxes)"
@@ -132,6 +137,41 @@ msgstr " 請求先住所"
 msgid "Shipping address"
 msgstr "お届け先住所"
 
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr ""
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr ""
+
+msgid "Save customer details while creating order"
+msgstr ""
+
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr ""
+
+msgid "Ship to billing address"
+msgstr ""
+
+msgid ""
+"Checking this will make the shipping address the same as the billing "
+"address."
+msgstr ""
+
+msgid "Order for company"
+msgstr ""
+
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr ""
+
+msgid "Billing Address"
+msgstr "請求先住所"
+
+msgid "Shipping Address"
+msgstr "お届け先住所"
+
 msgid "Full Name"
 msgstr ""
 
@@ -140,6 +180,9 @@ msgstr "電話"
 
 msgid "Email"
 msgstr "Eメール"
+
+msgid "Tax Number"
+msgstr ""
 
 msgid "Groups"
 msgstr ""
@@ -165,6 +208,27 @@ msgstr ""
 msgid "Order Status"
 msgstr ""
 
+msgid "Search by name or email"
+msgstr ""
+
+msgid "Customer Search"
+msgstr ""
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to"
+" create an order for a new customer."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "View Details"
+msgstr ""
+
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
 msgid "Customer Information"
 msgstr ""
 
@@ -177,35 +241,8 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-msgid "A new customer will be created based on billing address."
+msgid "Warning: No customer account is currently associated with this order."
 msgstr ""
-
-msgid "Customer"
-msgstr ""
-
-msgid "Select Existing Customer"
-msgstr ""
-
-msgid "New Customer"
-msgstr ""
-
-msgid "View Details"
-msgstr ""
-
-msgid "Save customer details while creating order"
-msgstr ""
-
-msgid "Ship to billing address"
-msgstr ""
-
-msgid "Order for company"
-msgstr ""
-
-msgid "Billing Address"
-msgstr "請求先住所"
-
-msgid "Shipping Address"
-msgstr "お届け先住所"
 
 msgid "Back"
 msgstr ""
@@ -213,10 +250,10 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-msgid "Discard Changes"
+msgid "Select Shop"
 msgstr ""
 
-msgid "Select Shop"
+msgid "Discard Changes"
 msgstr ""
 
 msgid "Customer Details"
@@ -251,28 +288,74 @@ msgstr "商品を選ぶ"
 msgid "Text/Comment"
 msgstr ""
 
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr ""
+
 msgid "Qty"
+msgstr ""
+
+msgid "Enter the number of units of the product ordered."
+msgstr ""
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
 msgstr ""
 
 msgid "Total Price"
 msgstr ""
 
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr ""
+
 msgid "Base Unit Price"
 msgstr ""
 
-msgid "Discounted Unit Price"
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr ""
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
 msgstr ""
 
 msgid "Discount Percent"
 msgstr ""
 
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr ""
+
 msgid "Total Discount Amount"
+msgstr ""
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
 msgstr ""
 
 msgid "Line Total"
 msgstr ""
 
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr ""
+
 msgid "Orderline type"
+msgstr ""
+
+msgid "Search product by name, SKU, or barcode"
 msgstr ""
 
 msgid ""
@@ -281,13 +364,22 @@ msgid ""
 msgstr ""
 
 #, javascript-format
-msgid "All prices are in %s currency."
+msgid "All prices are in %s and include taxes."
 msgstr ""
 
-msgid "All prices include taxes."
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
 msgstr ""
 
-msgid "Taxes not included."
+msgid "Product Quick Adder"
+msgstr ""
+
+msgid ""
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
+msgstr ""
+
+msgid "Automatically add selected product"
 msgstr ""
 
 msgid "Add new line"
@@ -296,7 +388,17 @@ msgstr ""
 msgid "No shipping method"
 msgstr ""
 
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr ""
+
 msgid "No payment method"
+msgstr ""
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
 msgstr ""
 
 msgid "Shop"
@@ -308,71 +410,99 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+msgid "billing"
+msgstr ""
+
+msgid "shipping"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr ""
+
 msgid "Tax number"
 msgstr "税番号"
 
+msgid "Enter the company tax (ID) number."
+msgstr ""
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr ""
+
+#, javascript-format
+msgid ""
+"Enter the %s email address for transaction receipts and communications."
+msgstr ""
+
 msgid "Street"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s street address."
 msgstr ""
 
 msgid "Street (2)"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the %s street address (2)."
+msgstr ""
+
 msgid "ZIP / Postal code"
 msgstr "郵便番号"
 
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr ""
+
 msgid "City"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the city of the %s address."
 msgstr ""
 
 msgid "Region"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr ""
+
 msgid "Country"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the country of the %s address."
 msgstr ""
 
 msgid "No records found."
 msgstr ""
 
-msgid "Identifier"
-msgstr ""
-
-#, javascript-format
-msgid "Value %s Name"
-msgstr ""
-
-msgid "Delete value"
-msgstr ""
-
-msgid "Are you sure?"
-msgstr ""
-
-msgid "Delete Variable"
-msgstr ""
-
-msgid "Add new value"
-msgstr ""
-
-msgid "Variable Name"
-msgstr ""
-
-msgid "DELETE"
-msgstr ""
-
-msgid "Variable"
-msgstr ""
-
-msgid "Show identifier fields (for advanced users)"
-msgstr ""
-
-msgid "There are no variables defined."
-msgstr ""
-
-msgid "Add new variable"
+msgid "Warning! Missing JavaScript dependencies detected."
 msgstr ""
 
 msgid "No browser URL for kind:"
 msgstr ""
 
-msgid "Expand Editor"
+msgid "Clear"
+msgstr ""
+
+msgid "Drop files here or click to browse."
+msgstr ""
+
+msgid "only images can be uploaded!"
+msgstr ""
+
+msgid "Error happened while uploading file."
+msgstr ""
+
+msgid "Browse media"
+msgstr ""
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
 msgstr ""
 
 msgid "No results."
@@ -404,6 +534,120 @@ msgstr ""
 msgid "Searching..."
 msgstr ""
 
+msgid "Quick Links"
+msgstr ""
+
+msgid "Quick Links to your most used features."
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Track and filter your customers’ orders here."
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "All your exciting products and features are located here."
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid ""
+"All your customer data is located here. Target and organize your clients "
+"details your way!"
+msgstr ""
+
+msgid "Campaigns"
+msgstr ""
+
+msgid ""
+"Great loyalty tool for creating marketing, campaigns, special offers and "
+"coupons to entice your shoppers!"
+msgstr ""
+
+msgid ""
+"Set offers based on their previous purchase behavior to up- and cross sale "
+"your inventory."
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid ""
+"The make-over tool to customize you site themes, add pages and product "
+"carousels. Incorporate any media to make your store pop!"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr ""
+
+msgid "Shops"
+msgstr ""
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
+msgstr ""
+
+msgid "Addons"
+msgstr ""
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections."
+msgstr ""
+
+msgid ""
+"Supercharge your site and gather crazy amounts of data with integrations to "
+"CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid ""
+"The nuts and bolts of your store are found here. From individual country "
+"tax-regulations to your contact details."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid ""
+"Lost and cannot find your way? No worries, you can search contacts, "
+"settings, add-ons and more features from here."
+msgstr ""
+
+msgid "View your storefront"
+msgstr ""
+
+msgid "Preview your shop and all the cool features you have created!"
+msgstr ""
+
+msgid "We're done!"
+msgstr ""
+
+msgid "It was nice to show you around!"
+msgstr ""
+
+msgid ""
+"If you need to run it again, fire it up from the menu in the top right."
+msgstr ""
+
+msgid "Learn more at the Shuup Help Center"
+msgstr ""
+
+msgid "Mass actions"
+msgstr ""
+
 msgid "From"
 msgstr ""
 
@@ -413,10 +657,16 @@ msgstr ""
 msgid "Items per page"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
 msgid "Reset filters"
 msgstr ""
 
 msgid "Reset"
+msgstr ""
+
+msgid "Apply filters"
 msgstr ""
 
 msgid "Sort by"
@@ -441,7 +691,55 @@ msgstr ""
 msgid "Filter by %s"
 msgstr ""
 
+msgid " Select"
+msgstr ""
+
 msgid "Filters"
+msgstr ""
+
+msgid "Show filters"
+msgstr ""
+
+msgid "Select Action"
+msgstr ""
+
+msgid "Clear Selections"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr ""
+
+#, javascript-format
+msgid "There are no %s to show"
+msgstr ""
+
+msgid "There is no item to show"
+msgstr ""
+
+msgid "with selected filters"
+msgstr ""
+
+msgid "How about creating a new entry?"
+msgstr ""
+
+msgid "Success! Mass Action was completed."
+msgstr ""
+
+msgid "Error! Something went wrong with the Mass Action."
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
+
+msgid "Warning! You didn't select anything."
+msgstr ""
+
+msgid "Confirm action by clicking OK!"
 msgstr ""
 
 msgid "Are you sure you want to delete this media?"
@@ -453,23 +751,8 @@ msgstr ""
 msgid "Primary image"
 msgstr ""
 
-msgid "Bold"
+msgid "Finish"
 msgstr ""
 
-msgid "Italic"
-msgstr ""
-
-msgid "List"
-msgstr ""
-
-msgid "Ordered list"
-msgstr ""
-
-msgid "Link"
-msgstr ""
-
-msgid "Editor"
-msgstr ""
-
-msgid "Done"
+msgid "Skip"
 msgstr ""

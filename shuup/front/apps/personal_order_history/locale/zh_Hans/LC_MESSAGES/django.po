@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 15:33+0000\n"
-"PO-Revision-Date: 2019-03-13 07:45+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 16:25+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -89,9 +89,6 @@ msgstr "总价"
 msgid "Total Price (taxless)"
 msgstr "总价 (无税)"
 
-msgid "Tracking codes"
-msgstr "追踪编号"
-
 msgid "Order Status"
 msgstr "订单状态"
 
@@ -103,6 +100,15 @@ msgstr "配送状态"
 
 msgid "Shipping Address"
 msgstr "收货地址"
+
+msgid "Shipments"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Tracking code"
+msgstr ""
 
 msgid "Billing Address"
 msgstr "账单地址"

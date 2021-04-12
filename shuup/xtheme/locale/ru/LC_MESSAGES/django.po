@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-18 22:57+0000\n"
-"PO-Revision-Date: 2019-01-22 22:56+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,10 +20,10 @@ msgstr ""
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-msgid "Theme identifier must match"
+msgid "Theme identifiers must match."
 msgstr ""
 
-msgid "Either theme_settings or shop should be informed"
+msgid "Either theme_settings or shop should be informed."
 msgstr ""
 
 msgid "Global plugins"
@@ -97,7 +97,7 @@ msgstr "Выбор стиля"
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Шрифты, цвета и стили для использования в вашей теме."
 
-msgid "Content in this placeholder is shown without limitations."
+msgid "Content in this box is shown to all user types without limitations."
 msgstr ""
 
 #, python-format
@@ -105,16 +105,18 @@ msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for guests."
+msgid "Content in this box is shown to guests (anonymous users) only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for company contacts."
+msgid "Content in this box is shown to company contacts only."
 msgstr ""
 
-msgid "Content in this placeholder is shown for all logged in contacts."
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
 msgstr ""
 
-msgid "Content in this placeholder is shown for person contacts."
+msgid "Content in this box is shown to person contacts only."
 msgstr ""
 
 #, python-format
@@ -131,6 +133,9 @@ msgid "Inline CSS"
 msgstr ""
 
 msgid "Inline HTML"
+msgstr ""
+
+msgid "Inline Jinja HTML"
 msgstr ""
 
 msgid "current draft"
@@ -150,6 +155,9 @@ msgstr "показать имя"
 
 msgid "created on"
 msgstr "создано"
+
+msgid "modified on"
+msgstr ""
 
 msgid "status"
 msgstr "статус"
@@ -212,14 +220,14 @@ msgstr "Ссылка на изображение"
 msgid "Full width"
 msgstr "Полная ширина"
 
-msgid "Set image to full width of cell"
-msgstr "Установить изображение в полную ширину ячейки"
+msgid "Set image to the full width of cell."
+msgstr ""
 
 msgid "Width (px)"
 msgstr "Ширина (пикс.)"
 
-msgid "Leave blank for default width"
-msgstr "Оставьте незаполненным для ширины по умолчанию"
+msgid "Leave blank for default width."
+msgstr ""
 
 msgid "Height (px)"
 msgstr "Высота (пикс.)"
@@ -250,6 +258,12 @@ msgstr ""
 msgid "Product Cross Sells"
 msgstr "Кросс-продажи товара"
 
+msgid "Show variation parents"
+msgstr ""
+
+msgid "Render variation parents instead of the children."
+msgstr ""
+
 msgid "Category"
 msgstr ""
 
@@ -263,6 +277,24 @@ msgid "Select all products you want to show"
 msgstr ""
 
 msgid "Product Selection"
+msgstr ""
+
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr ""
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
 msgstr ""
 
 msgid "In-Place Snippet"
@@ -279,6 +311,10 @@ msgstr "Ресурс для конца основного фрагмента"
 
 msgid "URL"
 msgstr "URL"
+
+#, python-format
+msgid "%(name)s Ordering"
+msgstr ""
 
 msgid "Ordering"
 msgstr "Упорядочивание"
@@ -338,6 +374,9 @@ msgid "Content start"
 msgstr ""
 
 msgid "Content end"
+msgstr ""
+
+msgid "(Error while rendering.)"
 msgstr ""
 
 msgid "Delete This Cell"
@@ -421,18 +460,18 @@ msgstr "Отменить изменения"
 msgid "Publish Changes"
 msgstr "Опубликовать изменения"
 
-msgid "No access to editing"
-msgstr "Нет доступа к редактированию"
-
-#, python-format
-msgid "Unknown command %s"
+msgid "No access to editing."
 msgstr ""
 
-msgid "Unable to determine current theme."
-msgstr "Невозможно определить текущую тему."
+#, python-format
+msgid "Unknown command: `%s`."
+msgstr ""
+
+msgid "Unable to determine the current theme."
+msgstr ""
 
 #, python-format
-msgid "Cannot add more than %d cells in one row."
+msgid "Can't add more than %d cells in one row."
 msgstr ""
 
 msgid "Published"
@@ -440,6 +479,9 @@ msgstr "Опубликовано"
 
 msgid "Reverted"
 msgstr "Отменено"
+
+msgid "Custom"
+msgstr ""
 
 msgid "Full Width"
 msgstr "На всю ширину"

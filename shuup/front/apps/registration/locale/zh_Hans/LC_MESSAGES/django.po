@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 18:06+0000\n"
-"PO-Revision-Date: 2019-03-13 08:00+0000\n"
-"Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>\n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2020-06-30 02:16+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,11 +38,17 @@ msgstr "激活URL"
 msgid "Is User Active"
 msgstr "用户是否活跃"
 
+msgid "Account Reactivation"
+msgstr ""
+
 msgid "Company Registration Received"
 msgstr "收到公司注册"
 
 msgid "Company Approved"
 msgstr "公司批准"
+
+msgid "Account Activation"
+msgstr ""
 
 msgid "Company has been activated."
 msgstr "公司已被激活"
@@ -61,6 +67,20 @@ msgstr "此脚本将在用户注册后立即向用户发送电子邮件或任何
 msgid "{{ order.shop }} - Welcome!"
 msgstr "{{订单.商店}} - 欢迎！"
 
+msgid "Send account reactivation email"
+msgstr ""
+
+msgid "Send email when a user account gets reactivated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr ""
+
+msgid "{{ customer.username }} is now active again!"
+msgstr ""
+
 msgid "Send Company Registration Received Email"
 msgstr "发送公司登记收到电子邮件"
 
@@ -77,6 +97,20 @@ msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a company is activated."
 msgstr "此脚本将发送电子邮件给用户或任何配置的电子邮件后，公司被激活。"
+
+msgid "Send account activation email"
+msgstr ""
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr ""
+
+msgid "{{ customer.username }} is now active!"
+msgstr ""
 
 msgid "Account activation"
 msgstr "帐户激活"
@@ -117,8 +151,8 @@ msgstr "注册"
 msgid "Register as a company."
 msgstr "注册为公司"
 
-msgid "Activation successful!"
-msgstr "激活成功！"
+msgid "Activation successful"
+msgstr ""
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 03:24+0000\n"
-"PO-Revision-Date: 2016-10-09 13:04+0000\n"
-"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"POT-Creation-Date: 2020-11-09 17:10+0000\n"
+"PO-Revision-Date: 2020-11-10 17:15+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Simple CMS"
-msgstr "Shoop CMS"
+msgid "Content Pages"
+msgstr ""
 
 msgid "Pages"
 msgstr "Pagine"
@@ -30,19 +30,25 @@ msgid "Show pages"
 msgstr "Mostra Pagine"
 
 msgid "Add a web page"
-msgstr "Aggiungi una pagina web"
+msgstr ""
 
-msgid "Add a page"
-msgstr "Aggiungi una pagina"
+msgid "New page"
+msgstr ""
 
-msgid "Available from"
-msgstr "Disponibile da"
+msgid "Available since"
+msgstr ""
 
-msgid "Available to"
-msgstr "Disponibile fino a"
+msgid "Available until"
+msgstr ""
+
+msgid "Template"
+msgstr ""
 
 msgid "URL already exists."
 msgstr "L'URL è già esistente."
+
+msgid "URL must be unique."
+msgstr ""
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -66,11 +72,52 @@ msgstr "Data creazione"
 msgid "Page"
 msgstr "Pagina"
 
-msgid "available from"
-msgstr "disponibile da"
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
 
-msgid "available to"
-msgstr "disponibile fino "
+msgid "Content in this placeholder is shown for this page only."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(title)s only."
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "Article"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid "available since"
+msgstr ""
+
+msgid ""
+"Set an available date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr ""
+
+msgid "available until"
+msgstr ""
+
+msgid ""
+"Set an available date to restrict the page to be available only until a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr ""
+
+msgid "Available for permission groups"
+msgstr ""
+
+msgid "Select the permission groups that can have access to this page."
+msgstr ""
 
 msgid "created by"
 msgstr "creato da"
@@ -90,20 +137,69 @@ msgstr "Questo identificativo può essere usato nei template per generare gli UR
 msgid "visible in menu"
 msgstr "visibile nel menu"
 
+msgid ""
+"Enable this if this page should have a visible link in the top menu of the "
+"store front."
+msgstr ""
+
 msgid "parent"
 msgstr "genitore"
 
-msgid "list children on page"
-msgstr "mostra i figli nella pagina"
+msgid ""
+"Set this to a parent page if this page should be subcategorized (sub-menu) "
+"under another page."
+msgstr ""
+
+msgid "display children on page"
+msgstr ""
+
+msgid "Enable this if this page should display all of its children pages."
+msgstr ""
+
+msgid "show child page timestamps"
+msgstr ""
+
+msgid ""
+"Enable this if you want to show timestamps on the child pages. Please note, "
+"that this requires the children to be listed on the page as well."
+msgstr ""
+
+msgid "deleted"
+msgstr ""
 
 msgid "title"
 msgstr "titolo"
 
+msgid "The page title. This is shown anywhere links to your page are shown."
+msgstr ""
+
 msgid "URL"
 msgstr "URL"
 
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr ""
+
 msgid "content"
 msgstr "contenuto"
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on"
+" your page link.You can leave this empty and add all page content through "
+"placeholder editor in shop front.To edit the style of the page you can use "
+"the Snippet plugin which is in shop front editor."
+msgstr ""
+
+msgid "Template path"
+msgstr ""
+
+msgid "render title"
+msgstr ""
+
+msgid "Enable this if this page should have a visible title."
+msgstr ""
 
 msgid "page"
 msgstr "pagina"
@@ -114,8 +210,52 @@ msgstr "pagine"
 msgid "Untitled"
 msgstr "Senza titolo"
 
+msgid "Image"
+msgstr ""
+
+msgid "The image of your object."
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid ""
+"The title of your object as it should appear within the graph, e.g. The "
+"Rock."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "A one to two sentence description of your object."
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid ""
+"A high-level section name, e.g. Technology. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid ""
+"Tag words associated with this article. Only applicable when type is "
+"Article."
+msgstr ""
+
+msgid "Article author"
+msgstr ""
+
+msgid ""
+"The name of the author for the article. Only applicable when type is "
+"Article."
+msgstr ""
+
 msgid "CMS Page Links"
-msgstr "Link di Pagina CMS"
+msgstr "Link alle Pagine del CMS"
 
 msgid "Show all pages"
 msgstr "Mostra tutte le pagine"
@@ -126,17 +266,19 @@ msgstr "Tutte le pagine sono mostrate, anche quelle non selezionate"
 msgid "Hide expired pages"
 msgstr "Nascondi le pagine scadute"
 
+msgid "Default Page"
+msgstr ""
+
+msgid "Page with sidebar"
+msgstr ""
+
+msgid ""
+"Fill the fields below to add extra OpenGraph information to the page meta.\n"
+"        If not informed, some values will be inferred from the page attributes."
+msgstr ""
+
 msgid "New Page"
 msgstr "Nuova pagina"
-
-msgid "General Information"
-msgstr "Informazioni Generali"
-
-msgid "Availability"
-msgstr "Disponibilità"
-
-msgid "Extras"
-msgstr "Extra"
 
 msgid "Home"
 msgstr "Pagina Iniziale"

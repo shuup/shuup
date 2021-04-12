@@ -28,9 +28,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-09-29 17:26+0000\n"
-"Last-Translator: Andreas Modinos <andreas@shuup.com>\n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-03-29 14:28+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1053,13 +1053,6 @@ msgstr "Tilaus merkittiin osittain maksetuksi."
 msgid "Success! Shipment #%d was created."
 msgstr "Lähetys # %d luotiin onnistuneesti."
 
-#, python-format
-msgid "Refund for %s"
-msgstr "Hyvitys: %s"
-
-msgid "Misc refund"
-msgstr "Sekalainen hyvitys"
-
 msgid "All rows requiring verification have been verified."
 msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
 
@@ -1354,6 +1347,12 @@ msgid ""
 "informing customers of special stock numbers or preorders. (Ex.: Available "
 "in a month)"
 msgstr "Tämä teksti näkyy tuotteen vieressä. Sijainti on hyödyllinen lyhyitä tietoiskuja tai huomioita varten, esimerkiksi tuotteen saatavuuteen tai ennakkotilaamiseen liittyen."
+
+msgid "shop product"
+msgstr ""
+
+msgid "shop products"
+msgstr ""
 
 msgid ""
 "Error! Invalid display unit: Internal unit of the selected display unit does"
@@ -1900,14 +1899,14 @@ msgstr "Rajoita palvelujen saatavuus listattuihin maihin."
 msgid "available in countries"
 msgstr "saatavilla näissä maissa"
 
-msgid "available in european countries"
-msgstr "saatavilla euroopan maissa"
+msgid "available in european union"
+msgstr ""
 
 msgid "unavailable in countries"
 msgstr "ei saatavilla näissä maissa"
 
-msgid "unavailable in european countries"
-msgstr "ei saatavilla euroopan maissa"
+msgid "unavailable in european union"
+msgstr ""
 
 msgid "Service is not available without a defined country."
 msgstr "Palvelun tulisi olla saatavilla ainakin yhdessä maassa."
@@ -1984,17 +1983,17 @@ msgstr "Mukautetut kuljetusliikkeet"
 msgid "Manually processed shipment"
 msgstr "Manualisesti käsiteltävä toimitus"
 
-msgid "not sent"
-msgstr "ei lähetetty"
+msgid "Not sent"
+msgstr ""
 
-msgid "sent"
-msgstr "lähetetty"
+msgid "Sent"
+msgstr ""
 
-msgid "received"
-msgstr "vastaanotettu"
+msgid "Error"
+msgstr ""
 
-msgid "error"
-msgstr "virhe"
+msgid "Deleted"
+msgstr ""
 
 msgid "outgoing"
 msgstr "ulosmenevä"
@@ -2004,6 +2003,9 @@ msgstr "sisääntuleva"
 
 msgid "tracking code"
 msgstr "seurantakoodi"
+
+msgid "tracking url"
+msgstr ""
 
 msgid "volume ({})"
 msgstr "äänenvoimakkuus ({})"
@@ -2174,20 +2176,18 @@ msgid ""
 "participate fully, the supplier also needs to be `Approved`."
 msgstr "Toimittaja on käytettävissä. Huomaathan, että toimittajan on myös oltava hyväksytty."
 
-msgid "approved"
-msgstr "hyväksytty"
-
-msgid ""
-"Indicates whether this supplier is currently approved for work. In order to "
-"participate fully, the supplier also needs to be `Enabled`."
-msgstr "Toimittaja on hyväksytty. Huomaathan, että toimittajan on myös oltava käytettävissä"
-
 msgid ""
 "Enter a URL slug for your supplier. Slug is user- and search engine-friendly"
 " short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your supplier page URL in the browser address bar "
 "will look like. A default will be created using the supplier name."
 msgstr "Syötä verkko-osoitteen typistys toimittajallesi. Typistys on käyttäjä- ja hakukoneystävällinen lyhyt teksti jota käytetään verkko-osoitteessa resurssin yksilöimiseen ja kuvaamiseen. Tässä yhteydessä typistys määrittää sen, miltä toimittajasi verkko-osoite nettiselaimen osoiterivillä näyttää. Oletus-typistys luodaan automaattisesti toimittajan nimestä."
+
+msgid "Approved"
+msgstr ""
+
+msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
 msgstr "Käytössä olevan veron liiketoimintakriittisiä kenttiä ei voi muokata."
@@ -2404,6 +2404,13 @@ msgstr "uudelleenvarastoi"
 
 msgid "restock logical"
 msgstr "uudelleenvarastoi looginen"
+
+#, python-format
+msgid "Refund for %s"
+msgstr "Hyvitys: %s"
+
+msgid "Misc refund"
+msgstr "Sekalainen hyvitys"
 
 msgid "Untaxed"
 msgstr "Verottamaton"
