@@ -1,6 +1,6 @@
 {% extends "shuup/front/dashboard/dashboard.jinja" %}
 {% from "shuup/personal_order_history/macros/buttons.jinja" import render_action_buttons with context %}
-{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, status, order_contents, sent_shipments with context %}
+{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, order_contents, sent_shipments with context %}
 
 {% block title %}{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{% endblock %}
 {% set main_title = _("Details of order %(identifier)s", identifier=order.identifier) %}

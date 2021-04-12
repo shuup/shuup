@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Front: add extra head block to base template
 - Core: allow refunds creation when the order is complete
 - Admin: show the product picture in order item list
 - Admin: change so TaxClassEditView is a FormPartView
@@ -17,7 +18,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Core: Fix error that occurred when creating an order with a product which SKU was longer than 48 characters. 
+- Front: fix non existent macro import
+- Core: Fix error that occurred when creating an order with a product which SKU was longer than 48 characters.
 - Admin: Multiple duplicate images being saved when image is uploaded before product is saved
 
 ## [2.6.0] - 2021-03-29

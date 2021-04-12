@@ -34,6 +34,8 @@
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
     {% endif %}
     <script type="text/javascript" src="{{ url("shuup:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
+
+    {% block extra_head %}{% endblock %}
 </head>
 <body {% if shuup.general.is_shop_admin() %} class="admin-tools-visible" {% endif %}>
     {{ macros.render_admin_tools() }}
