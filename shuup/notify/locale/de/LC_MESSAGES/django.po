@@ -1,0 +1,76 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2021-04-07 19:08+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Error!"
+msgstr "Fehler!"
+
+msgid "Success!"
+msgstr "Das war erfolgreich!"
+
+msgid "Error! An unspecified error occurred."
+msgstr "Fehler! Ein unerwarteter Fehler ist aufgetreten."
+
+msgid "Warning! Unexpected edit data was received."
+msgstr "Achtung! Unerwartete Editierdaten wurden empfangen."
+
+msgid "Add new"
+msgstr "Neu hinzufügen"
+
+msgid ""
+"Delete this item?\n"
+"This is final and can't be undone."
+msgstr "Dieses Element löschen?\nDies ist endgültig und kann nicht rückgängig gemacht werden."
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Move Up"
+msgstr "Nach oben bewegen"
+
+msgid "Move Down"
+msgstr "Nach unten bewegen"
+
+msgid "Disable"
+msgstr "Deaktivieren"
+
+msgid "Enable"
+msgstr "Aktivieren"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Are you sure you want to delete this step?"
+msgstr "Bist Du sicher, dass Du diesen Schritt löschen möchtest?"
+
+msgid "If"
+msgstr "Wenn"
+
+msgid "of these conditions hold..."
+msgstr "eine dieser Bedingungen gilt..."
+
+msgid "then execute these actions..."
+msgstr "dann führe diese Aktionen aus..."
+
+msgid "and then..."
+msgstr "und dann..."
+
+msgid "New step"
+msgstr "Neuer Schritt"

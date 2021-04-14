@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-05 21:13+0000\n"
+"PO-Revision-Date: 2021-04-07 18:56+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Search"
+msgstr "Suchen"
+
+msgid "Search for products"
+msgstr "Artikel suchen"
+
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr "Keine Ergebnisse für \"<strong>%(query)s</strong>\" gefunden."
+
+msgid ""
+"Limiting results to first 150 products. Refine search terms for better "
+"results."
+msgstr "Begrenzung der Ergebnisse auf die ersten 150 Artikel. Bitte verfeinere Deine Suchbegriffe für bessere Ergebnisse."
+
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "%(n)s Ergebnisse für \"<strong>%(query)s</strong>\" gefunden."

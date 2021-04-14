@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-04-07 18:37+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Shuup Frontend - Persönliche Bestellhistorie"
+
+msgid "Order history"
+msgstr "Bestellhistorie"
+
+msgid "Show all"
+msgstr "Alles anzeigen"
+
+msgid "Identifier"
+msgstr "Kennung"
+
+msgid "Order date"
+msgstr "Bestelldatum"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Total price"
+msgstr "Gesamtsumme"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "You haven't made any orders yet."
+msgstr "Du hast noch keine Bestellung aufgegeben."
+
+msgid "Add all products to cart"
+msgstr "Alle Artikel zum Warenkorb hinzufügen"
+
+msgid "Basic Information"
+msgstr "Allgemeine Informationen"
+
+msgid "Order Number"
+msgstr "Bestellnummer"
+
+msgid "Order Date"
+msgstr "Bestelldatum"
+
+msgid "Reference"
+msgstr "Referenz"
+
+msgid "Label"
+msgstr "Etikett"
+
+msgid "Customer"
+msgstr "Kunde"
+
+msgid "Ordered by"
+msgstr "Bestellt von"
+
+msgid "Creator"
+msgstr "Ersteller"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+msgid "Tax Number"
+msgstr "Steuernummer"
+
+msgid "Total Price"
+msgstr "Summe (brutto)"
+
+msgid "Total Price (taxless)"
+msgstr "Summe (netto)"
+
+msgid "Order Status"
+msgstr "Bestellstatus"
+
+msgid "Payment Status"
+msgstr "Bezahlstatus"
+
+msgid "Shipping Status"
+msgstr "Versandstatus"
+
+msgid "Shipping Address"
+msgstr "Lieferadresse"
+
+msgid "Shipments"
+msgstr "Lieferungen"
+
+msgid "Products"
+msgstr "Artikel"
+
+msgid "Tracking code"
+msgstr "Tracking-Code"
+
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
+
+msgid "Order Contents"
+msgstr "Bestellinhalt"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Bestellung %(identifier)s"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Details der Bestellung %(identifier)s"
+
+msgid "Home"
+msgstr "Startseite"
+
+msgid "Dashboard"
+msgstr "Kontoübersicht"
+
+msgid "Order History"
+msgstr "Bestellhistorie"

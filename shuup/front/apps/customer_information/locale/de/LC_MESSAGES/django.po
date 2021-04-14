@@ -1,0 +1,222 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2021-04-07 18:25+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Shuup Frontend - Bearbeitung von Kundendaten"
+
+msgid "Customer Information"
+msgstr "Kundendaten"
+
+msgid "Company Information"
+msgstr "Firmendaten"
+
+msgid "Edit Company Information."
+msgstr "Firmendaten bearbeiten"
+
+msgid "Address Book"
+msgstr "Adressbuch"
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Will become default user email when linked."
+msgstr "Wird beim Verknüpfen zur Standard-Benutzer-E-Mail."
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "Die angegebene Steuernummer existiert bereits. Bitte kontaktiere den Support."
+
+msgid "Address Title"
+msgstr "Adressbezeichnung"
+
+msgid "Address Type"
+msgstr "Adressentyp"
+
+msgid "Address Status"
+msgstr "Adressen-Status"
+
+msgid "Company information was saved."
+msgstr "Die Firmendaten wurden gespeichert."
+
+msgid ""
+"Company information was saved. Please follow the instructions sent to your "
+"email address."
+msgstr "Die Firmendaten wurden gespeichert. Bitte folge den Anweisungen, die an Deine E-Mail-Adresse gesendet wurden."
+
+msgid "Customer Email"
+msgstr "Kunden-E-Mail-Adresse"
+
+msgid "Home"
+msgstr "Startseite"
+
+msgid "Dashboard"
+msgstr "Kontoübersicht"
+
+msgid "General Information"
+msgstr "Allgemeines"
+
+msgid "Contact Information"
+msgstr "Kontaktinformationen"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Default Addresses"
+msgstr "Standard-Adressen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Default Billing Address"
+msgstr "Standard-Rechnungsadresse"
+
+msgid "No Default Billing Address set."
+msgstr "Es ist keine Standard-Rechnungsadresse hinterlegt."
+
+msgid "Default Shipping Address"
+msgstr "Standard-Lieferadresse"
+
+msgid "No Default Shipping Address set."
+msgstr "Es ist keine Standard-Lieferadresse hinterlegt."
+
+msgid "Additional Addresses"
+msgstr "Weitere Adressen"
+
+msgid "Create new"
+msgstr "Neu anlegen"
+
+msgid "Role"
+msgstr "Rolle"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "You don't have any additional addresses"
+msgstr "Es sind bis jetzt noch keine weiteren Adressen angelegt"
+
+msgid "Change Password"
+msgstr "Passwort ändern"
+
+msgid "Change password"
+msgstr "Passwort ändern"
+
+msgid "Basic Information"
+msgstr "Allgemeine Informationen"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Tax Number"
+msgstr "Steuernummer"
+
+msgid "Birth Date"
+msgstr "Geburtsdatum"
+
+msgid "Gender"
+msgstr "Geschlecht"
+
+msgid "Marketing Permission"
+msgstr "Einwilligung in E-Mail-Marketing"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Company account information"
+msgstr "Firmenkontodaten"
+
+msgid ""
+"You have already linked your account to a company and it is pending "
+"approval."
+msgstr "Du hast Dein Konto bereits mit einer Firma verknüpft und die Genehmigung steht hierfür noch aus."
+
+msgid "User account information"
+msgstr "Benutzerkontodaten"
+
+msgid "Not specified"
+msgstr "Nicht angegeben"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Postal code"
+msgstr "PLZ"
+
+msgid "City"
+msgstr "Ort"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Billing information"
+msgstr "Rechnungsdaten"
+
+msgid "Copy to shipping information"
+msgstr "In die Versanddaten kopieren"
+
+msgid "Shipping information"
+msgstr "Versanddaten"
+
+msgid "Copy to billing information"
+msgstr "In die Rechnungsdaten kopieren"
+
+msgid "Edit user account information"
+msgstr "Benutzerkontodaten bearbeiten"
+
+msgid "Save password"
+msgstr "Passwort speichern"
+
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+msgid "Edit company information"
+msgstr "Firmendaten bearbeiten"
+
+msgid "Link account to company"
+msgstr "Benutzerkonto mit Firma verknüpfen"
+
+msgid "Company information"
+msgstr "Firmendaten"
+
+msgid "User information"
+msgstr "Benutzerdaten"
+
+msgid "Password changed."
+msgstr "Das Passwort wurde geändert."
+
+msgid "Account information was saved."
+msgstr "Die Kontodaten wurden gespeichert."
+
+msgid "Address information was saved."
+msgstr "Die Adressdaten wurden gespeichert."
+
+msgid "Cannot remove address because it doesn't exist."
+msgstr "Die Adresse kann nicht entfernt werden, da sie nicht existiert."

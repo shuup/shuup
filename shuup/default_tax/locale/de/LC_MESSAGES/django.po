@@ -1,0 +1,168 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2021-04-06 14:13+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Default Tax"
+msgstr "Shuup Standard-Steuer"
+
+msgid "Tax Rules"
+msgstr "Steuerregeln"
+
+msgid "Show tax rules"
+msgstr "Steuerregeln anzeigen"
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr "ISO 3166-1-Ländercodes (US, FI usw.) verwenden"
+
+msgid "Use two letter state codes for the US"
+msgstr "Zweistellige Staaten-Codes für die USA verwenden"
+
+msgid "Tax Rule"
+msgstr "Steuerregel"
+
+msgid "Tax"
+msgstr "Steuern"
+
+msgid "Tax Classes"
+msgstr "Steuerklassen"
+
+msgid "Customer Tax Groups"
+msgstr "Kunden-Steuerklassen"
+
+msgid "Countries"
+msgstr "Länder"
+
+msgid "Regions"
+msgstr "Bundesländer"
+
+msgid "Postal Codes"
+msgstr "PLZ"
+
+msgid "Priority"
+msgstr "Priorität"
+
+msgid "Override Group"
+msgstr "Übersteuerungsgruppe"
+
+msgid "Enabled"
+msgstr "Aktiviert"
+
+msgid "enabled"
+msgstr "aktiviert"
+
+msgid "Enable this if this tax rule is active."
+msgstr "Aktiviere diese Option, wenn diese Steuerregel aktiv ist."
+
+msgid "tax classes"
+msgstr "Steuerklassen"
+
+msgid "Tax classes of the items to be taxed"
+msgstr "Steuerklassen der zu besteuernden Artikel"
+
+msgid "customer tax groups"
+msgstr "Kunden-Steuergruppen"
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr "Die Kundensteuergruppen, auf die diese Steuerregel begrenzt ist."
+
+msgid "country codes pattern"
+msgstr "Ländercode-Muster"
+
+msgid "region codes pattern"
+msgstr "Bundeländercode-Muster"
+
+msgid "postal codes pattern"
+msgstr "PLZ-Muster"
+
+msgid "priority"
+msgstr "Priorität"
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr "Regeln mit gleicher Priorität definieren zusätzliche Steuern (z. B. US-Steuern) und Regeln mit unterschiedlicher Priorität definieren zusammengesetzte Steuern (z. B. Kanada Quebec PST-Fall)"
+
+msgid "override group number"
+msgstr "Nummer der Übersteuerungsgruppe"
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr "Wenn mehrere Regeln übereinstimmen, werden nur die Regeln mit der höchsten Übersteuerungsgruppennummer wirksam. Dies kann z. B. verwendet werden, um eine Steuerbefreiung zu implementieren, indem eine Regel mit einer sehr hohen Übersteuerungsgruppe hinzugefügt wird, die eine Nullsteuer festlegt."
+
+msgid "tax"
+msgstr "Steuern"
+
+msgid "The tax to apply when this rule is applied."
+msgstr "Die Steuer, die anzuwenden ist, wenn diese Regel angewendet wird."
+
+msgid "Tax rule {} ({})"
+msgstr "Steuerregel {} ({})"
+
+msgid "Default Taxation"
+msgstr "Standardbesteuerung"
+
+msgid "Tax rule information"
+msgstr "Informationen zur Steuerregel"
+
+msgid "Matching criteria"
+msgstr "Übereinstimmungskriterien"
+
+msgid "Grouping"
+msgstr "Gruppierung"
+
+msgid "Applied tax"
+msgstr "Angewandte Steuern"
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr "\n            Die folgenden Felder bestimmen, wann diese Regel gilt. Alle\n            nicht leeren Felder müssen übereinstimmen, damit die Regel gilt. Leere Felder werden\n           nicht berücksichtigt, z. B. wenn das Feld \"Kundensteuergruppe\" leer gelassen wird, werden alle\n           Kundensteuergruppen übereinstimmen."
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and \"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not match\n"
+"            \"700000\" since for numerical items natural numeric ordering is used.\n"
+"        "
+msgstr "\n            Ein Muster kann ein einzelner Wert oder eine durch Komma getrennte Liste von Elementen sein,\n            wobei jedes Element ein einzelner Wert oder ein Bereich sein kann, wie z. B.\n           \"Wert1 - Wert2\". Der spezielle Wert \"*\" passt auf alles. Zum\n           Beispiel: Das Muster \"1,2,50-90\" passt auf die Werte \"1\" und \"2\", und\n           \"50\", \"90\" und alles dazwischen. Der Bereich verwendet eine alphabetische\n          Reihenfolge, es sei denn, Start, Ende und die zu übereinstimmende Zeichenfolge sind alle\n          numerisch, d. h. \"50-90\" passt auch auf \"6a\" und \"700X\", da sie\nalphabetisch zwischen \"50\" und \"90\" liegen, aber nicht auf\n         \"700000\", da für numerische Elemente die natürliche numerische Reihenfolge verwendet wird."
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr "\n           Verwende die folgenden Felder, um addierte oder geklammerte\n           Steuern zu konfigurieren (wenn mehrere Steuern für einen Artikel gelten), oder um eine\n           Steuerregel oder einen Satz von Steuerregeln zu erstellen, die andere Steuerregeln außer Kraft setzen."
+
+msgid "When this rule applies, apply the following tax."
+msgstr "Wenn diese Regel gilt, wende die folgende Steuer an."
