@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2017-03-30 06:49+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr "Shuup Frontend - Gespeicherte Warenkörbe"
+
+msgid "Saved Carts"
+msgstr "Gespeicherte Warenkörbe"
+
+msgid "Home"
+msgstr "Startseite"
+
+msgid "Dashboard"
+msgstr "Kontoübersicht"
+
+msgid "My Saved Carts"
+msgstr "Meine gespeicherten Warenkörbe"
+
+msgid "Product"
+msgstr "Artikel"
+
+msgid "Quantity"
+msgstr "Menge"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Title"
+msgstr "Bezeichnung"
+
+msgid "Product Count"
+msgstr "Artikelanzahl"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "You haven't saved any carts yet."
+msgstr "Du hast noch keinen Warenkorb abgespeichert."
+
+msgid "Add all products to cart"
+msgstr "Alle Artikel zum Warenkorb hinzufügen"
+
+msgid "Delete cart"
+msgstr "Warenkorb löschen"
+
+msgid "Please enter a basket title."
+msgstr "Bitte gib eine Warenkorb-Bezeichnung ein."
+
+msgid "Can't save an empty basket."
+msgstr "Es kann kein leerer Warenkorb gespeichert werden."
+
+msgid "Product is not available in this shop."
+msgstr "Der Artikel ist auf dem Marktplatz leider nicht verfügbar."
+
+msgid "Invalid supplier."
+msgstr "Ungültiger Händler."
+
+#, python-format
+msgid "%d product(s) added to cart."
+msgstr "%d Artikel wurde(n) in den Warenkorb gelegt."

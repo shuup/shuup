@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2021-04-07 14:16+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, python-format
+msgid ""
+"Error! Please enter a correct %(username)s and password. Note that both "
+"fields may be case-sensitive. In case of multiple accounts with same email "
+"only username can be used to log in."
+msgstr "Fehler! Bitte gib einen korrekten %(username)s und ein korrektes Passwort ein. Beachte bitte, dass in beiden Feldern Groß- und Kleinschreibung beachtet werden muss. Bei mehreren Konten mit derselben E-Mail-Adresse kann nur der Benutzername zur Anmeldung verwendet werden."
+
+msgid "This account is inactive."
+msgstr "Dieses Konto ist inaktiv."
+
+msgid "Username or email address"
+msgstr "Benutzername oder E-Mail-Adresse"
+
+msgid "You are not allowed to log in to this shop."
+msgstr "Du bist nicht berechtigt, Dich in diesem Händlerbereich anzumelden."
+
+msgid "Log in"
+msgstr "Anmelden"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr "Du bist bereits angemeldet als <strong>%(username)s</strong>"
+
+msgid "Go to Homepage"
+msgstr "Zurück zur Startseite"
+
+msgid "Forgot your password?"
+msgstr "Passwort vergessen?"
+
+msgid "New user? Register here!"
+msgstr "Neuer Benutzer? Hier registrieren!"
+
+msgid "Logged out"
+msgstr "Abgemeldet"
+
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "Du wurdest erfolgreich abgemeldet. Wir hoffen, Dich bald wieder auf unserem Marktplatz begrüßen zu dürfen!"
+
+msgid "Recover your password"
+msgstr "Passwort wiederherstellen"
+
+msgid "You can recover your password with either username or email."
+msgstr "Du kannst Dein Passwort entweder mit dem Benutzernamen oder der E-Mail-Adresse wiederherstellen."
+
+msgid "Send password recovery instructions"
+msgstr "Anweisungen zur Passwortwiederherstellung senden"
+
+msgid "Password Changed"
+msgstr "Das Passwort wurde geändert."
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "Das Passwort wurde geändert und Du wurdest erfolgreich angemeldet."
+
+msgid "Password Recovery"
+msgstr "Passwort-Wiederherstellung"
+
+msgid "Change Password"
+msgstr "Passwort ändern"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "Hallo %(fullname)s"
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "Zur Erinnerung: Dein Benutzername lautet %(username)s."
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr "Du erhältst diese E-Mail, weil Du eine Passwortzurücksetzung für Dein Benutzerkonto bei %(site_name)s angefordert hast."
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Bitte gehe auf die folgende Seite und wähle ein neues Passwort:"
+
+msgid ""
+"If a user account is associated with the information you entered, you should"
+" receive instructions on how to reset your password shortly."
+msgstr "Wenn ein Benutzerkonto mit den von Dir eingegebenen Informationen verknüpft ist, solltest Du in Kürze Anweisungen zum Zurücksetzen Deines Passworts erhalten."
+
+msgid "Error! This recovery link is invalid."
+msgstr "Fehler! Der Link zur Wiederherstellung ist ungültig."

@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2021-04-06 09:24+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Addons"
+msgstr "Add-ons"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Aktivieren %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d Die neuen Add-ons sind nun aktiviert."
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d Die bereits aktiven Add-ons wurden deaktiviert."
+
+msgid "No changes were made."
+msgstr "Die Änderungen wurden nicht gespeichert."
+
+msgid "Save addon changes"
+msgstr "Die Änderung des Add-ons speichern"
+
+msgid "Upload new addon"
+msgstr "Ein neues Add-on hochladen"
+
+msgid "Reload application"
+msgstr "Die Anwendung erneut laden"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr "Das erneute Laden war leider nicht erfolgreich. Bitte wenden Sie sich an Ihren Systemadministrator."
+
+msgid "Reload Method"
+msgstr "Methode für erneutes Laden"
+
+msgid "Reloading."
+msgstr "Das erneute Laden läuft."
+
+msgid "Addon file (ZIP)"
+msgstr "Add-on-Datei (ZIP)"
+
+msgid "Only upload the addon files you trust."
+msgstr "Lade bitte nur Add-on-Dateien hoch, die vertrauenswürdig sind."
+
+msgid "Only wheel files (`.whl`) are supported."
+msgstr "Es werden nur Wheel-Dateien (`.whl`) unterstützt."
+
+msgid "Upload"
+msgstr "Hochladen"
+
+msgid "Install Addon"
+msgstr "Add-on installieren"
+
+msgid "Installed addons"
+msgstr "Installierte Add-ons"
+
+msgid "Addon name"
+msgstr "Name des Add-ons"
+
+msgid "Is enabled"
+msgstr "ist aktiviert"
+
+msgid "You don't have any installed addons"
+msgstr "Es sind keine Add-ons installiert"
+
+msgid "Reload Application Server"
+msgstr "Applikationsserver neu laden"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr "Wenn Du den Anwendungsserver neu lädst, kann es einige Zeit dauern, bis die neue Instanz der Anwendung richtig initialisiert ist."
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr "Außerdem besteht immer die Möglichkeit, dass der Server überhaupt nicht richtig initialisiert wird. In diesem Fall musst Du das Problem selbst beheben (oder einen Systemadministrator kontaktieren)."
+
+msgid "Reload steps"
+msgstr "Schritte neu laden"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr "Die Installation für neu installierte Addons abschließen (Migrieren und Sammeln statischer Ressourcen)"
+
+msgid "Reload application server"
+msgstr "Applikationsserver neu laden"
+
+msgid "Reload was initiated."
+msgstr "Der Reload wurde gestartet."
+
+msgid "Reloading application failed."
+msgstr "Das erneute Laden der Anwendung ist fehlgeschlagen."
+
+msgid "Finalizing installations."
+msgstr "Die Installation wird fertiggestellt."
+
+msgid "Your Shuup seems to be back up!"
+msgstr "Das System ist wieder einsatzbereit."
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr "Die Wartungsarbeiten am System dauern leider noch an. Bitte versuche es später noch einmal."
+
+msgid "Select file"
+msgstr "Datei auswählen"
+
+msgid "Installation Finished"
+msgstr "Die Installation ist abgeschlossen"
+
+msgid "Installation Failed"
+msgstr "Die Installation ist fehlgeschlagen"
+
+msgid "Success"
+msgstr "Das war erfolgreich."
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Als nächstes, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>aktiviere das neu installierte Add-on </strong></a> und <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>lade den Anwendungsserver neu </strong></a>."
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "Installer Log"
+msgstr "Installer Log"
+
+msgid "Upload Addon - Install"
+msgstr "Add-on hochladen und installieren"
+
+msgid "Package Information"
+msgstr "Packinformationen"
+
+msgid "No package information could be extracted."
+msgstr "Es konnten keine Packinformationen extrahiert werden."
+
+msgid "File List"
+msgstr "Datei-Liste"

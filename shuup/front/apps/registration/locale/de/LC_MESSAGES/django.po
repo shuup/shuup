@@ -1,0 +1,159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2021-04-07 18:54+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Name of the company"
+msgstr "Firmenname"
+
+msgid "Registration Received"
+msgstr "Registrierung erhalten"
+
+msgid "Customer"
+msgstr "Kunde"
+
+msgid "Customer Email"
+msgstr "Kunden-E-Mail-Adresse"
+
+msgid "Activation URL"
+msgstr "Aktivierungs-URL"
+
+msgid "Is User Active"
+msgstr "Benutzer ist aktiv"
+
+msgid "Account Reactivation"
+msgstr "Konto-Reaktivierung"
+
+msgid "Company Registration Received"
+msgstr "Firmenkundenregistrierung erhalten"
+
+msgid "Company Approved"
+msgstr "Firmenkunde ist freigegeben"
+
+msgid "Account Activation"
+msgstr "Konto-Aktivierung"
+
+msgid "Company has been activated."
+msgstr "Der Firmenkunde wurde aktiviert."
+
+msgid "Send Registration Received Email"
+msgstr "Eine E-Mail an den Kunden senden, dass die Registrierung eingegangen ist."
+
+msgid "Send email when a user registers."
+msgstr "Eine E-Mail an den Kunden senden, wenn dieser sich registriert."
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr "Dieses Skript sendet eine E-Mail an den Kunden (bzw. an die angegebene E-Mail-Adresse), nachdem der Kunde sich angemeldet hat."
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "{{ order.shop }} - Herzlich Willkommen!"
+
+msgid "Send account reactivation email"
+msgstr "Konto-Reaktivierungs-E-Mail senden"
+
+msgid "Send email when a user account gets reactivated"
+msgstr "Eine E-Mail an den Kunden senden, wenn das Benutzerkonto reaktiviert wird"
+
+msgid ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr "Dieses Skript sendet eine E-Mail an den Kunden (bzw. an die angegebene E-Mail-Adresse), nachdem das Benutzerkonto reaktiviert wurde."
+
+msgid "{{ customer.username }} is now active again!"
+msgstr "{{ customer.username }} ist wieder aktiv!"
+
+msgid "Send Company Registration Received Email"
+msgstr "Eine E-Mail an den Kunden senden, dass die Firmenkundenregistrierung eingegangen ist."
+
+msgid "Send email when a user registers as a company."
+msgstr "Eine E-Mail an den Kunden senden, wenn dieser sich als Firmenkunde registriert."
+
+msgid "Send Company Activated Email"
+msgstr "Firmenkunden-Aktivierungs-E-Mail senden"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Die Kontaktperson des Unternehmens benachrichtigen, dass das Firmenkonto aktiviert ist"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr "Dieses Skript sendet eine E-Mail an den Kunden (bzw. an die angegebene E-Mail-Adresse), nachdem das Firmenkonto aktiviert wurde."
+
+msgid "Send account activation email"
+msgstr "Konto-Aktivierungs-E-Mail senden"
+
+msgid "Send email when a user account gets activated for the first time"
+msgstr "Eine E-Mail an den Kunden senden, wenn das Benutzerkonto zum ersten Mal aktiviert wird"
+
+msgid ""
+"This script will send an email to the user or to any configured email when "
+"an account gets activated for the first time"
+msgstr "Dieses Skript sendet eine E-Mail an den Kunden (bzw. an die angegebene E-Mail-Adresse), nachdem das Benutzerkonto zum ersten Mal aktiviert wurde."
+
+msgid "{{ customer.username }} is now active!"
+msgstr "{{ customer.username }} ist jetzt aktiv!"
+
+msgid "Account activation"
+msgstr "Konto-Aktivierung"
+
+msgid "Account activation failed."
+msgstr "Die Konto-Aktivierung ist leider fehlgeschlagen."
+
+msgid "Register as a Company"
+msgstr "Als Firmenkunde registrieren"
+
+msgid "Company Registration"
+msgstr "Firmenkundenregistrierung"
+
+msgid "Company information"
+msgstr "Firmendaten"
+
+msgid "Company billing information"
+msgstr "Firmenrechnungsdaten"
+
+msgid "Contact person"
+msgstr "Kontaktperson"
+
+msgid "Contact information for primary company contact"
+msgstr "Kontaktdaten des primären Firmenkontakts"
+
+msgid "Login information"
+msgstr "Anmeldedaten"
+
+msgid "The information you will log in with."
+msgstr "Die Daten, mit denen Du Dich anmeldest."
+
+msgid "Register"
+msgstr "Registrieren"
+
+msgid "Registration"
+msgstr "Registrierung"
+
+msgid "Register as a company."
+msgstr "Als Firmenkunde registrieren."
+
+msgid "Activation successful"
+msgstr "Die Aktivierung war erfolgreich"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr "Deine Registrierung ist abgeschlossen. Bitte folge den Anweisungen, die an Deine E-Mail-Adresse gesendet wurden."

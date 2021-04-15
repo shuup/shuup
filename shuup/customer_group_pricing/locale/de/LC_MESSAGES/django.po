@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
+"PO-Revision-Date: 2016-06-28 10:53+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Customer Group Pricing"
+msgstr "Shuup Kundengruppenpreise"
+
+#, python-format
+msgid "Price (%(shop)s/%(group)s)"
+msgstr "Preis (%(shop)s/%(group)s)"
+
+#, python-format
+msgid "Discount (%(shop)s/%(group)s)"
+msgstr "Rabatt (%(shop)s/%(group)s)"
+
+msgid "product"
+msgstr "Artikel"
+
+msgid "shop"
+msgstr "Marktplatz"
+
+msgid "contact group"
+msgstr "Kontaktgruppe"
+
+msgid "price"
+msgstr "Preis"
+
+msgid "product price"
+msgstr "Artikelpreis"
+
+msgid "product prices"
+msgstr "Artikelpreise"
+
+msgid "discount amount"
+msgstr "Rabattbetrag"
+
+msgid "product discount"
+msgstr "Artikelrabatt"
+
+msgid "product discounts"
+msgstr "Artikelrabatte"
+
+msgid "Customer Group Pricing"
+msgstr "Kundengruppenpreise"
+
+msgid "Customer Group Discount"
+msgstr "Rabatt je Kundengruppe"
+
+msgid "Contact Group Discount"
+msgstr "Rabatt je Kontaktgruppe"
+
+msgid ""
+"Here you can set individual discount amounts for different contact groups. "
+"The discount amount may be visible on storefront. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Hier kannst Du individuelle Rabattbeträge für verschiedene Kontaktgruppen "
+"einstellen. Der Rabattbetrag kann in der Marktplatzansicht sichtbar sein. "
+"Diese Gruppen werden definiert in Kontakteinstellungen - Kontaktgruppen"
+
+msgid "Contact Group Pricing"
+msgstr "Preise je Kontaktgruppe"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Hier kannst Du individuelle Preise für verschiedene Kontaktgruppen "
+"einstellen. Dies kann für spezielle Rabatte oder für B2B-Bestellungen "
+"nützlich sein. Diese Gruppen werden definiert in Kontakteinstellungen - "
+"Kontaktgruppen"

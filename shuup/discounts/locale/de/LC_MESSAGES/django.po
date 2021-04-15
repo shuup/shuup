@@ -1,0 +1,419 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Archive Product Discounts"
+msgstr "Artikelrabatte archivieren"
+
+msgid "Unarchive Discounts"
+msgstr "Archivierung der Rabatte rückgängig machen"
+
+msgid "Delete Discounts"
+msgstr "Rabatte löschen"
+
+msgid "Product Discounts Coupon Codes"
+msgstr "Artikelrabattcodes"
+
+msgid "Discounts"
+msgstr "Rabatte"
+
+msgid "Product Discounts"
+msgstr "Artikelrabatte"
+
+msgid "Archived Product Discounts"
+msgstr "Archivierte Artikelrabatte"
+
+msgid "Discounts Availability Exceptions"
+msgstr "Ausnahmen bzgl. Rabattverfügbarkeit"
+
+msgid "Product Discounts Availability Exceptions"
+msgstr "Ausnahmen bzgl. Artikelrabattverfügbarkeit"
+
+msgid "Discounts Happy Hours"
+msgstr "Happy-Hour-Rabatte"
+
+msgid "Product Discounts Happy Hours"
+msgstr "Happy-Hour-Artikelrabatte"
+
+msgid "Discount Name"
+msgstr "Rabattname"
+
+msgid "Filter by name..."
+msgstr "Nach Name filtern..."
+
+msgid "Product"
+msgstr "Artikel"
+
+msgid "Filter by product..."
+msgstr "Nach Artikel filtern..."
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Filter by category..."
+msgstr "Nach Kategorie filtern..."
+
+msgid "Contact Group"
+msgstr "Kontaktgruppe"
+
+msgid "Filter by contact group..."
+msgstr "Nach Kontaktgruppe filtern..."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Filter by contact..."
+msgstr "Nach Kontakt filtern..."
+
+msgid "Coupon code"
+msgstr "Coupon Code"
+
+msgid "Filter by coupon code..."
+msgstr "Nach Coupon Code filtern..."
+
+msgid "Effect"
+msgstr "Auswirkung"
+
+msgid "End Date and Time"
+msgstr "Enddatum und -uhrzeit"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Usages"
+msgstr "Verwendungen"
+
+msgid "Usages Limit per contact"
+msgstr "Verwendungsbeschränkung je Kontakt"
+
+msgid "Usage Limit"
+msgstr "Verwendungsbeschränkung"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Created by"
+msgstr "Erstellt von"
+
+msgid "Date created"
+msgstr "Erstellt am"
+
+msgid "Select discounts linked to this coupon code."
+msgstr "Wähle Rabatte, die mit diesem Coupon Code verbunden sein sollen."
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s wurde gelöscht."
+
+msgid "Discount percentage"
+msgstr "Rabatt in Prozent"
+
+msgid "The discount percentage for this discount."
+msgstr "Der Rabatt in Prozent für diese Rabattart."
+
+msgid "Exception Name"
+msgstr "Bezeichnung der Ausnahme"
+
+msgid "Start Date and Time"
+msgstr "Start- und Endzeitpunkt"
+
+msgid "Select discounts to be ignored on given time frame."
+msgstr ""
+"Wähle Rabatte aus, die in einem bestimmten Zeitrahmen ignoriert werden "
+"sollen."
+
+msgid "Happy Hour Name"
+msgstr "Happy-Hour-Bezeichnung"
+
+msgid "Select discounts for this happy hour."
+msgstr "Wähle Rabatte für diese Happy-Hour aus."
+
+msgid ""
+"12pm is considered noon and 12am as midnight. Start hour is included to the "
+"discount."
+msgstr ""
+"12pm wird als Mittag und 12am als Mitternacht betrachtet. Ab Startzeitpunkt "
+"gilt der Rabatt."
+
+msgid ""
+"12pm is considered noon and 12am as midnight. End hours is included to the "
+"discount."
+msgstr ""
+"12pm wird als Mittag und 12am als Mitternacht betrachtet. Zum Endzeitpunkt "
+"gilt der Rabatt noch."
+
+msgid "Weekdays the happy hour is active."
+msgstr "Wochentags ist die Happy-Hour aktiv."
+
+msgid "shops"
+msgstr "Händlerbereiche"
+
+msgid "name"
+msgstr "Name"
+
+msgid ""
+"The name for this exception. Used internally with exception lists for "
+"filtering."
+msgstr ""
+"Die Bezeichnung für diese Ausnahme. Es wird intern mit Ausnahmelisten zur "
+"Filterung verwendet."
+
+msgid "start since"
+msgstr "Start ab"
+
+msgid ""
+"Set to restrict the availability exception to be available only after a "
+"certain date and time."
+msgstr ""
+"Lege fest, dass die Ausnahme von der Verfügbarkeit nur bis zu einem "
+"bestimmten Datum und einer bestimmten Uhrzeit gilt."
+
+msgid "end until"
+msgstr "Ende bis"
+
+msgid ""
+"Set to restrict the availability exception to be available only until a "
+"certain date and time."
+msgstr ""
+"Lege fest, dass die Ausnahme von der Verfügbarkeit nur nach einem bestimmten"
+" Datum und einer bestimmten Uhrzeit gilt."
+
+msgid "availability exception"
+msgstr "Ausnahme von der Verfügbarkeit"
+
+msgid "availability exceptions"
+msgstr "Ausnahmen von der Verfügbarkeit"
+
+msgid "created on"
+msgstr "erstellt am"
+
+msgid "usage limit per customer"
+msgstr "Verwendungsbeschränkung je Kunde"
+
+msgid "Limit the amount of usages per a single customer."
+msgstr "Begrenze die Anzahl der Nutzung für einen einzelnen Kunden."
+
+msgid "usage limit"
+msgstr "Verwendungsbeschränkung"
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr ""
+"Lege das absolute Limit der Verwendungen für diesen Coupon fest. Wenn das "
+"Limit null (0) ist, kann der Coupon gar nicht eingelöst werden"
+
+msgid "active"
+msgstr "aktiv"
+
+msgid "created by"
+msgstr "erstellt von"
+
+msgid "modified by"
+msgstr "geändert von"
+
+msgid "modified on"
+msgstr "geändert am"
+
+msgid ""
+"The name for this discount. Used internally with discount lists for "
+"filtering."
+msgstr ""
+"Die für diesen Rabatt. Er wird intern mit Rabattlisten zur Filterung "
+"verwendet."
+
+msgid "supplier"
+msgstr "Händler"
+
+msgid "Select supplier for this discount."
+msgstr "Einen Händler für diesen Rabatt auswählen."
+
+msgid ""
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
+msgstr ""
+"Aktiviere dies, wenn der Rabatt bereits aktiv ist. Bitte stelle auch ein "
+"Start- und ein Endzeitpunkt ein."
+
+msgid "start date and time"
+msgstr "Start- und Endzeitpunkt"
+
+msgid ""
+"The date and time the discount starts. This is only applicable if the "
+"discount is marked as active."
+msgstr ""
+"Das Datum und die Uhrzeit, ab dem der Rabatt gilt. Dies ist nur relevant, "
+"wenn der Rabatt bereits aktiv gesetzt ist."
+
+msgid "end date and time"
+msgstr "Enddatum und -uhrzeit"
+
+msgid ""
+"The date and time the discount ends. This is only applicable if the discount"
+" is marked as active."
+msgstr ""
+"Das Datum und die Uhrzeit, ab dem der Rabatt nicht mehr gilt. Dies ist nur "
+"relevant, wenn der Rabatt bereits aktiv gesetzt ist."
+
+msgid "happy hours"
+msgstr "Happy-Hours"
+
+msgid "Select happy hours for this discount."
+msgstr "Wähle Happy-Hours für diesen Rabatt aus."
+
+msgid "Select availability for this discount."
+msgstr "Wähle die Verfügbarkeit für diesen Rabatt aus."
+
+msgid "product"
+msgstr "Artikel"
+
+msgid "Select product for this discount."
+msgstr "Einen Artikel für diesen Rabatt auswählen."
+
+msgid "exclude selected category"
+msgstr "Schließe die ausgewählte Kategorien aus"
+
+msgid "Exclude products in selected category from this discount."
+msgstr ""
+"Artikel in der ausgewählten Kategorie sind von diesem Rabatt ausgeschlossen."
+
+msgid "category"
+msgstr "Kategorie"
+
+msgid "Select category for this discount."
+msgstr "Eine Kategorie für diesen Rabatt auswählen."
+
+msgid "contact"
+msgstr "Kontakt"
+
+msgid "Select contact for this discount."
+msgstr "Einen Kontakt für diesen Rabatt auswählen."
+
+msgid "exclude selected contact group"
+msgstr "Schließe die ausgewählte Kontaktgruppe aus"
+
+msgid "Exclude contacts in selected contact group from this discount."
+msgstr ""
+"Kontakte in der ausgewählten Kontaktgruppe von diesem Rabatt ausschließen."
+
+msgid "contact group"
+msgstr "Kontaktgruppe"
+
+msgid "Select contact group for this discount."
+msgstr "Eine Kontaktgruppe für diesen Rabatt auswählen."
+
+msgid "coupon code"
+msgstr "Coupon Code"
+
+msgid "Select coupon code for this discount."
+msgstr "Einen Coupon Code für diesen Rabatt auswählen."
+
+msgid "discounted price"
+msgstr "reduzierter Preis"
+
+msgid "Discounted product price for this discount."
+msgstr "Reduzierter Artikelpreis für diesen Artikel"
+
+msgid "discount amount"
+msgstr "Rabattbetrag"
+
+msgid "Discount amount value for this discount."
+msgstr "Rabattwert dieses Rabattes."
+
+msgid "discount percentage"
+msgstr "Rabatt in Prozent"
+
+msgid "Discount percentage for this discount."
+msgstr "Der Rabatt in Prozent für diesen Rabatt."
+
+msgid "product discount"
+msgstr "Artikelrabatt"
+
+msgid "product discounts"
+msgstr "Artikelrabatte"
+
+msgid ""
+"The name for this HappyHour. Used internally with exception lists for "
+"filtering."
+msgstr ""
+"Die Bezeichnung für diese Happy-Hour. Es wird intern mit Ausnahmelisten zur "
+"Filterung verwendet."
+
+msgid "happy hour"
+msgstr "Happy-Hour"
+
+msgid "parent"
+msgstr "übergeordneter"
+
+msgid "from hour"
+msgstr "ab Stunde"
+
+msgid "to hour"
+msgstr "bis Stunde"
+
+msgid "weekday"
+msgstr "Wochentag"
+
+msgid "time range"
+msgstr "Zeitspanne"
+
+msgid "time ranges"
+msgstr "Zeitspannen"
+
+msgid ""
+"The value of the field `to hour` has to be later than that of `from hour`."
+msgstr ""
+"Der Wert des Feldes \"bis Stunde\" muss größer sein als der von \"ab "
+"Stunde\"."
+
+msgid ""
+"Select all discounts to render products from. Only active discounts that "
+"have product or category linked are available."
+msgstr ""
+"Wähle alle Rabatte aus, um diese auf Artikel anzuwenden. Nur aktive Rabatte,"
+" die mit einem Artikel oder einer Kategorie verknüpft sind, sind verfügbar."
+
+msgid "Discounted Products"
+msgstr "Reduzierte Artikel"
+
+msgid "Title"
+msgstr "Bezeichnung"
+
+msgid "Count"
+msgstr "Anzahl"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Nur vorrätige und bestellbare Artikel anzeigen"
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+"Achtung: die endgültige Anzahl der Artikel kann niedriger sein als die "
+"tatsächliche \"Anzahl\", da nicht bestellbare Artikel aus der Menge der "
+"\"Artikel-Anzahl\" herausgefiltert werden."
+
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+msgid "Condition"
+msgstr "Bedingung"

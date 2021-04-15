@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"PO-Revision-Date: 2021-04-06 13:57+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Customer"
+msgstr "Kunde"
+
+msgid "Filter report results by customer."
+msgstr "Berichtsergebnisse nach Kunde filtern."
+
+msgid "Orderer"
+msgstr "Besteller"
+
+msgid "Filter report results by the person that made the order."
+msgstr "Berichtsergebnisse nach Besteller filtern."
+
+msgid "Order Line Type"
+msgstr "Bestellpositionstyp"
+
+msgid "Suppliers"
+msgstr "Händler"
+
+msgid "Filter order lines by suppliers."
+msgstr "Bestellpositionen nach Händler filtern."
+
+msgid "Order status"
+msgstr "Bestellstatus"
+
+msgid "Filter order lines by status of their order."
+msgstr "Bestellpositionen nach Bestellstatus filtern."
+
+msgid "Quantity"
+msgstr "Menge"
+
+msgid "Taxless Total"
+msgstr "Summe (netto)"
+
+msgid "Taxful Total"
+msgstr "Summe (brutto)"
+
+msgid "Sort order"
+msgstr "Bestellungen sortieren"
+
+msgid "Year"
+msgstr "Jahr"
+
+msgid "Year/Month"
+msgstr "Jahr/Monat"
+
+msgid "Year/Month/Day"
+msgstr "Jahr/Monat/Tag"
+
+msgid "Group by"
+msgstr "Gruppieren nach"
+
+msgid "Order Count"
+msgstr "Anzahl Bestellungen"
+
+msgid "Average Sales"
+msgstr "Durchschnittliche Verkäufe"
+
+msgid "Tax"
+msgstr "Steuern"
+
+msgid "Filter report results by tax."
+msgstr "Berichtsergebnisse nach Steuern filtern."
+
+msgid "Tax Class"
+msgstr "Steuerklasse"
+
+msgid "Filter report results by tax class."
+msgstr "Berichtsergebnisse nach Steuerklasse filtern."
+
+msgid "Shipping Method"
+msgstr "Versandart"
+
+msgid "Filter report results by shipping method."
+msgstr "Berichtsergebnisse nach Versandart filtern."
+
+msgid "Carrier"
+msgstr "Transportunternehmen"
+
+msgid "Filter report results by carrier."
+msgstr "Berichtsergebnisse nach Transportunternehmen filtern."
+
+msgid "Customer Sales"
+msgstr "Kundenumsatz"
+
+msgid "Orders"
+msgstr "Bestellungen"
+
+msgid "New Customers"
+msgstr "Neukunden"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Persons"
+msgstr "Personen"
+
+msgid "Companies"
+msgstr "Unternehmen"
+
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Orders Report"
+msgstr "Bericht über die Bestellungen"
+
+msgid "Order ref."
+msgstr "Bestellreferenz"
+
+msgid "Order date"
+msgstr "Bestelldatum"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Order line quantity"
+msgstr "Menge in der Bestellposition"
+
+msgid "Payment status"
+msgstr "Bezahlstatus"
+
+msgid "Shipment status"
+msgstr "Versandstatus"
+
+msgid "Total"
+msgstr "Gesamtsumme"
+
+msgid "Order Line Report"
+msgstr "Bestellpositionsbericht"
+
+msgid "Order Line SKU"
+msgstr "Artikelnummer in der Bestellposition"
+
+msgid "Order Line Text"
+msgstr "Bestellpositionstext"
+
+msgid "Taxless Unit Price"
+msgstr "Stückpreis (netto)"
+
+msgid "Taxful Unit Price"
+msgstr "Stückpreis (brutto)"
+
+msgid "Taxful Price"
+msgstr "Preis (brutto)"
+
+msgid "Created on"
+msgstr "Angelegt am"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Product Total Sales"
+msgstr "Summe der Verkäufe eines Artikels"
+
+msgid "Product"
+msgstr "Artikel"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Refunded Sales"
+msgstr "Erstatteter Umsatz"
+
+msgid "Refunded Orders"
+msgstr "Erstattete Bestellungen"
+
+msgid "Total Refunded"
+msgstr "Summe der Erstattungen"
+
+msgid "Sales Report"
+msgstr "Umsatzbericht"
+
+msgid "Products"
+msgstr "Artikel"
+
+msgid "Sales Per Hour"
+msgstr "Umsätze pro Stunde"
+
+msgid "Hour"
+msgstr "Stunde"
+
+msgid "Order Amount"
+msgstr "Anzahl der Bestellungen"
+
+msgid "Total Sales"
+msgstr "Gesamtumsatz"
+
+msgid "Shipping"
+msgstr "Versand"
+
+msgid "Shipping method"
+msgstr "Versandart"
+
+msgid "Total Charged"
+msgstr "Gesamt berechnet"
+
+msgid "Taxes"
+msgstr "Steuern"
+
+msgid "Rate (%)"
+msgstr "Steuersatz (in %)"
+
+msgid "Pre-tax Total"
+msgstr "Summe (netto)"
+
+msgid "Total Tax Amount"
+msgstr "Steuerbetrag gesamt"
+
+msgid "Shop Name"
+msgstr "Marktplatzname"
+
+msgid "Currency"
+msgstr "Währung"
+
+msgid "Customers"
+msgstr "Kunden"
+
+msgid "Customer Average Sale"
+msgstr "Durchschnittlicher Kundenumsatz"
