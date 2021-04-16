@@ -1,0 +1,54 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+
+{% macro render_form(form, form_prefix, idx) %}
+{% set full_prefix = form_prefix + idx|string if idx == "__prefix__" else form_prefix %}
+<div class="panel panel-default panel-slide row panel-{{ full_prefix }}" id="panel-{{ full_prefix }}">
+    {% if form.translated_field_names %}
+        {{ language_dependent_content_tabs(form, tab_id_prefix=full_prefix) }}
+    {% else %}
+        <div class="language-tabs"></div>
+    {% endif %}
+    {{ render_monolingual_fields(form) }}
+</div>
+{% endmacro %}
+
+
+{% call content_block(_("Choice Options"), "fa-users") %}
+    {% set formset = form["choice_options"] %}
+    {% set form_prefix = "choice_options" %}
+    {{ formset.management_form }}
+    {%  for f in formset %}
+        {% set form_prefix = form_prefix + "-" + (loop.index - 1)|string %}
+        {{ render_form(f, form_prefix, loop.index) }}
+    {% endfor %}
+    <div class="d-none" id="insert-placeholder"></div>
+    <div class="d-none" id="{{ form_prefix }}-placeholder">
+        {{ render_form(formset.empty_form, form_prefix, "__prefix__") }}
+    </div>
+    <div>
+        <a class="btn btn-primary" id="new-option-button" href="#">
+            <i class="fa fa-plus"></i>
+            {% trans %}Add new option{% endtrans %}
+        </a>
+    </div>
+{% endcall %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    $(function () {
+        $("#new-option-button").on("click", function (event) {
+            event.preventDefault();
+            var $source = $("#" + "choice_options" + "-placeholder");
+            var $totalFormsField = $("#" + "choice_options" + "-TOTAL_FORMS");
+            var componentCount = parseInt($totalFormsField.val());
+            var html = $source.html().replace(/__prefix__/g, componentCount);
+            var $componentsPlaceholder = $("#insert-placeholder");
+            $(html).insertAfter($componentsPlaceholder);
+            $totalFormsField.val(componentCount + 1);
+        });
+    });
+</script>
+{% endblock %}

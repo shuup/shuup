@@ -334,12 +334,17 @@ class ProductAttributesForm(forms.Form):
         self.trans_name_map = defaultdict(dict)
         self.translated_field_names = []
         super(ProductAttributesForm, self).__init__(**kwargs)
-        if self.product.pk:
-            self.applied_attrs = dict((pa.attribute_id, pa) for pa in self.product.attributes.all())
-        else:
-            self.applied_attrs = {}
+        self.applied_attrs = self._get_applied_attributes()
         self._field_languages = {}
         self._build_fields()
+        self.empty_permitted = False
+
+    def _get_applied_attributes(self):
+        applied_attrs = {}
+        if self.product.pk:
+            for pa in self.product.attributes.select_related("attribute").prefetch_related("chosen_options"):
+                applied_attrs[pa.attribute_id] = pa
+        return applied_attrs
 
     def _build_fields(self):
         for attribute in self.attributes:
@@ -352,6 +357,8 @@ class ProductAttributesForm(forms.Form):
                 if pa:
                     if attribute.type == AttributeType.TIMEDELTA:  # Special case.
                         value = pa.numeric_value
+                    elif attribute.type == AttributeType.CHOICES:
+                        value = [choice.id for choice in pa.chosen_options.all()]
                     else:
                         value = pa.value
                     self.initial[attribute.identifier] = value

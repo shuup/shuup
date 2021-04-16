@@ -1,12 +1,14 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
-{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
-{% block title %}{{ attribute.name or _("New Attribute") }}{% endblock %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
 
 {% block body_class %}shuup-details{% endblock %}
 {% block content %}
-    {% call single_section_form("attribute_form", form) %}
-        {{ language_dependent_content_tabs(form) }}
-        {{ render_monolingual_fields(form) }}
+    {% call content_with_sidebar(content_id="attribute_form") %}
+        <form method="post" id="attribute_form" novalidate>
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
     {% endcall %}
 {% endblock %}

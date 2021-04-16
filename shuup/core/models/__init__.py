@@ -7,7 +7,7 @@
 from shuup.utils import update_module_attributes
 
 from ._addresses import ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole, SavedAddressStatus
-from ._attributes import Attribute, AttributeType, AttributeVisibility
+from ._attributes import Attribute, AttributeChoiceOption, AttributeType, AttributeVisibility
 from ._base import PolymorphicShuupModel, PolymorphicTranslatableShuupModel, ShuupModel, TranslatableShuupModel
 from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
@@ -96,6 +96,7 @@ __all__ = [
     "AbstractPayment",
     "AnonymousContact",
     "Attribute",
+    "AttributeChoiceOption",
     "AttributeType",
     "AttributeVisibility",
     "Basket",
