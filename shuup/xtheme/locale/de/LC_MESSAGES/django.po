@@ -1,518 +1,519 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-04-09 21:40+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Theme identifiers must match."
-msgstr ""
+msgstr "Designkennungen müssen übereinstimmen."
 
 msgid "Either theme_settings or shop should be informed."
-msgstr ""
+msgstr "Entweder theme_settings oder der Marktplatz sollten informiert werden."
 
 msgid "Global plugins"
-msgstr ""
+msgstr "Globale Plugins"
 
 msgid "Theme plugins"
-msgstr ""
+msgstr "Design Plugins"
 
 msgid "Shuup Extensible Theme Engine"
-msgstr ""
+msgstr "Shuup Extensible Design Engine"
 
 msgid "Themes"
-msgstr ""
+msgstr "Designs"
 
 msgid "Customize the look and feel of your shop"
-msgstr ""
+msgstr "Passe das Erscheinungsbild Deines Marktplatzes an"
 
 msgid "Customize theme"
-msgstr ""
+msgstr "Design anpassen"
 
 msgid "No theme is active. Click here to activate one."
-msgstr ""
+msgstr "Kein Design ist aktiv. Klicke hier, um eines zu aktivieren."
 
 msgid "Theming"
-msgstr ""
+msgstr "Theming / Designs"
 
 msgid "Shuup Extensible Theme Engine Snippets"
-msgstr ""
+msgstr "Shuup Extensible Theme Engine Snippets"
 
 msgid "Snippets"
-msgstr ""
+msgstr "Snippets"
 
 msgid "Theme Custom CSS/JS"
-msgstr ""
+msgstr "Benutzerdefiniertes Design- CSS / JS"
 
 msgid ""
 "Select the themes that will have this snippet injected. Leave the field "
 "blank to inject in all themes."
-msgstr ""
+msgstr "Wähle die Designs aus, in die dieses Snippet eingefügt werden soll. Lass das Feld leer, um alle Designs einzufügen."
 
 msgid "Select the location of the page to inject the snippet."
-msgstr ""
+msgstr "Wähle den Ort der Seite aus, an dem das Snippet eingefügt werden soll."
 
 msgid "Location"
-msgstr ""
+msgstr "Ort"
 
 msgid "Filter by location..."
-msgstr ""
+msgstr "Nach Ort filtern ..."
 
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 msgid "activate"
-msgstr ""
+msgstr "aktivieren"
 
 msgid "Theme"
-msgstr ""
+msgstr "Design"
 
 msgid "Choose a theme for your shop"
-msgstr ""
+msgstr "Wähle ein Design für Deinen Marktplatz"
 
 msgid "Theme activated."
-msgstr ""
+msgstr "Design aktiviert."
 
 msgid "Custom CSS/JS"
-msgstr ""
+msgstr "Benutzerdefiniertes CSS / JS"
 
 msgid "Stylesheets"
-msgstr ""
+msgstr "Stylesheets"
 
 msgid "The fonts, colors, and styles to use with your theme."
-msgstr ""
+msgstr "Die Schriftarten, Farben und Stile, die für Dein Desing verwendet werden sollen."
 
 msgid "Content in this box is shown to all user types without limitations."
-msgstr ""
+msgstr "Der Inhalt in diesem Feld wird allen Benutzertypen ohne Einschränkungen angezeigt."
 
 #, python-format
 msgid ""
 "Content in this placeholder is shown for %(category_name)s category only."
-msgstr ""
+msgstr "Der Inhalt dieses Platzhalters wird nur für die Kategorie %(category_name)s angezeigt."
 
 msgid "Content in this box is shown to guests (anonymous users) only."
-msgstr ""
+msgstr "Der Inhalt in diesem Feld wird nur Gästen (anonymen Benutzern) angezeigt."
 
 msgid "Content in this box is shown to company contacts only."
-msgstr ""
+msgstr "Der Inhalt in diesem Feld wird nur Unternehmenskontakten angezeigt."
 
 msgid ""
 "Content in this box is shown to all logged-in contacts (both person and "
 "company; not anonymous)."
-msgstr ""
+msgstr "Der Inhalt in diesem Feld wird allen angemeldeten Kontakten angezeigt (sowohl Person als auch Firma; nicht anonym)."
 
 msgid "Content in this box is shown to person contacts only."
-msgstr ""
+msgstr "Der Inhalt in diesem Feld wird nur Personenkontakten angezeigt."
 
 #, python-format
 msgid "Content in this placeholder is shown for %(product_name)s only."
-msgstr ""
+msgstr "Der Inhalt dieses Platzhalters wird nur für %(product_name)s angezeigt."
 
 msgid "Shop '{}' has no active theme"
-msgstr ""
+msgstr "Der Marktplatz \"{}\" hat kein aktives Design"
 
 msgid "Inline JavaScript"
-msgstr ""
+msgstr "Inline-JavaScript"
 
 msgid "Inline CSS"
-msgstr ""
+msgstr "Inline-CSS"
 
 msgid "Inline HTML"
-msgstr ""
+msgstr "Inline-HTML"
 
 msgid "Inline Jinja HTML"
-msgstr ""
+msgstr "Inline Jinja HTML"
 
 msgid "current draft"
-msgstr ""
+msgstr "aktueller Entwurf"
 
 msgid "old version"
-msgstr ""
+msgstr "alte Version"
 
 msgid "public"
-msgstr ""
+msgstr "öffentlich"
 
 msgid "theme identifier"
-msgstr ""
+msgstr "Designkennung"
 
 msgid "view name"
-msgstr ""
+msgstr "Name anzeigen"
 
 msgid "created on"
-msgstr ""
+msgstr "erstellt am"
 
 msgid "modified on"
-msgstr ""
+msgstr "geändert am"
 
 msgid "status"
-msgstr ""
+msgstr "Status"
 
 msgid "internal data"
-msgstr ""
+msgstr "interne Daten"
 
 msgid "active"
-msgstr ""
+msgstr "aktiv"
 
 msgid "data"
-msgstr ""
+msgstr "Daten"
 
 #, python-format
 msgid "Theme configuration for %s"
-msgstr ""
+msgstr "Design-Konfiguration für %s"
 
 msgid "location"
-msgstr ""
+msgstr "Standort"
 
 msgid "snippet type"
-msgstr ""
+msgstr "Snippet typ"
 
 msgid "snippet"
-msgstr ""
+msgstr "Snippet"
 
 msgid "themes"
-msgstr ""
+msgstr "Designs"
 
 msgid "Snippet"
-msgstr ""
+msgstr "Snippet"
 
 msgid "Snippet for {} in {}"
-msgstr ""
+msgstr "Snippet für {} in {}"
 
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 msgid "Categories"
-msgstr ""
+msgstr "Kategorien"
 
 msgid "Category Links"
-msgstr ""
+msgstr "Kategorien-Links"
 
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 msgid "Show all categories"
-msgstr ""
+msgstr "Alle Kategorien anzeigen"
 
 msgid "All categories are shown, even if not selected"
-msgstr ""
+msgstr "Alle Kategorien werden angezeigt, auch wenn sie nicht ausgewählt sind"
 
 msgid "Image"
-msgstr ""
+msgstr "Bild"
 
 msgid "Image Link URL"
-msgstr ""
+msgstr "Bildlink-URL"
 
 msgid "Full width"
-msgstr ""
+msgstr "Volle Breite"
 
 msgid "Set image to the full width of cell."
-msgstr ""
+msgstr "Stelle das Bild auf die volle Breite der Zelle ein."
 
 msgid "Width (px)"
-msgstr ""
+msgstr "Breite (px)"
 
 msgid "Leave blank for default width."
-msgstr ""
+msgstr "Lass das Feld für die Standardbreite leer."
 
 msgid "Height (px)"
-msgstr ""
+msgstr "Höhe (px)"
 
 msgid "Newest"
-msgstr ""
+msgstr "Neuste"
 
 msgid "Best Selling"
-msgstr ""
+msgstr "Meistverkauft"
 
 msgid "Random"
-msgstr ""
+msgstr "Zufällig"
 
 msgid "Product Highlights"
-msgstr ""
+msgstr "Produkt-Highlights"
 
 msgid "Count"
-msgstr ""
+msgstr "Anzahl"
 
 msgid "Only show in-stock and orderable items"
-msgstr ""
+msgstr "Nur vorrätige und bestellbare Artikel anzeigen"
 
 msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
-msgstr ""
+msgstr "Achtung: die endgültige Anzahl der Artikel kann niedriger sein als die tatsächliche \"Anzahl\", da nicht bestellbare Artikel aus der Menge der \"Artikel-Anzahl\" herausgefiltert werden."
 
 msgid "Product Cross Sells"
-msgstr ""
+msgstr "Artikel-Cross-Selling-Möglichkeiten"
 
 msgid "Show variation parents"
-msgstr ""
+msgstr "Übergeordnete Produktvarianten anzeigen"
 
 msgid "Render variation parents instead of the children."
-msgstr ""
+msgstr "Übergeordnete Produktvarianten anstatt der untergeordneten Produkte wiedergeben"
 
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "Category Products Highlight"
-msgstr ""
+msgstr "Produkt-Highlights-Kategorie"
 
 msgid "Products"
-msgstr ""
+msgstr "Artikel"
 
 msgid "Select all products you want to show"
-msgstr ""
+msgstr "Wähle alle Artikel, die Du anzeigen lassen möchtest"
 
 msgid "Product Selection"
-msgstr ""
+msgstr "Artikelauswahl"
 
 msgid "Product Highlights (asynchronous)"
-msgstr ""
+msgstr "Produkt-Highlights (asynchron)"
 
 msgid "Cutoff days"
-msgstr ""
+msgstr "Stichtage"
 
 msgid "Cache timeout (seconds)"
-msgstr ""
+msgstr "Cache-Timeout (in Sekunden)"
 
 msgid "Product Cross Sells (asynchronous)"
-msgstr ""
+msgstr "Artikel-Cross-Selling-Möglichkeiten (asynchron)"
 
 msgid "Category Products Highlight (asynchronous)"
-msgstr ""
+msgstr "Produkt-Highlights-Kategorie (asynchron)"
 
 msgid "Product Selection (asynchronous)"
-msgstr ""
+msgstr "Artikelauswahl (asynchron)"
 
 msgid "In-Place Snippet"
-msgstr ""
+msgstr "In-Place-Snippet"
 
 msgid "Resource snippet for end of head"
-msgstr ""
+msgstr "Ressourcen-Snippet für das Kopfende"
 
 msgid "Resource snippet for beginning of body"
-msgstr ""
+msgstr "Ressourcen-Snippet für den Anfang des Körpers"
 
 msgid "Resource for end of body"
-msgstr ""
+msgstr "Ressource für das Ende des Körpers"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #, python-format
 msgid "%(name)s Ordering"
-msgstr ""
+msgstr "%(name)s Bestellung"
 
 msgid "Ordering"
-msgstr ""
+msgstr "Bestellen"
 
 msgid "Social Media Links"
-msgstr ""
+msgstr "Social Media Links"
 
 msgid "Topic"
-msgstr ""
+msgstr "Thema"
 
 msgid "Icon Size"
-msgstr ""
+msgstr "Icongröße"
 
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 msgid "Large"
-msgstr ""
+msgstr "Groß"
 
 msgid "Alignment"
-msgstr ""
+msgstr "Ausrichtung"
 
 msgid "Left"
-msgstr ""
+msgstr "Linksbündig"
 
 msgid "Center"
-msgstr ""
+msgstr "Zentriert"
 
 msgid "Right"
-msgstr ""
+msgstr "Rechtsbündig"
 
 msgid "text"
-msgstr ""
+msgstr "Text"
 
 #, python-format
 msgid "Click to edit placeholder: %s"
-msgstr ""
+msgstr "Klicke hier, um den Platzhalter zu bearbeiten: %s"
 
 msgid ""
 "This placeholder is global and content of this placeholder is shown on all "
 "pages."
-msgstr ""
+msgstr "Dieser Platzhalter ist global und der Inhalt dieses Platzhalters wird auf allen Seiten angezeigt."
 
 msgid "End of head"
-msgstr ""
+msgstr "Kopfende"
 
 msgid "Start of head"
-msgstr ""
+msgstr "Kopfanfang"
 
 msgid "End of body"
-msgstr ""
+msgstr "Ende des Körpers"
 
 msgid "Start of body"
-msgstr ""
+msgstr "Beginn des Körpers"
 
 msgid "Content start"
-msgstr ""
+msgstr "Inhaltsanfang"
 
 msgid "Content end"
-msgstr ""
+msgstr "Inhaltsende"
 
 msgid "(Error while rendering.)"
-msgstr ""
+msgstr "(Wiedergabefehler)"
 
 msgid "Delete This Cell"
-msgstr ""
+msgstr "Diese Zelle löschen"
 
 msgid "Untranslated"
-msgstr ""
+msgstr "Nicht übersetzt"
 
 msgid "There's nothing to configure in this plugin."
-msgstr ""
+msgstr "In diesem Plugin ist nichts zu konfigurieren."
 
 msgid "Save Plugin"
-msgstr ""
+msgstr "Plugin speichern"
 
 msgid ""
 "Remember to publish your changes for this placeholder when you are done, by "
 "clicking the Publish Changes button at the top."
-msgstr ""
+msgstr "Denke daran, Deine Änderungen für diesen Platzhalter zu veröffentlichen, wenn Du fertig bist, indem Du oben auf die Schaltfläche Änderungen veröffentlichen klickst."
 
 msgid "Edit Placeholder"
-msgstr ""
+msgstr "Platzhalter bearbeiten"
 
 msgid ""
 "Edit plugins inside this placeholder. By saving the individual plugin, the "
 "changes are saved as a draft, and only you are able to see the changes. To "
 "make your changes Public, Click the Publish Changes button."
-msgstr ""
+msgstr "Bearbeite Plugins in diesem Platzhalter. Durch Speichern des einzelnen Plugins werden die Änderungen als Entwurf gespeichert, und nur Du kannst die Änderungen sehen. Um Deine Änderungen öffentlich zu machen, klicke auf die Schaltfläche \"Änderungen veröffentlichen\"."
 
 msgid "Add new cell"
-msgstr ""
+msgstr "Neue Zelle hinzufügen"
 
 msgid "Delete row"
-msgstr ""
+msgstr "Zeile löschen"
 
 msgid "Move row"
-msgstr ""
+msgstr "Zeile verschieben"
 
 msgid "Add new row"
-msgstr ""
+msgstr "Neue Zeile hinzufügen"
 
 msgid "Theme Configuration"
-msgstr ""
+msgstr "Designkonfiguration"
 
 msgid "No themes are installed."
-msgstr ""
+msgstr "Es sind keine Designs / Themes installiert."
 
 #, python-format
 msgid "Theme Configuration: %(name)s"
-msgstr ""
+msgstr "Design-Konfiguration: %(name)s"
 
 msgid "There's nothing to configure in this theme."
-msgstr ""
+msgstr "In diesem Design gibt es nichts zu konfigurieren."
 
 msgid "Select theme"
-msgstr ""
+msgstr "Design wählen"
 
 msgid "Theme Guide"
-msgstr ""
+msgstr "Design-Leitfaden"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "Configure"
-msgstr ""
+msgstr "Konfigurieren"
 
 msgid "Activate"
-msgstr ""
+msgstr "Aktivieren"
 
 msgid "Theme Name"
-msgstr ""
+msgstr "Design-Name"
 
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 msgid "Currently active"
-msgstr ""
+msgstr "Gerade aktiv"
 
 msgid "Revert Changes"
-msgstr ""
+msgstr "Änderungen rückgängig machen"
 
 msgid "Publish Changes"
-msgstr ""
+msgstr "Änderungen veröffentlichen"
 
 msgid "No access to editing."
-msgstr ""
+msgstr "Kein Zugriff auf die Bearbeitung."
 
 #, python-format
 msgid "Unknown command: `%s`."
-msgstr ""
+msgstr "Unbekannter Befehl: \"%s\"."
 
 msgid "Unable to determine the current theme."
-msgstr ""
+msgstr "Das aktuelle Design kann nicht gefunden werden."
 
 #, python-format
 msgid "Can't add more than %d cells in one row."
-msgstr ""
+msgstr "Es können nicht mehr als %d-Zellen in einer Zeile hinzugefügt werden."
 
 msgid "Published"
-msgstr ""
+msgstr "Veröffentlicht"
 
 msgid "Reverted"
-msgstr ""
+msgstr "Rückgängig gemacht"
 
 msgid "Custom"
-msgstr ""
+msgstr "Benutzerdefiniert"
 
 msgid "Full Width"
-msgstr ""
+msgstr "Volle Breite"
 
 msgid "Three Fourths (3/4)"
-msgstr ""
+msgstr "Drei Viertel (3/4)"
 
 msgid "Two Thirds (2/3)"
-msgstr ""
+msgstr "Zwei Drittel (2/3)"
 
 msgid "Half (1/2)"
-msgstr ""
+msgstr "Die Hälfte (1/2)"
 
 msgid "One Third (1/3)"
-msgstr ""
+msgstr "Ein Drittel (1/3)"
 
 msgid "One Fourth (1/4)"
-msgstr ""
+msgstr "Ein Viertel (1/4)"
 
 msgid "Auto"
-msgstr ""
+msgstr "Automatisch"
 
 msgid "Cell width"
-msgstr ""
+msgstr "Zellenbreite"
 
 msgid "Cell align"
-msgstr ""
+msgstr "Zellenausrichtung"
 
 msgid "Extra classes"
-msgstr ""
+msgstr "Zusätzliche Klassen"
 
 msgid "Add extra CSS classes names to the cell"
-msgstr ""
+msgstr "Füge der Zelle zusätzliche CSS-Klassennamen hinzu"
 
 msgid "No Plugin"
-msgstr ""
+msgstr "Kein Plugin"

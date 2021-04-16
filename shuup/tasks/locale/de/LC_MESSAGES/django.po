@@ -2,172 +2,177 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Tasks"
-msgstr ""
+msgstr "Aufgaben"
 
 msgid "Show Tasks"
-msgstr ""
+msgstr "Aufgaben anzeigen"
 
 msgid "Task Types"
-msgstr ""
+msgstr "Aufgabentypen"
 
 msgid "Show Task Types"
-msgstr ""
+msgstr "Aufgabentypen anzeigen"
 
 #, python-brace-format
 msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
 msgstr ""
+"Die Verantwortlichkeit wurde von {from_contact_name} in {to_contact_name} "
+"geändert."
 
 msgid "Set In Progress"
-msgstr ""
+msgstr "Als \"In Arbeit\" markieren"
 
 msgid "Set Completed"
-msgstr ""
+msgstr "Als  \"Abgeschlossen\" markieren"
 
 msgid "Invalid status."
-msgstr ""
+msgstr "Ungültiger Status."
 
 msgid "Status changed."
-msgstr ""
+msgstr "Der Status wurde geändert."
 
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Nach Name filtern..."
 
 msgid "Creator"
-msgstr ""
+msgstr "Ersteller"
 
 msgid "Filter by creator..."
-msgstr ""
+msgstr "Nach Ersteller filtern ..."
 
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 msgid "Priority"
-msgstr ""
+msgstr "Priorität"
 
 msgid "Comments"
-msgstr ""
+msgstr "Bemerkungen"
 
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 msgid "In progress"
-msgstr ""
+msgstr "In Arbeit"
 
 msgid "Completed"
-msgstr ""
+msgstr "Abgeschlossen"
 
 msgid "Deleted"
-msgstr ""
+msgstr "Gelöscht"
 
 msgid "Public"
-msgstr ""
+msgstr "Öffentlich"
 
 msgid "Staff Only"
-msgstr ""
+msgstr "Nur für Mitarbeiter"
 
 msgid "Admins Only"
-msgstr ""
+msgstr "Nur für Administratoren"
 
 msgid "shop"
-msgstr ""
+msgstr "Marktplatz"
 
 msgid "name"
-msgstr ""
+msgstr "Name"
 
 msgid "task type"
-msgstr ""
+msgstr "Aufgabentyp"
 
 msgid "task types"
-msgstr ""
+msgstr "Aufgabentypen"
 
 msgid "status"
-msgstr ""
+msgstr "Status"
 
 msgid "priority"
-msgstr ""
+msgstr "Priorität"
 
 msgid "creator"
-msgstr ""
+msgstr "Ersteller"
 
 msgid "assigned to"
-msgstr ""
+msgstr "zugewiesen an"
 
 msgid "completed by"
-msgstr ""
+msgstr "abgeschlossen von"
 
 msgid "completed on"
-msgstr ""
+msgstr "abgeschlossen am"
 
 msgid "created on"
-msgstr ""
+msgstr "erstellt am"
 
 msgid "modified on"
-msgstr ""
+msgstr "geändert am"
 
 msgid "task"
-msgstr ""
+msgstr "Aufgabe"
 
 msgid "author"
-msgstr ""
+msgstr "Autor"
 
 msgid "visibility"
-msgstr ""
+msgstr "Anzeige"
 
 msgid "body"
-msgstr ""
+msgstr "Körper"
 
 msgid "New Task"
-msgstr ""
+msgstr "Neue Aufgabe"
 
 msgid "General Information"
-msgstr ""
+msgstr "Allgemeines"
 
 msgid "Created on"
-msgstr ""
+msgstr "Angelegt am"
 
 msgid "Completed on"
-msgstr ""
+msgstr "Abgeschlossen am"
 
 msgid "Completed by"
-msgstr ""
+msgstr "Abgeschlossen von"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "Visibility"
-msgstr ""
+msgstr "Anzeige"
 
 msgid "Comment"
-msgstr ""
+msgstr "Bemerkung"
 
 msgid "Post a new comment"
-msgstr ""
+msgstr "Schreibe einen neue Bemerkung"
 
 msgid "New Task Type"
-msgstr ""
+msgstr "Neuer Aufgabentyp"
 
 msgid "Last 10 pending tasks assigned for you"
-msgstr ""
+msgstr "Deine letzten 10 ausstehenden Aufgaben"
 
 msgid "Task"
-msgstr ""
+msgstr "Aufgabe"

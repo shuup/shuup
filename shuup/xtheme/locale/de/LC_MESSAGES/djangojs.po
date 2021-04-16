@@ -1,61 +1,63 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-12-05 00:12+0000\n"
+"PO-Revision-Date: 2021-04-09 21:17+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, javascript-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Bearbeite %s"
 
 msgid ""
-"Changing plugin cells without saving will cause changes made to this cell to "
-"be lost."
-msgstr ""
+"Changing plugin cells without saving will cause changes made to this cell to"
+" be lost."
+msgstr "Das Ändern von Plugin-Zellen ohne Speichern führt dazu, dass Änderungen an dieser Zelle verloren gehen."
 
 #, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."
-msgstr ""
+msgstr "Fehler: Es können nicht mehr als %s-Zellen zu einer Zeile hinzugefügt werden."
 
 msgid "Are you sure you wish to delete this row?"
-msgstr ""
+msgstr "Bist Du sicher, dass Du diese Zeile wirklich löschen möchtest?"
 
 msgid "Are you sure you wish to delete this cell?"
-msgstr ""
+msgstr "Bist Du sicher, dass Du diese Zelle wirklich löschen möchtest?"
 
 msgid "Are you sure you wish to publish changes made to this view?"
-msgstr ""
+msgstr "Bist Du sicher, dass Du die Änderungen an dieser Ansicht veröffentlichen möchtest?"
 
 msgid "You have changed the form. Do you want to save them before publishing?"
-msgstr ""
+msgstr "Du hast das Formular geändert. Möchtest Du es vor der Veröffentlichung speichern?"
 
 msgid ""
 "Are you sure you wish to revert all changes made since the last published "
 "version?"
-msgstr ""
+msgstr "Bist Du sicher, dass Du seit der letzten veröffentlichten Version vorgenommenen Änderungen rückgängig machen möchtest?"
 
-msgid "Changing plugins will cause other changes made on this form to be lost."
-msgstr ""
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
+msgstr "Das Ändern von Plugins führt dazu, dass andere in diesem Formular vorgenommene Änderungen verloren gehen."
 
 msgid "Custom CSS/JS"
-msgstr ""
+msgstr "Benutzerdefiniertes CSS / JS"
 
 msgid "Exit Edit"
-msgstr ""
+msgstr "Bearbeitungsmodus verlassen"
 
 msgid "Edit Page"
-msgstr ""
+msgstr "Seite bearbeiten"

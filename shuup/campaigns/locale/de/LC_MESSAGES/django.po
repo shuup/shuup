@@ -1,10 +1,10 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -374,10 +374,10 @@ msgstr ""
 " alle passenden Artikel im Warenkorb angewendet wird."
 
 msgid "shop"
-msgstr "Händlerbereich"
+msgstr "Marktplatz"
 
 msgid "The shop where the campaign is active."
-msgstr "Der Händlerbereich, für den die Aktion aktiv ist."
+msgstr "Der Marktplatz, für den die Aktion aktiv ist."
 
 msgid "name"
 msgstr "Name"
@@ -488,7 +488,7 @@ msgid "is active"
 msgstr "ist aktiv"
 
 msgid "The shop where the coupon is active."
-msgstr "Der Händlerbereich, für den der Coupon aktiv ist."
+msgstr "Der Marktplatz, für den der Coupon aktiv ist."
 
 msgid "Can not have multiple active campaigns with the same code."
 msgstr "Es kann nicht mehrere aktive Aktionen mit demselben Code geben."

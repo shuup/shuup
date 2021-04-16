@@ -1,97 +1,98 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2021-04-09 21:14+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Utilities"
-msgstr ""
+msgstr "Shuup-Dienstprogramme"
 
 msgid "other"
-msgstr ""
+msgstr "andere"
 
 msgid "audit"
-msgstr ""
+msgstr "prüfen"
 
 msgid "edit"
-msgstr ""
+msgstr "bearbeiten"
 
 msgid "deletion"
-msgstr ""
+msgstr "Löschen"
 
 msgid "note"
-msgstr ""
+msgstr "Hinweis"
 
 msgid "email"
-msgstr ""
+msgstr "E-Mail-Adresse"
 
 msgid "warning"
-msgstr ""
+msgstr "Achtung"
 
 msgid "error"
-msgstr ""
+msgstr "Fehler"
 
 msgid "created on"
-msgstr ""
+msgstr "erstellt am"
 
 msgid "user"
-msgstr ""
+msgstr "Benutzer"
 
 msgid "message"
-msgstr ""
+msgstr "Nachricht"
 
 msgid "identifier"
-msgstr ""
+msgstr "Kennung"
 
 msgid "log entry kind"
-msgstr ""
+msgstr "Art des Protokolleintrags"
 
 msgid "extra data"
-msgstr ""
+msgstr "zusätzliche Daten"
 
 msgid "target"
-msgstr ""
+msgstr "Ziel"
 
 #, python-format
 msgid "%s day"
 msgid_plural "%s days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s Tag"
+msgstr[1] "%s Tage"
 
 #, python-format
 msgid "%(min)s--%(max)s days"
-msgstr ""
+msgstr "%(min)s - %(max)s Tage"
 
 #, python-format
 msgid "Maximum file size reached (%(size)s MB)."
-msgstr ""
+msgstr "Maximale Dateigröße erreicht (%(size)sMB)."
 
 msgid "Root"
-msgstr ""
+msgstr "Root"
 
 msgid "This field is required."
-msgstr ""
+msgstr "Dieses Feld ist ein Pflichtfeld."
 
 msgid ""
 "Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
 "marks to negate (A-Z,!G will not match G)."
-msgstr ""
+msgstr "Durch Kommas getrennte Werte oder Bereiche, z. B. AZ, 10000-19000. Verwende zum Negieren Ausrufezeichen (AZ ,! G stimmt nicht mit G überein)."
 
 msgid ""
 "Could not create PDF since Weasyprint is not available. Please contact "
 "support."
-msgstr ""
+msgstr "PDF konnte nicht erstellt werden, da Weasyprint nicht verfügbar ist. Bitte wende Dich an den Support."

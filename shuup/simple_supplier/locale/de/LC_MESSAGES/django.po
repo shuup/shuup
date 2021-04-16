@@ -1,168 +1,168 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"PO-Revision-Date: 2021-04-09 20:38+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Stock management"
-msgstr ""
+msgstr "Lagerverwaltung"
 
 msgid "SKU"
-msgstr ""
+msgstr "Artikelnummer"
 
 msgid "Filter by SKU..."
-msgstr ""
+msgstr "Nach Artikelnummer filtern..."
 
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Nach Name filtern..."
 
 msgid "Supplier"
-msgstr ""
+msgstr "Händler"
 
 msgid "Stock information"
-msgstr ""
+msgstr "Bestandsdaten"
 
 msgid "Adjust stock"
-msgstr ""
+msgstr "Lagerbestand anpassen"
 
 #, python-format
 msgid ""
 "Success! Added %(delta)s `%(unit_symbol)s` for product `%(product_name)s` "
 "stock (%(supplier_name)s)."
-msgstr ""
+msgstr "Das war erfolgreich! %(delta)s \"%(unit_symbol)s\" wurden dem Bestand von Artikel%(product_name)s im Lager (%(supplier_name)s) hinzugefügt."
 
 #, python-format
 msgid ""
-"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s` "
-"stock (%(supplier_name)s)."
-msgstr ""
+"Success! Removed %(delta)s `%(unit_symbol)s` from product `%(product_name)s`"
+" stock (%(supplier_name)s)."
+msgstr "Das war erfolgreich! %(delta)s \"%(unit_symbol)s\" wurden dem Bestand von Artikel%(product_name)s im Lager (%(supplier_name)s) abgebucht."
 
 #, python-format
 msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
-msgstr ""
+msgstr "Der Meldebestand für den Artikel \"%(product_name)s\" wurde auf \"%(value)s\"  gesetzt."
 
 msgid "Non-POST request methods are forbidden."
-msgstr ""
+msgstr "Nicht-POST-Anforderungsmethoden sind verboten."
 
 msgid "Please check submitted values and try again."
-msgstr ""
+msgstr "Bitte überprüfe die eingegebenen Werte und versuche es erneut."
 
 #, python-format
 msgid "Please check submitted values and try again (%(error)s)."
-msgstr ""
+msgstr "Bitte überprüfe die eingegebenen Werte und versuche es erneut (%(error)s)."
 
 #, python-brace-format
 msgid "Stock management is now enabled for {product}."
-msgstr ""
+msgstr "Die Lagerverwaltung für {product} ist jetzt aktiviert."
 
 #, python-brace-format
 msgid "Stock management is now disabled for {product}."
-msgstr ""
+msgstr "Die Lagerverwaltung für {product} ist jetzt deaktiviert."
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
-msgstr ""
+msgstr "Kaufpreis pro Einheit (%(currency_name)s)"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Menge"
 
 msgid "Only non-zero values can be added to stock."
-msgstr ""
+msgstr "Dem Bestand können nur Werte ungleich Null hinzugefügt werden."
 
 msgid "Alert limit"
-msgstr ""
+msgstr "Meldebestand"
 
 msgid "product"
-msgstr ""
+msgstr "Artikel"
 
 msgid "supplier"
-msgstr ""
+msgstr "Händler"
 
 msgid "created on"
-msgstr ""
+msgstr "erstellt am"
 
 msgid "created by"
-msgstr ""
+msgstr "erstellt von"
 
 msgid "delta"
-msgstr ""
+msgstr "Delta"
 
 msgid "type"
-msgstr ""
+msgstr "Typ"
 
 msgid "alert limit"
-msgstr ""
+msgstr "Meldebestand"
 
 msgid "stock managed"
-msgstr ""
+msgstr "bestandsgeführt"
 
 msgid "Use this to override the supplier default stock behavior per product."
-msgstr ""
+msgstr "Verwende diese Option, um die Standardlagerverwaltung des Händlers pro Artikel zu überschreiben."
 
 msgid "logical count"
-msgstr ""
+msgstr "errechnete Menge"
 
 msgid "physical count"
-msgstr ""
+msgstr "physische Menge"
 
 msgid "Alert Limit Reached"
-msgstr ""
+msgstr "Meldebestand erreicht"
 
 msgid "Product"
-msgstr ""
+msgstr "Artikel"
 
 msgid "Supplier Email"
-msgstr ""
+msgstr "Händler-E-Mail-Adresse"
 
 msgid "Shop Email"
-msgstr ""
+msgstr "Marktplatz-E-Mail-Adresse"
 
 msgid "Fired in the last 24 hours?"
-msgstr ""
+msgstr "In den letzten 24 Stunden gesendet?"
 
 msgid ""
 "This will be True if this event was already dispatched in the last 24 hours "
 "for the same product and supplier. This is useful to prevent sending "
 "identical notifications in a short period of time."
-msgstr ""
+msgstr "Dies gilt auch dann, wenn dieses Ereignis bereits in den letzten 24 Stunden für dasselbe Produkt und denselben Händler ausgelöst wurde. Dies ist nützlich, um zu verhindern, dass identische Benachrichtigungen in kurzer Zeit gesendet werden."
 
 msgid "Send to?"
-msgstr ""
+msgstr "Senden an?"
 
 msgid "Send email to whom?"
-msgstr ""
+msgstr "E-Mail an wen senden?"
 
 msgid "Do not send the same email within 24 hours."
-msgstr ""
+msgstr "Nicht innerhalb von 24 Stunden dieselbe E-Mail senden."
 
 msgid ""
 "If enabled, avoids sending the same email for the same product and supplier "
 "within 24 hours."
-msgstr ""
+msgstr "Wenn diese Option aktiviert ist, wird vermieden, dass innerhalb von 24 Stunden dieselbe E-Mail für dasselbe Produkt und denselben Händler gesendet wird."
 
 msgid "Send Stock Limit Alert Email"
-msgstr ""
+msgstr "Bestandslimit-Benachrichtigungs-E-Mail (\"Meldebestand erreicht\") senden"
 
 msgid ""
 "Send me an email when a product stock is lower than the configured limit."
-msgstr ""
+msgstr "Mir eine E-Mail senden, wenn ein Produktbestand unter dem konfigurierten Meldebestand liegt."
 
 msgid ""
 "This script will send an email to the configured destination alerting about "
@@ -170,75 +170,74 @@ msgid ""
 "same email multiple times in a period of 24 hours. Every time a product's "
 "stock reach its configured limit, this notification will be fired and the "
 "email sent."
-msgstr ""
+msgstr "Dieses Skript sendet eine E-Mail an das konfigurierte Ziel, um über den geringen Lagerbestand eines Händlers zu informieren. Du kannst es so konfigurieren, dass innerhalb eines Zeitraums von 24 Stunden nicht dieselbe E-Mail mehrmals gesendet wird. Jedes Mal, wenn der Lagerbestand eines Produkts das konfigurierte Limit erreicht, wird diese Benachrichtigung ausgelöst und die E-Mail gesendet."
 
 msgid "Low stock of: {{ product }} from {{ supplier }}"
-msgstr ""
+msgstr "Geringer Bestand an:  {{ product }}  von {{ supplier }}"
 
 msgid ""
 "Hi!\n"
-"You are receiving this message because the product {{ product}} from "
-"{{ supplier }} has a low stock."
-msgstr ""
+"You are receiving this message because the product {{ product}} from {{ supplier }} has a low stock."
+msgstr "Hallo! \nDu erhälst diese Nachricht, weil der Artikel {{ product}} von {{ supplier }} einen geringen Lagerbestand hat."
 
 msgid "Add stock"
-msgstr ""
+msgstr "Lagerbestand hinzufügen"
 
 #, python-format
 msgid ""
 "Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
 "scripts</a> are executed when product stock falls below set quantity."
-msgstr ""
+msgstr "<a href=\"%(notify_url)s\" target=\"_blank\">Benachrichtigungsskripte für Meldebestände</a> werden ausgeführt, wenn der Artikelbestand unter die festgelegte Menge fällt."
 
 msgid "Change alert limit"
-msgstr ""
+msgstr "Meldebestand ändern"
 
 msgid "Disable stock management"
-msgstr ""
+msgstr "Lagerverwaltung deaktivieren"
 
 msgid "Enable stock management"
-msgstr ""
+msgstr "Lagerverwaltung aktivieren"
 
 #, python-format
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "does not have suppliers with %(module_name)s module."
-msgstr ""
+msgstr "Der Artikel <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> hat keine Händler mit dem Modul %(module_name)s."
 
 #, python-format
 msgid ""
-"Please go in this product's Additional tab section and add enabled Suppliers "
-"that have both %(module_name)s module and stock management enabled."
-msgstr ""
+"Please go in this product's Additional tab section and add enabled Suppliers"
+" that have both %(module_name)s module and stock management enabled."
+msgstr "Gehe bitte in den Abschnitt \"Zusätzliche Registerkarte\" dieses Artikels und füge aktivierte Lieferanten hinzu, für die sowohl das Modul %(module_name)s als auch die Lagerverwaltung aktiviert sind."
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
-msgstr ""
+msgstr "Keine Händler mit %(module_name)s verfügbar."
 
 #, python-format
 msgid ""
-"Please set %(module_name)s module for at least one of the enabled <a href="
-"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the stock "
-"management for them."
-msgstr ""
+"Please set %(module_name)s module for at least one of the enabled <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a> and enable the "
+"stock management for them."
+msgstr "Bitte setze das Modul %(module_name)s für mindestens einen der aktivierten <a href=\"%(supplier_url)s\" target=\"_blank\">Händler</a> und aktiviere die Lagerverwaltung für diese."
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr ""
+msgstr "Physische Menge ({sales_unit})"
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr ""
+msgstr "Errechneter Bestand ({sales_unit})"
 
 msgid "Value per unit"
-msgstr ""
+msgstr "Wert pro Einheit"
 
 msgid "Total value"
-msgstr ""
+msgstr "Gesamtwert"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr ""
+msgstr "Meldebestand ({sales_unit})"
 
 msgid "No stock information available."
-msgstr ""
+msgstr "Keine Lagerbestandsdaten verfügbar."
