@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-04-07 14:09+0000\n"
+"PO-Revision-Date: 2021-04-16 19:24+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -1337,7 +1337,7 @@ msgid "`{language_code}` is an invalid language code."
 msgstr "\"{language_code}\" ist ein ungültiger Sprachcode."
 
 msgid "Error! This product is not available in this shop."
-msgstr "Fehler! Dieser Artikel ist in diesem Händlerbereich leider nicht verfügbar."
+msgstr "Fehler! Dieser Artikel ist auf diesem Marktplatz leider nicht verfügbar."
 
 #, python-format
 msgid "Maximum file size reached (%(size)s MB)."

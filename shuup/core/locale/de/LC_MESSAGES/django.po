@@ -1,6 +1,6 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-04-09 18:48+0000\n"
+"PO-Revision-Date: 2021-04-16 19:23+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgid "Customer is not active."
 msgstr "Der Kunde ist nicht aktiv."
 
 msgid "Shop does not have all the necessary permissions for this customer."
-msgstr "Der Händlerbereich verfügt nicht über alle erforderlichen Berechtigungen für diesen Kunden."
+msgstr "Der Marktplatz verfügt nicht über alle erforderlichen Berechtigungen für diesen Kunden."
 
 msgid "You don't have the required permission to assign this customer."
 msgstr "Du hast nicht die erforderliche Berechtigung, diesen Kunden zuzuordnen."
@@ -312,7 +312,7 @@ msgid "key"
 msgstr "Schlüssel"
 
 msgid "shop"
-msgstr "Händlerbereich"
+msgstr "Marktplatz"
 
 msgid "customer"
 msgstr "Kunde"
@@ -389,10 +389,10 @@ msgid ""
 msgstr "Wenn Deine Kategorie eine Unterkategorie einer anderen Kategorie ist, kannst Du sie hier verlinken."
 
 msgid "shops"
-msgstr "Händlerbereiche"
+msgstr "Marktplätze"
 
 msgid "You can select which shops the category is visible in."
-msgstr "Du kannst auswählen, in welchen Händlerbereichen die Kategorie sichtbar ist."
+msgstr "Du kannst auswählen, in welchen Marktplätzen die Kategorie sichtbar ist."
 
 msgid "Choose if you want this category to be visible in your store."
 msgstr "Wähle aus, ob diese Kategorie in Deinem Händlerbereich sichtbar sein soll."
@@ -449,7 +449,7 @@ msgstr "Beschreibung"
 msgid ""
 "Give your product category a detailed description. This will help shoppers "
 "find your products under that category in your store and on the web."
-msgstr "Gib eine Beschreibung für Deine Artikelkategorie ein. Dies wird Käufern helfen, Deine Artikel unter dieser Kategorie in Deinem Händlerbereich und im Internet zu finden."
+msgstr "Gib eine Beschreibung für Deine Artikelkategorie ein. Dies wird Käufern helfen, Deine Artikel unter dieser Kategorie auf Deinem Marktplatz und im Internet zu finden."
 
 msgid "slug"
 msgstr "Slug"
@@ -758,13 +758,13 @@ msgid "file"
 msgstr "Datei"
 
 msgid "Select which shops you would like the files to be visible in."
-msgstr "Du kannst auswählen, in welchen Händlerbereichen die Dateien sichtbar sein sollen."
+msgstr "Du kannst auswählen, auf welchen Marktplätzen die Dateien sichtbar sein sollen."
 
 msgid "folder"
 msgstr "Ordner"
 
 msgid "Select which shops you would like the folder to be visible in."
-msgstr "Du kannst auswählen, in welchen Händlerbereichen der Ordner sichtbar sein soll."
+msgstr "Du kannst auswählen, auf welchen Marktplätzen der Ordner sichtbar sein soll."
 
 msgid "Should this folder be visible for everyone in the media browser"
 msgstr "Soll dieser Ordner im Medienbrowser für alle sichtbar sein?"
@@ -1077,7 +1077,7 @@ msgid "sample"
 msgstr "Beispiel"
 
 msgid "Select which shops you would like the product media to be visible in."
-msgstr "Du kannst auswählen, in welchen Händlerbereichen die Produktmedien sichtbar sein sollen."
+msgstr "Du kannst auswählen, auf welchen Marktplätzen die Produktmedien sichtbar sein sollen."
 
 msgid "kind"
 msgstr "Art"
@@ -1736,7 +1736,7 @@ msgstr "%s ist deaktiviert."
 
 #, python-format
 msgid "%s is for different shop."
-msgstr "%s betrifft einen anderen Händlerbereich."
+msgstr "%s betrifft einen anderen Marktplatz."
 
 #, python-format
 msgid "%(service_name)s: %(sub_item)s"
@@ -2013,7 +2013,7 @@ msgstr "verschickte Waren"
 msgid ""
 "The following fields can't be changed because there are existing orders for "
 "this shop."
-msgstr "Die folgenden Felder können nicht geändert werden, da es bereits Bestellungen für diesen Händlerbereich gibt."
+msgstr "Die folgenden Felder können nicht geändert werden, da es bereits Bestellungen für diesen Marktplatz gibt."
 
 msgid "domain"
 msgstr "Domain"
@@ -2022,13 +2022,13 @@ msgid ""
 "Your shop domain name. Use this field to configure the URL that is used to "
 "visit your store front. Note: this requires additional configuration through"
 " your internet domain registrar."
-msgstr "Die Domain Deines Händlerbereichs. Verwende dieses Feld, um die URL zu konfigurieren, über die Dein Händlerbereich auf dem Marktplatz erreichbar ist. Hinweis: Dies erfordert eine zusätzliche Konfiguration durch Deinen Internet-Domain-Registrator."
+msgstr "Die Domain Deines Marktplatzes. Verwende dieses Feld, um die URL zu konfigurieren, über die Dein Marktplatz erreichbar ist. Hinweis: Dies erfordert eine zusätzliche Konfiguration durch Deinen Internet-Domain-Registrator."
 
 msgid ""
 "Your shop's status. Disable your shop if it's no longer in use. For "
 "temporary closing enable the maintenance mode, available in the `Maintenance"
 " Mode` tab on the left."
-msgstr "Der Status Deines Händlerbereichs. Deaktiviere Deinen Händlerbereich, wenn er nicht mehr in Gebrauch ist. Zum vorübergehenden Schließen aktiviere den Wartungsmodus, der über die Registerkarte \"Wartungsmodus\" auf der linken Seite erreichbar ist."
+msgstr "Der Status Deines Marktplatzes. Deaktiviere Deinen Marktplatz, wenn er nicht mehr in Gebrauch ist. Zum vorübergehenden Schließen aktiviere den Wartungsmodus, der über die Registerkarte \"Wartungsmodus\" auf der linken Seite erreichbar ist."
 
 msgid ""
 "The primary shop currency. This is the currency used when selling the "
@@ -2357,7 +2357,7 @@ msgstr "Der Gesamtpreis sollte größer als  {} sein, um eine Bestellung auszul�
 
 #, python-format
 msgid "%s is not available in this shop."
-msgstr "%s ist in diesem Händlerbereich leider nicht verfügbar."
+msgstr "%s ist auf diesem Marktplatz leider nicht verfügbar."
 
 msgid "Default Pricing"
 msgstr "Standardpreise"

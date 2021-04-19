@@ -2,241 +2,269 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2017-03-01 14:19+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Data Import"
-msgstr ""
+msgstr "Datenimport"
 
 msgid "Import mode"
-msgstr ""
+msgstr "Import-Modus"
 
 msgid "Importing language"
-msgstr ""
+msgstr "Import-Sprache"
 
 msgid "The language of the data you want to import."
-msgstr ""
+msgstr "Die Sprache der Daten, die Du importieren möchtest."
 
 msgid "Importer"
-msgstr ""
+msgstr "Importer-Typ"
 
 msgid "Select a importer type matching the data you want to import"
-msgstr ""
+msgstr "Wähle einen Importer-Typ, der zu den zu importierenden Daten passt"
 
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 #, python-format
 msgid "%s is not a file."
-msgstr ""
+msgstr "%s ist keine Datei."
 
 msgid "File is missing."
-msgstr ""
+msgstr "Die Datei fehlt."
 
 msgid "Failed to import the file."
-msgstr ""
+msgstr "Der Import der Datei ist fehlgeschlagen."
 
 msgid "Invalid parameters."
-msgstr ""
+msgstr "Ungültige Parameter."
 
 msgid "Invalid importer."
-msgstr ""
+msgstr "Ungültiger Import-Typ."
 
 msgid "Invalid file name."
-msgstr ""
+msgstr "Ungültiger Dateiname."
 
 msgid "File was not found."
-msgstr ""
+msgstr "Die Datei wurde nicht gefunden."
 
 msgid "Import"
-msgstr ""
+msgstr "Importieren"
 
 msgid "Row ignored (no existing item and creating new is not allowed)."
 msgstr ""
+"Zeile ignoriert (kein vorhandenes Element und Anlegen eines neuen ist nicht "
+"erlaubt)."
 
 #, python-format
 msgid ""
 "Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
 msgstr ""
+"Zeile ignoriert (Objekt existiert bereits ( %(object_name)s mit ID: "
+"%(object_id)s)."
 
 #, python-format
 msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
 msgstr ""
+"Fehler beim Setzen des Wertes für das Feld %(field_name)s. (%(exception)s)"
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
 msgstr ""
+"Der Wert %(original_value)s für das Feld %(field_name)s konnte nicht gesetzt"
+" werden."
 
 #, python-format
 msgid "Row import failed (%s)."
-msgstr ""
+msgstr "Zeilenimport fehlgeschlagen (%s)."
 
 msgid "Example files"
-msgstr ""
+msgstr "Beispiel-Dateien"
 
 msgid ""
 "If there is a 'Ignore' column in the example file you are using,\n"
-"                    make sure to leave the ignore column empty for all your "
-"rows,\n"
+"                    make sure to leave the ignore column empty for all your rows,\n"
 "                    otherwise the rows won't be imported."
 msgstr ""
+"Wenn es in der von Dir verwendeten Beispieldatei eine Spalte \"Ignorieren\" gibt,\n"
+"stelle bitte sicher, dass die Ignorieren-Spalte für alle Deine Zeilen leer bleibt,\n"
+"sonst werden die Zeilen nicht importiert."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
+"Dieser Importer stellt Beispieldateien zur Verfügung. Klicke unten, um sie "
+"herunterzuladen:"
 
 msgid "Continue"
-msgstr ""
+msgstr "Weiter"
 
 msgid "Import Data - process"
-msgstr ""
+msgstr "Die Daten werden importiert..."
 
 msgid "Amount if items being imported"
-msgstr ""
+msgstr "Menge der importierten Artikel"
 
 msgid "The following fields were automatically mapped"
-msgstr ""
+msgstr "Die folgenden Felder wurden automatisch gemappt"
 
 msgid ""
-"The following fields in the file are being used a s possible connection keys:"
+"The following fields in the file are being used a s possible connection "
+"keys:"
 msgstr ""
+"Die folgenden Felder in der Datei werden als mögliche Verbindungsschlüssel "
+"verwendet:"
 
 msgid "Not a single connection key was found, File cannot be imported."
 msgstr ""
+"Es wurde kein einziger Verbindungsschlüssel gefunden, die Datei kann daher "
+"leider nicht importiert werden."
 
 msgid "Connection Keys"
-msgstr ""
+msgstr "Verbindungsschlüssel"
 
 msgid "Read only fields"
-msgstr ""
+msgstr "Schreibgeschützte Felder"
 
 msgid ""
 "The following fields are Read Only and changes for those fields will be "
 "ignored."
 msgstr ""
+"Die folgenden Felder sind schreibgeschützt und Änderungen für diese Felder "
+"werden ignoriert."
 
 msgid "Import method"
-msgstr ""
+msgstr "Import-Methode"
 
 msgid "Automatically mapped"
-msgstr ""
+msgstr "Automatisch gemappt"
 
 msgid "Original field"
-msgstr ""
+msgstr "Original-Feld"
 
 msgid "Shuup field"
-msgstr ""
+msgstr "Shuup-Feld"
 
 msgid "Sample values"
-msgstr ""
+msgstr "Beispielwerte"
 
 msgid "The following fields must be manually tied"
-msgstr ""
+msgstr "Die folgenden Felder müssen manuell verbunden werden"
 
 msgid "Don't import"
-msgstr ""
+msgstr "Nicht importieren"
 
 msgid "Field name"
-msgstr ""
+msgstr "Feldname"
 
 msgid "Target field"
-msgstr ""
+msgstr "Zielfeld"
 
 msgid "We may not be able to import the file."
-msgstr ""
+msgstr "Möglicherweise können wir die Datei nicht importieren."
 
 msgid ""
 "File may not be imported because no connection keys were found. Connection "
 "keys are unique keys that are used to map results."
 msgstr ""
+"Die Datei kann nicht importiert werden, da keine Verbindungsschlüssel "
+"gefunden wurden. Verbindungsschlüssel sind eindeutige Schlüssel, die zum "
+"Zuordnen von Ergebnissen verwendet werden."
 
 msgid ""
 "Please consider adding some of the following fields to your import file:"
 msgstr ""
+"Bitte denke daran, einige der folgenden Felder in Deine Importdatei mit "
+"aufzunehmen:"
 
 msgid "Products"
-msgstr ""
+msgstr "Artikel"
 
 msgid "SKU"
-msgstr ""
+msgstr "Artikelnummer"
 
 msgid "Customers"
-msgstr ""
+msgstr "Kunden"
 
 msgid "email"
-msgstr ""
+msgstr "E-Mail-Adresse"
 
 msgid "Importer type"
-msgstr ""
+msgstr "Importer-Typ"
 
 msgid "Field(s) to add"
-msgstr ""
+msgstr "Weitere Feld(er)"
 
 msgid "You can continue importing, but it might end up in error"
-msgstr ""
+msgstr "Du kannst den Import fortsetzen, aber er könnte fehlerhaft enden"
 
 msgid ""
-"If you are importing customers this might be a false alarm if you have email "
-"key set"
+"If you are importing customers this might be a false alarm if you have email"
+" key set"
 msgstr ""
+"Wenn Du Kunden importierst, könnte dies ein falscher Alarm sein, falls Du "
+"den E-Mail-Schlüssel eingestellt hast"
 
 msgid "Start Import"
-msgstr ""
+msgstr "Datenimport starten"
 
 msgid "Import Data - Complete"
-msgstr ""
+msgstr "Datenimport fertiggestellt"
 
 msgid "Import Complete!"
-msgstr ""
+msgstr "Datenimport fertiggestellt"
 
 msgid "New items"
-msgstr ""
+msgstr "Neue Elemente"
 
 msgid "The following items were imported as new:"
-msgstr ""
+msgstr "Die folgenden Elemente wurden neu importiert:"
 
 msgid "Zero new items were created."
-msgstr ""
+msgstr "Es wurden keine neuen Elemente erstellt."
 
 msgid "Updated items"
-msgstr ""
+msgstr "Aktualisierte Elemente"
 
 msgid "The following items were updated:"
-msgstr ""
+msgstr "Die folgenden Elemente wurden aktualisiert:"
 
 msgid "Zero items were updated."
-msgstr ""
+msgstr "Es wurden keine Elemente aktualisiert."
 
 msgid "Import log"
-msgstr ""
+msgstr "Import-Protokoll"
 
 msgid "Other messages"
-msgstr ""
+msgstr "Andere Mitteilungen"
 
 msgid "Import errors"
-msgstr ""
+msgstr "Import-Fehler"
 
 #, python-format
 msgid "Can't import more than %s rows from one file."
-msgstr ""
+msgstr "Es können nicht mehr als %s Zeilen aus einer Datei importiert werden."
 
 msgid "Allow create and update"
-msgstr ""
+msgstr "Anlegen und Aktualisieren der Daten zulassen"
 
 msgid "Only create (no updates)"
-msgstr ""
+msgstr "Nur die Neuanlage der Daten zulassen (keine Aktualisierungen)"
 
 msgid "Only update existing (no new ones are created)"
-msgstr ""
+msgstr "Nur vorhandene Daten aktualisieren (es werden keine neuen angelegt)"

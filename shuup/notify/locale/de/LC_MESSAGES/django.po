@@ -1,15 +1,15 @@
-# English translations for PROJECT.
-# Copyright (C) 2015 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:57+0000\n"
-"PO-Revision-Date: 2021-04-07 19:08+0000\n"
+"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"PO-Revision-Date: 2021-04-08 15:31+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -19,58 +19,414 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Error!"
-msgstr "Fehler!"
+msgid "HTML"
+msgstr "HTML"
 
-msgid "Success!"
-msgstr "Das war erfolgreich!"
+msgid "Plain text"
+msgstr "Einfacher Text"
 
-msgid "Error! An unspecified error occurred."
-msgstr "Fehler! Ein unerwarteter Fehler ist aufgetreten."
+msgid "Subject"
+msgstr "Thema"
 
-msgid "Warning! Unexpected edit data was received."
-msgstr "Achtung! Unerwartete Editierdaten wurden empfangen."
+msgid "Email Template"
+msgstr "E-Mail-Template"
 
-msgid "Add new"
-msgstr "Neu hinzufügen"
+msgid "Email Body"
+msgstr "E-Mail-Körper"
+
+msgid "Content type"
+msgstr "Inhaltsart"
+
+msgid "Recipient"
+msgstr "Empfänger"
+
+msgid "Reply-To"
+msgstr "Antwort senden an"
+
+msgid "Carbon Copy (CC)"
+msgstr "In Kopie senden an (CC)"
+
+msgid "Blind Carbon Copy (BCC)"
+msgstr "In Blindkopie senden an (BCC)"
+
+msgid "From email"
+msgstr "Absender-E-Mail-Adresse"
 
 msgid ""
-"Delete this item?\n"
-"This is final and can't be undone."
-msgstr "Dieses Element löschen?\nDies ist endgültig und kann nicht rückgängig gemacht werden."
+"Override the default from email to be used. It can either be binded to a "
+"variable or be a constant like support@store.com or even \"Store Support\" "
+"<support@store.com>."
+msgstr "Überschreibe den Standard-E-Mail-Absender, der verwendet werden soll. Er kann entweder an eine Variable gebunden werden oder eine Konstante wie support@store.com oder sogar \"Store Support\" <support@store.com> sein."
 
-msgid "New"
-msgstr "Neu"
+msgid "Language"
+msgstr "Sprache"
 
-msgid "Move Up"
-msgstr "Nach oben bewegen"
+msgid "Fallback language"
+msgstr "Ausweichsprache"
 
-msgid "Move Down"
-msgstr "Nach unten bewegen"
+msgid "Send Identifier"
+msgstr "\"Senden an\"-Kennung"
 
-msgid "Disable"
-msgstr "Deaktivieren"
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr "Wenn gesetzt, wird dieser Bezeichner im Protokollziel des Ereignisses protokolliert. Wenn der Bezeichner bereits protokolliert wurde, wird die E-Mail nicht erneut gesendet."
 
-msgid "Enable"
-msgstr "Aktivieren"
+msgid "Notifications"
+msgstr "Mitteilungen"
+
+msgid "Show notification scripts"
+msgstr "Benachrichtigungsskripte anzeigen"
+
+msgid "Email Templates"
+msgstr "E-Mail-Templates"
+
+msgid "Event"
+msgstr "Ereignis"
+
+msgid "Choose which event to bind this script to."
+msgstr "Wähle aus, an welches Ereignis dieses Skript gebunden werden soll."
+
+msgid "Script Name"
+msgstr "Skript-Name"
+
+msgid "Type in a descriptive name for your new script."
+msgstr "Gib einen aussagekräftigen Namen für Dein neues Skript ein."
+
+msgid "Enable Script"
+msgstr "Skript aktivieren"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr "Wähle aus, ob dieses Skript aktiviert werden soll, wenn sein Ereignis ausgelöst wird."
+
+msgid ""
+"Warning! Changing the event for an existing script may have unexpected "
+"effects."
+msgstr "Achtung! Das Ändern des Ereignisses für ein vorhandenes Skript kann unerwartete Auswirkungen haben."
+
+msgid "Template"
+msgstr "Template"
+
+msgid "Bind to Variable"
+msgstr "An Variable binden"
+
+msgid "This field is missing content."
+msgstr "Diesem Feld fehlt der Inhalt."
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s wurde als gelöscht markiert."
+
+msgid "Edit Script Contents"
+msgstr "Skriptinhalt bearbeiten"
+
+msgid "Edit Script (advanced)"
+msgstr "Skriptinhalt bearbeiten (erweitert)"
+
+msgid "Edit Template"
+msgstr "Template bearbeiten"
 
 msgid "Delete"
 msgstr "Löschen"
 
-msgid "Are you sure you want to delete this step?"
-msgstr "Bist Du sicher, dass Du diesen Schritt löschen möchtest?"
+#, python-format
+msgid "Are you sure you wish to delete \"%s\" notification?"
+msgstr "Bist Du sicher, dass Du die Mitteilung \"%s\" löschen möchtest?"
 
-msgid "If"
-msgstr "Wenn"
+msgid "Save"
+msgstr "Speichern"
 
-msgid "of these conditions hold..."
-msgstr "eine dieser Bedingungen gilt..."
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s wurde gelöscht."
 
-msgid "then execute these actions..."
-msgstr "dann führe diese Aktionen aus..."
+msgid "Name"
+msgstr "Name"
 
-msgid "and then..."
-msgstr "und dann..."
+msgid "Enabled"
+msgstr "Aktiviert"
 
-msgid "New step"
-msgstr "Neuer Schritt"
+msgid "New Script"
+msgstr "Neues Skript"
+
+msgid "New From Template"
+msgstr "Neu aus Template anlegen"
+
+msgid "Script created from template."
+msgstr "Skript aus Template wurde erstellt."
+
+msgid "Template Script not found."
+msgstr "Das Skript-Template wurde nicht gefunden."
+
+msgid "Templated script not found."
+msgstr "Das Skript-Template wurde nicht gefunden."
+
+msgid "Script updated."
+msgstr "Das Skript wurde aktualisiert."
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr "Prüfe bitte, ob der gebundene Wert \"value\" existiert und nicht leer und ungleich Null ist."
+
+msgid "Non-Empty"
+msgstr "nicht leer"
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr "Prüfe bitte, ob der gebundene Wert \"value\" leer oder Null ist."
+
+msgid "Empty"
+msgstr "Leer"
+
+msgid "none"
+msgstr "keine"
+
+msgid "unilingual"
+msgstr "einsprachig"
+
+msgid "multilingual"
+msgstr "mehrsprachig"
+
+msgid "variable only"
+msgstr "nur variabel"
+
+msgid "constant only"
+msgstr "nur konstant"
+
+msgid "variable or constant"
+msgstr "variabel oder konstant"
+
+msgid "continue to the next step"
+msgstr "weiter zum nächsten Schritt"
+
+msgid "stop processing"
+msgstr "Verarbeitung stoppen"
+
+msgid "all"
+msgstr "alle"
+
+msgid "any"
+msgstr "jeder"
+
+msgid "any shop administrator"
+msgstr "jeder Marktplatz-Administrator"
+
+msgid "a specific user"
+msgstr "ein bestimmter Benutzer"
+
+msgid "low"
+msgstr "niedrig"
+
+msgid "normal"
+msgstr "normal"
+
+msgid "high"
+msgstr "hoch"
+
+msgid "critical"
+msgstr "kritisch"
+
+msgid ""
+"Enter the base HTML template to be used in emails. Mark the place to inject "
+"the email content using the variable `%html_body%` inside the body."
+msgstr "Gib die Basis-HTML-Vorlage ein, die in E-Mails verwendet werden soll. Markiere die Stelle, an der der E-Mail-Inhalt eingefügt werden soll, indem Du die Variable `%html_body%` im Body verwendest."
+
+msgid "shop"
+msgstr "Marktplatz"
+
+msgid "recipient type"
+msgstr "Empfänger-Typ"
+
+msgid "recipient"
+msgstr "Empfänger"
+
+msgid "created on"
+msgstr "erstellt am"
+
+msgid "message"
+msgstr "Nachricht"
+
+msgid "priority"
+msgstr "Priorität"
+
+msgid "marked read"
+msgstr "Als gelesen markiert"
+
+msgid "marked read by"
+msgstr "Als gelesen markiert von"
+
+msgid "marked read on"
+msgstr "Als gelesen markiert am"
+
+msgid "event identifier"
+msgstr "Ereignis-Kennung"
+
+msgid "name"
+msgstr "Name"
+
+msgid "enabled"
+msgstr "aktiviert"
+
+msgid "template identifier"
+msgstr "Template-Kennung"
+
+msgid "the template identifier used to create this script"
+msgstr "Die Template-Kennung, mit der dieses Skript erstellt wurde"
+
+msgid "Password Reset"
+msgstr "Passwort-Rücksetzung"
+
+msgid "This event is triggered when password reset is requested."
+msgstr "Dieses Ereignis wird ausgelöst, wenn das Zurücksetzen des Passworts angefordert wird."
+
+msgid "Site name"
+msgstr "Name der Seite"
+
+msgid "User secret"
+msgstr "Benutzergeheimcode"
+
+msgid "User to recover"
+msgstr "Benutzer zum Wiederherstellen"
+
+msgid "Token"
+msgstr "Token"
+
+msgid "Recovery URL"
+msgstr "Wiederherstellungs-URL"
+
+msgid "To Email"
+msgstr "An die E-Mail-Adresse"
+
+msgid "The subject of the email"
+msgstr "Der Betreff der E-Mail"
+
+msgid "Email content"
+msgstr "E-Mail-Inhalt"
+
+msgid "The content of the email."
+msgstr "Der Inhalt der E-Mail."
+
+msgid "Customer"
+msgstr "Kunde"
+
+msgid "Other destination"
+msgstr "Andere Ziel-E-Mail-Adresse"
+
+msgid "Send to?"
+msgstr "Senden an?"
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr "Du kannst diese E-Mail an den Kunden oder an eine andere E-Mail-Adresse Deiner Wahl senden."
+
+msgid "Destination"
+msgstr "Ziel-E-Mail-Adresse"
+
+msgid "Fill with the destination email address."
+msgstr "Gib die Ziel-E-Mail-Adresse ein."
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr "Der Empfänger ist ein Pflichtfeld, wenn Du die E-Mail nicht an den Kunden senden möchtest."
+
+msgid ""
+"\n"
+"<p>Hi {{ user_to_recover.get_full_name() }},</p>\n"
+"\n"
+"<p>In case you've forgotten, your username is {{ user_to_recover.username }}.</p>\n"
+"<p>You're receiving this email because you requested a password reset for your user account at {{ site_name }}.</p>\n"
+"<p>Please go to the following page and choose a new password:</p>\n"
+"<br>\n"
+"<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+msgstr "\n<p>Hallo {{ user_to_recover.get_full_name() }},</p>\n\n<p>Falls Du es vergessen haben solltest, Dein Benutzername ist {{ user_to_recover.username }}.</p>\n<p>Du erhältst diese E-Mail, weil Du eine Passwortzurücksetzung für Dein Benutzerkonto bei {{ site_name }} angefordert hast.</p>\n<p>Bitte gehe auf die folgende Seite und wähle ein neues Passwort:</p>\n<br>\n<a href=\"{{ recovery_url }}\">{{ recovery_url }}</a>\n"
+
+msgid "Send Password Reset Link"
+msgstr "Link zum Zurücksetzen des Passworts senden"
+
+msgid ""
+"\n"
+"        Send an email to user when their account password reset is requested\n"
+"    "
+msgstr "\n          Senden einer E-Mail an den Benutzer, wenn sein Passwort zurückgesetzt werden soll."
+
+msgid ""
+"\n"
+"        This script will send an email to user once their account password reset is\n"
+"        requested either by admin, staff or user.\n"
+"    "
+msgstr "\n          Dieses Skript sendet eine E-Mail an den Benutzer, wenn die Passwortzurücksetzung\nentweder vom Administrator, vom Marktplatz-Kundenservice oder dem Benutzer selbst angefordert wurde."
+
+msgid "Edit Script Information"
+msgstr "Skriptdaten bearbeiten"
+
+msgid "Create a new script"
+msgstr "Ein neues Skript erstellen"
+
+msgid "Script Details"
+msgstr "Skript-Details"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Show available variables"
+msgstr "verfügbare Werte anzeigen"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Select the script template to be created"
+msgstr "Wähle das zu erstellende Skript-Template aus"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Edit Script"
+msgstr "Skript bearbeiten"
+
+msgid "Edit Step"
+msgstr "Schritt bearbeiten"
+
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+msgid "Please correct the errors below."
+msgstr "Bitte die unten stehenden Fehler korrigieren."
+
+msgid "Variables"
+msgstr "Variablen"
+
+msgid "Script Template: {}"
+msgstr "Skript Template: {}"
+
+msgid "Configure the Script Template"
+msgstr "Skript Template konfigurieren"
+
+msgid "Modify Script"
+msgstr "Skript ändern"
+
+msgid "Create Script"
+msgstr "Skript erstellen"
+
+msgid "Create"
+msgstr "Erstellen"
+
+msgid "Boolean"
+msgstr "Boolesch"
+
+msgid "Integer Number"
+msgstr "Ganzzahlige Zahl"
+
+msgid "Decimal Number"
+msgstr "Dezimalzahl"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Email Address"
+msgstr "E-Mail-Adresse"
+
+msgid "URL Address"
+msgstr "URL-Adresse"
+
+msgid "Phone Number"
+msgstr "Telefonnummer"

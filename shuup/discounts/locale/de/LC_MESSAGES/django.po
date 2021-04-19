@@ -165,7 +165,7 @@ msgid "Weekdays the happy hour is active."
 msgstr "Wochentags ist die Happy-Hour aktiv."
 
 msgid "shops"
-msgstr "Händlerbereiche"
+msgstr "Marktplätze"
 
 msgid "name"
 msgstr "Name"

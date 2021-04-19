@@ -1,295 +1,297 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2021-04-09 21:09+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "About Us"
-msgstr ""
+msgstr "Über uns"
 
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Datenschutz"
 
 msgid "Terms and Conditions"
-msgstr ""
+msgstr "Allgemeine Geschäftsbedingungen"
 
 msgid "Refund Policy"
-msgstr ""
+msgstr "Erstattungsrichtlinie"
 
 msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
-msgstr ""
+msgstr "{{order.shop}} - Bestellung {{order.identifier}} erhalten"
 
 msgid "Send customer order confirmation email"
-msgstr ""
+msgstr "Bestellbstätigung per E-Mail an Kunden senden"
 
 msgid ""
 "We will configure a notification to send the customer an email after a "
-"placed order. You can disable this option later or even change the layout of "
-"the email."
-msgstr ""
+"placed order. You can disable this option later or even change the layout of"
+" the email."
+msgstr "Wir konfigurieren eine Benachrichtigung, um dem Kunden nach einer Bestellung eine E-Mail zu senden. Du kannst diese Option später deaktivieren oder sogar das Layout der E-Mail ändern."
 
 msgid "Create About Us page"
-msgstr ""
+msgstr "\"Über uns\"-Seite anlegen"
 
 msgid ""
 "We have already created an 'About Us' template for you based on your shop "
 "information. You must review the page and change it accordingly."
-msgstr ""
+msgstr "Wir haben bereits eine Vorlage für eine \"Über uns\"-Seite für Dich erstellt, die auf Deinen Marktplatzdaten basiert. Du musst nur die Seite nur überprüfen und entsprechend abändern."
 
 msgid ""
 "We will create an 'About Us' template for you. We will base content of the "
 "page on your shop information. After we are done, you must review the page "
 "and change it accordingly."
-msgstr ""
+msgstr "Wir erstellen eine Vorlage für eine \"Über uns\"-Seite für Dich. Wir werden den Inhalt der Seite auf Deine Marktplatzdaten stützen. Nachdem wir fertig sind, musst Du die Seite nur überprüfen und entsprechend abändern."
 
 msgid "Create Privacy Policy page"
-msgstr ""
+msgstr "Seite für die Datenschutzrichtlinie erstellen"
 
 msgid ""
 "We have already created a 'Privacy Policy' template for you based on your "
 "shop information. You must review the page and change it accordingly."
-msgstr ""
+msgstr "Wir haben bereits eine Vorlage für die Datenschutzrichtlinien-Seite für Dich erstellt, die auf Deinen Marktplatzdaten basiert. Du musst die Seite nur überprüfen und entsprechend abändern."
 
 msgid ""
 "We will create a 'Privacy Policy' template for you. We will base content of "
 "the page on your shop information. After we are done, you must review the "
 "page and change it accordingly."
-msgstr ""
+msgstr "Wir erstellen eine Vorlage für die Datenschutzrichtlinien-Seite für Dich. Wir werden den Inhalt der Seite auf Deine Marktplatzdaten stützen. Nachdem wir fertig sind, musst Du die Seite nur überprüfen und entsprechend abändern."
 
 msgid "Create Terms and Conditions page"
-msgstr ""
+msgstr "Seite \"Allgemeine Geschäftsbedingungen\" erstellen"
 
 msgid ""
 "We have already created a 'Terms & Conditions' template for you based on "
 "your shop information. You must review the page and change it accordingly."
-msgstr ""
+msgstr "Wir haben bereits eine Vorlage mit den allgemeinen Geschäftsbedingungen für Dich erstellt, die auf Deinen Marktplatzdaten basiert. Du musst die Seite nur überprüfen und entsprechend abändern."
 
 msgid ""
-"We will create a 'Terms & Conditions' template for you. We will base content "
-"of the page on your shop information. After we are done, you must review the "
-"page and change it accordingly."
-msgstr ""
+"We will create a 'Terms & Conditions' template for you. We will base content"
+" of the page on your shop information. After we are done, you must review "
+"the page and change it accordingly."
+msgstr "Wir erstellen für Dich eine Vorlage mit den allgemeinen Geschäftsbedingungen. Wir werden den Inhalt der Seite auf Deinen Marktplatzdaten stützen. Nachdem wir fertig sind, musst Du die Seite nur überprüfen und entsprechend abändern."
 
 msgid "Create Refund Policy page"
-msgstr ""
+msgstr "Seite \"Erstattungsrichtlinie\" erstellen"
 
 msgid ""
 "We have already created a 'Refund Policy' template for you based on your "
 "shop information. You must review the page and change it accordingly."
-msgstr ""
+msgstr "Wir haben bereits eine Vorlage für Rückerstattungsrichtlinien für Dich erstellt, die auf Deinen Marktplatzdaten basiert. Du musst die Seite nur überprüfen und entsprechend abändern."
 
 msgid ""
 "We will create an 'Refund Policy' template for you. We will base content of "
 "the page on your shop information. After we are done, you must review the "
 "page and change it accordingly."
-msgstr ""
+msgstr "Wir erstellen eine Vorlage für die Rückerstattungsrichtlinie für Dich. Wir werden den Inhalt der Seite auf Deine Marktplatzdaten stützen. Nachdem wir fertig sind, musst Du die Seite nur überprüfen und entsprechend abändern."
 
 msgid "Configure the footer"
-msgstr ""
+msgstr "Footer konfigurieren"
 
 msgid ""
 "We will now configure your shop footer and fill it with some of your shop's "
 "information. Don't worry, you can change this at any time."
-msgstr ""
+msgstr "Wir konfigurieren jetzt Deine Marktplatz-Fußzeile und füllen sie mit einigen Informationen Deines Marktplatzes. Keine Sorge, Du kannst dies jederzeit ändern."
 
 msgid "Content & Behavior"
-msgstr ""
+msgstr "Inhalt & Verhalten"
 
 msgid ""
 "Add the initial content and configure the customer notifications for your "
 "shop"
-msgstr ""
+msgstr "Füge den ursprünglichen Inhalt hinzu und konfiguriere die Kundenbenachrichtigungen für Deinen Marktplatz"
 
 msgid "Configure notifications for your shop"
-msgstr ""
+msgstr "Konfiguriere Benachrichtigungen für Deinen Marktplatz"
 
 msgid "Add the initial content"
-msgstr ""
+msgstr "Füge den ersten Inhalt hinzu"
 
 msgid "Configure the initial content pages"
-msgstr ""
+msgstr "Konfiguriere die ersten Inhaltsseiten"
 
 msgid "Configure some notifications"
-msgstr ""
+msgstr "Konfiguriere einige Benachrichtigungen"
 
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
 msgid "Dummy Mass Action #1"
-msgstr ""
+msgstr "Dummy-Massenaktion #1"
 
 msgid "Dummy Mass Action #2"
-msgstr ""
+msgstr "Dummy-Massenaktion #2"
 
 msgid "mock section title"
-msgstr ""
+msgstr "Titel des Mock-Abschnitts"
 
 msgid "Hello"
-msgstr ""
+msgstr "Hallo"
 
 #, python-format
 msgid "Hello %(name)s"
-msgstr ""
+msgstr "Hallo %(name)s"
 
 #, python-format
 msgid "This is %(sku)s"
-msgstr ""
+msgstr "Das ist %(sku)s"
 
 msgid ""
 "There is a sample data installed. Search `Sample Data` for more information."
-msgstr ""
+msgstr "Es sind Beispieldaten installiert. Suche nach \"Beispieldaten\", um weitere Informationen zu erhalten."
 
 msgid ""
 "There is a sample data installed. Click here to consolidate or delete them."
-msgstr ""
+msgstr "Es sind Beispieldaten installiert. Klicke hier, um sie zu konsolidieren oder zu löschen."
 
 msgid "Sample Data"
-msgstr ""
+msgstr "Beispieldaten"
 
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 msgid "Cosmetics and perfumes"
-msgstr ""
+msgstr "Kosmetik und Parfums"
 
 msgid "USpicy Makeup Brushes"
-msgstr ""
+msgstr "USpicy Makeup Brushes"
 
 msgid ""
 "Professional 10 pieces makeup brush set with soft oval toothbrush design"
-msgstr ""
+msgstr "Professionelles 10-teiliges Make-up-Bürstenset mit weichem, ovalem Zahnbürstendesign"
 
 msgid "Precision Eyelash Curler"
-msgstr ""
+msgstr "Präzise Wimpernzange"
 
 msgid ""
 "Precision Eyelash Curler is the professional choice of makeup artists "
 "everywhere."
-msgstr ""
+msgstr "Precision Eyelash Curler ist die professionelle Wahl von Maskenbildnern überall."
 
 msgid "PureMoist Lipstick"
-msgstr ""
+msgstr "PureMoist Lippenstift"
 
 msgid ""
 "PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
 "and protect lips."
-msgstr ""
+msgstr "PureMoist Lipstick hat eine feuchtigkeitsspendende Formel, die die Lippen beruhigt, tröstet und schützt."
 
 msgid "Clinique Happy"
-msgstr ""
+msgstr "Clinique Happy"
 
 msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
-msgstr ""
+msgstr "Ein Hauch von Zitrusfrüchten. Eine Fülle von Blumen. Eine Mischung aus Emotionen."
 
 msgid "Tommy Girld by Tommy Hilfiger Perfume"
-msgstr ""
+msgstr "Tommy Girl von Tommy Hilfiger Parfüm"
 
 msgid ""
-"A refreshing and energetic floral - with low notes of sandalwood and heather."
-msgstr ""
+"A refreshing and energetic floral - with low notes of sandalwood and "
+"heather."
+msgstr "Ein erfrischendes und energiegeladenes Blumenmuster - mit niedrigen Noten von Sandelholz und Heidekraut."
 
 msgid "Bvlgari Omnia Crystalline Eau de Toilette"
-msgstr ""
+msgstr "Bvlgari Omnia kristallines Eau de Toilette"
 
 msgid ""
 "Give yourself over to this fragrance as intoxicating and pure as a woman's "
 "soul is fragile."
-msgstr ""
+msgstr "Geben Sie sich diesem Duft hin, der so berauschend und rein ist, wie die Seele einer Frau zerbrechlich ist."
 
 msgid "Still Jennifer Lopez Perfume"
-msgstr ""
+msgstr "Still Jennifer Lopez Parfüm"
 
 msgid ""
-"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still "
-"fragrance."
-msgstr ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
+" fragrance."
+msgstr "Lassen Sie sich von Vitalität und Selbstvertrauen leiten, wenn Sie den Duft Jennifer Lopez Still tragen."
 
 msgid "La Vie Est Belle"
-msgstr ""
+msgstr "La Vie Est Belle"
 
 msgid "A captivating new scent joins the La vie est belle path to happiness."
-msgstr ""
+msgstr "Ein fesselnder neuer Duft verbindet den Weg von La vie est belle zum Glück."
 
 msgid "Smooth Viking Beard Brush"
-msgstr ""
+msgstr "Glatte Wikinger-Bartbürste"
 
 msgid "Just a beard brush."
-msgstr ""
+msgstr "Nur eine Bartbürste."
 
 msgid "Beard & Stash Oil"
-msgstr ""
+msgstr "Bart &amp; Stash Öl"
 
 msgid "This oil is natural, and is made with the perfect combination of oils."
-msgstr ""
+msgstr "Dieses Öl ist natürlich und wird mit der perfekten Kombination von Ölen hergestellt."
 
 msgid "Sample Carousel"
-msgstr ""
+msgstr "Beispielkarussell"
 
 msgid "Business Segment"
-msgstr ""
+msgstr "Geschäftsfeld"
 
 msgid "Select your business segment to install categories."
-msgstr ""
+msgstr "Wähle Dein Geschäftsfeld aus, um Kategorien festzulegen."
 
 msgid "Install Categories"
-msgstr ""
+msgstr "Kategorien festlegen"
 
 msgid "Enable this to install sample categories."
-msgstr ""
+msgstr "Aktiviere diese Option, um Beispielkategorien festzulegen."
 
 msgid "Install Products"
-msgstr ""
+msgstr "Artikel anlegen"
 
 msgid "Enable this to install sample products."
-msgstr ""
+msgstr "Aktiviere diese Option, um Beispielprodukte anzulegen."
 
 msgid "Install Carousel"
-msgstr ""
+msgstr "Karussell anlegen"
 
 msgid "Enable this to install a sample carousel."
-msgstr ""
+msgstr "Aktiviere diese Option, um ein Beispielkarussell anzulegen."
 
 msgid "Uninstall Categories"
-msgstr ""
+msgstr "Kategorien deinstallieren"
 
 msgid "Uninstall Products"
-msgstr ""
+msgstr "Artikel deinstallieren"
 
 msgid "Uninstall Carousel"
-msgstr ""
+msgstr "Karussell deinstallieren"
 
 msgid "Sample data were consolidated."
-msgstr ""
+msgstr "Beispieldaten wurden konsolidiert."
 
 msgid ""
 "To start shopping right now, please install some sample data into your shop"
-msgstr ""
+msgstr "Um sofort mit dem Einkaufen zu beginnen, installiere bitte einige Beispieldaten auf Deinem Marktplatz"
 
 msgid "You must have the Access to Admin Panel permission."
-msgstr ""
+msgstr "Du musst die Berechtigung \"Zugriff auf Admin-Panel\" besitzen."
 
 msgid "Supplier Pricing"
-msgstr ""
+msgstr "Händlerpreise"
 
 msgid "Shuup Testing Theme"
-msgstr ""
+msgstr "Shuup-Testdesign"
 
 msgid "Shuup Testing Theme With Custom Base Template"
-msgstr ""
+msgstr "Shuup-Testdesign mit benutzerdefinierter Basisvorlage"
 
 msgid "Shuup Test Theme Product Highlights"
-msgstr ""
+msgstr "Produkthighlights des Shuup-Testdesigns"

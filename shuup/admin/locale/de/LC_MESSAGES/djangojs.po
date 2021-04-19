@@ -1,7 +1,7 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-04-09 20:28+0000\n"
+"PO-Revision-Date: 2021-04-16 19:20+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -252,7 +252,7 @@ msgid "Confirm"
 msgstr "Bestätigen"
 
 msgid "Select Shop"
-msgstr "Händlerbereich auswählen"
+msgstr "Marktplatz auswählen"
 
 msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
@@ -403,7 +403,7 @@ msgid ""
 msgstr "Wähle eine Zahlungsart für die Bestellung. Die Zahlungsarten werden in den Zahlungseinstellungen definiert."
 
 msgid "Shop"
-msgstr "Händlerbereich"
+msgstr "Marktplatz"
 
 msgid "Product"
 msgstr "Artikel"
@@ -593,7 +593,7 @@ msgid ""
 msgstr "Dein Reporting-Tool zum Aufbau und zur Analyse von Daten über das Verbraucherverhalten, die Dich bei Deinen Geschäftsentscheidungen unterstützen können."
 
 msgid "Shops"
-msgstr "Händlerbereiche"
+msgstr "Marktplätze"
 
 msgid ""
 "Place for your Shop specific settings. You can customize taxes, currencies, "
@@ -633,7 +633,7 @@ msgid "View your storefront"
 msgstr "Deinen Händlerbereich anschauen"
 
 msgid "Preview your shop and all the cool features you have created!"
-msgstr "Vorschau auf Deinen Händlerbereich mit all den coolen Funktionen, die Du bereits erstellt hast!"
+msgstr "Vorschau auf Deinen Marktplatz mit all den coolen Funktionen, die Du bereits erstellt hast!"
 
 msgid "We're done!"
 msgstr "Fertig!"
