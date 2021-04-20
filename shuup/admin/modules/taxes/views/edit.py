@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.breadcrumbs import BreadcrumbedView
@@ -44,7 +45,7 @@ class TaxClassFormPart(FormPart):
             TaxClassForm,
             template_name="shuup/admin/taxes/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object},
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES},
         )
 
     def form_valid(self, form):
