@@ -16,9 +16,16 @@
 {% endblock %}
 
 {% block dashboard_content %}
-    <h2 class="page-header">{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{{ render_action_buttons(order) }}</h2>
+    <div class="row">
+        <div class="col-sm-12">
+            {{ render_action_buttons(order) }}
+        </div>
+        <div class="col-sm-12">
+            <h2>{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}</h2>
+        </div>
+    </div>
     <div class="row order-dashboard-container">
-        <div class="col-xs-12">
+        <div class="col-sm-12">
             {{ basic_info() }}
         </div>
         {% if order.shipping_address_id and order.billing_address_id %}
@@ -29,17 +36,17 @@
                 {{ billing_address() }}
             </div>
         {% elif order.shipping_address_id %}
-            <div class="col-xs-12-6">
+            <div class="col-sm-12">
                 {{ shipping_address() }}
             </div>
         {% elif order.billing_address_id %}
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 {{ billing_address() }}
             </div>
         {% endif %}
         {% set _sent_shipments = order.get_sent_shipments() %}
         {% if _sent_shipments.exists() %}
-            <div class="col-xs-12">
+            <div class="col-sm-12">
                 {{ sent_shipments(_sent_shipments) }}
             </div>
         {% endif %}
