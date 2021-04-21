@@ -70,7 +70,7 @@ Locally
 
    .. code-block:: shell
 
-      pip install -e .[everything]
+      pip install -r requirements-tests.txt
 
 .. note::
     Some extra steps is required for **Windows**
@@ -164,13 +164,6 @@ To run tests in the active virtualenv:
    # Or with coverage
    py.test -vvv --nomigrations --cov shuup --cov-report html shuup_tests
 
-To run tests for all supported Python versions run:
-
-.. code-block:: shell
-
-   pip install tox  # To install tox, needed just once
-   tox
-
 Running browser tests
 ---------------------
 
@@ -178,18 +171,11 @@ Running browser tests
 
    SHUUP_BROWSER_TESTS=1 py.test -v --nomigrations shuup_tests/browser
 
-Headless with Firefox:
-
-.. code-block:: shell
-
-   SHUUP_BROWSER_TESTS=1 MOZ_HEADLESS=1 py.test -v --nomigrations shuup_tests/browser
-
 For Chrome
 
 .. code-block:: shell
 
    SHUUP_BROWSER_TESTS=1 py.test -v --nomigrations --splinter-webdriver=chrome shuup_tests/browser
-
 
 For OSX with Homebrew:
 
@@ -201,13 +187,13 @@ For OSX with Homebrew:
     # Install Geckodriver (for Firefox)
     brew install geckodriver
 
-    # If your current version is below 0.23.0 (for Firefox)
+    # If your current version is below 0.29.1 (for Firefox)
     brew upgrade geckodriver
 
     # Make sure the selenium is up to date (tested with 3.141.0)
     pip install selenium -U
 
-    # Make sure splinter is up to date (tested with 0.9.0)
+    # Make sure splinter is up to date (tested with 0.14.0)
     pip install splinter -U
 
 For other OS and browsers check package documentation directly:
