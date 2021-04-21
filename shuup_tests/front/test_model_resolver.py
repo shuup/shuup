@@ -25,4 +25,19 @@ def test_resolve_product_url():
     product = factories.create_product("product", shop, factories.get_default_supplier(), "10")
     from shuup.front.template_helpers.urls import model_url
 
-    assert model_url({}, product) == reverse("shuup:product", kwargs=dict(pk=product.pk, slug=product.slug))
+    product_url = reverse("shuup:product", kwargs=dict(pk=product.pk, slug=product.slug))
+    assert model_url({}, product) == product_url
+
+    # create a new supplier and use it
+    # the URL should still point to the default product URL (no supplier specific)
+    # because the given supplier doesn't supplies the product
+    supplier2 = factories.get_supplier("", shop)
+    assert model_url({}, product, supplier=supplier2) == product_url
+
+    shop_product = product.get_shop_instance(shop)
+    shop_product.suppliers.add(supplier2)
+    # now the url is supplier2 specific
+    product_supplier2_url = reverse(
+        "shuup:supplier-product", kwargs=dict(pk=product.pk, slug=product.slug, supplier_pk=supplier2.pk)
+    )
+    assert model_url({}, product, supplier=supplier2) == product_supplier2_url

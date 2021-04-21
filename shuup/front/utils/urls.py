@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement
 
-from shuup.core.models import Category, Product
+from shuup.core.models import Category, Product, ShopProduct, Supplier
 from shuup.utils.django_compat import reverse
 
 
@@ -15,7 +15,13 @@ def model_url(context, model, absolute=False, **kwargs):
     uri = None
 
     if isinstance(model, Product):
-        uri = reverse("shuup:product", kwargs=dict(pk=model.pk, slug=model.slug))
+        supplier = kwargs.get("supplier") or context.get("supplier")
+
+        # if the supplier was passed and it supplies the product, the URL can be supplier specific
+        if isinstance(supplier, Supplier) and ShopProduct.objects.filter(product=model, suppliers=supplier).exists():
+            uri = reverse("shuup:supplier-product", kwargs=dict(pk=model.pk, slug=model.slug, supplier_pk=supplier.pk))
+        else:
+            uri = reverse("shuup:product", kwargs=dict(pk=model.pk, slug=model.slug))
 
     if isinstance(model, Category):
         uri = reverse("shuup:category", kwargs=dict(pk=model.pk, slug=model.slug))

@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Front: consider the supplier from context or kwargs while reversing the product url
+
 ### Fixed
 
-- Fix the order detail template
-- Pass languages to the TaxClassFormPart to show multilanguage forms
+- Front: Fix the order detail template
+- Admin: Pass languages to the TaxClassFormPart to show multilanguage forms
 
 ## [2.6.4] - 2021-04-19
 
