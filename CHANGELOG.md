@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Fix the order detail template
 - Pass languages to the TaxClassFormPart to show multilanguage forms
 
 ## [2.6.4] - 2021-04-19
