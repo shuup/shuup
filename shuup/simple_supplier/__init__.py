@@ -20,6 +20,9 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
         "notify_script_template": [
             "shuup.simple_supplier.notify_script_template:StockLimitEmailScriptTemplate",
         ],
+        "core_internal_product_type": [
+            (0, "Product")
+        ]
     }
 
     def ready(self):

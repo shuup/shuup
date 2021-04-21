@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.models import TranslatableModel, TranslatedFields
 
+from shuup.apps.provides import get_provide_tuples
 from shuup.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.signals import get_orderability_errors, get_visibility_errors, post_clean, pre_clean
@@ -57,6 +58,8 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         verbose_name=_("suppliers"),
         help_text=_("List your suppliers here. Suppliers can be found by searching for `Suppliers`."),
     )
+
+    internal_type = models.IntegerField(default=0, choices=get_provide_tuples("core_internal_product_type"))    
 
     visibility = EnumIntegerField(
         ShopProductVisibility,
