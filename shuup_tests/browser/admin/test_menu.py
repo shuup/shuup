@@ -8,6 +8,7 @@
 import os
 import pytest
 import selenium
+import time
 
 from shuup.testing.browser_utils import initialize_admin_browser_test, wait_until_appeared, wait_until_condition
 from shuup.testing.factories import get_default_shop
@@ -16,9 +17,8 @@ from shuup.utils.django_compat import reverse
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_menu(browser, admin_user, live_server, settings):
     get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)
@@ -43,11 +43,11 @@ def test_menu(browser, admin_user, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_menu_small_device(browser, admin_user, live_server, settings):
     get_default_shop()
 
+    original_size = browser.driver.get_window_size()
     browser.driver.set_window_size(480, 960)
     initialize_admin_browser_test(browser, live_server, settings)
 
@@ -61,6 +61,7 @@ def test_menu_small_device(browser, admin_user, live_server, settings):
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("#menu-button"))
     browser.find_by_css("#menu-button").first.click()
 
+    time.sleep(0.5)
     wait_until_condition(browser, lambda x: x.is_text_present("Quicklinks"))
     browser.find_by_css(".quicklinks a").first.click()
 
@@ -68,10 +69,11 @@ def test_menu_small_device(browser, admin_user, live_server, settings):
     browser.find_by_css(".menu-list li a")[2].click()
 
     wait_until_condition(browser, lambda x: x.is_text_present("New shop product"))
+    # back to default
+    browser.driver.set_window_size(original_size["width"], original_size["height"])
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_menu_toggle(browser, admin_user, live_server, settings):
     get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)
@@ -84,7 +86,7 @@ def test_menu_toggle(browser, admin_user, live_server, settings):
     # Close menu
     try:
         browser.find_by_css("#menu-button").first.click()
-    except selenium.common.exceptions.TimeoutException as e:
+    except selenium.common.exceptions.TimeoutException:
         browser.find_by_css("#menu-button").first.click()
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(".desktop-menu-closed"))
 

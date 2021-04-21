@@ -56,8 +56,7 @@ def create_orderable_product(name, sku, price):
     return product
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_search_product_list(browser, live_server, settings):
     activate("en")
     # initialize

@@ -34,9 +34,8 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_order_creator_view_1(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     get_default_payment_method()
@@ -58,9 +57,8 @@ def test_order_creator_view_1(browser, admin_user, live_server, settings):
     _test_quick_add_lines(browser)
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_order_creator_view_2(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     pm = get_default_payment_method()
@@ -77,6 +75,7 @@ def test_order_creator_view_2(browser, admin_user, live_server, settings):
     object_created.connect(_add_custom_order_created_message, sender=Order, dispatch_uid="object_created_signal_test")
 
     initialize_admin_browser_test(browser, live_server, settings)
+    original_size = browser.driver.get_window_size()
     browser.driver.set_window_size(1920, 1080)
     _visit_order_creator_view(browser, live_server)
     _test_customer_using_search(browser, person)
@@ -85,6 +84,7 @@ def test_order_creator_view_2(browser, admin_user, live_server, settings):
     _test_confirm(browser)
     assert Order.objects.first().log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
     object_created.disconnect(sender=Order, dispatch_uid="object_created_signal_test")
+    browser.driver.set_window_size(original_size["width"], original_size["height"])
 
 
 def _add_custom_order_created_message(sender, object, **kwargs):
@@ -195,6 +195,7 @@ def _test_customer_data(browser, person):
     click_element(browser, "#select-existing-customer")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")
+
     # click second row - first row is admin
     browser.find_by_css("tbody tr")[1].find_by_css("a").click()
 
@@ -222,6 +223,7 @@ def _test_add_lines(browser):
     # selecting product for the order line.
     original_window_name = browser.windows.current.name
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("#lines .list-group-item:last-child a"))
+
     click_element(browser, "#lines .list-group-item:last-child a")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")

@@ -24,9 +24,8 @@ from shuup.xtheme.models import Snippet
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_snippet_injection(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     initialize_admin_browser_test(browser, live_server, settings)

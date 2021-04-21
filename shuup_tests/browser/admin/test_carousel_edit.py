@@ -7,14 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
+import time
 
-from shuup.admin.utils.tour import is_tour_complete
 from shuup.front.apps.carousel.models import Carousel
 from shuup.testing import factories
 from shuup.testing.browser_utils import (
     click_element,
     initialize_admin_browser_test,
-    move_to_element,
     wait_until_appeared,
     wait_until_condition,
 )
@@ -22,9 +21,8 @@ from shuup.testing.browser_utils import (
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_carousel_create(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     filer_image = factories.get_random_filer_image()
@@ -45,6 +43,7 @@ def test_carousel_create(browser, admin_user, live_server, settings):
     carousel = Carousel.objects.first()
 
     browser.visit(live_server + "/sa/carousels/%d/" % carousel.pk)
+    time.sleep(1)
     wait_until_condition(browser, lambda x: x.is_text_present(carousel.name))
     click_element(browser, "a[href='#slides-section']")
     wait_until_appeared(browser, ".slide-add-new-panel")
@@ -76,9 +75,8 @@ def test_carousel_create(browser, admin_user, live_server, settings):
     wait_until_appeared(browser, "div[class='message success']")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_carousel_multi_slide(browser, admin_user, live_server, settings):
     shop = factories.get_default_shop()
     filer_image = factories.get_random_filer_image()

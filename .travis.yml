@@ -1,5 +1,10 @@
 sudo: false
 language: python
+env:
+  global:
+    - SHUUP_BROWSER_TESTS=1
+    - SHUUP_TESTS_CI=1
+    - SHUUP_WORKBENCH_DISABLE_MIGRATIONS=1
 cache:
   bundler: true
   directories:
@@ -21,18 +26,15 @@ cache:
     - shuup/xtheme/node_modules
 jobs:
   include:
-    - {stage: development, python: 3.6, env: TOXENV=py36-django22-nomigrations}
-    - {stage: development, python: 3.7, env: TOXENV=py37-django22-nomigrations}
-    - {stage: development, python: 3.8, env: TOXENV=py38-django22-nomigrations}
     - stage: development
       python: 3.6
-      env: TOXENV=py36-django22-nomigrations-nocoverage-browser-travis-admin
       addons:
         firefox: "latest"
       services:
         - xvfb
       before_install:
-        - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+        - sudo apt-get -y install gettext
+        - wget https://github.com/mozilla/geckodriver/releases/download/v0.29.1/geckodriver-v0.29.1-linux64.tar.gz
         - mkdir geckodriver
         - tar -xzf geckodriver*.tar.gz -C geckodriver
         - export PATH=$PATH:$PWD/geckodriver
@@ -42,38 +44,9 @@ jobs:
         - "npm install -g selenium-standalone@6.15.3"
         - "selenium-standalone install"
         - "selenium-standalone start &"
-    - stage: development
-      python: 3.7
-      env: TOXENV=py37-django22-nomigrations-nocoverage-browser-travis-front
-      addons:
-        firefox: "latest"
-      services:
-        - xvfb
-      before_install:
-        - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
-        - mkdir geckodriver
-        - tar -xzf geckodriver*.tar.gz -C geckodriver
-        - export PATH=$PATH:$PWD/geckodriver
-        - "nvm install 10"
-        - "nvm use 10"
-        - "export DISPLAY=:99.0"
-        - "npm install -g selenium-standalone@6.15.3"
-        - "selenium-standalone install"
-        - "selenium-standalone start &"
-stages:
-  - development
-  - name: deploy
-    if: type != pull_request
-install:
-  - pip install -U pip
-  - pip install tox
-  - pip install coveralls
-  - pip install codecov
-script:
-  - tox -vv
-after_success:
-  - coveralls
-  - codecov
-notifications:
-  slack:
-    secure: mkYYYt9ZQc6vR1aJltnEF1DzZ5xsNmllNcdK8fCwjeK5ZOnB1atujZ08tYxx/t57gaxhMWyJHvKdD0gvyQS6R/pAO2epXY9NqOhPVDEhqtXBpd7wUcEMTQqjSy68FSTjO94O8suC18xB55Cq+KSxm8jJt6zSFsjoffhz+4QIA67rkiNPLmAw2AHYymvVaidWMDe5UUGD7qONmdFI5wx4wOE9veboWDQ49oygiq+c4NFC/d4C108jT7l9ZTko/JF7Bim3VQI0LprGuIH2tZ6TI/3LWEhQX6XXuGr6eXuTF3nQp470yRXRs50Gh+CSY++ZUgFdRfOlg0edHt9m2Lk8j2jfeLgXYWYy1QSCnJDPRzzVIkEP4xaZCcIK7pcckV0Ytn7BP3Y09MDzSvt3+0Cm7ou16shiyy5NqW5DonarN21Mlz9/auZPawsXJqYZVDIZQiM7GLJnpg9wBfgKlPxUZKwi5ttsvrS7iPNK1sSLmICFqukrQlMQnpY5h45uGXsqL7fI7z30Ftld6qIGGVFdFjh3K+4dVXV5XKHnynaR518JvugxLwrNcIWwpyB2I3Ak7AsMzd3IWnY4yrB6pSbVdG0W3zZYXR6GUsYmxICKv5pUVnRKtp2tgOKA3EwgnVjSkJahGPp5bc3xJN8mNOaR33f3kieM5jJcNteEWueX+eA=
+        - pip install -r requirements-tests.txt
+        - python setup.py build_resources --ci
+        - python setup.py build_messages
+      script:
+        - py.test -v --nomigrations shuup_tests/browser/admin/
+        - py.test -v --nomigrations shuup_tests/browser/front/

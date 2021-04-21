@@ -22,9 +22,8 @@ from shuup.utils.django_compat import reverse
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     activate("en")
     factories.get_default_shop()
@@ -34,6 +33,7 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     filer_image = factories.get_random_filer_image()
 
     initialize_admin_browser_test(browser, live_server, settings)
+    original_size = browser.driver.get_window_size()
     browser.driver.set_window_size(1920, 1080)
 
     url = reverse("shuup_admin:shop_product.new")
@@ -60,3 +60,4 @@ def test_summernote_editor_picture(browser, admin_user, live_server, settings):
     wait_until_appeared(
         browser, "#id_base-description__en-editor-wrap .note-editable img[src='%s']" % filer_image.url, timeout=20
     )
+    browser.driver.set_window_size(original_size["width"], original_size["height"])

@@ -39,8 +39,7 @@ def create_orderable_product(name, sku, price):
 
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
 @pytest.mark.urls("shuup.testing.checkout_with_login_and_register_urls")
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_checkout_with_login_and_register(browser, live_server, settings):
     cache.clear()  # Avoid caches from past tests
     # initialize
@@ -73,9 +72,8 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
 
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
 @pytest.mark.urls("shuup.testing.single_page_checkout_with_login_and_register_conf")
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_single_page_checkout_with_login_and_register(browser, live_server, settings):
     cache.clear()  # Avoid caches from past tests
 

@@ -23,9 +23,8 @@ from shuup.utils.django_compat import reverse
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
     browser.visit(live_server + "/")
@@ -107,9 +106,8 @@ def test_xtheme_edit_front(admin_user, browser, live_server, settings):
     wait_until_condition(browser, lambda x: not x.is_text_present(person_contact_text_content))
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
@@ -192,9 +190,8 @@ def test_xtheme_edit_product(admin_user, browser, live_server, settings):
     wait_until_condition(browser, lambda x: not x.is_text_present(second_product_text_content))
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_xtheme_edit_save_and_publish(admin_user, browser, live_server, settings):
     browser = initialize_admin_browser_test(browser, live_server, settings)  # Login to admin as admin user
     browser.visit(live_server + "/")

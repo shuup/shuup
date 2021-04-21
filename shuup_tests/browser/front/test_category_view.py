@@ -48,9 +48,8 @@ FIRST_CATEGORY_PRODUCT_DATA = [
 ]
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
-@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_TRAVIS", "0") == "1", reason="Disable when run through tox.")
+@pytest.mark.django_db
+@pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
 def test_category_product_filters_1(browser, live_server, settings):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
@@ -71,8 +70,7 @@ def test_category_product_filters_1(browser, live_server, settings):
     second_category_page_change(browser, live_server, shop, second_cat)
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_category_product_filters_2(browser, live_server, settings):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
@@ -104,8 +102,7 @@ def test_category_product_filters_2(browser, live_server, settings):
     second_category_sort_with_price_filter(browser, second_cat)
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_category_product_filters_3(browser, live_server, settings):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
@@ -132,8 +129,7 @@ def test_category_product_filters_3(browser, live_server, settings):
     categories_filter_test(browser, first_cat, second_cat, third_cat)
 
 
-@pytest.mark.browser
-@pytest.mark.djangodb
+@pytest.mark.django_db
 def test_category_product_filters_4(browser, live_server, settings):
     """
     Do not show manufacturer option if there is any product

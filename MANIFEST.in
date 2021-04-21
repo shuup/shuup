@@ -2,8 +2,6 @@ include README.rst
 include LICENSE
 include VENDOR-LICENSES.md
 
-include tox.ini
-
 recursive-include shuup \
     *.jinja *.html *.txt *.js *.css *.json *.less *.map \
     *.ico *.png *.svg *.jpg \

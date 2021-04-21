@@ -23,7 +23,6 @@ def new_product(i, shop, category):
     return product
 
 
-@pytest.mark.browser
 @pytest.mark.django_db
 def test_recently_viewed_products(browser, live_server, settings):
     shop = get_default_shop()
