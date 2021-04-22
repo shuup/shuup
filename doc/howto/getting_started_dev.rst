@@ -14,8 +14,8 @@ Getting Started with Shuup Development
 
 Requirements
 ------------
-* Python 2.7.9+/3.4+. https://www.python.org/download/.
-* Node.js (v0.12 or above). https://nodejs.org/en/download/
+* Python 3.6+. https://www.python.org/download/.
+* Node.js (v12 or above). https://nodejs.org/en/download/
 * Any database supported by Django.
 
 Installation for Shuup Development
@@ -48,29 +48,23 @@ Fastest way to get Shuup development environment up and running is to use `Docke
 Locally
 #######
 
-1. Python < 3.6 is recommended only advanced users. To cover large amount
-   of issues with setup it is recommended to run
-   `pip install -U pip setuptools wheel` before creating virtualenv.
-
-2. Setup a virtualenv and activate it. You may use the traditional
-   ``virtualenv`` command, or the newer ``python -m venv`` if you're
-   using Python 3.  See `Virtualenv User Guide
+1. Setup a virtualenv and activate it. See `Virtualenv User Guide
    <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
    are unfamiliar with virtualenv.  For example, following commands
    create and activate a virtualenv in Linux:
 
    .. code-block:: shell
 
-      virtualenv shuup-venv
+     virtualenv shuup-venv
       . shuup-venv/bin/activate
 
-3. Finally, you'll need to install Shuup in the activated virtualenv in
-   development mode.  To do that, run the following commands in the
+3. Finally, you'll need to install Shuup in the activated virtualenv.
+   To do that, run the following commands in the
    root of the checkout (within the activated virtualenv):
 
    .. code-block:: shell
 
-      pip install -r requirements-tests.txt
+      pip install -r requirements-dev.txt
 
 .. note::
     Some extra steps is required for **Windows**
@@ -159,6 +153,7 @@ Running tests
 To run tests in the active virtualenv:
 
 .. code-block:: shell
+   pip install -r requirements-tests.txt
 
    py.test -v --nomigrations shuup_tests
    # Or with coverage

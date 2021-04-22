@@ -10,8 +10,8 @@ Installing Shuup
 Requirements
 ------------
 
-* Python 2.7.9+/3.4+. https://www.python.org/download/.
-* Django's minimum supported version is 1.11LTS. This is the last version to support Python 2.7. The support will end at some point after April 2020.
+* Python 3.6+. https://www.python.org/download/.
+* Django's minimum supported version is 2.2 LTS.
 * Any database supported by Django. https://docs.djangoproject.com/en/3.0/ref/databases/ .
 
 Installation
@@ -56,7 +56,6 @@ including ``pip`` and ``virtualenv``.
    .. code-block:: shell
 
       pip install shuup
-
 
 4. Once installed, you can begin setting up a Django project using whichever
    standards you fancy. Refer to the top-level `settings
