@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.6
-    - name: Install dependencies
+    - name: Install dev dependencies
       run: pip install -r requirements-dev.txt
     - name: Run sanity check
       run: _misc/check_sanity.py

@@ -35,6 +35,14 @@ The ``ensure_code_style.py`` tool has a couple checkers:
 
    python _misc/ensure_code_style.py shuup
 
+You also need to make sure to run isort, black and flake8 to check
+the code style and to search for issues in your code.
+
+.. code-block::  shell
+
+   flake8 .
+   isort --check --diff .
+   black --check --diff .
 
 Ensure License Headers
 ----------------------
