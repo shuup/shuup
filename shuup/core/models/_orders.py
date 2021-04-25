@@ -750,7 +750,7 @@ class Order(MoneyPropped, models.Model):
         if not supplier:
             supplier = shipment.supplier
 
-        supplier.module.ship_products(shipment, product_quantities)
+        supplier.ship_products(shipment, product_quantities)
 
         self.add_log_entry(_("Success! Shipment #%d was created.") % shipment.id)
         self.update_shipping_status()

@@ -31,14 +31,12 @@ _provide_specs = defaultdict(list)
 _loaded_provides = defaultdict(OrderedDict)
 _identifier_to_spec = defaultdict(OrderedDict)
 _identifier_to_object = defaultdict(OrderedDict)
-_identifier_to_tuple = defaultdict(list)
 
 
 def _uncache(category):
     _loaded_provides.pop(category, None)
     _identifier_to_spec.pop(category, None)
     _identifier_to_object.pop(category, None)
-    _identifier_to_tuple.pop(category, None)
 
 
 def clear_provides_cache():
@@ -46,7 +44,6 @@ def clear_provides_cache():
     _loaded_provides.clear()
     _identifier_to_spec.clear()
     _identifier_to_object.clear()
-    _identifier_to_tuple.clear()
 
 
 def _get_provide_specs_from_apps(category):
@@ -99,40 +96,6 @@ def _load_provide_objects(category):
             loaded_provides[spec] = load(spec, explanation)
         _loaded_provides[category] = loaded_provides
     return _loaded_provides.get(category, {})
-
-
-def get_provide_tuples(category):
-    """
-    Get a list of provide tuples for the given category.
-
-    :param category: Category to load objects for.
-    :type category: str
-    :return: list of tuple.
-    :rtype: list[tuple]
-    """
-    provide_specs = _get_provide_specs_from_apps(category)
-    loaded_provides = _identifier_to_tuple[category]
-    if set(provide_specs) != set(loaded_provides):
-        _uncache(category)
-        loaded_provides = []
-        provide_specs_zip = zip(*provide_specs)
-        longest_tuple = max(provide_specs, key=len)
-        zip_length = len(list(provide_specs_zip))
-        if zip_length != len(longest_tuple):
-            raise ImproperlyConfigured(
-                "Tuple: %s has to many values. It should only have %d values, like the rest of the provides."
-                % (str(longest_tuple), zip_length))
-        provide_specs_zip = zip(*provide_specs)
-        for spec in provide_specs_zip:
-            set_spec = set(spec)
-            if len(set_spec) != len(spec):
-                raise ImproperlyConfigured(
-                    "There are values that are the same in some specs. "
-                    "Please make sure that all values are unique in your tuples. "
-                    "'%s'" % (str(spec),)
-                )
-        _identifier_to_tuple[category] = provide_specs
-    return _identifier_to_tuple.get(category, [])
 
 
 def _load_identifier_maps(category):

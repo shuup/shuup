@@ -17,7 +17,7 @@ def test_module_interface_for_scandinavian_letters(rf):
     supplier = Supplier.objects.create(identifier="module_interface_test", name="ääääööööååå")
 
     assert isinstance(supplier, Supplier)
-    assert supplier.module
+    assert supplier.modules
     assert "%r" % supplier
 
     supplier.delete()

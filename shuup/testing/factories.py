@@ -67,6 +67,7 @@ from shuup.core.models import (
     ShopProductVisibility,
     ShopStatus,
     Supplier,
+    SupplierModule,
     SupplierType,
     Tax,
     TaxClass,
@@ -445,9 +446,9 @@ def get_default_supplier(shop=None):
 
 
 def get_supplier(module_identifier, shop=None, **kwargs):
-    supplier = Supplier.objects.create(
-        name=DEFAULT_NAME, module_identifier=module_identifier, type=SupplierType.INTERNAL, **kwargs
-    )
+    supplier = Supplier.objects.create(name=DEFAULT_NAME, type=SupplierType.INTERNAL, **kwargs)
+    supplier_module, created = SupplierModule.objects.get_or_create(module_identifier=module_identifier)
+    supplier.supplier_modules.add(supplier_module)
     if shop:
         supplier.shops.add(shop)
     return supplier

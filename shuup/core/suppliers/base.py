@@ -8,6 +8,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core.models import ShopProduct
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.utils import context_cache
@@ -24,6 +25,7 @@ class BaseSupplierModule(object):
 
     identifier = None
     name = None
+    handels_internal_type = None
 
     def __init__(self, supplier, options):
         """
@@ -32,6 +34,23 @@ class BaseSupplierModule(object):
         """
         self.supplier = supplier
         self.options = options
+
+    def can_handle_product(self, product_id):
+        """
+        :param product_id: Product ID.
+        :type product_id: int
+        :return: boolean value if this module can handle product
+        :rtype: bool
+        """
+        if self.handels_internal_type is None:
+            return True
+
+        if type(self.handels_internal_type) == list:
+            return ShopProduct.objects.filter(
+                product__id=product_id, internal_type__in=self.handels_internal_type
+            ).exists()
+
+        return ShopProduct.objects.filter(product__id=product_id, internal_type=self.handels_internal_type).exists()
 
     def get_stock_statuses(self, product_ids):
         """

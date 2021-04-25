@@ -87,7 +87,7 @@ def on_order_creator_finished(sender, order, source, **kwargs):
 @receiver(order_changed)
 def on_order_changed(sender, order, **kwargs):
     for line in order.lines.products().only("product_id", "supplier").select_related("supplier"):
-        line.supplier.module.update_stock(line.product_id)
+        line.supplier.update_stock(line.product_id)
 
 
 def handle_contact_group_price_display_post_save(sender, instance, **kwargs):

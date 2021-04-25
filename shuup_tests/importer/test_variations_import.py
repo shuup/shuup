@@ -75,7 +75,8 @@ def test_variatins_import(rf):
     assert len(products) == 42  # 2 parents 20 variations each
 
     supplier = Supplier.objects.first()
-    assert supplier and supplier.stock_managed and supplier.module_identifier == "simple_supplier"
+    assert supplier and supplier.stock_managed
+    assert supplier.supplier_modules.filter(module_identifier="simple_supplier").exists()
     assert ShopProduct.objects.filter(suppliers=supplier).count() == 42
 
     parent1 = Product.objects.filter(sku=1).first()

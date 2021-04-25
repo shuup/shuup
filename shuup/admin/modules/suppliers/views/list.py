@@ -29,7 +29,7 @@ class SupplierListView(PicotableListView):
             filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
         Column("type", _("Type")),
-        Column("module_identifier", _("Module"), display="get_module_display", sortable=True),
+        Column("supplier_modules", _("Module"), display="get_supplier_modules", sortable=True),
     ]
     toolbar_buttons_provider_key = "supplier_list_toolbar_provider"
     mass_actions_provider_key = "supplier_list_mass_actions_provider"
@@ -37,8 +37,11 @@ class SupplierListView(PicotableListView):
     def get_queryset(self):
         return Supplier.objects.filter(Q(shops=get_shop(self.request)) | Q(shops__isnull=True)).not_deleted()
 
-    def get_module_display(self, instance):
-        return instance.module.name or _("No %s module") % self.model._meta.verbose_name
+    def get_supplier_modules(self, instance):
+        return (
+            ", ".join(instance.supplier_modules.all().values_list("name"))
+            or _("No %s module") % self.model._meta.verbose_name
+        )
 
     def get_toolbar(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:

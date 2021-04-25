@@ -100,7 +100,7 @@ class Shipment(ShuupModel):
     def save(self, *args, **kwargs):
         super(Shipment, self).save(*args, **kwargs)
         for product_id in self.products.values_list("product_id", flat=True):
-            self.supplier.module.update_stock(product_id=product_id)
+            self.supplier.update_stock(product_id=product_id)
 
     def delete(self, using=None):
         raise NotImplementedError("Error! Not implemented: `Shipment` -> `delete()`. Use `soft_delete()` instead.")
@@ -112,7 +112,7 @@ class Shipment(ShuupModel):
         self.status = ShipmentStatus.DELETED
         self.save(update_fields=["status"])
         for product_id in self.products.values_list("product_id", flat=True):
-            self.supplier.module.update_stock(product_id=product_id)
+            self.supplier.update_stock(product_id=product_id)
         if self.order:
             self.order.update_shipping_status()
         shipment_deleted.send(sender=type(self), shipment=self)
@@ -167,7 +167,7 @@ class Shipment(ShuupModel):
         if self.type == ShipmentType.IN:
             for product_id, quantity in self.products.values_list("product_id", "quantity"):
                 purchase_price = purchase_prices.get(product_id, None) if purchase_prices else None
-                self.supplier.module.adjust_stock(
+                self.supplier.adjust_stock(
                     product_id=product_id, delta=quantity, purchase_price=purchase_price or 0, created_by=created_by
                 )
 

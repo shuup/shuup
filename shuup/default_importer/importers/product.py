@@ -26,6 +26,7 @@ from shuup.core.models import (
     SalesUnit,
     ShopProduct,
     Supplier,
+    SupplierModule,
     TaxClass,
 )
 from shuup.importer.importing import DataImporter, ImporterExampleFile, ImportMetaBase
@@ -260,11 +261,12 @@ class ProductMetaBase(ImportMetaBase):
             supplier.stock_managed = True
             supplier_changed = True
 
-        if not supplier.module_identifier and has_installed("shuup.simple_supplier"):
-            supplier.module_identifier = "simple_supplier"
+        if not supplier.supplier_modules.all().exists() and has_installed("shuup.simple_supplier"):
+            supplier_module = SupplierModule.objects.get_or_create(module_identifier="simple_supplier")[0]
+            supplier.supplier_modules.add(supplier_module)
             supplier_changed = True
 
-        if not supplier.module_identifier:
+        if not supplier.supplier_modules:
             msg = _("No supplier module set, please check that the supplier module is set.")
             sess.log_messages.append(msg)
             return

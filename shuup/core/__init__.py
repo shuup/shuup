@@ -29,6 +29,7 @@ class ShuupCoreAppConfig(AppConfig):
             "shuup.core.order_creator:OrderSourceMethodsUnavailabilityReasonsValidator",
             "shuup.core.order_creator:OrderSourceSupplierValidator",
         ],
+        "internal_product_type_provider": ["shuup.core.models._products:SimpleSupplierInternalProductTypeProvider"],
     }
 
     def ready(self):
@@ -48,6 +49,10 @@ class ShuupCoreAppConfig(AppConfig):
             from .error_handling import install_error_handlers
 
             install_error_handlers()
+
+        from .models import SupplierModule
+
+        SupplierModule.ensure_all_supplier_modules()
 
         # connect signals
         import shuup.core.signal_handlers  # noqa: F401

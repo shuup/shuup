@@ -471,4 +471,4 @@ class JsonOrderCreator(object):
             product = Product.objects.get(id=prod_id)
             shop_product = product.get_shop_instance(shop)
             for supplier in shop_product.suppliers.enabled():
-                supplier.module.update_stock(product.id)
+                supplier.update_stock(product.id)

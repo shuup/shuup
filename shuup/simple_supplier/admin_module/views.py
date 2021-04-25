@@ -48,7 +48,9 @@ class StocksListView(PicotableListView):
             _("Supplier"),
             display="supplier",
             linked=False,
-            filter_config=ChoicesFilter(Supplier.objects.enabled().filter(module_identifier="simple_supplier")),
+            filter_config=ChoicesFilter(
+                Supplier.objects.enabled().filter(supplier_modules__module_identifier="simple_supplier")
+            ),
         ),
         Column(
             "stock_information",
@@ -83,7 +85,7 @@ class StocksListView(PicotableListView):
 
     def get_queryset(self):
         return StockCount.objects.filter(
-            supplier__module_identifier="simple_supplier",
+            supplier__supplier_modules__module_identifier="simple_supplier",
             supplier__enabled=True,
             supplier__stock_managed=True,
             product__deleted=False,
@@ -133,7 +135,7 @@ def _get_success_message(request, supplier, product, message):
 def _process_stock_adjustment(form, request, supplier_id, product_id):
     data = form.cleaned_data
     supplier = Supplier.objects.get(id=supplier_id)
-    stock_adjustment = supplier.module.adjust_stock(
+    stock_adjustment = supplier.adjust_stock(
         product_id, delta=data.get("delta"), purchase_price=data.get("purchase_price"), created_by=request.user
     )
     success_message = _get_success_message(

@@ -153,7 +153,7 @@ class ProductListView(PicotableListView):
     def get_queryset(self):
         filter = self.get_filter()
         shop = get_shop(self.request)
-        qs = ShopProduct.objects.filter(product__deleted=False, shop=shop)
+        qs = ShopProduct.objects.filter(product__deleted=False, shop=shop, internal_type=0)
         q = Q()
         for mode in filter.get("modes", []):
             q |= Q(product__mode=mode)

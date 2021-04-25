@@ -25,7 +25,6 @@ class SupplierBaseForm(ShuupAdminForm):
         model = Supplier
         exclude = ("module_data", "options", "contact_address", "deleted")
         widgets = {
-            "module_identifier": forms.Select,
             "description": (
                 TextEditorWidget()
                 if settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
@@ -68,15 +67,12 @@ class SupplierBaseForm(ShuupAdminForm):
         else:
             self.fields["is_approved"].initial = False
 
-        choices = Supplier.get_module_choices(empty_label=(_("No %s module") % Supplier._meta.verbose_name))
-        self.fields["module_identifier"].choices = self.fields["module_identifier"].widget.choices = choices
-
     def clean(self):
         cleaned_data = super(SupplierBaseForm, self).clean()
         stock_managed = cleaned_data.get("stock_managed")
-        module_identifier = cleaned_data.get("module_identifier")
+        supplier_modules = cleaned_data.get("supplier_modules")
 
-        if stock_managed and not module_identifier:
+        if stock_managed and not supplier_modules:
             self.add_error("stock_managed", _("It is not possible to manage inventory when no module is selected."))
 
         if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:

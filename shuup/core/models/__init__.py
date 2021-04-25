@@ -67,6 +67,7 @@ from ._products import (
     ProductMode,
     ProductType,
     ShippingMode,
+    SimpleSupplierInternalProductTypeProvider,
     StockBehavior,
 )
 from ._service_base import Service, ServiceBehaviorComponent, ServiceChoice, ServiceCost, ServiceProvider
@@ -87,7 +88,7 @@ from ._service_shipping import Carrier, CustomCarrier, ShippingMethod
 from ._shipments import Shipment, ShipmentProduct, ShipmentStatus, ShipmentType
 from ._shops import Shop, ShopStatus
 from ._supplied_products import SuppliedProduct
-from ._suppliers import Supplier, SupplierShop, SupplierType
+from ._suppliers import Supplier, SupplierModule, SupplierShop, SupplierType
 from ._taxes import CustomerTaxGroup, Tax, TaxClass
 from ._units import DisplayUnit, PiecesSalesUnit, SalesUnit, UnitInterface
 
@@ -173,6 +174,7 @@ __all__ = [
     "ProductVariationVariable",
     "ProductVariationVariableValue",
     "ProductVisibility",
+    "SimpleSupplierInternalProductTypeProvider",
     "RoundingMode",
     "SalesUnit",
     "SavedAddress",
@@ -201,6 +203,7 @@ __all__ = [
     "Supplier",
     "SupplierShop",
     "SupplierType",
+    "SupplierModule",
     "Tax",
     "TaxClass",
     "TranslatableShuupModel",

@@ -20,6 +20,7 @@ from .models import StockAdjustment, StockCount
 class SimpleSupplierModule(BaseSupplierModule):
     identifier = "simple_supplier"
     name = "Simple Supplier"
+    handels_internal_type = [0, 1]
 
     def get_stock_statuses(self, product_ids):
         stock_counts = StockCount.objects.filter(supplier=self.supplier, product_id__in=product_ids).values_list(
