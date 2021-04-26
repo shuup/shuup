@@ -134,7 +134,7 @@ if __name__ == "__main__":
         license=LICENSE,
         classifiers=CLASSIFIERS,
         install_requires=REQUIRES,
-        python_requires='>=3.6',
+        python_requires=">=3.6",
         packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
         cmdclass=utils.COMMANDS,
