@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-04-16 19:24+0000\n"
+"PO-Revision-Date: 2021-04-26 16:01+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -171,7 +171,7 @@ msgid "I accept the terms and conditions"
 msgstr "Ich akzeptiere die Bedingungen und Konditionen"
 
 msgid "I want to receive marketing material"
-msgstr "Ich möchte den Newsletter und anderes Marketingmaterial erhalten"
+msgstr "Ich freue mich über den Newsletter und andere Updates"
 
 msgid "Comment"
 msgstr "Bemerkung"
@@ -1089,7 +1089,7 @@ msgid "My saved carts"
 msgstr "Meine gespeicherten Warenkörbe"
 
 msgid "My wishlists"
-msgstr "Meine Wunschlisten"
+msgstr "Meine Einkaufslisten"
 
 msgid "Admin panel"
 msgstr "Admin-Panel"
@@ -1162,7 +1162,7 @@ msgstr "Auch verfügbar bei"
 
 #, python-format
 msgid "Save %(discount_percent)s"
-msgstr "%(discount_percent)s speichern"
+msgstr "%(discount_percent)s sparen"
 
 msgid "Product Information"
 msgstr "Informationen zum Produkt"
