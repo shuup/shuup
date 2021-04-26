@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Update requirements to support Python3.6+
+
 ## [2.6.5] - 2021-04-22
 
 ### Changed
