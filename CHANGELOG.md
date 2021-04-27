@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Update requirements to support Python3.6+
+- Fix mass editing validation for ManyToManyField fields.
 
 ## [2.6.5] - 2021-04-22
 

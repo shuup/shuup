@@ -7,6 +7,7 @@
 import six
 from django import forms
 from django.contrib import messages
+from django.db import models
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -54,9 +55,15 @@ class ProductMassEditView(MassEditMixin, FormView):
                 if not v:
                     continue
                 if hasattr(product, k):
-                    setattr(product, k, v)
+                    if isinstance(product._meta.get_field(k), models.ManyToManyField):
+                        getattr(product, k).set(v)
+                    else:
+                        setattr(product, k, v)
                 if hasattr(shop_product, k):
-                    setattr(shop_product, k, v)
+                    if isinstance(shop_product._meta.get_field(k), models.ManyToManyField):
+                        getattr(shop_product, k).set(v)
+                    else:
+                        setattr(shop_product, k, v)
             product.save()
             shop_product.save()
 
