@@ -2,10 +2,10 @@
 # Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -186,7 +186,7 @@ msgid ""
 "I have read and accept the <a href='{}' target='_blank' "
 "class='gdpr_consent_doc_check'>{}</a>"
 msgstr ""
-"Ich habe die <a href='{}' target='_blank' "
+"Ich habe die Bestimmungen bzgl. <a href='{}' target='_blank' "
 "class='gdpr_consent_doc_check'>{}</a> gelesen und akzeptiere sie."
 
 msgid "You must accept this in order to register."

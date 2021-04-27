@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-16 19:20+0000\n"
+"PO-Revision-Date: 2021-04-27 10:29+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -514,11 +514,11 @@ msgstr "Root"
 
 #, python-brace-format
 msgid "{num} subfolders moved to {folder}."
-msgstr "{num} Unterordner nach {folder} verschoben."
+msgstr "{Anzahl} Unterordner nach {Ordner} verschoben."
 
 #, python-brace-format
 msgid "{num} files moved to {folder}."
-msgstr "{num} Dateien nach {folder} verschoben."
+msgstr "{Anzahl} Dateien nach {Ordner} verschoben."
 
 #, python-format
 msgid "Folder `%s` was deleted."
@@ -762,7 +762,7 @@ msgstr "Du kannst keine Bestellungen stornieren, die bezahlt, versandt oder bere
 
 #, python-brace-format
 msgid "Order status changed: from `{old_status}` to `{new_status}`."
-msgstr "Der Bestellstatus wurde geändert: von \"{old_status}\" auf \"{new_status}\"."
+msgstr "Der Bestellstatus wurde geändert: von \"{alter_status}\" auf \"{neuer_status}\"."
 
 msgid "Create Order"
 msgstr "Bestellung anlegen"
@@ -1620,7 +1620,7 @@ msgid ""
 "Two fundamental permissions: Access to Admin Panel and Superuser status "
 "rights. Go to user account -> `Actions` -> `Edit Main Permissions` to change"
 " these."
-msgstr "Zwei grundlegende Berechtigungen: Zugriff auf das Admin-Panel und Superuser-Statusrechte. Gehe zu Benutzerkonto -> \"Aktionen\" -> \"Hauptrechte bearbeiten\", um diese zu ändern."
+msgstr "Zwei grundlegende Berechtigungen: Zugriff auf den Administrationsbereich (Admin-Panel) und Superuser-Statusrechte. Gehe zu Benutzerkonto -> \"Aktionen\" -> \"Hauptrechte bearbeiten\", um diese zu ändern."
 
 msgid ""
 "Use Permission Groups to granularly give more permissions. Search for "
@@ -1641,7 +1641,7 @@ msgid "The last name of the user."
 msgstr "Der Nachname des Benutzers."
 
 msgid "Access to Admin Panel"
-msgstr "Zugriff auf das Admin-Panel"
+msgstr "Zugriff auf den Administrationsbereich (Admin-Panel)"
 
 msgid "Superuser (Full rights)"
 msgstr "Superuser (volle Rechte)"
@@ -1661,7 +1661,7 @@ msgstr "Bestätigung per E-Mail senden"
 msgid ""
 "Send an email to the user to let them know they've been added as a shop "
 "user. Applicable only for users with Access to Admin Panel status."
-msgstr "Sende eine E-Mail an den Benutzer, um ihn darüber zu informieren, dass er als Marktplatz-Benutzer hinzugefügt wurde. Gilt nur für Benutzer mit dem Status Zugriff auf das Admin-Panel."
+msgstr "Sende eine E-Mail an den Benutzer, um ihn darüber zu informieren, dass er als Marktplatz-Benutzer hinzugefügt wurde. Gilt nur für Benutzer mit dem Status Zugriff auf den Administrationsbereich (Admin-Panel)."
 
 msgid "Please enter an email to send a confirmation to."
 msgstr "Bitte gibt eine E-Mail-Adresse ein, an die eine Bestätigung gesendet werden soll."
@@ -1800,13 +1800,13 @@ msgid ""
 msgstr "Gibt an, ob dieser Benutzer alle Berechtigungen hat, ohne sie explizit zuzuweisen. Das Zuweisen von granularen Berechtigungsgruppen an einen Superuser hat keine Auswirkung, da granulare Berechtigungsgruppen nur mehr Rechte vergeben können, der Superuser aber bereits alle Rechte besitzt."
 
 msgid "Access to Admin Panel status"
-msgstr "Zugriff auf den Status des Admin-Panels"
+msgstr "Zugriff auf den Status des Administrationsbereichs (Admin-Panel)"
 
 msgid ""
 "Designates whether this user can log into this admin site. Even Superusers "
 "should have this status enabled, otherwise they won't be able to access the "
 "Admin Panel."
-msgstr "Gibt an, ob sich dieser Benutzer an dieser Admin-Seite anmelden darf. Auch Superuser sollten diesen Status aktiviert haben, da sie sonst nicht auf das Admin-Panel zugreifen können."
+msgstr "Gibt an, ob sich dieser Benutzer an dieser Admin-Seite anmelden darf. Auch Superuser sollten diesen Status aktiviert haben, da sie sonst nicht auf den Administrationsbereich (Admin-Panel) zugreifen können."
 
 msgid ""
 "Use Permission Groups to granularly give more permissions. User can belong "
@@ -1836,10 +1836,10 @@ msgid "Permissions changed for %s."
 msgstr "Berechtigungen geändert für %s."
 
 msgid "You must have the Access to Admin Panel permission."
-msgstr "Du musst die Berechtigung \"Zugriff auf Admin-Panel\" besitzen."
+msgstr "Du musst die Berechtigung \"Zugriff auf den Administrationsbereich (Admin-Panel)\" besitzen."
 
 msgid "You must have the Access to Admin Panel permissions to this shop."
-msgstr "Du musst  für diesen Marktplatz die Berechtigung \"Zugriff auf das Admin-Panel\" besitzen."
+msgstr "Du musst  für diesen Marktplatz die Berechtigung \"Zugriff auf den Administrationsbereich (Admin-Panel)\" besitzen."
 
 msgid "New Attribute"
 msgstr "Neues Merkmal"
@@ -3647,7 +3647,7 @@ msgstr "Anmelden, um fortzufahren."
 msgid ""
 "Your account must have `Access to Admin Panel` permissions to access this "
 "page."
-msgstr "Dein Konto muss über die Berechtigung \"Zugriff auf das Admin-Panel\" verfügen, um auf diese Seite zugreifen zu können."
+msgstr "Dein Konto muss über die Berechtigung \"Zugriff auf den Administrationsbereich (Admin-Panel)\" verfügen, um auf diese Seite zugreifen zu können."
 
 msgid "There is no active shop available. Contact support for more details."
 msgstr "Es ist kein aktiver Marktplatz verfügbar. Für weitere Details, kontaktiere bitte den Support."
