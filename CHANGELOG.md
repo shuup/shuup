@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Reports: convert string into translated string
 - Update requirements to support Python3.6+
 
 ## [2.6.5] - 2021-04-22
