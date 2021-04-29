@@ -117,7 +117,7 @@ class Attribute(TranslatableModel):
     )
     min_choices = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("min choices"),
+        verbose_name=_("Minimum amount of choices"),
         help_text=_(
             "Minimum amount of choices that user can choose from existing options. "
             "This field has affect only for choices type."
@@ -125,7 +125,7 @@ class Attribute(TranslatableModel):
     )
     max_choices = models.PositiveIntegerField(
         default=1,
-        verbose_name=_("max choices"),
+        verbose_name=_("Maximum amount of choices"),
         help_text=_(
             "Maximum amount of choices that user can choose from existing options. "
             "This field has affect only for choices type."
@@ -537,7 +537,7 @@ class AttributableMixin(object):
 
         if applied_attr:
             if applied_attr.attribute.type == AttributeType.CHOICES:
-                return [choice for choice in applied_attr.chosen_options]
+                return [choice for choice in applied_attr.chosen_options.all()]
             else:
                 return applied_attr.value
         return default
@@ -582,9 +582,16 @@ class AttributableMixin(object):
 
         # Set the value and save the attribute (possibly new)
         if applied_attr.attribute.type == AttributeType.CHOICES:
-            applied_attr.save()
-            applied_attr.chosen_options.clear()
-            applied_attr.chosen_options.add(*value)
+            # `value` must be iterable
+            choices_ids = [choice.pk if isinstance(choice, AttributeChoiceOption) else choice for choice in value]
+
+            # make sure all choices are valid
+            if applied_attr.attribute.choices.filter(pk__in=choices_ids).count() != len(choices_ids):
+                raise ValueError("Error! Invalid options set to the attribute.")
+
+            if not applied_attr.pk:
+                applied_attr.save()
+            applied_attr.chosen_options.set(value)
         else:
             applied_attr.value = value
             applied_attr.save()

@@ -8,6 +8,7 @@
 from django.conf import settings
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.core.models import AttributeChoiceOption, AttributeType
 
 from .forms import AttributeChoiceOptionFormSet, AttributeForm
 
@@ -38,7 +39,7 @@ class AttributeChoiceOptionsFormPart(FormPart):
     formset = AttributeChoiceOptionFormSet
 
     def get_form_defs(self):
-        if not self.object.pk:
+        if not self.object.pk or self.object.type != AttributeType.CHOICES:
             return
 
         yield TemplatedFormDef(
@@ -53,3 +54,6 @@ class AttributeChoiceOptionsFormPart(FormPart):
         if self.name in form.forms:
             frm = form.forms[self.name]
             frm.save()
+        else:
+            # make sure to delete attribute options if there is any
+            AttributeChoiceOption.objects.filter(attribute=self.object).delete()

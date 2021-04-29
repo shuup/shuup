@@ -34,6 +34,7 @@ from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     AnonymousContact,
     Attribute,
+    AttributeChoiceOption,
     AttributeType,
     AttributeVisibility,
     Basket,
@@ -551,6 +552,19 @@ def get_initial_order_status():
 def get_completed_order_status():
     create_default_order_statuses()
     return OrderStatus.objects.get_default_complete()
+
+
+def create_attribute_with_options(name, options, min_options=0, max_options=0):
+    attribute = Attribute.objects.create(
+        identifier=name,
+        name=name,
+        type=AttributeType.CHOICES,
+        min_choices=min_options,
+        max_choices=max_options,
+    )
+    for option in options:
+        AttributeChoiceOption.objects.create(attribute=attribute, name=option)
+    return attribute
 
 
 def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):

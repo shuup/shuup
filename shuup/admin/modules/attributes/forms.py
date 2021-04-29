@@ -9,7 +9,7 @@ from django.conf import settings
 from django.forms import BaseModelFormSet
 
 from shuup.admin.form_modifier import ModifiableFormMixin
-from shuup.core.models import Attribute, AttributeChoiceOption
+from shuup.core.models import Attribute, AttributeChoiceOption, AttributeType
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm, TranslatableModelForm
 
 
@@ -23,6 +23,16 @@ class AttributeForm(ModifiableFormMixin, MultiLanguageModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
+
+    def clean(self):
+        data = super().clean()
+
+        # when it is not a choice attribute, make sure the min/max are zero
+        if data["type"] != AttributeType.CHOICES:
+            data["min_choices"] = 0
+            data["max_choices"] = 0
+
+        return data
 
 
 class AttributeChoiceOptionForm(MultiLanguageModelForm):
