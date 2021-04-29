@@ -6249,9 +6249,9 @@
       "integrity": "sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM="
     },
     "shuup-static-build-tools": {
-      "version": "1.0.4",
-      "resolved": "https://registry.npmjs.org/shuup-static-build-tools/-/shuup-static-build-tools-1.0.4.tgz",
-      "integrity": "sha512-dUqir6m9elbA1cRsnyHAL2xDxQgyqw015VNXkZG5+ZvGkngwGc+Df1ejTTHX/PJquTJdX65xypIjU0WmiXE3Jw=="
+      "version": "1.0.5",
+      "resolved": "https://registry.npmjs.org/shuup-static-build-tools/-/shuup-static-build-tools-1.0.5.tgz",
+      "integrity": "sha512-2Y+9xQCrM4Qvs8JQ6njvmyuDXuZmlFVyD6wkT045OHVWtW1Xj4wbVlnx46sNw10VOwvPMk0yrk4nUQcELCmElQ=="
     },
     "signal-exit": {
       "version": "3.0.3",
