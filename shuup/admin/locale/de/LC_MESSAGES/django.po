@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-28 12:30+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:14+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -204,7 +204,7 @@ msgid "hide prices"
 msgstr "Preise ausblenden"
 
 msgid "shop"
-msgstr "einkaufen"
+msgstr "anlegen"
 
 msgid "Price display mode"
 msgstr "Preisanzeige-Modus"
@@ -1842,8 +1842,14 @@ msgstr "Du musst die Berechtigung \"Zugriff auf den Administrationsbereich (Admi
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr "Du musst  für diesen Marktplatz die Berechtigung \"Zugriff auf den Administrationsbereich (Admin-Panel)\" besitzen."
 
-msgid "New Attribute"
-msgstr "Neues Merkmal"
+msgid "General Information"
+msgstr "Allgemeines"
+
+msgid "Choice Options"
+msgstr "Auswahlmöglichkeiten"
+
+msgid "Add new option"
+msgstr "Neue Auswahlmöglichkeit hinzufügen"
 
 msgid "Login"
 msgstr "Anmelden"
@@ -1924,9 +1930,6 @@ msgstr "Einleitung anzeigen"
 
 msgid "Log out"
 msgstr "Abmelden"
-
-msgid "General Information"
-msgstr "Allgemeines"
 
 msgid "Copy visibility settings to products"
 msgstr "Kopieren der Anzeigeeinstellungen auf die Artikel"

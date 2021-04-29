@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -259,6 +259,9 @@ msgstr "chaîne traduite"
 msgid "untranslated string"
 msgstr "chaîne non traduite"
 
+msgid "choices"
+msgstr ""
+
 msgid "searchable"
 msgstr "consultable"
 
@@ -275,6 +278,22 @@ msgid ""
 "page."
 msgstr "Le type de données d'attribut. Les valeurs d'attribut peuvent être définies sur la page de l'éditeur de produit."
 
+msgid "Minimum amount of choices"
+msgstr ""
+
+msgid ""
+"Minimum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
+msgid "Maximum amount of choices"
+msgstr ""
+
+msgid ""
+"Maximum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
 msgid "visibility mode"
 msgstr "mode de visibilité"
 
@@ -282,6 +301,9 @@ msgid ""
 "Select the attribute visibility setting. Attributes can be shown on the "
 "product detail page or can be used to enhance product search results."
 msgstr "Sélectionnez le paramètre de visibilité des attributs. Les attributs peuvent être affichés sur la page de détails du produit ou peuvent être utilisés pour améliorer les résultats de recherche de produits."
+
+msgid "The ordering in which your attribute will be displayed."
+msgstr ""
 
 msgid ""
 "The attribute name. Product attributes can be used to list the various "
@@ -295,6 +317,12 @@ msgstr "attribut"
 
 msgid "attributes"
 msgstr "les attributs"
+
+msgid "The attribute choice option name. "
+msgstr ""
+
+msgid "chosen options"
+msgstr ""
 
 msgid "numeric value"
 msgstr "valeur numérique"

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -261,6 +261,9 @@ msgstr "stringa traducibile"
 msgid "untranslated string"
 msgstr "stringa non traducibile"
 
+msgid "choices"
+msgstr ""
+
 msgid "searchable"
 msgstr "cercabile"
 
@@ -277,12 +280,31 @@ msgid ""
 "page."
 msgstr ""
 
+msgid "Minimum amount of choices"
+msgstr ""
+
+msgid ""
+"Minimum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
+msgid "Maximum amount of choices"
+msgstr ""
+
+msgid ""
+"Maximum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
 msgid "visibility mode"
 msgstr "tipo di visibilità"
 
 msgid ""
 "Select the attribute visibility setting. Attributes can be shown on the "
 "product detail page or can be used to enhance product search results."
+msgstr ""
+
+msgid "The ordering in which your attribute will be displayed."
 msgstr ""
 
 msgid ""
@@ -297,6 +319,12 @@ msgstr "attributo"
 
 msgid "attributes"
 msgstr "attributi"
+
+msgid "The attribute choice option name. "
+msgstr ""
+
+msgid "chosen options"
+msgstr ""
 
 msgid "numeric value"
 msgstr "valore numerico"

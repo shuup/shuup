@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
 "Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1849,8 +1849,14 @@ msgstr "У вас должно быть разрешение для доступ
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr "У вас должно быть разрешение для доступа в панель администратора этого магазина."
 
-msgid "New Attribute"
-msgstr "Новое свойство"
+msgid "General Information"
+msgstr "Общая информация"
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
+msgstr ""
 
 msgid "Login"
 msgstr "Логин"
@@ -1931,9 +1937,6 @@ msgstr "Тур по сайту"
 
 msgid "Log out"
 msgstr "Выйти"
-
-msgid "General Information"
-msgstr "Общая информация"
 
 msgid "Copy visibility settings to products"
 msgstr "Скопировать настройки отображения для товаров"

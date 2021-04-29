@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 # Jiechao Li <jiechao.li@sesamechat.com>, 2019
@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:57+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,6 +389,18 @@ msgstr "价格区间步骤"
 msgid ""
 "Set the price step for each range. Each range will increment by this value."
 msgstr "设置每个范围的价格步骤。每个范围将按此值递增。"
+
+msgid "Filter products by its attributes"
+msgstr ""
+
+msgid "Allow products to be filtered according to their attributes."
+msgstr ""
+
+msgid "Attributes that can be filtered"
+msgstr ""
+
+msgid "Select attributes that can used for filtering the products."
+msgstr ""
 
 #, python-format
 msgid "Under %(min_limit)s"
@@ -1056,11 +1068,11 @@ msgstr "切换导航"
 
 #, python-brace-format
 msgid "Edit '{object_title}' in administration page"
-msgstr "在管理页面中编辑“{object_title}”"
+msgstr ""
 
 #, python-brace-format
 msgid "Edit {object_name} in Admin"
-msgstr "在管理中编辑{object_name}"
+msgstr ""
 
 msgid "Shop Administration"
 msgstr "商店管理员"
@@ -1075,7 +1087,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Available until: <span class=\"availability-date\">{date}</span></small>"
-msgstr "可用时间：: <span class=\"availability-date\">{date} </span></small>"
+msgstr ""
 
 msgid "Edit account details"
 msgstr "账号详情编辑"
@@ -1224,7 +1236,7 @@ msgstr "添加到购物车"
 
 #, python-brace-format
 msgid "Available until: {date}"
-msgstr "可供使用直到: {date}"
+msgstr ""
 
 msgid "Maintenance mode"
 msgstr "维护模式"

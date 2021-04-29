@@ -5,14 +5,15 @@
 # Translators:
 # Antônio Carlos Dias <antoniocarlosdff@gmail.com>, 2020
 # Christian Hess <christianhess.rlz@gmail.com>, 2020
+# Christian Hess <christian@shuup.com>, 2021
 # 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:58+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,13 +45,13 @@ msgid ""
 msgstr "Escolher o número de horas do carrinho antes dele desaparecer em Pedidos > Carrinhos"
 
 msgid "Key"
-msgstr ""
+msgstr "Chave"
 
 msgid "Last updated on"
 msgstr "Última atualização em"
 
 msgid "Completed"
-msgstr ""
+msgstr "Concluído"
 
 msgid "yes"
 msgstr "sim"
@@ -62,7 +63,7 @@ msgid "Shop"
 msgstr "Loja"
 
 msgid "Supplier"
-msgstr ""
+msgstr "Fornecedor"
 
 msgid "Customer"
 msgstr "Cliente"
@@ -136,7 +137,7 @@ msgstr "Tente remover alguns produtos do carrinho e faça o pedido separadamente
 
 #, python-format
 msgid "Products in basket can't be shipped together. %s"
-msgstr ""
+msgstr "Os produtos na cesta não podem ser enviados juntos. %s"
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
@@ -155,7 +156,7 @@ msgid "Addresses"
 msgstr "Endereços"
 
 msgid "Saved addresses."
-msgstr ""
+msgstr "Endereços salvos."
 
 msgid "Checkout as Guest"
 msgstr "Checkout Anônimo"
@@ -187,7 +188,7 @@ msgid "Confirmation"
 msgstr "Confirmação"
 
 msgid "Starting to create order."
-msgstr ""
+msgstr "Começando a criar pedido."
 
 msgid "Empty Basket"
 msgstr "Carrinho Vazio"
@@ -202,7 +203,7 @@ msgid "Shipping & Payment"
 msgstr "Entrega & Pagamento"
 
 msgid "Saved services."
-msgstr ""
+msgstr "Serviços salvos."
 
 msgid "Sort products by name"
 msgstr "Ordenar produtos por nome"
@@ -220,15 +221,15 @@ msgid "Name - Z-A"
 msgstr "Nome - Z-A"
 
 msgid "Enable this to allow products to be sortable by product name."
-msgstr ""
+msgstr "Ative para permitir que os produtos sejam classificados por nome de produto."
 
 msgid ""
 "Use a numeric value to set the order in which the the filter will appear on "
 "the product listing page."
-msgstr ""
+msgstr "Use um valor numérico para definir a ordem em que o filtro aparecerá na página de lista de produtos."
 
 msgid "Sort products by price"
-msgstr ""
+msgstr "Classifique os produtos por preço"
 
 msgid "Ordering for sort by price"
 msgstr ""
@@ -389,6 +390,18 @@ msgstr ""
 
 msgid ""
 "Set the price step for each range. Each range will increment by this value."
+msgstr ""
+
+msgid "Filter products by its attributes"
+msgstr ""
+
+msgid "Allow products to be filtered according to their attributes."
+msgstr ""
+
+msgid "Attributes that can be filtered"
+msgstr ""
+
+msgid "Select attributes that can used for filtering the products."
 msgstr ""
 
 #, python-format

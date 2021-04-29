@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-04-27 12:18+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:12+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -259,6 +259,9 @@ msgstr "übersetztes Textelement"
 msgid "untranslated string"
 msgstr "nicht übersetztes Textelement"
 
+msgid "choices"
+msgstr "Auswahlmöglichkeiten"
+
 msgid "searchable"
 msgstr "suchbar"
 
@@ -275,6 +278,22 @@ msgid ""
 "page."
 msgstr "Der Datentyp des Merkmals. Merkmalswerte können auf der Artikeleditor-Seite definiert werden."
 
+msgid "Minimum amount of choices"
+msgstr "Mindestanzahl an Auswahlmöglichkeiten"
+
+msgid ""
+"Minimum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr "Mindestanzahl an Auswahlmöglichkeiten, die der Benutzer aus vorhandenen Optionen auswählen kann. Dieses Feld wirkt sich nur auf den Auswahltyp aus."
+
+msgid "Maximum amount of choices"
+msgstr "Maximale Anzahl an Auswahlmöglichkeiten"
+
+msgid ""
+"Maximum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr "Maximale Anzahl von Auswahlmöglichkeiten, die der Benutzer aus vorhandenen Optionen auswählen kann. Dieses Feld wirkt sich nur auf den Auswahltyp aus."
+
 msgid "visibility mode"
 msgstr "Sichtbarkeitsmodus"
 
@@ -282,6 +301,9 @@ msgid ""
 "Select the attribute visibility setting. Attributes can be shown on the "
 "product detail page or can be used to enhance product search results."
 msgstr "Wähle die Einstellung, um Artikelmerkmale sichtbar zu machen. Die Merkmale können auf der Produktdetailseite angezeigt werden oder zur Verbesserung von Artikelsuchergebnissen dienen."
+
+msgid "The ordering in which your attribute will be displayed."
+msgstr "Die Reihenfolge, in der das Attribut angezeigt wird."
 
 msgid ""
 "The attribute name. Product attributes can be used to list the various "
@@ -295,6 +317,12 @@ msgstr "Merkmal"
 
 msgid "attributes"
 msgstr "Merkmale"
+
+msgid "The attribute choice option name. "
+msgstr "Der Name der Auswahloption des Attributs."
+
+msgid "chosen options"
+msgstr "ausgewählte Kombination"
 
 msgid "numeric value"
 msgstr "numerischer Wert"
@@ -1449,10 +1477,10 @@ msgid "bought with"
 msgstr "wird gekauft mit"
 
 msgid "not shipped (non-deliverable)"
-msgstr "nicht versendet (unzustellbar)"
+msgstr "nicht lieferbar"
 
 msgid "shipped (deliverable)"
-msgstr "zu versenden (lieferbar)"
+msgstr "lieferbar"
 
 msgid "no verification required"
 msgstr "keine Prüfung erforderlich"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-04-09 21:40+0000\n"
+"PO-Revision-Date: 2021-04-29 13:00+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -313,10 +313,10 @@ msgstr "URL"
 
 #, python-format
 msgid "%(name)s Ordering"
-msgstr "%(name)s Bestellung"
+msgstr "%(name)s Reihenfolge"
 
 msgid "Ordering"
-msgstr "Bestellen"
+msgstr "Reihenfolge"
 
 msgid "Social Media Links"
 msgstr "Social Media Links"

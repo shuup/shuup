@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-04-27 11:01+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:20+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -388,6 +388,18 @@ msgstr "Preisschritt"
 msgid ""
 "Set the price step for each range. Each range will increment by this value."
 msgstr "Stelle den Preisschritt für jeden Bereich ein. Jeder weitere Preisbereich wird um diesen Wert erhöht."
+
+msgid "Filter products by its attributes"
+msgstr "Artikel nach Tags filtern"
+
+msgid "Allow products to be filtered according to their attributes."
+msgstr "Ermögliche das Filtern von Artikeln nach ihren Merkmalen."
+
+msgid "Attributes that can be filtered"
+msgstr "Attribute, die gefiltert werden können"
+
+msgid "Select attributes that can used for filtering the products."
+msgstr "Wähle die Artikelmerkmale aus, die zum Filtern der Artikel verwendet werden können."
 
 #, python-format
 msgid "Under %(min_limit)s"

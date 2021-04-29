@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
 "Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
@@ -1840,8 +1840,14 @@ msgstr ""
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr ""
 
-msgid "New Attribute"
-msgstr "新属性"
+msgid "General Information"
+msgstr "基本信息"
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
+msgstr ""
 
 msgid "Login"
 msgstr "登录"
@@ -1922,9 +1928,6 @@ msgstr "显示游览"
 
 msgid "Log out"
 msgstr "退出"
-
-msgid "General Information"
-msgstr "基本信息"
 
 msgid "Copy visibility settings to products"
 msgstr "将可见性设置复制到产品"

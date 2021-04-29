@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -390,6 +390,18 @@ msgstr "Prisintervall"
 msgid ""
 "Set the price step for each range. Each range will increment by this value."
 msgstr "Sätta priset steg för varje intervall. Varje intervall kommer öka med detta värde."
+
+msgid "Filter products by its attributes"
+msgstr ""
+
+msgid "Allow products to be filtered according to their attributes."
+msgstr ""
+
+msgid "Attributes that can be filtered"
+msgstr ""
+
+msgid "Select attributes that can used for filtering the products."
+msgstr ""
 
 #, python-format
 msgid "Under %(min_limit)s"

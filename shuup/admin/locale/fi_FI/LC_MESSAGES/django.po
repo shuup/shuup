@@ -27,8 +27,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
 "Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -1860,8 +1860,14 @@ msgstr "Sinulla on oltava lupa päästäksesi hallinnointi-osioon."
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr "Sinulla on oltava lupa päästäksesi tämän kaupan hallinnointi-osioon."
 
-msgid "New Attribute"
-msgstr "Uusi attribuutti"
+msgid "General Information"
+msgstr "Yleiset tiedot"
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
+msgstr ""
 
 msgid "Login"
 msgstr "Kirjaudu sisään"
@@ -1942,9 +1948,6 @@ msgstr "Näytä kierros"
 
 msgid "Log out"
 msgstr "Kirjaudu ulos"
-
-msgid "General Information"
-msgstr "Yleiset tiedot"
 
 msgid "Copy visibility settings to products"
 msgstr "Kopioi näkyvyysasetukset tuotteille"

@@ -3,14 +3,15 @@
 # 
 # Translators:
 # Christian Hess <christianhess.rlz@gmail.com>, 2018,2020
+# Christian Hess <christian@shuup.com>, 2021
 # 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 13:54+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,54 +22,54 @@ msgstr ""
 
 #, python-format
 msgid "Error! Invalid command `%s`."
-msgstr ""
+msgstr "Erro! Comando inválido `%s`."
 
 #, python-format
 msgid "Error! The quantity `%f` is not allowed. Please use an integer value."
-msgstr ""
+msgstr "Erro! A quantidade `%f` não é permitida. Use um valor inteiro."
 
 #, python-format
 msgid "Error! The quantity `%s` is not valid."
-msgstr ""
+msgstr "Erro! A quantidade `%s` não é válida."
 
 #, python-format
 msgid "Error! The quantity `%s` is not valid, should be bigger than zero."
-msgstr ""
+msgstr "Erro! A quantidade `%s` não é válida, deve ser maior que zero."
 
 msgid "Error! This variation is not available."
-msgstr ""
+msgstr "Erro! Esta variação não está disponível."
 
 msgid "Customer is not active."
 msgstr "Este usuário não está ativo."
 
 msgid "Shop does not have all the necessary permissions for this customer."
-msgstr ""
+msgstr "A loja não possui todas as permissões necessárias para este cliente."
 
 msgid "You don't have the required permission to assign this customer."
 msgstr "Você não tem as permissões necessárias para atribuir este cliente."
 
 msgid "You must specify the order, in which customer is a company."
-msgstr ""
+msgstr "Você deve especificar o pedido, no qual o cliente é uma empresa."
 
 msgid "Invalid customer."
 msgstr "Cliente inválido."
 
 msgid "Orderer is not a member of the company."
-msgstr ""
+msgstr "O solicitante não é membro da empresa."
 
 msgid "You are not a member of the company."
-msgstr ""
+msgstr "Você não é membro da empresa."
 
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)."
-msgstr ""
+msgstr "O carregamento da cesta falhou: cesta incompatível (%s)."
 
 msgid "Try to remove some products from the basket and order them separately."
 msgstr "Tente remover alguns produtos do carrinho e faça o pedido separadamente."
 
 #, python-format
 msgid "Products in basket can't be shipped together. %s"
-msgstr ""
+msgstr "Os produtos na cesta não podem ser enviados juntos. %s"
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
@@ -84,13 +85,13 @@ msgid "Invalid color"
 msgstr "Cor inválida"
 
 msgid "Enter a valid JSON."
-msgstr ""
+msgstr "Insira um JSON válido."
 
 msgid "Error!"
-msgstr ""
+msgstr "Erro!"
 
 msgid "No such shop is configured."
-msgstr ""
+msgstr "Nenhuma loja desse tipo está configurada."
 
 msgid "shipping address"
 msgstr "endereço de entrega"
@@ -141,7 +142,7 @@ msgstr "número de contribuinte"
 
 msgid ""
 "The business tax number. For example, EIN in the USA or VAT code in the EU."
-msgstr ""
+msgstr "O número fiscal da empresa. Por exemplo, EIN nos EUA ou código de IVA na UE."
 
 msgid "phone"
 msgstr "telefone"
@@ -260,13 +261,16 @@ msgstr "string traduzida"
 msgid "untranslated string"
 msgstr "string não traduzida"
 
+msgid "choices"
+msgstr "escolhas"
+
 msgid "searchable"
 msgstr "pesquisável"
 
 msgid ""
 "Searchable attributes will be used for product lookup when customers search "
 "in your store."
-msgstr ""
+msgstr "Atributos pesquisáveis serão usados para pesquisa de produto quando os clientes pesquisarem em sua loja."
 
 msgid "type"
 msgstr "tipo"
@@ -274,7 +278,23 @@ msgstr "tipo"
 msgid ""
 "The attribute data type. Attribute values can be set on the product editor "
 "page."
-msgstr ""
+msgstr "O tipo de dados do atributo. Os valores dos atributos podem ser configurados na página do editor do produto."
+
+msgid "Minimum amount of choices"
+msgstr "Quantidade mínima de escolhas"
+
+msgid ""
+"Minimum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr "Quantidade mínima de opções que o usuário pode escolher entre as opções existentes. Este campo tem efeito apenas para o tipo de escolha."
+
+msgid "Maximum amount of choices"
+msgstr "Quantidade máxima de escolhas"
+
+msgid ""
+"Maximum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr "Quantidade máxima de opções que o usuário pode escolher entre as opções existentes. Este campo tem efeito apenas para o tipo de escolha."
 
 msgid "visibility mode"
 msgstr "modo de visibilidade"
@@ -282,20 +302,29 @@ msgstr "modo de visibilidade"
 msgid ""
 "Select the attribute visibility setting. Attributes can be shown on the "
 "product detail page or can be used to enhance product search results."
-msgstr ""
+msgstr "Selecione a configuração de visibilidade do atributo. Os atributos podem ser mostrados na página de detalhes do produto ou podem ser usados para aprimorar os resultados da pesquisa do produto."
+
+msgid "The ordering in which your attribute will be displayed."
+msgstr "A ordem em que seu atributo será exibido."
 
 msgid ""
 "The attribute name. Product attributes can be used to list the various "
 "features of a product and can be shown on the product detail page. The "
 "product attributes for a product are determined by the product type and can "
 "be set on the product editor page."
-msgstr ""
+msgstr "O nome do atributo. Os atributos do produto podem ser usados para listar os vários recursos de um produto e podem ser mostrados na página de detalhes do produto. Os atributos do produto para um produto são determinados pelo tipo de produto e podem ser configurados na página do editor do produto."
 
 msgid "attribute"
 msgstr "atributo"
 
 msgid "attributes"
 msgstr "atributos"
+
+msgid "The attribute choice option name. "
+msgstr "O nome da opção de escolha do atributo."
+
+msgid "chosen options"
+msgstr "opções escolhidas"
 
 msgid "numeric value"
 msgstr "valor numérico"
@@ -307,7 +336,7 @@ msgid "untranslated value"
 msgstr "valor não traduzido"
 
 msgid "The following fields are protected and can not be changed."
-msgstr ""
+msgstr "Os campos a seguir são protegidos e não podem ser alterados."
 
 msgid "key"
 msgstr "chave"
@@ -322,31 +351,31 @@ msgid "orderer"
 msgstr "comprador"
 
 msgid "creator"
-msgstr ""
+msgstr "O Criador"
 
 msgid "created on"
 msgstr "criado em"
 
 msgid "updated on"
-msgstr ""
+msgstr "atualizado em"
 
 msgid "persistent"
-msgstr ""
+msgstr "persistente"
 
 msgid "deleted"
 msgstr "excluído"
 
 msgid "finished"
-msgstr ""
+msgstr "finalizado"
 
 msgid "data"
 msgstr "dados"
 
 msgid "taxless total price"
-msgstr ""
+msgstr "preço total sem impostos"
 
 msgid "taxful total price"
-msgstr ""
+msgstr "preço total tributável"
 
 msgid "currency"
 msgstr "moeda"
@@ -355,16 +384,16 @@ msgid "prices include tax"
 msgstr "preços incluem impostos"
 
 msgid "product_count"
-msgstr ""
+msgstr "product_count"
 
 msgid "products"
 msgstr "produtos"
 
 msgid "basket"
-msgstr ""
+msgstr "cesta"
 
 msgid "baskets"
-msgstr ""
+msgstr "cestos"
 
 msgid "invisible"
 msgstr "invisível"
@@ -376,7 +405,7 @@ msgid "visible to all"
 msgstr "visível a todos"
 
 msgid "visible to logged-in customers"
-msgstr ""
+msgstr "visível para clientes conectados"
 
 msgid "visible to certain customer groups"
 msgstr "visível a determinados grupos de clientes"
@@ -387,16 +416,16 @@ msgstr "categoria pai"
 msgid ""
 "If your category is a sub-category of another category, you can link them "
 "here."
-msgstr ""
+msgstr "Se a sua categoria for uma subcategoria de outra categoria, você pode vinculá-los aqui."
 
 msgid "shops"
 msgstr "lojas"
 
 msgid "You can select which shops the category is visible in."
-msgstr ""
+msgstr "Você pode selecionar em quais lojas a categoria está visível."
 
 msgid "Choose if you want this category to be visible in your store."
-msgstr ""
+msgstr "Escolha se deseja que esta categoria fique visível em sua loja."
 
 msgid "image"
 msgstr "imagem"
@@ -404,7 +433,7 @@ msgstr "imagem"
 msgid ""
 "Category image. Will be shown in places defined by the graphical theme in "
 "use."
-msgstr ""
+msgstr "Imagem da categoria. Será mostrado em locais definidos pelo tema gráfico em uso."
 
 msgid "ordering"
 msgstr "ordenação"
@@ -413,7 +442,7 @@ msgid ""
 "You can assign numerical values to images to tell the order in which they "
 "shall be displayed on the vendor page. You can also use the `Organize` "
 "button in the list view to order them visually with a drag-and-drop."
-msgstr ""
+msgstr "Você pode atribuir valores numéricos às imagens para informar a ordem em que devem ser exibidas na página do fornecedor. Você também pode usar o botão `Organizar` na visualização de lista para ordená-los visualmente arrastando e soltando."
 
 msgid "visibility limitations"
 msgstr "limitações de visibilidade"
@@ -421,10 +450,10 @@ msgstr "limitações de visibilidade"
 msgid ""
 "You can choose to limit who sees your category based on whether they are "
 "logged in or if they are part of a certain customer group."
-msgstr ""
+msgstr "Você pode optar por limitar quem vê sua categoria com base no fato de estar conectado ou fazer parte de um determinado grupo de clientes."
 
 msgid "visible in menu"
-msgstr ""
+msgstr "visível no menu"
 
 msgid "Enable if this category should be visible in the store front's menu."
 msgstr ""

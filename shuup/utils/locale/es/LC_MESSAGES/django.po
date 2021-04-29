@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-15 10:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-04-29 12:57+0000\n"
+"PO-Revision-Date: 2021-04-29 13:00+0000\n"
+"Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,13 +38,13 @@ msgid "note"
 msgstr "nota"
 
 msgid "email"
-msgstr ""
+msgstr "correo electrónico"
 
 msgid "warning"
 msgstr "alerta"
 
 msgid "error"
-msgstr ""
+msgstr "error"
 
 msgid "created on"
 msgstr "creado en"
@@ -58,7 +59,7 @@ msgid "identifier"
 msgstr "identificador"
 
 msgid "log entry kind"
-msgstr ""
+msgstr "tipo de entrada de registro"
 
 msgid "extra data"
 msgstr "datos adicionales"
@@ -75,6 +76,18 @@ msgstr[1] "%s dias"
 #, python-format
 msgid "%(min)s--%(max)s days"
 msgstr "%(min)s--%(max)s días"
+
+#, python-brace-format
+msgid "You can't select less than {min_limit} item."
+msgid_plural "You can't select less than {min_limit} items."
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-brace-format
+msgid "You can't select more than {max_limit} item."
+msgid_plural "You can't select more than {max_limit} items."
+msgstr[0] ""
+msgstr[1] ""
 
 #, python-format
 msgid "Maximum file size reached (%(size)s MB)."

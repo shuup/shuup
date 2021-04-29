@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
 "Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -1841,8 +1841,14 @@ msgstr "Vous devez disposer de l'autorisation d'accès au panneau d'administrati
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr "Vous devez disposer des autorisations d'accès au panneau d'administration pour cette boutique."
 
-msgid "New Attribute"
-msgstr "Nouvel attribut"
+msgid "General Information"
+msgstr "Informations générales"
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
+msgstr ""
 
 msgid "Login"
 msgstr "S'identifier"
@@ -1923,9 +1929,6 @@ msgstr "Afficher le tour"
 
 msgid "Log out"
 msgstr "Se déconnecter"
-
-msgid "General Information"
-msgstr "Informations générales"
 
 msgid "Copy visibility settings to products"
 msgstr "Copier les paramètres de visibilité dans les produits"

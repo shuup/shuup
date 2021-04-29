@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
-"PO-Revision-Date: 2021-04-12 10:43+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"PO-Revision-Date: 2021-04-29 12:59+0000\n"
 "Last-Translator: Christian Hess <christian@shuup.com>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
@@ -1839,7 +1839,13 @@ msgstr ""
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr ""
 
-msgid "New Attribute"
+msgid "General Information"
+msgstr "基本情報"
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
 msgstr ""
 
 msgid "Login"
@@ -1921,9 +1927,6 @@ msgstr ""
 
 msgid "Log out"
 msgstr "ログアウト"
-
-msgid "General Information"
-msgstr "基本情報"
 
 msgid "Copy visibility settings to products"
 msgstr ""
