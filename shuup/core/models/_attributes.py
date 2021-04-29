@@ -29,6 +29,7 @@ from shuup.core.fields import InternalIdentifierField
 from shuup.core.templatetags.shuup_common import datetime as format_datetime, number as format_number
 from shuup.utils.analog import define_log_model
 from shuup.utils.dates import parse_date
+from shuup.utils.fields import TypedMultipleChoiceWithLimitField
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.text import flatten
 
@@ -60,6 +61,8 @@ class AttributeType(Enum):
     TRANSLATED_STRING = 20
     UNTRANSLATED_STRING = 21
 
+    CHOICES = 22
+
     class Labels:
         INTEGER = _("integer")
         DECIMAL = _("decimal")
@@ -71,6 +74,8 @@ class AttributeType(Enum):
 
         TRANSLATED_STRING = _("translated string")
         UNTRANSLATED_STRING = _("untranslated string")
+
+        CHOICES = _("choices")
 
 
 ATTRIBUTE_STRING_TYPES = (
@@ -110,6 +115,22 @@ class Attribute(TranslatableModel):
         verbose_name=_("type"),
         help_text=_("The attribute data type. Attribute values can be set on the product editor page."),
     )
+    min_choices = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Minimum amount of choices"),
+        help_text=_(
+            "Minimum amount of choices that user can choose from existing options. "
+            "This field has affect only for choices type."
+        ),
+    )
+    max_choices = models.PositiveIntegerField(
+        default=1,
+        verbose_name=_("Maximum amount of choices"),
+        help_text=_(
+            "Maximum amount of choices that user can choose from existing options. "
+            "This field has affect only for choices type."
+        ),
+    )
     visibility_mode = EnumIntegerField(
         AttributeVisibility,
         default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
@@ -118,6 +139,10 @@ class Attribute(TranslatableModel):
             "Select the attribute visibility setting. "
             "Attributes can be shown on the product detail page or can be used to enhance product search results."
         ),
+    )
+    ordering = models.IntegerField(
+        default=0,
+        help_text=_("The ordering in which your attribute will be displayed."),
     )
 
     translations = TranslatedFields(
@@ -179,6 +204,11 @@ class Attribute(TranslatableModel):
             #       the caller will have to deal with calling this function several
             #       times for that.
             return forms.CharField(**kwargs)
+        elif self.type == AttributeType.CHOICES:
+            choices = [(choice.id, choice.name) for choice in self.choices.all()]
+            return TypedMultipleChoiceWithLimitField(
+                min_limit=self.min_choices, max_limit=self.max_choices, choices=choices, **kwargs
+            )
         else:
             raise ValueError("Error! `formfield` can't deal with the fields of type `%r`." % self.type)
 
@@ -213,10 +243,26 @@ class Attribute(TranslatableModel):
         return not value
 
 
+class AttributeChoiceOption(TranslatableModel):
+    attribute = models.ForeignKey(
+        on_delete=models.CASCADE, to=Attribute, related_name="choices", verbose_name=_("attribute")
+    )
+
+    translations = TranslatedFields(
+        name=models.CharField(
+            max_length=256,
+            verbose_name=_("name"),
+            help_text=_("The attribute choice option name. "),
+        ),
+    )
+
+
 class AppliedAttribute(TranslatableModel):
     _applied_fk_field = None  # Used by the `repr` implementation
 
     attribute = models.ForeignKey(on_delete=models.CASCADE, to=Attribute, verbose_name=_("attribute"))
+
+    chosen_options = models.ManyToManyField(to=AttributeChoiceOption, verbose_name=_("chosen options"))
 
     numeric_value = models.DecimalField(
         null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True
@@ -234,43 +280,22 @@ class AppliedAttribute(TranslatableModel):
     class Meta:
         abstract = True
 
+    ATTRIBUTE_TYPE_GETTERS = {
+        AttributeType.BOOLEAN: (lambda self: bool(int(self.numeric_value)) if self.numeric_value is not None else None),
+        AttributeType.INTEGER: (lambda self: int(self.numeric_value)),
+        AttributeType.DECIMAL: (lambda self: Decimal(self.numeric_value)),
+        AttributeType.TIMEDELTA: (lambda self: datetime.timedelta(seconds=float(self.numeric_value))),
+        AttributeType.DATETIME: (lambda self: self.datetime_value),
+        AttributeType.DATE: (lambda self: self.datetime_value.date()),
+        AttributeType.UNTRANSLATED_STRING: (lambda self: self.untranslated_string_value),
+        AttributeType.TRANSLATED_STRING: (lambda self: self.translated_string_value if self.has_translation() else ""),
+        AttributeType.CHOICES: (lambda self: "; ".join(option.name for option in self.chosen_options.all())),
+    }
+
     def _get_value(self):
-        if self.attribute.type == AttributeType.BOOLEAN:
-            """
-            Return Boolean value or `None`.
-
-            Since we are using ``django.forms.fields.NullBooleanField`` in admin
-            we should return either None, True or False.
-
-            While the `Unknown` option (`None`) will never end up in the database
-            when product attribute is being saved in admin, it is possible to
-            create this value through API and that causes admin to break.
-            """
-            return bool(int(self.numeric_value)) if self.numeric_value is not None else None
-
-        if self.attribute.type == AttributeType.INTEGER:
-            return int(self.numeric_value)
-
-        if self.attribute.type == AttributeType.DECIMAL:
-            return Decimal(self.numeric_value)
-
-        if self.attribute.type == AttributeType.TIMEDELTA:
-            return datetime.timedelta(seconds=float(self.numeric_value))
-
-        if self.attribute.type == AttributeType.DATETIME:
-            return self.datetime_value
-
-        if self.attribute.type == AttributeType.DATE:
-            return self.datetime_value.date()
-
-        if self.attribute.type == AttributeType.UNTRANSLATED_STRING:
-            return self.untranslated_string_value
-
-        if self.attribute.type == AttributeType.TRANSLATED_STRING:
-            if self.has_translation():
-                return self.translated_string_value
-            return ""
-
+        getter = self.ATTRIBUTE_TYPE_GETTERS.get(self.attribute.type)
+        if getter:
+            return getter(self)
         raise ValueError("Error! Unknown attribute type.")  # pragma: no cover
 
     def _set_numeric_value(self, new_value):
@@ -511,7 +536,10 @@ class AttributableMixin(object):
                 self._set_cached_attribute(language, identifier, NoSuchAttributeHere)
 
         if applied_attr:
-            return applied_attr.value
+            if applied_attr.attribute.type == AttributeType.CHOICES:
+                return [choice for choice in applied_attr.chosen_options.all()]
+            else:
+                return applied_attr.value
         return default
 
     def set_attribute_value(self, identifier, value, language=None):
@@ -553,8 +581,20 @@ class AttributableMixin(object):
             return
 
         # Set the value and save the attribute (possibly new)
-        applied_attr.value = value
-        applied_attr.save()
+        if applied_attr.attribute.type == AttributeType.CHOICES:
+            # `value` must be iterable
+            choices_ids = [choice.pk if isinstance(choice, AttributeChoiceOption) else choice for choice in value]
+
+            # make sure all choices are valid
+            if applied_attr.attribute.choices.filter(pk__in=choices_ids).count() != len(choices_ids):
+                raise ValueError("Error! Invalid options set to the attribute.")
+
+            if not applied_attr.pk:
+                applied_attr.save()
+            applied_attr.chosen_options.set(value)
+        else:
+            applied_attr.value = value
+            applied_attr.save()
         return applied_attr
 
     def clear_attribute_value(self, identifier, language=None):

@@ -1,0 +1,30 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% set base_form = form["base"] %}
+
+{% call content_block(_("General Information"), icon="fa-info-circle") %}
+    {{ language_dependent_content_tabs(base_form) }}
+    <div class="form-divider"></div>
+    {{ render_monolingual_fields(base_form, exclude=["name"]) }}
+{% endcall %}
+
+<script>
+    function onTypeChange(attrType) {
+        // if the attribute is choices, show the min/max fields
+        // otherwise hide them
+        if (attrType == 22) {   // AttributeType.CHOICES = 22
+            $('#{{ base_form.min_choices.auto_id }}').closest('.form-group').show();
+            $('#{{ base_form.max_choices.auto_id }}').closest('.form-group').show();
+        } else {
+            $('#{{ base_form.min_choices.auto_id }}').closest('.form-group').hide();
+            $('#{{ base_form.max_choices.auto_id }}').closest('.form-group').hide();
+        }
+    }
+
+    window.addEventListener('load', function () {
+        $('#{{ base_form.type.auto_id }}').change(function (evt) {
+            onTypeChange(parseInt(evt.currentTarget.value, 10));
+        });
+        onTypeChange(parseInt($('#{{ base_form.type.auto_id }}').val(), 10));
+    });
+</script>

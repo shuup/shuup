@@ -16,9 +16,24 @@ from django.utils.text import capfirst, slugify
 from django.utils.translation import get_language, ugettext_lazy as _
 from itertools import chain
 
-from shuup.core.models import Category, Manufacturer, ProductVariationVariable, ShopProduct, ShopProductVisibility
+from shuup import configuration as shuup_config
+from shuup.admin.forms.fields import Select2MultipleField
+from shuup.core.models import (
+    Attribute,
+    AttributeType,
+    Category,
+    Manufacturer,
+    ProductVariationVariable,
+    ShopProduct,
+    ShopProductVisibility,
+)
 from shuup.core.utils import context_cache
-from shuup.front.utils.sorts_and_filters import ProductListFormModifier, get_configuration, get_form_field_label
+from shuup.front.utils.sorts_and_filters import (
+    ProductListFormModifier,
+    _get_category_configuration_key,
+    get_configuration,
+    get_form_field_label,
+)
 from shuup.utils.i18n import format_money
 
 
@@ -574,6 +589,115 @@ class ProductPriceFilter(SimpleProductListModifier):
             (self.range_max_key, max_field),
             (self.range_size_key, range_step),
         ]
+
+
+class AttributeProductListFilter(SimpleProductListModifier):
+    is_active_key = "filter_products_by_products_attribute"
+    is_active_label = _("Filter products by its attributes")
+
+    product_attr_key = "filter_products_by_product_attribute_field"
+
+    def _build_attribute_filter_fields(
+        self,
+        attributes,
+    ):
+        fields = []
+        for attribute in attributes:
+            if attribute.type == AttributeType.CHOICES and attribute.choices.exists():
+                fields.append(
+                    [
+                        attribute.identifier,
+                        CommaSeparatedListField(
+                            required=False,
+                            widget=FilterWidget(
+                                choices=[(choice.id, choice.name) for choice in attribute.choices.all()],
+                            ),
+                            label=_(attribute.name),
+                        ),
+                    ]
+                )
+
+        return fields
+
+    def _get_attributes_from_shop_config(self, shop):
+        config = get_configuration(shop)
+        filterable_attribute_pks = config.get(self.product_attr_key)
+
+        attributes = Attribute.objects.all()
+        if filterable_attribute_pks:
+            return attributes.filter(pk__in=filterable_attribute_pks)
+
+        return attributes
+
+    def _get_attributes_from_category(self, shop, category):
+        category_config = shuup_config.get(shop, _get_category_configuration_key(category))
+        attributes = Attribute.objects.all()
+        if category_config and category_config.get("override_default_configuration", False):
+            filterable_attribute_pks = category_config.get(self.product_attr_key)
+        else:
+            config = get_configuration(shop)
+            filterable_attribute_pks = config.get(self.product_attr_key)
+        if filterable_attribute_pks:
+            return attributes.filter(pk__in=filterable_attribute_pks)
+        return attributes
+
+    def get_fields(
+        self,
+        request,
+        category=None,
+    ):
+        if category:
+            attributes = self._get_attributes_from_category(request.shop, category)
+        else:
+            attributes = self._get_attributes_from_shop_config(request.shop)
+
+        return self._build_attribute_filter_fields(attributes)
+
+    def _get_product_attribute_query_strings(self, data):
+        """
+        Get product attribute in querystring that has truthy values
+        """
+        attribute_identifiers = Attribute.objects.all().values_list("identifier", flat=True)
+
+        attribute_query_strings = [key for key, value in data.items() if value and key in attribute_identifiers]
+
+        return attribute_query_strings
+
+    def get_queryset(self, queryset, data):
+        # Filter for chosen attributes
+        attributes = self._get_product_attribute_query_strings(data)
+        if not attributes:
+            return queryset
+
+        for attribute in attributes:
+            values = data.get(attribute, [])
+            queryset = queryset.filter(
+                attributes__attribute__identifier=attribute,
+                attributes__chosen_options__id__in=values,
+            )
+
+        return queryset
+
+    def get_admin_fields(self):
+        active, ordering = super(AttributeProductListFilter, self).get_admin_fields()
+        active[1].help_text = _("Allow products to be filtered according to their attributes.")
+
+        attributes = Select2MultipleField(
+            model=Attribute,
+            label=_("Attributes that can be filtered"),
+            required=False,
+            help_text=_("Select attributes that can used for filtering the products."),
+        )
+
+        return [active, (self.product_attr_key, attributes)]
+
+    def clean_hook(self, form):
+        attribute_query_strings = self._get_product_attribute_query_strings(form.data)
+
+        for attribute_query_string in attribute_query_strings:
+            form.cleaned_data[attribute_query_string] = form.data.get(attribute_query_string).split(",")
+
+        return super().clean_hook(form)
 
 
 def get_price_ranges(shop, min_price, max_price, range_step):

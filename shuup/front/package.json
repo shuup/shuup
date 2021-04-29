@@ -32,7 +32,7 @@
     "postcss-modules": "^1.1.0",
     "sass": "^1.15.1",
     "select2": "^4.0.12",
-    "shuup-static-build-tools": "^1.0.3",
+    "shuup-static-build-tools": "^1.0.5",
     "simplelightbox": "^1.17.0",
     "url-search-params-polyfill": "^8.0.0"
   },

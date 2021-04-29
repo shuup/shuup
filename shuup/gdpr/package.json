@@ -22,7 +22,7 @@
     "less": "^3.0.4",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.1.0",
-    "shuup-static-build-tools": "^1.0.3"
+    "shuup-static-build-tools": "^1.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.3"

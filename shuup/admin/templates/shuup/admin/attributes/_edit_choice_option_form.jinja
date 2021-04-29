@@ -1,0 +1,102 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% set formset = form["choice_options"] %}
+
+{% macro render_form(form, idx) %}
+    <div class="choice-option-container" data-idx="{{ idx }}">
+        <h2 class="option-number"></h2>
+        {% if form.translated_field_names %}
+            {{ language_dependent_content_tabs(form, tab_id_prefix="choice-option-" ~ idx) }}
+        {% else %}
+            <div class="language-tabs"></div>
+        {% endif %}
+        {{ render_monolingual_fields(form, exclude=["DELETE"]) }}
+        {% set delete_field_name = form.prefix ~ '-' ~ form.DELETE.name %}
+        <input type="hidden" name="{{ delete_field_name }}">
+        <div class="text-center">
+            <button type="button" class="btn btn-outline-danger btn-delete" data-delete-field="{{ delete_field_name }}">
+                <i class="fa fa-times"></i> {{ _("Delete") }}
+            </button>
+        </div>
+        <hr>
+    </div>
+{% endmacro %}
+
+{% call content_block(_("Choice Options"), "fa-list-ul") %}
+    {{ formset.management_form }}
+
+    <template id="choice-option-template">
+        {{ render_form(formset.empty_form, "__prefix__") }}
+    </template>
+
+    <div id="options-container">
+    {%  for f in formset %}
+        {{ render_form(f, loop.index0) }}
+    {% endfor %}
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" id="btn-new-option-button">
+            <i class="fa fa-plus"></i>
+            {{ _("Add new option") }}
+        </button>
+    </div>
+{% endcall %}
+
+{% block extra_js %}
+<script>
+    window.addEventListener('load', function() {
+        var $totalFormsField = $("#{{ formset.management_form.TOTAL_FORMS.auto_id }}");
+        var $FormsField = $("#{{ formset.management_form.INITIAL_FORMS.auto_id }}");
+        var $componentsPlaceholder = $("#options-container");
+
+        function recalculateForms() {
+            $totalFormsField.val($(".choice-option-container[data-idx!='__prefix__']").length);
+
+            var optionNumber = 1;
+            $(".option-number").each(function (index, element) {
+                var container = $(element).closest(".choice-option-container");
+                console.log(container, container.data('deleted'));
+                if (container.data('deleted') !== true) {
+                    $(element).html(interpolate(gettext('Option %s'), [optionNumber]));
+                    optionNumber++;
+                }
+            });
+        }
+
+        function configureEvents() {
+            $(".choice-option-container[data-idx!='__prefix__'] .btn-delete").off('click').on('click', function (){
+                var deleteFieldName = $(this).data('delete-field');
+                $("input[name='" + deleteFieldName + "']").val("on");
+                $(this).closest('.choice-option-container').hide().attr("data-deleted", "true");
+                recalculateForms();
+            });
+        }
+
+        function getLastId() {
+            var maxIdx = -1;
+            $(".choice-option-container[data-idx!='__prefix__']").each(function () {
+                var idx = parseInt($(this).data('idx'), 10);
+                if (idx > maxIdx) {
+                    maxIdx = idx;
+                }
+            });
+            return maxIdx;
+        }
+
+        $("#btn-new-option-button").on("click", function (event) {
+            event.preventDefault();
+            var $source = $("#choice-option-template");
+            var html = $source.html().replace(/__prefix__/g, getLastId() + 1);
+            $componentsPlaceholder.append(html);
+
+            recalculateForms();
+            configureEvents();
+        });
+
+        configureEvents();
+        recalculateForms();
+    });
+</script>
+{% endblock %}

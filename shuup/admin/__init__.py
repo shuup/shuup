@@ -22,6 +22,10 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.products.views.edit.ProductImageMediaFormPart",
             "shuup.admin.modules.products.views.edit.ProductMediaFormPart",
         ],
+        "admin_attribute_form_part": [
+            "shuup.admin.modules.attributes.form_parts.AttributeBaseFormPart",
+            "shuup.admin.modules.attributes.form_parts.AttributeChoiceOptionsFormPart",
+        ],
         "admin_module": [
             "shuup.admin.modules.system:SystemModule",
             "shuup.admin.modules.products:ProductModule",

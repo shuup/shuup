@@ -26,8 +26,8 @@
   "dependencies": {
     "@babel/cli": "7.12.7",
     "@babel/core": "7.12.7",
-    "@babel/preset-env": "7.12.7",
     "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "7.12.7",
     "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
     "babel-plugin-wildcard": "^5.0.0",
@@ -62,7 +62,7 @@
     "select2": "^4.0.6-rc.1",
     "select2-bootstrap-css": "^1.4.6",
     "shepherd.js": "^2.5.0",
-    "shuup-static-build-tools": "^1.0.3",
+    "shuup-static-build-tools": "^1.0.5",
     "sortablejs": "^1.13.0",
     "summernote": "^0.8.12",
     "tooltip.js": "^1.2.0",

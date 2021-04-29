@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import ngettext
 
 from shuup.utils.django_compat import force_text
 
@@ -29,3 +30,28 @@ class RelaxedModelChoiceField(forms.ModelChoiceField):
                             if obj is None or isinstance(obj, self.queryset.model):
                                 return obj
             raise verr  # Just reraise the original exception then, but from here for clarity
+
+
+class TypedMultipleChoiceWithLimitField(forms.TypedMultipleChoiceField):
+    def __init__(self, min_limit=None, max_limit=None, **kwargs):
+        self.min_limit = min_limit
+        self.max_limit = max_limit
+        super().__init__(**kwargs)
+
+    def clean(self, value):
+        value = super().clean(value)
+        if self.min_limit is not None and len(value) < self.min_limit:
+            error_message = ngettext(
+                "You can't select less than {min_limit} item.",
+                "You can't select less than {min_limit} items.",
+                self.min_limit,
+            )
+            raise forms.ValidationError(error_message.format(min_limit=self.min_limit))
+        if self.max_limit is not None and len(value) > self.max_limit:
+            error_message = ngettext(
+                "You can't select more than {max_limit} item.",
+                "You can't select more than {max_limit} items.",
+                self.max_limit,
+            )
+            raise forms.ValidationError(error_message.format(max_limit=self.max_limit))
+        return value

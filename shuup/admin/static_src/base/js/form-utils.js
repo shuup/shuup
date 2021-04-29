@@ -92,6 +92,7 @@ $(function() {
     $(".language-dependent-content").each(function() {
         const $ctr = $(this);
         var firstTabWithErrorsOpened = false;
+
         $ctr.find(".nav-tabs li").each(function() {
             const $tab = $(this);
             const lang = $tab.data("lang");

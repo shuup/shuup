@@ -54,6 +54,7 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.product_list_modifiers.SortProductListByName",
             "shuup.front.forms.product_list_modifiers.SortProductListByPrice",
             "shuup.front.forms.product_list_modifiers.ManufacturerProductListFilter",
+            "shuup.front.forms.product_list_modifiers.AttributeProductListFilter",
             "shuup.front.forms.product_list_supplier_modifier.SupplierProductListFilter",
         ],
         "front_product_order_form": [

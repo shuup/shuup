@@ -7,9 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import Category
+from shuup.core.models import Category, ProductAttribute, ProductType
 from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
+from shuup.testing.factories import create_attribute_with_options, create_product, get_default_shop
 from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
@@ -115,3 +116,72 @@ def test_category_filter():
     assert response.status_code == 200
     assert soup.find(id="product-%d" % product1.id)
     assert soup.find(id="product-%d" % product2.id)
+
+
+@pytest.mark.django_db
+def test_product_attributes_filter():
+    shop = factories.get_default_shop()
+
+    category1 = Category.objects.create(name="Category 1")
+    category1.shops.add(shop)
+    product_type = ProductType.objects.create(name="Default Product Type")
+    options_attribute = create_attribute_with_options("attribute1", ["A", "B", "C"], 1, 3)
+    product_type.attributes.add(options_attribute)
+
+    choices = list(options_attribute.choices.all().order_by("translations__name"))
+    option_a, option_b, option_c = choices
+
+    product1 = factories.create_product("p1", shop, factories.get_default_supplier(), "10", type=product_type)
+    shop_product1 = product1.get_shop_instance(shop)
+    shop_product1.categories.add(category1)
+    product1.set_attribute_value("attribute1", [option_a.pk, option_c.pk])
+
+    product2 = factories.create_product("p2", shop, factories.get_default_supplier(), "10", type=product_type)
+    shop_product2 = product2.get_shop_instance(shop)
+    shop_product2.categories.add(category1)
+    product2.set_attribute_value("attribute1", [option_c.pk])
+
+    client = SmartClient()
+    config = {"filter_products_by_products_attribute": True, "override_default_configuration": True}
+    set_configuration(category=category1, data=config)
+
+    url = reverse("shuup:category", kwargs={"pk": category1.pk, "slug": category1.slug})
+    filtered_url = "{}?attribute1={}".format(url, option_c.pk)
+    response, soup = client.response_and_soup(filtered_url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product1.id)
+    assert soup.find(id="product-%d" % product2.id)
+
+    url = reverse("shuup:category", kwargs={"pk": category1.pk, "slug": category1.slug})
+    filtered_url = "{}?attribute1={}".format(url, option_a.pk)
+    response, soup = client.response_and_soup(filtered_url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product1.id)
+    assert not soup.find(id="product-%d" % product2.id)
+
+    url = reverse("shuup:category", kwargs={"pk": category1.pk, "slug": category1.slug})
+    filtered_url = "{}?attribute1={}".format(url, option_b.pk)
+    response, soup = client.response_and_soup(filtered_url)
+    assert response.status_code == 200
+    assert not soup.find(id="product-%d" % product1.id)
+    assert not soup.find(id="product-%d" % product2.id)
+
+    # Check category setting doesn't override
+    config = {"filter_products_by_products_attribute": True, "override_default_configuration": False}
+    set_configuration(category=category1, data=config)
+    url = reverse("shuup:category", kwargs={"pk": category1.pk, "slug": category1.slug})
+    filtered_url = "{}?attribute1={}".format(url, option_a.pk)
+    response, soup = client.response_and_soup(filtered_url)
+    assert response.status_code == 200
+    assert soup.find(id="product-%d" % product2.id)
+
+    # Check shop setting is working
+    config = {
+        "filter_products_by_products_attribute": True,
+    }
+    set_configuration(shop=shop, data=config)
+    url = reverse("shuup:category", kwargs={"pk": category1.pk, "slug": category1.slug})
+    filtered_url = "{}?attribute1={}".format(url, option_a.pk)
+    response, soup = client.response_and_soup(filtered_url)
+    assert response.status_code == 200
+    assert not soup.find(id="product-%d" % product2.id)
