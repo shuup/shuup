@@ -29,7 +29,7 @@
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.5.0",
     "select2": "^4.0.13",
-    "shuup-static-build-tools": "^1.0.4",
+    "shuup-static-build-tools": "^1.0.5",
     "sortablejs": "^1.13.0",
     "summernote": "0.8.18"
   },
