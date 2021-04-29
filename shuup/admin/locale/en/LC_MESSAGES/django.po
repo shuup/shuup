@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 10:42+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1838,7 +1838,13 @@ msgstr ""
 msgid "You must have the Access to Admin Panel permissions to this shop."
 msgstr ""
 
-msgid "New Attribute"
+msgid "General Information"
+msgstr ""
+
+msgid "Choice Options"
+msgstr ""
+
+msgid "Add new option"
 msgstr ""
 
 msgid "Login"
@@ -1919,9 +1925,6 @@ msgid "Show Tour"
 msgstr ""
 
 msgid "Log out"
-msgstr ""
-
-msgid "General Information"
 msgstr ""
 
 msgid "Copy visibility settings to products"

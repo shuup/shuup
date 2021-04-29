@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
+"POT-Creation-Date: 2021-04-29 01:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -259,6 +259,9 @@ msgstr ""
 msgid "untranslated string"
 msgstr ""
 
+msgid "choices"
+msgstr ""
+
 msgid "searchable"
 msgstr ""
 
@@ -275,12 +278,31 @@ msgid ""
 "page."
 msgstr ""
 
+msgid "Minimum amount of choices"
+msgstr ""
+
+msgid ""
+"Minimum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
+msgid "Maximum amount of choices"
+msgstr ""
+
+msgid ""
+"Maximum amount of choices that user can choose from existing options. This "
+"field has affect only for choices type."
+msgstr ""
+
 msgid "visibility mode"
 msgstr ""
 
 msgid ""
 "Select the attribute visibility setting. Attributes can be shown on the "
 "product detail page or can be used to enhance product search results."
+msgstr ""
+
+msgid "The ordering in which your attribute will be displayed."
 msgstr ""
 
 msgid ""
@@ -294,6 +316,12 @@ msgid "attribute"
 msgstr ""
 
 msgid "attributes"
+msgstr ""
+
+msgid "The attribute choice option name. "
+msgstr ""
+
+msgid "chosen options"
 msgstr ""
 
 msgid "numeric value"
