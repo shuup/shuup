@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import ngettext
 
 from shuup.utils.django_compat import force_text
 
@@ -40,9 +41,17 @@ class TypedMultipleChoiceWithLimitField(forms.TypedMultipleChoiceField):
     def clean(self, value):
         value = super().clean(value)
         if self.min_limit is not None and len(value) < self.min_limit:
-            ending = "" if self.min_limit % 10 == 1 else "s"
-            raise forms.ValidationError(f"You can't select less than {self.min_limit} item{ending}.")
+            error_message = ngettext(
+                "You can't select less than {min_limit} item.",
+                "You can't select less than {min_limit} items.",
+                self.min_limit,
+            )
+            raise forms.ValidationError(error_message.format(min_limit=self.min_limit))
         if self.max_limit is not None and len(value) > self.max_limit:
-            ending = "" if self.max_limit % 10 == 1 else "s"
-            raise forms.ValidationError(f"You can't select more than {self.max_limit} item{ending}.")
+            error_message = ngettext(
+                "You can't select more than {max_limit} item.",
+                "You can't select more than {max_limit} items.",
+                self.max_limit,
+            )
+            raise forms.ValidationError(error_message.format(max_limit=self.max_limit))
         return value

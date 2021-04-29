@@ -633,7 +633,7 @@ class AttributeProductListFilter(SimpleProductListModifier):
         category_config = shuup_config.get(shop, _get_category_configuration_key(category))
         attributes = Attribute.objects.all()
         if category_config and category_config.get("override_default_configuration", False):
-            filterable_attribute_pks = category_config[self.product_attr_key]
+            filterable_attribute_pks = category_config.get(self.product_attr_key)
         else:
             config = get_configuration(shop)
             filterable_attribute_pks = config.get(self.product_attr_key)
