@@ -1,0 +1,757 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-03 17:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Error! Unexpected error while uploading files."
+msgstr ""
+
+msgid "Error!"
+msgstr ""
+
+msgid "Uploaded:"
+msgstr ""
+
+msgid "New file name?"
+msgstr ""
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr ""
+
+msgid "New folder name?"
+msgstr ""
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr ""
+
+msgid "New folder"
+msgstr ""
+
+msgid "Oldest first"
+msgstr ""
+
+msgid "Newest first"
+msgstr ""
+
+msgid "Smallest first"
+msgstr ""
+
+msgid "Largest first"
+msgstr ""
+
+msgid "Drop your files here"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr ""
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr ""
+
+msgid "Rename file"
+msgstr ""
+
+msgid "Delete file"
+msgstr ""
+
+msgid "Rename folder"
+msgstr ""
+
+msgid "Delete folder"
+msgstr ""
+
+msgid "Edit folder access"
+msgstr ""
+
+#, javascript-format
+msgid "Success! Order %s was created."
+msgstr ""
+
+msgid "Error! An unspecified error occurred.\n"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Unit Price"
+msgstr ""
+
+msgid "Discounted Unit Price"
+msgstr ""
+
+msgid "Discount amount"
+msgstr ""
+
+msgid "Discount percent"
+msgstr ""
+
+msgid "Total (excluding taxes)"
+msgstr ""
+
+msgid "Tax percent"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "Shipping address"
+msgstr ""
+
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr ""
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr ""
+
+msgid "Save customer details while creating order"
+msgstr ""
+
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr ""
+
+msgid "Ship to billing address"
+msgstr ""
+
+msgid ""
+"Checking this will make the shipping address the same as the billing address."
+msgstr ""
+
+msgid "Order for company"
+msgstr ""
+
+msgid "Enable this if the order is for a company or business with a tax ID."
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Search by name or email"
+msgstr ""
+
+msgid "Customer Search"
+msgstr ""
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to "
+"create an order for a new customer."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "View Details"
+msgstr ""
+
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Select Shop"
+msgstr ""
+
+msgid "Discard Changes"
+msgstr ""
+
+msgid "Customer Details"
+msgstr ""
+
+msgid "Order Contents"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+
+msgid "Proceed"
+msgstr ""
+
+msgid "Logical Count"
+msgstr ""
+
+msgid "Physical Count"
+msgstr ""
+
+msgid "Select product"
+msgstr ""
+
+msgid "Text/Comment"
+msgstr ""
+
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr ""
+
+msgid "Qty"
+msgstr ""
+
+msgid "Enter the number of units of the product ordered."
+msgstr ""
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr ""
+
+msgid "Base Unit Price"
+msgstr ""
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr ""
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
+msgstr ""
+
+msgid "Discount Percent"
+msgstr ""
+
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr ""
+
+msgid "Total Discount Amount"
+msgstr ""
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
+msgstr ""
+
+msgid "Line Total"
+msgstr ""
+
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr ""
+
+msgid "Orderline type"
+msgstr ""
+
+msgid "Search product by name, SKU, or barcode"
+msgstr ""
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr ""
+
+#, javascript-format
+msgid "All prices are in %s and include taxes."
+msgstr ""
+
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
+msgstr ""
+
+msgid "Product Quick Adder"
+msgstr ""
+
+msgid ""
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
+msgstr ""
+
+msgid "Automatically add selected product"
+msgstr ""
+
+msgid "Add new line"
+msgstr ""
+
+msgid "No shipping method"
+msgstr ""
+
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr ""
+
+msgid "No payment method"
+msgstr ""
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "billing"
+msgstr ""
+
+msgid "shipping"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr ""
+
+msgid "Tax number"
+msgstr ""
+
+msgid "Enter the company tax (ID) number."
+msgstr ""
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s email address for transaction receipts and communications."
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s street address."
+msgstr ""
+
+msgid "Street (2)"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s street address (2)."
+msgstr ""
+
+msgid "ZIP / Postal code"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the city of the %s address."
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the country of the %s address."
+msgstr ""
+
+msgid "No records found."
+msgstr ""
+
+msgid "Warning! Missing JavaScript dependencies detected."
+msgstr ""
+
+msgid "No browser URL for kind:"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Drop files here or click to browse."
+msgstr ""
+
+msgid "only images can be uploaded!"
+msgstr ""
+
+msgid "Error happened while uploading file."
+msgstr ""
+
+msgid "Browse media"
+msgstr ""
+
+#, javascript-format
+msgid "Error! For images greater than %s kb, use the media browser instead."
+msgstr ""
+
+msgid "No results."
+msgstr ""
+
+msgid "The results could not be loaded"
+msgstr ""
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+msgstr[1] ""
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr ""
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "Searching..."
+msgstr ""
+
+msgid "Quick Links"
+msgstr ""
+
+msgid "Quick Links to your most used features."
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Track and filter your customers’ orders here."
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "All your exciting products and features are located here."
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid ""
+"All your customer data is located here. Target and organize your clients "
+"details your way!"
+msgstr ""
+
+msgid "Campaigns"
+msgstr ""
+
+msgid ""
+"Great loyalty tool for creating marketing, campaigns, special offers and "
+"coupons to entice your shoppers!"
+msgstr ""
+
+msgid ""
+"Set offers based on their previous purchase behavior to up- and cross sale "
+"your inventory."
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid ""
+"The make-over tool to customize you site themes, add pages and product "
+"carousels. Incorporate any media to make your store pop!"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr ""
+
+msgid "Shops"
+msgstr ""
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
+msgstr ""
+
+msgid "Addons"
+msgstr ""
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections."
+msgstr ""
+
+msgid ""
+"Supercharge your site and gather crazy amounts of data with integrations to "
+"CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid ""
+"The nuts and bolts of your store are found here. From individual country tax-"
+"regulations to your contact details."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid ""
+"Lost and cannot find your way? No worries, you can search contacts, "
+"settings, add-ons and more features from here."
+msgstr ""
+
+msgid "View your storefront"
+msgstr ""
+
+msgid "Preview your shop and all the cool features you have created!"
+msgstr ""
+
+msgid "We're done!"
+msgstr ""
+
+msgid "It was nice to show you around!"
+msgstr ""
+
+msgid "If you need to run it again, fire it up from the menu in the top right."
+msgstr ""
+
+msgid "Learn more at the Shuup Help Center"
+msgstr ""
+
+msgid "Mass actions"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Items per page"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid "Reset filters"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Apply filters"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "ascending"
+msgstr ""
+
+msgid "descending"
+msgstr ""
+
+msgid "Default sorting"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr ""
+
+msgid " Select"
+msgstr ""
+
+msgid "Filters"
+msgstr ""
+
+msgid "Show filters"
+msgstr ""
+
+msgid "Select Action"
+msgstr ""
+
+msgid "Clear Selections"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr ""
+
+#, javascript-format
+msgid "There are no %s to show"
+msgstr ""
+
+msgid "There is no item to show"
+msgstr ""
+
+msgid "with selected filters"
+msgstr ""
+
+msgid "How about creating a new entry?"
+msgstr ""
+
+msgid "Success! Mass Action was completed."
+msgstr ""
+
+msgid "Error! Something went wrong with the Mass Action."
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
+
+msgid "Warning! You didn't select anything."
+msgstr ""
+
+msgid "Confirm action by clicking OK!"
+msgstr ""
+
+msgid "Are you sure you want to delete this media?"
+msgstr ""
+
+msgid "Set as primary image"
+msgstr ""
+
+msgid "Primary image"
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
+msgid "Skip"
+msgstr ""
