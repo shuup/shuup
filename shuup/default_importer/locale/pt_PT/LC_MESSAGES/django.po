@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-03 17:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Contact Importer"
+msgstr ""
+
+msgid "Company Contact Importer"
+msgstr ""
+
+msgid ""
+"Parent SKU set for the row, but couldn't find product to match with the "
+"given SKU."
+msgstr ""
+
+msgid "Parent SKU set for the row, but no variation variables found."
+msgstr ""
+
+#, python-format
+msgid "Image '%s' was not found, please check whether the image exists."
+msgstr ""
+
+msgid "Please add supplier to the row, before importing stock quantities."
+msgstr ""
+
+msgid "No supplier found, please check that the supplier exists."
+msgstr ""
+
+msgid "No supplier module set, please check that the supplier module is set."
+msgstr ""
+
+msgid "Product Importer"
+msgstr ""
+
+msgid "Quantities"
+msgstr ""
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr ""
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(supplier_url)s\">supplier</a> with \"Stock "
+"Managed\" <strong>on</strong>."
+msgstr ""
+
+#, python-format
+msgid ""
+"your <a href=\"%(supplier_url)s\">supplier</a> has \"Stock Managed\" "
+"<strong>on</strong>. (Currently <strong>off</strong>)"
+msgstr ""
+
+msgid "your import file has <strong>supplier</strong> field"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "If you are importing products with images, ensure the following:"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"                Upload all product images using the <a href="
+"\"%(media_browser_url)s\" target=\"_blank\">Media Browser</a>.\n"
+"            "
+msgstr ""
+
+msgid "Upload all product images using the Media Browser."
+msgstr ""
+
+msgid ""
+"Use the image file name on <strong>image</strong> and/or <strong>images</"
+"strong> column(s)."
+msgstr ""
+
+msgid ""
+"<strong>images</strong> column can receive a comma-separated list of image "
+"names."
+msgstr ""
+
+msgid ""
+"Image names can be the file name (e.g.: <em>product_001.png</em>) or the "
+"path to the image (e.g.: <em>Products/Images/product_001.jpeg</em>).\n"
+"        Using the full path will ensure that the correct image will be used "
+"when there is more than one image with the same name."
+msgstr ""
+
+msgid "Related objects"
+msgstr ""
+
+msgid ""
+"Columns that are relations to other objects (like Category and Supplier) "
+"accept both the object ID number\n"
+"    and the object name. Make sure that when using the name, there should be "
+"only a single object for that given name."
+msgstr ""

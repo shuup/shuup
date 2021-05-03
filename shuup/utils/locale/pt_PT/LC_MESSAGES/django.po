@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-03 17:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Shuup Utilities"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
+msgid "audit"
+msgstr ""
+
+msgid "edit"
+msgstr ""
+
+msgid "deletion"
+msgstr ""
+
+msgid "note"
+msgstr ""
+
+msgid "email"
+msgstr ""
+
+msgid "warning"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "identifier"
+msgstr ""
+
+msgid "log entry kind"
+msgstr ""
+
+msgid "extra data"
+msgstr ""
+
+msgid "target"
+msgstr ""
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr ""
+
+#, python-brace-format
+msgid "You can't select less than {min_limit} item."
+msgid_plural "You can't select less than {min_limit} items."
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-brace-format
+msgid "You can't select more than {max_limit} item."
+msgid_plural "You can't select more than {max_limit} items."
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "Maximum file size reached (%(size)s MB)."
+msgstr ""
+
+msgid "Root"
+msgstr ""
+
+msgid "This field is required."
+msgstr ""
+
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr ""
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr ""

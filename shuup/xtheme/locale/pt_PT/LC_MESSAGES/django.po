@@ -1,0 +1,517 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-03 17:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Theme identifiers must match."
+msgstr ""
+
+msgid "Either theme_settings or shop should be informed."
+msgstr ""
+
+msgid "Global plugins"
+msgstr ""
+
+msgid "Theme plugins"
+msgstr ""
+
+msgid "Shuup Extensible Theme Engine"
+msgstr ""
+
+msgid "Themes"
+msgstr ""
+
+msgid "Customize the look and feel of your shop"
+msgstr ""
+
+msgid "Customize theme"
+msgstr ""
+
+msgid "No theme is active. Click here to activate one."
+msgstr ""
+
+msgid "Theming"
+msgstr ""
+
+msgid "Shuup Extensible Theme Engine Snippets"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "Theme Custom CSS/JS"
+msgstr ""
+
+msgid ""
+"Select the themes that will have this snippet injected. Leave the field "
+"blank to inject in all themes."
+msgstr ""
+
+msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Filter by location..."
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "activate"
+msgstr ""
+
+msgid "Theme"
+msgstr ""
+
+msgid "Choose a theme for your shop"
+msgstr ""
+
+msgid "Theme activated."
+msgstr ""
+
+msgid "Custom CSS/JS"
+msgstr ""
+
+msgid "Stylesheets"
+msgstr ""
+
+msgid "The fonts, colors, and styles to use with your theme."
+msgstr ""
+
+msgid "Content in this box is shown to all user types without limitations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Content in this placeholder is shown for %(category_name)s category only."
+msgstr ""
+
+msgid "Content in this box is shown to guests (anonymous users) only."
+msgstr ""
+
+msgid "Content in this box is shown to company contacts only."
+msgstr ""
+
+msgid ""
+"Content in this box is shown to all logged-in contacts (both person and "
+"company; not anonymous)."
+msgstr ""
+
+msgid "Content in this box is shown to person contacts only."
+msgstr ""
+
+#, python-format
+msgid "Content in this placeholder is shown for %(product_name)s only."
+msgstr ""
+
+msgid "Shop '{}' has no active theme"
+msgstr ""
+
+msgid "Inline JavaScript"
+msgstr ""
+
+msgid "Inline CSS"
+msgstr ""
+
+msgid "Inline HTML"
+msgstr ""
+
+msgid "Inline Jinja HTML"
+msgstr ""
+
+msgid "current draft"
+msgstr ""
+
+msgid "old version"
+msgstr ""
+
+msgid "public"
+msgstr ""
+
+msgid "theme identifier"
+msgstr ""
+
+msgid "view name"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "internal data"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr ""
+
+msgid "location"
+msgstr ""
+
+msgid "snippet type"
+msgstr ""
+
+msgid "snippet"
+msgstr ""
+
+msgid "themes"
+msgstr ""
+
+msgid "Snippet"
+msgstr ""
+
+msgid "Snippet for {} in {}"
+msgstr ""
+
+msgid "Plugin"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Category Links"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Show all categories"
+msgstr ""
+
+msgid "All categories are shown, even if not selected"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image Link URL"
+msgstr ""
+
+msgid "Full width"
+msgstr ""
+
+msgid "Set image to the full width of cell."
+msgstr ""
+
+msgid "Width (px)"
+msgstr ""
+
+msgid "Leave blank for default width."
+msgstr ""
+
+msgid "Height (px)"
+msgstr ""
+
+msgid "Newest"
+msgstr ""
+
+msgid "Best Selling"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
+msgid "Product Highlights"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid ""
+"Warning: The final number of products can be lower than 'Count' as it will "
+"filter out unorderable products from a set of 'Count' products."
+msgstr ""
+
+msgid "Product Cross Sells"
+msgstr ""
+
+msgid "Show variation parents"
+msgstr ""
+
+msgid "Render variation parents instead of the children."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category Products Highlight"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Select all products you want to show"
+msgstr ""
+
+msgid "Product Selection"
+msgstr ""
+
+msgid "Product Highlights (asynchronous)"
+msgstr ""
+
+msgid "Cutoff days"
+msgstr ""
+
+msgid "Cache timeout (seconds)"
+msgstr ""
+
+msgid "Product Cross Sells (asynchronous)"
+msgstr ""
+
+msgid "Category Products Highlight (asynchronous)"
+msgstr ""
+
+msgid "Product Selection (asynchronous)"
+msgstr ""
+
+msgid "In-Place Snippet"
+msgstr ""
+
+msgid "Resource snippet for end of head"
+msgstr ""
+
+msgid "Resource snippet for beginning of body"
+msgstr ""
+
+msgid "Resource for end of body"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+#, python-format
+msgid "%(name)s Ordering"
+msgstr ""
+
+msgid "Ordering"
+msgstr ""
+
+msgid "Social Media Links"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Icon Size"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
+
+msgid "Left"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Right"
+msgstr ""
+
+msgid "text"
+msgstr ""
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr ""
+
+msgid ""
+"This placeholder is global and content of this placeholder is shown on all "
+"pages."
+msgstr ""
+
+msgid "End of head"
+msgstr ""
+
+msgid "Start of head"
+msgstr ""
+
+msgid "End of body"
+msgstr ""
+
+msgid "Start of body"
+msgstr ""
+
+msgid "Content start"
+msgstr ""
+
+msgid "Content end"
+msgstr ""
+
+msgid "(Error while rendering.)"
+msgstr ""
+
+msgid "Delete This Cell"
+msgstr ""
+
+msgid "Untranslated"
+msgstr ""
+
+msgid "There's nothing to configure in this plugin."
+msgstr ""
+
+msgid "Save Plugin"
+msgstr ""
+
+msgid ""
+"Remember to publish your changes for this placeholder when you are done, by "
+"clicking the Publish Changes button at the top."
+msgstr ""
+
+msgid "Edit Placeholder"
+msgstr ""
+
+msgid ""
+"Edit plugins inside this placeholder. By saving the individual plugin, the "
+"changes are saved as a draft, and only you are able to see the changes. To "
+"make your changes Public, Click the Publish Changes button."
+msgstr ""
+
+msgid "Add new cell"
+msgstr ""
+
+msgid "Delete row"
+msgstr ""
+
+msgid "Move row"
+msgstr ""
+
+msgid "Add new row"
+msgstr ""
+
+msgid "Theme Configuration"
+msgstr ""
+
+msgid "No themes are installed."
+msgstr ""
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr ""
+
+msgid "There's nothing to configure in this theme."
+msgstr ""
+
+msgid "Select theme"
+msgstr ""
+
+msgid "Theme Guide"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Configure"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Theme Name"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Currently active"
+msgstr ""
+
+msgid "Revert Changes"
+msgstr ""
+
+msgid "Publish Changes"
+msgstr ""
+
+msgid "No access to editing."
+msgstr ""
+
+#, python-format
+msgid "Unknown command: `%s`."
+msgstr ""
+
+msgid "Unable to determine the current theme."
+msgstr ""
+
+#, python-format
+msgid "Can't add more than %d cells in one row."
+msgstr ""
+
+msgid "Published"
+msgstr ""
+
+msgid "Reverted"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Full Width"
+msgstr ""
+
+msgid "Three Fourths (3/4)"
+msgstr ""
+
+msgid "Two Thirds (2/3)"
+msgstr ""
+
+msgid "Half (1/2)"
+msgstr ""
+
+msgid "One Third (1/3)"
+msgstr ""
+
+msgid "One Fourth (1/4)"
+msgstr ""
+
+msgid "Auto"
+msgstr ""
+
+msgid "Cell width"
+msgstr ""
+
+msgid "Cell align"
+msgstr ""
+
+msgid "Extra classes"
+msgstr ""
+
+msgid "Add extra CSS classes names to the cell"
+msgstr ""
+
+msgid "No Plugin"
+msgstr ""

@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-03 17:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Reports"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Select the type of report to run."
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Running Week (last 7 days)"
+msgstr ""
+
+msgid "Running Month (last 30 days)"
+msgstr ""
+
+msgid "This Week"
+msgstr ""
+
+msgid "This Month"
+msgstr ""
+
+msgid "This Year"
+msgstr ""
+
+msgid "All Time"
+msgstr ""
+
+msgid "Output Format"
+msgstr ""
+
+msgid "The format to show the report results."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Enable this to download the report."
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Filter report results by shop."
+msgstr ""
+
+msgid "Date Range"
+msgstr ""
+
+msgid "Filter report results by a date range."
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "For a custom date range."
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Report Description"
+msgstr ""
+
+msgid "Toggle Filters"
+msgstr ""
+
+msgid "Get Report"
+msgstr ""
+
+msgid "No reports available"
+msgstr ""
