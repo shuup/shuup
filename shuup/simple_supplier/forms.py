@@ -25,7 +25,7 @@ class StockAdjustmentForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(StockAdjustmentForm, self).__init__(*args, **kwargs)
         if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
-            self.fields["purchase_price"].label = "Purchase price per unit (%(currency_name)s)" % {
+            self.fields["purchase_price"].label = _("Purchase price per unit (%(currency_name)s)") % {
                 "currency_name": get_currency_name(Shop.objects.first().currency)
             }
 
