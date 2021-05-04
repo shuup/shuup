@@ -10,7 +10,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Fix the python string format syntax to format after resolving the translation string
+- Core: do not use message tags as part of the message as it doesn't contain translated string
+- Core: fix the python string format syntax to format after resolving the translation string
 
 ### Changed
 
