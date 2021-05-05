@@ -12,6 +12,7 @@ from django.db import models
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
@@ -70,10 +71,10 @@ class Shipment(ShuupModel):
     tracking_url = models.URLField(blank=True, verbose_name=_("tracking url"))
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
     volume = MeasurementField(
-        unit=get_shuup_volume_unit(), verbose_name=_("volume ({})".format(get_shuup_volume_unit()))
+        unit=get_shuup_volume_unit(), verbose_name=format_lazy(_("volume ({})"), get_shuup_volume_unit())
     )
     weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT, verbose_name=_("weight ({})".format(settings.SHUUP_MASS_UNIT))
+        unit=settings.SHUUP_MASS_UNIT, verbose_name=format_lazy(_("weight ({})"), settings.SHUUP_MASS_UNIT)
     )
     identifier = InternalIdentifierField(unique=True)
     type = EnumIntegerField(ShipmentType, default=ShipmentType.OUT, verbose_name=_("type"))
@@ -182,10 +183,10 @@ class ShipmentProduct(ShuupModel):
     quantity = QuantityField(verbose_name=_("quantity"))
 
     unit_volume = MeasurementField(
-        unit=get_shuup_volume_unit(), verbose_name=_("unit volume ({})".format(get_shuup_volume_unit()))
+        unit=get_shuup_volume_unit(), verbose_name=format_lazy(_("unit volume ({})"), get_shuup_volume_unit())
     )
     unit_weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT, verbose_name=_("unit weight ({})".format(settings.SHUUP_MASS_UNIT))
+        unit=settings.SHUUP_MASS_UNIT, verbose_name=format_lazy(_("unit weight ({})"), settings.SHUUP_MASS_UNIT)
     )
 
     class Meta:

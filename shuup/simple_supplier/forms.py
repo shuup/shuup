@@ -8,6 +8,7 @@
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Shop
@@ -17,17 +18,20 @@ from shuup.utils.i18n import get_currency_name
 
 class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
-        label=_("Purchase price per unit (%(currency_name)s)")
-        % {"currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)}
+        label=format_lazy(
+            _("Purchase price per unit ({currency_name})"),
+            currency_name=get_currency_name(settings.SHUUP_HOME_CURRENCY),
+        )
     )
     delta = forms.DecimalField(label=_("Quantity"))
 
     def __init__(self, *args, **kwargs):
         super(StockAdjustmentForm, self).__init__(*args, **kwargs)
         if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
-            self.fields["purchase_price"].label = _("Purchase price per unit (%(currency_name)s)") % {
-                "currency_name": get_currency_name(Shop.objects.first().currency)
-            }
+            self.fields["purchase_price"].label = format_lazy(
+                _("Purchase price per unit ({currency_name})"),
+                currency_name=get_currency_name(Shop.objects.first().currency),
+            )
 
     def clean_delta(self):
         delta = self.cleaned_data.get("delta")

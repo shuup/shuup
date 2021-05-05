@@ -12,7 +12,7 @@ from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, UpdateView
 
 from shuup.admin.form_modifier import ModifiableFormMixin, ModifiableViewMixin
@@ -31,8 +31,8 @@ from shuup.utils.excs import Problem
 class ShipmentForm(ModifiableFormMixin, forms.Form):
     form_modifier_provide_key = "admin_extend_create_shipment_form"
 
-    description = forms.CharField(required=False)
-    tracking_code = forms.CharField(required=False)
+    description = forms.CharField(required=False, label=_("Description"))
+    tracking_code = forms.CharField(required=False, label=_("Tracking Code"))
     tracking_url = forms.URLField(required=False, label=_("Tracking URL"))
 
 

@@ -11,6 +11,7 @@ import decimal
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from jsonfield import JSONField
@@ -116,14 +117,14 @@ class WeightBasedPriceRange(TranslatableModel):
     )
     min_value = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=_("min weight ({})".format(settings.SHUUP_MASS_UNIT)),
+        verbose_name=format_lazy(_("min weight ({})"), settings.SHUUP_MASS_UNIT),
         blank=True,
         null=True,
         help_text=_("The minimum weight for this price to apply."),
     )
     max_value = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=_("max weight ({})".format(settings.SHUUP_MASS_UNIT)),
+        verbose_name=format_lazy(_("max weight ({})"), settings.SHUUP_MASS_UNIT),
         blank=True,
         null=True,
         help_text=_("The maximum weight before this price no longer applies."),
