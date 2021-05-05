@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 18:11+0000\n"
+"POT-Creation-Date: 2021-05-05 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,8 +75,8 @@ msgstr ""
 msgid "Stock management is now disabled for {product}."
 msgstr ""
 
-#, python-format
-msgid "Purchase price per unit (%(currency_name)s)"
+#, python-brace-format
+msgid "Purchase price per unit ({currency_name})"
 msgstr ""
 
 msgid "Quantity"

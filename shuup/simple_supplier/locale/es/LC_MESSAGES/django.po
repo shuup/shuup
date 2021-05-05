@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 18:11+0000\n"
-"PO-Revision-Date: 2020-10-15 10:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-05-05 13:35+0000\n"
+"PO-Revision-Date: 2021-05-05 16:18+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgid "Stock management"
 msgstr "Control de Inventario"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Filter by SKU..."
 msgstr "Filtrar por SKU..."
@@ -75,9 +76,9 @@ msgstr "Control de inventario activado para {product}."
 msgid "Stock management is now disabled for {product}."
 msgstr "Control de inventario desactivado para {product}."
 
-#, python-format
-msgid "Purchase price per unit (%(currency_name)s)"
-msgstr "Precio de compra por unidad  (%(currency_name)s)"
+#, python-brace-format
+msgid "Purchase price per unit ({currency_name})"
+msgstr ""
 
 msgid "Quantity"
 msgstr "Cantidad"
@@ -101,7 +102,7 @@ msgid "created by"
 msgstr "creado por"
 
 msgid "delta"
-msgstr ""
+msgstr "delta"
 
 msgid "type"
 msgstr "tipo"

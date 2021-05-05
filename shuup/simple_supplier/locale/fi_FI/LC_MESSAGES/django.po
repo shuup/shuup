@@ -5,8 +5,8 @@
 # Translators:
 # Janne Tammi <janne@shuup.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2016,2020
-# Rauli L. <rauli.laine@iki.fi>, 2016
-# Rauli L. <rauli.laine@iki.fi>, 2016
+# Rauli Laine <rauli.laine@iki.fi>, 2016
+# Rauli Laine <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2016
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 18:11+0000\n"
-"PO-Revision-Date: 2020-09-29 08:48+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2021-05-05 13:35+0000\n"
+"PO-Revision-Date: 2021-05-05 16:18+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,9 +82,9 @@ msgstr "Varastonhallinta on nyt käytössä verkkotunnuksessa {product}."
 msgid "Stock management is now disabled for {product}."
 msgstr "Varastonhallinta on nyt poistettu käytöstä verkkotunnuksessa {product}."
 
-#, python-format
-msgid "Purchase price per unit (%(currency_name)s)"
-msgstr "Ostohinta per yksikkö (%(currency_name)s)"
+#, python-brace-format
+msgid "Purchase price per unit ({currency_name})"
+msgstr ""
 
 msgid "Quantity"
 msgstr "Määrä"
