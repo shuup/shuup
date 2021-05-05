@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Christian Hess <christian@shuup.com>, 2021
+# Christian Hess, 2021
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 13:14+0000\n"
-"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"PO-Revision-Date: 2021-05-05 16:57+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3107,7 +3107,7 @@ msgid "Taxless Discount"
 msgstr "Steuerfreier Rabatt"
 
 msgid "Taxless Discount Percentage"
-msgstr "Steuerfreier Rabatt in %"
+msgstr "Steuerfreier Rabatt Prozentsatz"
 
 msgid "Tax"
 msgstr "Steuern"

@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Admin: Fix the Select2 translations strings
+- General: Collect translation strings correctly
+
+### Changed
+
+- General: Pull translation strings
+
 ## [2.7.1] - 2021-05-04
 
 ### Fixed

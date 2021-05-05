@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Jessica Wang <jessica.wang@shoop.io>, 2016
 # Jiechao Li <jiechao.li@sesamechat.com>, 2019
@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 18:11+0000\n"
-"PO-Revision-Date: 2020-06-30 02:24+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-05-05 13:35+0000\n"
+"PO-Revision-Date: 2021-05-05 17:01+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,9 +77,9 @@ msgstr ""
 msgid "Stock management is now disabled for {product}."
 msgstr ""
 
-#, python-format
-msgid "Purchase price per unit (%(currency_name)s)"
-msgstr "单位采购价格(%(currency_name)s)"
+#, python-brace-format
+msgid "Purchase price per unit ({currency_name})"
+msgstr ""
 
 msgid "Quantity"
 msgstr "数量"
@@ -224,11 +224,11 @@ msgstr ""
 
 #, python-brace-format
 msgid "Physical count ({sales_unit})"
-msgstr "物理计数({sales_unit})"
+msgstr ""
 
 #, python-brace-format
 msgid "Logical count ({sales_unit})"
-msgstr "逻辑计数({sales_unit})"
+msgstr ""
 
 msgid "Value per unit"
 msgstr "单位价值"
@@ -238,7 +238,7 @@ msgstr "总价值"
 
 #, python-brace-format
 msgid "Alert limit ({sales_unit})"
-msgstr "警告限制({sales_unit})"
+msgstr ""
 
 msgid "No stock information available."
 msgstr "没有库存信息。"

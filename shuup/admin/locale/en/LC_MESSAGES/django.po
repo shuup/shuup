@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"POT-Creation-Date: 2021-05-05 17:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -907,6 +907,12 @@ msgstr ""
 msgid "Full refund created."
 msgstr ""
 
+msgid "Description"
+msgstr ""
+
+msgid "Tracking Code"
+msgstr ""
+
 msgid "Tracking URL"
 msgstr ""
 
@@ -942,9 +948,6 @@ msgid "ID"
 msgstr ""
 
 msgid "Supplier"
-msgstr ""
-
-msgid "Tracking Code"
 msgstr ""
 
 #, python-brace-format
@@ -3027,9 +3030,6 @@ msgid "Comment was saved."
 msgstr ""
 
 msgid "Updating the admin comment failed."
-msgstr ""
-
-msgid "Description"
 msgstr ""
 
 msgid "No payments have been created yet."

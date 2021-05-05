@@ -13,6 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.text import format_lazy
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -323,7 +324,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     # Physical dimensions
     width = MeasurementField(
         unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=_("width ({})").format(settings.SHUUP_LENGTH_UNIT),
+        verbose_name=format_lazy(_("width ({})"), settings.SHUUP_LENGTH_UNIT),
         help_text=_(
             "Set the measured width of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
@@ -331,7 +332,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     )
     height = MeasurementField(
         unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=_("height ({})").format(settings.SHUUP_LENGTH_UNIT),
+        verbose_name=format_lazy(_("height ({})"), settings.SHUUP_LENGTH_UNIT),
         help_text=_(
             "Set the measured height of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
@@ -339,7 +340,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     )
     depth = MeasurementField(
         unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=_("depth ({})").format(settings.SHUUP_LENGTH_UNIT),
+        verbose_name=format_lazy(_("depth ({})"), settings.SHUUP_LENGTH_UNIT),
         help_text=_(
             "Set the measured depth or length of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
@@ -347,7 +348,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     )
     net_weight = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=_("net weight ({})").format(settings.SHUUP_MASS_UNIT),
+        verbose_name=format_lazy(_("net weight ({})"), settings.SHUUP_MASS_UNIT),
         help_text=_(
             "Set the measured weight of your product WITHOUT its packaging. "
             "This will provide customers with the actual product's weight."
@@ -355,7 +356,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     )
     gross_weight = MeasurementField(
         unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=_("gross weight ({})").format(settings.SHUUP_MASS_UNIT),
+        verbose_name=format_lazy(_("gross weight ({})"), settings.SHUUP_MASS_UNIT),
         help_text=_(
             "Set the measured gross weight of your product WITH its packaging. "
             "This will help with calculating shipping costs."
