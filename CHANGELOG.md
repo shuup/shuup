@@ -10,11 +10,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Collect translation strings correctly
+- Admin: Fix the Select2 translations strings
+- General: Collect translation strings correctly
 
 ### Changed
 
-- Pull translation strings
+- General: Pull translation strings
 
 ## [2.7.1] - 2021-05-04
 

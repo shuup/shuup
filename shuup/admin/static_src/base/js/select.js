@@ -17,15 +17,49 @@ export function activateSelect($select, model, searchMode, extraFilters = null, 
         $select.width("100%");
     }
 
+    const language = {
+        errorLoading: function () {
+            return gettext("The results could not be loaded");
+        },
+        inputTooLong: function (args) {
+            var overChars = args.input.length - args.maximum;
+            var message = ngettext(
+                "Please delete %s character",
+                "Please delete %s characters", overChars
+            );
+            return interpolate(message, [overChars]);
+        },
+        inputTooShort: function (args) {
+            var remainingChars = args.minimum - args.input.length;
+            return interpolate(gettext("Please enter %s or more characters"), [remainingChars]);
+        },
+        loadingMore: function () {
+            return gettext("Loading more results...");
+        },
+        maximumSelected: function (args) {
+            var message = ngettext(
+                "You can only select %s item",
+                "You can only select %s items", args.maximum
+            );
+            return interpolate(message, [args.maximum]);
+        },
+        noResults: function () {
+            return gettext("No results found");
+        },
+        searching: function () {
+            return gettext("Searching...");
+        }
+    };
+
     if (!model) {
         return $select.select2({
-            language: "xx",
-            ...attrs
+            ...attrs,
+            language,
         });
     }
 
     return $select.select2(Object.assign({
-        language: "xx",
+        language,
         minimumInputLength: window.ShuupAdminConfig.settings.minSearchInputLength,
         ajax: {
             url: window.ShuupAdminConfig.browserUrls.select,
@@ -82,45 +116,5 @@ export function activateSelects() {
     });
 }
 
-function select2Local() {
-    // Handle localization with Django instead of using select2 localization files
-    $.fn.select2.amd.define("select2/i18n/xx", [], function () {
-        return {
-            errorLoading: function () {
-                return gettext("The results could not be loaded");
-            },
-            inputTooLong: function (args) {
-                var overChars = args.input.length - args.maximum;
-                var message = ngettext(
-                    "Please delete %s character",
-                    "Please delete %s characters", overChars
-                );
-                return interpolate(message, [overChars]);
-            },
-            inputTooShort: function (args) {
-                var remainingChars = args.minimum - args.input.length;
-                return interpolate(gettext("Please enter %s or more characters"), [remainingChars]);
-            },
-            loadingMore: function () {
-                return gettext("Loading more results...");
-            },
-            maximumSelected: function (args) {
-                var message = ngettext(
-                    "You can only select %s item",
-                    "You can only select %s items", args.maximum
-                );
-                return interpolate(message, [args.maximum]);
-            },
-            noResults: function () {
-                return gettext("No results found");
-            },
-            searching: function () {
-                return gettext("Searching...");
-            }
-        };
-    });
-}
-
 window.activateSelects = activateSelects;
 activateSelects();
-select2Local();
