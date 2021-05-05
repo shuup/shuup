@@ -20,9 +20,11 @@ from .models import StockAdjustment, StockCount
 class SimpleSupplierModule(BaseSupplierModule):
     identifier = "simple_supplier"
     name = "Simple Supplier"
-    handels_internal_type = [0, 1]
+    handles_internal_type = [0, 1]
 
     def get_stock_statuses(self, product_ids):
+        product_ids = self._get_can_handel_product_ids(product_ids)
+
         stock_counts = StockCount.objects.filter(supplier=self.supplier, product_id__in=product_ids).values_list(
             "product_id", "physical_count", "logical_count", "stock_managed"
         )
@@ -50,6 +52,8 @@ class SimpleSupplierModule(BaseSupplierModule):
         return dict((pss.product_id, pss) for pss in stati)
 
     def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None, type=StockAdjustmentType.INVENTORY):
+        if not self._can_handle_product(product_id):
+            return {}
 
         stock_count = StockCount.objects.get_or_create(
             supplier=self.supplier,
@@ -57,7 +61,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         )[0]
         if not stock_count.stock_managed:
             # item doesn't manage stocks
-            return
+            return {}
 
         adjustment = StockAdjustment.objects.create(
             supplier=self.supplier,
@@ -75,6 +79,8 @@ class SimpleSupplierModule(BaseSupplierModule):
         Supplier module update stock should always bump product
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
+        if not self._can_handle_product(product_id):
+            return
         supplier_id = self.supplier.pk
         sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
         if not sv.stock_managed:

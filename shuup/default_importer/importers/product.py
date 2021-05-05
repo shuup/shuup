@@ -31,6 +31,7 @@ from shuup.core.models import (
 )
 from shuup.importer.importing import DataImporter, ImporterExampleFile, ImportMetaBase
 from shuup.importer.utils import fold_mapping_name
+from shuup.simple_supplier.module import SimpleSupplierModule
 from shuup.utils.django_compat import force_text
 from shuup.utils.djangoenv import has_installed
 from shuup.utils.properties import PriceProperty
@@ -262,7 +263,7 @@ class ProductMetaBase(ImportMetaBase):
             supplier_changed = True
 
         if not supplier.supplier_modules.all().exists() and has_installed("shuup.simple_supplier"):
-            supplier_module = SupplierModule.objects.get_or_create(module_identifier="simple_supplier")[0]
+            supplier_module = SupplierModule.objects.get_or_create(module_identifier=SimpleSupplierModule.identifier)[0]
             supplier.supplier_modules.add(supplier_module)
             supplier_changed = True
 

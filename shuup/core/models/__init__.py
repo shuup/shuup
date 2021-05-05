@@ -51,7 +51,12 @@ from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
-from ._product_shops import ProductVisibility, ShopProduct, ShopProductVisibility
+from ._product_shops import (
+    ProductVisibility,
+    ShopProduct,
+    ShopProductVisibility,
+    SimpleSupplierInternalProductTypeProvider,
+)
 from ._product_variation import (
     ProductVariationLinkStatus,
     ProductVariationResult,
@@ -67,7 +72,6 @@ from ._products import (
     ProductMode,
     ProductType,
     ShippingMode,
-    SimpleSupplierInternalProductTypeProvider,
     StockBehavior,
 )
 from ._service_base import Service, ServiceBehaviorComponent, ServiceChoice, ServiceCost, ServiceProvider

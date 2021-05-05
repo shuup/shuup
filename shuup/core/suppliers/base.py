@@ -25,7 +25,7 @@ class BaseSupplierModule(object):
 
     identifier = None
     name = None
-    handels_internal_type = None
+    handles_internal_type = None
 
     def __init__(self, supplier, options):
         """
@@ -35,22 +35,43 @@ class BaseSupplierModule(object):
         self.supplier = supplier
         self.options = options
 
-    def can_handle_product(self, product_id):
+    def _can_handle_product(self, product_id):
         """
         :param product_id: Product ID.
         :type product_id: int
         :return: boolean value if this module can handle product
         :rtype: bool
         """
-        if self.handels_internal_type is None:
+        if self.handles_internal_type is None:
             return True
 
-        if type(self.handels_internal_type) == list:
+        if type(self.handles_internal_type) == list:
             return ShopProduct.objects.filter(
-                product__id=product_id, internal_type__in=self.handels_internal_type
+                product__id=product_id, internal_type__in=self.handles_internal_type
             ).exists()
 
-        return ShopProduct.objects.filter(product__id=product_id, internal_type=self.handels_internal_type).exists()
+        return ShopProduct.objects.filter(product__id=product_id, internal_type=self.handles_internal_type).exists()
+
+    def _get_can_handel_product_ids(self, product_ids):
+        """
+        :param product_ids: Product IDs.
+        :type product_ids: iterable[int]
+        :return: list of all product ids that this module can handle
+        :rtype: iterable[int]
+        """
+        if self.handles_internal_type is None:
+            return True
+
+        if type(self.handles_internal_type) == list:
+            return ShopProduct.objects.filter(
+                product__id__in=product_ids, internal_type__in=self.handles_internal_type
+            ).values_list("product__id", flat=True)
+
+        return ShopProduct.objects.filter(
+            product__id__in=product_ids, internal_type=self.handles_internal_type
+        ).values_list(
+            "product__id", flat=True
+        )
 
     def get_stock_statuses(self, product_ids):
         """
@@ -66,6 +87,7 @@ class BaseSupplierModule(object):
                 ),
             )
             for product_id in product_ids
+            if self._can_handle_product(product_id)
         )
 
     def get_stock_status(self, product_id):
@@ -106,6 +128,8 @@ class BaseSupplierModule(object):
         Supplier module update stock should always bump product
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
+        if not self._can_handle_product(product_id):
+            return
         context_cache.bump_cache_for_product(product_id)
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
@@ -122,6 +146,8 @@ class BaseSupplierModule(object):
             insufficient_stocks = {}
 
             for product, quantity in product_quantities.items():
+                if not self._can_handle_product(product.id):
+                    continue
                 if quantity > 0:
                     stock_status = self.get_stock_status(product.pk)
                     if stock_status.stock_managed and stock_status.physical_count < quantity:
@@ -140,6 +166,8 @@ class BaseSupplierModule(object):
 
         for product, quantity in product_quantities.items():
             if quantity == 0:
+                continue
+            if not self._can_handle_product(product.id):
                 continue
 
             sp = shipment.products.create(product=product, quantity=quantity)

@@ -29,7 +29,7 @@ class SupplierListView(PicotableListView):
             filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
         ),
         Column("type", _("Type")),
-        Column("supplier_modules", _("Module"), display="get_supplier_modules", sortable=True),
+        Column("supplier_modules", _("Modules"), display="get_supplier_modules", sortable=True),
     ]
     toolbar_buttons_provider_key = "supplier_list_toolbar_provider"
     mass_actions_provider_key = "supplier_list_mass_actions_provider"

@@ -29,7 +29,9 @@ class ShuupCoreAppConfig(AppConfig):
             "shuup.core.order_creator:OrderSourceMethodsUnavailabilityReasonsValidator",
             "shuup.core.order_creator:OrderSourceSupplierValidator",
         ],
-        "internal_product_type_provider": ["shuup.core.models._products:SimpleSupplierInternalProductTypeProvider"],
+        "internal_product_type_provider": [
+            "shuup.core.models._product_shops:SimpleSupplierInternalProductTypeProvider"
+        ],
     }
 
     def ready(self):

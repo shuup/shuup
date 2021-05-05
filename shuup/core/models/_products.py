@@ -39,12 +39,6 @@ from ._product_variation import (
 )
 
 
-class SimpleSupplierInternalProductTypeProvider:
-    @classmethod
-    def get_internal_product_types(cls):
-        yield (0, _("Product"))
-
-
 # TODO (2.0): This should be extandable
 class ProductMode(Enum):
     NORMAL = 0

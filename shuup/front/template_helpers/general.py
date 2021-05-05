@@ -242,8 +242,8 @@ def get_random_products(context, n_products=6, orderable_only=True):
         n_products=n_products,
         orderable_only=orderable_only,
     )
-    if products is not None and len(products) >= n_products:
-        return products[:n_products]
+    if products is not None:
+        return products
 
     products = _get_listed_products(
         context, n_products, ordering="?", filter_dict={"variation_parent": None}, orderable_only=orderable_only
@@ -264,6 +264,9 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         categories=categories,
         orderable_only=orderable_only,
     )
+
+    if products is not None:
+        return products
 
     products = _get_listed_products(
         context,

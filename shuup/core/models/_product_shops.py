@@ -34,6 +34,12 @@ from ._units import DisplayUnit, PiecesSalesUnit, UnitInterface
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 
 
+class SimpleSupplierInternalProductTypeProvider:
+    @classmethod
+    def get_internal_product_types(cls):
+        yield (0, _("Product"))
+
+
 @lru_cache()
 def get_internal_product_type_enum():
     values = []
