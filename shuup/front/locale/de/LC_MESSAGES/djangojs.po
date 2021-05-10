@@ -2,27 +2,42 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Christian Hess, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-14 16:31+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-05-10 14:18+0000\n"
+"PO-Revision-Date: 2021-05-10 14:24+0000\n"
+"Last-Translator: Christian Hess, 2021\n"
+"Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Clear"
-msgstr ""
+msgstr "klar"
 
 msgid "Drop files here or click to browse."
-msgstr ""
+msgstr "Legen Sie Dateien hier ab oder klicken Sie zum Durchsuchen."
 
 msgid "only images can be uploaded!"
-msgstr ""
+msgstr "Es können nur Bilder hochgeladen werden!"
+
+msgid "Nothing selected"
+msgstr "Nichts ausgewählt"
+
+msgid "No results matched {0}"
+msgstr "Keine Ergebnisse übereinstimmen {0}"
+
+msgid "Select All"
+msgstr "Wählen Sie Alle"
+
+msgid "Deselect All"
+msgstr "Alle abwählen"
