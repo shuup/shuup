@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Melanie Missbach <melanie@buyhappy.de>, 2021
+# Christian Hess, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"POT-Creation-Date: 2021-05-10 20:06+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
-"Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
+"Last-Translator: Christian Hess, 2021\n"
 "Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -433,9 +434,9 @@ msgstr "Aktion"
 msgid "The campaign name to show in the store front."
 msgstr "Die Aktionsbezeichnung, die auf dem Marktplatz angezeigt wird."
 
-#, python-format
-msgid "Catalog Campaign: %(name)s"
-msgstr "Katalog-Aktion: %(name)s"
+#, python-brace-format
+msgid "Catalog Campaign: {name}"
+msgstr "Katalogkampagne: {name}"
 
 msgid "basket line text"
 msgstr "Warenkorb-Zeilentext"
@@ -461,9 +462,9 @@ msgstr ""
 msgid "public name"
 msgstr "öffentliche Bezeichnung"
 
-#, python-format
-msgid "Basket Campaign: %(name)s"
-msgstr "Warenkorb-Aktion: %(name)s"
+#, python-brace-format
+msgid "Basket Campaign: {name}"
+msgstr "Korbkampagne: {name}"
 
 msgid "Can't have multiple active campaigns with same code."
 msgstr "Es kann nicht mehrere aktive Aktionen mit demselben Code geben."
