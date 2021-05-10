@@ -10,25 +10,9 @@ import pytest
 from django.utils.translation import activate
 
 from shuup.core import cache
-from shuup.core.models import (
-    Category,
-    CategoryStatus,
-    Manufacturer,
-    Product,
-    ProductMode,
-    ProductVariationVariable,
-    ProductVariationVariableValue,
-    ShopProduct,
-)
-from shuup.front.utils.sorts_and_filters import set_configuration
-from shuup.testing.browser_utils import (
-    click_element,
-    initialize_front_browser_test,
-    move_to_element,
-    wait_until_condition,
-    wait_until_disappeared,
-)
-from shuup.testing.factories import create_product, get_default_category, get_default_shop, get_default_supplier
+from shuup.core.models import Product
+from shuup.testing.browser_utils import click_element, initialize_front_browser_test, wait_until_condition
+from shuup.testing.factories import create_product, get_default_shop, get_default_supplier
 from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
@@ -61,7 +45,7 @@ def test_search_product_list(browser, live_server, settings):
     activate("en")
     # initialize
     cache.clear()
-    shop = get_default_shop()
+    get_default_shop()
 
     for name, sku, price in PRODUCT_DATA:
         create_orderable_product(name, sku, price=price)
@@ -95,26 +79,25 @@ def check_default_ordering(browser):
 def basic_sorting_test(browser):
     # Sort from Z to A
     click_element(browser, "button[data-id='id_sort']")
-    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
-    click_element(browser, "li[data-original-index='1'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(2) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-3").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Sort by price (highest first)
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='3'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(4) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-8").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Sort by price (lowest first)
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='2'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(3) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-3").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Sort from A to Z
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='0'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(1) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-2").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 

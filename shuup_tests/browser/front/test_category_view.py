@@ -271,32 +271,31 @@ def show_sorts_for_the_category_only(browser, category):
 def sort_category_products_test(browser, category):
     # Lowest price first
     click_element(browser, "button[data-id='id_sort']")
-    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
-    click_element(browser, "li[data-original-index='2'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(3) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-3").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Name from A-Z
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='0'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(1) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-2").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Name from Z-A
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='1'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(2) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-3").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Highest price first
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='3'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(4) a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-2").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
     # Date created
     click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='4'] a")
+    click_element(browser, "button[data-id='id_sort'] + .dropdown-menu li:nth-child(5) a")
     expected_first_prod_id = (
         "product-%s"
         % Product.objects.filter(shop_products__primary_category=category).order_by("-created_on").first().id
@@ -425,7 +424,7 @@ def second_category_sort_test(browser, live_server, shop, category):
     wait_until_condition(browser, lambda x: x.is_element_present_by_css("button[data-id='id_limit']"), timeout=30)
     # Set limit to 24
     click_element(browser, "button[data-id='id_limit']")
-    click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
+    click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li:nth-child(2) a")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13, timeout=30)
 
     # Check that visibility change affects the product count
@@ -481,16 +480,16 @@ def second_category_sort_with_price_filter(browser, category):
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5)
     # 5 products and let's filter all products with price less than 5
     click_element(browser, "button[data-id='id_price_range']")
-    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='1'] a")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(2) a")
 
     # 4 products and let's filter products with price +12
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)
     click_element(browser, "button[data-id='id_price_range']")
-    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='4'] a")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(5) a")
 
     # Now 2 products left and now filter with price 8-11
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
     click_element(browser, "button[data-id='id_price_range']")
-    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li[data-original-index='3'] a")
+    click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(4) a")
 
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
