@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Campaigns: fix the translation string format
+
 ### Changed
 
 - Front: unify the Customer Information title across the dashboard
