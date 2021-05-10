@@ -16,6 +16,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- General: use gettext_lazy to make sure translations work
 - Front: unify the Customer Information title across the dashboard
 - Front: bump bootstrap-select and use translated strings while initializing it
 

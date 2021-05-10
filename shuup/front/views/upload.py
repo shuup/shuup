@@ -11,7 +11,7 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseForbidden, JsonResponse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
 from shuup.utils.filer import ensure_media_file, filer_file_to_json_dict, filer_image_from_upload, get_or_create_folder

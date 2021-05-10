@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 import warnings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.toolbar import (
     DropdownActionButton,

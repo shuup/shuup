@@ -12,7 +12,7 @@ import re
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 
 from shuup.core.models import Order, get_person_contact
