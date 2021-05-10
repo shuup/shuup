@@ -6,11 +6,11 @@
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-$(function() {
+$(function () {
     $(".selectpicker").selectpicker();
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $(".btn-variation").on("click", function (e) {
         e.preventDefault();
         var level = $(this).data("level");

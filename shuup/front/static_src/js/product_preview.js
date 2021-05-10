@@ -15,15 +15,15 @@ window.showPreview = function showPreview(productId) {
     }
 
     // make sure modals disappear and are not "cached"
-    $(document).on("hidden.bs.modal", modalSelector, function() {
+    $(document).on("hidden.bs.modal", modalSelector, function () {
         $(modalSelector).remove();
     });
 
     $.ajax({
         url: "/xtheme/product_preview",
         method: "GET",
-        data: {id: productId},
-        success: function(data) {
+        data: { id: productId },
+        success: function (data) {
             $("body").append(data);
             $(modalSelector).modal("show");
             window.updatePrice(productId);
