@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: use correct translated label syntax for form fields
 - Front: Remove untranslated Error! prefix in alert messages
 - Campaigns: fix the translation string format
 
