@@ -5,7 +5,7 @@
     {% call content_with_sidebar(content_id="user_form") %}
         <form method="post" id="user_form">
             {% csrf_token %}
-            {% call content_block(_("User Information"), "fa-info-circle") %}
+            {% call content_block(_("Customer Information"), "fa-info-circle") %}
                 {% for field in form %}
                     {{ bs3.field(field) }}
                 {% endfor %}

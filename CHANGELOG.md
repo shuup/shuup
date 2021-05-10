@@ -10,7 +10,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
-- Bump bootstrap-select and use translated strings while initializing it
+- Front: unify the Customer Information title across the dashboard
+- Front: bump bootstrap-select and use translated strings while initializing it
 
 ## [2.7.2] - 2021-05-05
 
