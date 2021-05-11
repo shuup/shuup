@@ -254,6 +254,7 @@ ATTR_SPECS = [
     dict(type=AttributeType.TRANSLATED_STRING, identifier="genre", name="Genre"),
     dict(type=AttributeType.DATE, identifier="release_date", name="Release Date"),
     dict(type=AttributeType.DATETIME, identifier="important_datetime", name="Time and Date of Eschaton"),
+    dict(type=AttributeType.CHOICES, identifier="list_choices", name="Options to select"),
 ]
 
 

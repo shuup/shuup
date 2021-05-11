@@ -14,7 +14,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.test import override_settings
 from django.utils.translation import get_language
 
-from shuup.core.models import Attribute, AttributeType, AttributeVisibility, Product, ProductAttribute
+from shuup.core.models import (
+    Attribute,
+    AttributeChoiceOption,
+    AttributeType,
+    AttributeVisibility,
+    Product,
+    ProductAttribute,
+)
 from shuup.core.models._attributes import NoSuchAttributeHere
 from shuup.testing.factories import ATTR_SPECS, create_product, get_default_attribute_set, get_default_product
 
@@ -108,6 +115,15 @@ def _populate_applied_attribute(aa):
         assert aa.untranslated_string_value == dt.isoformat(), "Datetimes are saved as strings too"
         return
 
+    if aa.attribute.type == AttributeType.CHOICES:
+        option_a = AttributeChoiceOption.objects.create(attribute=aa.attribute, name="Option A")
+        option_b = AttributeChoiceOption.objects.create(attribute=aa.attribute, name="Option B")
+        option_c = AttributeChoiceOption.objects.create(attribute=aa.attribute, name="Option C")
+        aa.value = [option_a, option_b.pk, option_c.name]
+        aa.save()
+        assert aa.value == "Option A; Option B; Option C"
+        return
+
     raise NotImplementedError("Error! Not implemented: populating %s" % aa.attribute.type)  # pragma: no cover
 
 
@@ -157,11 +173,44 @@ def test_get_set_attribute():
     product.set_attribute_value("author", None)
     product.set_attribute_value("genre", "Kenre", "fi")
 
+    choice_attr = Attribute.objects.get(identifier="list_choices")
+    AttributeChoiceOption.objects.create(attribute=choice_attr, name="Option A")
+    AttributeChoiceOption.objects.create(attribute=choice_attr, name="Option B")
+    AttributeChoiceOption.objects.create(attribute=choice_attr, name="Option C")
+
+    product.set_attribute_value("list_choices", ["Option A", "Option C"])
+
     with pytest.raises(ValueError):
         product.set_attribute_value("genre", "Kenre")
 
     with pytest.raises(ObjectDoesNotExist):
         product.set_attribute_value("keppi", "stick")
+
+
+@pytest.mark.django_db
+def test_get_choice_attribute():
+    product = create_product("ATTR_TEST")
+    attribute = Attribute.objects.create(
+        identifier="choices", type=AttributeType.CHOICES, min_choices=1, max_choices=10, name="Options"
+    )
+    product.type.attributes.add(attribute)
+    option1 = AttributeChoiceOption.objects.create(attribute=attribute, name="Option 1")
+    option2 = AttributeChoiceOption.objects.create(attribute=attribute, name="Option 2")
+    option3 = AttributeChoiceOption.objects.create(attribute=attribute, name="Option 3")
+
+    product.set_attribute_value("choices", ["Option 1", "Option 3"])
+    assert product.get_attribute_value("choices") == [option1, option3]
+    applied_attribute = product.attributes.get(attribute=attribute)
+
+    applied_attribute.value = "Option 1"
+    applied_attribute.save()
+    assert applied_attribute.value == "Option 1"
+    assert product.get_attribute_value("choices") == [option1]
+
+    applied_attribute.value = "Option 2; Option 3"
+    applied_attribute.save()
+    assert applied_attribute.value == "Option 2; Option 3"
+    assert product.get_attribute_value("choices") == [option2, option3]
 
 
 def test_saving_invalid_attribute():
