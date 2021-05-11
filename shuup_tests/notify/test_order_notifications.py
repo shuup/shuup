@@ -191,6 +191,7 @@ def test_order_received(rf, regular_user):
 
     template_data = STEP_DATA[0]["actions"][0]["template_data"]
     for lang in ["en", "fi"]:
+        cache.clear()
         n_outbox_pre = len(mail.outbox)
         customer = create_random_person(locale=lang)
         create_random_order(customer)
@@ -205,6 +206,7 @@ def test_order_received_admin(rf, admin_user):
     get_test_script("test script", "order_received")
     template_data = STEP_DATA[0]["actions"][0]["template_data"]
     for lang in ["en", "fi"]:
+        cache.clear()
         get_initial_order_status()  # Needed for the API
         n_outbox_pre = len(mail.outbox)
         contact = create_random_person(locale=lang, minimum_name_comp_len=5)
@@ -233,6 +235,7 @@ def test_basic_order_flow_not_registered(with_company):
     LANG_CODE = {"en": "US", "fi": "FI"}
 
     for lang in ["en", "fi"]:
+        cache.clear()
         n_outbox_pre = len(mail.outbox)
         c = SmartClient()
         product_ids = _populate_client_basket(c)
@@ -284,6 +287,7 @@ def test_basic_order_flow_registered(regular_user):
     LANG_CODE = {"en": "US", "fi": "FI"}
 
     for lang in ["en", "fi"]:
+        cache.clear()
         n_outbox_pre = len(mail.outbox)
         contact = get_person_contact(regular_user)
         contact.language = lang
