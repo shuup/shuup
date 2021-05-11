@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Core: implement choice attribute getter and setter correctly
 - Admin: collect translation strings from Shepard Tour
 
 ## [2.7.3] - 2021-05-11

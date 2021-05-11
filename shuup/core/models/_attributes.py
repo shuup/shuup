@@ -24,6 +24,7 @@ from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+from typing import Iterable, Union
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.templatetags.shuup_common import datetime as format_datetime, number as format_number
@@ -207,7 +208,11 @@ class Attribute(TranslatableModel):
         elif self.type == AttributeType.CHOICES:
             choices = [(choice.id, choice.name) for choice in self.choices.all()]
             return TypedMultipleChoiceWithLimitField(
-                min_limit=self.min_choices, max_limit=self.max_choices, choices=choices, **kwargs
+                min_limit=self.min_choices,
+                max_limit=self.max_choices,
+                choices=choices,
+                coerce=lambda v: int(v),
+                **kwargs
             )
         else:
             raise ValueError("Error! `formfield` can't deal with the fields of type `%r`." % self.type)
@@ -228,6 +233,10 @@ class Attribute(TranslatableModel):
     @property
     def is_temporal(self):
         return self.type in ATTRIBUTE_DATETIME_TYPES
+
+    @property
+    def is_choices(self):
+        return self.type == AttributeType.CHOICES
 
     def is_null_value(self, value):
         """
@@ -362,6 +371,26 @@ class AppliedAttribute(TranslatableModel):
             self.numeric_value = date.toordinal()  # Store date ordinal as numeric value
             self.untranslated_string_value = date.isoformat()  # Store date ISO format as string value
 
+    def _set_choices_value(self, choices: Union[str, Iterable[Union[str, int, AttributeChoiceOption]]]):
+        choices_ids = []
+
+        # in case `choices` is a comma-separated string, like `option a; option b`
+        if isinstance(choices, str):
+            choices = [choice.strip() for choice in choices.split(";")]
+
+        for choice in choices:
+            if isinstance(choice, AttributeChoiceOption):
+                choices_ids.append(choice.pk)
+            elif isinstance(choice, int):
+                choices_ids.append(choice)
+            elif isinstance(choice, str):
+                existing_choice = self.attribute.choices.filter(translations__name=choice).first()
+                if existing_choice:
+                    choices_ids.append(existing_choice.pk)
+
+        # set the options
+        self.chosen_options.set(choices_ids)
+
     def _set_value(self, new_value):
         if self.attribute.is_numeric:
             self._set_numeric_value(new_value)
@@ -373,6 +402,10 @@ class AppliedAttribute(TranslatableModel):
 
         if self.attribute.is_temporal:
             self._set_datetime_value(new_value)
+            return
+
+        if self.attribute.is_choices:
+            self._set_choices_value(new_value)
             return
 
         raise ValueError("Error! Unknown attribute type.")  # pragma: no cover
@@ -542,7 +575,7 @@ class AttributableMixin(object):
                 return applied_attr.value
         return default
 
-    def set_attribute_value(self, identifier, value, language=None):
+    def set_attribute_value(self, identifier, value, language=None):  # noqa (C901)
         """
         Set an attribute value.
 
@@ -582,8 +615,24 @@ class AttributableMixin(object):
 
         # Set the value and save the attribute (possibly new)
         if applied_attr.attribute.type == AttributeType.CHOICES:
-            # `value` must be iterable
-            choices_ids = [choice.pk if isinstance(choice, AttributeChoiceOption) else choice for choice in value]
+            # `value` must be a comma-separated string or an iterable of AttributeChoiceOption, int or str
+            choices_ids = []
+
+            # in case `value` is a comma-separated string, like `option a; option b`
+            if isinstance(value, str):
+                value = [choice.strip() for choice in value.split(";")]
+
+            for choice in value:
+                if isinstance(choice, AttributeChoiceOption):
+                    choices_ids.append(choice.pk)
+                elif isinstance(choice, int):
+                    choices_ids.append(choice)
+                elif isinstance(choice, str):
+                    existing_choice = AttributeChoiceOption.objects.filter(
+                        attribute=attr, translations__name=choice
+                    ).first()
+                    if existing_choice:
+                        choices_ids.append(existing_choice.pk)
 
             # make sure all choices are valid
             if applied_attr.attribute.choices.filter(pk__in=choices_ids).count() != len(choices_ids):
@@ -591,7 +640,8 @@ class AttributableMixin(object):
 
             if not applied_attr.pk:
                 applied_attr.save()
-            applied_attr.chosen_options.set(value)
+
+            applied_attr.chosen_options.set(choices_ids)
         else:
             applied_attr.value = value
             applied_attr.save()

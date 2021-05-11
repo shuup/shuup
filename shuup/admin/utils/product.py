@@ -58,8 +58,13 @@ class ProductCloner:
         new_shop_product.categories.set(shop_product.categories.all())
 
         # clone attributes
-        for attribute in product.attributes.all():
-            ProductAttribute.objects.create(product=new_product, attribute=attribute.attribute, value=attribute.value)
+        for original_product_attribute in product.attributes.all():
+            product_attribute = ProductAttribute.objects.create(
+                product=new_product,
+                attribute=original_product_attribute.attribute,
+            )
+            product_attribute.value = original_product_attribute.value
+            product_attribute.save()
 
         # clone media
         for media in product.media.all():
