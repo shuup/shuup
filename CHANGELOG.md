@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.8.1] - 2021-05-11
+
 ### Fixed
 
 - Xtheme: encode cache key into base64 to prevent issues with memcache
