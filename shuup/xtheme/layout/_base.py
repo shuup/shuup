@@ -5,8 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
+from base64 import b64encode
+from django.utils.encoding import force_bytes
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -92,7 +92,9 @@ class LayoutCell(object):
             # check whether the plugin can be cached
             cacheabled = getattr(plugin_inst, "cacheable", False)
             cache_key = plugin_inst.get_cache_key() if hasattr(plugin_inst, "get_cache_key") else plugin_inst.identifier
-            full_cache_key = f"{cache_key_prefix}|{cache_key}"
+            full_cache_key = "shuup_xtheme_cell:{}".format(
+                force_text(b64encode(force_bytes(f"{cache_key_prefix}-{cache_key}")))
+            )
             cached_content = cache.get(full_cache_key)
             if cached_content is not None:
                 return cached_content

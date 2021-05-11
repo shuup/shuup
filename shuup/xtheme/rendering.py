@@ -197,22 +197,20 @@ class PlaceholderRenderer(object):
         saved_view_config = self.view_config.saved_view_config
 
         for x, cell in enumerate(row):
-            cache_key_prefix = "shuup_xtheme_cell:{}".format(
-                slugify(
-                    "{x}_{y}_{pk}_{status}_{modified_on}_{lang}_{placeholder}_{data_key}".format(
-                        x=x,
-                        y=y,
-                        pk=(saved_view_config.pk if saved_view_config else ""),
-                        status=(saved_view_config.status if saved_view_config else ""),
-                        modified_on=(
-                            saved_view_config.modified_on.isoformat()
-                            if saved_view_config and saved_view_config.modified_on
-                            else ""
-                        ),
-                        lang=language,
-                        placeholder=self.placeholder_name,
-                        data_key=get_layout_data_key(self.placeholder_name, layout, self.context),
-                    )
+            cache_key_prefix = slugify(
+                "{x}_{y}_{pk}_{status}_{modified_on}_{lang}_{placeholder}_{data_key}".format(
+                    x=x,
+                    y=y,
+                    pk=(saved_view_config.pk if saved_view_config else ""),
+                    status=(saved_view_config.status if saved_view_config else ""),
+                    modified_on=(
+                        saved_view_config.modified_on.isoformat()
+                        if saved_view_config and saved_view_config.modified_on
+                        else ""
+                    ),
+                    lang=language,
+                    placeholder=self.placeholder_name,
+                    data_key=get_layout_data_key(self.placeholder_name, layout, self.context),
                 )
             )
             self._render_cell(write, layout, x, cell, cache_key_prefix)
