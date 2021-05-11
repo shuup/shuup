@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Xtheme: add attribute on every plugin to indicate whether it can be cached or not
+
+### Removed
+
+- Xtheme: removed the SHUUP_XTHEME_USE_PLACEHOLDER_CACHE setting and do not cache the entire placeholder content
+
 ### Fixed
 
 - Core: implement choice attribute getter and setter correctly
