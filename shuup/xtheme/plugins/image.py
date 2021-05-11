@@ -49,6 +49,7 @@ class ImagePlugin(TemplatedPlugin):
     identifier = "images"
     name = _("Image")
     template_name = "shuup/xtheme/plugins/image.jinja"
+    cacheable = True
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False)),
         ("image_id", ImageIDField(label=_("Image"), required=False)),
@@ -76,6 +77,15 @@ class ImagePlugin(TemplatedPlugin):
             ),
         ),
     ]
+
+    def get_cache_key(self) -> str:
+        image_id = self.config.get("image_id", None)
+        title = self.get_translated_value("title", "")
+        url = self.config.get("url", None)
+        full_width = self.config.get("full_width", None)
+        width = self.config.get("width", None)
+        height = self.config.get("height", None)
+        return str((image_id, title, url, full_width, width, height))
 
     def get_context_data(self, context):
         """

@@ -32,6 +32,7 @@ class Plugin(object):
     required_context_variables = set()
     name = _("Plugin")  # User-visible name
     editor_form_class = GenericPluginForm
+    cacheable = False  # Indicates whether this plugin can be cached while rendering
 
     def __init__(self, config):
         """
@@ -172,6 +173,12 @@ class Plugin(object):
                 choices.append((plugin.identifier, getattr(plugin, "name", None) or plugin.identifier))
         choices.sort()
         return choices
+
+    def get_cache_key(self) -> str:
+        """
+        Return a string that is used as the cache key when the plugin can be cached
+        """
+        return self.identifier
 
 
 class TemplatedPlugin(Plugin):

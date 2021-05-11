@@ -38,6 +38,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
     identifier = "async_product_highlight"
     name = _("Product Highlights (asynchronous)")
     template_name = "shuup/xtheme/plugins/highlight_plugin_async.jinja"
+    cacheable = True
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         (
@@ -48,6 +49,14 @@ class ProductHighlightPlugin(TemplatedPlugin):
         ("cutoff_days", forms.IntegerField(label=_("Cutoff days"), min_value=1, initial=30)),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        plugin_type = self.config.get("type", HighlightType.NEWEST.value)
+        count = self.config.get("count", 5)
+        cutoff_days = self.config.get("cutoff_days", 30)
+        cache_timeout = self.config.get("cache_timeout", 0)
+        return str((title, plugin_type, count, cutoff_days, cache_timeout))
 
     def get_context_data(self, context):
         request = context["request"]

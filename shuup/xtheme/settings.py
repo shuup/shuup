@@ -26,14 +26,3 @@ SHUUP_XTHEME_ADMIN_THEME_CONTEXT = "shuup.xtheme.admin_module.utils.get_theme_co
 SHUUP_XTHEME_EXCLUDE_TEMPLATES_FROM_RESOUCE_INJECTION = [
     "notify/admin/script_item_editor.jinja",
 ]
-
-#: Cache placeholders
-#:
-#: This useful when you have plugins does no depend on
-#: context which they should not.
-#:
-#: By default do not create plugins which are depended
-#: on context. Instead try to make those asynchronous
-#: so those are not rendered server side during initial
-#: page load.
-SHUUP_XTHEME_USE_PLACEHOLDER_CACHE = False

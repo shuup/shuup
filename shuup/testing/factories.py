@@ -908,7 +908,7 @@ def create_random_product_attribute():
 def create_random_user(locale="en", **kwargs):
     user_model = get_user_model()
     faker = get_faker(["person"], locale)
-    params = {user_model.USERNAME_FIELD: slugify(faker.first_name())}
+    params = {user_model.USERNAME_FIELD: "{}-{}".format(uuid.uuid4().hex, slugify(faker.first_name()))}
     params.update(kwargs or {})
     return user_model.objects.create(**params)
 

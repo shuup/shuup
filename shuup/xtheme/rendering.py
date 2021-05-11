@@ -7,18 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.utils.text import slugify
 from django.utils.translation import get_language, ugettext_lazy as _
 from markupsafe import Markup
 
-from shuup.core import cache
 from shuup.core.fields.tagged_json import TaggedJSONEncoder
 from shuup.utils.django_compat import force_text
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.editing import is_edit_mode, may_inject
 from shuup.xtheme.layout.utils import get_layout_data_key
-from shuup.xtheme.models import SavedViewConfigStatus
 from shuup.xtheme.utils import get_html_attrs
 from shuup.xtheme.view_config import ViewConfig
 
@@ -123,50 +120,23 @@ class PlaceholderRenderer(object):
         :return: Rendered markup.
         :rtype: markupsafe.Markup
         """
-        language = get_language()
 
         if not may_inject(self.context):
             return ""
 
         full_content = ""
-        saved_view_config = self.view_config.saved_view_config
         for layout in self.layouts:
-            cache_key = slugify(
-                "shuup_xtheme_placeholders:placeholder_%s_%s_%s_%s_%s_%s"
-                % (
-                    (saved_view_config.pk if saved_view_config else ""),
-                    (saved_view_config.status if saved_view_config else ""),
-                    (
-                        saved_view_config.modified_on.isoformat()
-                        if saved_view_config and saved_view_config.modified_on
-                        else ""
-                    ),
-                    language,
-                    self.placeholder_name,
-                    get_layout_data_key(self.placeholder_name, layout, self.context),
-                )
-            )
-            layout_content = cache.get(cache_key)
-            if (
-                settings.SHUUP_XTHEME_USE_PLACEHOLDER_CACHE
-                and saved_view_config
-                and saved_view_config.status == SavedViewConfigStatus.PUBLIC
-                and layout_content
-            ):
-                full_content += layout_content
-            else:
-                wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))
-                buffer = []
-                write = buffer.append
-                self._render_layout(write, layout)
-                content = "".join(buffer)
-                layout_content = "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
-                    "wrapper_start": wrapper_start,
-                    "content": content,
-                    "wrapper_end": "</div>",
-                }
-                cache.set(cache_key, layout_content)
-                full_content += layout_content
+            wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs(layout))
+            buffer = []
+            write = buffer.append
+            self._render_layout(write, layout)
+            content = "".join(buffer)
+            layout_content = "%(wrapper_start)s%(content)s%(wrapper_end)s" % {
+                "wrapper_start": wrapper_start,
+                "content": content,
+                "wrapper_end": "</div>",
+            }
+            full_content += layout_content
 
         return Markup('<div class="placeholder-edit-wrap">%s</div>' % full_content)
 
@@ -222,11 +192,34 @@ class PlaceholderRenderer(object):
         if self.edit:
             row_attrs["data-xt-row"] = str(y)
         write("<div%s>" % get_html_attrs(row_attrs))
+
+        language = get_language()
+        saved_view_config = self.view_config.saved_view_config
+
         for x, cell in enumerate(row):
-            self._render_cell(write, layout, x, cell)
+            cache_key_prefix = "shuup_xtheme_cell:{}".format(
+                slugify(
+                    "{x}_{y}_{pk}_{status}_{modified_on}_{lang}_{placeholder}_{data_key}".format(
+                        x=x,
+                        y=y,
+                        pk=(saved_view_config.pk if saved_view_config else ""),
+                        status=(saved_view_config.status if saved_view_config else ""),
+                        modified_on=(
+                            saved_view_config.modified_on.isoformat()
+                            if saved_view_config and saved_view_config.modified_on
+                            else ""
+                        ),
+                        lang=language,
+                        placeholder=self.placeholder_name,
+                        data_key=get_layout_data_key(self.placeholder_name, layout, self.context),
+                    )
+                )
+            )
+            self._render_cell(write, layout, x, cell, cache_key_prefix)
+
         write("</div>\n")
 
-    def _render_cell(self, write, layout, x, cell):
+    def _render_cell(self, write, layout, x, cell, cache_key_prefix):
         """
         Render a layout cell into HTML.
 
@@ -254,7 +247,7 @@ class PlaceholderRenderer(object):
         if self.edit:
             cell_attrs.update({"data-xt-cell": str(x)})
         write("<div%s>" % get_html_attrs(cell_attrs))
-        content = cell.render(self.context)
+        content = cell.render(self.context, cache_key_prefix=cache_key_prefix)
         if content is not None:  # pragma: no branch
             write(force_text(content))
         write("</div>")
