@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- General: make some plugins cacheable
 - Xtheme: add attribute on every plugin to indicate whether it can be cached or not
 
 ### Removed

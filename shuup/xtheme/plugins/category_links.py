@@ -46,6 +46,7 @@ class CategoryLinksPlugin(TemplatedPlugin):
     identifier = "category_links"
     name = _("Category Links")
     template_name = "shuup/xtheme/plugins/category_links.jinja"
+    cacheable = True
     editor_form_class = CategoryLinksConfigForm
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
@@ -60,6 +61,12 @@ class CategoryLinksPlugin(TemplatedPlugin):
         ),
         "categories",
     ]
+
+    def get_cache_key(self) -> str:
+        selected_categories = self.config.get("categories", [])
+        show_all_categories = self.config.get("show_all_categories", True)
+        title = self.get_translated_value("title")
+        return str((selected_categories, show_all_categories, title))
 
     def get_context_data(self, context):
         """

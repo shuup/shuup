@@ -77,6 +77,7 @@ class PageLinksPlugin(TemplatedPlugin):
     identifier = "simple_cms.page_links"
     name = _("CMS Page Links")
     template_name = "shuup/simple_cms/plugins/page_links.jinja"
+    cacheable = True
     editor_form_class = PageLinksConfigForm
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
@@ -99,6 +100,13 @@ class PageLinksPlugin(TemplatedPlugin):
         ),
         "pages",
     ]
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        selected_pages = self.config.get("pages", [])
+        show_all_pages = self.config.get("show_all_pages", True)
+        hide_expired = self.config.get("hide_expired", False)
+        return str((title, selected_pages, show_all_pages, hide_expired))
 
     def get_context_data(self, context):
         """

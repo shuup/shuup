@@ -37,6 +37,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
     identifier = "product_highlight"
     name = _("Product Highlights")
     template_name = "shuup/xtheme/plugins/highlight_plugin.jinja"
+    cacheable = True
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         (
@@ -57,6 +58,13 @@ class ProductHighlightPlugin(TemplatedPlugin):
             ),
         ),
     ]
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        highlight_type = self.config.get("type", HighlightType.NEWEST.value)
+        count = self.config.get("count", 4)
+        orderable_only = self.config.get("orderable_only", True)
+        return str((title, highlight_type, orderable_only, count))
 
     def get_context_data(self, context):
         highlight_type = self.config.get("type", HighlightType.NEWEST.value)
@@ -83,6 +91,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
     identifier = "product_cross_sells"
     name = _("Product Cross Sells")
     template_name = "shuup/xtheme/plugins/cross_sells_plugin.jinja"
+    cacheable = True
     required_context_variables = ["product"]
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
@@ -121,6 +130,14 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
                 type = ProductCrossSellType.RELATED
             config["type"] = type
         super(ProductCrossSellsPlugin, self).__init__(config)
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        relation_type = self.config.get("type")
+        count = self.config.get("count", 4)
+        orderable_only = self.config.get("orderable_only", True)
+        use_variation_parents = self.config.get("use_variation_parents", False)
+        return str((title, relation_type, orderable_only, count, use_variation_parents))
 
     def get_context_data(self, context):
         count = self.config.get("count", 4)
@@ -163,6 +180,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
     name = _("Category Products Highlight")
     template_name = "shuup/xtheme/plugins/highlight_plugin.jinja"
     editor_form_class = ProductsFromCategoryForm
+    cacheable = True
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
@@ -179,6 +197,13 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
             ),
         ),
     ]
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        category_id = self.config.get("category")
+        count = self.config.get("count")
+        orderable_only = self.config.get("orderable_only", True)
+        return str((title, category_id, orderable_only, count))
 
     def get_context_data(self, context):
         products = []
@@ -227,7 +252,13 @@ class ProductSelectionPlugin(TemplatedPlugin):
     name = _("Product Selection")
     template_name = "shuup/xtheme/plugins/product_selection_plugin.jinja"
     editor_form_class = ProductSelectionConfigForm
+    cacheable = True
     fields = [("title", TranslatableField(label=_("Title"), required=False, initial=""))]
+
+    def get_cache_key(self) -> str:
+        title = self.get_translated_value("title")
+        products = self.config.get("products")
+        return str((title, products))
 
     def get_context_data(self, context):
         request = context["request"]

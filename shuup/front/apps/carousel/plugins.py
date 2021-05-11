@@ -19,6 +19,7 @@ class CarouselPlugin(TemplatedPlugin):
     identifier = "shuup.front.apps.carousel.carousel"
     name = _("Carousel Plugin")
     template_name = "shuup/carousel/carousel.jinja"
+    cacheable = True
     fields = [
         ("carousel", None),
         (
@@ -37,6 +38,11 @@ class CarouselPlugin(TemplatedPlugin):
         defaults = super(CarouselPlugin, self).get_defaults()
         defaults.update({"carousel": self.config.get("carousel", None), "active": self.config.get("active", True)})
         return defaults
+
+    def get_cache_key(self) -> str:
+        carousel_id = self.config.get("carousel")
+        active = self.config.get("active")
+        return str((carousel_id, active))
 
     def get_context_data(self, context):
         """
