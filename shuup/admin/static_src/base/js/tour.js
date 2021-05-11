@@ -190,7 +190,7 @@ import Shepherd from "shepherd.js";
         const buttons = [];
         if (type !== "first" && type !== "last") {
             buttons.push({
-                text: "Previous",
+                text: gettext("Previous"),
                 classes: "btn btn-primary",
                 action: tour.back
             });
@@ -198,13 +198,13 @@ import Shepherd from "shepherd.js";
 
         if (type === "last") {
             buttons.push({
-                text: "OK",
+                text: gettext("OK"),
                 classes: "btn btn-primary",
                 action: tour.cancel
             });
         } else {
             buttons.push({
-                text: "Next",
+                text: gettext("Next"),
                 classes: "btn btn-primary",
                 action: tour.next
             });

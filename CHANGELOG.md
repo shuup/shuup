@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Admin: collect translation strings from Shepard Tour
+
 ## [2.7.3] - 2021-05-11
 
 ### Fixed
