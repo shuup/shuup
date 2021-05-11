@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
+import time
 from django.test.utils import override_settings
 
 from shuup.core import cache
@@ -108,15 +109,18 @@ def navigate_to_checkout(browser, product):
     click_element(browser, "#product-%s" % product.pk)  # open product from product list
     click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
 
-    wait_until_appeared(browser, ".cover-wrap")
-    wait_until_disappeared(browser, ".cover-wrap")
+    time.sleep(1)
 
     click_element(browser, "#navigation-basket-partial")  # open upper basket navigation menu
     click_element(browser, "a[href='/basket/']")  # click the link to basket in dropdown
+    time.sleep(1)
+
     wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
     wait_until_condition(browser, lambda x: x.is_text_present(product.name))  # product is in basket
 
     click_element(browser, "a[href='/checkout/']")  # click link that leads to checkout
+
+    time.sleep(1)
 
 
 def guest_ordering_test(browser, live_server):
@@ -128,8 +132,7 @@ def guest_ordering_test(browser, live_server):
     wait_until_appeared(browser, "div.alert.alert-danger")
 
     click_element(browser, "button[data-id='id_checkout_method_choice-register']")
-    # WARNING: data-original-index was removed after bootstrap-select 1.6.3
-    click_element(browser, "li[data-original-index='0'] a")
+    click_element(browser, "button[data-id='id_checkout_method_choice-register'] + .dropdown-menu li:nth-child(1) a")
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Addresses"))
     url = reverse("shuup:checkout", kwargs={"phase": "checkout_method"})
@@ -138,7 +141,7 @@ def guest_ordering_test(browser, live_server):
 
 def register_test(browser, live_server, test_username, test_email, test_password):
     click_element(browser, "button[data-id='id_checkout_method_choice-register']")
-    click_element(browser, "li[data-original-index='1'] a")
+    click_element(browser, "button[data-id='id_checkout_method_choice-register'] + .dropdown-menu li:nth-child(2) a")
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_condition(browser, lambda x: x.is_text_present("Register"))
 

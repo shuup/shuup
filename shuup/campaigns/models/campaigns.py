@@ -10,7 +10,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
@@ -29,7 +29,6 @@ from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Category, Order, Shop
 from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
-from shuup.utils.django_compat import force_text
 from shuup.utils.properties import MoneyPropped
 
 
@@ -148,7 +147,7 @@ class CatalogCampaign(Campaign):
     )
 
     def __str__(self):
-        return force_text(_("Catalog Campaign: %(name)s" % dict(name=self.name)))
+        return force_text(_("Catalog Campaign: {name}").format(name=self.name))
 
     def save(self, *args, **kwargs):
         super(CatalogCampaign, self).save(*args, **kwargs)
@@ -255,7 +254,7 @@ class BasketCampaign(Campaign):
     )
 
     def __str__(self):
-        return force_text(_("Basket Campaign: %(name)s" % dict(name=self.name)))
+        return force_text(_("Basket Campaign: {name}").format(name=self.name))
 
     def save(self, *args, **kwargs):
         if self.coupon:
@@ -382,7 +381,6 @@ class CouponUsage(models.Model):
         return cls.objects.create(order=order, coupon=coupon)
 
 
-@python_2_unicode_compatible
 class Coupon(models.Model):
     admin_url_suffix = "coupon"
     name_field = "code"  # TODO: Document me

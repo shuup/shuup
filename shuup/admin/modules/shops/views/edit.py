@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
 from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"POT-Creation-Date: 2021-05-10 20:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -157,9 +157,6 @@ msgid ""
 "You have already linked your account to a company and it is pending approval."
 msgstr ""
 
-msgid "User account information"
-msgstr ""
-
 msgid "Not specified"
 msgstr ""
 
@@ -187,7 +184,7 @@ msgstr ""
 msgid "Copy to billing information"
 msgstr ""
 
-msgid "Edit user account information"
+msgid "Edit customer information"
 msgstr ""
 
 msgid "Save password"
@@ -203,9 +200,6 @@ msgid "Link account to company"
 msgstr ""
 
 msgid "Company information"
-msgstr ""
-
-msgid "User information"
 msgstr ""
 
 msgid "Password changed."

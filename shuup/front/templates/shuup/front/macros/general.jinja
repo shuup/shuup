@@ -3,12 +3,12 @@
 {% macro alert(message, title=None, mode="") %}
     <div class="alert{% if mode %} alert-{{ mode }}{% endif %}">
         {% if title %}
-            <strong>{{ "Error! "~title }}</strong>
+            <strong>{{ title }}</strong>
         {% endif %}
         {% if not caller %}
-            {{ "Error! "~message|safe }}
+            {{ message|safe }}
         {% else %}
-            {{ "Error! "~caller() }}
+            {{ caller() }}
         {% endif %}
     </div>
 {% endmacro %}

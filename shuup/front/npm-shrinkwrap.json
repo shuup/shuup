@@ -2181,12 +2181,9 @@
       "integrity": "sha512-yN5oZVmRCwe5aKwzRj6736nSmKDX7pLYwsXiCj/EYmo16hODaBiT4En5btW/jhBF/seV+XMx3aYwukYC3A49DA=="
     },
     "bootstrap-select": {
-      "version": "1.6.3",
-      "resolved": "https://registry.npmjs.org/bootstrap-select/-/bootstrap-select-1.6.3.tgz",
-      "integrity": "sha1-qdKsJnO1KXWueq/z7GWMHzx2PAI=",
-      "requires": {
-        "jquery": ">=1.8"
-      }
+      "version": "1.13.18",
+      "resolved": "https://registry.npmjs.org/bootstrap-select/-/bootstrap-select-1.13.18.tgz",
+      "integrity": "sha512-V1IzK4rxBq5FrJtkzSH6RmFLFBsjx50byFbfAf8jYyXROWs7ZpprGjdHeoyq2HSsHyjJhMMwjsQhRoYAfxCGow=="
     },
     "brace-expansion": {
       "version": "1.1.11",

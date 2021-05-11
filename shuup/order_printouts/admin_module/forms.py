@@ -10,9 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class PrintoutsEmailForm(forms.Form):
-    to = forms.EmailField(max_length=256)
-    subject = forms.CharField(max_length=256)
-    body = forms.CharField(max_length=512, widget=forms.Textarea)
-
-    class Meta:
-        labels = {"to": _("To"), "subject": _("Email Subject"), "body": _("Email Body")}
+    to = forms.EmailField(max_length=256, label=_("To"))
+    subject = forms.CharField(max_length=256, label=_("Email Subject"))
+    body = forms.CharField(max_length=512, widget=forms.Textarea, label=_("Email Body"))

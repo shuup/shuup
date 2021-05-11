@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.admin.utils.urls import get_model_url

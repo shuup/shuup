@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"POT-Creation-Date: 2021-05-10 20:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -395,8 +395,8 @@ msgstr ""
 msgid "The campaign name to show in the store front."
 msgstr ""
 
-#, python-format
-msgid "Catalog Campaign: %(name)s"
+#, python-brace-format
+msgid "Catalog Campaign: {name}"
 msgstr ""
 
 msgid "basket line text"
@@ -420,8 +420,8 @@ msgstr ""
 msgid "public name"
 msgstr ""
 
-#, python-format
-msgid "Basket Campaign: %(name)s"
+#, python-brace-format
+msgid "Basket Campaign: {name}"
 msgstr ""
 
 msgid "Can't have multiple active campaigns with same code."

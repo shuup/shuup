@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Admin: use correct translated label syntax for form fields
+- Front: Remove untranslated Error! prefix in alert messages
+- Campaigns: fix the translation string format
+
+### Changed
+
+- General: use gettext_lazy to make sure translations work
+- Front: unify the Customer Information title across the dashboard
+- Front: bump bootstrap-select and use translated strings while initializing it
+
 ## [2.7.2] - 2021-05-05
 
 ### Fixed

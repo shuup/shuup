@@ -3,14 +3,14 @@
 {% from "shuup/customer_information/macros/buttons.jinja" import change_password_button, company_account_button, save_changes_button %}
 {% from "shuup/customer_information/macros/contact.jinja" import render_person_contact_form %}
 
-{% block title %}{% trans %}User account information{% endtrans %}{% endblock %}
-{% block content_title %}{% trans %}User account information{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Customer Information{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Customer Information{% endtrans %}{% endblock %}
 
 {% block breadcrumb %}
     {% call macros.breadcrumb() %}
         {{ macros.render_breadcrumb_item("/", _("Home")) }}
         {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
-        {{ macros.render_breadcrumb_item(None, _("User account information"), True) }}
+        {{ macros.render_breadcrumb_item(None, _("Customer Information"), True) }}
     {% endcall %}
 {% endblock %}
 

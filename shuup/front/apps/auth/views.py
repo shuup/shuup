@@ -16,7 +16,7 @@ from django.contrib.auth.views import REDIRECT_FIELD_NAME
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url, urlsafe_base64_decode
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
 
 from shuup.core.utils.forms import RecoverPasswordForm
