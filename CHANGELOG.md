@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Xtheme: use the context while generating the cache key
 - Xtheme: do not crash the whole site when a plugin fails to render
 - Xtheme: hash the cache key to prevent strings larger then 250 chars
 

@@ -78,7 +78,7 @@ class ImagePlugin(TemplatedPlugin):
         ),
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         image_id = self.config.get("image_id", None)
         title = self.get_translated_value("title", "")
         url = self.config.get("url", None)

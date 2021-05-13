@@ -94,7 +94,9 @@ class LayoutCell(object):
                 # check whether the plugin can be cached
                 cacheabled = getattr(plugin_inst, "cacheable", False)
                 cache_key = (
-                    plugin_inst.get_cache_key() if hasattr(plugin_inst, "get_cache_key") else plugin_inst.identifier
+                    plugin_inst.get_cache_key(context)
+                    if hasattr(plugin_inst, "get_cache_key")
+                    else plugin_inst.identifier
                 )
                 full_cache_key = "shuup_xtheme_cell:{}".format(hash(f"{cache_key_prefix}-{cache_key}"))
                 cached_content = cache.get(full_cache_key)

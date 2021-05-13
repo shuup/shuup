@@ -39,7 +39,7 @@ class CarouselPlugin(TemplatedPlugin):
         defaults.update({"carousel": self.config.get("carousel", None), "active": self.config.get("active", True)})
         return defaults
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         carousel_id = self.config.get("carousel")
         active = self.config.get("active")
         return str((carousel_id, active))

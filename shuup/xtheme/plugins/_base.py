@@ -174,7 +174,7 @@ class Plugin(object):
         choices.sort()
         return choices
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         """
         Return a string that is used as the cache key when the plugin can be cached
         """
