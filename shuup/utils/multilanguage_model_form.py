@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 import copy
 import six
+import warnings
 from collections import defaultdict
 from django.conf import settings
 from django.forms.models import ModelForm, model_to_dict
@@ -31,10 +30,17 @@ def to_language_codes(languages, default_language):
 
 
 class MultiLanguageModelForm(TranslatableModelForm):
+    def _get_translation_models(self):
+        return self._meta.model._parler_meta.get_all_models()
+
     def _get_translation_model(self):
+        warnings.warn(
+            "Warning! `_get_translation_model` is deprecated in Shuup 2.x as unused for this util.",
+            DeprecationWarning,
+        )
         return self._meta.model._parler_meta.root_model
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs):  # noqa (C901)
         self.default_language = kwargs.pop(
             "default_language", getattr(self, "language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         )
@@ -43,16 +49,18 @@ class MultiLanguageModelForm(TranslatableModelForm):
         self.required_languages = kwargs.pop("required_languages", [self.default_language])
 
         opts = self._meta
-        translations_model = self._get_translation_model()
+        translations_models = self._get_translation_models()
         object_data = {}
 
         # We're not mutating the existing fields, so the shallow copy should be okay
         self.base_fields = self.base_fields.copy()
-        self.translation_fields = [
-            f
-            for f in translations_model._meta.get_fields()
-            if f.name not in ("language_code", "master", "id") and f.name in self.base_fields
-        ]
+        self.translation_fields = []
+
+        for translations_model in translations_models:
+            for field in translations_model._meta.get_fields():
+                if field.name not in ("language_code", "master", "id") and field.name in self.base_fields:
+                    self.translation_fields.append(field)
+
         self.trans_field_map = defaultdict(dict)
         self.trans_name_map = defaultdict(dict)
         self.translated_field_names = []
@@ -80,13 +88,17 @@ class MultiLanguageModelForm(TranslatableModelForm):
         initial = kwargs.get("initial")
         if instance is not None:
             assert isinstance(instance, self._meta.model)
-            current_translations = dict(
-                (trans.language_code, trans) for trans in translations_model.objects.filter(master=instance)
-            )
+            current_translations = defaultdict(list)
+
+            for translations_model in translations_models:
+                for trans in translations_model.objects.filter(master=instance):
+                    current_translations[trans.language_code].append(trans)
+
             object_data = {}
-            for lang, trans in six.iteritems(current_translations):
-                model_dict = model_to_dict(trans, opts.fields, opts.exclude)
-                object_data.update(("%s__%s" % (fn, lang), f) for (fn, f) in six.iteritems(model_dict))
+            for lang, translations in six.iteritems(current_translations):
+                for trans in translations:
+                    model_dict = model_to_dict(trans, opts.fields, opts.exclude)
+                    object_data.update(("%s__%s" % (fn, lang), f) for (fn, f) in six.iteritems(model_dict))
 
         if initial is not None:
             object_data.update(initial)
@@ -114,25 +126,26 @@ class MultiLanguageModelForm(TranslatableModelForm):
         return data
 
     def _save_translations(self, instance, data):
-        translations_model = self._get_translation_model()
-        current_translations = dict(
-            (trans.language_code, trans)
-            for trans in translations_model.objects.filter(master_id=instance.id, language_code__in=self.languages)
-        )
-        for lang, field_map in six.iteritems(self.trans_field_map):
-            translation_fields = dict((src_name, data.get(src_name)) for src_name in field_map)
-            translation = current_translations.get(lang)
-            # Add translation only if at least one translated field is given
-            if not any(translation_fields.values()):
-                if translation:
-                    translation.delete()  # No translations set so delete the object also.
-                continue
-            current_translations[lang] = translation = translation or translations_model(
-                master=instance, language_code=lang
+        for translations_model in self._get_translation_models():
+            current_translations = dict(
+                (trans.language_code, trans)
+                for trans in translations_model.objects.filter(master_id=instance.id, language_code__in=self.languages)
             )
-            for src_name, field in six.iteritems(field_map):
-                field.save_form_data(translation, translation_fields[src_name])
-            self._save_translation(instance, translation)
+            for lang, field_map in six.iteritems(self.trans_field_map):
+                translation_fields = dict((src_name, data.get(src_name)) for src_name in field_map)
+                translation = current_translations.get(lang)
+                # Add translation only if at least one translated field is given
+                if not any(translation_fields.values()):
+                    if translation:
+                        translation.delete()  # No translations set so delete the object also.
+                    continue
+                current_translations[lang] = translation = translation or translations_model(
+                    master=instance, language_code=lang
+                )
+                for src_name, field in six.iteritems(field_map):
+                    field.save_form_data(translation, translation_fields[src_name])
+
+                self._save_translation(instance, translation)
 
     def _save_translation(self, instance, translation):
         """
