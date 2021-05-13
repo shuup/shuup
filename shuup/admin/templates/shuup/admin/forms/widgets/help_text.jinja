@@ -16,7 +16,7 @@
             data-html="true"
             data-trigger="focus"
             title="{{ field.field.label }}"
-            data-content="{{ help_text }}"
+            data-content="{{ help_text|forceescape }}"
         >
             <i class="fa fa-question-circle"></i>
         </a>

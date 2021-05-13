@@ -10,6 +10,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: force escape help texts which can contain `"` characters
+- Admin: show translation fields from all polymorphic models available
 - Xtheme: hash the cache key to prevent strings larger then 250 chars
 
 ## [2.8.1] - 2021-05-11
