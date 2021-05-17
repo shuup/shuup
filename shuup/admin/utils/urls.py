@@ -57,7 +57,7 @@ class AdminRegexURLPattern(URLPattern):
         """
         if request.is_ajax():
             return HttpResponseForbidden(json.dumps({"error": force_text(reason)}))
-        error_params = urlencode({"error": reason})
+        error_params = urlencode({"error": force_text(reason)})
         login_url = force_str(reverse("shuup_admin:login") + "?" + error_params)
         resp = redirect_to_login(next=request.path, login_url=login_url)
         if is_authenticated(request.user):
