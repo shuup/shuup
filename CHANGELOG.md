@@ -12,6 +12,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Xtheme: use the context while generating the cache key
 - Xtheme: do not crash the whole site when a plugin fails to render
+- Admin: Force to parse reason as string before encoding the url
 
 ## [2.8.2] - 2021-05-14
 
