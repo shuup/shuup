@@ -101,7 +101,7 @@ class PageLinksPlugin(TemplatedPlugin):
         "pages",
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         selected_pages = self.config.get("pages", [])
         show_all_pages = self.config.get("show_all_pages", True)

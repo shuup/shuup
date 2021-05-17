@@ -5,12 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import logging
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext, ugettext_lazy as _
 
 from shuup.core import cache
 from shuup.utils.django_compat import force_text
 from shuup.xtheme.plugins._base import Plugin
+
+LOGGER = logging.getLogger(__name__)
 
 
 class LayoutCell(object):
@@ -86,21 +89,32 @@ class LayoutCell(object):
         if plugin_inst is None:
             return mark_safe("<!-- %s? -->" % self.plugin_identifier)
 
-        if plugin_inst.is_context_valid(context=context):
-            # check whether the plugin can be cached
-            cacheabled = getattr(plugin_inst, "cacheable", False)
-            cache_key = plugin_inst.get_cache_key() if hasattr(plugin_inst, "get_cache_key") else plugin_inst.identifier
-            full_cache_key = "shuup_xtheme_cell:{}".format(hash(f"{cache_key_prefix}-{cache_key}"))
-            cached_content = cache.get(full_cache_key)
-            if cached_content is not None:
-                return cached_content
+        try:
+            if plugin_inst.is_context_valid(context=context):
+                # check whether the plugin can be cached
+                cacheabled = getattr(plugin_inst, "cacheable", False)
+                cache_key = (
+                    plugin_inst.get_cache_key(context)
+                    if hasattr(plugin_inst, "get_cache_key")
+                    else plugin_inst.identifier
+                )
+                full_cache_key = "shuup_xtheme_cell:{}".format(hash(f"{cache_key_prefix}-{cache_key}"))
+                cached_content = cache.get(full_cache_key)
+                if cached_content is not None:
+                    return cached_content
 
-            content = plugin_inst.render(context=context)
-            if cacheabled:
-                cache.set(full_cache_key, content)
-            return content
-        else:
-            return ""
+                content = plugin_inst.render(context=context)
+                if cacheabled:
+                    cache.set(full_cache_key, content)
+                return content
+            else:
+                return ""
+
+        except Exception:
+            # catch any error while trying to render the cell
+            LOGGER.exception(f"Failed to render the plugin: {self.plugin_identifier}")
+            error_msg = gettext("Failed to render the plugin")
+            return mark_safe(mark_safe(f'<small class="plugin-render-error">{error_msg}</small>'))
 
     @classmethod
     def unserialize(cls, theme, data):

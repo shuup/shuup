@@ -59,7 +59,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
         ),
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         highlight_type = self.config.get("type", HighlightType.NEWEST.value)
         count = self.config.get("count", 4)
@@ -131,7 +131,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             config["type"] = type
         super(ProductCrossSellsPlugin, self).__init__(config)
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         relation_type = self.config.get("type")
         count = self.config.get("count", 4)
@@ -170,7 +170,7 @@ class ProductsFromCategoryForm(GenericPluginForm):
         self.fields["category"] = XThemeSelect2ModelChoiceField(
             model="shuup.category",
             label=_("Category"),
-            required=False,
+            required=True,
             initial=self.plugin.config.get("category") if self.plugin else None,
         )
 
@@ -198,7 +198,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         ),
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         category_id = self.config.get("category")
         count = self.config.get("count")
@@ -255,7 +255,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
     cacheable = True
     fields = [("title", TranslatableField(label=_("Title"), required=False, initial=""))]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         products = self.config.get("products")
         return str((title, products))

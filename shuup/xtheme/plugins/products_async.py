@@ -50,13 +50,13 @@ class ProductHighlightPlugin(TemplatedPlugin):
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
-        plugin_type = self.config.get("type", HighlightType.NEWEST.value)
-        count = self.config.get("count", 5)
-        cutoff_days = self.config.get("cutoff_days", 30)
-        cache_timeout = self.config.get("cache_timeout", 0)
-        return str((title, plugin_type, count, cutoff_days, cache_timeout))
+        plugin_type = self.config.get("type")
+        count = self.config.get("count")
+        cutoff_days = self.config.get("cutoff_days")
+        cache_timeout = self.config.get("cache_timeout")
+        return str((title, plugin_type, count, cutoff_days, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]
@@ -118,6 +118,13 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             config["type"] = type
         super(ProductCrossSellsPlugin, self).__init__(config)
 
+    def get_cache_key(self, context, **kwargs) -> str:
+        title = self.get_translated_value("title")
+        relation_type = self.config.get("type")
+        count = self.config.get("count")
+        cache_timeout = self.config.get("cache_timeout")
+        return str((title, relation_type, count, cache_timeout, context["request"].is_ajax()))
+
     def get_context_data(self, context):
         request = context["request"]
         products = []
@@ -177,7 +184,7 @@ class ProductsFromCategoryForm(GenericPluginForm):
         self.fields["category"] = XThemeSelect2ModelChoiceField(
             model="shuup.category",
             label=_("Category"),
-            required=False,
+            required=True,
             initial=self.plugin.config.get("category") if self.plugin else None,
         )
 
@@ -192,6 +199,12 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=5)),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
+
+    def get_cache_key(self, context, **kwargs) -> str:
+        title = self.get_translated_value("title")
+        count = self.config.get("count")
+        cache_timeout = self.config.get("cache_timeout")
+        return str((title, count, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]
@@ -255,6 +268,11 @@ class ProductSelectionPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
     ]
+
+    def get_cache_key(self, context, **kwargs) -> str:
+        title = self.get_translated_value("title")
+        cache_timeout = self.config.get("cache_timeout")
+        return str((title, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]

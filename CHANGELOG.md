@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Xtheme: use the context while generating the cache key
+- Xtheme: do not crash the whole site when a plugin fails to render
+
 ## [2.8.2] - 2021-05-14
 
 ### Fixed

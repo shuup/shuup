@@ -62,7 +62,7 @@ class CategoryLinksPlugin(TemplatedPlugin):
         "categories",
     ]
 
-    def get_cache_key(self) -> str:
+    def get_cache_key(self, context, **kwargs) -> str:
         selected_categories = self.config.get("categories", [])
         show_all_categories = self.config.get("show_all_categories", True)
         title = self.get_translated_value("title")
