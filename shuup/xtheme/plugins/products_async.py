@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum
 
 from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
@@ -56,7 +56,9 @@ class ProductHighlightPlugin(TemplatedPlugin):
         count = self.config.get("count")
         cutoff_days = self.config.get("cutoff_days")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, plugin_type, count, cutoff_days, cache_timeout, context["request"].is_ajax()))
+        return str(
+            (get_language(), title, plugin_type, count, cutoff_days, cache_timeout, context["request"].is_ajax())
+        )
 
     def get_context_data(self, context):
         request = context["request"]
@@ -123,7 +125,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         relation_type = self.config.get("type")
         count = self.config.get("count")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, relation_type, count, cache_timeout, context["request"].is_ajax()))
+        return str((get_language(), title, relation_type, count, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]
@@ -204,7 +206,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         title = self.get_translated_value("title")
         count = self.config.get("count")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, count, cache_timeout, context["request"].is_ajax()))
+        return str((get_language(), title, count, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]
@@ -272,7 +274,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
     def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, cache_timeout, context["request"].is_ajax()))
+        return str((get_language(), title, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]

@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from shuup.core.models import Category
 from shuup.xtheme import TemplatedPlugin
@@ -66,7 +66,7 @@ class CategoryLinksPlugin(TemplatedPlugin):
         selected_categories = self.config.get("categories", [])
         show_all_categories = self.config.get("show_all_categories", True)
         title = self.get_translated_value("title")
-        return str((selected_categories, show_all_categories, title))
+        return str((get_language(), show_all_categories, title))
 
     def get_context_data(self, context):
         """

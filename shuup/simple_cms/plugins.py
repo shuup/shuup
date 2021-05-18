@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 
 from shuup.simple_cms.models import Page
 from shuup.simple_cms.utils import order_query_by_values
@@ -106,7 +106,7 @@ class PageLinksPlugin(TemplatedPlugin):
         selected_pages = self.config.get("pages", [])
         show_all_pages = self.config.get("show_all_pages", True)
         hide_expired = self.config.get("hide_expired", False)
-        return str((title, selected_pages, show_all_pages, hide_expired))
+        return str((get_language(), title, selected_pages, show_all_pages, hide_expired))
 
     def get_context_data(self, context):
         """

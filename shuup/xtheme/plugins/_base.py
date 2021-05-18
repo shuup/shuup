@@ -178,7 +178,7 @@ class Plugin(object):
         """
         Return a string that is used as the cache key when the plugin can be cached
         """
-        return self.identifier
+        return str((get_language(), self.identifier))
 
 
 class TemplatedPlugin(Plugin):

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.forms.widgets import ImageChoiceWidget
@@ -85,7 +85,7 @@ class ImagePlugin(TemplatedPlugin):
         full_width = self.config.get("full_width", None)
         width = self.config.get("width", None)
         height = self.config.get("height", None)
-        return str((image_id, title, url, full_width, width, height))
+        return str((get_language(), image_id, title, url, full_width, width, height))
 
     def get_context_data(self, context):
         """
