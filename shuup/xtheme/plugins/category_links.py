@@ -66,7 +66,7 @@ class CategoryLinksPlugin(TemplatedPlugin):
         selected_categories = self.config.get("categories", [])
         show_all_categories = self.config.get("show_all_categories", True)
         title = self.get_translated_value("title")
-        return str((get_language(), show_all_categories, title))
+        return str((get_language(), selected_categories, show_all_categories, title))
 
     def get_context_data(self, context):
         """
