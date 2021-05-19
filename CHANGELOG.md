@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Importer: use more bites in order to detect csv dialect in importer
 - Admin: save the current user menu using the current language
 
 ### Changed
