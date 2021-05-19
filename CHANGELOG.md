@@ -12,6 +12,11 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: add a method in AdminModule that allows returning help texts for permissions
 
+### Fixed
+
+- Importer: use more bites in order to detect csv dialect in importer
+- Admin: save the current user menu using the current language
+
 ### Changed
 
 - Xtheme: allow async plugin to have orderable only flag set
