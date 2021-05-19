@@ -8,7 +8,7 @@
     <div class="container-fluid support-nav-wrap notify{% if iframe_mode %} iframe-mode{% endif %}">
         {% if shuup_admin.is_multishop_enabled() %}
         <div class="flex-wrapper">
-            <h3>Active shop: <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
+            <h3>{% trans %}Active shop:{% endtrans %} <strong>{{ shuup_admin.get_admin_shop().name }}</strong></h3>
         </div>
         {% endif %}
         <div class="support-nav">
@@ -125,34 +125,37 @@
         </form>
     </div>
 {% endblock %}
+
 {% block extra_css %}
-<style>
-    body {
-        background: #fff;
-        padding-top: 0;
-    }
-    .iframe-content-block {
-        background: #fff;
-        padding-top: 0px !important;
-        padding: 30px;
-    }
-    .iframe-title {
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
-    .title { margin-bottom: 15px; }
-    .nav-tabs { margin-bottom: 10px; }
-    .summernote-wrap {
-        width: 100%;
-    }
-    .btn-success {
-        margin-top: 10px;
-    }
-    .nav-tabs:after {
-        background: transparent;
-    }
-</style>
+    <style>
+        body {
+            background: #fff;
+            padding-top: 0;
+        }
+        .iframe-content-block {
+            background: #fff;
+            padding-top: 0px !important;
+            padding: 30px;
+        }
+        .iframe-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .title { margin-bottom: 15px; }
+        .nav-tabs { margin-bottom: 10px; }
+        .summernote-wrap {
+            width: 100%;
+        }
+        .btn-success {
+            margin-top: 10px;
+        }
+        .nav-tabs:after {
+            background: transparent;
+        }
+    </style>
+    <link href="{{ shuup_static('notify/admin/script-editor.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
+
 {% block extra_js %}
     {% if post_message %}
         <script>
