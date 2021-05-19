@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum
 
 from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
@@ -48,6 +48,18 @@ class ProductHighlightPlugin(TemplatedPlugin):
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=5)),
         ("cutoff_days", forms.IntegerField(label=_("Cutoff days"), min_value=1, initial=30)),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
+        (
+            "orderable_only",
+            forms.BooleanField(
+                label=_("Only show in-stock and orderable items"),
+                initial=False,
+                required=False,
+                help_text=_(
+                    "Warning: The final number of products can be lower than 'Count' "
+                    "as it will filter out unorderable products from a set of 'Count' products."
+                ),
+            ),
+        ),
     ]
 
     def get_cache_key(self, context, **kwargs) -> str:
@@ -56,7 +68,19 @@ class ProductHighlightPlugin(TemplatedPlugin):
         count = self.config.get("count")
         cutoff_days = self.config.get("cutoff_days")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, plugin_type, count, cutoff_days, cache_timeout, context["request"].is_ajax()))
+        orderable_only = self.config.get("orderable_only", False)
+        return str(
+            (
+                get_language(),
+                title,
+                plugin_type,
+                count,
+                cutoff_days,
+                cache_timeout,
+                orderable_only,
+                context["request"].is_ajax(),
+            )
+        )
 
     def get_context_data(self, context):
         request = context["request"]
@@ -64,7 +88,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
         count = self.config.get("count", 5)
         cutoff_days = self.config.get("cutoff_days", 30)
         cache_timeout = self.config.get("cache_timeout", 0)
-        orderable_only = False
+        orderable_only = self.config.get("orderable_only", False)
 
         products = []
         if request.is_ajax():
@@ -79,6 +103,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
             "request": request,
             "title": self.get_translated_value("title"),
             "products": products,
+            "orderable_only": self.config.get("orderable_only", False),
             "data_url": reverse(
                 "shuup:xtheme-product-highlight",
                 kwargs=dict(plugin_type=plugin_type, cutoff_days=cutoff_days, count=count, cache_timeout=cache_timeout),
@@ -105,6 +130,18 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             ),
         ),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
+        (
+            "orderable_only",
+            forms.BooleanField(
+                label=_("Only show in-stock and orderable items"),
+                initial=False,
+                required=False,
+                help_text=_(
+                    "Warning: The final number of products can be lower than 'Count' "
+                    "as it will filter out unorderable products from a set of 'Count' products."
+                ),
+            ),
+        ),
     ]
 
     def __init__(self, config):
@@ -123,7 +160,10 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         relation_type = self.config.get("type")
         count = self.config.get("count")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, relation_type, count, cache_timeout, context["request"].is_ajax()))
+        orderable_only = self.config.get("orderable_only", False)
+        return str(
+            (get_language(), title, relation_type, count, cache_timeout, orderable_only, context["request"].is_ajax())
+        )
 
     def get_context_data(self, context):
         request = context["request"]
@@ -132,9 +172,9 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         count = self.config.get("count", 5)
         cache_timeout = self.config.get("cache_timeout", 0)
         product = context.get("product", self.config.get("product"))
-
-        orderable_only = False
+        orderable_only = self.config.get("orderable_only", False)
         relation_type = self.config.get("type")
+
         try:
             relation_type = map_relation_type(relation_type)
         except LookupError:
@@ -158,6 +198,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             "request": context["request"],
             "title": self.get_translated_value("title"),
             "products": products,
+            "orderable_only": self.config.get("orderable_only", False),
             "data_url": reverse(
                 "shuup:xtheme-product-cross-sells-highlight",
                 kwargs=dict(
@@ -198,13 +239,26 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=5)),
         ("cache_timeout", forms.IntegerField(label=_("Cache timeout (seconds)"), min_value=0, initial=120)),
+        (
+            "orderable_only",
+            forms.BooleanField(
+                label=_("Only show in-stock and orderable items"),
+                initial=False,
+                required=False,
+                help_text=_(
+                    "Warning: The final number of products can be lower than 'Count' "
+                    "as it will filter out unorderable products from a set of 'Count' products."
+                ),
+            ),
+        ),
     ]
 
     def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         count = self.config.get("count")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, count, cache_timeout, context["request"].is_ajax()))
+        orderable_only = self.config.get("orderable_only", False)
+        return str((get_language(), title, count, cache_timeout, orderable_only, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]
@@ -212,7 +266,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         category_id = self.config.get("category")
         count = self.config.get("count", 5)
         cache_timeout = self.config.get("cache_timeout", 0)
-        orderable_only = False
+        orderable_only = self.config.get("orderable_only", False)
 
         if request.is_ajax() and category_id:
             products = get_products_for_categories(
@@ -223,6 +277,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
             "request": request,
             "title": self.get_translated_value("title"),
             "products": products,
+            "orderable_only": orderable_only,
             "data_url": reverse(
                 "shuup:xtheme-category-products-highlight",
                 kwargs=dict(category_id=category_id, count=count, cache_timeout=cache_timeout),
@@ -272,7 +327,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
     def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         cache_timeout = self.config.get("cache_timeout")
-        return str((title, cache_timeout, context["request"].is_ajax()))
+        return str((get_language(), title, cache_timeout, context["request"].is_ajax()))
 
     def get_context_data(self, context):
         request = context["request"]

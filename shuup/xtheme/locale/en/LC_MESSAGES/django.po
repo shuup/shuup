@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"POT-Creation-Date: 2021-05-18 23:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -94,6 +94,9 @@ msgid "Stylesheets"
 msgstr ""
 
 msgid "The fonts, colors, and styles to use with your theme."
+msgstr ""
+
+msgid "Failed to render the plugin"
 msgstr ""
 
 msgid "Content in this box is shown to all user types without limitations."
