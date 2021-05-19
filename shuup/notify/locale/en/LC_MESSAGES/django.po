@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
+"POT-Creation-Date: 2021-05-19 16:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -388,6 +388,9 @@ msgid "Edit Script"
 msgstr ""
 
 msgid "Edit Step"
+msgstr ""
+
+msgid "Active shop:"
 msgstr ""
 
 msgid "Save changes"
