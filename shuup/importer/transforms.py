@@ -119,7 +119,7 @@ def py2_read_file(data, filename):
     got_data = set()
     data = []
     with open(filename) as f:
-        dialect = csv.Sniffer().sniff(f.read(1024))
+        dialect = csv.Sniffer().sniff(f.read(20480))
         f.seek(0)
         for x, row in enumerate(csv.DictReader(f, dialect=dialect)):
             got_data.update(set(h.lower() for (h, d) in six.iteritems(row) if d))
@@ -140,7 +140,7 @@ def py3_read_file(data, filename):
         encoding = "utf-8"
 
     with open(filename, encoding=encoding) as f:
-        dialect = csv.Sniffer().sniff(f.read(1024))
+        dialect = csv.Sniffer().sniff(f.read(20480))
         f.seek(0)
         for x, row in enumerate(csv.DictReader(f, dialect=dialect)):
             got_data.update(set(h.lower() for (h, d) in six.iteritems(row) if d))
