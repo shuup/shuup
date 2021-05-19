@@ -17,7 +17,6 @@ from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
 from shuup.apps.provides import get_provide_objects
 from shuup.utils.django_compat import force_text
-from shuup.utils.iterables import first
 
 ORDERS_MENU_CATEGORY = 1
 PRODUCTS_MENU_CATEGORY = 2
@@ -133,12 +132,9 @@ def customize_menu(entries, request):  # noqa (C901)
 
     if customized_admin_menu and isinstance(customized_admin_menu, dict):
         """
-        If menu configuration is stored to dict try to find right configuration with
-        current language and fallback to first stored configuration
+        If menu configuration is stored to dict try to find right configuration with current language
         """
-        customized_admin_menu = customized_admin_menu.get(
-            get_language(), customized_admin_menu.get(first(customized_admin_menu))
-        )
+        customized_admin_menu = customized_admin_menu.get(get_language())
 
     if customized_admin_menu:
 
