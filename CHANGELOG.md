@@ -10,7 +10,13 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Use more bites in order to detect csv dialect in importer
+- Importer: use more bites in order to detect csv dialect in importer
+- Admin: save the current user menu using the current language
+
+### Changed
+
+- Xtheme: allow async plugin to have orderable only flag set
+- Xtheme: use the current language as part of the plugins cache key
 
 ## [2.8.3] - 2021-05-17
 

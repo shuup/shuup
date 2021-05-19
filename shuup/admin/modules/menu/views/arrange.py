@@ -43,7 +43,10 @@ class AdminMenuArrangeView(TemplateView):
         return context
 
     def set_configuration(self, request, menus):
-        configuration.set(None, CUSTOM_ADMIN_MENU_USER_PREFIX.format(request.user.pk), menus)
+        config_key = CUSTOM_ADMIN_MENU_USER_PREFIX.format(request.user.pk)
+        configuration_object = configuration.get(None, config_key, {}) or {}
+        configuration_object.update({get_language(): menus})
+        configuration.set(None, config_key, configuration_object)
 
     def post(self, request):
         """

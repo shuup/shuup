@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum
 
 from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
@@ -64,7 +64,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
         highlight_type = self.config.get("type", HighlightType.NEWEST.value)
         count = self.config.get("count", 4)
         orderable_only = self.config.get("orderable_only", True)
-        return str((title, highlight_type, orderable_only, count))
+        return str((get_language(), title, highlight_type, orderable_only, count))
 
     def get_context_data(self, context):
         highlight_type = self.config.get("type", HighlightType.NEWEST.value)
@@ -137,7 +137,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         count = self.config.get("count", 4)
         orderable_only = self.config.get("orderable_only", True)
         use_variation_parents = self.config.get("use_variation_parents", False)
-        return str((title, relation_type, orderable_only, count, use_variation_parents))
+        return str((get_language(), title, relation_type, orderable_only, count, use_variation_parents))
 
     def get_context_data(self, context):
         count = self.config.get("count", 4)
@@ -203,7 +203,7 @@ class ProductsFromCategoryPlugin(TemplatedPlugin):
         category_id = self.config.get("category")
         count = self.config.get("count")
         orderable_only = self.config.get("orderable_only", True)
-        return str((title, category_id, orderable_only, count))
+        return str((get_language(), title, category_id, orderable_only, count))
 
     def get_context_data(self, context):
         products = []
@@ -258,7 +258,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
     def get_cache_key(self, context, **kwargs) -> str:
         title = self.get_translated_value("title")
         products = self.config.get("products")
-        return str((title, products))
+        return str((get_language(), title, products))
 
     def get_context_data(self, context):
         request = context["request"]

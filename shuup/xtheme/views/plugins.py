@@ -19,6 +19,7 @@ PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX = "shuup_xtheme_proudct_highlight_cache_key_%
 
 
 def get_category_products_highlight(request, category_id, count, cache_timeout):
+    orderable_only = "orderable_only" in request.GET
     key, html = context_cache.get_cached_value(
         identifier="xtheme_category_proudcts_highlights",
         item=PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX % {"shop_id": request.shop.pk},
@@ -26,12 +27,18 @@ def get_category_products_highlight(request, category_id, count, cache_timeout):
         category_id=category_id,
         count=count,
         cache_timeout=cache_timeout,
+        orderable_only=orderable_only,
     )
     if html is not None:
         return HttpResponse(html)
 
     plugin = ProductsFromCategoryPlugin(
-        config={"category": int(category_id), "count": int(count), "cache_timeout": int(cache_timeout)}
+        config={
+            "category": int(category_id),
+            "count": int(count),
+            "cache_timeout": int(cache_timeout),
+            "orderable_only": orderable_only,
+        }
     )
     html = plugin.render(dict(request=request))
     context_cache.set_cached_value(key, html, int(cache_timeout))
@@ -39,6 +46,7 @@ def get_category_products_highlight(request, category_id, count, cache_timeout):
 
 
 def get_product_cross_sell_highlight(request, product_id, relation_type, use_parents, count, cache_timeout):
+    orderable_only = "orderable_only" in request.GET
     key, html = context_cache.get_cached_value(
         identifier="xtheme_product_cross_sell_highlight",
         item=PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX % {"shop_id": request.shop.pk},
@@ -48,6 +56,7 @@ def get_product_cross_sell_highlight(request, product_id, relation_type, use_par
         use_variation_parents=use_parents,
         count=count,
         cache_timeout=cache_timeout,
+        orderable_only=orderable_only,
     )
     if html is not None:
         return HttpResponse(html)
@@ -59,6 +68,7 @@ def get_product_cross_sell_highlight(request, product_id, relation_type, use_par
             "use_variation_parents": bool(use_parents),
             "count": int(count),
             "cache_timeout": int(cache_timeout),
+            "orderable_only": orderable_only,
         }
     )
     html = plugin.render(dict(request=request))
@@ -67,6 +77,7 @@ def get_product_cross_sell_highlight(request, product_id, relation_type, use_par
 
 
 def get_product_highlight(request, plugin_type, cutoff_days, count, cache_timeout):
+    orderable_only = "orderable_only" in request.GET
     key, html = context_cache.get_cached_value(
         identifier="xtheme_category_proudcts_highlights",
         item=PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX % {"shop_id": request.shop.pk},
@@ -75,6 +86,7 @@ def get_product_highlight(request, plugin_type, cutoff_days, count, cache_timeou
         cutoff_days=cutoff_days,
         count=count,
         cache_timeout=cache_timeout,
+        orderable_only=orderable_only,
     )
     if html is not None:
         return HttpResponse(html)
@@ -85,6 +97,7 @@ def get_product_highlight(request, plugin_type, cutoff_days, count, cache_timeou
             "cutoff_days": int(cutoff_days),
             "count": int(count),
             "cache_timeout": int(cache_timeout),
+            "orderable_only": orderable_only,
         }
     )
     html = plugin.render(dict(request=request))
