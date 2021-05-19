@@ -2,14 +2,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Christian Hess, 2021
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 13:12+0000\n"
-"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"PO-Revision-Date: 2021-05-11 20:26+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1526,7 +1527,7 @@ msgid ""
 "Select a sales unit for your product. This is shown in your store front and "
 "is used to determine whether the product can be purchased using fractional "
 "amounts. To change settings search for `Sales Units`."
-msgstr "Wähle eine Verkaufseinheit für Deinen Artikel. Diese wird in Deinem Händlerbereich angezeigt und wird verwendet, um zu bestimmen, ob der Artikel in Teilmengen erworben werden kann. Um die Einstellungen zu ändern, gehe zu \"Verkaufseinheiten\"."
+msgstr "Wähle eine Verkaufseinheit für Deinen Artikel. Diese wird in Deinem Händlerbereich angezeigt und wird verwendet, um zu bestimmen, ob der Artikel in Teilmengen erworben werden kann. Um die Einstellungen zu ändern, gehe zu Verkaufseinheiten."
 
 msgid "tax class"
 msgstr "Steuerklasse"
@@ -1536,7 +1537,7 @@ msgid ""
 "which taxes to apply to your product. Define tax classes by searching for "
 "`Tax Classes`. To define the rules by which taxes are applied search for "
 "`Tax Rules`."
-msgstr "Wähle eine Steuerklasse für Deinen Artikel. Die Steuerklasse wird verwendet, um zu bestimmen, welche Steuern auf  Deinen Artikel angewendet werden sollen. Um die Steuerklassen zu definieren, gehe zu \"Steuerklassen\". Um die Regeln zu definieren, gemäß denen die Steuern angewendet werden sollen, gehe zu \"Steuerregeln\"."
+msgstr "Wähle eine Steuerklasse für Deinen Artikel. Die Steuerklasse wird verwendet, um zu bestimmen, welche Steuern auf  Deinen Artikel angewendet werden sollen. Um die Steuerklassen zu definieren, gehe zu Steuerklassen. Um die Regeln zu definieren, gemäß denen die Steuern angewendet werden sollen, gehe zu Steuerregeln."
 
 msgid ""
 "Select a product type for your product. These allow you to configure custom "

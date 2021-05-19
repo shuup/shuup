@@ -139,7 +139,7 @@ msgid "visibility"
 msgstr "Anzeige"
 
 msgid "body"
-msgstr "Körper"
+msgstr "Textkörper"
 
 msgid "New Task"
 msgstr "Neue Aufgabe"

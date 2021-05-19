@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-05-05 16:57+0000\n"
+"POT-Creation-Date: 2021-05-19 12:42+0000\n"
+"PO-Revision-Date: 2021-05-19 18:05+0000\n"
 "Last-Translator: Christian Hess\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -910,6 +910,12 @@ msgstr "Es konnte keine komplette Rückerstattung erstellt werden."
 msgid "Full refund created."
 msgstr "Komplette Rückerstattung erstellt."
 
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Tracking Code"
+msgstr "Tracking-Code"
+
 msgid "Tracking URL"
 msgstr "Tracking-URL"
 
@@ -946,9 +952,6 @@ msgstr "ID"
 
 msgid "Supplier"
 msgstr "Händler"
-
-msgid "Tracking Code"
-msgstr "Tracking-Code"
 
 #, python-brace-format
 msgid "Shipment {shipment_id}"
@@ -1586,6 +1589,33 @@ msgstr "Steuersatz"
 
 msgid "Users"
 msgstr "Benutzer"
+
+msgid "Allow the user to change the passwords of other users."
+msgstr "Ermöglichen Sie dem Benutzer, die Kennwörter anderer Benutzer zu ändern."
+
+msgid "Allow the user send the reset password email."
+msgstr "Ermöglichen Sie dem Benutzer, die E-Mail zum Zurücksetzen des Kennworts zu senden."
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr "Ermöglichen Sie dem Benutzer, die Berechtigungsgruppen anderer Benutzer zu ändern."
+
+msgid "Allow the user to see a user detail."
+msgstr "Ermöglichen Sie dem Benutzer, ein Benutzerdetail anzuzeigen."
+
+msgid "Allow the user to create a new user."
+msgstr "Ermöglichen Sie dem Benutzer, einen neuen Benutzer zu erstellen."
+
+msgid "Allow the user to list the users."
+msgstr "Ermöglichen Sie dem Benutzer, die Benutzer aufzulisten."
+
+msgid "Allow the user to impersonate a different user."
+msgstr "Ermöglichen Sie dem Benutzer, sich als ein anderer Benutzer auszugeben."
+
+msgid "Allow the user to impersonate a staff user."
+msgstr "Ermöglichen Sie dem Benutzer, sich als Mitarbeiter auszugeben."
+
+msgid "Allow the user to change the user list columns."
+msgstr "Ermöglichen Sie dem Benutzer, die Spalten der Benutzerliste zu ändern."
 
 msgid "Add some users to help manage your shop"
 msgstr "Füge Benutzer hinzu, die Dir bei der Verwaltung Deines Marktplatzes helfen"
@@ -3040,9 +3070,6 @@ msgstr "Kommentar wurde gespeichert."
 msgid "Updating the admin comment failed."
 msgstr "Das Aktualisieren des Admin-Kommentars ist fehlgeschlagen."
 
-msgid "Description"
-msgstr "Beschreibung"
-
 msgid "No payments have been created yet."
 msgstr "Es wurden noch keine Zahlungen erstellt."
 
@@ -3582,8 +3609,8 @@ msgstr "Telemetriedaten"
 msgid "Here is an example of the data that would be submitted right now."
 msgstr "Hier ist ein Beispiel für die Daten, die jetzt übermittelt werden würden."
 
-msgid "User Information"
-msgstr "Benutzerdaten"
+msgid "Customer Information"
+msgstr "Kundeninformation"
 
 #, python-format
 msgid "Send a password reset email to %(email)s?"

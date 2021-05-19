@@ -20,6 +20,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Pull DE translations from Transifex
 - Xtheme: allow async plugin to have orderable only flag set
 - Xtheme: use the current language as part of the plugins cache key
 

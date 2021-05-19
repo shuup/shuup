@@ -1,15 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Christian Hess, 2021
 # Melanie Missbach <melanie@buyhappy.de>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2021-04-07 18:25+0000\n"
+"POT-Creation-Date: 2021-05-10 20:10+0000\n"
+"PO-Revision-Date: 2021-05-12 01:28+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -158,9 +159,6 @@ msgid ""
 "approval."
 msgstr "Du hast Dein Konto bereits mit einer Firma verknüpft und die Genehmigung steht hierfür noch aus."
 
-msgid "User account information"
-msgstr "Benutzerkontodaten"
-
 msgid "Not specified"
 msgstr "Nicht angegeben"
 
@@ -188,8 +186,8 @@ msgstr "Versanddaten"
 msgid "Copy to billing information"
 msgstr "In die Rechnungsdaten kopieren"
 
-msgid "Edit user account information"
-msgstr "Benutzerkontodaten bearbeiten"
+msgid "Edit customer information"
+msgstr "Kundeninformationen bearbeiten"
 
 msgid "Save password"
 msgstr "Passwort speichern"
@@ -205,9 +203,6 @@ msgstr "Benutzerkonto mit Firma verknüpfen"
 
 msgid "Company information"
 msgstr "Firmendaten"
-
-msgid "User information"
-msgstr "Benutzerdaten"
 
 msgid "Password changed."
 msgstr "Das Passwort wurde geändert."
