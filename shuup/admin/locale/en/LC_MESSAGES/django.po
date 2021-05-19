@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 20:10+0000\n"
+"POT-Creation-Date: 2021-05-19 12:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1585,6 +1585,33 @@ msgid "Rate"
 msgstr ""
 
 msgid "Users"
+msgstr ""
+
+msgid "Allow the user to change the passwords of other users."
+msgstr ""
+
+msgid "Allow the user send the reset password email."
+msgstr ""
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr ""
+
+msgid "Allow the user to see a user detail."
+msgstr ""
+
+msgid "Allow the user to create a new user."
+msgstr ""
+
+msgid "Allow the user to list the users."
+msgstr ""
+
+msgid "Allow the user to impersonate a different user."
+msgstr ""
+
+msgid "Allow the user to impersonate a staff user."
+msgstr ""
+
+msgid "Allow the user to change the user list columns."
 msgstr ""
 
 msgid "Add some users to help manage your shop"

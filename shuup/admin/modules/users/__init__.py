@@ -9,6 +9,7 @@ import six
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+from typing import Dict
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
@@ -56,6 +57,19 @@ class UserModule(AdminModule):
                 name="user.list_settings",
             ),
         ]
+
+    def get_permissions_help_texts(self) -> Dict[str, str]:
+        return {
+            "user.change-password": _("Allow the user to change the passwords of other users."),
+            "user.reset-password": _("Allow the user send the reset password email."),
+            "user.change-permissions": _("Allow the user to change the permission groups of other users."),
+            "user.detail": _("Allow the user to see a user detail."),
+            "user.new": _("Allow the user to create a new user."),
+            "user.list": _("Allow the user to list the users."),
+            "user.login-as": _("Allow the user to impersonate a different user."),
+            "user.login-as-staff": _("Allow the user to impersonate a staff user."),
+            "user.list_settings": _("Allow the user to change the user list columns."),
+        }
 
     def get_menu_entries(self, request):
         return [

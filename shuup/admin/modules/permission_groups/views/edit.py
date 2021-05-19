@@ -49,11 +49,15 @@ class PermissionGroupForm(forms.ModelForm):
             partial_permissions_granted = False
             admin_module.required_permissions_fields = []
             admin_module.per_view_permissions_fields = []
+            help_texts = admin_module.get_permissions_help_texts()
 
             for required_permission in admin_module.get_required_permissions():
                 field_id = "perm:{}".format(required_permission)
                 self.fields[field_id] = forms.BooleanField(
-                    required=False, label=required_permission, initial=(required_permission in initial_permissions)
+                    required=False,
+                    label=required_permission,
+                    initial=(required_permission in initial_permissions),
+                    help_text=help_texts.get(required_permission),
                 )
                 admin_module.required_permissions_fields.append(field_id)
                 if required_permission in initial_permissions:
@@ -67,7 +71,10 @@ class PermissionGroupForm(forms.ModelForm):
             for permission in extra_permissions:
                 field_id = "perm:{}".format(permission)
                 self.fields[field_id] = forms.BooleanField(
-                    required=False, label=permission, initial=(permission in initial_permissions)
+                    required=False,
+                    label=permission,
+                    initial=(permission in initial_permissions),
+                    help_text=help_texts.get(permission),
                 )
                 admin_module.per_view_permissions_fields.append(field_id)
                 if permission in initial_permissions:

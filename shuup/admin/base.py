@@ -5,13 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 import hashlib
 import six
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
-from typing import Dict, Optional
+from typing import Dict, Iterable, Optional
 
 from shuup.utils.django_compat import reverse
 
@@ -62,14 +60,15 @@ class AdminModule(object):
         """
         return ()
 
-    def get_required_permissions(self):
+    def get_required_permissions(self) -> Iterable[str]:
         """
+        Returns a list of required permissions for this module to be enabled
         :rtype: list[str]
         """
         with override(language="en"):
-            return ("%s" % self.name,)
+            return [force_text(self.name)]
 
-    def get_extra_permissions(self):
+    def get_extra_permissions(self) -> Iterable[str]:
         """
         Define custom extra permissions for admin module for option
         to limit certain parts of the admin module based on per user
@@ -79,6 +78,14 @@ class AdminModule(object):
         :rtype: list[str]
         """
         return ()
+
+    def get_permissions_help_texts(self) -> Dict[str, str]:
+        """
+        Returns a dictionary where the keys is the permission identifier
+        and the value is a help text that can help the user to understand
+        where the permissions is used and how it works.
+        """
+        return dict()
 
     def get_notifications(self, request):
         """
