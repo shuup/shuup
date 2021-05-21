@@ -594,7 +594,7 @@ class ProductPriceFilter(SimpleProductListModifier):
 class AttributeProductListFilter(SimpleProductListModifier):
     is_active_key = "filter_products_by_products_attribute"
     is_active_label = _("Filter products by its attributes")
-
+    ordering_key = "filter_products_by_attribute_ordering"
     product_attr_key = "filter_products_by_product_attribute_field"
 
     def _build_attribute_filter_fields(
@@ -689,7 +689,7 @@ class AttributeProductListFilter(SimpleProductListModifier):
             help_text=_("Select attributes that can used for filtering the products."),
         )
 
-        return [active, (self.product_attr_key, attributes)]
+        return [active, (self.product_attr_key, attributes), ordering]
 
     def clean_hook(self, form):
         attribute_query_strings = self._get_product_attribute_query_strings(form.data)
