@@ -86,7 +86,8 @@ utils.add_exclude_patters(
 # Use https://pypi.org/project/poetry2setup/ to update it
 REQUIRES = [
     "Babel>=2.9.1,<3.0.0",
-    "Django>=3.2.3,<4.0.0",
+    "Django>=2.2,<4",
+    "Faker>=7,<8",
     "Jinja2<3",
     "Markdown>=3.3.4,<4.0.0",
     "bleach>=3.3.0,<4.0.0",
@@ -103,6 +104,7 @@ REQUIRES = [
     "django-reversion>=3.0.9,<4.0.0",
     "django-timezone-field>=4.1.2,<5.0.0",
     "djangorestframework>=3.12.4,<4.0.0",
+    "easy-thumbnails>=2.7.1,<3.0.0",
     "factory-boy>=3.2.0,<4.0.0",
     "fake-factory>=9999.9.9,<10000.0.0",
     "jsonfield>=3.1.0,<4.0.0",
@@ -137,7 +139,7 @@ if __name__ == "__main__":
         license=LICENSE,
         classifiers=CLASSIFIERS,
         install_requires=REQUIRES,
-        python_requires=">=3.6",
+        python_requires=">=3.6,<4.0",
         packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
         cmdclass=utils.COMMANDS,

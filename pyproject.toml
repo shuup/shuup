@@ -3,11 +3,11 @@ name = "shuup"
 version = "2.9.0"
 description = "E-Commerce Platform"
 authors = ["Shuup Commerce Inc."]
-license = "OSL 3.0"
+license = "Proprietary"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-Django = "^3.2.3"
+Django = ">=2.2,<4"
 Jinja2 = "<3"
 Babel = "^2.9.1"
 bleach = "^3.3.0"
