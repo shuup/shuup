@@ -7,10 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import babel
 import decimal
 import json
 import numbers
+
+import babel
 import six
 from django import forms
 from django.core.exceptions import ValidationError

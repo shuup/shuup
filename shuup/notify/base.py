@@ -8,9 +8,10 @@
 from __future__ import unicode_literals
 
 import abc
-import six
 from abc import abstractmethod
 from collections import OrderedDict
+
+import six
 from django.utils.text import camel_case_to_spaces
 from jinja2.exceptions import TemplateError
 

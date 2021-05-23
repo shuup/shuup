@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import six
 import sys
+
+import six
 from django.conf import settings
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals, with_statement
 
 import datetime
+
 from django.db.models import Sum
 from django.utils.translation import get_language
 

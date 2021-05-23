@@ -8,10 +8,11 @@
 from __future__ import unicode_literals, with_statement
 
 import codecs
-import openpyxl
 import os
-import six
 import sys
+
+import openpyxl
+import six
 import xlrd
 from django.conf import settings
 from django.utils.encoding import force_text

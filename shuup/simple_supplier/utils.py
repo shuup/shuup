@@ -6,10 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
+from math import pow
+
 from django.conf import settings
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
-from math import pow
 
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.core.models import (

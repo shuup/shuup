@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import random
+
 from django import forms
 from django.conf import settings as django_settings
 from django.contrib import messages

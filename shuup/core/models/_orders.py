@@ -8,9 +8,10 @@
 from __future__ import unicode_literals, with_statement
 
 import datetime
-import six
 from collections import defaultdict
 from decimal import Decimal
+
+import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models

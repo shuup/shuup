@@ -9,9 +9,11 @@ from __future__ import unicode_literals, with_statement
 
 import calendar
 import datetime
-import six
 from collections import defaultdict
 from decimal import Decimal
+from typing import Iterable, Union
+
+import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -20,14 +22,15 @@ from django.template.defaultfilters import yesno
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
-from typing import Iterable, Union
 
 from shuup.core.fields import InternalIdentifierField
-from shuup.core.templatetags.shuup_common import datetime as format_datetime, number as format_number
+from shuup.core.templatetags.shuup_common import datetime as format_datetime
+from shuup.core.templatetags.shuup_common import number as format_number
 from shuup.utils.analog import define_log_model
 from shuup.utils.dates import parse_date
 from shuup.utils.fields import TypedMultipleChoiceWithLimitField

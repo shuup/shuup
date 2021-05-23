@@ -7,13 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 import itertools
 import json
+from datetime import date
+from decimal import Decimal
+
 import pytest
 import pytz
 import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
-from datetime import date
-from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.encoding import force_text
 from django.utils.functional import lazy

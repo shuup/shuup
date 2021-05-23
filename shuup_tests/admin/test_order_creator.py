@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import decimal
 import json
+
 import pytest
 from django.test import RequestFactory
 from django.utils import translation

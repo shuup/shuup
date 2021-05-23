@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import pytest
 from decimal import Decimal
+
+import pytest
 from django.utils import translation
-from django.utils.translation.trans_real import DjangoTranslation, translation as get_trans
+from django.utils.translation.trans_real import DjangoTranslation
+from django.utils.translation.trans_real import translation as get_trans
 
 from shuup.core.models import DisplayUnit, PiecesSalesUnit, SalesUnit, UnitInterface
 from shuup.core.models._units import SalesUnitAsDisplayUnit

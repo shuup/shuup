@@ -8,10 +8,11 @@
 from __future__ import unicode_literals
 
 import decimal
-import factory.fuzzy as fuzzy
 import os
 import random
 from datetime import datetime, timedelta
+
+import factory.fuzzy as fuzzy
 from django.conf import settings
 from PIL import Image
 from six import BytesIO

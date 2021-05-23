@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import os
+
 import six
 from django.conf import settings
 from django_jinja import library

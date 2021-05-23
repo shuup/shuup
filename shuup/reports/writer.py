@@ -7,9 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from decimal import Decimal
+from pprint import pformat
+
 import six
 from babel.dates import format_datetime
-from decimal import Decimal
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django.http import HttpResponse
@@ -20,7 +22,6 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
-from pprint import pformat
 from six import BytesIO
 
 from shuup.apps.provides import get_provide_objects

@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import re
 from difflib import SequenceMatcher
+
 from django import forms
 from django.conf import settings
 from django.db.models import Q

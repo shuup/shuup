@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+
 from django.conf import settings
 
 from shuup.utils.django_compat import force_text

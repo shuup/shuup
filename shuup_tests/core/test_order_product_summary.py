@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import defaultdict
+
 import pytest
 import six
-from collections import defaultdict
 
 from shuup.core.models import ShippingMode, Supplier
 from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop

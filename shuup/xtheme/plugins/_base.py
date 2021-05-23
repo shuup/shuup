@@ -8,7 +8,8 @@
 from __future__ import unicode_literals
 
 from django.template.loader import get_template
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import get_identifier_to_object_map, get_provide_objects
 from shuup.utils.importing import load

@@ -7,8 +7,10 @@
 
 from __future__ import unicode_literals
 
-import django
 import functools
+from uuid import uuid4
+
+import django
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -17,7 +19,6 @@ from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedField, TranslatedFields
-from uuid import uuid4
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.pricing import PriceInfo

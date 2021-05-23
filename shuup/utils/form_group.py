@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import six
 from collections import OrderedDict
+
+import six
 from django.forms import BaseFormSet
 
 

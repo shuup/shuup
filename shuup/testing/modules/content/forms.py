@@ -8,12 +8,13 @@
 from __future__ import unicode_literals
 
 from datetime import datetime
+from logging import getLogger
+
 from django import forms
 from django.conf import settings
 from django.template import loader as template_loader
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
-from logging import getLogger
 
 from shuup import configuration as config
 from shuup.utils import djangoenv

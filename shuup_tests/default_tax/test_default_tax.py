@@ -7,9 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import pytest
 import random
 from decimal import Decimal
+
+import pytest
 from django.test.utils import override_settings
 
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass

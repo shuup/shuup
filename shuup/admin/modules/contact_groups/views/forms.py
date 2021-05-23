@@ -13,7 +13,8 @@ from django.contrib import messages
 from django.db.transaction import atomic
 from django.forms import HiddenInput
 from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet, formset_factory
-from django.utils.translation import ugettext_lazy as _, ungettext
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms.widgets import ContactChoiceWidget

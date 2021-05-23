@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import re
 import unicodedata
+
 from django.utils.encoding import force_str, force_text
 
 __all__ = (

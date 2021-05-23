@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import logging
+
 import six
 from django.db.models.query import QuerySet
 

@@ -9,6 +9,7 @@
 from __future__ import unicode_literals
 
 import warnings
+
 from django.conf.urls import url
 from django.contrib.auth import logout as do_logout
 from django.views.decorators.csrf import csrf_exempt

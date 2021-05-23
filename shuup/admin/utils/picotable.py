@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import datetime
 import json
+
 import six
 from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Manager, Q, QuerySet

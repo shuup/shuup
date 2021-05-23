@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import inspect
+
 from django.apps import apps
 from django.db import models
 from django.utils.encoding import force_text

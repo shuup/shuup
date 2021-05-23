@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+
 from django.db.models import Count, Sum
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _

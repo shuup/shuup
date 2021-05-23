@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import re
 import unicodedata
+
 from django.db import models
 
 from shuup.utils.django_compat import force_text

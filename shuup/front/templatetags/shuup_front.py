@@ -5,12 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from functools import lru_cache
+
 import django_jinja
 from django.conf import settings
 from django.utils.functional import SimpleLazyObject
 from django.utils.safestring import mark_safe
 from django_jinja import library
-from functools import lru_cache
 from markdown import Markdown
 
 from shuup.apps.provides import get_provide_objects

@@ -7,6 +7,7 @@
 from __future__ import unicode_literals
 
 import decimal
+
 import pytest
 
 from shuup.core.templatetags.shuup_common import money

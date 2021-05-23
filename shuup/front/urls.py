@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from itertools import chain
+
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
-from itertools import chain
 
 from shuup.apps.provides import get_provide_objects
 

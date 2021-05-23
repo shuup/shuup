@@ -8,9 +8,10 @@
 from __future__ import unicode_literals
 
 import decimal
+from decimal import Decimal
+
 import pytest
 import six
-from decimal import Decimal
 
 from shuup.utils.numbers import parse_decimal_string, parse_simple_decimal
 

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from collections import Counter
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q

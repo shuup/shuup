@@ -9,13 +9,15 @@ from __future__ import unicode_literals
 
 import warnings
 from decimal import ROUND_HALF_UP, Decimal
+from functools import lru_cache
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.translation import pgettext, ugettext_lazy as _
-from functools import lru_cache
+from django.utils.translation import pgettext
+from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedField, TranslatedFields, TranslatedFieldsModel
 
 from shuup.core import cache

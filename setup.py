@@ -5,8 +5,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import setuptools
 import sys
+
+import setuptools
 
 import shuup_setup_utils as utils
 
@@ -84,37 +85,37 @@ utils.add_exclude_patters(
 # This requires is updated based on the poetry2setup command output
 # Use https://pypi.org/project/poetry2setup/ to update it
 REQUIRES = [
-    'Babel>=2.9.1,<3.0.0',
-    'Django>=3.2.3,<4.0.0',
-    'Jinja2<3',
-    'Markdown>=3.3.4,<4.0.0',
-    'bleach>=3.3.0,<4.0.0',
-    'django-bootstrap3>=15.0.0,<16.0.0',
-    'django-countries>=7.2.1,<8.0.0',
-    'django-enumfields>=2.1.1,<3.0.0',
-    'django-filer>=2.0.2,<3.0.0',
-    'django-filter>=2.4.0,<3.0.0',
-    'django-jinja>=2.7.0,<3.0.0',
-    'django-mptt>=0.12.0,<0.13.0',
-    'django-parler>=2.2,<3.0',
-    'django-polymorphic>=3.0.0,<4.0.0',
-    'django-registration-redux>=2.9,<3.0',
-    'django-reversion>=3.0.9,<4.0.0',
-    'django-timezone-field>=4.1.2,<5.0.0',
-    'djangorestframework>=3.12.4,<4.0.0',
-    'factory-boy>=3.2.0,<4.0.0',
-    'fake-factory>=9999.9.9,<10000.0.0',
-    'jsonfield>=3.1.0,<4.0.0',
-    'keyrings.alt>=4.0.2,<5.0.0',
-    'lxml>=4.6.3,<5.0.0',
-    'openpyxl>=3.0.7,<4.0.0',
-    'python-dateutil>=2.8.1,<3.0.0',
-    'requests>=2.25.1,<3.0.0',
-    'six>=1.16.0,<2.0.0',
-    'toml>=0.10.2,<0.11.0',
-    'unicodecsv>=0.14.1,<0.15.0',
-    'weasyprint>=52.5,<53.0',
-    'xlrd>=2.0.1,<3.0.0'
+    "Babel>=2.9.1,<3.0.0",
+    "Django>=3.2.3,<4.0.0",
+    "Jinja2<3",
+    "Markdown>=3.3.4,<4.0.0",
+    "bleach>=3.3.0,<4.0.0",
+    "django-bootstrap3>=15.0.0,<16.0.0",
+    "django-countries>=7.2.1,<8.0.0",
+    "django-enumfields>=2.1.1,<3.0.0",
+    "django-filer>=2.0.2,<3.0.0",
+    "django-filter>=2.4.0,<3.0.0",
+    "django-jinja>=2.7.0,<3.0.0",
+    "django-mptt>=0.12.0,<0.13.0",
+    "django-parler>=2.2,<3.0",
+    "django-polymorphic>=3.0.0,<4.0.0",
+    "django-registration-redux>=2.9,<3.0",
+    "django-reversion>=3.0.9,<4.0.0",
+    "django-timezone-field>=4.1.2,<5.0.0",
+    "djangorestframework>=3.12.4,<4.0.0",
+    "factory-boy>=3.2.0,<4.0.0",
+    "fake-factory>=9999.9.9,<10000.0.0",
+    "jsonfield>=3.1.0,<4.0.0",
+    "keyrings.alt>=4.0.2,<5.0.0",
+    "lxml>=4.6.3,<5.0.0",
+    "openpyxl>=3.0.7,<4.0.0",
+    "python-dateutil>=2.8.1,<3.0.0",
+    "requests>=2.25.1,<3.0.0",
+    "six>=1.16.0,<2.0.0",
+    "toml>=0.10.2,<0.11.0",
+    "unicodecsv>=0.14.1,<0.15.0",
+    "weasyprint>=52.5,<53.0",
+    "xlrd>=2.0.1,<3.0.0",
 ]
 
 if __name__ == "__main__":

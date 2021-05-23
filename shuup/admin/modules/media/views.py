@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,7 +19,8 @@ from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
 from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image

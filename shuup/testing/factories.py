@@ -8,13 +8,14 @@
 from __future__ import unicode_literals
 
 import datetime
+import random
+import uuid
+from decimal import Decimal
+
 import factory
 import factory.fuzzy as fuzzy
 import faker
-import random
 import six
-import uuid
-from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as PermissionGroup

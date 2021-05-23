@@ -6,9 +6,10 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
+
 import pytest
 import selenium
-import time
 
 from shuup.testing.browser_utils import initialize_admin_browser_test, wait_until_appeared, wait_until_condition
 from shuup.testing.factories import get_default_shop

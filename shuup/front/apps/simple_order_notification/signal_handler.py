@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import logging
+
 from django.core.mail.message import EmailMessage
 from django.template import engines
 from django.template.utils import InvalidTemplateEngineError

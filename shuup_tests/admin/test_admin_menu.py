@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+
 import pytest
 from django.test import override_settings
 from jinja2 import Environment

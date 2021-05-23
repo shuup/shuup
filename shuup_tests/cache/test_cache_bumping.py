@@ -8,9 +8,10 @@
 Tests for utils.price_display and the price filters.
 """
 
+from datetime import datetime
+
 import pytest
 import pytz
-from datetime import datetime
 from mock import patch
 
 from shuup.core.models import Supplier, get_person_contact

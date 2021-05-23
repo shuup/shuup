@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import decimal
+
 from django.http import Http404
 
 from shuup.core.models import ProductVariationResult, Supplier

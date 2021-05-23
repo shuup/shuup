@@ -8,9 +8,10 @@
 from __future__ import unicode_literals
 
 import base64
+from io import BytesIO
+
 import pytest
 from easy_thumbnails.files import Thumbnailer
-from io import BytesIO
 
 from shuup.core import cache
 from shuup.core.models import ProductMedia

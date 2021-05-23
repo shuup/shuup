@@ -12,8 +12,9 @@ from __future__ import unicode_literals
 
 import argparse
 import os
-import sanity_utils
 import sys
+
+import sanity_utils
 
 HEADER = """
 This file is part of Shuup.

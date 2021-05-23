@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import abc
+
 import six
 
 from shuup.core.models import Basket

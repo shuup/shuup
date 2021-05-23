@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import pytest
 from decimal import Decimal
+
+import pytest
 
 from shuup.core.models import Tax
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice

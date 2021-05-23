@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from itertools import chain
+
 from django.http.response import JsonResponse
 from django.views.generic import View
-from itertools import chain
 
 from shuup.admin.base import SearchResult
 from shuup.admin.module_registry import get_modules

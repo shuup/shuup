@@ -9,8 +9,9 @@ from __future__ import unicode_literals
 
 import hashlib
 import itertools
-import six
 from collections import defaultdict
+
+import six
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify

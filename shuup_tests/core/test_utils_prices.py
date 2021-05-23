@@ -6,8 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import pytest
 from decimal import Decimal
+
+import pytest
 from django.conf import settings
 from django.test.client import RequestFactory
 

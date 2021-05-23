@@ -8,6 +8,7 @@
 from __future__ import unicode_literals, with_statement
 
 import decimal
+
 from django.db import models
 from django.http.response import HttpResponseRedirect
 from django.utils.timezone import now

@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 
 import codecs
 import os
+
 from pkg_resources import WorkingSet
 
 

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from copy import deepcopy
+
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError

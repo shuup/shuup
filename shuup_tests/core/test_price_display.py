@@ -8,11 +8,12 @@
 Tests for utils.price_display and the price filters.
 """
 
+from decimal import Decimal
+
 import django.template
 import django_jinja.backend
 import pytest
 import six
-from decimal import Decimal
 from django.conf import settings
 from django.test.client import RequestFactory
 from django.test.utils import override_settings

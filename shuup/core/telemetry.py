@@ -7,9 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 import json
 import platform
-import requests
 import sys
 from datetime import date, datetime, time, timedelta
+
+import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist

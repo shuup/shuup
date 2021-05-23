@@ -6,9 +6,10 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
+from collections import defaultdict
+
 import pytest
 import six
-from collections import defaultdict
 from django.template import loader
 from django.test.client import Client
 from django.urls import reverse

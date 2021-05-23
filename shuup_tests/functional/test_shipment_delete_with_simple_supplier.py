@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
 import random
+
+import pytest
 
 from shuup.core.models import Shipment, ShipmentStatus
 from shuup.testing.factories import create_order_with_product, create_product, get_default_shop

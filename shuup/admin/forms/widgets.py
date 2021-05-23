@@ -8,8 +8,11 @@
 from __future__ import unicode_literals
 
 import json
+
 import six
-from django.forms import HiddenInput, Textarea, TextInput, TimeInput as DjangoTimeInput, Widget
+from django.forms import HiddenInput, Textarea, TextInput
+from django.forms import TimeInput as DjangoTimeInput
+from django.forms import Widget
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _

@@ -8,9 +8,10 @@
 
 from __future__ import unicode_literals
 
-import babel.core
 import decimal
 from collections import defaultdict
+
+import babel.core
 
 _cache = None
 _default = None

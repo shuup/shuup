@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
+
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
 from django.utils.http import urlencode

@@ -8,12 +8,13 @@
 
 from __future__ import unicode_literals
 
-import six
-from babel.dates import format_date
 from collections import OrderedDict
 from datetime import date, time, timedelta
-from dateutil import rrule
 from decimal import Decimal
+
+import six
+from babel.dates import format_date
+from dateutil import rrule
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 

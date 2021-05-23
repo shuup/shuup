@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+
 import pytest
 from babel.dates import format_date
 from django.utils.encoding import force_text

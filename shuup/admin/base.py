@@ -6,10 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import hashlib
+from typing import Dict, Iterable, Optional
+
 import six
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
-from typing import Dict, Iterable, Optional
 
 from shuup.utils.django_compat import reverse
 

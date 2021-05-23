@@ -8,6 +8,7 @@
 import os
 import re
 import sys
+
 from babel.messages.pofile import read_po
 from rope.base.codeanalyze import ChangeCollector
 from rope.base.project import Project

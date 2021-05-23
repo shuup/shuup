@@ -5,10 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
-import six
 from collections import defaultdict
 from decimal import Decimal
+
+import pytest
+import six
 from django.test import override_settings
 
 from shuup.core.excs import RefundArbitraryRefundsNotAllowedException, RefundExceedsAmountException

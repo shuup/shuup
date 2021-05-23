@@ -7,6 +7,7 @@
 from __future__ import unicode_literals
 
 import abc
+
 import six
 from django.http import HttpRequest
 

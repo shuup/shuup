@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import decimal
+
 import pytest
 from django.core.exceptions import ValidationError
 

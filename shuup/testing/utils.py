@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import inspect
+
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string

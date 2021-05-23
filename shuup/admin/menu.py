@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.utils.datastructures import OrderedDict
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.base import BaseMenuEntry

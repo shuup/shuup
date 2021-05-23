@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import logging
 from collections import defaultdict
+
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe

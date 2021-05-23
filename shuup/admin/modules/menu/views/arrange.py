@@ -8,9 +8,11 @@
 from __future__ import unicode_literals
 
 import json
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.utils.translation import get_language, ugettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import RedirectView, TemplateView
 
 from shuup import configuration

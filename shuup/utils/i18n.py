@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from functools import lru_cache, wraps
+
 import babel
 import babel.numbers
 from babel import UnknownLocaleError
@@ -15,7 +17,6 @@ from django.utils import translation
 from django.utils.timezone import localtime
 from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
-from functools import lru_cache, wraps
 
 
 def lang_lru_cache(func):

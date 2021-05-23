@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import re
+
 import six
 from django.core.exceptions import ValidationError
 

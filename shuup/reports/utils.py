@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+
 import six
 
 from shuup.utils import dates, i18n, iterables

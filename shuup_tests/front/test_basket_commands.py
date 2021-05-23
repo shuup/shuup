@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
 from decimal import Decimal
+
+import pytest
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -26,7 +27,8 @@ from shuup.core.models import (
     ShopProductVisibility,
 )
 from shuup.core.order_creator import OrderLineBehavior
-from shuup.front.basket import commands as basket_commands, get_basket, get_basket_command_dispatcher
+from shuup.front.basket import commands as basket_commands
+from shuup.front.basket import get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
 from shuup.front.signals import get_basket_command_handler
 from shuup.testing.factories import (

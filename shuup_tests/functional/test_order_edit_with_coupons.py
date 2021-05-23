@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import decimal
 import json
+
 import pytest
 from django.core import serializers
 

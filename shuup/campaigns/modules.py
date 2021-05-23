@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.translation import ugettext_lazy as _
 from uuid import uuid4
+
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign, CouponUsage
 from shuup.core.models import OrderLineType, ShopProduct

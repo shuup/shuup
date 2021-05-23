@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import random
+
 from babel.dates import format_date
 from django.http.response import HttpResponse
 from django.utils.timezone import now

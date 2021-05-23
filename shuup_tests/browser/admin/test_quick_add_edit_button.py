@@ -6,8 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import pytest
 import time
+
+import pytest
 from django.contrib.auth.models import Group, Permission
 
 from shuup.admin.module_registry import get_modules

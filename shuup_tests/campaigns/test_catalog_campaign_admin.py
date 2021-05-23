@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import datetime
+
 import pytest
 import pytz
 from django.test import override_settings

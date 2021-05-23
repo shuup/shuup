@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
 import json
+
 import pytest
 from bs4 import BeautifulSoup
 from django.http.response import Http404

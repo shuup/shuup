@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
+
 import pytest
 from django.http.response import Http404
 from django.test import override_settings
@@ -35,9 +36,9 @@ from shuup.testing.factories import (
     get_default_product,
     get_default_shop,
     get_default_supplier,
-    get_shop as create_shop,
-    get_shop as get_new_shop,
 )
+from shuup.testing.factories import get_shop as create_shop
+from shuup.testing.factories import get_shop as get_new_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.utils import admin_only_urls
 from shuup_tests.utils import empty_iterable

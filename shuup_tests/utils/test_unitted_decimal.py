@@ -4,9 +4,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from decimal import Decimal
+
 import pytest
 import six
-from decimal import Decimal
 
 from shuup.utils.numbers import UnittedDecimal
 

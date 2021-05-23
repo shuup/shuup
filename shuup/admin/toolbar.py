@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+
 import six
 from django.middleware.csrf import get_token
 from django.utils.html import conditional_escape, format_html

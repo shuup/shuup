@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import hmac
+
 from django.contrib import messages
 from django.db import models
 from django.http.response import HttpResponse

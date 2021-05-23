@@ -7,9 +7,10 @@
 
 from __future__ import unicode_literals
 
-import pytest
 from collections import defaultdict
 from decimal import Decimal
+
+import pytest
 from django.test.utils import override_settings
 
 from shuup.core.models import OrderLineType, Tax, TaxClass

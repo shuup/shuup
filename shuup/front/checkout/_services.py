@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import abc
+
 import six
 
 from shuup.apps.provides import get_provide_objects

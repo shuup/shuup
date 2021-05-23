@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import babel
 import decimal
+
+import babel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models

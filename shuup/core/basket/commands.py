@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import decimal
+
 import six
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
