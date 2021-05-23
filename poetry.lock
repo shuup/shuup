@@ -473,16 +473,8 @@ dev = ["coverage", "django", "flake8", "isort", "pillow", "sqlalchemy", "mongoen
 doc = ["sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
 
 [[package]]
-name = "fake-factory"
-version = "9999.9.9"
-description = "The `fake-factory` package was deprecated on December 15th, 2016. Use the `Faker` package instead."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "faker"
-version = "8.2.1"
+version = "7.0.1"
 description = "Faker is a Python package that generates fake data for you."
 category = "main"
 optional = false
@@ -1165,7 +1157,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "e037ee616ed6663bb49ae8c755504ef12494adf1564bb5e52511bc3af79583c3"
+content-hash = "889102e4095d20523346740d4f07da6c94af825c494e2b5deec73ea2fff6eae6"
 
 [metadata.files]
 alabaster = [
@@ -1419,13 +1411,9 @@ factory-boy = [
     {file = "factory_boy-3.2.0-py2.py3-none-any.whl", hash = "sha256:1d3db4b44b8c8c54cdd8b83ae4bdb9aeb121e464400035f1f03ae0e1eade56a4"},
     {file = "factory_boy-3.2.0.tar.gz", hash = "sha256:401cc00ff339a022f84d64a4339503d1689e8263a4478d876e58a3295b155c5b"},
 ]
-fake-factory = [
-    {file = "fake-factory-9999.9.9.tar.gz", hash = "sha256:f5bd18deb22ad8cb4402513c025877bc6b50de58902d686b6b21ba8981dce260"},
-    {file = "fake_factory-9999.9.9-py2.py3-none-any.whl", hash = "sha256:60c64a953c03e29fbee6b59fcb700c86a313778d68dc5816fc560ef515019d77"},
-]
 faker = [
-    {file = "Faker-8.2.1-py3-none-any.whl", hash = "sha256:765cb52df0ca2dc5af0393048c1f60b2fec736095b379954c42c5c552f65838a"},
-    {file = "Faker-8.2.1.tar.gz", hash = "sha256:7397915ce793ac1e162eb89450a268c4404121389ca46264648a2a8c56d88624"},
+    {file = "Faker-7.0.1-py3-none-any.whl", hash = "sha256:08c4cfbfd498c0e90aff6741771c01803d894013df858db6a573182c6a47951f"},
+    {file = "Faker-7.0.1.tar.gz", hash = "sha256:20c6e4253b73ef2a783d38e085e7c8d8916295fff31c7403116d2af8f908f7ca"},
 ]
 flake8 = [
     {file = "flake8-3.9.1-py2.py3-none-any.whl", hash = "sha256:3b9f848952dddccf635be78098ca75010f073bfe14d2c6bda867154bea728d2a"},

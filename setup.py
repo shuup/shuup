@@ -106,7 +106,6 @@ REQUIRES = [
     "djangorestframework>=3.12.4,<4.0.0",
     "easy-thumbnails>=2.7.1,<3.0.0",
     "factory-boy>=3.2.0,<4.0.0",
-    "fake-factory>=9999.9.9,<10000.0.0",
     "jsonfield>=3.1.0,<4.0.0",
     "keyrings.alt>=4.0.2,<5.0.0",
     "lxml>=4.6.3,<5.0.0",

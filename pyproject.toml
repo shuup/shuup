@@ -25,7 +25,6 @@ django-reversion = "^3.0.9"
 django-timezone-field = "^4.1.2"
 djangorestframework = "^3.12.4"
 factory-boy = "^3.2.0"
-fake-factory = "^9999.9.9"
 jsonfield = "^3.1.0"
 lxml = "^4.6.3"
 Markdown = "^3.3.4"
@@ -42,6 +41,8 @@ keyring = [
 ]
 "keyrings.alt" = "^4.0.2"
 weasyprint = "^52.5"
+easy-thumbnails = "^2.7.1"
+Faker = "^7"
 
 [tool.poetry.dev-dependencies]
 beautifulsoup4 = "4.9.3"
@@ -58,10 +59,6 @@ mock = "^4.0.3"
 pytest-splinter = "^3.3.1"
 selenium = "^3.141.0"
 splinter = "^0.14.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0", "setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
 
 [tool.black]
 exclude = "(migrations|node_modules)"
