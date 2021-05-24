@@ -15,7 +15,6 @@ loading components, both first-party and third-party.
 
 """
 
-from __future__ import unicode_literals
 
 from collections import OrderedDict, defaultdict
 from contextlib import contextmanager

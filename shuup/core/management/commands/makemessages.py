@@ -10,7 +10,6 @@ Patched version of Django's Makemessages that works with Jinja2.
 Works by monkey patching django.utils.translation.trans_real.templatize
 with our version.
 """
-from __future__ import unicode_literals
 
 import datetime
 import os

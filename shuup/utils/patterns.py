@@ -6,8 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import fnmatch
+from functools import lru_cache
 
-from django.utils import lru_cache
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.utils.django_compat import force_text
@@ -135,7 +135,7 @@ class Pattern(object):
                     return True
 
 
-@lru_cache.lru_cache()
+@lru_cache()
 def _compile_pattern(pattern):
     return Pattern(pattern)
 

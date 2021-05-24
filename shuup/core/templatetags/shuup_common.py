@@ -14,7 +14,6 @@ Common helpers for Shuup templates.
    `shuup.core.templatetags.prices` module are available.
 """
 
-from __future__ import unicode_literals
 
 from datetime import date
 from json import dumps as json_dump
