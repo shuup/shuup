@@ -59,7 +59,7 @@ def test_serialize_data():
     assert "My Data" in response.content.decode("utf-8")
 
     response = client.post(reverse("shuup:gdpr_download_data"))
-    assert response._headers["content-disposition"][0] == "Content-Disposition"
+    assert response.headers["Content-Disposition"]
     assert response.status_code == 200
 
     from shuup.gdpr.models import GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER
