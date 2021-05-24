@@ -9,7 +9,7 @@
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.http.response import JsonResponse
 from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import MiddlewareMixin, force_text

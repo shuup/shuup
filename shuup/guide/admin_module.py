@@ -8,7 +8,7 @@
 
 import requests
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from requests.exceptions import RequestException
 
 from shuup.admin.base import AdminModule, SearchResult

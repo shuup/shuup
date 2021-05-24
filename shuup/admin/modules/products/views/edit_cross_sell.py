@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.forms.models import BaseModelFormSet, ModelForm
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import UpdateView
 
 from shuup.admin.base import MenuEntry

@@ -8,7 +8,7 @@
 import fnmatch
 from functools import lru_cache
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.utils.django_compat import force_text
 

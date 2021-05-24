@@ -8,7 +8,7 @@
 from django.apps import apps
 from django.core.exceptions import PermissionDenied
 from django.http.response import Http404, HttpResponseBadRequest, HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 
 from shuup.admin.shop_provider import get_shop

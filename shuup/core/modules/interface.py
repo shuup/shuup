@@ -8,7 +8,7 @@
 from __future__ import unicode_literals, with_statement
 
 import six
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.apps.provides import get_provide_objects, get_provide_specs_and_objects
 from shuup.utils.importing import load

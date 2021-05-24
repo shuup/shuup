@@ -9,8 +9,8 @@ import zipfile
 import six
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
 from six import BytesIO
 
 from shuup.admin.shop_provider import get_shop

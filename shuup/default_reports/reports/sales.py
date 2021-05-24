@@ -9,7 +9,7 @@ import itertools
 
 from babel.dates import format_date
 from django.utils.timezone import localtime
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.default_reports.forms import OrderReportForm

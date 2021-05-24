@@ -20,7 +20,7 @@ from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import EnumIntegerField
 
 from shuup.importer._mapper import RelatedMapper

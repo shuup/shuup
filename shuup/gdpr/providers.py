@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 from shuup.gdpr.forms import CompanyAgreementForm

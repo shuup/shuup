@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.db.models import FieldDoesNotExist, ForeignKey
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatedFieldsModel
 
 from shuup.importer.exceptions import ImporterError

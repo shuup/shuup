@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.models import ShopProduct, ShopProductVisibility, Supplier
 from shuup.front.utils.sorts_and_filters import get_configuration, get_form_field_label

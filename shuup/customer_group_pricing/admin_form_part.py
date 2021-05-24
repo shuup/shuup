@@ -8,7 +8,7 @@
 
 from django import forms
 from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.core.models import ContactGroup

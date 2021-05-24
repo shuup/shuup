@@ -13,7 +13,7 @@ from logging import getLogger
 import six
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from jinja2.utils import contextfunction
 
 from shuup.core import cache

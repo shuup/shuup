@@ -11,7 +11,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
 from shuup.apps.provides import get_provide_objects

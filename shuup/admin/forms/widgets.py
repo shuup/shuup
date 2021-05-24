@@ -14,7 +14,7 @@ from django.forms import TimeInput as DjangoTimeInput
 from django.forms import Widget
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from filer.models import File
 
 from shuup.admin.forms.quick_select import QuickAddRelatedObjectMultiSelect, QuickAddRelatedObjectSelect

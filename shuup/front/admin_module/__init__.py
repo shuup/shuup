@@ -10,7 +10,7 @@ import datetime
 
 from django.db.models import Count, Sum
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.dashboard import DashboardMoneyBlock

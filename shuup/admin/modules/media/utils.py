@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from filer.models import Folder
 
 

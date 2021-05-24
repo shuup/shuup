@@ -18,7 +18,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet

@@ -8,7 +8,7 @@
 from decimal import Decimal
 
 from django.db.models import Count, F, Q, Sum
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.fields import MoneyValueField
 from shuup.core.models import OrderLineTax, Tax

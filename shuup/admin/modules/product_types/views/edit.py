@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.toolbar import PostActionButton, get_default_edit_toolbar

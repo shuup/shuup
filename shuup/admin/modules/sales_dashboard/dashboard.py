@@ -15,7 +15,7 @@ import six
 from babel.dates import format_date
 from dateutil import rrule
 from django.db.models import Avg, Count, Sum
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.dashboard import (
     ChartDataType,

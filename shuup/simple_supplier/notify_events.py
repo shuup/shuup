@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from time import time
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core import cache
 from shuup.notify.base import Event, Variable

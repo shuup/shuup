@@ -12,7 +12,7 @@ import babel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core import cache
 from shuup.utils.analog import define_log_model

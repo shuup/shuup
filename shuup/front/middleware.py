@@ -15,7 +15,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone, translation
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.middleware import ExceptionMiddleware
 from shuup.core.models import AnonymousContact, Contact, get_company_contact, get_person_contact

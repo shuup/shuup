@@ -12,7 +12,7 @@ from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_email
 from django.utils.text import camel_case_to_spaces
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class MultiEmailField(forms.Field):

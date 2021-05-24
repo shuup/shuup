@@ -9,7 +9,7 @@ import os
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from six.moves import urllib
 

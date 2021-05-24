@@ -16,7 +16,7 @@ import six
 import xlrd
 from django.conf import settings
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.utils.excs import Problem
 

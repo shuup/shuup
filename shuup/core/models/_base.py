@@ -9,7 +9,7 @@ import parler.models
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from polymorphic.base import PolymorphicModelBase
 from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet

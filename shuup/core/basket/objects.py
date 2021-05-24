@@ -15,7 +15,7 @@ from uuid import uuid4
 import six
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.fields.tagged_json import TaggedJSONEncoder

@@ -14,8 +14,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
-from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedField, TranslatedFields, TranslatedFieldsModel
 
 from shuup.core import cache

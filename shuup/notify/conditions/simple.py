@@ -8,7 +8,7 @@
 
 import six
 from django.utils.functional import lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.notify.base import Binding, Condition, ConstantUse
 from shuup.notify.typology import Boolean, Integer, Language, Text

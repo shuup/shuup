@@ -10,7 +10,7 @@ import six
 from django import forms
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.forms.widgets import PackageProductChoiceWidget
 from shuup.admin.modules.products.utils import clear_existing_package

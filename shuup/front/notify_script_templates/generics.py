@@ -11,7 +11,7 @@ from django.template import loader as template_loader
 from django.template.defaultfilters import linebreaksbr
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.front.notify_events import OrderReceived, PaymentCreated, RefundCreated, ShipmentCreated, ShipmentDeleted
 from shuup.notify.script_template.factory import generic_send_email_script_template_factory

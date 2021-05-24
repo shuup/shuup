@@ -18,7 +18,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
 from django.forms.widgets import NumberInput
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from jsonfield.fields import JSONField
 
 from shuup.core.fields.tagged_json import TaggedJSONEncoder, tag_registry

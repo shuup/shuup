@@ -25,7 +25,7 @@ KEYWORDS = dict(
     **{
         "_L": None,
         "gettext_lazy": None,
-        "ugettext_lazy": None,
+        "gettext_lazy": None,
     }
 )
 

@@ -11,7 +11,7 @@ from collections import OrderedDict, defaultdict
 
 from django import forms
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.notify.admin_module.utils import get_name_map
 from shuup.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE, TemplateUse

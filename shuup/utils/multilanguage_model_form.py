@@ -13,7 +13,7 @@ import six
 from django.conf import settings
 from django.forms.models import ModelForm, model_to_dict
 from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from parler.forms import TranslatableModelForm
 from parler.utils.context import switch_language
 

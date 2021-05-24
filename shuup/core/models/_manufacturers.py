@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from filer.fields.image import FilerImageField
 
 from shuup.core.fields import InternalIdentifierField

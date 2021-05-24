@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup import configuration
 from shuup.core.basket.objects import BaseBasket as Basket

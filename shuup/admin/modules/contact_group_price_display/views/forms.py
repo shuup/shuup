@@ -8,7 +8,7 @@
 
 from django import forms
 from django.forms import HiddenInput
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum
 
 from shuup.admin.shop_provider import get_shop

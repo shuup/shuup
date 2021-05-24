@@ -7,7 +7,7 @@
 
 from django import forms
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.front.utils.translation import get_shop_available_languages, set_shop_available_languages

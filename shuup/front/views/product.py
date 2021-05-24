@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.core.models import Product, ProductMode, ShopProduct, Supplier

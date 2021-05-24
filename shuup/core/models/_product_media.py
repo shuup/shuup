@@ -8,7 +8,7 @@
 from __future__ import with_statement
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.exceptions import InvalidImageFormatError
 from easy_thumbnails.files import get_thumbnailer
 from enumfields import Enum, EnumIntegerField

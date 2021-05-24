@@ -10,7 +10,7 @@ import json
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
 from django.utils.http import urlencode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from shuup.utils.excs import Problem

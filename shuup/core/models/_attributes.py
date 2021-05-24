@@ -22,7 +22,7 @@ from django.template.defaultfilters import yesno
 from django.utils.timesince import timesince
 from django.utils.timezone import now
 from django.utils.translation import get_language
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields

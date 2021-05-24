@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.contacts.form_parts import (

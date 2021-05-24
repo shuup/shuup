@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.template import engines
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
