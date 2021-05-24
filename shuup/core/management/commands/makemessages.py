@@ -10,14 +10,12 @@ Patched version of Django's Makemessages that works with Jinja2.
 Works by monkey patching django.utils.translation.trans_real.templatize
 with our version.
 """
-
 import datetime
 import os
-from io import BytesIO
+from io import BytesIO, StringIO
 
 import babel.messages.extract
 from django.core.management.commands import makemessages
-from django.utils.six import StringIO
 from django.utils.translation import template as trans_real
 
 KEYWORDS = dict(
