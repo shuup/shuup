@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -45,7 +44,6 @@ class TaskCommentVisibility(Enum):
         ADMINS_ONLY = _("Admins Only")
 
 
-@python_2_unicode_compatible
 class TaskType(TranslatableModel):
     identifier = InternalIdentifierField(unique=False, blank=True, null=True, editable=True)
     shop = models.ForeignKey(
@@ -82,7 +80,6 @@ class TaskQuerySet(models.QuerySet):
         return self.filter(assigned_to=contact)
 
 
-@python_2_unicode_compatible
 class Task(models.Model):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="tasks")
     name = models.CharField(verbose_name=_("name"), max_length=60)

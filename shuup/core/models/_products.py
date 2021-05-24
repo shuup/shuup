@@ -12,7 +12,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import format_lazy
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -111,7 +110,6 @@ class ProductVerificationMode(Enum):
         THIRD_PARTY_VERIFICATION_REQUIRED = _("third party verification required")
 
 
-@python_2_unicode_compatible
 class ProductType(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
@@ -224,7 +222,6 @@ class ProductQuerySet(TranslatableQuerySet):
         return qs
 
 
-@python_2_unicode_compatible
 class Product(TaxableItem, AttributableMixin, TranslatableModel):
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 

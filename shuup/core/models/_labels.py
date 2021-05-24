@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
@@ -18,7 +17,6 @@ from shuup.utils.django_compat import force_text
 from ._base import TranslatableShuupModel
 
 
-@python_2_unicode_compatible
 class Label(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True, max_length=128, editable=True)
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))

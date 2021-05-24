@@ -11,7 +11,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
@@ -67,7 +66,6 @@ class OrderLineManager(models.Manager):
         return self.filter(type=OrderLineType.OTHER)
 
 
-@python_2_unicode_compatible
 class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     product = UnsavedForeignKey(
         "shuup.Product",
@@ -192,7 +190,6 @@ class OrderLine(LineWithUnit, AbstractOrderLine):
         return self.order.shop
 
 
-@python_2_unicode_compatible
 class OrderLineTax(MoneyPropped, ShuupModel, LineTax):
     order_line = models.ForeignKey(
         OrderLine, related_name="taxes", on_delete=models.PROTECT, verbose_name=_("order line")

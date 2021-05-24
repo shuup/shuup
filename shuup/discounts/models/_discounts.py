@@ -11,7 +11,6 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import InternalIdentifierField, MoneyValueField
@@ -82,7 +81,6 @@ class DiscountQueryset(models.QuerySet):
         return self.filter(query).exclude(availability_query)
 
 
-@python_2_unicode_compatible
 class Discount(models.Model, MoneyPropped):
     name = models.CharField(
         null=True,

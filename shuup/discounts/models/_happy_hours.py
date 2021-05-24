@@ -9,11 +9,9 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 
-@python_2_unicode_compatible
 class HappyHour(models.Model):
     shops = models.ManyToManyField("shuup.Shop", blank=True, db_index=True, verbose_name=_("shops"))
     name = models.CharField(
@@ -30,7 +28,6 @@ class HappyHour(models.Model):
         verbose_name_plural = _("happy hours")
 
 
-@python_2_unicode_compatible
 class TimeRange(models.Model):
     happy_hour = models.ForeignKey(
         on_delete=models.CASCADE, to="discounts.HappyHour", related_name="time_ranges", verbose_name=_("happy hour")

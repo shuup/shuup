@@ -19,7 +19,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import yesno
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
 from django.utils.translation import get_language
@@ -105,7 +104,6 @@ class AttributeQuerySet(TranslatableQuerySet):
         return self.exclude(visibility_mode=AttributeVisibility.HIDDEN)
 
 
-@python_2_unicode_compatible
 class Attribute(TranslatableModel):
     identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
     searchable = models.BooleanField(

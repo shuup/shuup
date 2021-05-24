@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import activate, get_language
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
@@ -30,7 +29,6 @@ def get_setting(shop):
     return instance
 
 
-@python_2_unicode_compatible
 class GDPRSettings(TranslatableModel):
     shop = models.OneToOneField("shuup.Shop", related_name="gdpr_settings", on_delete=models.CASCADE)
     enabled = models.BooleanField(
@@ -104,7 +102,6 @@ class GDPRSettings(TranslatableModel):
         return get_setting(shop)
 
 
-@python_2_unicode_compatible
 class GDPRCookieCategory(TranslatableModel):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="gdpr_cookie_categories")
     always_active = models.BooleanField(default=False, verbose_name=_("always active"))
@@ -138,7 +135,6 @@ class GDPRCookieCategory(TranslatableModel):
         return _("GDPR cookie category for {}").format(self.shop)
 
 
-@python_2_unicode_compatible
 class GDPRUserConsent(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="gdpr_consents", editable=False)
@@ -205,7 +201,6 @@ class GDPRUserConsent(models.Model):
         return _("GDPR user consent in {} for user {} in shop {}").format(self.created_on, self.user, self.shop)
 
 
-@python_2_unicode_compatible
 class GDPRUserConsentDocument(models.Model):
     page = models.ForeignKey(on_delete=models.CASCADE, to="shuup_simple_cms.Page")
     version = models.ForeignKey(on_delete=models.CASCADE, to=Version)

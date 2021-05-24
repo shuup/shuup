@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
@@ -47,7 +46,6 @@ class ShopStatus(Enum):
         ENABLED = _("enabled")
 
 
-@python_2_unicode_compatible
 class Shop(ChangeProtected, TranslatableShuupModel):
     protected_fields = ["currency", "prices_include_tax"]
     change_protect_message = _("The following fields can't be changed because there are existing orders for this shop.")

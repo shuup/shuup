@@ -8,7 +8,6 @@
 from typing import TYPE_CHECKING, Union
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -60,7 +59,6 @@ class SupplierQueryset(TranslatableQuerySet):
         return queryset.distinct()
 
 
-@python_2_unicode_compatible
 class Supplier(ModuleInterface, TranslatableShuupModel):
     default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"

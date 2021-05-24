@@ -13,14 +13,12 @@ import babel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core import cache
 from shuup.utils.analog import define_log_model
 
 
-@python_2_unicode_compatible
 class Currency(models.Model):
     identifier_attr = "code"
 

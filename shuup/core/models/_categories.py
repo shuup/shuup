@@ -10,7 +10,6 @@ from __future__ import with_statement
 from django.db import models
 from django.db.models import Q
 from django.db.transaction import atomic
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
@@ -85,7 +84,6 @@ class CategoryManager(TreeManager, TranslatableManager):
         return qs
 
 
-@python_2_unicode_compatible
 class Category(MPTTModel, TranslatableModel):
     parent = TreeForeignKey(
         "self",

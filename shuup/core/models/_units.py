@@ -14,7 +14,6 @@ from functools import lru_cache
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import pgettext
 from django.utils.translation import ugettext_lazy as _
@@ -63,7 +62,6 @@ class _ShortNameToSymbol(object):
         warnings.warn("Warning! `short_name` is deprecated, use `symbol` instead.", DeprecationWarning)
 
 
-@python_2_unicode_compatible
 class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     decimals = models.PositiveSmallIntegerField(
@@ -225,7 +223,6 @@ class DisplayUnit(TranslatableShuupModel):
         verbose_name_plural = _("display units")
 
 
-@python_2_unicode_compatible
 class SalesUnitAsDisplayUnit(DisplayUnit):
     class Meta:
         abstract = True
@@ -250,7 +247,6 @@ class SalesUnitAsDisplayUnit(DisplayUnit):
         return force_text(self.name)
 
 
-@python_2_unicode_compatible
 class PiecesSalesUnit(SalesUnit):
     """
     An object representing `Pieces` sales unit.
