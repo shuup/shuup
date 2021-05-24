@@ -11,7 +11,7 @@ from shuup.apps import AppConfig
 class SimpleOrderNotificationAppConfig(AppConfig):
     name = "shuup.front.apps.simple_order_notification"
     verbose_name = "Shuup Frontend - Simple Order Notification"
-    label = "shuup_front.simple_order_notification"
+    label = "shuup_front_simple_order_notification"
 
     provides = {
         "admin_module": [

@@ -15,7 +15,7 @@ import shuup.apps
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
     verbose_name = _("Shuup Frontend - Customer Information Editing")
-    label = "shuup_front.customer_information"
+    label = "shuup_front_customer_information"
 
     provides = {
         "front_urls": [__name__ + ".urls:urlpatterns"],

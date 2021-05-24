@@ -38,7 +38,7 @@ from shuup.front.apps.registration.signals import company_contact_activated
 class RegistrationAppConfig(AppConfig):
     name = "shuup.front.apps.registration"
     verbose_name = "Shuup Frontend - User Registration"
-    label = "shuup_front.registration"
+    label = "shuup_front_registration"
 
     required_installed_apps = {
         "registration": "django-registration-redux is required for user registration and activation"

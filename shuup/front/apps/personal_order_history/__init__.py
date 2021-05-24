@@ -14,7 +14,7 @@ import shuup.apps
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
     verbose_name = _("Shuup Frontend - Personal Order History")
-    label = "shuup_front.personal_order_history"
+    label = "shuup_front_personal_order_history"
 
     provides = {
         "front_urls": [__name__ + ".urls:urlpatterns"],

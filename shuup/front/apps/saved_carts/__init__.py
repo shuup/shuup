@@ -14,7 +14,7 @@ import shuup.apps
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
     verbose_name = _("Shuup Frontend - Saved Baskets")
-    label = "shuup_front.saved_baskets"
+    label = "shuup_front_saved_baskets"
 
     provides = {
         "front_urls": [__name__ + ".urls:urlpatterns"],
