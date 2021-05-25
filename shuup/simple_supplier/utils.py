@@ -22,7 +22,7 @@ from shuup.core.models import (
     ShipmentType,
     ShippingMode,
 )
-from shuup.core.suppliers.base import StockAdjustmentType
+from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm, StockManagedForm
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.utils.django_compat import reverse

@@ -65,7 +65,6 @@ class SupplierQueryset(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Supplier(ModuleInterface, TranslatableShuupModel):
-    default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
@@ -98,7 +97,6 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
             "merely assigns a sensible default behavior, which can be overwritten on a product-by-product basis."
         ),
     )
-
     supplier_modules = models.ManyToManyField(
         "SupplierModule",
         blank=True,
@@ -175,48 +173,29 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         :type contect: shuup.core.models.Contact
         :rtype: iterable[ValidationError]
         """
-        return_errors = []
         for module in self.modules:
-            if shop_product.product.internal_type in module.handles_internal_types:
-                return_errors.extend(
-                    module.get_orderability_errors(
-                        shop_product=shop_product, quantity=quantity, customer=customer, *args, **kwargs
-                    )
-                )
-                break
-
-        for errors in return_errors:
-            yield errors
+            yield from module.get_orderability_errors(
+                shop_product=shop_product, quantity=quantity, customer=customer, *args, **kwargs
+            )
 
     def get_stock_statuses(self, product_ids, *args, **kwargs):
         """
+        Return a dict of product stock statuses
+
         :param product_ids: Iterable of product IDs.
         :return: Dict of {product_id: ProductStockStatus}
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
-        product_ids = set(product_ids)
         return_dict = {}
         for module in self.modules:
-            ids_for_module = set(module.get_can_handel_product_ids(product_ids))
-            product_ids -= ids_for_module
-            return_dict.update(module.get_stock_statuses(ids_for_module, *args, **kwargs))
-            if len(product_ids) == 0:
-                break
-
+            return_dict.update(module.get_stock_statuses(product_ids, *args, **kwargs))
         return return_dict
 
     def get_stock_status(self, product_id, *args, **kwargs):
-        """
-        :param product_id: Product ID.
-        :type product_id: int
-        :rtype: shuup.core.stocks.ProductStockStatus
-        """
-        return_object = None
-        for module in self.module:
-            if module.can_handel_product_id(product_id):
-                return_object = module.get_stock_status(product_id, *args, **kwargs)
-                break
-        return return_object
+        for module in self.modules:
+            stock_status = module.get_stock_status(product_id, *args, **kwargs)
+            if stock_status:
+                return stock_status
 
     def get_suppliable_products(self, shop, customer):
         """
@@ -235,44 +214,21 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     def adjust_stock(self, product_id, delta, created_by=None, type=None, *args, **kwargs):
         from shuup.core.suppliers.base import StockAdjustmentType
 
-        if type is None:
-            type = StockAdjustmentType.INVENTORY
-
-        return_object = None
+        adjustment_type = type or StockAdjustmentType.INVENTORY
         for module in self.modules:
-            if module.can_handel_product_id(product_id):
-                return_object = module.adjust_stock(
-                    product_id, delta, created_by=created_by, type=type, *args, **kwargs
-                )
-                break
-        return return_object
+            module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type, *args, **kwargs)
 
     def update_stock(self, product_id, *args, **kwargs):
         for module in self.modules:
-            if module.can_handel_product_id(product_id):
-                module.update_stock(product_id, *args, **kwargs)
-                break
+            module.update_stock(product_id, *args, **kwargs)
 
     def update_stocks(self, product_ids, *args, **kwargs):
-        product_ids = set(product_ids)
         for module in self.modules:
-            ids_for_module = set(module.get_can_handel_product_ids(product_ids))
-            product_ids -= ids_for_module
-            module.update_stocks(ids_for_module, *args, **kwargs)
-            if len(product_ids) == 0:
-                break
+            module.update_stocks(product_ids, *args, **kwargs)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         for module in self.modules:
-            products = set(product_quantities.keys())
-            product_quantities_for_module = {}
-            for product in products:
-                if product.internal_type in module.handles_internal_types:
-                    product_quantities_for_module[product] = product_quantities.pop(product)
-
-            module.ship_products(shipment, product_quantities_for_module, *args, **kwargs)
-            if len(product_quantities) == 0:
-                break
+            module.ship_products(shipment, product_quantities, *args, **kwargs)
 
     def soft_delete(self):
         if not self.deleted:
@@ -314,19 +270,10 @@ class SupplierModule(models.Model):
 
     @classmethod
     def ensure_all_supplier_modules(cls):
-        from django.db.utils import OperationalError, ProgrammingError
-
         from shuup.apps.provides import get_provide_objects
 
         for module in get_provide_objects(Supplier.module_provides_key):
-            try:
-                cls.objects.get_or_create(module_identifier=module.identifier, defaults={"name": module.name})
-            # Errors that will be raised if this model is change and not migrated yet
-            # As this method will be runned before migrations can be applied we need to catch these errors
-            except ProgrammingError:
-                break
-            except OperationalError:
-                break
+            cls.objects.update_or_create(module_identifier=module.identifier, defaults={"name": module.name})
 
 
 SupplierLogEntry = define_log_model(Supplier)

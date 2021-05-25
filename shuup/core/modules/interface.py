@@ -20,30 +20,23 @@ class ModuleNotFound(ValueError):
 
 class ModuleInterface(object):
     _cached_modules_impl = None
-    default_module_spec = None  # Overridden on class level
     module_options_field = "module_data"  # May be overridden on class level
     module_provides_key = None
 
     def _load_modules(self):
-        self.default_module_spec
         enabled_supplier_modules = self.supplier_modules.all()
         loaded_modules = []
         options = getattr(self, self.module_options_field, None) or {}
-        if enabled_supplier_modules:
-            for supplier_module in enabled_supplier_modules:
-                impls = self.get_module_implementation_map()
-                if supplier_module.module_identifier not in impls:
-                    raise ModuleNotFound(
-                        "Invalid module identifier %r in %s" % (supplier_module.name, force_ascii(repr(self)))
-                    )
-                spec = impls[supplier_module.module_identifier]
 
-                module = load(spec, context_explanation="Loading module for %s" % force_ascii(repr(self)))
-                loaded_modules.append(module(self, options))
-
-        # Always load the default supplier module last
-        module = load(self.default_module_spec, context_explanation="Loading module for %s" % force_ascii(repr(self)))
-        loaded_modules.append(module(self, options))
+        for supplier_module in enabled_supplier_modules:
+            impls = self.get_module_implementation_map()
+            if supplier_module.module_identifier not in impls:
+                raise ModuleNotFound(
+                    "Invalid module identifier %r in %s" % (supplier_module.name, force_ascii(repr(self)))
+                )
+            spec = impls[supplier_module.module_identifier]
+            module = load(spec, context_explanation="Loading module for %s" % force_ascii(repr(self)))
+            loaded_modules.append(module(self, options))
 
         return loaded_modules
 

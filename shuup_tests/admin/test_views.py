@@ -241,7 +241,7 @@ def test_product_edit_view(rf, admin_user, settings):
     response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
-    assert None == shop_product.primary_category
+    assert shop_product.primary_category
 
     if settings.SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES:
         assert shop_product.categories.count() == 1
