@@ -1,25 +1,26 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Christian Hess, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-03 17:35+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-05-11 12:15+0000\n"
+"PO-Revision-Date: 2021-05-25 17:20+0000\n"
+"Last-Translator: Christian Hess\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Error! Unexpected error while uploading files."
-msgstr ""
+msgstr "Erro! Erro inesperado ao enviar arquivos."
 
 msgid "Error!"
 msgstr ""
@@ -156,7 +157,8 @@ msgid "Ship to billing address"
 msgstr ""
 
 msgid ""
-"Checking this will make the shipping address the same as the billing address."
+"Checking this will make the shipping address the same as the billing "
+"address."
 msgstr ""
 
 msgid "Order for company"
@@ -215,8 +217,8 @@ msgstr ""
 
 msgid ""
 "Search for existing customers by searching by name or email or click the "
-"magnifying glass for more fine-grained filtering. Clear the search filter to "
-"create an order for a new customer."
+"magnifying glass for more fine-grained filtering. Clear the search filter to"
+" create an order for a new customer."
 msgstr ""
 
 msgid "Customer"
@@ -430,7 +432,8 @@ msgid "Enter the best %s contact phone number."
 msgstr ""
 
 #, javascript-format
-msgid "Enter the %s email address for transaction receipts and communications."
+msgid ""
+"Enter the %s email address for transaction receipts and communications."
 msgstr ""
 
 msgid "Street"
@@ -614,8 +617,8 @@ msgid "Settings"
 msgstr ""
 
 msgid ""
-"The nuts and bolts of your store are found here. From individual country tax-"
-"regulations to your contact details."
+"The nuts and bolts of your store are found here. From individual country "
+"tax-regulations to your contact details."
 msgstr ""
 
 msgid "Search"
@@ -638,10 +641,20 @@ msgstr ""
 msgid "It was nice to show you around!"
 msgstr ""
 
-msgid "If you need to run it again, fire it up from the menu in the top right."
+msgid ""
+"If you need to run it again, fire it up from the menu in the top right."
 msgstr ""
 
 msgid "Learn more at the Shuup Help Center"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Next"
 msgstr ""
 
 msgid "Mass actions"
@@ -678,12 +691,6 @@ msgid "descending"
 msgstr ""
 
 msgid "Default sorting"
-msgstr ""
-
-msgid "Previous"
-msgstr ""
-
-msgid "Next"
 msgstr ""
 
 #, javascript-format
