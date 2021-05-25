@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
@@ -20,11 +23,31 @@ from .models import StockAdjustment, StockCount
 class SimpleSupplierModule(BaseSupplierModule):
     identifier = "simple_supplier"
     name = "Simple Supplier"
-    handles_internal_type = [0, 1]
+    handles_internal_types = [0]
+
+    def get_orderability_errors(self, shop_product, quantity, customer):
+        """
+        :param shop_product: Shop Product.
+        :type shop_product: shuup.core.models.ShopProduct
+        :param quantity: Quantity to order.
+        :type quantity: decimal.Decimal
+        :param customer: Contact.
+        :type user: django.contrib.auth.models.AbstractUser
+        :rtype: iterable[ValidationError]
+        """
+        stock_status = self.get_stock_status(shop_product.product_id)
+
+        backorder_maximum = shop_product.backorder_maximum
+        if stock_status.error:
+            yield ValidationError(stock_status.error, code="stock_error")
+
+        if self.supplier.stock_managed and stock_status.stock_managed:
+            if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
+                yield ValidationError(
+                    stock_status.message or _(u"Error! Insufficient quantity in stock."), code="stock_insufficient"
+                )
 
     def get_stock_statuses(self, product_ids):
-        product_ids = self._get_can_handel_product_ids(product_ids)
-
         stock_counts = StockCount.objects.filter(supplier=self.supplier, product_id__in=product_ids).values_list(
             "product_id", "physical_count", "logical_count", "stock_managed"
         )
@@ -52,9 +75,6 @@ class SimpleSupplierModule(BaseSupplierModule):
         return dict((pss.product_id, pss) for pss in stati)
 
     def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None, type=StockAdjustmentType.INVENTORY):
-        if not self._can_handle_product(product_id):
-            return {}
-
         stock_count = StockCount.objects.get_or_create(
             supplier=self.supplier,
             product_id=product_id,
@@ -79,8 +99,6 @@ class SimpleSupplierModule(BaseSupplierModule):
         Supplier module update stock should always bump product
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
-        if not self._can_handle_product(product_id):
-            return
         supplier_id = self.supplier.pk
         sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
         if not sv.stock_managed:

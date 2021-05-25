@@ -51,12 +51,7 @@ from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
-from ._product_shops import (
-    ProductVisibility,
-    ShopProduct,
-    ShopProductVisibility,
-    SimpleSupplierInternalProductTypeProvider,
-)
+from ._product_shops import ProductVisibility, ShopProduct, ShopProductVisibility
 from ._product_variation import (
     ProductVariationLinkStatus,
     ProductVariationResult,
@@ -164,7 +159,6 @@ __all__ = [
     "PolymorphicShuupModel",
     "PolymorphicTranslatableShuupModel",
     "Product",
-    "Product",
     "ProductAttribute",
     "ProductCrossSell",
     "ProductCrossSellType",
@@ -178,7 +172,6 @@ __all__ = [
     "ProductVariationVariable",
     "ProductVariationVariableValue",
     "ProductVisibility",
-    "SimpleSupplierInternalProductTypeProvider",
     "RoundingMode",
     "SalesUnit",
     "SavedAddress",

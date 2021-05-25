@@ -554,6 +554,13 @@ class BaseBasket(OrderSource):
         if product.variation_children.filter(deleted=False).exists():
             raise ValueError("Error! Add a variation parent to the basket is not allowed.")
 
+        # We need to check for errors as otherwise customers can get a messages that
+        # the product was successfully added to the basket but it was added with quantity 0
+        if supplier:
+            errors = supplier.get_orderability_errors(product.get_shop_instance(shop), quantity, self.customer)
+            for error in errors:
+                raise error
+
         return {
             "line_id": uuid4().hex,
             "product": product,

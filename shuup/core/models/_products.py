@@ -17,9 +17,11 @@ from django.utils.text import format_lazy
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
+from functools import lru_cache
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
 from shuup.core.signals import post_clean, pre_clean
@@ -37,6 +39,18 @@ from ._product_variation import (
     get_all_available_combinations,
     get_combination_hash_from_variable_mapping,
 )
+
+
+@lru_cache()
+def get_internal_product_type_enum():
+    values = []
+    for internal_product_type_provider in get_provide_objects("internal_product_type_provider"):
+        for value, label in internal_product_type_provider.get_internal_product_types():
+            values.append((value, label))
+    return values
+
+
+INTERNAL_PRODUCT_TYPE = get_internal_product_type_enum()
 
 
 # TODO (2.0): This should be extandable
@@ -222,6 +236,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     deleted = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_("deleted"))
 
     # Behavior
+    internal_type = models.IntegerField(default=0, choices=INTERNAL_PRODUCT_TYPE)
     mode = EnumIntegerField(ProductMode, default=ProductMode.NORMAL, verbose_name=_("mode"))
     variation_parent = models.ForeignKey(
         "self",

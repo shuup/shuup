@@ -39,7 +39,7 @@ class SupplierListView(PicotableListView):
 
     def get_supplier_modules(self, instance):
         return (
-            ", ".join(instance.supplier_modules.all().values_list("name"))
+            ", ".join(instance.supplier_modules.all().values_list("name", flat=True))
             or _("No %s module") % self.model._meta.verbose_name
         )
 

@@ -15,10 +15,8 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
-from functools import lru_cache
 from parler.models import TranslatableModel, TranslatedFields
 
-from shuup.apps.provides import get_provide_objects
 from shuup.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.signals import get_orderability_errors, get_visibility_errors, post_clean, pre_clean
@@ -32,24 +30,6 @@ from ._products import ProductMode, ProductVisibility
 from ._units import DisplayUnit, PiecesSalesUnit, UnitInterface
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
-
-
-class SimpleSupplierInternalProductTypeProvider:
-    @classmethod
-    def get_internal_product_types(cls):
-        yield (0, _("Product"))
-
-
-@lru_cache()
-def get_internal_product_type_enum():
-    values = []
-    for internal_product_type_provider in get_provide_objects("internal_product_type_provider"):
-        for value, label in internal_product_type_provider.get_internal_product_types():
-            values.append((value, label))
-    return values
-
-
-INTERNAL_PRODUCT_TYPE = get_internal_product_type_enum()
 
 
 class ShopProductVisibility(Enum):
@@ -77,8 +57,6 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         verbose_name=_("suppliers"),
         help_text=_("List your suppliers here. Suppliers can be found by searching for `Suppliers`."),
     )
-
-    internal_type = models.IntegerField(default=0, choices=INTERNAL_PRODUCT_TYPE)
 
     visibility = EnumIntegerField(
         ShopProductVisibility,

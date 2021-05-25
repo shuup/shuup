@@ -8,24 +8,61 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import ShopProduct
-from shuup.core.signals import stocks_updated
-from shuup.core.stocks import ProductStockStatus
-from shuup.core.utils import context_cache
+from shuup.core.models import ShopProduct, Supplier
 from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
 
-from .enums import StockAdjustmentType
 
-
-class BaseSupplierModule(object):
+class SupplierModuleInterface(object):
     """
-    Base supplier module implementation.
+    Supplier module interface.
     """
 
     identifier = None
     name = None
-    handles_internal_type = None
+    handles_internal_types = []
+
+    def __init__(self, supplier, options):
+        pass
+
+    def get_can_handel_product_ids(self, product_ids):
+        return []
+
+    def can_handel_product_id(self, product_id):
+        return False
+
+    def get_can_handel_shop_product_ids(self, shop_product_ids):
+        return []
+
+    def can_handel_shop_product_id(self, shop_product_id):
+        return False
+
+    def get_stock_statuses(self, product_ids):
+        return {}
+
+    def get_stock_status(self, product_id):
+        pass
+
+    def get_orderability_errors(self, shop_product, quantity, customer):
+        pass
+
+    def adjust_stock(self, product_id, delta, created_by=None, type=None):
+        pass
+
+    def update_stock(self, product_id):
+        pass
+
+    def update_stocks(self, product_ids):
+        pass
+
+    def ship_products(self, shipment, product_quantities):
+        pass
+
+
+class BaseSupplierModule(SupplierModuleInterface):
+    """
+    Base supplier module implementation.
+    """
 
     def __init__(self, supplier, options):
         """
@@ -35,43 +72,61 @@ class BaseSupplierModule(object):
         self.supplier = supplier
         self.options = options
 
-    def _can_handle_product(self, product_id):
-        """
-        :param product_id: Product ID.
-        :type product_id: int
-        :return: boolean value if this module can handle product
-        :rtype: bool
-        """
-        if self.handles_internal_type is None:
-            return True
+    def _get_can_handle_product_queryset(self, ids):
+        from shuup.core.models import Product
 
-        if type(self.handles_internal_type) == list:
-            return ShopProduct.objects.filter(
-                product__id=product_id, internal_type__in=self.handles_internal_type
-            ).exists()
+        return Product.objects.filter(id__in=ids, internal_type__in=self.handles_internal_types)
 
-        return ShopProduct.objects.filter(product__id=product_id, internal_type=self.handles_internal_type).exists()
+    def _get_can_handle_shop_product_queryset(self, ids):
+        return ShopProduct.objects.filter(id__in=ids, product__internal_type__in=self.handles_internal_types)
 
-    def _get_can_handel_product_ids(self, product_ids):
+    def get_can_handel_product_ids(self, product_ids):
         """
         :param product_ids: Product IDs.
         :type product_ids: iterable[int]
         :return: list of all product ids that this module can handle
         :rtype: iterable[int]
         """
-        if self.handles_internal_type is None:
+        if not self.handles_internal_types:
             return True
 
-        if type(self.handles_internal_type) == list:
-            return ShopProduct.objects.filter(
-                product__id__in=product_ids, internal_type__in=self.handles_internal_type
-            ).values_list("product__id", flat=True)
+        return self._get_can_handle_product_queryset(product_ids).values_list("id", flat=True)
 
-        return ShopProduct.objects.filter(
-            product__id__in=product_ids, internal_type=self.handles_internal_type
-        ).values_list(
-            "product__id", flat=True
-        )
+    def can_handel_product_id(self, product_id):
+        """
+        :param product_ids: Product ID.
+        :type product_ids: int
+        :return: returns true if this module can handle the product
+        :rtype: bool
+        """
+        if not self.handles_internal_types:
+            return True
+
+        return self._get_can_handle_product_queryset([product_id]).exists()
+
+    def get_can_handel_shop_product_ids(self, shop_product_ids):
+        """
+        :param product_ids: Shop Product IDs.
+        :type product_ids: iterable[int]
+        :return: list of all shop product ids that this module can handle
+        :rtype: iterable[int]
+        """
+        if not self.handles_internal_types:
+            return True
+
+        return self._get_can_handle_shop_product_queryset(shop_product_ids).values_list("id", flat=True)
+
+    def can_handel_shop_product_id(self, shop_product_id):
+        """
+        :param product_ids: Shop Product ID
+        :type product_ids: int
+        :return: returns true if this module can handle the product
+        :rtype: bool
+        """
+        if not self.handles_internal_types:
+            return True
+
+        return self._get_can_handle_shop_product_queryset([shop_product_id]).exists()
 
     def get_stock_statuses(self, product_ids):
         """
@@ -79,16 +134,7 @@ class BaseSupplierModule(object):
         :return: Dict of {product_id: ProductStockStatus}.
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
-        return dict(
-            (
-                product_id,
-                ProductStockStatus(
-                    product_id=product_id, logical_count=0, physical_count=0, stock_managed=self.supplier.stock_managed
-                ),
-            )
-            for product_id in product_ids
-            if self._can_handle_product(product_id)
-        )
+        return {}
 
     def get_stock_status(self, product_id):
         """
@@ -96,7 +142,10 @@ class BaseSupplierModule(object):
         :type product_id: int
         :rtype: shuup.core.stocks.ProductStockStatus
         """
-        return self.get_stock_statuses([product_id])[product_id]
+        statuses = self.get_stock_statuses([product_id])
+        if product_id in statuses:
+            return statuses[product_id]
+        return
 
     def get_orderability_errors(self, shop_product, quantity, customer):
         """
@@ -108,32 +157,24 @@ class BaseSupplierModule(object):
         :type user: django.contrib.auth.models.AbstractUser
         :rtype: iterable[ValidationError]
         """
-        stock_status = self.get_stock_status(shop_product.product_id)
-
-        backorder_maximum = shop_product.backorder_maximum
-        if stock_status.error:
-            yield ValidationError(stock_status.error, code="stock_error")
-
-        if self.supplier.stock_managed and stock_status.stock_managed:
-            if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
-                yield ValidationError(
-                    stock_status.message or _(u"Error! Insufficient quantity in stock."), code="stock_insufficient"
-                )
-
-    def adjust_stock(self, product_id, delta, created_by=None, type=StockAdjustmentType.INVENTORY):
-        raise NotImplementedError("Error! Not implemented: `BaseSupplierModule` -> `adjust_stock()`.")
-
-    def update_stock(self, product_id):
-        """
-        Supplier module update stock should always bump product
-        cache and send `shuup.core.signals.stocks_updated` signal.
-        """
-        if not self._can_handle_product(product_id):
-            return
-        context_cache.bump_cache_for_product(product_id)
-        stocks_updated.send(
-            type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
-        )
+        vendor_user = None
+        if hasattr(customer, "user"):
+            vendor_user = customer.user.vendor_users.filter(
+                supplier__in=Supplier.objects.enabled(shop=shop_product.shop), shop=shop_product.shop
+            ).first()
+        if vendor_user:
+            yield ValidationError(
+                _(
+                    "Error! Your vendor can't handle this product type. "
+                    "Please be in contact with your marketplace admin"
+                ),
+                code="missing_supplier_module",
+            )
+        else:
+            yield ValidationError(
+                _("Unfortunately product: %s can't be ordered right now.") % (shop_product.product.name,),
+                code="missing_supplier_module",
+            )
 
     def update_stocks(self, product_ids):
         # Naive default implementation; smarter modules can do something better
@@ -146,8 +187,6 @@ class BaseSupplierModule(object):
             insufficient_stocks = {}
 
             for product, quantity in product_quantities.items():
-                if not self._can_handle_product(product.id):
-                    continue
                 if quantity > 0:
                     stock_status = self.get_stock_status(product.pk)
                     if stock_status.stock_managed and stock_status.physical_count < quantity:
@@ -166,8 +205,6 @@ class BaseSupplierModule(object):
 
         for product, quantity in product_quantities.items():
             if quantity == 0:
-                continue
-            if not self._can_handle_product(product.id):
                 continue
 
             sp = shipment.products.create(product=product, quantity=quantity)

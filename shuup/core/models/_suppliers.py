@@ -175,14 +175,18 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         :type contect: shuup.core.models.Contact
         :rtype: iterable[ValidationError]
         """
-        return_dict = {}
+        return_errors = []
         for module in self.modules:
-            return_dict.update(
-                module.get_orderability_errors(
-                    shop_product=shop_product, quantity=quantity, customer=customer, *args, **kwargs
+            if shop_product.product.internal_type in module.handles_internal_types:
+                return_errors.extend(
+                    module.get_orderability_errors(
+                        shop_product=shop_product, quantity=quantity, customer=customer, *args, **kwargs
+                    )
                 )
-            )
-        return return_dict
+                break
+
+        for errors in return_errors:
+            yield errors
 
     def get_stock_statuses(self, product_ids, *args, **kwargs):
         """
@@ -190,9 +194,15 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         :return: Dict of {product_id: ProductStockStatus}
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
+        product_ids = set(product_ids)
         return_dict = {}
         for module in self.modules:
-            return_dict.update(module.get_stock_statuses(product_ids, *args, **kwargs))
+            ids_for_module = set(module.get_can_handel_product_ids(product_ids))
+            product_ids -= ids_for_module
+            return_dict.update(module.get_stock_statuses(ids_for_module, *args, **kwargs))
+            if len(product_ids) == 0:
+                break
+
         return return_dict
 
     def get_stock_status(self, product_id, *args, **kwargs):
@@ -201,10 +211,10 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         :type product_id: int
         :rtype: shuup.core.stocks.ProductStockStatus
         """
-        return_object = {}
-        for module in self.modules:
-            return_object = module.get_stock_status(product_id, *args, **kwargs)
-            if return_object:
+        return_object = None
+        for module in self.module:
+            if module.can_handel_product_id(product_id):
+                return_object = module.get_stock_status(product_id, *args, **kwargs)
                 break
         return return_object
 
@@ -225,29 +235,44 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     def adjust_stock(self, product_id, delta, created_by=None, type=None, *args, **kwargs):
         from shuup.core.suppliers.base import StockAdjustmentType
 
-        adjustment_type = type or StockAdjustmentType.INVENTORY
+        if type is None:
+            type = StockAdjustmentType.INVENTORY
+
         return_object = None
         for module in self.modules:
-            return_object = module.adjust_stock(
-                product_id, delta, created_by=created_by, type=adjustment_type, *args, **kwargs
-            )
-            if return_object:
+            if module.can_handel_product_id(product_id):
+                return_object = module.adjust_stock(
+                    product_id, delta, created_by=created_by, type=type, *args, **kwargs
+                )
                 break
         return return_object
 
     def update_stock(self, product_id, *args, **kwargs):
-        return_dict = {}
         for module in self.modules:
-            return_dict.update(module.update_stock(product_id, *args, **kwargs))
-        return return_dict
+            if module.can_handel_product_id(product_id):
+                module.update_stock(product_id, *args, **kwargs)
+                break
 
     def update_stocks(self, product_ids, *args, **kwargs):
+        product_ids = set(product_ids)
         for module in self.modules:
-            module.update_stocks(product_ids, *args, **kwargs)
+            ids_for_module = set(module.get_can_handel_product_ids(product_ids))
+            product_ids -= ids_for_module
+            module.update_stocks(ids_for_module, *args, **kwargs)
+            if len(product_ids) == 0:
+                break
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         for module in self.modules:
-            module.ship_products(shipment, product_quantities, *args, **kwargs)
+            products = set(product_quantities.keys())
+            product_quantities_for_module = {}
+            for product in products:
+                if product.internal_type in module.handles_internal_types:
+                    product_quantities_for_module[product] = product_quantities.pop(product)
+
+            module.ship_products(shipment, product_quantities_for_module, *args, **kwargs)
+            if len(product_quantities) == 0:
+                break
 
     def soft_delete(self):
         if not self.deleted:

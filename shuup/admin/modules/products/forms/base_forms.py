@@ -175,7 +175,6 @@ class ShopProductForm(MultiLanguageModelForm):
     class Meta:
         model = ShopProduct
         fields = (
-            "internal_type",
             "default_price_value",
             "minimum_price_value",
             "suppliers",
