@@ -6,13 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-import uuid
 from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
 from django.utils.timezone import now
-from django.utils.translation import activate
 from parler.models import TranslationDoesNotExist
 
 from shuup import configuration
@@ -30,7 +28,6 @@ from shuup.core.models import (
     Supplier,
     get_person_contact,
 )
-from shuup.core.models._product_variation import hash_combination
 from shuup.testing.factories import (
     CategoryFactory,
     create_product,
@@ -63,12 +60,12 @@ def test_product_orderability():
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, orderable=True):
         shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
-        assert shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+        assert shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1, allow_cache=False)
 
     with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_LOGGED_IN, orderable=True):
         with pytest.raises(ProductNotOrderableProblem):
             shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
-        assert not shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+        assert not shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1, allow_cache=False)
 
 
 @pytest.mark.django_db
@@ -79,12 +76,12 @@ def test_purchasability():
     assert shop_product.purchasable
 
     shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
-    assert shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+    assert shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1, allow_cache=False)
 
     with modify(shop_product, purchasable=False):
         with pytest.raises(ProductNotOrderableProblem):
             shop_product.raise_if_not_orderable(supplier=supplier, customer=anon_contact, quantity=1)
-        assert not shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1)
+        assert not shop_product.is_orderable(supplier=supplier, customer=anon_contact, quantity=1, allow_cache=False)
 
 
 @pytest.mark.django_db

@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Cache product orderability and prices using a list of user groups instead of per contact
 - Pull translation strings from Transifex
 
 ## [2.9.1] - 2021-05-24
