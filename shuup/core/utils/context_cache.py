@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import hashlib
 import six
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Q, QuerySet
@@ -43,7 +44,7 @@ def get_cached_value(identifier, item, context, **kwargs):
     if "allow_cache" in kwargs:
         allow_cache = kwargs.pop("allow_cache")
     key = get_cache_key_for_context(identifier, item, context, **kwargs)
-    if not allow_cache:
+    if allow_cache is False:
         return key, None
     return key, cache.get(key)
 
@@ -216,7 +217,9 @@ def get_cache_key_for_context(identifier, item, context, **kwargs):
         for k, v in six.iteritems(parse_qs(query_string)):
             items[k] = _get_val(v)
 
-    return "%s:%s_%s" % (namespace, identifier, hash(frozenset(items.items())))
+    sorted_items = dict(sorted(items.items(), key=lambda item: item[0]))
+    key_hash = hashlib.sha1(str(sorted_items).encode("utf-8")).hexdigest()
+    return "%s:%s_%s" % (namespace, identifier, key_hash)
 
 
 def bump_internal_cache():
@@ -287,7 +290,8 @@ def _get_items_from_context(context):  # noqa (C901)
 
 def _get_val(v):
     if isinstance(v, dict):
-        return hash(frozenset(v.items()))
+        sorted_items = dict(sorted(v.items(), key=lambda item: item[0]))
+        return hashlib.sha1(str(frozenset(sorted_items.items())).encode("utf-8")).hexdigest()
     if hasattr(v, "pk"):
         return v.pk
     if isinstance(v, QuerySet) or isinstance(v, TranslatableQuerySet):

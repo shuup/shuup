@@ -7,6 +7,8 @@
 """
 Utilities for caching price info
 """
+from decimal import Decimal
+
 from shuup.core.models import AnonymousContact, ShopProduct
 from shuup.core.pricing import PriceInfo
 from shuup.core.utils import context_cache
@@ -39,13 +41,21 @@ def _get_price_info_cache_key_params(context, item, quantity, **context_args):
             AnonymousContact._cached_default_group_id = anonymous_group_id
             groups = [anonymous_group_id]
 
+    extra_kwargs = dict()
+    for key, value in context_args.items():
+        if hasattr(value, "pk"):
+            extra_kwargs[key] = value.pk
+        else:
+            extra_kwargs[key] = value
+
     return dict(
         identifier="price_info_cache",
         item=_get_price_info_namespace_for_shop(shop_id),
-        context={"customer_groups": groups},
-        quantity=quantity,
-        context_item=item,
-        **context_args
+        context={},
+        customer_groups=groups,
+        quantity=str(Decimal(quantity)),
+        item_id=item.pk if hasattr(item, "pk") else str(item),
+        **extra_kwargs
     )
 
 
@@ -98,9 +108,8 @@ def get_many_cached_price_info(context, item, quantity=1, **context_args):
     :param object item
     :param float|Decimal quantity
     """
-    key, prices_infos = context_cache.get_cached_value(
-        many=True, **_get_price_info_cache_key_params(context, item, quantity, **context_args)
-    )
+    cache_kwargs = _get_price_info_cache_key_params(context, item, quantity, many=True, **context_args)
+    key, prices_infos = context_cache.get_cached_value(**cache_kwargs)
 
     if prices_infos:
         try:
@@ -129,9 +138,8 @@ def get_cached_price_info(context, item, quantity=1, **context_args):
     :param object item
     :param float|Decimal quantity
     """
-    key, price_info = context_cache.get_cached_value(
-        **_get_price_info_cache_key_params(context, item, quantity, **context_args)
-    )
+    cache_kwargs = _get_price_info_cache_key_params(context, item, quantity, **context_args)
+    key, price_info = context_cache.get_cached_value(**cache_kwargs)
 
     from django.utils.timezone import now
 
