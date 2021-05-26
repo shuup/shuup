@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- General: replace hash() with sha1() as Python's hash() function doesn't have a stable result across processes
 - Core: use SHA-1 to hash cache keys as Python's hash() function doesn't have a stable result across processes
 
 ### Changed

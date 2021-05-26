@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import hashlib
 import random
 import string
 from django.conf import settings
@@ -185,7 +186,8 @@ class CatalogCampaign(Campaign):
             customer=context.customer.pk or 0, shop=context.shop.pk, product_id=shop_product.pk
         )
         namespace = CAMPAIGNS_CACHE_NAMESPACE
-        key = "%s:%s" % (namespace, hash(frozenset(prod_ctx_cache_elements.items())))
+        sorted_items = dict(sorted(prod_ctx_cache_elements.items(), key=lambda item: item[0]))
+        key = "%s:%s" % (namespace, hashlib.sha1(str(sorted_items).encode("utf-8")).hexdigest())
         cached_matching = cache.get(key, None)
         if cached_matching is not None:
             return cached_matching

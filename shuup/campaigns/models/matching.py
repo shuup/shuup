@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import hashlib
 from django.db.models import Q
 
 from shuup.campaigns.consts import CONTEXT_CONDITION_CACHE_NAMESPACE
@@ -16,7 +17,8 @@ from shuup.core.utils import context_cache
 def get_matching_context_conditions(context):
     namespace = CONTEXT_CONDITION_CACHE_NAMESPACE
     ctx_cache_elements = dict(customer=context.customer.pk or 0, shop=context.shop.pk)
-    conditions_cache_key = "%s:%s" % (namespace, hash(frozenset(ctx_cache_elements.items())))
+    sorted_items = dict(sorted(ctx_cache_elements.items(), key=lambda item: item[0]))
+    conditions_cache_key = "%s:%s" % (namespace, hashlib.sha1(str(sorted_items).encode("utf-8")).hexdigest())
     matching_context_conditions = cache.get(conditions_cache_key, None)
     if matching_context_conditions is None:
         matching_context_conditions = set()
