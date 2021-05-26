@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import hashlib
 import logging
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext, ugettext_lazy as _
@@ -98,7 +99,8 @@ class LayoutCell(object):
                     if hasattr(plugin_inst, "get_cache_key")
                     else plugin_inst.identifier
                 )
-                full_cache_key = "shuup_xtheme_cell:{}".format(hash(f"{cache_key_prefix}-{cache_key}"))
+                hash_key = hashlib.sha1(f"{cache_key_prefix}-{cache_key}".encode("utf-8")).hexdigest()
+                full_cache_key = f"shuup_xtheme_cell:{hash_key}"
                 cached_content = cache.get(full_cache_key)
                 if cached_content is not None:
                     return cached_content

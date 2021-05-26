@@ -567,16 +567,34 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         """
         Product to be orderable it needs to be visible and purchasable.
         """
+        if customer:
+            cached_customer_groups = getattr(customer, "_cached_customer_groups", None)
+            if cached_customer_groups:
+                groups = customer._cached_customer_groups
+            else:
+                groups = list(customer.groups.order_by("pk").values_list("pk", flat=True))
+                customer._cached_customer_groups = groups
+        else:
+            from shuup.core.models import AnonymousContact
+
+            anonymous_group_id = getattr(AnonymousContact, "_cached_default_group_id", None)
+            if anonymous_group_id:
+                groups = [AnonymousContact._cached_default_group_id]
+            else:
+                anonymous_group_id = AnonymousContact().default_group.pk
+                AnonymousContact._cached_default_group_id = anonymous_group_id
+                groups = [anonymous_group_id]
+
         key, val = context_cache.get_cached_value(
             identifier="is_orderable",
             item=self,
-            context={"customer": customer},
+            context={"customer_groups": groups},
             supplier=supplier,
             stock_managed=bool(supplier and supplier.stock_managed),
             quantity=quantity,
             allow_cache=allow_cache,
         )
-        if customer and val is not None:
+        if val is not None:
             return val
 
         if not supplier:
@@ -587,8 +605,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
                 context_cache.set_cached_value(key, False)
             return False
 
-        if customer:
-            context_cache.set_cached_value(key, True)
+        context_cache.set_cached_value(key, True)
         return True
 
     def is_visible(self, customer):

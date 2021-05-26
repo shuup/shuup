@@ -143,19 +143,6 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
-    def _select_related(self):
-        return self.select_related("primary_image", "sales_unit", "tax_class", "manufacturer").prefetch_related(
-            "translations",
-            "shop_products",
-            "shop_products__display_unit",
-            "shop_products__display_unit__internal_unit",
-            "shop_products__display_unit__translations",
-            "shop_products__categories",
-            "shop_products__categories__translations",
-            "shop_products__primary_category",
-            "primary_image__file",
-        )
-
     def _visible(self, shop, customer, language=None, invisible_modes=[ProductMode.VARIATION_CHILD]):
         root = self.language(language) if language else self
         qs = root.all().filter(shop_products__shop=shop)
@@ -188,20 +175,20 @@ class ProductQuerySet(TranslatableQuerySet):
             else:
                 qs = qs.filter(shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_ALL)
 
-        qs = qs.select_related(*Product.COMMON_SELECT_RELATED).distinct()
-        return qs.exclude(deleted=True).exclude(type__isnull=True)
+        qs = qs.select_related(*Product.COMMON_SELECT_RELATED).prefetch_related(*Product.COMMON_PREFETCH_RELATED)
+        return qs.exclude(deleted=True).exclude(type__isnull=True).distinct()
 
     def _get_qs(self, shop, customer, language, visibility_type):
         qs = self._visible(shop=shop, customer=customer, language=language)
         if customer and customer.is_all_seeing:
-            return qs._select_related()
+            return qs
         else:
             from ._product_shops import ShopProductVisibility
 
             return qs.filter(
                 shop_products__shop=shop,
                 shop_products__visibility__in=(visibility_type, ShopProductVisibility.ALWAYS_VISIBLE),
-            )._select_related()
+            )
 
     def listed(self, shop, customer=None, language=None):
         from ._product_shops import ShopProductVisibility
@@ -220,13 +207,14 @@ class ProductQuerySet(TranslatableQuerySet):
         qs = (self.language(language) if language else self).exclude(deleted=True).exclude(type__isnull=True)
         if shop:
             qs = qs.filter(shop_products__shop=shop)
-        qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
+        qs = qs.select_related(*Product.COMMON_SELECT_RELATED).prefetch_related(*Product.COMMON_PREFETCH_RELATED)
         return qs
 
 
 @python_2_unicode_compatible
 class Product(TaxableItem, AttributableMixin, TranslatableModel):
-    COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
+    COMMON_SELECT_RELATED = ("sales_unit", "type", "primary_image", "tax_class", "manufacturer")
+    COMMON_PREFETCH_RELATED = ("translations",)
 
     # Metadata
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))

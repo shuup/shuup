@@ -5,8 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
+import hashlib
 import os
 import six
 from django.conf import settings
@@ -39,7 +38,8 @@ def _get_cached_thumbnail_url(source, **kwargs):
 
     from shuup.core.models import ProductMedia
 
-    kwargs_hash = hash(frozenset(kwargs.items()))
+    sorted_items = dict(sorted(kwargs.items(), key=lambda item: item[0]))
+    kwargs_hash = hashlib.sha1(str(sorted_items).encode("utf-8")).hexdigest()
     cache_key = None
 
     if isinstance(source, (File, ProductMedia)) and source.pk:

@@ -193,7 +193,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
             else None
         )
 
-        if not priced_products:
+        if priced_products is None:
             priced_children_key = PRICED_CHILDREN_CACHE_KEY % (product.id, quantity)
             priced_products = []
 

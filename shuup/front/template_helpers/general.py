@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import hashlib
 import six
 from collections import defaultdict
 from django.conf import settings
@@ -119,7 +120,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         ordering=ordering,
         filter_dict=filter_dict,
         orderable_only=orderable_only,
-        extra_filters=hash(str(extra_filters)),
+        extra_filters=hashlib.sha1(str(extra_filters).encode("utf-8")).hexdigest(),
     )
     if products is not None:
         return products
