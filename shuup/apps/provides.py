@@ -15,11 +15,11 @@ loading components, both first-party and third-party.
 
 """
 
-from __future__ import unicode_literals
 
-import six
 from collections import OrderedDict, defaultdict
 from contextlib import contextmanager
+
+import six
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured

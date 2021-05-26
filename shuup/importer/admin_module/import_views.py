@@ -9,11 +9,12 @@ import hashlib
 import logging
 import os
 from datetime import datetime
+
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView, View
 
 from shuup.admin.shop_provider import get_shop

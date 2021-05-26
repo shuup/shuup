@@ -5,18 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from jsonfield import JSONField
 
 from ._base import ShuupModel
 from ._shops import Shop
 
 
-@python_2_unicode_compatible
 class ConfigurationItem(ShuupModel):
     shop = models.ForeignKey(
         on_delete=models.CASCADE, to=Shop, related_name="+", null=True, blank=True, verbose_name=_("shop")

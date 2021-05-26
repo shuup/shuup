@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import six
 from collections import defaultdict
+
+import six
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.middleware.csrf import get_token

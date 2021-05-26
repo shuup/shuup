@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.template.loader import get_template
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum
 
 from shuup.utils.django_compat import reverse

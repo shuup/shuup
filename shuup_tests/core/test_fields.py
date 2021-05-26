@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
 import re
 from decimal import Decimal
+
+import pytest
 from django.forms import Form, ModelForm
 from django.forms.widgets import NumberInput
 from django.utils.encoding import force_text

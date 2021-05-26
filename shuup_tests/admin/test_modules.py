@@ -6,13 +6,14 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import pytest
 from copy import deepcopy
+from itertools import chain
+
+import pytest
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.test.utils import override_settings
 from django.utils.timezone import now
-from itertools import chain
 
 from shuup.admin import ShuupAdminAppConfig
 from shuup.admin.base import AdminModule

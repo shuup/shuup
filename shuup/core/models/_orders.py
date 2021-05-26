@@ -8,17 +8,17 @@
 from __future__ import unicode_literals, with_statement
 
 import datetime
-import six
 from collections import defaultdict
 from decimal import Decimal
+
+import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
@@ -140,7 +140,6 @@ class OrderStatusQuerySet(TranslatableQuerySet):
         return self._default_for_role(OrderStatusRole.COMPLETE)
 
 
-@python_2_unicode_compatible
 class OrderStatus(TranslatableModel):
     identifier = InternalIdentifierField(
         db_index=True,
@@ -308,7 +307,6 @@ class OrderQuerySet(models.QuerySet):
         return result
 
 
-@python_2_unicode_compatible
 class Order(MoneyPropped, models.Model):
     # Identification
     shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT, verbose_name=_("shop"))

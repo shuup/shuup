@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import re
+
 import six
 from django.contrib.auth.models import AnonymousUser
 from django.http.response import HttpResponse

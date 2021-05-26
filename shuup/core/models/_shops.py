@@ -5,12 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
@@ -47,7 +45,6 @@ class ShopStatus(Enum):
         ENABLED = _("enabled")
 
 
-@python_2_unicode_compatible
 class Shop(ChangeProtected, TranslatableShuupModel):
     protected_fields = ["currency", "prices_include_tax"]
     change_protect_message = _("The following fields can't be changed because there are existing orders for this shop.")

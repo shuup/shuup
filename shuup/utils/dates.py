@@ -5,15 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import datetime
-import django
 import itertools
-import six
 import time
+
+import django
+import six
 from django.utils import timezone
-from django.utils.translation import ugettext as _, ungettext
+from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 
 __all__ = ("parse_date", "parse_time", "try_parse_date", "try_parse_time", "try_parse_datetime")
 

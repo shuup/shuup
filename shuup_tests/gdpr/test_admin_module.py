@@ -97,8 +97,7 @@ def test_gdpr_admin_download_data(client, admin_user):
     admin_download_url = reverse("shuup_admin:gdpr.download_data", kwargs=dict(pk=customer.pk))
     response = client.post(admin_download_url)
     assert response.status_code == 200
-    assert response._headers["content-disposition"][0] == "Content-Disposition"
-    assert response._headers["content-disposition"][1].startswith("attachment; filename=user_data_")
+    assert response.headers["Content-Disposition"].startswith("attachment; filename=user_data_")
 
 
 @pytest.mark.django_db

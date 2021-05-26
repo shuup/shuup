@@ -7,10 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 import json
 from datetime import timedelta
+
 from django.conf import settings
 from django.template import loader
 from django.utils.timezone import now
-from django.utils.translation import activate, get_language, ugettext_lazy as _
+from django.utils.translation import activate, get_language
+from django.utils.translation import gettext_lazy as _
 from reversion import create_revision
 
 from shuup.simple_cms.models import Page

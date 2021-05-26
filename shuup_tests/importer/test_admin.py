@@ -351,11 +351,8 @@ def test_download_examples(rf, admin_user):
                     assert response.status_code == 404
                 else:
                     assert response.status_code == 200
-                    assert response._headers["content-type"] == ("Content-Type", str(example_file.content_type))
-                    assert response._headers["content-disposition"] == (
-                        "Content-Disposition",
-                        "attachment; filename=%s" % example_file.file_name,
-                    )
+                    assert response.headers["Content-Type"] == str(example_file.content_type)
+                    assert response.headers["Content-Disposition"] == "attachment; filename=%s" % example_file.file_name
 
                     if example_file.template_name:
                         from django.template.loader import get_template

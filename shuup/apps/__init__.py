@@ -81,7 +81,6 @@ rules for naming their settings.
    imported, or when it is imported, it will point to module defined by
    :file:`your_app/settings.py`.
 """
-from __future__ import unicode_literals
 
 import importlib
 

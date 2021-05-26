@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import get_person_contact

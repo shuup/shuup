@@ -23,10 +23,10 @@ try:
     )
     from django.urls.resolvers import RegexPattern
 except ImportError:
+    from django.core.urlresolvers import NoReverseMatch  # noqa (F401)
+    from django.core.urlresolvers import RegexURLPattern as RegexPattern
+    from django.core.urlresolvers import RegexURLResolver as URLResolver  # noqa (F401)
     from django.core.urlresolvers import (  # noqa (F401)
-        NoReverseMatch,
-        RegexURLPattern as RegexPattern,
-        RegexURLResolver as URLResolver,
         Resolver404,
         clear_url_caches,
         get_callable,

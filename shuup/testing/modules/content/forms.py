@@ -5,15 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from datetime import datetime
+from logging import getLogger
+
 from django import forms
 from django.conf import settings
 from django.template import loader as template_loader
 from django.utils import translation
-from django.utils.translation import ugettext_lazy as _
-from logging import getLogger
+from django.utils.translation import gettext_lazy as _
 
 from shuup import configuration as config
 from shuup.utils import djangoenv

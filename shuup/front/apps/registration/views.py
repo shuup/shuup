@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.shortcuts import redirect
 from django.utils.http import is_safe_url
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views

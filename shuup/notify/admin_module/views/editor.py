@@ -5,15 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import json
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import camel_case_to_spaces
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 

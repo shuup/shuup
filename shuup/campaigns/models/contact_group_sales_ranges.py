@@ -9,7 +9,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.campaigns.utils.sales_range import get_contacts_in_sales_range
 from shuup.core.fields import MoneyValueField

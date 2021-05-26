@@ -6,13 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import random
 import string
+
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
-@python_2_unicode_compatible
 class CouponUsage(models.Model):
     coupon = models.ForeignKey(on_delete=models.CASCADE, to="discounts.CouponCode", related_name="usages")
     order = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Order", related_name="discounts_coupon_usages")
@@ -26,7 +25,6 @@ class CouponUsage(models.Model):
         return cls.objects.create(order=order, coupon=coupon)
 
 
-@python_2_unicode_compatible
 class CouponCode(models.Model):
     code = models.CharField(max_length=12)
     name_field = "code"

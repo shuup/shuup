@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import unicode_literals
 
 from django.apps import apps
 from django.contrib.auth import get_user_model
@@ -14,7 +13,7 @@ from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.http import JsonResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from shuup.admin.supplier_provider import get_supplier

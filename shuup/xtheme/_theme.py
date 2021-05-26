@@ -9,8 +9,9 @@ import logging
 import threading
 import warnings
 from contextlib import contextmanager
+
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.apps.provides import get_identifier_to_object_map, get_provide_objects
 from shuup.core import cache

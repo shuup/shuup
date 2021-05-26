@@ -5,15 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import json
+from datetime import datetime
+from decimal import Decimal
+
 import pytest
 import pytz
 import six
 from babel.dates import format_date
-from datetime import datetime
-from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.dateparse import parse_datetime
 from django.utils.encoding import force_text

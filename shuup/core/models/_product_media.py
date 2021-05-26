@@ -8,8 +8,7 @@
 from __future__ import with_statement
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.exceptions import InvalidImageFormatError
 from easy_thumbnails.files import get_thumbnailer
 from enumfields import Enum, EnumIntegerField
@@ -33,7 +32,6 @@ class ProductMediaKind(Enum):
         SAMPLE = _("sample")
 
 
-@python_2_unicode_compatible
 class ProductMedia(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
     product = models.ForeignKey("Product", related_name="media", on_delete=models.CASCADE, verbose_name=_("product"))

@@ -5,16 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import hashlib
 import itertools
-import six
 from collections import defaultdict
+
+import six
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.models import TranslatableModel, TranslatedFields
 
@@ -32,7 +31,6 @@ class ProductVariationLinkStatus(Enum):
         VISIBLE = _("visible")
 
 
-@python_2_unicode_compatible
 class ProductVariationVariable(TranslatableModel, SortableMixin):
     product = models.ForeignKey(
         "Product", related_name="variation_variables", on_delete=models.CASCADE, verbose_name=_("product")
@@ -57,7 +55,6 @@ class ProductVariationVariable(TranslatableModel, SortableMixin):
         return force_text(self.safe_translation_getter("name") or self.identifier or repr(self))
 
 
-@python_2_unicode_compatible
 class ProductVariationVariableValue(TranslatableModel, SortableMixin):
     variable = models.ForeignKey(
         ProductVariationVariable, related_name="values", on_delete=models.CASCADE, verbose_name=_("variation variable")

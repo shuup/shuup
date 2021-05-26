@@ -6,8 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
-import six
 from collections import OrderedDict
+
+import six
 from django import forms
 from django.conf import settings
 from django.db.models import Q

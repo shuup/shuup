@@ -122,6 +122,7 @@ def get_next_dates_for_range(weekday, from_hour, to_hour):
     :rtype list[datetime.datetime]
     """
     import datetime
+
     from django.utils.timezone import now
 
     now_datetime = now()

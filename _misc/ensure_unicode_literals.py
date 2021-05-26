@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import click
 import re
 from ast import BinOp, Mod, parse
+
+import click
 from sanity_utils import XNodeVisitor, find_files
 from six import text_type
 

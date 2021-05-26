@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
 import datetime
+
 import pytest
 import pytz
 from django.db.models import Q

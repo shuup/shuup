@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
-import babel
 import decimal
 import json
 import numbers
+
+import babel
 import six
 from django import forms
 from django.core.exceptions import ValidationError
@@ -18,7 +18,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
 from django.forms.widgets import NumberInput
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from jsonfield.fields import JSONField
 
 from shuup.core.fields.tagged_json import TaggedJSONEncoder, tag_registry

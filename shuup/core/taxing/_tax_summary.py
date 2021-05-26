@@ -4,12 +4,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from collections import defaultdict
 from decimal import Decimal
-from django.utils.translation import ugettext as _
 from itertools import chain
+
+from django.utils.translation import ugettext as _
 
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.utils.money import Money

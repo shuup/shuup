@@ -13,15 +13,13 @@ are encoded into special objects of the form `{tag: val}`; the encoding
 and decoding process can be customized however necessary.
 """
 
-from __future__ import unicode_literals
-
-from enum import Enum
 
 import datetime
 import decimal
+from enum import Enum
+
 import django.utils.dateparse as dateparse
 from django.core.exceptions import ImproperlyConfigured
-from django.utils import six
 from jsonfield.encoder import JSONEncoder
 from six import text_type
 
@@ -70,7 +68,7 @@ class TagRegistry(object):
         self.tags[tag] = {"classes": classes, "encoder": encoder, "decoder": decoder}
 
     def encode(self, obj, default):
-        for tag, info in six.iteritems(self.tags):
+        for tag, info in self.tags.items():
             if isinstance(obj, info["classes"]):
                 return {tag: info["encoder"](obj)}
         return default(obj)

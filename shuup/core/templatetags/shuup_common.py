@@ -14,12 +14,13 @@ Common helpers for Shuup templates.
    `shuup.core.templatetags.prices` module are available.
 """
 
-from __future__ import unicode_literals
+
+from datetime import date
+from json import dumps as json_dump
 
 import bleach
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
-from datetime import date
 from django.conf import settings
 from django.template.defaultfilters import linebreaks
 from django.utils import translation
@@ -28,7 +29,6 @@ from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2 import Undefined
 from jinja2.utils import contextfunction
-from json import dumps as json_dump
 
 from shuup.utils.i18n import format_money, format_percent, get_current_babel_locale
 from shuup.utils.serialization import ExtendedJSONEncoder

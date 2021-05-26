@@ -5,17 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import logging
 import random
 import threading
 import time
+from pickle import PicklingError
+
 from django.conf import settings
 from django.core.cache import caches
 from django.core.signals import request_finished
 from django.utils.encoding import force_str
-from pickle import PicklingError
 
 DEFAULT_CACHE_DURATIONS = {
     # Add default durations for various namespaces here (in seconds)

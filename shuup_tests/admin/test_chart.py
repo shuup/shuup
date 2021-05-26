@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import OrderedDict
+
 import pytest
 from babel.numbers import format_decimal, format_percent
-from collections import OrderedDict
 
 from shuup.admin.dashboard.charts import BarChart, Chart, ChartDataType, ChartType, MixedChart
 from shuup.utils.i18n import format_money

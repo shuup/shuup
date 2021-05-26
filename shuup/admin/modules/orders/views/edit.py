@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import decimal
 import json
+
 from babel.numbers import format_currency, format_decimal
 from django.conf import settings
 from django.contrib import messages
@@ -17,7 +17,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import Sum
 from django.http.response import Http404, HttpResponse, JsonResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import View
 from django_countries import countries
 

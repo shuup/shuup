@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import contextlib
+
 import six
 
 from shuup.apps.provides import get_provide_objects

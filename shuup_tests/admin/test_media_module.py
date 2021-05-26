@@ -4,11 +4,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import django
 import json
+import tempfile
+
+import django
 import mock
 import pytest
-import tempfile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import ProtectedError
 from django.http import JsonResponse

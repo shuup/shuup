@@ -5,14 +5,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import re
 from difflib import SequenceMatcher
+
 from django import forms
 from django.conf import settings
 from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.models import Product
 from shuup.core.utils import context_cache

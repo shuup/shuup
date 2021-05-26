@@ -5,16 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from typing import TYPE_CHECKING, Union
+
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
-from typing import TYPE_CHECKING, Union
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
@@ -59,7 +59,6 @@ class SupplierQueryset(TranslatableQuerySet):
         return queryset.distinct()
 
 
-@python_2_unicode_compatible
 class Supplier(ModuleInterface, TranslatableShuupModel):
     default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"

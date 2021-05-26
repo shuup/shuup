@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django import forms
 from django.conf import settings
@@ -16,7 +15,7 @@ from django.contrib.auth.views import REDIRECT_FIELD_NAME
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url, urlsafe_base64_decode
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
 
 from shuup.core.utils.forms import RecoverPasswordForm

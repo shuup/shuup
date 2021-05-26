@@ -5,9 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import logging
+
 from django.core.mail.message import EmailMessage
 from django.template import engines
 from django.template.utils import InvalidTemplateEngineError

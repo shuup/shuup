@@ -7,7 +7,7 @@
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
 from shuup.admin.form_part import FormPartsViewMixin

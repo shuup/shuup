@@ -5,8 +5,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import math
-import pytest
 from decimal import ROUND_FLOOR, ROUND_HALF_DOWN, Decimal
+
+import pytest
 from django.conf import settings
 from mock import patch
 

@@ -6,12 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import contextlib
-import django.conf
 import logging
 import string
 import sys
 import types
 import uuid
+
+import django.conf
 from bs4 import BeautifulSoup
 from django.test import Client, TestCase, override_settings
 from django.utils.crypto import get_random_string

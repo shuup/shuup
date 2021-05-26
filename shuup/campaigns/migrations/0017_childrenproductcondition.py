@@ -20,9 +20,6 @@ class Migration(migrations.Migration):
                 ('basketcondition_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='campaigns.BasketCondition')),
                 ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='shuup.Product')),
             ],
-            options={
-                'manager_inheritance_from_future': True,
-            },
             bases=('campaigns.basketcondition',),
         ),
     ]

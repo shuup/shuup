@@ -5,19 +5,19 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import unicode_literals
+
+import functools
+from uuid import uuid4
 
 import django
-import functools
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedField, TranslatedFields
-from uuid import uuid4
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.pricing import PriceInfo

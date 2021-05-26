@@ -5,18 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
+
+from functools import lru_cache
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import QuerySet
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumField
 from filer.fields.image import FilerImageField
-from functools import lru_cache
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
@@ -184,7 +183,6 @@ class ContactGroup(TranslatableShuupModel):
         return self.price_display_options.for_group_and_shop(self, shop=self.shop).hide_prices
 
 
-@python_2_unicode_compatible
 class Contact(PolymorphicShuupModel):
     is_anonymous = False
     is_all_seeing = False

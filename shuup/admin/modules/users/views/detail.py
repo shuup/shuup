@@ -5,9 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import random
+
 from django import forms
 from django.conf import settings as django_settings
 from django.contrib import messages
@@ -17,7 +17,7 @@ from django.core.mail import send_mail
 from django.db.transaction import atomic
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.detail import DetailView
 
 from shuup.admin.shop_provider import get_shop

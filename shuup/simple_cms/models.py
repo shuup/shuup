@@ -10,9 +10,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumField
 from filer.fields.image import FilerImageField
 from mptt.managers import TreeManager
@@ -83,7 +82,6 @@ class PageQuerySet(TranslatableQuerySet):
 
 
 @reversion.register(follow=["translations"])
-@python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"))
     supplier = models.ForeignKey(
@@ -261,7 +259,6 @@ class Page(MPTTModel, TranslatableModel):
         return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))
 
 
-@python_2_unicode_compatible
 class PageOpenGraph(TranslatableModel):
     """
     Object that describes Open Graph extra meta attributes.

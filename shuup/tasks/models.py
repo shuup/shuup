@@ -5,14 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.models import TranslatableModel, TranslatedFields
 
@@ -45,7 +43,6 @@ class TaskCommentVisibility(Enum):
         ADMINS_ONLY = _("Admins Only")
 
 
-@python_2_unicode_compatible
 class TaskType(TranslatableModel):
     identifier = InternalIdentifierField(unique=False, blank=True, null=True, editable=True)
     shop = models.ForeignKey(
@@ -82,7 +79,6 @@ class TaskQuerySet(models.QuerySet):
         return self.filter(assigned_to=contact)
 
 
-@python_2_unicode_compatible
 class Task(models.Model):
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", verbose_name=_("shop"), related_name="tasks")
     name = models.CharField(verbose_name=_("name"), max_length=60)

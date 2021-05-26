@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
+
+import sys
 
 import six
-import sys
 from django.conf import settings
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode

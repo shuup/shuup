@@ -5,12 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django import forms
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.forms.models import model_to_dict
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormView
 
 from shuup.core.models import CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus

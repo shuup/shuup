@@ -5,15 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import format_lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
 from shuup.core.fields import InternalIdentifierField, MeasurementField, QuantityField
@@ -172,7 +170,6 @@ class Shipment(ShuupModel):
                 )
 
 
-@python_2_unicode_compatible
 class ShipmentProduct(ShuupModel):
     shipment = models.ForeignKey(
         Shipment, related_name="products", on_delete=models.PROTECT, verbose_name=_("shipment")

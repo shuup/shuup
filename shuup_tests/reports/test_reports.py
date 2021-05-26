@@ -7,19 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import itertools
 import json
+from datetime import date
+from decimal import Decimal
+
 import pytest
 import pytz
 import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
-from datetime import date
-from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.encoding import force_text
 from django.utils.functional import lazy
 from django.utils.safestring import SafeText
 from django.utils.timezone import activate
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import Order

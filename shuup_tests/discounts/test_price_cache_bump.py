@@ -7,9 +7,10 @@
 """
 Tests for utils.price_display and the price filters.
 """
+from datetime import datetime, timedelta
+
 import pytest
 import pytz
-from datetime import datetime, timedelta
 from mock import patch
 
 from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info

@@ -4,14 +4,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import decimal
 import os
+
 import six
 from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import (

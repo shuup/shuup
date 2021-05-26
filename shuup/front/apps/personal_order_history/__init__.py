@@ -4,9 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import shuup.apps
 
@@ -14,7 +13,7 @@ import shuup.apps
 class AppConfig(shuup.apps.AppConfig):
     name = __name__
     verbose_name = _("Shuup Frontend - Personal Order History")
-    label = "shuup_front.personal_order_history"
+    label = "shuup_front_personal_order_history"
 
     provides = {
         "front_urls": [__name__ + ".urls:urlpatterns"],

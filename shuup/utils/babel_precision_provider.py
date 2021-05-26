@@ -6,11 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import unicode_literals
 
-import babel.core
 import decimal
 from collections import defaultdict
+
+import babel.core
 
 _cache = None
 _default = None

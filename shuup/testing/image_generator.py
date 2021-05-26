@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import math
 import random
+
 from PIL import Image, ImageDraw
 
 PALATABLE_PALETTES = [

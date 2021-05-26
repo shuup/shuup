@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.template import engines
 from django.template.utils import InvalidTemplateEngineError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.base import AdminModule, Notification
 

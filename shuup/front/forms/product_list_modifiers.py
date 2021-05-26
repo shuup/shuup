@@ -6,15 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import six
 from collections import defaultdict
+from itertools import chain
+
+import six
 from django import forms
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst, slugify
-from django.utils.translation import get_language, ugettext_lazy as _
-from itertools import chain
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
 
 from shuup import configuration as shuup_config
 from shuup.admin.forms.fields import Select2MultipleField

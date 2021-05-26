@@ -5,12 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
-import six
 from collections import OrderedDict
 from datetime import datetime, timedelta
 from decimal import Decimal
+
+import six
 from django.conf import settings
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware

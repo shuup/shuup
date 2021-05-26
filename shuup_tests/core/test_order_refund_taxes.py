@@ -5,11 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
-import pytest
 from collections import defaultdict
 from decimal import Decimal
+
+import pytest
 
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import OrderLine, OrderLineType, Supplier

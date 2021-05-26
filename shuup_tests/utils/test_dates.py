@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytz
 from datetime import date, datetime, time
+
+import pytz
 
 from shuup.utils.dates import parse_date, parse_datetime, to_aware, try_parse_date, try_parse_datetime, try_parse_time
 

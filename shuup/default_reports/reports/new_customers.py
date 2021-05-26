@@ -6,8 +6,9 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.utils.translation import ugettext_lazy as _
 from operator import itemgetter
+
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.models import Contact
 from shuup.default_reports.forms import NewCustomersReportForm

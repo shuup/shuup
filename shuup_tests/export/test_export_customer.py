@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import csv
 import io
+
 import pytest
 from django.utils.html import strip_tags
 

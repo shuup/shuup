@@ -7,13 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 import argparse
 import ast
-import jinja2
 import linecache
 import logging
 import os
 import re
 import sys
 from collections import Counter
+
+import jinja2
 from django.utils.text import slugify
 from sanity_utils import find_files
 

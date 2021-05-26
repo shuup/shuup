@@ -4,14 +4,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import parler.models
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from polymorphic.base import PolymorphicModelBase
 from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet
@@ -40,7 +38,6 @@ class ShuupModel(models.Model):
         abstract = True
 
 
-@python_2_unicode_compatible
 class TranslatableShuupModel(ShuupModel, parler.models.TranslatableModel):
     name_attr = "name"
 

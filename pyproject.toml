@@ -1,3 +1,71 @@
+[tool.poetry]
+name = "shuup"
+version = "2.9.0"
+description = "E-Commerce Platform"
+authors = ["Shuup Commerce Inc."]
+license = "Proprietary"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+Django = ">=2.2,<4"
+Jinja2 = "<3"
+Babel = "^2.9.1"
+bleach = "^3.3.0"
+django-bootstrap3 = "^15.0.0"
+django-countries = "^7.2.1"
+django-enumfields = "^2.1.1"
+django-filer = "^2.0.2"
+django-filter = "^2.4.0"
+django-jinja = "^2.7.0"
+django-mptt = "^0.12.0"
+django-parler = "^2.2"
+django-polymorphic = "^3.0.0"
+django-registration-redux = "^2.9"
+django-reversion = "^3.0.9"
+django-timezone-field = "^4.1.2"
+djangorestframework = "^3.12.4"
+factory-boy = "^3.2.0"
+jsonfield = "^3.1.0"
+lxml = "^4.6.3"
+Markdown = "^3.3.4"
+openpyxl = "^3.0.7"
+python-dateutil = "^2.8.1"
+toml = "^0.10.2"
+requests = "^2.25.1"
+six = "^1.16.0"
+unicodecsv = "^0.14.1"
+xlrd = "^2.0.1"
+keyring = [
+    # https://github.com/python-poetry/poetry/issues/3662#issue-803869736
+    { version = "21.2.1", markers = "sys_platform == 'darwin'" },
+]
+"keyrings.alt" = "^4.0.2"
+weasyprint = "^52.5"
+easy-thumbnails = "^2.7.1"
+Faker = "^7"
+
+[tool.poetry.dev-dependencies]
+beautifulsoup4 = "4.9.3"
+black = "20.8b1"
+flake8 = "3.9.1"
+isort = "5.8.0"
+pytest = "6.2.3"
+pytest-cov = "2.11.1"
+pytest-django = "4.2.0"
+Sphinx = "<1.6"
+cryptography = "^3.4.7"
+html5lib = "0.999999999"
+mock = "^4.0.3"
+pytest-splinter = "^3.3.1"
+selenium = "^3.141.0"
+splinter = "^0.14.0"
+
 [tool.black]
-exclude = "migrations/.*|.eggs|.git|.tox|.venv|_build|buck-out|build|dist"
+exclude = "(migrations|node_modules)"
 line_length = 120
+
+[tool.isort]
+profile = "black"
+line_length=120
+atomic = true
+skip_glob = ["*/migrations/*", "*/node_modules/*"]

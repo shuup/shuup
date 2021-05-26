@@ -8,9 +8,11 @@
 from __future__ import unicode_literals, with_statement
 
 import datetime
-import django
 import itertools
 import logging
+from operator import iand, ior
+
+import django
 import six
 import xlrd
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
@@ -18,9 +20,8 @@ from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from enumfields import EnumIntegerField
-from operator import iand, ior
 
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError

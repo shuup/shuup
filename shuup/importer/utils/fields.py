@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import re
 import unicodedata
+
 from django.db import models
 
 from shuup.utils.django_compat import force_text

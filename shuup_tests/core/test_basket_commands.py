@@ -6,12 +6,14 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
+
 import pytest
 from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
 
 from shuup.apps.provides import override_provides
-from shuup.core.basket import commands as basket_commands, get_basket, get_basket_command_dispatcher
+from shuup.core.basket import commands as basket_commands
+from shuup.core.basket import get_basket, get_basket_command_dispatcher
 from shuup.core.models import AnonymousContact, get_person_contact
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware

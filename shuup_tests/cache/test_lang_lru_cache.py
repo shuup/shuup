@@ -4,8 +4,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.translation import activate
 from random import random
+
+from django.utils.translation import activate
 
 from shuup.utils.i18n import lang_lru_cache
 

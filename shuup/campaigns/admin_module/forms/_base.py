@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.db.models import ManyToManyField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField

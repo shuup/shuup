@@ -42,7 +42,6 @@ TODO: document the concepts of base price and the pricing steps API.
 TODO: caching.
 """
 
-from __future__ import unicode_literals
 
 from shuup.utils import update_module_attributes
 

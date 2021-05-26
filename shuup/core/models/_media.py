@@ -5,17 +5,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from filer.fields.file import FilerFileField
 from filer.fields.folder import FilerFolderField
 
 
-@python_2_unicode_compatible
 class MediaFile(models.Model):
     file = FilerFileField(related_name="media_file", verbose_name=_("file"), on_delete=models.CASCADE)
     shops = models.ManyToManyField(
@@ -29,7 +26,6 @@ class MediaFile(models.Model):
         return "%s" % (self.file)
 
 
-@python_2_unicode_compatible
 class MediaFolder(models.Model):
     folder = FilerFolderField(related_name="media_folder", verbose_name=_("folder"), on_delete=models.CASCADE)
     shops = models.ManyToManyField(

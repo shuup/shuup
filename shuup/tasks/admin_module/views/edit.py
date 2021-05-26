@@ -5,14 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.contrib import messages
 from django.db.models import Q
 from django.db.transaction import atomic
 from django.forms.models import ModelForm
 from django.http.response import HttpResponseNotAllowed, HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DeleteView
 from django.views.generic.detail import BaseDetailView
 

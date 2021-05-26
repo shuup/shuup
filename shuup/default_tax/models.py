@@ -4,12 +4,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 from shuup.utils.patterns import Pattern, pattern_matches
@@ -24,7 +22,6 @@ class TaxRuleQuerySet(models.QuerySet):
         return self.filter(null | in_range)
 
 
-@python_2_unicode_compatible
 class TaxRule(models.Model):
     enabled = models.BooleanField(
         default=True, verbose_name=_("enabled"), db_index=True, help_text=_("Enable this if this tax rule is active.")

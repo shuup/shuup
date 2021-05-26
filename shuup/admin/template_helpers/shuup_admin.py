@@ -11,9 +11,10 @@ This module is installed as the `shuup_admin` template function namespace.
 """
 
 import itertools
+from functools import lru_cache
+
 from django.conf import settings
 from django.middleware.csrf import get_token
-from functools import lru_cache
 from jinja2.utils import contextfunction
 
 from shuup import configuration

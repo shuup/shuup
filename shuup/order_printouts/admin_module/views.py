@@ -6,10 +6,11 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
+
 from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop
 from shuup.apps.provides import get_provide_objects

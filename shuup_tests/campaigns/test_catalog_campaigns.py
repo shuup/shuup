@@ -7,8 +7,9 @@
 import datetime
 import decimal
 import json
-import pytest
 from decimal import Decimal
+
+import pytest
 from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.timezone import now

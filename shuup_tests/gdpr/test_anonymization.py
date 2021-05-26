@@ -5,10 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from uuid import uuid4
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.utils.translation import activate
-from uuid import uuid4
 
 from shuup.core.models import Basket, CompanyContact, Order, PersonContact
 from shuup.front.models import StoredBasket

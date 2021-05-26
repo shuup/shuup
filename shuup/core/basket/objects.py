@@ -5,17 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import hashlib
 import json
-import six
 from collections import Counter
 from decimal import Decimal
+from uuid import uuid4
+
+import six
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-from uuid import uuid4
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.core.fields.tagged_json import TaggedJSONEncoder

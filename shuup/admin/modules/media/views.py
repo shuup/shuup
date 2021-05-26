@@ -5,9 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,7 +18,8 @@ from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
 from django.urls import reverse
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import gettext_lazy
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
@@ -110,7 +111,7 @@ class MediaBrowserView(TemplateView):
     """
 
     template_name = "shuup/admin/media/browser.jinja"
-    title = ugettext_lazy("Browse Media")
+    title = gettext_lazy("Browse Media")
 
     def get_context_data(self, **kwargs):
         context = super(MediaBrowserView, self).get_context_data(**kwargs)

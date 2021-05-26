@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import json
+
 import pytest
 from django.test import override_settings
 from django.utils.translation import activate, get_language

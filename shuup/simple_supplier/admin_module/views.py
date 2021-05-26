@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
 
 from django.http import JsonResponse
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView

@@ -9,6 +9,7 @@ import distutils.errors
 import os
 import subprocess
 from distutils.command.build import build as du_build
+
 from setuptools.command.build_py import build_py as st_build_py
 
 from . import excludes, resource_building

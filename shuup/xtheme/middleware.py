@@ -6,7 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
-from django.utils.translation import ugettext_lazy as _
+
+from django.utils.translation import gettext_lazy as _
 
 from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import MiddlewareMixin

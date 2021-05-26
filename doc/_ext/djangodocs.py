@@ -4,9 +4,11 @@ Sphinx plugins for Django documentation.
 import json
 import os
 import re
+
 from docutils import nodes
 from docutils.parsers.rst import directives
-from sphinx import __version__ as sphinx_ver, addnodes
+from sphinx import __version__ as sphinx_ver
+from sphinx import addnodes
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.util.compat import Directive
 from sphinx.util.console import bold

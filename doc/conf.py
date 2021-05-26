@@ -10,9 +10,10 @@
 Shuup documentation build configuration file
 """
 
-import django
 import os
 import sys
+
+import django
 
 # -- Python path ----------------------------------------------------------
 

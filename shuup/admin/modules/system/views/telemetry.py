@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 from shuup import configuration

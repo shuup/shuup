@@ -8,9 +8,10 @@
 from __future__ import print_function
 
 import ast
-import click
 import sys
 from itertools import chain
+
+import click
 from sanity_utils import IGNORED_DIRS, XNodeVisitor, dotify_ast_name, find_files, get_assign_first_target
 
 KNOWN_ACRONYMS = ("SKU", "GTIN", "URL", "IP")

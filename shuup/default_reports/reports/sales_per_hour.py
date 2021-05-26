@@ -6,9 +6,10 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import itertools
+
 import six
 from django.utils.timezone import localtime
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from shuup.default_reports.forms import OrderReportForm
 from shuup.default_reports.mixins import OrderReportMixin
