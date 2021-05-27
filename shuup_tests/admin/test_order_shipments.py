@@ -7,16 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import json
 import pytest
-import six
-from collections import defaultdict
 from django.template import loader
 from django.test.client import Client
 from django.urls import reverse
 
 from shuup.admin.modules.orders.sections import ShipmentSection
-from shuup.admin.modules.orders.views.shipment import ShipmentListView
 from shuup.admin.utils.permissions import set_permissions_for_group
-from shuup.core.models import ShipmentStatus, ShippingMode, Supplier
+from shuup.core.models import ShipmentStatus, ShippingMode
 from shuup.testing.factories import (
     add_product_to_order,
     create_empty_order,
@@ -24,6 +21,7 @@ from shuup.testing.factories import (
     create_random_user,
     get_default_permission_group,
     get_default_shop,
+    get_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -31,9 +29,9 @@ from shuup.testing.utils import apply_request_middleware
 @pytest.mark.django_db
 def test_order_shipments(rf, admin_user):
     shop = get_default_shop()
-    supplier1 = Supplier.objects.create(identifier="1", name="supplier1")
+    supplier1 = get_supplier(module_identifier="simple_supplier", identifier="1", name="supplier1")
     supplier1.shops.add(shop)
-    supplier2 = Supplier.objects.create(identifier="2")
+    supplier2 = get_supplier(module_identifier="simple_supplier", identifier="2", name="supplier1")
     supplier2.shops.add(shop)
 
     product1 = create_product("sku1", shop=shop, default_price=10)

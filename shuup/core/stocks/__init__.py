@@ -14,6 +14,8 @@ class ProductStockStatus(ProductCachingObject):
     message = None
     error = None
     stock_managed = False
+    # when the supplier module handles the product
+    handled = False
 
     def __init__(
         self,
@@ -24,6 +26,9 @@ class ProductStockStatus(ProductCachingObject):
         message=None,
         error=None,
         stock_managed=False,
+        handled=True,
+        *args,
+        **kwargs
     ):
         if product_id:
             self.product_id = product_id
@@ -36,3 +41,4 @@ class ProductStockStatus(ProductCachingObject):
         self.message = message
         self.error = error
         self.stock_managed = stock_managed
+        self.handled = handled

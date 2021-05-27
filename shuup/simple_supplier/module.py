@@ -76,8 +76,10 @@ class SimpleSupplierModule(BaseSupplierModule):
                     physical_count=values.get(product_id, null)[0],
                     logical_count=values.get(product_id, null)[1],
                     stock_managed=stock_managed,
+                    handled=product_id in values,
                 )
             )
+        print(product_ids)
 
         return dict((pss.product_id, pss) for pss in stati)
 

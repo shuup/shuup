@@ -25,15 +25,17 @@ if TYPE_CHECKING:
 
 @lru_cache()
 def get_supported_product_kinds_for_module(module_identifier: str) -> Iterable[ProductKindSpec]:
+    specs = []
     for product_kind_spec in get_provide_objects("product_kind_specs"):
         supported_modules = product_kind_spec.supported_supplier_modules
         if not supported_modules or module_identifier in supported_modules:
-            yield product_kind_spec
+            specs.append(product_kind_spec)
+    return specs
 
 
 @lru_cache()
 def get_supported_product_kinds_values_for_module(module_identifier: str) -> Iterable[int]:
-    return (spec.value for spec in get_supported_product_kinds_for_module(module_identifier))
+    return list([spec.value for spec in get_supported_product_kinds_for_module(module_identifier)])
 
 
 class SupplierModuleInterface:
