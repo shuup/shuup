@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Admin: filter products in list and edit views according to product kind listing name
+
 ### Add
 
 - Core: Allow a supplier to have multiple modules
