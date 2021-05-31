@@ -204,5 +204,5 @@ class ScriptItemEditForm(forms.Form):
         self._save_template(new_data)
         if self.errors:
             raise forms.ValidationError("Error! There are errors.")
-        self.script_item.data.update(new_data)
+        self.script_item.data = new_data
         return self.script_item
