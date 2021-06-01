@@ -51,7 +51,17 @@ def get_import_file_path(filename):
 
 
 class FileImporter:
-    def __init__(self, importer, import_mode, file_name, language, mapping={}, shop=None, supplier=None, **kwargs):
+    def __init__(
+        self,
+        importer: str,
+        import_mode: ImportMode,
+        file_name: str,
+        language: str = None,
+        mapping={},
+        shop=None,
+        supplier=None,
+        **kwargs
+    ):
         self.importer = None
         self.importer_cls = get_importer(importer)
         self.import_mode = import_mode

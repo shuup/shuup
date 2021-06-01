@@ -9,6 +9,7 @@ import hashlib
 import logging
 import os
 from datetime import datetime
+from django.apps import apps
 from django.contrib import messages
 from django.db.models import Q
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
@@ -213,6 +214,10 @@ class ImportListView(PicotableListView):
     toolbar_buttons_provider_key = "import_list_toolbar_provider"
     mass_actions_provider_key = "import_list_mass_actions_provider"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.columns = self.default_columns
+
     def get_importer(self, instance):
         importer = instance.task.arguments["importer"]
         return IMPORTER_NAMES_MAP.get(importer, importer)
@@ -251,8 +256,24 @@ class ImportDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        result = self.object.result
+
         context["new_objects"] = []
         context["updated_objects"] = []
-        context["log_messages"] = []
-        context["other_log_messages"] = []
+        context["log_messages"] = result.get("log_messages")
+        context["other_log_messages"] = result.get("other_log_messages")
+
+        new_objects = result.get("new_objects")
+        updated_objects = result.get("updated_objects")
+
+        if new_objects:
+            model = apps.get_model(new_objects[0]["model"])
+            pks = [obj["pk"] for obj in new_objects]
+            context["new_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
+
+        if updated_objects:
+            model = apps.get_model(updated_objects[0]["model"])
+            pks = [obj["pk"] for obj in updated_objects]
+            context["updated_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
+
         return context

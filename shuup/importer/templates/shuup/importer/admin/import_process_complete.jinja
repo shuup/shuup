@@ -6,6 +6,11 @@
     {% call content_block(_("Import Results"), "fa-info-circle") %}
         {% if object.status.value == 0 %}
             <h3 class="text-center">The import process is still running.</h3>
+        {% elif object.status.value == 2 %}
+            <h3>{{ _("Error") }}</h3>
+            <p class="text-danger">
+                {{ object.error_log }}
+            </p>
         {% else %}
             <div class="span12 normal-element no-left-margin">
                 <h3>{% trans %}New items{% endtrans %}</h3>

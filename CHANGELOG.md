@@ -20,6 +20,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Importers: enable importers to run asynchronously
 - Importers: change the admin views to show the list of import processes
 
 ### Fixed
