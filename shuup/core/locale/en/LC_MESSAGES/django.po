@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
+"POT-Creation-Date: 2021-06-01 22:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -333,13 +333,70 @@ msgstr ""
 msgid "untranslated value"
 msgstr ""
 
+msgid "queue name"
+msgstr ""
+
+msgid "task identifier"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "task function"
+msgstr ""
+
+msgid "task arguments"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "background task"
+msgstr ""
+
+msgid "background tasks"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "success"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "started on"
+msgstr ""
+
+msgid "finished on"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "error log"
+msgstr ""
+
+msgid "background task execution"
+msgstr ""
+
+msgid "background task executions"
+msgstr ""
+
 msgid "The following fields are protected and can not be changed."
 msgstr ""
 
 msgid "key"
-msgstr ""
-
-msgid "shop"
 msgstr ""
 
 msgid "customer"
@@ -349,9 +406,6 @@ msgid "orderer"
 msgstr ""
 
 msgid "creator"
-msgstr ""
-
-msgid "created on"
 msgstr ""
 
 msgid "updated on"
@@ -554,9 +608,6 @@ msgstr ""
 msgid "Can't delete. This object is protected."
 msgstr ""
 
-msgid "modified on"
-msgstr ""
-
 msgid "active"
 msgstr ""
 
@@ -682,9 +733,6 @@ msgid "other"
 msgstr ""
 
 msgid "Person Contacts"
-msgstr ""
-
-msgid "user"
 msgstr ""
 
 msgid "gender"
@@ -821,9 +869,6 @@ msgid "refund"
 msgstr ""
 
 msgid "rounding"
-msgstr ""
-
-msgid "supplier"
 msgstr ""
 
 msgid "parent line"
@@ -2404,6 +2449,12 @@ msgid "restock"
 msgstr ""
 
 msgid "restock logical"
+msgstr ""
+
+msgid "Failed to execute the task"
+msgstr ""
+
+msgid "An unexpeted error occurred."
 msgstr ""
 
 #, python-format
