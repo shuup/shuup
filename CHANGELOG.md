@@ -18,6 +18,10 @@ List all changes after the last release here (newer on top). Each change on a se
 - Core: Allow a supplier to have multiple modules
 - Core: add option to store tasks in the database to collect results
 
+### Changed
+
+- Importers: change the admin views to show the list of import processes
+
 ### Fixed
 
 - Notify: always overrride the current notification data with the new one

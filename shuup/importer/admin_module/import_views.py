@@ -10,6 +10,7 @@ import logging
 import os
 from datetime import datetime
 from django.contrib import messages
+from django.db.models import Q
 from django.db.transaction import atomic
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
@@ -18,6 +19,11 @@ from django.views.generic import FormView, TemplateView, View
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
+from shuup.admin.toolbar import NewActionButton
+from shuup.admin.utils.permissions import has_permission
+from shuup.admin.utils.picotable import Column, Picotable, TextFilter
+from shuup.admin.utils.views import PicotableListView
+from shuup.core.models import BackgroundTaskExecution
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.transforms import transform_file
 from shuup.importer.utils import get_import_file_path, get_importer, get_importer_choices
@@ -25,6 +31,11 @@ from shuup.utils.django_compat import reverse
 from shuup.utils.excs import Problem
 
 logger = logging.getLogger(__name__)
+
+
+class ImporterPicotable(Picotable):
+    def get_verbose_name_plural(self):
+        return _("Data imports")
 
 
 class ImportProcessView(TemplateView):
@@ -191,3 +202,47 @@ class ExampleFileDownloadView(View):
         data.seek(0)
         response.write(data.getvalue())
         return response
+
+
+class ImportListView(PicotableListView):
+    picotable_class = ImporterPicotable
+    model = BackgroundTaskExecution
+    default_columns = [
+        Column("started_on", _("Import date"), ordering=0, sortable=True),
+        Column("importer", _("Importer"), ordering=1, sortable=False, display="get_importer"),
+        Column("user", _("User"), sort_field="task__user", display="task__user"),
+        Column(
+            "status",
+            _("Status"),
+            sort_field="status",
+        ),
+    ]
+    toolbar_buttons_provider_key = "import_list_toolbar_provider"
+    mass_actions_provider_key = "import_list_mass_actions_provider"
+
+    def get_importer(self, instance):
+        return _("Unknown")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = _("Data imports")
+        return context
+
+    def get_toolbar(self):
+        toolbar = super().get_toolbar()
+        toolbar.append(NewActionButton(url=reverse("shuup_admin:importer.import.new"), text=_("Import file")))
+        return toolbar
+
+    def get_queryset(self):
+        # get only executions from tasks inside `data_import` queue
+        queryset = super().get_queryset().select_related("task").filter(task__queue="data_import")
+
+        if not has_permission(self.request.user, "importer.show-all-imports"):
+            shop = get_shop(self.request)
+            supplier = get_supplier(self.request)
+            queryset = queryset.filter(
+                Q(Q(task__shop=shop) | Q(task__shop__isnull=True)),
+                Q(task__supplier=supplier),
+            )
+
+        return queryset
