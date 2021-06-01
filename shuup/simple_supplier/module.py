@@ -79,7 +79,6 @@ class SimpleSupplierModule(BaseSupplierModule):
                     handled=product_id in values,
                 )
             )
-        print(product_ids)
 
         return dict((pss.product_id, pss) for pss in stati)
 
@@ -164,7 +163,7 @@ class SimpleSupplierModule(BaseSupplierModule):
             if insufficient_stocks:
                 formatted_counts = [
                     _("%(name)s (physical stock: %(quantity)s)")
-                    % {"name": force_text(name), "quantity": force_text(quantity)}
+                    % {"name": force_text(name), "quantity": force_text(int(quantity))}
                     for (name, quantity) in insufficient_stocks.items()
                 ]
                 raise Problem(

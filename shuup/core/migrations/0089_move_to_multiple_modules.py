@@ -16,7 +16,7 @@ def move_to_multiple_modules(apps, schema_editor):
 def move_to_single_module(apps, schema_editor):
     Supplier = apps.get_model("shuup", "Supplier")
 
-    for supplier in Supplier.objects.all():
+    for supplier in Supplier.objects.exclude(module_identifier=""):
         supplier.module_identifier = supplier.supplier_modules.first().module_identifier
         supplier.save()
 

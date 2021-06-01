@@ -9,7 +9,7 @@ import pytest
 import six
 from collections import defaultdict
 
-from shuup.core.models import ShippingMode, Supplier
+from shuup.core.models import ShippingMode, Supplier, SupplierModule
 from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
 
 
@@ -18,10 +18,13 @@ def test_order_product_summary_with_multiple_suppliers():
     shop = get_default_shop()
     supplier1 = Supplier.objects.create(identifier="1", name="supplier1")
     supplier1.shops.add(shop)
+    supplier1.supplier_modules.set(SupplierModule.objects.all())
     supplier2 = Supplier.objects.create(identifier="2")
     supplier2.shops.add(shop)
+    supplier2.supplier_modules.set(SupplierModule.objects.all())
     supplier3 = Supplier.objects.create(identifier="3", name="s")
     supplier3.shops.add(shop)
+    supplier3.supplier_modules.set(SupplierModule.objects.all())
 
     product1 = create_product("sku1", shop=shop, default_price=10)
     shop_product1 = product1.get_shop_instance(shop=shop)
@@ -109,7 +112,7 @@ def test_order_product_summary_with_multiple_suppliers():
     order.create_payment(order.taxful_total_price)
     assert order.is_paid()
 
-    # Let's make suer all good with unshipped products
+    # Let's make sure all good with unshipped products
     unshipped_products = order.get_unshipped_products()
     assert unshipped_products[product1.pk]["unshipped"] == 9
     assert unshipped_products[product2.pk]["unshipped"] == 19

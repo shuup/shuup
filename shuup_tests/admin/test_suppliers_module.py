@@ -45,7 +45,9 @@ def test_suppliers_list(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_suppliers_edit(rf, admin_user):
+@pytest.mark.parametrize("manage_stock", [True, False])
+@pytest.mark.parametrize("stock_module", [[], [1]])
+def test_suppliers_edit(rf, admin_user, manage_stock, stock_module):
     shop = factories.get_default_shop()
     edit_view = SupplierEditView.as_view()
 
@@ -58,7 +60,8 @@ def test_suppliers_edit(rf, admin_user):
                 "base-name": "Supplier Name %d" % index,
                 "base-description__en": "Supplier Description %d" % index,
                 "base-type": SupplierType.INTERNAL.value,
-                "base-module_identifier": "",
+                "base-stock_managed": manage_stock,
+                "base-supplier_modules": stock_module,
                 "base-shops": shop.pk,
                 "base-enabled": "on",
                 "base-logo": "",
@@ -72,23 +75,31 @@ def test_suppliers_edit(rf, admin_user):
                 "address-region_code": "CA",
                 "address-country": "US",
             }
+            if manage_stock and not stock_module:
+                request = apply_request_middleware(rf.post("/", payload), user=user)
+                response = edit_view(request)
+                response.render()
+                assert bool(
+                    "It is not possible to manage inventory when no module is selected." in response.content.decode()
+                )
+                assert response.status_code == 200
+            else:
+                request = apply_request_middleware(rf.post("/", payload), user=user)
+                response = edit_view(request)
+                assert response.status_code == 302
 
-            request = apply_request_middleware(rf.post("/", payload), user=user)
-            response = edit_view(request)
-            assert response.status_code == 302
+                supplier = Supplier.objects.last()
+                assert response.url == reverse("shuup_admin:supplier.edit", kwargs=dict(pk=supplier.pk))
+                assert supplier.name == payload["base-name"]
+                assert supplier.slug == slugify(supplier.name)
+                assert supplier.description == payload["base-description__en"]
+                assert supplier.shops.count() == 1
+                assert supplier.enabled
+                assert supplier.contact_address.name == payload["address-name"]
 
-            supplier = Supplier.objects.last()
-            assert response.url == reverse("shuup_admin:supplier.edit", kwargs=dict(pk=supplier.pk))
-            assert supplier.name == payload["base-name"]
-            assert supplier.slug == slugify(supplier.name)
-            assert supplier.description == payload["base-description__en"]
-            assert supplier.shops.count() == 1
-            assert supplier.enabled
-            assert supplier.contact_address.name == payload["address-name"]
-
-            request = apply_request_middleware(rf.get("/"), user=user)
-            response = edit_view(request, **{"pk": supplier.pk})
-            assert response.status_code == 200
+                request = apply_request_middleware(rf.get("/"), user=user)
+                response = edit_view(request, **{"pk": supplier.pk})
+                assert response.status_code == 200
 
 
 @pytest.mark.django_db

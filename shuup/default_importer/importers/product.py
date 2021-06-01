@@ -277,7 +277,9 @@ class ProductMetaBase(ImportMetaBase):
 
         product = sess.instance
         stock_status = supplier.get_stock_status(product.pk)
-        stock_delta = decimal.Decimal(qty) - stock_status.logical_count
+        stock_delta = decimal.Decimal(qty)
+        if stock_status:
+            stock_delta = decimal.Decimal(qty) - stock_status.logical_count
 
         if stock_delta != 0:
             supplier.adjust_stock(product.pk, stock_delta)

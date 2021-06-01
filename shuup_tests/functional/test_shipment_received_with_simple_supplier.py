@@ -18,6 +18,9 @@ def test_simple_supplier(rf):
     shop = get_default_shop()
     product = create_product("simple-test-product", shop)
     ss = supplier.get_stock_status(product.pk)
+    assert ss is None
+    supplier.adjust_stock(product.pk, 0)
+    ss = supplier.get_stock_status(product.pk)
     assert ss.product == product
     assert ss.logical_count == 0
 

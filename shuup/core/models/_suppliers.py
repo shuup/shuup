@@ -216,7 +216,9 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
 
         adjustment_type = type or StockAdjustmentType.INVENTORY
         for module in self.modules:
-            module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type, *args, **kwargs)
+            stock = module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type, *args, **kwargs)
+            if stock:
+                return stock
 
     def update_stock(self, product_id, *args, **kwargs):
         for module in self.modules:
