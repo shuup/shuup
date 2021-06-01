@@ -1,17 +1,17 @@
 /**
  * This file is part of Shuup.
  *
- * Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+ * Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
  *
  * This source code is licensed under the OSL-3.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-$(document).ready(function() {
+$(document).ready(function () {
     var MAX_NUM_PRODUCTS = 5;
 
-    function getRecentlyViewedProductIds(){
+    function getRecentlyViewedProductIds() {
         var ids = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent("rvp").replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || '';
-        if(ids !== "") {
+        if (ids !== "") {
             return ids.split(",");
         } else {
             return [];
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     function getCurrentId() {
         var currentId = parseInt(window.location.pathname.match(/[\d]+/));
-        if(isNaN(currentId)) {
+        if (isNaN(currentId)) {
             return "";
         } else {
             return "" + currentId;
@@ -37,9 +37,9 @@ $(document).ready(function() {
 
     var ids = getRecentlyViewedProductIds();
     var currentId = getCurrentId();
-    if(currentId && ids.indexOf(currentId) < 0){
+    if (currentId && ids.indexOf(currentId) < 0) {
         ids.unshift(currentId);
-        if(ids.length > MAX_NUM_PRODUCTS) {
+        if (ids.length > MAX_NUM_PRODUCTS) {
             ids = ids.slice(0, -1);
         }
         setRecentlyViewedProductIds(ids);
