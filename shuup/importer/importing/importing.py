@@ -21,6 +21,7 @@ from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 from operator import iand, ior
+from typing import TYPE_CHECKING
 
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError
@@ -29,6 +30,9 @@ from shuup.importer.importing.session import DataImporterRowSession
 from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
 from shuup.utils.django_compat import force_text
+
+if TYPE_CHECKING:
+    from shuup.core.models import Shop, Supplier
 
 LOGGER = logging.getLogger(__name__)
 
@@ -45,10 +49,11 @@ class ImporterExampleFile(object):
 
 
 class ImporterContext:
-    shop = None  # shuup.core.models.Shop
+    shop = None  # type: Shop
     language = None  # str
+    supplier = None  # type: Supplier
 
-    def __init__(self, shop, language, **kwargs):
+    def __init__(self, shop, language, supplier=None, **kwargs):
         """
         :type shop: shuup.core.models.Shop
         :param shop: the current shop
@@ -59,6 +64,7 @@ class ImporterContext:
         """
         self.shop = shop
         self.language = language
+        self.supplier = supplier
 
 
 class DataImporter(object):
@@ -79,7 +85,7 @@ class DataImporter(object):
     model = None
 
     @classmethod
-    def get_importer_context(cls, request, **defaults):
+    def get_importer_context(cls, **defaults):
         """
         Returns a context object for the given `request`
         that will be used on the importer process.

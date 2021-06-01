@@ -43,15 +43,20 @@ class ImportAdminModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
-                "^importer/import$", "shuup.importer.admin_module.import_views.ImportListView", name="importer.import"
+                "^importer/imports/$", "shuup.importer.admin_module.import_views.ImportListView", name="importer.import"
             ),
             admin_url(
-                "^importer/import/new/$",
+                r"^importer/imports/(?P<pk>.+)/$",
+                "shuup.importer.admin_module.import_views.ImportDetailView",
+                name="importer.import.detail",
+            ),
+            admin_url(
+                "^importer/new/$",
                 "shuup.importer.admin_module.import_views.ImportView",
                 name="importer.import.new",
             ),
             admin_url(
-                "^importer/import/process$",
+                "^importer/process$",
                 "shuup.importer.admin_module.import_views.ImportProcessView",
                 name="importer.import_process",
             ),

@@ -11,26 +11,30 @@ import os
 from datetime import datetime
 from django.contrib import messages
 from django.db.models import Q
-from django.db.transaction import atomic
 from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, TemplateView, View
+from django.views.generic import DetailView, FormView, TemplateView, View
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton
 from shuup.admin.utils.permissions import has_permission
-from shuup.admin.utils.picotable import Column, Picotable, TextFilter
+from shuup.admin.utils.picotable import Column, Picotable
 from shuup.admin.utils.views import PicotableListView
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import BackgroundTaskExecution
+from shuup.core.tasks import run_task
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
-from shuup.importer.transforms import transform_file
+from shuup.importer.exceptions import ImporterError
 from shuup.importer.utils import get_import_file_path, get_importer, get_importer_choices
+from shuup.importer.utils.importer import FileImporter, ImportMode
 from shuup.utils.django_compat import reverse
-from shuup.utils.excs import Problem
 
 logger = logging.getLogger(__name__)
+
+
+IMPORTER_NAMES_MAP = {importer.identifier: importer.name for importer in get_provide_objects("importers")}
 
 
 class ImporterPicotable(Picotable):
@@ -40,90 +44,63 @@ class ImporterPicotable(Picotable):
 
 class ImportProcessView(TemplateView):
     template_name = "shuup/importer/admin/import_process.jinja"
-    importer = None
-
-    def dispatch(self, request, *args, **kwargs):
-        self.importer_cls = get_importer(request.GET.get("importer"))
-        self.model_str = request.GET.get("importer")
-        self.lang = request.GET.get("lang")
-        self.supplier = get_supplier(request)
-        return super(ImportProcessView, self).dispatch(request, *args, **kwargs)
-
-    def _transform_request_file(self):
-        try:
-            filename = get_import_file_path(self.request.GET.get("n"))
-            if not os.path.isfile(filename):
-                raise ValueError(_("%s is not a file.") % self.request.GET.get("n"))
-        except Exception:
-            raise Problem(_("File is missing."))
-        try:
-            mode = "xls"
-            if filename.endswith("xlsx"):
-                mode = "xlsx"
-            if filename.endswith("csv"):
-                mode = "csv"
-            if self.importer_cls.custom_file_transformer:
-                return self.importer_cls.transform_file(mode, filename)
-            return transform_file(mode, filename)
-        except (Exception, RuntimeError) as e:
-            messages.error(self.request, e)
-
-    def prepare(self):
-        self.data = self._transform_request_file()
-        if self.data is None:
-            return False
-
-        context = self.importer_cls.get_importer_context(
-            self.request,
-            shop=get_shop(self.request),
-            language=self.lang,
-        )
-        self.importer = self.importer_cls(self.data, context)
-        self.importer.process_data()
-
-        if self.request.method == "POST":
-            # check if mapping was done
-            for field in self.importer.unmatched_fields:
-                key = "remap[%s]" % field
-                vals = self.request.POST.getlist(key)
-                if len(vals):
-                    self.importer.manually_match(field, vals[0])
-            self.importer.do_remap()
-
-        self.settings_form = ImportSettingsForm(data=self.request.POST if self.request.POST else None)
-        if self.settings_form.is_bound:
-            self.settings_form.is_valid()
-        return True
 
     def post(self, request, *args, **kwargs):
-        prepared = self.prepare()
-        if not prepared:
-            return redirect(reverse("shuup_admin:importer.import"))
-        try:
-            with atomic():
-                self.importer.do_import(self.settings_form.cleaned_data["import_mode"])
-        except Exception:
-            logger.exception("Error! Failed to import data.")
-            messages.error(request, _("Failed to import the file."))
-            return redirect(reverse("shuup_admin:importer.import"))
+        mapping = dict()
 
-        self.template_name = "shuup/importer/admin/import_process_complete.jinja"
-        return self.render_to_response(self.get_context_data(**kwargs))
+        for field in request.POST.keys():
+            if field.startswith("remap["):
+                # remove the remap[] part
+                field_name = field.replace("remap[", "")[:-1]
+                mapping[field_name] = self.request.POST.getlist(field)
+
+        supplier = get_supplier(request)
+        shop = get_shop(request)
+        run_task(
+            "shuup.importer.tasks.import_file",
+            stored=True,
+            queue="data_import",
+            importer=request.GET["importer"],
+            import_mode=request.POST["import_mode"],
+            file_name=request.GET["n"],
+            language=request.GET.get("lang"),
+            shop_id=shop.pk,
+            supplier_id=supplier.pk if supplier else None,
+            user_id=request.user.pk,
+            mapping=mapping,
+        )
+        messages.success(request, _("The import was queued!"))
+        return redirect(reverse("shuup_admin:importer.import"))
 
     def get_context_data(self, **kwargs):
-        context = super(ImportProcessView, self).get_context_data(**kwargs)
-        context["data"] = self.data
-        context["importer"] = self.importer
-        context["form"] = self.settings_form
-        context["model_fields"] = self.importer.get_fields_for_mapping()
-        context["visible_rows"] = self.data.rows[1:5]
+        context = super().get_context_data(**kwargs)
+        file_importer = FileImporter(
+            importer=self.request.GET["importer"],
+            import_mode=ImportMode.CREATE_UPDATE,
+            file_name=self.request.GET["n"],
+            language=self.request.GET.get("lang"),
+            shop_id=get_shop(self.request),
+            supplier_id=get_supplier(self.request),
+        )
+        file_importer.prepare()
+
+        settings_form = ImportSettingsForm(data=self.request.POST if self.request.POST else None)
+        if settings_form.is_bound:
+            settings_form.is_valid()
+
+        context["data"] = file_importer.data
+        context["importer"] = file_importer.importer
+        context["form"] = settings_form
+        context["model_fields"] = file_importer.importer.get_fields_for_mapping()
+        context["visible_rows"] = file_importer.data.rows[1:5]
         return context
 
     def get(self, request, *args, **kwargs):
-        prepared = self.prepare()
-        if not prepared:
+        try:
+            return self.render_to_response(self.get_context_data(**kwargs))
+        except ImporterError:
+            messages.error(request, _("Failed to process the file."))
             return redirect(reverse("shuup_admin:importer.import"))
-        return self.render_to_response(self.get_context_data(**kwargs))
 
 
 class ImportView(FormView):
@@ -204,13 +181,29 @@ class ExampleFileDownloadView(View):
         return response
 
 
+def get_imports_queryset(request):
+    # get only executions from tasks inside `data_import` queue
+    queryset = BackgroundTaskExecution.objects.select_related("task", "task__user").filter(task__queue="data_import")
+
+    if not has_permission(request.user, "importer.show-all-imports"):
+        shop = get_shop(request)
+        supplier = get_supplier(request)
+        queryset = queryset.filter(
+            Q(Q(task__shop=shop) | Q(task__shop__isnull=True)),
+            Q(task__supplier=supplier),
+        )
+
+    return queryset
+
+
 class ImportListView(PicotableListView):
     picotable_class = ImporterPicotable
     model = BackgroundTaskExecution
     default_columns = [
-        Column("started_on", _("Import date"), ordering=0, sortable=True),
-        Column("importer", _("Importer"), ordering=1, sortable=False, display="get_importer"),
-        Column("user", _("User"), sort_field="task__user", display="task__user"),
+        Column("started_on", _("Import date"), sortable=True),
+        Column("importer", _("Importer"), sortable=False, display="get_importer"),
+        Column("import_mode", _("Import mode"), sortable=False, display="get_import_mode"),
+        Column("user", _("User"), sort_field="task__user", display="get_user"),
         Column(
             "status",
             _("Status"),
@@ -221,7 +214,14 @@ class ImportListView(PicotableListView):
     mass_actions_provider_key = "import_list_mass_actions_provider"
 
     def get_importer(self, instance):
-        return _("Unknown")
+        importer = instance.task.arguments["importer"]
+        return IMPORTER_NAMES_MAP.get(importer, importer)
+
+    def get_user(self, instance):
+        return str(instance.task.user or "-")
+
+    def get_import_mode(self, instance):
+        return ImportMode(instance.task.arguments["import_mode"]).label
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -230,19 +230,29 @@ class ImportListView(PicotableListView):
 
     def get_toolbar(self):
         toolbar = super().get_toolbar()
-        toolbar.append(NewActionButton(url=reverse("shuup_admin:importer.import.new"), text=_("Import file")))
+        toolbar.append(
+            NewActionButton(url=reverse("shuup_admin:importer.import.new"), text=_("Import file"), icon="fa fa-upload")
+        )
         return toolbar
 
     def get_queryset(self):
-        # get only executions from tasks inside `data_import` queue
-        queryset = super().get_queryset().select_related("task").filter(task__queue="data_import")
+        return get_imports_queryset(self.request).defer("result", "error_log")
 
-        if not has_permission(self.request.user, "importer.show-all-imports"):
-            shop = get_shop(self.request)
-            supplier = get_supplier(self.request)
-            queryset = queryset.filter(
-                Q(Q(task__shop=shop) | Q(task__shop__isnull=True)),
-                Q(task__supplier=supplier),
-            )
+    def get_object_url(self, instance):
+        return reverse("shuup_admin:importer.import.detail", kwargs=dict(pk=instance.pk))
 
-        return queryset
+
+class ImportDetailView(DetailView):
+    model = BackgroundTaskExecution
+    template_name = "shuup/importer/admin/import_process_complete.jinja"
+
+    def get_queryset(self):
+        return get_imports_queryset(self.request)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["new_objects"] = []
+        context["updated_objects"] = []
+        context["log_messages"] = []
+        context["other_log_messages"] = []
+        return context
