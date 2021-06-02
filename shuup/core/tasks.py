@@ -161,16 +161,18 @@ class DefaultTaskRunner(TaskRunner):
 
         if background_task_execution:
             result = None
+            error = None
 
             if isinstance(task_result, TaskResult):
                 result = task_result.result
+                error = task_result.error_log
             elif task_result:
-                result = str(task_result.result)
+                result = str(task_result)
 
             background_task_execution.finished_on = datetime.now()
             background_task_execution.status = status
             background_task_execution.result = result
-            background_task_execution.error_log = task_result.error_log if task_result else None
+            background_task_execution.error_log = error
             background_task_execution.save()
 
         return task_result
