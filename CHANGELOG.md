@@ -17,6 +17,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Core: Allow a supplier to have multiple modules
 
+### Fixed
+
+- Notify: always overrride the current notification data with the new one
+
 ## [2.9.2] - 2021-05-26
 
 ### Fixed
