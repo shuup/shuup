@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
 import mock
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -12,6 +13,7 @@ from urllib.parse import parse_qs, urlparse
 
 from shuup.core.models import BackgroundTaskExecution, BackgroundTaskExecutionStatus, Product
 from shuup.default_importer.importers import ProductImporter
+from shuup.importer.admin_module.import_views import ImportDetailView, ImportListView
 from shuup.importer.utils.importer import ImportMode
 from shuup.testing.factories import (
     get_default_product_type,
@@ -19,6 +21,7 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_tax_class,
 )
+from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
@@ -125,6 +128,49 @@ def test_admin(rf, admin_user):
 
     # can update
     do_importing("123", "test", "en", shop, import_mode=ImportMode.UPDATE, client=client)
+
+
+@pytest.mark.django_db
+def test_admin_views(rf, admin_user):
+    # list imports
+    activate("en")
+    shop = get_default_shop()
+    shop.staff_members.add(admin_user)
+    get_default_tax_class()
+    get_default_product_type()
+    get_default_sales_unit()
+
+    # list imports, should be blank
+    list_view_func = ImportListView.as_view()
+    detail_view_func = ImportDetailView.as_view()
+    payload = {"jq": json.dumps({"perPage": 100, "page": 1}), "shop": shop.pk}
+    request = apply_request_middleware(rf.get("/", data=payload), user=admin_user)
+
+    response = list_view_func(request)
+    assert response.status_code == 200
+    assert len(json.loads(response.content)["items"]) == 0
+
+    # import a product
+    do_importing("123", "test", "en", shop)
+
+    # should contain 1 successfull import
+    response = list_view_func(request)
+    assert response.status_code == 200
+    data = json.loads(response.content)
+    assert len(data["items"]) == 1
+    assert data["items"][0]["importer"] == "Product Importer"
+    assert data["items"][0]["status"] == "Success"
+
+    # check the details of the import
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = detail_view_func(request, pk=data["items"][0]["_id"])
+    assert response.status_code == 200
+    response.render()
+    template = response.content.decode("utf-8")
+    assert "Import Results" in template
+    assert "The following items were imported as new" in template
+    assert ">test</a>" in template
+    assert "Zero items were updated" in template
 
 
 @pytest.mark.django_db
