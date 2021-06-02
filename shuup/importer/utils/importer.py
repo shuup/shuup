@@ -60,6 +60,7 @@ class FileImporter:
         mapping={},
         shop=None,
         supplier=None,
+        user=None,
         **kwargs
     ):
         self.importer = None
@@ -70,6 +71,7 @@ class FileImporter:
         self.shop = shop
         self.supplier = supplier
         self.mapping = mapping
+        self.user = user
 
     def prepare(self):
         self.data = self._transform_request_file()
@@ -77,7 +79,9 @@ class FileImporter:
         if self.data is None:
             raise ImporterError(_("The file doesn't contain data."))
 
-        context = self.importer_cls.get_importer_context(shop=self.shop, language=self.language, supplier=self.supplier)
+        context = self.importer_cls.get_importer_context(
+            request=None, shop=self.shop, language=self.language, supplier=self.supplier, user=self.user
+        )
         self.importer = self.importer_cls(self.data, context)
         self.importer.process_data()
 

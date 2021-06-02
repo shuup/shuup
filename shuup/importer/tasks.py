@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
+from django.contrib.auth import get_user_model
 from django.db.transaction import atomic
 from django.utils.translation import gettext_lazy as _
 from typing import TYPE_CHECKING
@@ -21,18 +22,22 @@ if TYPE_CHECKING:
 LOGGER = logging.getLogger(__name__)
 
 
-def import_file(importer, import_mode, file_name, language, shop_id, supplier_id=None, mapping=None):
+def import_file(importer, import_mode, file_name, language, shop_id, supplier_id=None, user_id=None, mapping=None):
     shop = Shop.objects.get(pk=shop_id)
     supplier = None
+    user = None
 
     if supplier_id:
         supplier = Supplier.objects.filter(pk=supplier_id).first()
+
+    if user_id:
+        user = get_user_model().objects.get(pk=user_id)
 
     # convert to enum
     import_mode = ImportMode(import_mode)
 
     file_importer = FileImporter(
-        importer, import_mode, file_name, language, mapping=mapping, shop=shop, supplier=supplier
+        importer, import_mode, file_name, language, mapping=mapping, shop=shop, supplier=supplier, user=user
     )
 
     try:

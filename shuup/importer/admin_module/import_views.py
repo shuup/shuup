@@ -25,7 +25,7 @@ from shuup.admin.utils.picotable import Column, Picotable
 from shuup.admin.utils.views import PicotableListView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import BackgroundTaskExecution
-from shuup.core.tasks import run_task
+from shuup.core.tasks import LOGGER, run_task
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.utils import get_import_file_path, get_importer, get_importer_choices
@@ -46,6 +46,13 @@ class ImporterPicotable(Picotable):
 class ImportProcessView(TemplateView):
     template_name = "shuup/importer/admin/import_process.jinja"
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.GET.get("importer"):
+            return HttpResponseBadRequest(_("Invalid importer."))
+        if not request.GET.get("n"):
+            return HttpResponseBadRequest(_("File is missing."))
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         mapping = dict()
 
@@ -62,7 +69,7 @@ class ImportProcessView(TemplateView):
             stored=True,
             queue="data_import",
             importer=request.GET["importer"],
-            import_mode=request.POST["import_mode"],
+            import_mode=request.POST.get("import_mode") or ImportMode.CREATE_UPDATE.value,
             file_name=request.GET["n"],
             language=request.GET.get("lang"),
             shop_id=shop.pk,
@@ -100,6 +107,7 @@ class ImportProcessView(TemplateView):
         try:
             return self.render_to_response(self.get_context_data(**kwargs))
         except ImporterError:
+            LOGGER.exception("Failed to process the file")
             messages.error(request, _("Failed to process the file."))
             return redirect(reverse("shuup_admin:importer.import"))
 
@@ -260,20 +268,24 @@ class ImportDetailView(DetailView):
 
         context["new_objects"] = []
         context["updated_objects"] = []
-        context["log_messages"] = result.get("log_messages")
-        context["other_log_messages"] = result.get("other_log_messages")
+        context["log_messages"] = []
+        context["other_log_messages"] = []
 
-        new_objects = result.get("new_objects")
-        updated_objects = result.get("updated_objects")
+        if result:
+            context["log_messages"] = result.get("log_messages")
+            context["other_log_messages"] = result.get("other_log_messages")
 
-        if new_objects:
-            model = apps.get_model(new_objects[0]["model"])
-            pks = [obj["pk"] for obj in new_objects]
-            context["new_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
+            new_objects = result.get("new_objects")
+            updated_objects = result.get("updated_objects")
 
-        if updated_objects:
-            model = apps.get_model(updated_objects[0]["model"])
-            pks = [obj["pk"] for obj in updated_objects]
-            context["updated_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
+            if new_objects:
+                model = apps.get_model(new_objects[0]["model"])
+                pks = [obj["pk"] for obj in new_objects]
+                context["new_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
+
+            if updated_objects:
+                model = apps.get_model(updated_objects[0]["model"])
+                pks = [obj["pk"] for obj in updated_objects]
+                context["updated_objects"] = model.objects.filter(pk__in=pks).order_by("pk")
 
         return context

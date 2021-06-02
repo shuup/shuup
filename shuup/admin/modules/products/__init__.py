@@ -136,8 +136,8 @@ class ProductModule(AdminModule):
 
         if has_permission(request.user, "shop_product.new"):
             actions.append({"text": _("New product"), "url": self.get_model_url(ShopProduct, "new")})
-        if "shuup.importer" in settings.INSTALLED_APPS and has_permission(request.user, "importer.import"):
-            actions.append({"text": _("Import"), "url": reverse("shuup_admin:importer.import")})
+        if "shuup.importer" in settings.INSTALLED_APPS and has_permission(request.user, "importer.import.new"):
+            actions.append({"text": _("Import"), "url": reverse("shuup_admin:importer.import.new")})
 
         if actions:
             yield SimpleHelpBlock(
