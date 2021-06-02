@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shuup', '0087_fix_attribute_migration'),
+        ('shuup', '0090_remove_supplier_module'),
     ]
 
     operations = [
