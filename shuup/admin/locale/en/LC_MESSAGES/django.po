@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-19 12:42+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1538,10 +1538,6 @@ msgstr ""
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr ""
 
-#, python-format
-msgid "No %s module"
-msgstr ""
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr ""
 
@@ -1552,7 +1548,11 @@ msgstr ""
 msgid "Success! %s has been marked deleted."
 msgstr ""
 
-msgid "Module"
+msgid "Modules"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
 msgstr ""
 
 msgid "Shuup Support"

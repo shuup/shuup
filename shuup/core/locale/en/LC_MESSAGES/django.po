@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-01 22:29+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -2206,6 +2206,9 @@ msgid ""
 "overwritten on a product-by-product basis."
 msgstr ""
 
+msgid "supplier modules"
+msgstr ""
+
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define "
 "the rules by which inventory is managed."
@@ -2235,6 +2238,20 @@ msgid "Approved"
 msgstr ""
 
 msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
+
+msgid "module identifier"
+msgstr ""
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr ""
+
+msgid "Module name"
+msgstr ""
+
+msgid "Supplier modules name."
 msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
@@ -2407,9 +2424,6 @@ msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
 msgstr ""
 
-msgid "No Choice"
-msgstr ""
-
 msgid "inherit"
 msgstr ""
 
@@ -2429,17 +2443,11 @@ msgstr ""
 msgid "Default Pricing"
 msgstr ""
 
-msgid "Error! Insufficient quantity in stock."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
 msgstr ""
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr ""
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: `"
-"%(product_counts)s`."
+msgid "Product"
 msgstr ""
 
 msgid "inventory"
