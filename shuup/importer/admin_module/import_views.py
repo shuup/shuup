@@ -21,10 +21,10 @@ from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.toolbar import NewActionButton
 from shuup.admin.utils.permissions import has_permission
-from shuup.admin.utils.picotable import Column, Picotable
+from shuup.admin.utils.picotable import ChoicesFilter, Column, DateRangeFilter, Picotable
 from shuup.admin.utils.views import PicotableListView
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import BackgroundTaskExecution
+from shuup.core.models import BackgroundTaskExecution, BackgroundTaskExecutionStatus
 from shuup.core.tasks import LOGGER, run_task
 from shuup.importer.admin_module.forms import ImportForm, ImportSettingsForm
 from shuup.importer.exceptions import ImporterError
@@ -209,7 +209,7 @@ class ImportListView(PicotableListView):
     picotable_class = ImporterPicotable
     model = BackgroundTaskExecution
     default_columns = [
-        Column("started_on", _("Import date"), sortable=True),
+        Column("started_on", _("Import date"), sortable=True, filter_config=DateRangeFilter()),
         Column("importer", _("Importer"), sortable=False, display="get_importer"),
         Column("import_mode", _("Import mode"), sortable=False, display="get_import_mode"),
         Column("user", _("User"), sort_field="task__user", display="get_user"),
@@ -217,6 +217,7 @@ class ImportListView(PicotableListView):
             "status",
             _("Status"),
             sort_field="status",
+            filter_config=ChoicesFilter(BackgroundTaskExecutionStatus.choices()),
         ),
     ]
     toolbar_buttons_provider_key = "import_list_toolbar_provider"
@@ -253,6 +254,15 @@ class ImportListView(PicotableListView):
 
     def get_object_url(self, instance):
         return reverse("shuup_admin:importer.import.detail", kwargs=dict(pk=instance.pk))
+
+    def get_object_abstract(self, instance, item):
+        return [
+            {"text": item.get("importer"), "class": "header"},
+            {"title": _("Importdate"), "text": item.get("started_on")},
+            {"title": _("Mode"), "text": item.get("import_mode")},
+            {"title": _("User"), "text": item.get("user")},
+            {"title": _("Status"), "text": item.get("status")},
+        ]
 
 
 class ImportDetailView(DetailView):
