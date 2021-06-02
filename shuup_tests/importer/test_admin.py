@@ -8,8 +8,9 @@ import mock
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.translation import activate
+from urllib.parse import parse_qs, urlparse
 
-from shuup.core.models import Product
+from shuup.core.models import BackgroundTaskExecution, BackgroundTaskExecutionStatus, Product
 from shuup.default_importer.importers import ProductImporter
 from shuup.importer.utils.importer import ImportMode
 from shuup.testing.factories import (
@@ -21,17 +22,12 @@ from shuup.testing.factories import (
 from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
-try:
-    from urllib.parse import parse_qs, urlparse
-except ImportError:
-    from urlparse import parse_qs, urlparse
-
 
 def do_importing(sku, name, lang, shop, import_mode=ImportMode.CREATE_UPDATE, client=None):
     is_update = True
-    import_path = reverse("shuup_admin:importer.import")
+    import_path = reverse("shuup_admin:importer.import.new")
     process_path = reverse("shuup_admin:importer.import_process")
-    original_product = None
+
     if not client:
         is_update = False
         client = SmartClient()
@@ -89,7 +85,8 @@ def do_importing(sku, name, lang, shop, import_mode=ImportMode.CREATE_UPDATE, cl
     data = {}
     data["import_mode"] = import_mode.value
     process_submit_path = "%s?%s" % (process_path, query_string)
-    client.soup(process_submit_path, data=data, method="post")
+    response = client.post(process_submit_path, data=data)
+    assert response.status_code == 302
 
     assert Product.objects.count() == 1
     product = Product.objects.first()
@@ -133,14 +130,13 @@ def test_admin(rf, admin_user):
 @pytest.mark.django_db
 def test_invalid_files(rf, admin_user):
     lang = "en"
-    import_mode = ImportMode.CREATE_UPDATE
     sku = "123"
     name = "test"
 
-    import_path = reverse("shuup_admin:importer.import")
+    import_path = reverse("shuup_admin:importer.import.new")
     process_path = reverse("shuup_admin:importer.import_process")
-    tax_class = get_default_tax_class()
-    product_type = get_default_product_type()
+    get_default_tax_class()
+    get_default_product_type()
     get_default_sales_unit()
 
     activate("en")
@@ -159,8 +155,6 @@ def test_invalid_files(rf, admin_user):
     }
     response = client.post(import_path, data=data)
     assert response.status_code == 302
-    query_string = urlparse(response["location"]).query
-    query = parse_qs(query_string)
 
     data = {  # data with missing `n`
         "importer": "product_importer",
@@ -178,7 +172,7 @@ def test_invalid_file_type(rf, admin_user):
     sku = "123"
     name = "test"
 
-    import_path = reverse("shuup_admin:importer.import")
+    import_path = reverse("shuup_admin:importer.import.new")
     process_path = reverse("shuup_admin:importer.import_process")
     get_default_tax_class()
     get_default_product_type()
@@ -201,7 +195,6 @@ def test_invalid_file_type(rf, admin_user):
     response = client.post(import_path, data=data)
     assert response.status_code == 302
     query_string = urlparse(response["location"]).query
-    query = parse_qs(query_string)
 
     data = {  # data with missing `n`
         "importer": "product_importer",
@@ -249,10 +242,10 @@ def test_remap(rf, admin_user):
     sku = "123"
     name = "test"
 
-    import_path = reverse("shuup_admin:importer.import")
+    import_path = reverse("shuup_admin:importer.import.new")
     process_path = reverse("shuup_admin:importer.import_process")
-    tax_class = get_default_tax_class()
-    product_type = get_default_product_type()
+    get_default_tax_class()
+    get_default_product_type()
     get_default_sales_unit()
 
     activate("en")
@@ -311,7 +304,8 @@ def test_remap(rf, admin_user):
     data["import_mode"] = import_mode.value
     data["remap[gtiin]"] = "Product:gtin"  # map gtin
     process_submit_path = "%s?%s" % (process_path, query_string)
-    client.soup(process_submit_path, data=data, method="post")
+    response = client.post(process_submit_path, data=data)
+    assert response.status_code == 302
     assert Product.objects.count() == 1
     product = Product.objects.first()
     assert product.gtin == "111"
@@ -320,7 +314,7 @@ def test_remap(rf, admin_user):
 @pytest.mark.django_db
 def test_download_examples(rf, admin_user):
     shop = get_default_shop()
-    import_url = reverse("shuup_admin:importer.import")
+    import_url = reverse("shuup_admin:importer.import.new")
 
     shop.staff_members.add(admin_user)
     client = SmartClient()
@@ -367,47 +361,6 @@ def test_download_examples(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_import_error(admin_user):
-    shop = get_default_shop()
-    shop.staff_members.add(admin_user)
-    get_default_tax_class()
-    get_default_product_type()
-    get_default_sales_unit()
-
-    client = SmartClient()
-    client.login(username="admin", password="password")
-
-    import_path = reverse("shuup_admin:importer.import")
-    process_path = reverse("shuup_admin:importer.import_process")
-
-    client = SmartClient()
-    client.login(username="admin", password="password")
-
-    csv_content = str.encode("sku;name\n123;Teste")
-    data = {
-        "importer": "product_importer",
-        "shop": shop.pk,
-        "language": "en",
-        "file": SimpleUploadedFile("file.csv", csv_content, content_type="text/csv"),
-    }
-    response = client.post(import_path, data=data)
-    assert response.status_code == 302
-    query_string = urlparse(response["location"]).query
-    query = parse_qs(query_string)
-    data = {
-        "importer": "product_importer",
-        "shop": shop.pk,
-        "language": "en",
-        "n": query.get("n"),
-    }
-    data = {}
-    process_submit_path = "%s?%s" % (process_path, query_string)
-    response = client.post(process_submit_path, data=data)
-    assert response.status_code == 302
-    assert "Failed to import the file." == list(response.wsgi_request._messages)[0].message
-
-
-@pytest.mark.django_db
 def test_custom_file_transformer_import(admin_user):
     shop = get_default_shop()
     shop.staff_members.add(admin_user)
@@ -418,7 +371,7 @@ def test_custom_file_transformer_import(admin_user):
     client = SmartClient()
     client.login(username="admin", password="password")
 
-    import_path = reverse("shuup_admin:importer.import")
+    import_path = reverse("shuup_admin:importer.import.new")
     process_path = reverse("shuup_admin:importer.import_process")
 
     client = SmartClient()
@@ -445,7 +398,7 @@ def test_custom_file_transformer_import(admin_user):
         }
         response = client.post(process_submit_path, data=data)
         assert response.status_code == 302
-        assert (
-            "Error! Not implemented: `DataImporter` -> `transform_file()`."
-            in list(response.wsgi_request._messages)[0].message
-        )
+        assert "The import was queued!" in list(response.wsgi_request._messages)[0].message
+        task_execution = BackgroundTaskExecution.objects.last()
+        assert task_execution.status == BackgroundTaskExecutionStatus.ERROR
+        assert "Error! Not implemented: `DataImporter` -> `transform_file()`." in task_execution.error_log

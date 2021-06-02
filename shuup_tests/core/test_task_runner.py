@@ -10,5 +10,6 @@ from shuup.core.tasks import run_task
 
 
 def test_run_task():
-    result = run_task("shuup.utils.text.snake_case", value="test ing")
+    task, result = run_task("shuup.utils.text.snake_case", value="test ing")
     assert result == "test_ing"
+    assert task.identifier
