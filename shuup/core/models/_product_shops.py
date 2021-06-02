@@ -291,7 +291,7 @@ class ShopProduct(MoneyPropped, TranslatableModel):
         self.clean()
         super(ShopProduct, self).save(*args, **kwargs)
         for supplier in self.suppliers.enabled():
-            supplier.module.update_stock(product_id=self.product.id)
+            supplier.update_stock(product_id=self.product.id)
 
     def clean(self):
         pre_clean.send(type(self), instance=self)

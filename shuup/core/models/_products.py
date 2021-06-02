@@ -23,6 +23,7 @@ from parler.models import TranslatableModel, TranslatedFields
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
 from shuup.core.signals import post_clean, pre_clean
+from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_choices
 from shuup.core.taxing import TaxableItem
 from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import LogEntryKind, define_log_model
@@ -39,7 +40,7 @@ from ._product_variation import (
 )
 
 
-# TODO (2.0): This should be extandable
+# TODO (3.0): This should be extandable
 class ProductMode(Enum):
     NORMAL = 0
     PACKAGE_PARENT = 1
@@ -222,6 +223,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     deleted = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_("deleted"))
 
     # Behavior
+    kind = models.IntegerField(default=DefaultProductKindSpec.value, choices=get_product_kind_choices(), db_index=True)
     mode = EnumIntegerField(ProductMode, default=ProductMode.NORMAL, verbose_name=_("mode"))
     variation_parent = models.ForeignKey(
         "self",

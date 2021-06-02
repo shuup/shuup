@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
@@ -12,19 +15,49 @@ from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.core.utils import context_cache
 from shuup.simple_supplier.utils import get_current_stock_value
+from shuup.utils.django_compat import force_text
 from shuup.utils.djangoenv import has_installed
+from shuup.utils.excs import Problem
 
 from .models import StockAdjustment, StockCount
 
 
 class SimpleSupplierModule(BaseSupplierModule):
     identifier = "simple_supplier"
-    name = "Simple Supplier"
+    name = _("Simple Supplier")
 
-    def get_stock_statuses(self, product_ids):
-        stock_counts = StockCount.objects.filter(supplier=self.supplier, product_id__in=product_ids).values_list(
-            "product_id", "physical_count", "logical_count", "stock_managed"
-        )
+    def get_orderability_errors(self, shop_product, quantity, customer, *args, **kwargs):
+        """
+        :param shop_product: Shop Product.
+        :type shop_product: shuup.core.models.ShopProduct
+        :param quantity: Quantity to order.
+        :type quantity: decimal.Decimal
+        :param customer: Contact.
+        :type user: django.contrib.auth.models.AbstractUser
+        :rtype: iterable[ValidationError]
+        """
+        if shop_product.product.kind not in self.get_supported_product_kinds_values():
+            return
+
+        stock_status = self.get_stock_status(shop_product.product_id)
+
+        backorder_maximum = shop_product.backorder_maximum
+        if stock_status.error:
+            yield ValidationError(stock_status.error, code="stock_error")
+
+        if self.supplier.stock_managed and stock_status.stock_managed:
+            if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
+                yield ValidationError(
+                    stock_status.message or _("Error! Insufficient quantity in stock."), code="stock_insufficient"
+                )
+
+    def get_stock_statuses(self, product_ids, *args, **kwargs):
+        stock_counts = StockCount.objects.filter(
+            supplier=self.supplier,
+            product_id__in=product_ids,
+            product__kind__in=self.get_supported_product_kinds_values(),
+        ).values_list("product_id", "physical_count", "logical_count", "stock_managed")
+
         values = dict(
             (product_id, (physical_count, logical_count, stock_managed))
             for (product_id, physical_count, logical_count, stock_managed) in stock_counts
@@ -43,20 +76,22 @@ class SimpleSupplierModule(BaseSupplierModule):
                     physical_count=values.get(product_id, null)[0],
                     logical_count=values.get(product_id, null)[1],
                     stock_managed=stock_managed,
+                    handled=product_id in values,
                 )
             )
 
         return dict((pss.product_id, pss) for pss in stati)
 
-    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None, type=StockAdjustmentType.INVENTORY):
-
-        stock_count = StockCount.objects.get_or_create(
+    def adjust_stock(
+        self, product_id, delta, purchase_price=0, created_by=None, type=StockAdjustmentType.INVENTORY, *args, **kwargs
+    ):
+        stock_count = StockCount.objects.select_related("product").get_or_create(
             supplier=self.supplier,
             product_id=product_id,
         )[0]
-        if not stock_count.stock_managed:
+        if not stock_count.stock_managed or stock_count.product.kind not in self.get_supported_product_kinds_values():
             # item doesn't manage stocks
-            return
+            return {}
 
         adjustment = StockAdjustment.objects.create(
             supplier=self.supplier,
@@ -69,14 +104,16 @@ class SimpleSupplierModule(BaseSupplierModule):
         self.update_stock(product_id)
         return adjustment
 
-    def update_stock(self, product_id):
+    def update_stock(self, product_id, *args, **kwargs):
         """
         Supplier module update stock should always bump product
         cache and send `shuup.core.signals.stocks_updated` signal.
         """
         supplier_id = self.supplier.pk
-        sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
-        if not sv.stock_managed:
+        sv, _ = StockCount.objects.select_related("product").get_or_create(
+            supplier_id=supplier_id, product_id=product_id
+        )
+        if not sv.stock_managed or sv.product.kind not in self.get_supported_product_kinds_values():
             # item doesn't manage stocks
             return
 
@@ -111,3 +148,36 @@ class SimpleSupplierModule(BaseSupplierModule):
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
         )
+
+    def ship_products(self, shipment, product_quantities, *args, **kwargs):
+        # stocks are managed, do stocks check
+        if self.supplier.stock_managed:
+            insufficient_stocks = {}
+
+            for product, quantity in product_quantities.items():
+                if quantity > 0 and product.kind in self.get_supported_product_kinds_values():
+                    stock_status = self.get_stock_status(product.pk)
+                    if stock_status.stock_managed and stock_status.physical_count < quantity:
+                        insufficient_stocks[product] = stock_status.physical_count
+
+            if insufficient_stocks:
+                formatted_counts = [
+                    _("%(name)s (physical stock: %(quantity)s)")
+                    % {"name": force_text(name), "quantity": force_text(int(quantity))}
+                    for (name, quantity) in insufficient_stocks.items()
+                ]
+                raise Problem(
+                    _("Insufficient physical stock count for the following products: `%(product_counts)s`.")
+                    % {"product_counts": ", ".join(formatted_counts)}
+                )
+
+        for product, quantity in product_quantities.items():
+            if quantity == 0 or product.kind not in self.get_supported_product_kinds_values():
+                continue
+
+            sp = shipment.products.create(product=product, quantity=quantity)
+            sp.cache_values()
+            sp.save()
+
+        shipment.cache_values()
+        shipment.save()

@@ -28,6 +28,7 @@ from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Product, ProductType, SalesUnit, ShopProduct, Supplier, TaxClass
+from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_specs
 
 from .toolbars import EditProductToolbar
 
@@ -188,6 +189,14 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     base_form_part_classes = []
     form_part_class_provide_key = "admin_product_form_part"
     add_form_errors_as_messages = True
+    product_listing_names = [DefaultProductKindSpec.admin_listing_name]
+
+    def get_listing_product_kinds_values(self):
+        return [
+            product_kind_spec.value
+            for product_kind_spec in get_product_kind_specs()
+            if product_kind_spec.admin_listing_name in self.product_listing_names
+        ]
 
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
@@ -205,7 +214,11 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         return EditProductToolbar(view=self)
 
     def get_queryset(self):
-        qs = super(ProductEditView, self).get_queryset().filter(shop=get_shop(self.request))
+        qs = (
+            super(ProductEditView, self)
+            .get_queryset()
+            .filter(shop=get_shop(self.request), product__kind__in=self.get_listing_product_kinds_values())
+        )
 
         supplier = get_supplier(self.request)
         if supplier:

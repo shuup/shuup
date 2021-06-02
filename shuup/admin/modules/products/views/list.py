@@ -17,6 +17,7 @@ from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.picotable import ChoicesFilter, Column, Picotable, RangeFilter, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import ProductMode, Shop, ShopProduct
+from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_specs
 from shuup.utils.iterables import first
 
 
@@ -34,6 +35,7 @@ class ProductPicotable(Picotable):
 class ProductListView(PicotableListView):
     model = ShopProduct
     picotable_class = ProductPicotable
+    product_listing_names = [DefaultProductKindSpec.admin_listing_name]
 
     default_columns = [
         Column(
@@ -150,10 +152,19 @@ class ProductListView(PicotableListView):
                 return "<img src='{}'>".format(thumbnail.url)
         return "<img src='%s'>" % static("shuup_admin/img/no_image_thumbnail.png")
 
+    def get_listing_product_kinds_values(self):
+        return [
+            product_kind_spec.value
+            for product_kind_spec in get_product_kind_specs()
+            if product_kind_spec.admin_listing_name in self.product_listing_names
+        ]
+
     def get_queryset(self):
         filter = self.get_filter()
         shop = get_shop(self.request)
-        qs = ShopProduct.objects.filter(product__deleted=False, shop=shop)
+        qs = ShopProduct.objects.filter(
+            product__deleted=False, product__kind__in=self.get_listing_product_kinds_values(), shop=shop
+        )
         q = Q()
         for mode in filter.get("modes", []):
             q |= Q(product__mode=mode)

@@ -29,6 +29,7 @@ class ShuupCoreAppConfig(AppConfig):
             "shuup.core.order_creator:OrderSourceMethodsUnavailabilityReasonsValidator",
             "shuup.core.order_creator:OrderSourceSupplierValidator",
         ],
+        "product_kind_specs": ["shuup.core.specs.product_kind:DefaultProductKindSpec"],
     }
 
     def ready(self):

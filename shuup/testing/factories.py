@@ -67,6 +67,7 @@ from shuup.core.models import (
     ShopProductVisibility,
     ShopStatus,
     Supplier,
+    SupplierModule,
     SupplierType,
     Tax,
     TaxClass,
@@ -437,6 +438,8 @@ def get_default_supplier(shop=None):
     supplier = default_by_identifier(Supplier)
     if not supplier:
         supplier = Supplier.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, type=SupplierType.INTERNAL)
+        supplier_module = SupplierModule.objects.get_or_create(module_identifier="simple_supplier")[0]
+        supplier.supplier_modules.add(supplier_module)
         assert str(supplier) == DEFAULT_NAME
     if not shop:
         shop = get_default_shop()
@@ -445,9 +448,10 @@ def get_default_supplier(shop=None):
 
 
 def get_supplier(module_identifier, shop=None, **kwargs):
-    supplier = Supplier.objects.create(
-        name=DEFAULT_NAME, module_identifier=module_identifier, type=SupplierType.INTERNAL, **kwargs
-    )
+    name = kwargs.pop("name", DEFAULT_NAME)
+    supplier = Supplier.objects.create(name=name, type=SupplierType.INTERNAL, **kwargs)
+    supplier_module, created = SupplierModule.objects.get_or_create(module_identifier=module_identifier)
+    supplier.supplier_modules.add(supplier_module)
     if shop:
         supplier.shops.add(shop)
     return supplier

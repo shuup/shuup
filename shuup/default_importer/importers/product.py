@@ -26,10 +26,12 @@ from shuup.core.models import (
     SalesUnit,
     ShopProduct,
     Supplier,
+    SupplierModule,
     TaxClass,
 )
 from shuup.importer.importing import DataImporter, ImporterExampleFile, ImportMetaBase
 from shuup.importer.utils import fold_mapping_name
+from shuup.simple_supplier.module import SimpleSupplierModule
 from shuup.utils.django_compat import force_text
 from shuup.utils.djangoenv import has_installed
 from shuup.utils.properties import PriceProperty
@@ -260,11 +262,12 @@ class ProductMetaBase(ImportMetaBase):
             supplier.stock_managed = True
             supplier_changed = True
 
-        if not supplier.module_identifier and has_installed("shuup.simple_supplier"):
-            supplier.module_identifier = "simple_supplier"
+        if not supplier.supplier_modules.all().exists() and has_installed("shuup.simple_supplier"):
+            supplier_module = SupplierModule.objects.get_or_create(module_identifier=SimpleSupplierModule.identifier)[0]
+            supplier.supplier_modules.add(supplier_module)
             supplier_changed = True
 
-        if not supplier.module_identifier:
+        if not supplier.supplier_modules:
             msg = _("No supplier module set, please check that the supplier module is set.")
             sess.log_messages.append(msg)
             return
@@ -274,7 +277,9 @@ class ProductMetaBase(ImportMetaBase):
 
         product = sess.instance
         stock_status = supplier.get_stock_status(product.pk)
-        stock_delta = decimal.Decimal(qty) - stock_status.logical_count
+        stock_delta = decimal.Decimal(qty)
+        if stock_status:
+            stock_delta = decimal.Decimal(qty) - stock_status.logical_count
 
         if stock_delta != 0:
             supplier.adjust_stock(product.pk, stock_delta)

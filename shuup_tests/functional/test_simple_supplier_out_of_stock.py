@@ -31,6 +31,7 @@ def test_simple_supplier_out_of_stock(rf, anonymous, hide_unorderable_product):
     else:
         customer = create_random_person()
 
+    supplier.adjust_stock(product.pk, 0)
     ss = supplier.get_stock_status(product.pk)
     assert ss.product == product
     assert ss.logical_count == 0

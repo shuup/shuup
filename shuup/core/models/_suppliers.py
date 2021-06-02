@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import logging
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import slugify
@@ -24,6 +25,9 @@ from ._base import TranslatableShuupModel
 
 if TYPE_CHECKING:
     from shuup.core.models import Shop
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class SupplierType(Enum):
@@ -61,7 +65,6 @@ class SupplierQueryset(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Supplier(ModuleInterface, TranslatableShuupModel):
-    default_module_spec = "shuup.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
@@ -94,10 +97,11 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
             "merely assigns a sensible default behavior, which can be overwritten on a product-by-product basis."
         ),
     )
-    module_identifier = models.CharField(
-        max_length=64,
+    supplier_modules = models.ManyToManyField(
+        "SupplierModule",
         blank=True,
-        verbose_name=_("module"),
+        related_name="suppliers",
+        verbose_name=_("supplier modules"),
         help_text=_(
             "Select the supplier module to use for this supplier. "
             "Supplier modules define the rules by which inventory is managed."
@@ -159,7 +163,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
             self.slug = slugify(self.name)
         return super(Supplier, self).save(*args, **kwargs)
 
-    def get_orderability_errors(self, shop_product, quantity, customer):
+    def get_orderability_errors(self, shop_product, quantity, customer, *args, **kwargs):
         """
         :param shop_product: Shop Product.
         :type shop_product: shuup.core.models.ShopProduct
@@ -169,23 +173,29 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
         :type contect: shuup.core.models.Contact
         :rtype: iterable[ValidationError]
         """
-        return self.module.get_orderability_errors(shop_product=shop_product, quantity=quantity, customer=customer)
+        for module in self.modules:
+            yield from module.get_orderability_errors(
+                shop_product=shop_product, quantity=quantity, customer=customer, *args, **kwargs
+            )
 
-    def get_stock_statuses(self, product_ids):
+    def get_stock_statuses(self, product_ids, *args, **kwargs):
         """
+        Return a dict of product stock statuses
+
         :param product_ids: Iterable of product IDs.
         :return: Dict of {product_id: ProductStockStatus}
         :rtype: dict[int, shuup.core.stocks.ProductStockStatus]
         """
-        return self.module.get_stock_statuses(product_ids)
+        return_dict = {}
+        for module in self.modules:
+            return_dict.update(module.get_stock_statuses(product_ids, *args, **kwargs))
+        return return_dict
 
-    def get_stock_status(self, product_id):
-        """
-        :param product_id: Product ID.
-        :type product_id: int
-        :rtype: shuup.core.stocks.ProductStockStatus
-        """
-        return self.module.get_stock_status(product_id)
+    def get_stock_status(self, product_id, *args, **kwargs):
+        for module in self.modules:
+            stock_status = module.get_stock_status(product_id, *args, **kwargs)
+            if stock_status.handled:
+                return stock_status
 
     def get_suppliable_products(self, shop, customer):
         """
@@ -201,17 +211,26 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
             if shop_product.is_orderable(self, customer, shop_product.minimum_purchase_quantity)
         ]
 
-    def adjust_stock(self, product_id, delta, created_by=None, type=None):
+    def adjust_stock(self, product_id, delta, created_by=None, type=None, *args, **kwargs):
         from shuup.core.suppliers.base import StockAdjustmentType
 
         adjustment_type = type or StockAdjustmentType.INVENTORY
-        return self.module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type)
+        for module in self.modules:
+            stock = module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type, *args, **kwargs)
+            if stock:
+                return stock
 
-    def update_stock(self, product_id):
-        return self.module.update_stock(product_id)
+    def update_stock(self, product_id, *args, **kwargs):
+        for module in self.modules:
+            module.update_stock(product_id, *args, **kwargs)
 
-    def update_stocks(self, product_ids):
-        return self.module.update_stocks(product_ids)
+    def update_stocks(self, product_ids, *args, **kwargs):
+        for module in self.modules:
+            module.update_stocks(product_ids, *args, **kwargs)
+
+    def ship_products(self, shipment, product_quantities, *args, **kwargs):
+        for module in self.modules:
+            module.ship_products(shipment, product_quantities, *args, **kwargs)
 
     def soft_delete(self):
         if not self.deleted:
@@ -230,6 +249,33 @@ class SupplierShop(models.Model):
 
     class Meta:
         unique_together = ("supplier", "shop")
+
+
+class SupplierModule(models.Model):
+    module_identifier = models.CharField(
+        max_length=64,
+        verbose_name=_("module identifier"),
+        unique=True,
+        help_text=_(
+            "Select the types of products this supplier can handle."
+            "Example for normal products select just Simple Supplier."
+        ),
+    )
+    name = models.CharField(
+        max_length=64,
+        verbose_name=_("Module name"),
+        help_text=_("Supplier modules name."),
+    )
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def ensure_all_supplier_modules(cls):
+        from shuup.apps.provides import get_provide_objects
+
+        for module in get_provide_objects(Supplier.module_provides_key):
+            cls.objects.update_or_create(module_identifier=module.identifier, defaults={"name": module.name})
 
 
 SupplierLogEntry = define_log_model(Supplier)

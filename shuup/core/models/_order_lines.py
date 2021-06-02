@@ -179,7 +179,7 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
 
         super(AbstractOrderLine, self).save(*args, **kwargs)
         if self.product_id:
-            self.supplier.module.update_stock(self.product_id)
+            self.supplier.update_stock(self.product_id)
 
 
 class OrderLine(LineWithUnit, AbstractOrderLine):

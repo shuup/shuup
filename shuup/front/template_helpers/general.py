@@ -264,6 +264,7 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         categories=categories,
         orderable_only=orderable_only,
     )
+
     if products is not None:
         return products
 

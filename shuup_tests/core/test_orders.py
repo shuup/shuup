@@ -183,6 +183,59 @@ def test_basic_order():
 
 
 @pytest.mark.django_db
+def test_basic_order_without_supplier_module():
+    PRODUCTS_TO_SEND = 10
+    product = get_default_product()
+    supplier = get_default_supplier()
+    supplier.supplier_modules.set([])
+    supplier.stock_managed = False
+    supplier.save()
+    order = create_order_with_product(
+        product, supplier=supplier, quantity=PRODUCTS_TO_SEND, taxless_base_unit_price=10, tax_rate=Decimal("0.5")
+    )
+    assert order.shop.prices_include_tax is False
+    price = order.shop.create_price
+    currency = order.currency
+
+    discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
+    discount_order_line.discount_amount = price(30)
+    assert discount_order_line.price == price(-30)
+    discount_order_line.save()
+
+    order.cache_prices()
+    order.check_all_verified()
+    order.save()
+    assert order.taxful_total_price == TaxfulPrice(PRODUCTS_TO_SEND * (10 + 5) - 30, currency)
+    shipment = order.create_shipment_of_all_products(supplier=supplier)
+    assert shipment.total_products == 0
+    assert shipment.weight == 0
+    assert PRODUCTS_TO_SEND == int(order.get_unshipped_products()[product.id]["unshipped"])
+
+    order.create_payment(order.taxful_total_price)
+    assert order.payments.exists(), "A payment was created"
+    with pytest.raises(NoPaymentToCreateException):
+        order.create_payment(Money(6, currency))
+    assert order.is_paid(), "Order got paid"
+    assert not order.can_set_complete(), "Finalization is possible"
+
+    # Force to be complete
+    order.status = OrderStatus.objects.get_default_complete()
+    assert order.is_complete(), "Finalization done"
+
+    summary = order.get_tax_summary()
+    assert len(summary) == 2
+    assert summary[0].tax_rate * 100 == 50
+    assert summary[0].based_on == Money(100, currency)
+    assert summary[0].tax_amount == Money(50, currency)
+    assert summary[0].taxful == summary[0].based_on + summary[0].tax_amount
+    assert summary[1].tax_id is None
+    assert summary[1].tax_code == ""
+    assert summary[1].tax_amount == Money(0, currency)
+    assert summary[1].tax_rate == 0
+    assert order.get_total_tax_amount() == Money(50, currency)
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize("include_taxes", [True, False])
 def test_complex_order_tax(include_taxes):
     tax = get_default_tax()
@@ -495,21 +548,22 @@ def test_refund_with_shipment(restock):
 def test_refund_entire_order_restock_shipment_no_supplier_module():
     shop = get_default_shop()
     supplier = get_default_supplier()
+    supplier.supplier_modules.clear()
     product = create_product(
         "test-sku",
         shop=get_default_shop(),
         default_price=10,
     )
-    check_stock_counts(supplier, product, 0, 0)
+    assert not supplier.get_stock_statuses([product.id])
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
     product_line = order.lines.first()
     order.create_shipment({product_line.product: 2}, supplier=supplier)
-    check_stock_counts(supplier, product, 0, 0)
+    assert not supplier.get_stock_statuses([product.id])
 
     # Create a full refund with `restock_products` set to True
     order.create_full_refund(restock_products=True)
 
-    check_stock_counts(supplier, product, 0, 0)
+    assert not supplier.get_stock_statuses([product.id])
 
 
 @pytest.mark.django_db

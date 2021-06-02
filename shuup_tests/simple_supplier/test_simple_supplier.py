@@ -33,8 +33,7 @@ def test_simple_supplier(rf):
     shop = get_default_shop()
     product = create_product("simple-test-product", shop)
     ss = supplier.get_stock_status(product.pk)
-    assert ss.product == product
-    assert ss.logical_count == 0
+    assert ss == None
     num = random.randint(100, 500)
     supplier.adjust_stock(product.pk, +num)
     assert supplier.get_stock_status(product.pk).logical_count == num
