@@ -20,15 +20,43 @@ class ImportAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:importer.import")
 
     def get_extra_permissions(self):
-        return [importer.get_permission_identifier() for importer in get_provide_objects("importers")]
+        extra_permissions = ["importer.show-all-imports"]
+        importers_permissions = [importer.get_permission_identifier() for importer in get_provide_objects("importers")]
+        return extra_permissions + importers_permissions
+
+    def get_permissions_help_texts(self):
+        help_texts = {
+            "importer.show-all-imports": _("Allow the user to see the imports from all shops and suppliers."),
+            "importer.import_process": _("Allow the user to run importers."),
+            "importer.import": _("Allow the user to list imports."),
+            "importer.import.new": _("Allow the user to import a file."),
+            "importer.download_example": _("Allow the user to download sample files."),
+        }
+
+        for importer in get_provide_objects("importers"):
+            help_texts[importer.get_permission_identifier()] = _(
+                "Allow the user to use the {importer_name} importer."
+            ).format(importer_name=importer.name)
+
+        return help_texts
 
     def get_urls(self):
         return [
             admin_url(
-                "^importer/import$", "shuup.importer.admin_module.import_views.ImportView", name="importer.import"
+                "^importer/imports/$", "shuup.importer.admin_module.import_views.ImportListView", name="importer.import"
             ),
             admin_url(
-                "^importer/import/process$",
+                r"^importer/imports/(?P<pk>.+)/$",
+                "shuup.importer.admin_module.import_views.ImportDetailView",
+                name="importer.import.detail",
+            ),
+            admin_url(
+                "^importer/new/$",
+                "shuup.importer.admin_module.import_views.ImportView",
+                name="importer.import.new",
+            ),
+            admin_url(
+                "^importer/process$",
                 "shuup.importer.admin_module.import_views.ImportProcessView",
                 name="importer.import_process",
             ),

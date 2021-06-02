@@ -9,11 +9,8 @@ import pytest
 from django.core import mail
 from django.utils.translation import activate
 
-from shuup.notify.admin_module.views import ScriptTemplateView
-from shuup.notify.models import Script
 from shuup.notify.script_templates import PasswordResetTemplate
 from shuup.testing.factories import get_default_shop
-from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import reverse
 
 

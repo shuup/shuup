@@ -8,6 +8,7 @@ from shuup.utils import update_module_attributes
 
 from ._addresses import ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole, SavedAddressStatus
 from ._attributes import Attribute, AttributeChoiceOption, AttributeType, AttributeVisibility
+from ._background_tasks import BackgroundTask, BackgroundTaskExecution, BackgroundTaskExecutionStatus
 from ._base import PolymorphicShuupModel, PolymorphicTranslatableShuupModel, ShuupModel, TranslatableShuupModel
 from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
@@ -99,6 +100,9 @@ __all__ = [
     "AttributeChoiceOption",
     "AttributeType",
     "AttributeVisibility",
+    "BackgroundTask",
+    "BackgroundTaskExecution",
+    "BackgroundTaskExecutionStatus",
     "Basket",
     "Carrier",
     "Category",

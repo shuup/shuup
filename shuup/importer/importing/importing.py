@@ -12,7 +12,9 @@ import django
 import itertools
 import logging
 import six
+import warnings
 import xlrd
+from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields import BooleanField
@@ -21,6 +23,7 @@ from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 from operator import iand, ior
+from typing import TYPE_CHECKING
 
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError
@@ -30,7 +33,11 @@ from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
 from shuup.utils.django_compat import force_text
 
+if TYPE_CHECKING:
+    from shuup.core.models import Shop, Supplier
+
 LOGGER = logging.getLogger(__name__)
+User = get_user_model()
 
 
 class ImporterExampleFile(object):
@@ -45,20 +52,16 @@ class ImporterExampleFile(object):
 
 
 class ImporterContext:
-    shop = None  # shuup.core.models.Shop
+    shop = None  # type: Shop
     language = None  # str
+    supplier = None  # type: Supplier
+    user = None  # type: User
 
-    def __init__(self, shop, language, **kwargs):
-        """
-        :type shop: shuup.core.models.Shop
-        :param shop: the current shop
-
-        :type language: shuup.core.models.Shop
-        :param language: the current shop
-
-        """
+    def __init__(self, shop: "Shop", language: str, supplier: "Supplier" = None, user: User = None, **kwargs):
         self.shop = shop
         self.language = language
+        self.supplier = supplier
+        self.user = user
 
 
 class DataImporter(object):
@@ -79,17 +82,30 @@ class DataImporter(object):
     model = None
 
     @classmethod
-    def get_importer_context(cls, request, **defaults):
+    def get_importer_context(
+        cls,
+        request=None,
+        shop: "Shop" = None,
+        language: str = None,
+        supplier: "Supplier" = None,
+        user: User = None,
+        **kwargs
+    ):
         """
         Returns a context object for the given `request`
         that will be used on the importer process.
 
-        :type request: django.http.HttpRequest
-        :type defaults: dict
+        `request` parameter is deprecated
 
         :rtype: ImporterContext
         """
-        return ImporterContext(**defaults)
+        if request:
+            warnings.warn(
+                "Warning! `request` parameter is deprecated and will be removed in next major version.",
+                DeprecationWarning,
+            )
+
+        return ImporterContext(shop=shop, language=language, supplier=supplier, user=user, **kwargs)
 
     def __init__(self, data, context):
         """

@@ -601,7 +601,7 @@ const Picotable = (function (m, storage) {
         var tbody = m("tbody", rows);
         var massActionsClass = massActions.length ? ".has-mass-actions" : "";
 
-        return m("table.table.picotable-table" + massActionsClass, [thead, tbody]);
+        return m(".table-responsive", m("table.table.picotable-table" + massActionsClass, [thead, tbody]));
     }
 
     function preventSelect(event) {
@@ -723,9 +723,9 @@ const Picotable = (function (m, storage) {
                                     checked: ctrl.isChecked(item)
                                 }),
                                 m("label", { for: item._id, }),
-                                (item._url ? m("a.edit", {href: item._url}, m("i.fa.fa-edit")) : null)
+                                (item._url ? m("a.edit", { href: item._url }, m("i.fa.fa-edit")) : null)
                             ])
-                        : (line.class && massActions.length && item.popup === true ?
+                            : (line.class && massActions.length && item.popup === true ?
                                 m("div.input-checkbox", { onclick: preventSelect }, [
                                     m("button[type=button]", {
                                         class: "browse-btn btn btn-primary btn-sm",
@@ -735,7 +735,7 @@ const Picotable = (function (m, storage) {
                                         gettext(" Select")
                                     ])
                                 ])
-                            : null)
+                                : null)
                         ),
                         (line.title ? m(".col.title", line.title) : null),
                         m(".col.value", line.text)
@@ -788,8 +788,8 @@ const Picotable = (function (m, storage) {
                         [m("i.fa.fa-filter")], gettext("Show filters"),
                         (filterCount ?
                             m("span.badge.badge-pill.badge-dark.active-filter-counter",
-                            filterCount
-                        ) : null),
+                                filterCount
+                            ) : null),
                     )
                 ]),
                 m("div.col-sm-6", [
@@ -919,8 +919,8 @@ const Picotable = (function (m, storage) {
                 gettext("Filters"),
                 (filterCount > 0 ?
                     m("span.badge.badge-pill.badge-dark.active-filter-counter",
-                    filterCount
-                ) : null),
+                        filterCount
+                    ) : null),
             ),
             m("div.dropdown-menu.dropdown-menu-right.pl-3.pr-3", {
                 "aria-labelledby": "dropdownFilter"
@@ -1392,5 +1392,5 @@ else if (typeof define === "function" && define.amd) define(function () {
 
 const picotableElement = document.getElementById("picotable");
 if (picotableElement) {
-   window.picotable = new Picotable(picotableElement, window.location.pathname);
+    window.picotable = new Picotable(picotableElement, window.location.pathname);
 }

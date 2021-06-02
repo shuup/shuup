@@ -47,7 +47,7 @@
     <script>
         $(function () {
             $("#{{ form.importer.id_for_label }}").on("change", function() {
-                location.href = "{{ url('shuup_admin:importer.import') }}?importer=" + $(this).val();
+                location.href = "{{ url('shuup_admin:importer.import.new') }}?importer=" + $(this).val();
             });
         });
     </script>
