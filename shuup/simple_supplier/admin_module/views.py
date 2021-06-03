@@ -12,6 +12,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
+from shuup.core.excs import MissingSupplierModuleException
 from shuup.core.models import Product, Supplier
 from shuup.core.utils import context_cache
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
@@ -138,6 +139,13 @@ def _process_stock_adjustment(form, request, supplier_id, product_id):
     stock_adjustment = supplier.adjust_stock(
         product_id, delta=data.get("delta"), purchase_price=data.get("purchase_price"), created_by=request.user
     )
+
+    # If the the simple supplier module is disabled for a suppler for some reason.
+    # This will provide a usefull error message to the user that is trying to update the stock.
+    if not stock_adjustment:
+        raise MissingSupplierModuleException(
+            _("Please be in contact with the marketplace owner to get permission to update your product stock")
+        )
     success_message = _get_success_message(
         request, stock_adjustment.supplier, stock_adjustment.product, get_adjustment_success_message(stock_adjustment)
     )
@@ -182,6 +190,8 @@ def _process_and_catch_errors(process, form_class, request, supplier_id, product
 
         error_message = ugettext("Please check submitted values and try again.")
         return JsonResponse({"message": error_message}, status=400)
+    except MissingSupplierModuleException as exc:
+        return JsonResponse({"message": str(exc)}, status=400)
     except Exception as exc:
         error_message = ugettext("Please check submitted values and try again (%(error)s).") % {"error": exc}
         return JsonResponse({"message": error_message}, status=400)

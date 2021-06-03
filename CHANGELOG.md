@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Core: Only product kind modules that have specified supplier modules will be returned from get_supported_product_kinds_for_module
+- Admin: Display the correct error message when adding stock to a product and not only "on text"
+
 ### Changed
 
 - Admin: filter products in list and edit views according to product kind listing name

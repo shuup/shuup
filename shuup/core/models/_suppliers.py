@@ -194,7 +194,7 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
     def get_stock_status(self, product_id, *args, **kwargs):
         for module in self.modules:
             stock_status = module.get_stock_status(product_id, *args, **kwargs)
-            if stock_status.handled:
+            if stock_status and stock_status.handled:
                 return stock_status
 
     def get_suppliable_products(self, shop, customer):

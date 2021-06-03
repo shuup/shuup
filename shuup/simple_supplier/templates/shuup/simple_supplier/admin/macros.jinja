@@ -18,9 +18,15 @@
                     });
                 },
                 error: function(response) {
+                    var message = gettext(
+                        "Please enable the 'product' supplier module to the stock manager."
+                    );
+                    if(response.responseJSON && response.responseJSON.message){
+                        message = response.responseJSON.message;
+                    }
                     window.Messages.enqueue({
                         tags: "error",
-                        text: response.message
+                        text: message
                     });
                 }
             });

@@ -630,7 +630,6 @@ class BaseBasket(OrderSource):
         data = None
         if not force_new_line:
             data = self._find_product_line_data(product=product, supplier=supplier, shop=shop, extra=extra)
-
         if not data:
             data = self._initialize_product_line_data(product=product, supplier=supplier, shop=shop)
 
