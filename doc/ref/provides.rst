@@ -109,10 +109,6 @@ Core
     Allows providing extension for shipment creation in admin.
     Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
 
-``admin_extend_attribute_form``
-    Allows providing extension for the product attribute form in admin.
-    Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
-
 ``admin_order_information``
     Additional information rows for Order detail page. Provide objects should inherit
     from `~shuup.admin.modules.orders.utils.OrderInformation` class.
