@@ -8,14 +8,11 @@
 from django.conf import settings
 from django.forms import BaseModelFormSet
 
-from shuup.admin.form_modifier import ModifiableFormMixin
 from shuup.core.models import Attribute, AttributeChoiceOption, AttributeType
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm, TranslatableModelForm
 
 
-class AttributeForm(ModifiableFormMixin, MultiLanguageModelForm):
-    form_modifier_provide_key = "admin_extend_attribute_form"
-
+class AttributeForm(MultiLanguageModelForm):
     class Meta:
         model = Attribute
         fields = "__all__"

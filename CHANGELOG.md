@@ -8,10 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
-### Changed
+### Removed
 
-- Admin: filter products in list and edit views according to product kind listing name
-- Core: suppliers don't have default supplier modules anymore
+- Admin: remove the provides to allow adding extra fields to the Attribute form
 
 ### Add
 
@@ -20,6 +19,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: filter products in list and edit views according to product kind listing name
+- Core: suppliers don't have default supplier modules anymore
 - Importers: enable importers to run asynchronously
 - Importers: change the admin views to show the list of import processes
 
