@@ -15,7 +15,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Add
 
-- Core: Allow a supplier to have multiple modules
+- Core: add history for order status changes
+- Core: allow a supplier to have multiple modules
 - Core: add option to store tasks in the database to collect results
 
 ### Changed
