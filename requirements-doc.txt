@@ -3,7 +3,7 @@ babel==2.5.3              # via shuup, sphinx
 bleach==3.1.5             # via shuup
 certifi==2020.12.5        # via requests
 chardet==4.0.0            # via requests
-django==2.2.20            # via django-filer, django-filter, django-jinja, django-mptt, django-polymorphic, django-reversion, django-timezone-field, djangorestframework, easy-thumbnails, jsonfield, shuup
+django==2.2.21            # via django-filer, django-filter, django-jinja, django-mptt, django-polymorphic, django-reversion, django-timezone-field, djangorestframework, easy-thumbnails, jsonfield, shuup
 django-bootstrap3==11.0.0  # via shuup
 django-countries==6.1.3   # via shuup
 django-enumfields==2.0.0  # via shuup
