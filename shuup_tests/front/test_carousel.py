@@ -57,7 +57,7 @@ def test_carousel_plugin_form_get_context():
     context = get_jinja_context()
     test_carousel = Carousel.objects.create(name="test")
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
-    assert plugin.get_context_data(context).get("carousel") == None
+    assert plugin.get_context_data(context).get("carousel") is None
     test_carousel.shops.add(shop)
     plugin = CarouselPlugin(config={"carousel": test_carousel.pk})
     assert plugin.get_context_data(context).get("carousel") == test_carousel

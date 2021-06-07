@@ -7,17 +7,14 @@
 """
 Tests for utils.price_display and the price filters.
 """
-
 import pytest
 import pytz
 from datetime import datetime
 from mock import patch
 
-from shuup.core.models import Supplier, get_person_contact
+from shuup.core.models import get_person_contact
 from shuup.core.utils import context_cache
-from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info
 from shuup.testing import factories
-from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
@@ -45,7 +42,7 @@ def test_bump_caches_signal(rf):
                 allow_cache=True,
             )
 
-            assert val == None
+            assert val is None
 
     with patch("django.utils.timezone.now", new=lambda: now):
         product1 = factories.create_product(
