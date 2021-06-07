@@ -268,7 +268,7 @@ def test_cross_sell_plugin_with_invalid_type(rf):
 @pytest.mark.django_db
 def test_cross_sell_plugin_with_invalid_type_2(rf):
     plugin = ProductCrossSellsPlugin({"type": None})
-    assert plugin.config["type"] == None
+    assert plugin.config["type"] is None
 
     context = get_context(rf)
     context_data = plugin.get_context_data({"request": context["request"]})
@@ -278,7 +278,7 @@ def test_cross_sell_plugin_with_invalid_type_2(rf):
 @pytest.mark.django_db
 def test_cross_sell_plugin_with_product_that_does_not_exists(rf):
     plugin = ProductCrossSellsPlugin({"type": None})
-    assert plugin.config["type"] == None
+    assert plugin.config["type"] is None
 
     context = get_context(rf)
     plugin.config["product"] = "1111"

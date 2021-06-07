@@ -205,7 +205,7 @@ def test_image_plugin_choice_widget_get_object():
 
     # We don't want any exceptions if the image doesn't exist or else we won't be
     # able to display the form to change it
-    assert widget.get_object(1000) == None
+    assert widget.get_object(1000) is None
 
 
 @pytest.mark.django_db

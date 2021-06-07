@@ -121,7 +121,7 @@ def test_immutable_address():
     new_immutable = address.to_immutable()
 
     # New address should be saved
-    assert new_immutable.pk != None
+    assert new_immutable.pk is not None
     assert isinstance(new_immutable, ImmutableAddress)
     assert get_data_dict(address).items() == get_data_dict(new_immutable).items()
 
@@ -137,6 +137,6 @@ def test_new_mutable_address():
     new_mutable = address.to_mutable()
 
     # New address should be unsaved
-    assert new_mutable.pk == None
+    assert new_mutable.pk is None
     assert isinstance(new_mutable, MutableAddress)
     assert get_data_dict(address).items() == get_data_dict(new_mutable).items()
