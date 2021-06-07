@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import ValidationError
+from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Product
@@ -52,14 +53,22 @@ class SimpleSupplierModule(BaseSupplierModule):
                 )
 
     def get_stock_statuses(self, product_ids, *args, **kwargs):
-        stock_counts = StockCount.objects.filter(
-            supplier=self.supplier,
-            product_id__in=product_ids,
-            product__kind__in=self.get_supported_product_kinds_values(),
-        ).values_list("product_id", "physical_count", "logical_count", "stock_managed")
+        stock_counts = (
+            Product.objects.filter(
+                pk__in=product_ids,
+                simple_supplier_stock_count__supplier=self.supplier,
+                kind__in=self.get_supported_product_kinds_values(),
+            )
+            .annotate(
+                physical_count=F("simple_supplier_stock_count__physical_count"),
+                logical_count=F("simple_supplier_stock_count__logical_count"),
+                stock_managed=F("simple_supplier_stock_count__stock_managed"),
+            )
+            .values_list("pk", "physical_count", "logical_count", "stock_managed")
+        )
 
         values = dict(
-            (product_id, (physical_count, logical_count, stock_managed))
+            (product_id, (physical_count or 0, logical_count or 0, stock_managed or False))
             for (product_id, physical_count, logical_count, stock_managed) in stock_counts
         )
         null = (0, 0, self.supplier.stock_managed)
@@ -76,7 +85,6 @@ class SimpleSupplierModule(BaseSupplierModule):
                     physical_count=values.get(product_id, null)[0],
                     logical_count=values.get(product_id, null)[1],
                     stock_managed=stock_managed,
-                    handled=product_id in values,
                 )
             )
 

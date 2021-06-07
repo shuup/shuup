@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- SimpleSupplier: always return products as managed by using a different queryset
+
 ## [2.10.0] - 2021-06-07
 
 ### Removed
