@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-19 12:42+0000\n"
-"PO-Revision-Date: 2021-05-19 18:05+0000\n"
-"Last-Translator: Christian Hess\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-04 06:55+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1541,10 +1541,6 @@ msgstr "Ist freigegeben für {}"
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr "Zeigt an, ob dieser Händler für den Marktplatz freigegeben ist."
 
-#, python-format
-msgid "No %s module"
-msgstr "Kein %s Modul"
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "Es ist nicht möglich, den Bestand zu verwalten, wenn kein Modul ausgewählt ist."
 
@@ -1555,8 +1551,12 @@ msgstr "{}  befindet sich nicht im Feld \"Marktplatz\"."
 msgid "Success! %s has been marked deleted."
 msgstr "Das war erfolgreich! %s wurde als gelöscht markiert."
 
-msgid "Module"
-msgstr "Modul"
+msgid "Modules"
+msgstr "Module"
+
+#, python-format
+msgid "No %s module"
+msgstr "Kein %s Modul"
 
 msgid "Shuup Support"
 msgstr "Shuup Support"

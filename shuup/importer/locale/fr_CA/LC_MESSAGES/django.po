@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
@@ -23,6 +23,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Importation de données"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "Mode d'importation"
@@ -44,27 +63,47 @@ msgstr ""
 msgid "File"
 msgstr "Fichier"
 
-#, python-format
-msgid "%s is not a file."
-msgstr "%s n'est pas un fichier."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
+msgstr "Importateur non valide."
 
 msgid "File is missing."
 msgstr "Le fichier est manquant."
 
-msgid "Failed to import the file."
-msgstr "Échec de l'importation du fichier."
+msgid "The import was queued!"
+msgstr ""
+
+msgid "Failed to process the file."
+msgstr ""
 
 msgid "Invalid parameters."
 msgstr "Paramètres invalides."
-
-msgid "Invalid importer."
-msgstr "Importateur non valide."
 
 msgid "Invalid file name."
 msgstr "Nom de fichier non valide."
 
 msgid "File was not found."
 msgstr "Le fichier est introuvable."
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
 
 msgid "Import"
 msgstr "Importer"
@@ -96,6 +135,9 @@ msgstr ""
 #, python-format
 msgid "Row import failed (%s)."
 msgstr "L'importation de ligne a échoué (%s)."
+
+msgid "Unexpected error while trying to import the file."
+msgstr ""
 
 msgid "Example files"
 msgstr "Exemples de fichiers"
@@ -226,11 +268,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Lancer l'importation"
 
-msgid "Import Data - Complete"
-msgstr "Importer des données - Terminé"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "Importation terminée!"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "Nouveaux articles"
@@ -271,3 +313,16 @@ msgstr "Créer uniquement (pas de mises à jour)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Mettre à jour uniquement l'existant (aucun nouveau n'est créé)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""

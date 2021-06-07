@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
@@ -25,6 +25,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Dataimport"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "Importläge"
@@ -44,27 +63,47 @@ msgstr "Välj en importörstyp som matchar de data du vill importera"
 msgid "File"
 msgstr "Fil"
 
-#, python-format
-msgid "%s is not a file."
-msgstr "%s är inte en fil."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
+msgstr "Ogiltig importör."
 
 msgid "File is missing."
 msgstr "Filen saknas."
 
-msgid "Failed to import the file."
-msgstr "Det gick inte att importera filen."
+msgid "The import was queued!"
+msgstr ""
+
+msgid "Failed to process the file."
+msgstr ""
 
 msgid "Invalid parameters."
 msgstr "Ogiltiga parametrar."
-
-msgid "Invalid importer."
-msgstr "Ogiltig importör."
 
 msgid "Invalid file name."
 msgstr "Ogiltigt filnamn."
 
 msgid "File was not found."
 msgstr "Filen hittades inte."
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
 
 msgid "Import"
 msgstr "Importera"
@@ -91,6 +130,9 @@ msgstr ""
 #, python-format
 msgid "Row import failed (%s)."
 msgstr "Radimport misslyckades (%s)."
+
+msgid "Unexpected error while trying to import the file."
+msgstr ""
 
 msgid "Example files"
 msgstr "Exempel filer"
@@ -214,11 +256,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Starta import"
 
-msgid "Import Data - Complete"
-msgstr "Dataimport - Klar"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "Import genomförd"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "Nya objekt"
@@ -259,3 +301,16 @@ msgstr "Endast skapa (inga uppdateringar)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Uppdatera endast (inga nya objekt skapas)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""

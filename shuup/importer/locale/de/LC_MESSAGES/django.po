@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Melanie Missbach <melanie@buyhappy.de>, 2021\n"
 "Language-Team: German (https://www.transifex.com/shuup/teams/55306/de/)\n"
@@ -23,6 +23,26 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Datenimport"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+"Erlaube Benutzern die Importe von allen Shops und Lieferanten zu sehen."
+
+msgid "Allow the user to run importers."
+msgstr "Erlaube Benutzern, einen Daten-Import auszuführen."
+
+msgid "Allow the user to list imports."
+msgstr "Erlaube Benutzern, Importe aufzulisten."
+
+msgid "Allow the user to import a file."
+msgstr "Erlaube Benutzern, eine Datei zu importieren."
+
+msgid "Allow the user to download sample files."
+msgstr "Erlaube Benutzern, Beispieldateien herunterzuladen."
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr "Erlaube Benutzern, den {importer_name}-Importer zu verwenden."
 
 msgid "Import mode"
 msgstr "Import-Modus"
@@ -42,27 +62,47 @@ msgstr "Wähle einen Importer-Typ, der zu den zu importierenden Daten passt"
 msgid "File"
 msgstr "Datei"
 
-#, python-format
-msgid "%s is not a file."
-msgstr "%s ist keine Datei."
+msgid "Data imports"
+msgstr "Datenimporte"
+
+msgid "Invalid importer."
+msgstr "Ungültiger Import-Typ."
 
 msgid "File is missing."
 msgstr "Die Datei fehlt."
 
-msgid "Failed to import the file."
-msgstr "Der Import der Datei ist fehlgeschlagen."
+msgid "The import was queued!"
+msgstr "Der Import wurde in die Warteschleife gestellt!"
+
+msgid "Failed to process the file."
+msgstr "Fehler beim Verarbeiten der Datei."
 
 msgid "Invalid parameters."
 msgstr "Ungültige Parameter."
-
-msgid "Invalid importer."
-msgstr "Ungültiger Import-Typ."
 
 msgid "Invalid file name."
 msgstr "Ungültiger Dateiname."
 
 msgid "File was not found."
 msgstr "Die Datei wurde nicht gefunden."
+
+msgid "Import date"
+msgstr "Importdatum"
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Import file"
+msgstr "Import-Datei"
+
+msgid "Importdate"
+msgstr "Importdatum"
+
+msgid "Mode"
+msgstr "Modus"
 
 msgid "Import"
 msgstr "Importieren"
@@ -93,6 +133,9 @@ msgstr ""
 #, python-format
 msgid "Row import failed (%s)."
 msgstr "Zeilenimport fehlgeschlagen (%s)."
+
+msgid "Unexpected error while trying to import the file."
+msgstr "Ein unerwarteter Fehler ist beim Import der Datei aufgetreten."
 
 msgid "Example files"
 msgstr "Beispiel-Dateien"
@@ -223,11 +266,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Datenimport starten"
 
-msgid "Import Data - Complete"
-msgstr "Datenimport fertiggestellt"
+msgid "Import Results"
+msgstr "Import-Ergebnisse"
 
-msgid "Import Complete!"
-msgstr "Datenimport fertiggestellt"
+msgid "Error"
+msgstr "Fehler"
 
 msgid "New items"
 msgstr "Neue Elemente"
@@ -268,3 +311,16 @@ msgstr "Nur die Neuanlage der Daten zulassen (keine Aktualisierungen)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Nur vorhandene Daten aktualisieren (es werden keine neuen angelegt)"
+
+msgid "The file doesn't contain data."
+msgstr "Die Datei enthält keine Daten."
+
+msgid "Failed to import data."
+msgstr "Fehler beim Importieren der Daten."
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr "{file_name} ist keine gültige Datei."
+
+msgid "The file is missing."
+msgstr "Die Datei fehlt."

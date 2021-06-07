@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"POT-Creation-Date: 2021-05-10 20:06+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
@@ -427,9 +427,9 @@ msgstr "Erbjudande"
 msgid "The campaign name to show in the store front."
 msgstr "Erbjudandets namn som visas i butiken."
 
-#, python-format
-msgid "Catalog Campaign: %(name)s"
-msgstr "Katalogerbjudande: %(name)s"
+#, python-brace-format
+msgid "Catalog Campaign: {name}"
+msgstr ""
 
 msgid "basket line text"
 msgstr "korgen radtext"
@@ -455,9 +455,9 @@ msgstr ""
 msgid "public name"
 msgstr "offentligt namn"
 
-#, python-format
-msgid "Basket Campaign: %(name)s"
-msgstr "Katalogerbjudande: %(name)s"
+#, python-brace-format
+msgid "Basket Campaign: {name}"
+msgstr ""
 
 msgid "Can't have multiple active campaigns with same code."
 msgstr "Kan inte ha flera aktiva kampanjer med samma kod."

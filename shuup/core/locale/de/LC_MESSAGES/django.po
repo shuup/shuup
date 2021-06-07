@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-05-11 20:26+0000\n"
-"Last-Translator: Christian Hess\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-04 08:29+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,14 +334,71 @@ msgstr "Datum-Zeit-Wert"
 msgid "untranslated value"
 msgstr "nicht übersetzter Wert"
 
+msgid "queue name"
+msgstr "Name der Warteschleife"
+
+msgid "task identifier"
+msgstr "Aufgaben-Kennung"
+
+msgid "created on"
+msgstr "erstellt am"
+
+msgid "modified on"
+msgstr "geändert am"
+
+msgid "task function"
+msgstr "Aufgabenfunktion"
+
+msgid "task arguments"
+msgstr "Aufgabenargumente"
+
+msgid "shop"
+msgstr "Marktplatz"
+
+msgid "supplier"
+msgstr "Händler"
+
+msgid "user"
+msgstr "Benutzer"
+
+msgid "background task"
+msgstr "Anwendung im Hintergrund"
+
+msgid "background tasks"
+msgstr "Anwendungen im Hintergrund"
+
+msgid "running"
+msgstr "läuft"
+
+msgid "success"
+msgstr "Das war erfolgreich!"
+
+msgid "error"
+msgstr "Fehler"
+
+msgid "started on"
+msgstr "gestartet am"
+
+msgid "finished on"
+msgstr "vollendet am"
+
+msgid "results"
+msgstr "Ergebnisse"
+
+msgid "error log"
+msgstr "Fehlerprotokoll"
+
+msgid "background task execution"
+msgstr "Ausführung einer Aufgabe im Hintergrund"
+
+msgid "background task executions"
+msgstr "Ausführung von Aufgaben im Hintergrund"
+
 msgid "The following fields are protected and can not be changed."
 msgstr "Die folgenden Felder sind geschützt und können nicht geändert werden."
 
 msgid "key"
 msgstr "Schlüssel"
-
-msgid "shop"
-msgstr "Marktplatz"
 
 msgid "customer"
 msgstr "Kunde"
@@ -351,9 +408,6 @@ msgstr "Besteller"
 
 msgid "creator"
 msgstr "Ersteller"
-
-msgid "created on"
-msgstr "erstellt am"
 
 msgid "updated on"
 msgstr "aktualisiert am"
@@ -555,9 +609,6 @@ msgstr "Es kann kein Händlerbereich für die Standardkontaktgruppe definiert we
 msgid "Can't delete. This object is protected."
 msgstr "Kann nicht gelöscht werden. Dieses Objekt ist geschützt."
 
-msgid "modified on"
-msgstr "geändert am"
-
 msgid "active"
 msgstr "aktiv"
 
@@ -685,9 +736,6 @@ msgstr "andere"
 
 msgid "Person Contacts"
 msgstr "Privatepersonen-Kontakte"
-
-msgid "user"
-msgstr "Benutzer"
 
 msgid "gender"
 msgstr "Geschlecht"
@@ -824,9 +872,6 @@ msgstr "Rückerstattung"
 
 msgid "rounding"
 msgstr "Runden"
-
-msgid "supplier"
-msgstr "Händler"
 
 msgid "parent line"
 msgstr "übergeordnete Zeile"
@@ -2166,6 +2211,9 @@ msgid ""
 "overwritten on a product-by-product basis."
 msgstr "Aktiviere diese Option, wenn dieser Händler den Bestand der bestandsgeführten Artikel verwalten darf. Ein aktive Bestandsverwaltung ist unnötig, wenn Du z. B. digitale Produkte verkaufst, die nie ausgehen werden, egal wie viele davon bereits verkauft wurden. Es gibt auch einige andere Fälle, in denen die Bestandsverwaltung eine unnötige Komplikation darstellen könnte. Diese Einstellung weist lediglich ein sinnvolles Standardverhalten zu, das produktspezifisch überschrieben werden kann."
 
+msgid "supplier modules"
+msgstr "Händler-Module"
+
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define"
 " the rules by which inventory is managed."
@@ -2196,6 +2244,20 @@ msgstr "Freigegeben"
 
 msgid "Indicates whether this supplier is currently approved for work."
 msgstr "Zeigt an, ob dieser Händler freigegeben ist und vollständig am Marktplatzgeschehen teilnehmen kann."
+
+msgid "module identifier"
+msgstr "Modulkennung"
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr "Wähle die Artikeltypen aus, die dieser Händler verarbeiten kann. Für normale Produkte wähle bspw. \"Einfacher Lieferant\"."
+
+msgid "Module name"
+msgstr "Modulname"
+
+msgid "Supplier modules name."
+msgstr "Name der Händlermodule."
 
 msgid "Can't change the business critical fields of the Tax that is in use."
 msgstr "Die geschäftskritischen Felder der verwendeten Steuer können nicht geändert werden."
@@ -2369,9 +2431,6 @@ msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
 msgstr "{value}{symbol}"
 
-msgid "No Choice"
-msgstr "Keine Auswahl"
-
 msgid "inherit"
 msgstr "übernehmen"
 
@@ -2391,18 +2450,12 @@ msgstr "%s ist auf diesem Marktplatz leider nicht verfügbar."
 msgid "Default Pricing"
 msgstr "Standardpreise"
 
-msgid "Error! Insufficient quantity in stock."
-msgstr "Fehler! Unzureichende Menge auf Lager."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
+msgstr "Die Produktart {value} ist nicht eindeutig!"
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s (physischer Bestand: %(quantity)s)"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: "
-"`%(product_counts)s`."
-msgstr "Unzureichender physischer Lagerbestand für die folgenden Produkte: \"%(product_counts)s\"."
+msgid "Product"
+msgstr "Artikel"
 
 msgid "inventory"
 msgstr "Lagerbestand"
@@ -2412,6 +2465,12 @@ msgstr "Wiederbeschaffung des Bestands"
 
 msgid "restock logical"
 msgstr "Wiederbeschaffungslogik"
+
+msgid "Failed to execute the task"
+msgstr "Die Aufgabe konnte leider nicht ausgeführt werden"
+
+msgid "An unexpeted error occurred."
+msgstr "Ein unerwarteter Fehler ist aufgetreten."
 
 #, python-format
 msgid "Refund for %s"

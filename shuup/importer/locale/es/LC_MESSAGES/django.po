@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Pablo Burgos <hispar@gmail.com>, 2020
+# Panu Tulimäki <panu@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
-"Last-Translator: Pablo Burgos <hispar@gmail.com>, 2020\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +24,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Importar Datos"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "Modo de importación"
@@ -44,27 +64,47 @@ msgstr ""
 msgid "File"
 msgstr "Fichero"
 
-#, python-format
-msgid "%s is not a file."
-msgstr "%s no es un fichero."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
+msgstr "Importador no válido."
 
 msgid "File is missing."
 msgstr "El fichero no existe."
 
-msgid "Failed to import the file."
-msgstr "Error al importar el fichero."
+msgid "The import was queued!"
+msgstr ""
+
+msgid "Failed to process the file."
+msgstr ""
 
 msgid "Invalid parameters."
 msgstr "Parámetros no válidos."
-
-msgid "Invalid importer."
-msgstr "Importador no válido."
 
 msgid "Invalid file name."
 msgstr "Nombre de fichero no válido."
 
 msgid "File was not found."
 msgstr "El fichero no se ha encontrado."
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
 
 msgid "Import"
 msgstr "Importar"
@@ -95,6 +135,9 @@ msgstr ""
 msgid "Row import failed (%s)."
 msgstr "Fallo al importar fila (%s)."
 
+msgid "Unexpected error while trying to import the file."
+msgstr ""
+
 msgid "Example files"
 msgstr "Ficheros de ejemplo"
 
@@ -103,6 +146,9 @@ msgid ""
 "                    make sure to leave the ignore column empty for all your rows,\n"
 "                    otherwise the rows won't be imported."
 msgstr ""
+"Si hay una columna &#39;Ignorar&#39; en el archivo de ejemplo que está "
+"utilizando, asegúrese de dejar la columna de ignorar vacía para todas sus "
+"filas, de lo contrario, las filas no se importarán."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
@@ -194,13 +240,13 @@ msgid "Products"
 msgstr "Productos"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Customers"
 msgstr "Clientes"
 
 msgid "email"
-msgstr ""
+msgstr "correo electrónico"
 
 msgid "Importer type"
 msgstr "Tipo de importador"
@@ -221,11 +267,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Empezar importación"
 
-msgid "Import Data - Complete"
-msgstr "Importación de Datos - Completa"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "¡Importación Completa!"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "Nuevos elementos"
@@ -266,3 +312,16 @@ msgstr "Solo crear (no actualizaciones)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Solo actualizar existentes (no se crearan nuevos)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""

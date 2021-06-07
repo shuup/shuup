@@ -1,102 +1,104 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-03 17:35+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2021-06-05 14:15+0000\n"
+"Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
 msgid ""
 "Error! Please enter a correct %(username)s and password. Note that both "
 "fields may be case-sensitive. In case of multiple accounts with same email "
 "only username can be used to log in."
-msgstr ""
+msgstr "Erro! Por favor insira um %(username)s válido e password.\nNote que ambos os campos poderão ser sensível a maiúsculas/minúsculas. No caso de múltiplas contas com o mesmo email apenas no nome do utilizador pode ser usado para iniciar sessão."
 
 msgid "This account is inactive."
-msgstr ""
+msgstr "Esta conta está inativa."
 
 msgid "Username or email address"
-msgstr ""
+msgstr "Nome de utilizador ou endereço de email"
 
 msgid "You are not allowed to log in to this shop."
-msgstr ""
+msgstr "Você não tem permissão para iniciar sessão para esta loja."
 
 msgid "Log in"
-msgstr ""
+msgstr "Iniciar sessão"
 
 #, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr ""
+msgstr "Você já iniciou sessão como <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
-msgstr ""
+msgstr "Ir para o Início"
 
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Esqueceu-se da password?"
 
 msgid "New user? Register here!"
-msgstr ""
+msgstr "Novo utilizador? Registe-se aqui!"
 
 msgid "Logged out"
-msgstr ""
+msgstr "Sessão terminada"
 
 msgid "You have been logged out. Thank you for visiting!"
-msgstr ""
+msgstr "A sua sessão terminou com sucesso. Obrigado pela sua visita!"
 
 msgid "Recover your password"
-msgstr ""
+msgstr "Recupere a sua password"
 
 msgid "You can recover your password with either username or email."
-msgstr ""
+msgstr "Pode recuperar a sua password com nome de utilizador ou email."
 
 msgid "Send password recovery instructions"
-msgstr ""
+msgstr "Enviar instruções de recuperação de password"
 
 msgid "Password Changed"
-msgstr ""
+msgstr "Password alterada"
 
 msgid "Your password has been changed and you have been logged in."
-msgstr ""
+msgstr "A sua password foi alterada e você esteve com sessão iniciada."
 
 msgid "Password Recovery"
-msgstr ""
+msgstr "Recuperação de password"
 
 msgid "Change Password"
-msgstr ""
+msgstr "Alterar password"
 
 #, python-format
 msgid "Hi %(fullname)s"
-msgstr ""
+msgstr "Olá %(fullname)s"
 
 #, python-format
 msgid "In case you've forgotten, your username is %(username)s."
-msgstr ""
+msgstr "Caso se tenha esquecido, o seu nome de ultilizador é %(username)s."
 
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr ""
+msgstr "Você está a receber este email porque solicitou a redefinição para a sua conta de utilizador em %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "Por favor aceda à seguinte página e escolha uma nova password:"
 
 msgid ""
-"If a user account is associated with the information you entered, you should "
-"receive instructions on how to reset your password shortly."
-msgstr ""
+"If a user account is associated with the information you entered, you should"
+" receive instructions on how to reset your password shortly."
+msgstr "Se uma conta de utilizador estiver associada com a informação que introduziu, em breve você receberá instruções sobre como redefinir a sua password."
 
 msgid "Error! This recovery link is invalid."
-msgstr ""
+msgstr "Erro! Este link de recuperação é inválido."

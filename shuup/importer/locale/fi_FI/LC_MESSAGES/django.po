@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -24,6 +24,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Tietojen tuonti"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "Tuonnin tila"
@@ -43,27 +62,47 @@ msgstr "Valitse tuontityyppi, joka vastaa tuotavia tietoja"
 msgid "File"
 msgstr "Tiedosto"
 
-#, python-format
-msgid "%s is not a file."
-msgstr "%s ei ole tiedosto."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
+msgstr "Virheellinen tuoja."
 
 msgid "File is missing."
 msgstr "Tiedosto puuttuu."
 
-msgid "Failed to import the file."
-msgstr "Tiedoston tuonti epäonnistui."
+msgid "The import was queued!"
+msgstr ""
+
+msgid "Failed to process the file."
+msgstr ""
 
 msgid "Invalid parameters."
 msgstr "Virheelliset parametrit."
-
-msgid "Invalid importer."
-msgstr "Virheellinen tuoja."
 
 msgid "Invalid file name."
 msgstr "Virheellinen tiedoston nimi."
 
 msgid "File was not found."
 msgstr "Tiedostoa ei löytynyt."
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
 
 msgid "Import"
 msgstr "Tuo"
@@ -92,6 +131,9 @@ msgstr "Ei voitu asettaa arvoa %(original_value)s kentälle %(field_name)s."
 #, python-format
 msgid "Row import failed (%s)."
 msgstr "Rivin tuonti epäonnistui (%s)."
+
+msgid "Unexpected error while trying to import the file."
+msgstr ""
 
 msgid "Example files"
 msgstr "Esimerkkitiedostot"
@@ -214,11 +256,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Aloita tuonti"
 
-msgid "Import Data - Complete"
-msgstr "Tietojen tuonti - Valmis"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "Tietojen tuonti on valmis!"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "Uudet objektit"
@@ -259,3 +301,16 @@ msgstr "Vain luonti (ei päivittämistä)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Vain olemassa olevien päivittäminen (uusia ei luoda)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""
