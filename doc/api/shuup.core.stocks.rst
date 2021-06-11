@@ -1,5 +1,5 @@
-shuup.core.stocks package
-=========================
+shuup\.core\.stocks package
+===========================
 
 Module contents
 ---------------

@@ -35,8 +35,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.configuration module
---------------------------
+shuup\.configuration module
+---------------------------
 
 .. automodule:: shuup.configuration
     :members:

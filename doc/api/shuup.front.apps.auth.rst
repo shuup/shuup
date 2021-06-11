@@ -1,35 +1,35 @@
-shuup.front.apps.auth package
-=============================
+shuup\.front\.apps\.auth package
+================================
 
 Submodules
 ----------
 
-shuup.front.apps.auth.forms module
-----------------------------------
+shuup\.front\.apps\.auth\.forms module
+--------------------------------------
 
 .. automodule:: shuup.front.apps.auth.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.auth.settings module
--------------------------------------
+shuup\.front\.apps\.auth\.settings module
+-----------------------------------------
 
 .. automodule:: shuup.front.apps.auth.settings
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.auth.urls module
----------------------------------
+shuup\.front\.apps\.auth\.urls module
+-------------------------------------
 
 .. automodule:: shuup.front.apps.auth.urls
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.auth.views module
-----------------------------------
+shuup\.front\.apps\.auth\.views module
+--------------------------------------
 
 .. automodule:: shuup.front.apps.auth.views
     :members:

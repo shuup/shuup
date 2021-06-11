@@ -1,5 +1,5 @@
-shuup.admin.modules.service\_providers package
-==============================================
+shuup\.admin\.modules\.service\_providers package
+=================================================
 
 Subpackages
 -----------
@@ -11,24 +11,24 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.service\_providers.forms module
----------------------------------------------------
+shuup\.admin\.modules\.service\_providers\.forms module
+-------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.service_providers.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.service\_providers.wizard\_form\_defs module
-----------------------------------------------------------------
+shuup\.admin\.modules\.service\_providers\.wizard\_form\_defs module
+--------------------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.service_providers.wizard_form_defs
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.service\_providers.wizard\_forms module
------------------------------------------------------------
+shuup\.admin\.modules\.service\_providers\.wizard\_forms module
+---------------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.service_providers.wizard_forms
     :members:

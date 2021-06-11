@@ -1,243 +1,251 @@
-shuup.utils package
-===================
+shuup\.utils package
+====================
 
 Submodules
 ----------
 
-shuup.utils.analog module
--------------------------
+shuup\.utils\.analog module
+---------------------------
 
 .. automodule:: shuup.utils.analog
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.babel\_precision\_provider module
----------------------------------------------
+shuup\.utils\.babel\_precision\_provider module
+-----------------------------------------------
 
 .. automodule:: shuup.utils.babel_precision_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.dates module
-------------------------
+shuup\.utils\.dates module
+--------------------------
 
 .. automodule:: shuup.utils.dates
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.decorators module
------------------------------
+shuup\.utils\.decorators module
+-------------------------------
 
 .. automodule:: shuup.utils.decorators
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.deprecation module
-------------------------------
+shuup\.utils\.deprecation module
+--------------------------------
 
 .. automodule:: shuup.utils.deprecation
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.djangoenv module
-----------------------------
+shuup\.utils\.django\_compat module
+-----------------------------------
+
+.. automodule:: shuup.utils.django_compat
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.utils\.djangoenv module
+------------------------------
 
 .. automodule:: shuup.utils.djangoenv
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.excs module
------------------------
+shuup\.utils\.excs module
+-------------------------
 
 .. automodule:: shuup.utils.excs
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.fields module
--------------------------
+shuup\.utils\.fields module
+---------------------------
 
 .. automodule:: shuup.utils.fields
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.filer module
-------------------------
+shuup\.utils\.filer module
+--------------------------
 
 .. automodule:: shuup.utils.filer
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.form\_group module
-------------------------------
+shuup\.utils\.form\_group module
+--------------------------------
 
 .. automodule:: shuup.utils.form_group
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.forms module
-------------------------
+shuup\.utils\.forms module
+--------------------------
 
 .. automodule:: shuup.utils.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.http module
------------------------
+shuup\.utils\.http module
+-------------------------
 
 .. automodule:: shuup.utils.http
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.i18n module
------------------------
+shuup\.utils\.i18n module
+-------------------------
 
 .. automodule:: shuup.utils.i18n
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.importing module
-----------------------------
+shuup\.utils\.importing module
+------------------------------
 
 .. automodule:: shuup.utils.importing
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.iterables module
-----------------------------
+shuup\.utils\.iterables module
+------------------------------
 
 .. automodule:: shuup.utils.iterables
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.migrations module
------------------------------
+shuup\.utils\.migrations module
+-------------------------------
 
 .. automodule:: shuup.utils.migrations
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.models module
--------------------------
+shuup\.utils\.models module
+---------------------------
 
 .. automodule:: shuup.utils.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.money module
-------------------------
+shuup\.utils\.money module
+--------------------------
 
 .. automodule:: shuup.utils.money
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.mptt module
------------------------
+shuup\.utils\.mptt module
+-------------------------
 
 .. automodule:: shuup.utils.mptt
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.multilanguage\_model\_form module
----------------------------------------------
+shuup\.utils\.multilanguage\_model\_form module
+-----------------------------------------------
 
 .. automodule:: shuup.utils.multilanguage_model_form
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.numbers module
---------------------------
+shuup\.utils\.numbers module
+----------------------------
 
 .. automodule:: shuup.utils.numbers
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.objects module
---------------------------
+shuup\.utils\.objects module
+----------------------------
 
 .. automodule:: shuup.utils.objects
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.patterns module
----------------------------
+shuup\.utils\.patterns module
+-----------------------------
 
 .. automodule:: shuup.utils.patterns
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.pdf module
-----------------------
+shuup\.utils\.pdf module
+------------------------
 
 .. automodule:: shuup.utils.pdf
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.properties module
------------------------------
+shuup\.utils\.properties module
+-------------------------------
 
 .. automodule:: shuup.utils.properties
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.serialization module
---------------------------------
+shuup\.utils\.serialization module
+----------------------------------
 
 .. automodule:: shuup.utils.serialization
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.settings\_doc module
---------------------------------
+shuup\.utils\.settings\_doc module
+----------------------------------
 
 .. automodule:: shuup.utils.settings_doc
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.setup module
-------------------------
+shuup\.utils\.setup module
+--------------------------
 
 .. automodule:: shuup.utils.setup
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.text module
------------------------
+shuup\.utils\.text module
+-------------------------
 
 .. automodule:: shuup.utils.text
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.utils.translation module
-------------------------------
+shuup\.utils\.translation module
+--------------------------------
 
 .. automodule:: shuup.utils.translation
     :members:

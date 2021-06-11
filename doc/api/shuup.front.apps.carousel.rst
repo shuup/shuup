@@ -1,5 +1,5 @@
-shuup.front.apps.carousel package
-=================================
+shuup\.front\.apps\.carousel package
+====================================
 
 Subpackages
 -----------
@@ -11,32 +11,32 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.apps.carousel.apps module
--------------------------------------
+shuup\.front\.apps\.carousel\.apps module
+-----------------------------------------
 
 .. automodule:: shuup.front.apps.carousel.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.carousel.forms module
---------------------------------------
+shuup\.front\.apps\.carousel\.forms module
+------------------------------------------
 
 .. automodule:: shuup.front.apps.carousel.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.carousel.models module
----------------------------------------
+shuup\.front\.apps\.carousel\.models module
+-------------------------------------------
 
 .. automodule:: shuup.front.apps.carousel.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.apps.carousel.plugins module
-----------------------------------------
+shuup\.front\.apps\.carousel\.plugins module
+--------------------------------------------
 
 .. automodule:: shuup.front.apps.carousel.plugins
     :members:

@@ -1,13 +1,13 @@
-shuup\.notify\.conditions package
-=================================
+shuup\.core\.specs package
+==========================
 
 Submodules
 ----------
 
-shuup\.notify\.conditions\.simple module
+shuup\.core\.specs\.product\_kind module
 ----------------------------------------
 
-.. automodule:: shuup.notify.conditions.simple
+.. automodule:: shuup.core.specs.product_kind
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ shuup\.notify\.conditions\.simple module
 Module contents
 ---------------
 
-.. automodule:: shuup.notify.conditions
+.. automodule:: shuup.core.specs
     :members:
     :undoc-members:
     :show-inheritance:

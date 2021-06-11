@@ -1,11 +1,11 @@
-shuup.xtheme.layout package
-===========================
+shuup\.xtheme\.layout package
+=============================
 
 Submodules
 ----------
 
-shuup.xtheme.layout.utils module
---------------------------------
+shuup\.xtheme\.layout\.utils module
+-----------------------------------
 
 .. automodule:: shuup.xtheme.layout.utils
     :members:

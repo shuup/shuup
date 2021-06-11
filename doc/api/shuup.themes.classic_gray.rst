@@ -1,19 +1,19 @@
-shuup.themes.classic\_gray package
-==================================
+shuup\.themes\.classic\_gray package
+====================================
 
 Submodules
 ----------
 
-shuup.themes.classic\_gray.apps module
---------------------------------------
+shuup\.themes\.classic\_gray\.apps module
+-----------------------------------------
 
 .. automodule:: shuup.themes.classic_gray.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.themes.classic\_gray.theme module
----------------------------------------
+shuup\.themes\.classic\_gray\.theme module
+------------------------------------------
 
 .. automodule:: shuup.themes.classic_gray.theme
     :members:

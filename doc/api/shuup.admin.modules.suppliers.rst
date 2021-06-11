@@ -1,5 +1,5 @@
-shuup.admin.modules.suppliers package
-=====================================
+shuup\.admin\.modules\.suppliers package
+========================================
 
 Subpackages
 -----------
@@ -11,8 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.suppliers.forms module
-------------------------------------------
+shuup\.admin\.modules\.suppliers\.form\_parts module
+----------------------------------------------------
+
+.. automodule:: shuup.admin.modules.suppliers.form_parts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.admin\.modules\.suppliers\.forms module
+----------------------------------------------
 
 .. automodule:: shuup.admin.modules.suppliers.forms
     :members:

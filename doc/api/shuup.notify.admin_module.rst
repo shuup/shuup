@@ -1,5 +1,5 @@
-shuup.notify.admin\_module package
-==================================
+shuup\.notify\.admin\_module package
+====================================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.notify.admin\_module.forms module
----------------------------------------
+shuup\.notify\.admin\_module\.forms module
+------------------------------------------
 
 .. automodule:: shuup.notify.admin_module.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.admin\_module.utils module
----------------------------------------
+shuup\.notify\.admin\_module\.utils module
+------------------------------------------
 
 .. automodule:: shuup.notify.admin_module.utils
     :members:

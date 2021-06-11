@@ -1,5 +1,5 @@
-shuup.testing.models package
-============================
+shuup\.testing\.models package
+==============================
 
 Module contents
 ---------------

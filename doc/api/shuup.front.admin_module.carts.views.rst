@@ -1,5 +1,5 @@
-shuup.front.admin\_module.carts.views package
-=============================================
+shuup\.front\.admin\_module\.carts\.views package
+=================================================
 
 Module contents
 ---------------

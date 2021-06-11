@@ -1,19 +1,19 @@
-shuup.admin.modules.currencies.views package
-============================================
+shuup\.admin\.modules\.currencies\.views package
+================================================
 
 Submodules
 ----------
 
-shuup.admin.modules.currencies.views.edit module
-------------------------------------------------
+shuup\.admin\.modules\.currencies\.views\.edit module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.currencies.views.edit
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.currencies.views.list module
-------------------------------------------------
+shuup\.admin\.modules\.currencies\.views\.list module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.currencies.views.list
     :members:

@@ -1,5 +1,5 @@
-shuup.admin.modules.services.views package
-==========================================
+shuup\.admin\.modules\.services\.views package
+==============================================
 
 Module contents
 ---------------

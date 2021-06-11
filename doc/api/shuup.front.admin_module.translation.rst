@@ -1,11 +1,11 @@
-shuup.front.admin\_module.translation package
-=============================================
+shuup\.front\.admin\_module\.translation package
+================================================
 
 Submodules
 ----------
 
-shuup.front.admin\_module.translation.form\_parts module
---------------------------------------------------------
+shuup\.front\.admin\_module\.translation\.form\_parts module
+------------------------------------------------------------
 
 .. automodule:: shuup.front.admin_module.translation.form_parts
     :members:

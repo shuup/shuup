@@ -1,5 +1,5 @@
-shuup.front.apps.carousel.admin\_module package
-===============================================
+shuup\.front\.apps\.carousel\.admin\_module package
+===================================================
 
 Subpackages
 -----------
@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.apps.carousel.admin\_module.forms module
-----------------------------------------------------
+shuup\.front\.apps\.carousel\.admin\_module\.forms module
+---------------------------------------------------------
 
 .. automodule:: shuup.front.apps.carousel.admin_module.forms
     :members:

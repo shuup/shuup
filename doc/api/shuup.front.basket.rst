@@ -1,51 +1,51 @@
-shuup.front.basket package
-==========================
+shuup\.front\.basket package
+============================
 
 Submodules
 ----------
 
-shuup.front.basket.command\_dispatcher module
----------------------------------------------
+shuup\.front\.basket\.command\_dispatcher module
+------------------------------------------------
 
 .. automodule:: shuup.front.basket.command_dispatcher
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.commands module
-----------------------------------
+shuup\.front\.basket\.commands module
+-------------------------------------
 
 .. automodule:: shuup.front.basket.commands
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.objects module
----------------------------------
+shuup\.front\.basket\.objects module
+------------------------------------
 
 .. automodule:: shuup.front.basket.objects
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.order\_creator module
-----------------------------------------
+shuup\.front\.basket\.order\_creator module
+-------------------------------------------
 
 .. automodule:: shuup.front.basket.order_creator
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.storage module
----------------------------------
+shuup\.front\.basket\.storage module
+------------------------------------
 
 .. automodule:: shuup.front.basket.storage
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.basket.update\_methods module
------------------------------------------
+shuup\.front\.basket\.update\_methods module
+--------------------------------------------
 
 .. automodule:: shuup.front.basket.update_methods
     :members:

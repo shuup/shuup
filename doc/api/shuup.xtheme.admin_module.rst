@@ -1,5 +1,5 @@
-shuup.xtheme.admin\_module package
-==================================
+shuup\.xtheme\.admin\_module package
+====================================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.xtheme.admin\_module.utils module
----------------------------------------
+shuup\.xtheme\.admin\_module\.utils module
+------------------------------------------
 
 .. automodule:: shuup.xtheme.admin_module.utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.xtheme.admin\_module.widgets module
------------------------------------------
+shuup\.xtheme\.admin\_module\.widgets module
+--------------------------------------------
 
 .. automodule:: shuup.xtheme.admin_module.widgets
     :members:

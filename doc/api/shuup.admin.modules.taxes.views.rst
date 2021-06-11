@@ -1,19 +1,19 @@
-shuup.admin.modules.taxes.views package
-=======================================
+shuup\.admin\.modules\.taxes\.views package
+===========================================
 
 Submodules
 ----------
 
-shuup.admin.modules.taxes.views.edit module
--------------------------------------------
+shuup\.admin\.modules\.taxes\.views\.edit module
+------------------------------------------------
 
 .. automodule:: shuup.admin.modules.taxes.views.edit
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.taxes.views.list module
--------------------------------------------
+shuup\.admin\.modules\.taxes\.views\.list module
+------------------------------------------------
 
 .. automodule:: shuup.admin.modules.taxes.views.list
     :members:

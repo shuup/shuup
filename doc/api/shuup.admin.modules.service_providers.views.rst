@@ -1,5 +1,5 @@
-shuup.admin.modules.service\_providers.views package
-====================================================
+shuup\.admin\.modules\.service\_providers\.views package
+========================================================
 
 Module contents
 ---------------

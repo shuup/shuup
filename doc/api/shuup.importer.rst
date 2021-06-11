@@ -1,5 +1,5 @@
-shuup.importer package
-======================
+shuup\.importer package
+=======================
 
 Subpackages
 -----------
@@ -13,24 +13,32 @@ Subpackages
 Submodules
 ----------
 
-shuup.importer.apps module
---------------------------
+shuup\.importer\.apps module
+----------------------------
 
 .. automodule:: shuup.importer.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.importer.exceptions module
---------------------------------
+shuup\.importer\.exceptions module
+----------------------------------
 
 .. automodule:: shuup.importer.exceptions
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.importer.transforms module
---------------------------------
+shuup\.importer\.tasks module
+-----------------------------
+
+.. automodule:: shuup.importer.tasks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.importer\.transforms module
+----------------------------------
 
 .. automodule:: shuup.importer.transforms
     :members:

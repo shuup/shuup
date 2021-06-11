@@ -1,5 +1,5 @@
-shuup.admin.modules.support package
-===================================
+shuup\.admin\.modules\.support package
+======================================
 
 Module contents
 ---------------

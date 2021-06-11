@@ -1,11 +1,11 @@
-shuup.campaigns.api package
-===========================
+shuup\.campaigns\.api package
+=============================
 
 Submodules
 ----------
 
-shuup.campaigns.api.serializers module
---------------------------------------
+shuup\.campaigns\.api\.serializers module
+-----------------------------------------
 
 .. automodule:: shuup.campaigns.api.serializers
     :members:

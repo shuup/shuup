@@ -1,11 +1,11 @@
-shuup.admin.modules.settings.form\_parts package
-================================================
+shuup\.admin\.modules\.settings\.form\_parts package
+====================================================
 
 Submodules
 ----------
 
-shuup.admin.modules.settings.form\_parts.shop module
-----------------------------------------------------
+shuup\.admin\.modules\.settings\.form\_parts\.shop module
+---------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.form_parts.shop
     :members:

@@ -1,5 +1,5 @@
-shuup.notify package
-====================
+shuup\.notify package
+=====================
 
 Subpackages
 -----------
@@ -15,56 +15,96 @@ Subpackages
 Submodules
 ----------
 
-shuup.notify.base module
-------------------------
+shuup\.notify\.base module
+--------------------------
 
 .. automodule:: shuup.notify.base
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.enums module
--------------------------
+shuup\.notify\.enums module
+---------------------------
 
 .. automodule:: shuup.notify.enums
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.runner module
---------------------------
+shuup\.notify\.notify\_events module
+------------------------------------
+
+.. automodule:: shuup.notify.notify_events
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.notify\.runner module
+----------------------------
 
 .. automodule:: shuup.notify.runner
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.script module
---------------------------
+shuup\.notify\.script module
+----------------------------
 
 .. automodule:: shuup.notify.script
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.settings module
-----------------------------
+shuup\.notify\.script\_templates module
+---------------------------------------
+
+.. automodule:: shuup.notify.script_templates
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.notify\.settings module
+------------------------------
 
 .. automodule:: shuup.notify.settings
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.template module
-----------------------------
+shuup\.notify\.signal\_handlers module
+--------------------------------------
+
+.. automodule:: shuup.notify.signal_handlers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.notify\.signals module
+-----------------------------
+
+.. automodule:: shuup.notify.signals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.notify\.tasks module
+---------------------------
+
+.. automodule:: shuup.notify.tasks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.notify\.template module
+------------------------------
 
 .. automodule:: shuup.notify.template
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.notify.typology module
-----------------------------
+shuup\.notify\.typology module
+------------------------------
 
 .. automodule:: shuup.notify.typology
     :members:

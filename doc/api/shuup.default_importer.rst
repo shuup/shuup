@@ -1,5 +1,5 @@
-shuup.default\_importer package
-===============================
+shuup\.default\_importer package
+================================
 
 Subpackages
 -----------
@@ -12,8 +12,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.default\_importer.apps module
------------------------------------
+shuup\.default\_importer\.apps module
+-------------------------------------
 
 .. automodule:: shuup.default_importer.apps
     :members:

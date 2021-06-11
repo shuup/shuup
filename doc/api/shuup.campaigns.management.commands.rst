@@ -1,11 +1,11 @@
-shuup.campaigns.management.commands package
-===========================================
+shuup\.campaigns\.management\.commands package
+==============================================
 
 Submodules
 ----------
 
-shuup.campaigns.management.commands.rebuild\_campaign\_caches module
---------------------------------------------------------------------
+shuup\.campaigns\.management\.commands\.rebuild\_campaign\_caches module
+------------------------------------------------------------------------
 
 .. automodule:: shuup.campaigns.management.commands.rebuild_campaign_caches
     :members:

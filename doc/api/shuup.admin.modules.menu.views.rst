@@ -1,11 +1,11 @@
-shuup.admin.modules.menu.views package
-======================================
+shuup\.admin\.modules\.menu\.views package
+==========================================
 
 Submodules
 ----------
 
-shuup.admin.modules.menu.views.arrange module
----------------------------------------------
+shuup\.admin\.modules\.menu\.views\.arrange module
+--------------------------------------------------
 
 .. automodule:: shuup.admin.modules.menu.views.arrange
     :members:

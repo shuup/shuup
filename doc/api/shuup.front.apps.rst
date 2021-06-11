@@ -1,5 +1,5 @@
-shuup.front.apps package
-========================
+shuup\.front\.apps package
+==========================
 
 Subpackages
 -----------

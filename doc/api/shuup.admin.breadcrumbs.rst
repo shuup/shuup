@@ -1,5 +1,5 @@
-shuup.admin.breadcrumbs package
-===============================
+shuup\.admin\.breadcrumbs package
+=================================
 
 Module contents
 ---------------

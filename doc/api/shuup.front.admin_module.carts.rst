@@ -1,5 +1,5 @@
-shuup.front.admin\_module.carts package
-=======================================
+shuup\.front\.admin\_module\.carts package
+==========================================
 
 Subpackages
 -----------
@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.admin\_module.carts.form\_parts module
---------------------------------------------------
+shuup\.front\.admin\_module\.carts\.form\_parts module
+------------------------------------------------------
 
 .. automodule:: shuup.front.admin_module.carts.form_parts
     :members:

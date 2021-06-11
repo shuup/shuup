@@ -1,5 +1,5 @@
-shuup.front.admin\_module package
-=================================
+shuup\.front\.admin\_module package
+===================================
 
 Subpackages
 -----------
@@ -15,8 +15,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.admin\_module.forms module
---------------------------------------
+shuup\.front\.admin\_module\.forms module
+-----------------------------------------
 
 .. automodule:: shuup.front.admin_module.forms
     :members:

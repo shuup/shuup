@@ -1,5 +1,5 @@
-shuup.testing.management package
-================================
+shuup\.testing\.management package
+==================================
 
 Subpackages
 -----------

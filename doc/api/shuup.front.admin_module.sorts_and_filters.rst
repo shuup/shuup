@@ -1,11 +1,11 @@
-shuup.front.admin\_module.sorts\_and\_filters package
-=====================================================
+shuup\.front\.admin\_module\.sorts\_and\_filters package
+========================================================
 
 Submodules
 ----------
 
-shuup.front.admin\_module.sorts\_and\_filters.form\_parts module
-----------------------------------------------------------------
+shuup\.front\.admin\_module\.sorts\_and\_filters\.form\_parts module
+--------------------------------------------------------------------
 
 .. automodule:: shuup.front.admin_module.sorts_and_filters.form_parts
     :members:

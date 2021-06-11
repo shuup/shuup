@@ -1,11 +1,11 @@
-shuup.front.models package
-==========================
+shuup\.front\.models package
+============================
 
 Submodules
 ----------
 
-shuup.front.models.stored\_basket module
-----------------------------------------
+shuup\.front\.models\.stored\_basket module
+-------------------------------------------
 
 .. automodule:: shuup.front.models.stored_basket
     :members:

@@ -1,5 +1,5 @@
-shuup.testing.modules.demo package
-==================================
+shuup\.testing\.modules\.demo package
+=====================================
 
 Module contents
 ---------------

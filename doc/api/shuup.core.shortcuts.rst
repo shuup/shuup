@@ -1,5 +1,5 @@
-shuup.core.shortcuts package
-============================
+shuup\.core\.shortcuts package
+==============================
 
 Module contents
 ---------------

@@ -1,11 +1,11 @@
-shuup.admin.modules.system.views package
-========================================
+shuup\.admin\.modules\.system\.views package
+============================================
 
 Submodules
 ----------
 
-shuup.admin.modules.system.views.telemetry module
--------------------------------------------------
+shuup\.admin\.modules\.system\.views\.telemetry module
+------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.system.views.telemetry
     :members:

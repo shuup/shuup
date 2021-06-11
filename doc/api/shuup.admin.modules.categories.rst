@@ -1,5 +1,5 @@
-shuup.admin.modules.categories package
-======================================
+shuup\.admin\.modules\.categories package
+=========================================
 
 Subpackages
 -----------
@@ -11,16 +11,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.categories.form\_parts module
--------------------------------------------------
+shuup\.admin\.modules\.categories\.form\_parts module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.categories.form_parts
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.categories.forms module
--------------------------------------------
+shuup\.admin\.modules\.categories\.forms module
+-----------------------------------------------
 
 .. automodule:: shuup.admin.modules.categories.forms
     :members:

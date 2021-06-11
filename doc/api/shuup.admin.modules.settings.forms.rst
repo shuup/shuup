@@ -1,19 +1,19 @@
-shuup.admin.modules.settings.forms package
-==========================================
+shuup\.admin\.modules\.settings\.forms package
+==============================================
 
 Submodules
 ----------
 
-shuup.admin.modules.settings.forms.columns module
--------------------------------------------------
+shuup\.admin\.modules\.settings\.forms\.columns module
+------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.forms.columns
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.settings.forms.system module
-------------------------------------------------
+shuup\.admin\.modules\.settings\.forms\.system module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.forms.system
     :members:

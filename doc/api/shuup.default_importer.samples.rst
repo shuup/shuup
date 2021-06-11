@@ -1,5 +1,5 @@
-shuup.default\_importer.samples package
-=======================================
+shuup\.default\_importer\.samples package
+=========================================
 
 Module contents
 ---------------

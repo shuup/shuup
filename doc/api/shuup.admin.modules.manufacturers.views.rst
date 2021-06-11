@@ -1,19 +1,19 @@
-shuup.admin.modules.manufacturers.views package
-===============================================
+shuup\.admin\.modules\.manufacturers\.views package
+===================================================
 
 Submodules
 ----------
 
-shuup.admin.modules.manufacturers.views.edit module
----------------------------------------------------
+shuup\.admin\.modules\.manufacturers\.views\.edit module
+--------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.manufacturers.views.edit
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.manufacturers.views.list module
----------------------------------------------------
+shuup\.admin\.modules\.manufacturers\.views\.list module
+--------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.manufacturers.views.list
     :members:

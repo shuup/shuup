@@ -1,5 +1,5 @@
-shuup.discounts.management package
-==================================
+shuup\.discounts\.management package
+====================================
 
 Subpackages
 -----------

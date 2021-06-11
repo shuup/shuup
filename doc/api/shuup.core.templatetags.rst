@@ -1,19 +1,19 @@
-shuup.core.templatetags package
-===============================
+shuup\.core\.templatetags package
+=================================
 
 Submodules
 ----------
 
-shuup.core.templatetags.prices module
--------------------------------------
+shuup\.core\.templatetags\.prices module
+----------------------------------------
 
 .. automodule:: shuup.core.templatetags.prices
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.core.templatetags.shuup\_common module
---------------------------------------------
+shuup\.core\.templatetags\.shuup\_common module
+-----------------------------------------------
 
 .. automodule:: shuup.core.templatetags.shuup_common
     :members:

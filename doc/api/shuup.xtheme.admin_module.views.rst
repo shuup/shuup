@@ -1,5 +1,5 @@
-shuup.xtheme.admin\_module.views package
-========================================
+shuup\.xtheme\.admin\_module\.views package
+===========================================
 
 Module contents
 ---------------

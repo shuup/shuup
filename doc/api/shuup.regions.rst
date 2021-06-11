@@ -1,19 +1,19 @@
-shuup.regions package
-=====================
+shuup\.regions package
+======================
 
 Submodules
 ----------
 
-shuup.regions.apps module
--------------------------
+shuup\.regions\.apps module
+---------------------------
 
 .. automodule:: shuup.regions.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.regions.resources module
-------------------------------
+shuup\.regions\.resources module
+--------------------------------
 
 .. automodule:: shuup.regions.resources
     :members:

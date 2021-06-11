@@ -1,5 +1,5 @@
-shuup.admin.modules.attributes package
-======================================
+shuup\.admin\.modules\.attributes package
+=========================================
 
 Subpackages
 -----------
@@ -7,6 +7,26 @@ Subpackages
 .. toctree::
 
     shuup.admin.modules.attributes.views
+
+Submodules
+----------
+
+shuup\.admin\.modules\.attributes\.form\_parts module
+-----------------------------------------------------
+
+.. automodule:: shuup.admin.modules.attributes.form_parts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.admin\.modules\.attributes\.forms module
+-----------------------------------------------
+
+.. automodule:: shuup.admin.modules.attributes.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

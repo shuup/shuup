@@ -1,11 +1,11 @@
-shuup.core.taxing package
-=========================
+shuup\.core\.taxing package
+===========================
 
 Submodules
 ----------
 
-shuup.core.taxing.utils module
-------------------------------
+shuup\.core\.taxing\.utils module
+---------------------------------
 
 .. automodule:: shuup.core.taxing.utils
     :members:

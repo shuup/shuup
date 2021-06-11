@@ -1,27 +1,27 @@
-shuup.admin.forms package
-=========================
+shuup\.admin\.forms package
+===========================
 
 Submodules
 ----------
 
-shuup.admin.forms.fields module
--------------------------------
+shuup\.admin\.forms\.fields module
+----------------------------------
 
 .. automodule:: shuup.admin.forms.fields
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.forms.quick\_select module
---------------------------------------
+shuup\.admin\.forms\.quick\_select module
+-----------------------------------------
 
 .. automodule:: shuup.admin.forms.quick_select
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.forms.widgets module
---------------------------------
+shuup\.admin\.forms\.widgets module
+-----------------------------------
 
 .. automodule:: shuup.admin.forms.widgets
     :members:

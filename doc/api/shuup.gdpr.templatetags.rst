@@ -1,5 +1,5 @@
-shuup.gdpr.templatetags package
-===============================
+shuup\.gdpr\.templatetags package
+=================================
 
 Module contents
 ---------------

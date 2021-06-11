@@ -1,19 +1,19 @@
-shuup.apps package
-==================
+shuup\.apps package
+===================
 
 Submodules
 ----------
 
-shuup.apps.provides module
---------------------------
+shuup\.apps\.provides module
+----------------------------
 
 .. automodule:: shuup.apps.provides
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.apps.settings module
---------------------------
+shuup\.apps\.settings module
+----------------------------
 
 .. automodule:: shuup.apps.settings
     :members:

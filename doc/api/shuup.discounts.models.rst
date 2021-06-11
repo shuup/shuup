@@ -1,5 +1,5 @@
-shuup.discounts.models package
-==============================
+shuup\.discounts\.models package
+================================
 
 Module contents
 ---------------

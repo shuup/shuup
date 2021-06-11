@@ -1,5 +1,5 @@
-shuup.admin.modules.services package
-====================================
+shuup\.admin\.modules\.services package
+=======================================
 
 Subpackages
 -----------
@@ -12,24 +12,24 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.services.base\_form\_part module
-----------------------------------------------------
+shuup\.admin\.modules\.services\.base\_form\_part module
+--------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.services.base_form_part
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.services.behavior\_form\_part module
---------------------------------------------------------
+shuup\.admin\.modules\.services\.behavior\_form\_part module
+------------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.services.behavior_form_part
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.services.forms module
------------------------------------------
+shuup\.admin\.modules\.services\.forms module
+---------------------------------------------
 
 .. automodule:: shuup.admin.modules.services.forms
     :members:

@@ -1,11 +1,11 @@
-shuup.front.admin\_module.companies package
-===========================================
+shuup\.front\.admin\_module\.companies package
+==============================================
 
 Submodules
 ----------
 
-shuup.front.admin\_module.companies.form\_parts module
-------------------------------------------------------
+shuup\.front\.admin\_module\.companies\.form\_parts module
+----------------------------------------------------------
 
 .. automodule:: shuup.front.admin_module.companies.form_parts
     :members:

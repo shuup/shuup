@@ -1,5 +1,5 @@
-shuup.front.themes package
-==========================
+shuup\.front\.themes package
+============================
 
 Subpackages
 -----------

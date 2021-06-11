@@ -1,5 +1,5 @@
-shuup.reports package
-=====================
+shuup\.reports package
+======================
 
 Subpackages
 -----------
@@ -11,40 +11,48 @@ Subpackages
 Submodules
 ----------
 
-shuup.reports.apps module
--------------------------
+shuup\.reports\.apps module
+---------------------------
 
 .. automodule:: shuup.reports.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.reports.forms module
---------------------------
+shuup\.reports\.forms module
+----------------------------
 
 .. automodule:: shuup.reports.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.reports.report module
----------------------------
+shuup\.reports\.report module
+-----------------------------
 
 .. automodule:: shuup.reports.report
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.reports.utils module
---------------------------
+shuup\.reports\.settings module
+-------------------------------
+
+.. automodule:: shuup.reports.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.reports\.utils module
+----------------------------
 
 .. automodule:: shuup.reports.utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.reports.writer module
----------------------------
+shuup\.reports\.writer module
+-----------------------------
 
 .. automodule:: shuup.reports.writer
     :members:

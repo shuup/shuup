@@ -1,11 +1,11 @@
-shuup.admin.modules.labels package
-==================================
+shuup\.admin\.modules\.labels package
+=====================================
 
 Submodules
 ----------
 
-shuup.admin.modules.labels.views module
----------------------------------------
+shuup\.admin\.modules\.labels\.views module
+-------------------------------------------
 
 .. automodule:: shuup.admin.modules.labels.views
     :members:

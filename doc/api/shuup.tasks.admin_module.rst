@@ -1,5 +1,5 @@
-shuup.tasks.admin\_module package
-=================================
+shuup\.tasks\.admin\_module package
+===================================
 
 Subpackages
 -----------

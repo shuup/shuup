@@ -1,5 +1,5 @@
-shuup.admin.modules.menu package
-================================
+shuup\.admin\.modules\.menu package
+===================================
 
 Subpackages
 -----------

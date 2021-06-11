@@ -1,5 +1,5 @@
-shuup.admin.modules.settings package
-====================================
+shuup\.admin\.modules\.settings package
+=======================================
 
 Subpackages
 -----------
@@ -13,24 +13,24 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.settings.consts module
-------------------------------------------
+shuup\.admin\.modules\.settings\.consts module
+----------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.consts
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.settings.enums module
------------------------------------------
+shuup\.admin\.modules\.settings\.enums module
+---------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.enums
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.settings.view\_settings module
---------------------------------------------------
+shuup\.admin\.modules\.settings\.view\_settings module
+------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.settings.view_settings
     :members:

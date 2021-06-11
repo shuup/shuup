@@ -1,11 +1,11 @@
-shuup.default\_tax.admin\_module package
-========================================
+shuup\.default\_tax\.admin\_module package
+==========================================
 
 Submodules
 ----------
 
-shuup.default\_tax.admin\_module.views module
----------------------------------------------
+shuup\.default\_tax\.admin\_module\.views module
+------------------------------------------------
 
 .. automodule:: shuup.default_tax.admin_module.views
     :members:

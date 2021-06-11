@@ -1,5 +1,5 @@
-shuup.campaigns.management package
-==================================
+shuup\.campaigns\.management package
+====================================
 
 Subpackages
 -----------

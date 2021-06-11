@@ -1,11 +1,11 @@
-shuup.reports.admin\_module package
-===================================
+shuup\.reports\.admin\_module package
+=====================================
 
 Submodules
 ----------
 
-shuup.reports.admin\_module.views module
-----------------------------------------
+shuup\.reports\.admin\_module\.views module
+-------------------------------------------
 
 .. automodule:: shuup.reports.admin_module.views
     :members:

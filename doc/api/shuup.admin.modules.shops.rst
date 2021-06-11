@@ -1,5 +1,5 @@
-shuup.admin.modules.shops package
-=================================
+shuup\.admin\.modules\.shops package
+====================================
 
 Subpackages
 -----------
@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.shops.forms module
---------------------------------------
+shuup\.admin\.modules\.shops\.forms module
+------------------------------------------
 
 .. automodule:: shuup.admin.modules.shops.forms
     :members:

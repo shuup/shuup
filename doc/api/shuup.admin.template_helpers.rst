@@ -1,11 +1,11 @@
-shuup.admin.template\_helpers package
-=====================================
+shuup\.admin\.template\_helpers package
+=======================================
 
 Submodules
 ----------
 
-shuup.admin.template\_helpers.shuup\_admin module
--------------------------------------------------
+shuup\.admin\.template\_helpers\.shuup\_admin module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.template_helpers.shuup_admin
     :members:

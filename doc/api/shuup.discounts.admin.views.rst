@@ -1,5 +1,5 @@
-shuup.discounts.admin.views package
-===================================
+shuup\.discounts\.admin\.views package
+======================================
 
 Module contents
 ---------------

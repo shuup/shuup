@@ -1,5 +1,5 @@
-shuup.admin.modules.currencies package
-======================================
+shuup\.admin\.modules\.currencies package
+=========================================
 
 Subpackages
 -----------

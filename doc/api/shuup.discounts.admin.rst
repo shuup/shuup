@@ -1,5 +1,5 @@
-shuup.discounts.admin package
-=============================
+shuup\.discounts\.admin package
+===============================
 
 Subpackages
 -----------
@@ -12,16 +12,16 @@ Subpackages
 Submodules
 ----------
 
-shuup.discounts.admin.mass\_actions module
-------------------------------------------
+shuup\.discounts\.admin\.mass\_actions module
+---------------------------------------------
 
 .. automodule:: shuup.discounts.admin.mass_actions
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.discounts.admin.widgets module
-------------------------------------
+shuup\.discounts\.admin\.widgets module
+---------------------------------------
 
 .. automodule:: shuup.discounts.admin.widgets
     :members:

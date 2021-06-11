@@ -1,11 +1,11 @@
-shuup.core.pricing package
-==========================
+shuup\.core\.pricing package
+============================
 
 Submodules
 ----------
 
-shuup.core.pricing.default\_pricing module
-------------------------------------------
+shuup\.core\.pricing\.default\_pricing module
+---------------------------------------------
 
 .. automodule:: shuup.core.pricing.default_pricing
     :members:

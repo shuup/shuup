@@ -1,5 +1,5 @@
-shuup.testing.modules package
-=============================
+shuup\.testing\.modules package
+===============================
 
 Subpackages
 -----------

@@ -1,11 +1,11 @@
-shuup.core.cache package
-========================
+shuup\.core\.cache package
+==========================
 
 Submodules
 ----------
 
-shuup.core.cache.impl module
-----------------------------
+shuup\.core\.cache\.impl module
+-------------------------------
 
 .. automodule:: shuup.core.cache.impl
     :members:

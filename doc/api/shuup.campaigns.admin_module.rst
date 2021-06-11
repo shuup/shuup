@@ -1,5 +1,5 @@
-shuup.campaigns.admin\_module package
-=====================================
+shuup\.campaigns\.admin\_module package
+=======================================
 
 Subpackages
 -----------
@@ -12,32 +12,32 @@ Subpackages
 Submodules
 ----------
 
-shuup.campaigns.admin\_module.form\_parts module
-------------------------------------------------
+shuup\.campaigns\.admin\_module\.form\_parts module
+---------------------------------------------------
 
 .. automodule:: shuup.campaigns.admin_module.form_parts
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.admin\_module.form\_sets module
------------------------------------------------
+shuup\.campaigns\.admin\_module\.form\_sets module
+--------------------------------------------------
 
 .. automodule:: shuup.campaigns.admin_module.form_sets
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.admin\_module.sections module
----------------------------------------------
+shuup\.campaigns\.admin\_module\.sections module
+------------------------------------------------
 
 .. automodule:: shuup.campaigns.admin_module.sections
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.campaigns.admin\_module.utils module
-------------------------------------------
+shuup\.campaigns\.admin\_module\.utils module
+---------------------------------------------
 
 .. automodule:: shuup.campaigns.admin_module.utils
     :members:

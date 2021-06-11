@@ -1,5 +1,5 @@
-shuup.admin.modules.system package
-==================================
+shuup\.admin\.modules\.system package
+=====================================
 
 Subpackages
 -----------

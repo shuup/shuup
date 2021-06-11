@@ -1,5 +1,5 @@
-shuup.tasks package
-===================
+shuup\.tasks package
+====================
 
 Subpackages
 -----------
@@ -11,24 +11,24 @@ Subpackages
 Submodules
 ----------
 
-shuup.tasks.apps module
------------------------
+shuup\.tasks\.apps module
+-------------------------
 
 .. automodule:: shuup.tasks.apps
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.tasks.models module
--------------------------
+shuup\.tasks\.models module
+---------------------------
 
 .. automodule:: shuup.tasks.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.tasks.utils module
-------------------------
+shuup\.tasks\.utils module
+--------------------------
 
 .. automodule:: shuup.tasks.utils
     :members:

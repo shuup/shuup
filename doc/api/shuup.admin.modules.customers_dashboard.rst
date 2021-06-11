@@ -1,11 +1,11 @@
-shuup.admin.modules.customers\_dashboard package
-================================================
+shuup\.admin\.modules\.customers\_dashboard package
+===================================================
 
 Submodules
 ----------
 
-shuup.admin.modules.customers\_dashboard.dashboard module
----------------------------------------------------------
+shuup\.admin\.modules\.customers\_dashboard\.dashboard module
+-------------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.customers_dashboard.dashboard
     :members:

@@ -1,5 +1,5 @@
-shuup.core.models package
-=========================
+shuup\.core\.models package
+===========================
 
 Module contents
 ---------------

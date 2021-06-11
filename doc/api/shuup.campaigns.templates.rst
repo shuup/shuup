@@ -1,5 +1,5 @@
-shuup.campaigns.templates package
-=================================
+shuup\.campaigns\.templates package
+===================================
 
 Module contents
 ---------------

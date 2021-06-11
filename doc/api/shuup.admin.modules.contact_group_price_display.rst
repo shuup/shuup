@@ -1,5 +1,5 @@
-shuup.admin.modules.contact\_group\_price\_display package
-==========================================================
+shuup\.admin\.modules\.contact\_group\_price\_display package
+=============================================================
 
 Subpackages
 -----------

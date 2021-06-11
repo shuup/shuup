@@ -1,5 +1,5 @@
-shuup.admin.modules.services.weight\_based\_pricing package
-===========================================================
+shuup\.admin\.modules\.services\.weight\_based\_pricing package
+===============================================================
 
 Module contents
 ---------------

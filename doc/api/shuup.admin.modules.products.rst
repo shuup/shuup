@@ -1,5 +1,5 @@
-shuup.admin.modules.products package
-====================================
+shuup\.admin\.modules\.products package
+=======================================
 
 Subpackages
 -----------
@@ -12,32 +12,32 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.products.mass\_actions module
--------------------------------------------------
+shuup\.admin\.modules\.products\.mass\_actions module
+-----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.mass_actions
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.sections module
---------------------------------------------
+shuup\.admin\.modules\.products\.sections module
+------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.sections
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.signal\_handlers module
-----------------------------------------------------
+shuup\.admin\.modules\.products\.signal\_handlers module
+--------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.signal_handlers
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.products.utils module
------------------------------------------
+shuup\.admin\.modules\.products\.utils module
+---------------------------------------------
 
 .. automodule:: shuup.admin.modules.products.utils
     :members:

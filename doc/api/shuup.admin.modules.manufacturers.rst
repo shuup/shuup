@@ -1,5 +1,5 @@
-shuup.admin.modules.manufacturers package
-=========================================
+shuup\.admin\.modules\.manufacturers package
+============================================
 
 Subpackages
 -----------

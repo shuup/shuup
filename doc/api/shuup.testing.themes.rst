@@ -1,11 +1,11 @@
-shuup.testing.themes package
-============================
+shuup\.testing\.themes package
+==============================
 
 Submodules
 ----------
 
-shuup.testing.themes.plugins module
------------------------------------
+shuup\.testing\.themes\.plugins module
+--------------------------------------
 
 .. automodule:: shuup.testing.themes.plugins
     :members:

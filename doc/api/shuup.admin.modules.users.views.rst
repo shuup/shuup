@@ -1,35 +1,35 @@
-shuup.admin.modules.users.views package
-=======================================
+shuup\.admin\.modules\.users\.views package
+===========================================
 
 Submodules
 ----------
 
-shuup.admin.modules.users.views.detail module
----------------------------------------------
+shuup\.admin\.modules\.users\.views\.detail module
+--------------------------------------------------
 
 .. automodule:: shuup.admin.modules.users.views.detail
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.users.views.list module
--------------------------------------------
+shuup\.admin\.modules\.users\.views\.list module
+------------------------------------------------
 
 .. automodule:: shuup.admin.modules.users.views.list
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.users.views.password module
------------------------------------------------
+shuup\.admin\.modules\.users\.views\.password module
+----------------------------------------------------
 
 .. automodule:: shuup.admin.modules.users.views.password
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.admin.modules.users.views.permissions module
---------------------------------------------------
+shuup\.admin\.modules\.users\.views\.permissions module
+-------------------------------------------------------
 
 .. automodule:: shuup.admin.modules.users.views.permissions
     :members:

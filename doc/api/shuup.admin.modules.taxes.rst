@@ -1,5 +1,5 @@
-shuup.admin.modules.taxes package
-=================================
+shuup\.admin\.modules\.taxes package
+====================================
 
 Subpackages
 -----------

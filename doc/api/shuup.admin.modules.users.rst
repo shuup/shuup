@@ -1,5 +1,5 @@
-shuup.admin.modules.users package
-=================================
+shuup\.admin\.modules\.users package
+====================================
 
 Subpackages
 -----------
@@ -7,6 +7,18 @@ Subpackages
 .. toctree::
 
     shuup.admin.modules.users.views
+
+Submodules
+----------
+
+shuup\.admin\.modules\.users\.mass\_actions module
+--------------------------------------------------
+
+.. automodule:: shuup.admin.modules.users.mass_actions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -1,5 +1,5 @@
-shuup.simple\_supplier package
-==============================
+shuup\.simple\_supplier package
+===============================
 
 Subpackages
 -----------
@@ -11,48 +11,56 @@ Subpackages
 Submodules
 ----------
 
-shuup.simple\_supplier.forms module
------------------------------------
+shuup\.simple\_supplier\.forms module
+-------------------------------------
 
 .. automodule:: shuup.simple_supplier.forms
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple\_supplier.models module
-------------------------------------
+shuup\.simple\_supplier\.models module
+--------------------------------------
 
 .. automodule:: shuup.simple_supplier.models
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple\_supplier.module module
-------------------------------------
+shuup\.simple\_supplier\.module module
+--------------------------------------
 
 .. automodule:: shuup.simple_supplier.module
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple\_supplier.notify\_events module
---------------------------------------------
+shuup\.simple\_supplier\.notify\_events module
+----------------------------------------------
 
 .. automodule:: shuup.simple_supplier.notify_events
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple\_supplier.notify\_script\_template module
-------------------------------------------------------
+shuup\.simple\_supplier\.notify\_script\_template module
+--------------------------------------------------------
 
 .. automodule:: shuup.simple_supplier.notify_script_template
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.simple\_supplier.utils module
------------------------------------
+shuup\.simple\_supplier\.product\_copy\_signal\_handler module
+--------------------------------------------------------------
+
+.. automodule:: shuup.simple_supplier.product_copy_signal_handler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup\.simple\_supplier\.utils module
+-------------------------------------
 
 .. automodule:: shuup.simple_supplier.utils
     :members:

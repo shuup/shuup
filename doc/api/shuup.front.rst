@@ -1,5 +1,5 @@
-shuup.front package
-===================
+shuup\.front package
+====================
 
 Subpackages
 -----------
@@ -23,56 +23,56 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.error\_handlers module
-----------------------------------
+shuup\.front\.error\_handlers module
+------------------------------------
 
 .. automodule:: shuup.front.error_handlers
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.middleware module
------------------------------
+shuup\.front\.middleware module
+-------------------------------
 
 .. automodule:: shuup.front.middleware
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.notify\_events module
----------------------------------
+shuup\.front\.notify\_events module
+-----------------------------------
 
 .. automodule:: shuup.front.notify_events
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.settings module
----------------------------
+shuup\.front\.settings module
+-----------------------------
 
 .. automodule:: shuup.front.settings
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.signal\_handlers module
------------------------------------
+shuup\.front\.signal\_handlers module
+-------------------------------------
 
 .. automodule:: shuup.front.signal_handlers
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.signals module
---------------------------
+shuup\.front\.signals module
+----------------------------
 
 .. automodule:: shuup.front.signals
     :members:
     :undoc-members:
     :show-inheritance:
 
-shuup.front.urls module
------------------------
+shuup\.front\.urls module
+-------------------------
 
 .. automodule:: shuup.front.urls
     :members:

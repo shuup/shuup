@@ -1,5 +1,5 @@
-shuup.core.management package
-=============================
+shuup\.core\.management package
+===============================
 
 Subpackages
 -----------

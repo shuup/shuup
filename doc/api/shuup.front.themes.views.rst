@@ -1,5 +1,5 @@
-shuup.front.themes.views package
-================================
+shuup\.front\.themes\.views package
+===================================
 
 Module contents
 ---------------
