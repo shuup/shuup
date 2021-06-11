@@ -223,10 +223,10 @@ class MenuEntry(BaseMenuEntry):
         """
         Should return a dictionary with the information of the badge or None:
         ```
-        {
-            "tag": "info|success|danger|warning",
-            "value": "my value"
-        }
+            {
+                "tag": "info|success|danger|warning",
+                "value": "my value"
+            }
         ```
         """
         return None
@@ -302,7 +302,7 @@ class Section(object):
     `icon` the section icon.
     `template` the section template file.
     `extra_js` the section extra javascript template file,
-               set a file which contains js code inside a <script> tag.
+    set a file which contains js code inside a <script> tag.
     `order` the order.
     """
 
