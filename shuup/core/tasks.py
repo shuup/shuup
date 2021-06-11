@@ -49,7 +49,7 @@ class Task:
     queue = "default"  # str
     kwargs = None  # Optional[Dict[str, Any]]
 
-    def __init__(self, function, identifier, stored=False, queue="default", **kwargs):
+    def __init__(self, function, identifier=None, stored=False, queue="default", **kwargs):
         """
         :param function: A string that represents the function specification.
             It will be locaded dynamically and executed passing the given kwargs.
@@ -64,6 +64,9 @@ class Task:
 
         :type function: str
         """
+        if not identifier:
+            identifier = f"{queue}_{function}_{uuid4().hex}"
+
         assert isinstance(function, str)
 
         try:
