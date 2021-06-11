@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Xtheme: Add so snippets can have start of head content
+
+### Fixed
+
+- Core: fix so task don't require a identifier
+
 ## [2.10.1] - 2021-06-07
 
 ### Fixed
