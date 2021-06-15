@@ -150,7 +150,7 @@ class ImportView(FormView):
 
         # no importer passed, get the first choice available
         if not importer:
-            importers = list(get_importer_choices())
+            importers = list(get_importer_choices(self.request.user))
             if importers:
                 importer = importers[0][0]
 
