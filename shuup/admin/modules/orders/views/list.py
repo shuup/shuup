@@ -54,11 +54,19 @@ class OrderListView(PicotableListView):
         Column("shipping_status", _("Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
         Column(
             "taxful_total_price_value",
-            _("Total"),
+            _("Total, incl. tax"),
             sort_field="taxful_total_price_value",
             display="format_taxful_total_price",
             class_name="text-right",
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value"),
+        ),
+        Column(
+            "taxless_total_price_value",
+            _("Total, excl. tax"),
+            sort_field="taxless_total_price_value",
+            display="format_taxless_total_price",
+            class_name="text-right",
+            filter_config=RangeFilter(field_type="number", filter_field="taxless_total_price_value"),
         ),
     ]
     related_objects = [
@@ -96,6 +104,9 @@ class OrderListView(PicotableListView):
     def format_taxful_total_price(self, instance, *args, **kwargs):
         return escape(format_money(instance.taxful_total_price))
 
+    def format_taxless_total_price(self, instance, *args, **kwargs):
+        return escape(format_money(instance.taxless_total_price))
+
     def label(self, instance, *args, **kwargs):
         # format label to make it human readable
         return instance.label.replace("_", " ").title()
@@ -103,6 +114,7 @@ class OrderListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _("Total"), "text": item.get("taxful_total_price_value")},
+            {"title": _("Total, incl. tax"), "text": item.get("taxful_total_price_value")},
+            {"title": _("Total, excl. tax"), "text": item.get("taxless_total_price_value")},
             {"title": _("Status"), "text": item.get("status")},
         ]
