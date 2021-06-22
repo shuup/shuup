@@ -178,6 +178,7 @@ class ScriptItemEditForm(forms.Form):
 
     def _save_template(self, new_data):
         template_data = {}
+
         for lang_code, field_info in self.template_field_info.items():
             t_field_name_to_field_name = dict(field_info.items())
             lang_vals = dict(
@@ -187,6 +188,7 @@ class ScriptItemEditForm(forms.Form):
             if not any(lang_vals.values()):  # Not worth saving
                 continue
             can_save = True
+
             if lang_code == settings.PARLER_DEFAULT_LANGUAGE_CODE:
                 for t_field_name, content in lang_vals.items():
                     actual_field_name = t_field_name_to_field_name[t_field_name]
