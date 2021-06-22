@@ -14,6 +14,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: show taxless order total column in order list
 
+### Fixed
+
+- removed orderable boolean from async highlights plugin from being rendered
+
 ## [2.10.3] - 2021-06-15
 
 ### Fixed
