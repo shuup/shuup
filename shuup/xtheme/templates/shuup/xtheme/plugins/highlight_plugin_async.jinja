@@ -6,7 +6,6 @@
         {{ product_box(product, show_description=False) }}
     {% endfor %}
 {% else %}
-    {{ orderable_only }}
     <section
         class="carousel-section product-highlight-plugin async-xtheme-product-carousel-plugin"
         data-url='{{ data_url }}{% if orderable_only %}?orderable_only=1{% endif %}'
