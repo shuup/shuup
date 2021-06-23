@@ -12,6 +12,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Utils: fix MultiLanguageModelForm so language dependent filed will only be required if the language is required
 
+## [2.10.5] - 2021-06-21
+
+### Fixed
+
+- Xtheme: removed orderable boolean from async highlights plugin from being rendered
+
 ## [2.10.4] - 2021-06-21
 
 ### Changed
