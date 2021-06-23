@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -802,7 +802,10 @@ msgstr ""
 msgid "Shipping Status"
 msgstr ""
 
-msgid "Total"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
 msgstr ""
 
 #, python-format
@@ -3014,6 +3017,9 @@ msgid ""
 msgstr ""
 
 msgid "Date"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "Save and Exit"

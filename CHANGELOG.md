@@ -12,6 +12,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Utils: fix MultiLanguageModelForm so language dependent filed will only be required if the language is required
 
+## [2.10.4] - 2021-06-21
+
+### Changed
+
+- Admin: show taxless order total column in order list
+
 ## [2.10.3] - 2021-06-15
 
 ### Fixed
