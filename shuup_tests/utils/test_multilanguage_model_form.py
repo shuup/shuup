@@ -93,10 +93,11 @@ def test_model_form_partially_translated(rf, admin_user):
         payment_method = form.save()
 
         # Add description for Finnish and and name in Finnish should be required
-        data["description__fi"] = "Some description"
-        form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
-        form.full_clean()
-        assert not form.is_valid() and form.errors
+        with override_settings(**{"PARLER_DEFAULT_LANGUAGE_CODE": "fi"}):
+            data["description__fi"] = "Some description"
+            form = PaymentMethodForm(data=data, instance=payment_method, request=request, languages=settings.LANGUAGES)
+            form.full_clean()
+            assert not form.is_valid() and form.errors
 
         test_name_fi = "Some method name in finnish"
         data["name__fi"] = test_name_fi

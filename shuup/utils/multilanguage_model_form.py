@@ -75,9 +75,9 @@ class MultiLanguageModelForm(TranslatableModelForm):
             for lang in self.languages:
                 language_field = copy.deepcopy(base)
                 language_field_name = "%s__%s" % (f.name, lang)
+                language_field.required = language_field.required and (lang in self.required_languages)
                 if language_field.required:
                     self.required_translated_field_names.append(language_field_name)
-                language_field.required = language_field.required and (lang in self.required_languages)
                 language_field.label = self._get_label(f.name, language_field, lang)
                 self.base_fields[language_field_name] = language_field
                 self.trans_field_map[lang][language_field_name] = f
