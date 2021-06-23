@@ -210,11 +210,6 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
 
 SHUUP_SIMPLE_SEARCH_LIMIT = 150
 
-if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
-    from .utils import get_disabled_migrations
-
-    MIGRATION_MODULES = get_disabled_migrations()
-
 
 def configure(setup):
     setup.commit(globals())
