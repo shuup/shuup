@@ -8,12 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.10.6] - 2021-06-25
+
 ### Fixed
 
 - Core: fix service components get cost
-
-### Fixed
-
 - Utils: fix MultiLanguageModelForm so language dependent filed will only be required if the language is required
 
 ## [2.10.5] - 2021-06-21
