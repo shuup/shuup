@@ -438,6 +438,12 @@ class OrderSource(object):
             return sum(count_in_line(line) for line in self.get_product_lines() if line.supplier == supplier)
         return sum(count_in_line(line) for line in self.get_product_lines())
 
+    def get_source_for_supplier(self, supplier=None):
+        """
+        Return order sources base on the supplier.
+        """
+        return self
+
     @property
     def product_line_count(self):
         """

@@ -319,7 +319,7 @@ class Service(TranslatableShuupModel):
         :rtype: Iterable[ServiceCost]
         """
         for component in self.behavior_components.all():
-            for cost in component.get_costs(self, source):
+            for cost in component.get_costs(self, source.get_source_for_supplier(self.supplier)):
                 yield cost
 
     def get_lines(self, source):

@@ -10,6 +10,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Core: fix service components get cost
+
+### Fixed
+
 - Utils: fix MultiLanguageModelForm so language dependent filed will only be required if the language is required
 
 ## [2.10.5] - 2021-06-21
