@@ -8,7 +8,6 @@
 
 import decimal
 import pytest
-from django.core.exceptions import ValidationError
 
 from shuup.core.models import OrderLineType, WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
 from shuup.core.models._service_behavior import _is_in_range
@@ -17,6 +16,8 @@ from shuup.testing.factories import (
     get_default_payment_method,
     get_default_shipping_method,
     get_default_supplier,
+    get_shop,
+    get_supplier,
 )
 
 from .test_order_creator import seed_source
@@ -94,9 +95,9 @@ def _test_service_ranges_against_source(source, service, target_price, target_de
         assert costs[0].description == target_description
 
 
-def _get_source_for_weight(user, service, service_attr, total_gross_weight, sku):
+def _get_source_for_weight(user, service, service_attr, total_gross_weight, sku, supplier=None):
     source = seed_source(user)
-    supplier = get_default_supplier()
+    supplier = supplier or get_default_supplier()
     product = create_product(
         sku=sku,
         shop=source.shop,
@@ -176,3 +177,40 @@ def test_out_of_range(admin_user, get_service, service_attr):
     # Mid, high and expensive ranges matches but the mid range is selected
     source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("40"), "mid")
     _test_service_ranges_against_source(source, service, decimal.Decimal("10.000000"), "Mid range")
+
+
+@pytest.mark.django_db
+def test_matching_range_different_suppliers(admin_user):
+    supplier_1 = get_supplier("simple_supplier", name="Supplier 1", shop=get_shop())
+    supplier_2 = get_supplier("simple_supplier", name="Supplier 2", shop=get_shop())
+
+    # this service will only be available for supplier_2
+    shipping_method = get_default_shipping_method()
+    shipping_method.supplier = supplier_2
+    shipping_method.save()
+
+    ranges_data = [
+        ("10", "20", decimal.Decimal("20"), "Mid range"),
+    ]
+    _assign_component_for_service(shipping_method, ranges_data)
+
+    # as the shipping method is set for supplier_2, it shouldn't raise for items of supplier_1
+    source = _get_source_for_weight(
+        admin_user, shipping_method, "shipping_method", decimal.Decimal("3"), "sup1", supplier=supplier_1
+    )
+    assert not list(shipping_method.get_unavailability_reasons(source))
+    assert not list(shipping_method.get_costs(source))
+
+    # raise when correct supplier is set
+    source = _get_source_for_weight(
+        admin_user, shipping_method, "shipping_method", decimal.Decimal("3"), "sup2", supplier=supplier_2
+    )
+    assert list(shipping_method.get_unavailability_reasons(source))
+    assert not list(shipping_method.get_costs(source))
+
+    # don't raise with correct supplier and correct weight range
+    source = _get_source_for_weight(
+        admin_user, shipping_method, "shipping_method", decimal.Decimal("14"), "sup3", supplier=supplier_2
+    )
+    assert not list(shipping_method.get_unavailability_reasons(source))
+    assert list(shipping_method.get_costs(source))

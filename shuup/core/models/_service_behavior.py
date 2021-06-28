@@ -70,7 +70,16 @@ class WaivingCostBehaviorComponent(TranslatableServiceBehaviorComponent):
 
     def get_costs(self, service, source):
         waive_limit = source.create_price(self.waive_limit_value)
-        product_total = source.total_price_of_products
+
+        # sum the total of products of the given supplier
+        if service.supplier:
+            product_total = source.create_price(0)
+            for line in source.get_product_lines():
+                if line.supplier == service.supplier:
+                    product_total += line.price
+        else:
+            product_total = source.total_price_of_products
+
         price = source.create_price(self.price_value)
         description = self.safe_translation_getter("description")
         zero_price = source.create_price(0)
@@ -102,7 +111,19 @@ class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
     )
 
     def get_unavailability_reasons(self, service, source):
-        weight = sum(((x.get("weight") or 0) for x in source.get_lines()), 0)
+        from shuup.core.models import Order
+
+        if isinstance(source, Order):
+            lines = source.lines.all()
+        else:
+            lines = source.get_lines()
+
+        # sum the weight of products of the given supplier
+        if service.supplier:
+            weight = sum(((line.get("weight") or 0) for line in lines if line.supplier == service.supplier), 0)
+        else:
+            weight = sum(((line.get("weight") or 0) for line in lines), 0)
+
         if self.min_weight:
             if weight < self.min_weight:
                 yield ValidationError(_("Minimum weight not met."), code="min_weight")
@@ -154,22 +175,49 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
         "to be counted, but not range2's 'min 5'."
     )
 
-    def _get_matching_range_with_lowest_price(self, source):
-        total_gross_weight = source.total_gross_weight
+    def _get_matching_range_with_lowest_price(self, service, source):
+        if service.supplier:
+            total_gross_weight = 0
+
+            from shuup.core.models import Order
+
+            if isinstance(source, Order):
+                lines = source.lines.products()
+            else:
+                lines = source.get_product_lines()
+
+            for line in lines:
+                if line.supplier == service.supplier:
+                    total_gross_weight += line.product.gross_weight * line.quantity
+        else:
+            total_gross_weight = source.total_gross_weight
+
         matching_ranges = [range for range in self.ranges.all() if range.matches_to_value(total_gross_weight)]
         if not matching_ranges:
             return
         return min(matching_ranges, key=lambda x: x.price_value)
 
     def get_costs(self, service, source):
-        range = self._get_matching_range_with_lowest_price(source)
+        range = self._get_matching_range_with_lowest_price(service, source)
         if range:
             price = source.create_price(range.price_value)
             description = range.safe_translation_getter("description")
             yield ServiceCost(price, description)
 
     def get_unavailability_reasons(self, service, source):
-        range = self._get_matching_range_with_lowest_price(source)
+        if service.supplier:
+            from shuup.core.models import Order
+
+            if isinstance(source, Order):
+                lines_count = source.lines.products().filter(supplier=service.supplier).count()
+            else:
+                lines_count = len([line for line in source.get_product_lines() if line.supplier == service.supplier])
+
+            # there is no line for the given supplier, don't go further
+            if not lines_count:
+                return
+
+        range = self._get_matching_range_with_lowest_price(service, source)
         if not range:
             yield ValidationError(_("Weight does not match with any range."), code="out_of_range")
 
@@ -212,7 +260,36 @@ class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
     max_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("max price value"))
 
     def get_unavailability_reasons(self, service, source):
-        total = source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value
+        if service.supplier:
+            from shuup.core.models import Order
+
+            if isinstance(source, Order):
+                lines = source.lines.all()
+            else:
+                lines = source.get_lines()
+
+            total = source.create_price(0)
+            lines_count = 0
+
+            for line in lines:
+                if line.supplier == service.supplier:
+                    lines_count += 1
+
+                    if source.shop.prices_include_tax:
+                        total += line.taxful_price
+                    else:
+                        total += line.taxless_price
+
+            # no lines for the supplier
+            if not lines_count:
+                return
+
+            total = total.value
+        else:
+            total = (
+                source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value
+            )
+
         is_in_range = _is_in_range(total, self.min_price_value, self.max_price_value)
         if not is_in_range:
             yield ValidationError(
