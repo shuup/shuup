@@ -298,8 +298,9 @@ class Service(TranslatableShuupModel):
             yield ValidationError(_("%s is for different shop.") % self, code="wrong_shop")
 
         for component in self.behavior_components.all():
-            for reason in component.get_unavailability_reasons(self, source):
-                yield reason
+            if source.accepts_behavior_component(component):
+                for reason in component.get_unavailability_reasons(self, source):
+                    yield reason
 
     def get_total_cost(self, source):
         """
@@ -319,8 +320,9 @@ class Service(TranslatableShuupModel):
         :rtype: Iterable[ServiceCost]
         """
         for component in self.behavior_components.all():
-            for cost in component.get_costs(self, source.get_source_for_supplier(self.supplier)):
-                yield cost
+            if source.accepts_behavior_component(component):
+                for cost in component.get_costs(self, source):
+                    yield cost
 
     def get_lines(self, source):
         """

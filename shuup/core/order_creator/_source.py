@@ -24,6 +24,7 @@ from shuup.core.models import (
     PaymentMethod,
     Product,
     ProductMode,
+    ServiceBehaviorComponent,
     ShippingMethod,
     ShippingMode,
     Shop,
@@ -438,12 +439,6 @@ class OrderSource(object):
             return sum(count_in_line(line) for line in self.get_product_lines() if line.supplier == supplier)
         return sum(count_in_line(line) for line in self.get_product_lines())
 
-    def get_source_for_supplier(self, supplier=None):
-        """
-        Return order sources base on the supplier.
-        """
-        return self
-
     @property
     def product_line_count(self):
         """
@@ -637,6 +632,12 @@ class OrderSource(object):
             if not line_taxes:
                 untaxed += line.taxless_price
         return taxing.TaxSummary.from_line_taxes(all_line_taxes, untaxed)
+
+    def accepts_behavior_component(self, component: ServiceBehaviorComponent):
+        """
+        Returns whether this source accepts the given behavior component
+        """
+        return True
 
 
 def _collect_lines_from_signal(signal_results):

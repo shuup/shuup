@@ -51,6 +51,9 @@ class ShippingMethod(Service):
         """
         min_time, max_time = None, None
         for component in self.behavior_components.all():
+            if not source.accepts_behavior_component(component):
+                continue
+
             delivery_time = component.get_delivery_time(self, source)
             if delivery_time:
                 assert isinstance(delivery_time, DurationRange)
