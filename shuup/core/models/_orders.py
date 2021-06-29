@@ -23,6 +23,7 @@ from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+from typing import TYPE_CHECKING
 
 from shuup.core import taxing
 from shuup.core.excs import (
@@ -52,6 +53,9 @@ from ._order_lines import OrderLineType
 from ._order_utils import get_order_identifier, get_reference_number
 from ._products import Product
 from ._suppliers import Supplier
+
+if TYPE_CHECKING:
+    from ._service_base import Service, ServiceBehaviorComponent  # noqa (F401)
 
 
 class PaymentStatus(Enum):

@@ -4,7 +4,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from __future__ import unicode_literals
 
 import django
@@ -17,6 +16,7 @@ from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedField, TranslatedFields
+from typing import TYPE_CHECKING, Iterable, Union
 from uuid import uuid4
 
 from shuup.core.fields import InternalIdentifierField
@@ -25,6 +25,10 @@ from shuup.core.pricing import PriceInfo
 from ._base import PolymorphicShuupModel, PolymorphicTranslatableShuupModel, PolyTransModelBase, TranslatableShuupModel
 from ._product_shops import ShopProduct
 from ._shops import Shop
+
+if TYPE_CHECKING:
+    from shuup.core.models import Order
+    from shuup.core.order_creator import OrderSource
 
 
 class ServiceProvider(PolymorphicTranslatableShuupModel):
@@ -275,21 +279,15 @@ class Service(TranslatableShuupModel):
             return self.name
         return self.provider.get_effective_name(self, source)
 
-    def is_available_for(self, source):
+    def is_available_for(self, source: Union["OrderSource", "Order"]) -> bool:
         """
-        Return true if service is available for a given source.
-
-        :type source: shuup.core.order_creator.OrderSource
-        :rtype: bool
+        Return true if service is available for a given source or order.
         """
         return not any(self.get_unavailability_reasons(source))
 
-    def get_unavailability_reasons(self, source):
+    def get_unavailability_reasons(self, source: Union["OrderSource", "Order"]) -> Iterable[ValidationError]:
         """
-        Get reasons of being unavailable for a given source.
-
-        :type source: shuup.core.order_creator.OrderSource
-        :rtype: Iterable[ValidationError]
+        Get reasons of being unavailable for a given source or order.
         """
         if not self.provider or not self.provider.enabled or not self.enabled:
             yield ValidationError(_("%s is disabled.") % self, code="disabled")
@@ -301,25 +299,21 @@ class Service(TranslatableShuupModel):
             for reason in component.get_unavailability_reasons(self, source):
                 yield reason
 
-    def get_total_cost(self, source):
+    def get_total_cost(self, source: "OrderSource") -> PriceInfo:
         """
         Get total cost of this service for items in a given source.
-
-        :type source: shuup.core.order_creator.OrderSource
-        :rtype: PriceInfo
         """
         return _sum_costs(self.get_costs(source), source)
 
-    def get_costs(self, source):
+    def get_costs(self, source: "OrderSource") -> Iterable["ServiceCost"]:
         """
         Get costs of this service for items in a given source.
 
         :type source: shuup.core.order_creator.OrderSource
         :return: description, price and tax class of the costs.
-        :rtype: Iterable[ServiceCost]
         """
         for component in self.behavior_components.all():
-            for cost in component.get_costs(self, source.get_source_for_supplier(self.supplier)):
+            for cost in component.get_costs(self, source):
                 yield cost
 
     def get_lines(self, source):
@@ -457,27 +451,20 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
             raise TypeError("Error! %s.name is not defined." % type(self).__name__)
         super(ServiceBehaviorComponent, self).__init__(*args, **kwargs)
 
-    def get_unavailability_reasons(self, service, source):
-        """
-        :type service: Service
-        :type source: shuup.core.order_creator.OrderSource
-        :rtype: Iterable[ValidationError]
-        """
+    def get_unavailability_reasons(
+        self, service: "Service", source: Union["OrderSource", "Order"]
+    ) -> Iterable[ValidationError]:
         return ()
 
-    def get_costs(self, service, source):
+    def get_costs(self, service: "Service", source: "OrderSource"):
         """
         Return costs for this object. This should be implemented
         in a subclass. This method is used to calculate price for
         ``ShippingMethod`` and ``PaymentMethod`` objects.
-
-        :type service: Service
-        :type source: shuup.core.order_creator.OrderSource
-        :rtype: Iterable[ServiceCost]
         """
         return ()
 
-    def get_delivery_time(self, service, source):
+    def get_delivery_time(self, service: "Service", source: "OrderSource"):
         """
         :type service: Service
         :type source: shuup.core.order_creator.OrderSource

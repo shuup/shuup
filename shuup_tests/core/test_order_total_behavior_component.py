@@ -12,11 +12,13 @@ from shuup.core.models import OrderLineType, OrderTotalLimitBehaviorComponent, g
 from shuup.testing.factories import (
     create_product,
     get_address,
+    get_default_shop,
     get_default_supplier,
     get_initial_order_status,
     get_payment_method,
     get_shipping_method,
     get_shop,
+    get_supplier,
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -67,7 +69,56 @@ def test_order_total_behavior_unavailable(admin_user, min, max, price):
     shipping_method.behavior_components.clear()
 
 
-def _get_source(user, prices_include_taxes, total_price_value):
+@pytest.mark.django_db
+@pytest.mark.parametrize("prices_include_tax", [True, False])
+def test_order_total_behavior_unavailable_multiple_suppliers(admin_user, prices_include_tax):
+    shop = get_shop(prices_include_tax)
+    supplier_1 = get_supplier("simple_supplier", shop=shop)
+    supplier_2 = get_supplier("simple_supplier", shop=shop)
+
+    # create one source with a product for supplier_1
+    source, shipping_method = _get_source(admin_user, prices_include_tax, decimal.Decimal(5), supplier=supplier_1)
+
+    # set the supplier_2 for the shipping method
+    shipping_method.supplier = supplier_2
+    shipping_method.save()
+
+    component = OrderTotalLimitBehaviorComponent.objects.create(min_price_value=10, max_price_value=20)
+    shipping_method.behavior_components.add(component)
+
+    # nothing raised
+    assert not list(shipping_method.get_unavailability_reasons(source))
+
+    supplier_2_product = create_product(
+        sku="supplier_2_product",
+        shop=shop,
+        supplier=supplier_2,
+        default_price=decimal.Decimal(8),
+    )
+    # add one line
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=supplier_2_product,
+        supplier=supplier_2,
+        quantity=1,
+        base_unit_price=source.create_price(8),
+    )
+    # raise for supplier_2
+    assert list(shipping_method.get_unavailability_reasons(source))
+
+    # add one more item so it won't raise anymore
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=supplier_2_product,
+        supplier=supplier_2,
+        quantity=1,
+        base_unit_price=source.create_price(8),
+    )
+    # all good
+    assert not list(shipping_method.get_unavailability_reasons(source))
+
+
+def _get_source(user, prices_include_taxes, total_price_value, supplier=None):
     shop = get_shop(prices_include_taxes)
     payment_method = get_payment_method(shop)
     shipping_method = get_shipping_method(shop)
@@ -77,7 +128,7 @@ def _get_source(user, prices_include_taxes, total_price_value):
     assert source.payment_method_id == payment_method.id
     assert source.shipping_method_id == shipping_method.id
 
-    supplier = get_default_supplier()
+    supplier = supplier or get_default_supplier()
     product = create_product(
         sku="test-%s--%s" % (prices_include_taxes, total_price_value),
         shop=source.shop,
