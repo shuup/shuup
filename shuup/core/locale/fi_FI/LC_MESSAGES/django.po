@@ -28,9 +28,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-02 23:24+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -354,14 +354,71 @@ msgstr "päivämääräarvo"
 msgid "untranslated value"
 msgstr "kääntämätön tekstiarvo"
 
+msgid "queue name"
+msgstr ""
+
+msgid "task identifier"
+msgstr ""
+
+msgid "created on"
+msgstr "luotu"
+
+msgid "modified on"
+msgstr "muutettu"
+
+msgid "task function"
+msgstr ""
+
+msgid "task arguments"
+msgstr ""
+
+msgid "shop"
+msgstr "kauppa"
+
+msgid "supplier"
+msgstr "toimittaja"
+
+msgid "user"
+msgstr "käyttäjä"
+
+msgid "background task"
+msgstr ""
+
+msgid "background tasks"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "success"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "started on"
+msgstr ""
+
+msgid "finished on"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "error log"
+msgstr ""
+
+msgid "background task execution"
+msgstr ""
+
+msgid "background task executions"
+msgstr ""
+
 msgid "The following fields are protected and can not be changed."
 msgstr "Seuraavat kentät ovat lukittuja, eikä niiden sisältöä voi muokata."
 
 msgid "key"
 msgstr "avain"
-
-msgid "shop"
-msgstr "kauppa"
 
 msgid "customer"
 msgstr "asiakas"
@@ -371,9 +428,6 @@ msgstr "tilaaja"
 
 msgid "creator"
 msgstr "laatija"
-
-msgid "created on"
-msgstr "luotu"
 
 msgid "updated on"
 msgstr "päivitetty"
@@ -575,9 +629,6 @@ msgstr "Et voi asettaa kauppaa oletus kontaktiryhmälle."
 msgid "Can't delete. This object is protected."
 msgstr "Ei voi poistaa"
 
-msgid "modified on"
-msgstr "muutettu"
-
 msgid "active"
 msgstr "aktiivinen"
 
@@ -705,9 +756,6 @@ msgstr "muu"
 
 msgid "Person Contacts"
 msgstr "Yksityiskontaktit"
-
-msgid "user"
-msgstr "käyttäjä"
 
 msgid "gender"
 msgstr "sukupuoli"
@@ -844,9 +892,6 @@ msgstr "hyvitys"
 
 msgid "rounding"
 msgstr "pyöristys"
-
-msgid "supplier"
-msgstr "toimittaja"
 
 msgid "parent line"
 msgstr "ylärivi"
@@ -2186,6 +2231,9 @@ msgid ""
 "overwritten on a product-by-product basis."
 msgstr "Toimittaja hallinnoi tuotteiden saldoja. Saldojen hallinnointi on tarpeetonta esimerkiksi digitaalisten tuotteiden kanssa, sillä nämä eivät koskaan lopu. Tämä asetus määrittää oletusarvoisen käytännön, joka voidaan kumota tuotekohtaisesti."
 
+msgid "supplier modules"
+msgstr ""
+
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define"
 " the rules by which inventory is managed."
@@ -2215,6 +2263,20 @@ msgid "Approved"
 msgstr ""
 
 msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
+
+msgid "module identifier"
+msgstr ""
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr ""
+
+msgid "Module name"
+msgstr ""
+
+msgid "Supplier modules name."
 msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
@@ -2389,9 +2451,6 @@ msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
 msgstr "{value} {symbol}"
 
-msgid "No Choice"
-msgstr "ei valintaa"
-
 msgid "inherit"
 msgstr "periä"
 
@@ -2411,18 +2470,12 @@ msgstr "%s ei ole saatavana tässä myymälässä."
 msgid "Default Pricing"
 msgstr "Oletushinnoittelu"
 
-msgid "Error! Insufficient quantity in stock."
-msgstr "Tuotetta ei ole varastossa pyydettyä määrää."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
+msgstr ""
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s (fyysinen varastosaldo: %(quantity)s)"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: "
-"`%(product_counts)s`."
-msgstr "Riittämätön fyysinen varastomäärä seuraaville tuotteille: &quot;%(product_counts)s&quot;."
+msgid "Product"
+msgstr ""
 
 msgid "inventory"
 msgstr "varasto"
@@ -2432,6 +2485,12 @@ msgstr "uudelleenvarastoi"
 
 msgid "restock logical"
 msgstr "uudelleenvarastoi looginen"
+
+msgid "Failed to execute the task"
+msgstr ""
+
+msgid "An unexpeted error occurred."
+msgstr ""
 
 #, python-format
 msgid "Refund for %s"

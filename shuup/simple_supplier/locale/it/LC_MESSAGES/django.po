@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-05 13:35+0000\n"
-"PO-Revision-Date: 2021-05-05 16:18+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-02 23:25+0000\n"
 "Last-Translator: Christian Hess\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -122,6 +122,22 @@ msgstr "conto logico"
 
 msgid "physical count"
 msgstr "conto fisico"
+
+msgid "Simple Supplier"
+msgstr ""
+
+msgid "Error! Insufficient quantity in stock."
+msgstr ""
+
+#, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for the following products: "
+"`%(product_counts)s`."
+msgstr ""
 
 msgid "Alert Limit Reached"
 msgstr "Soglia Limite Raggiunta"

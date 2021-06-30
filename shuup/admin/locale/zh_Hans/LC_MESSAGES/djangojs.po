@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"POT-Creation-Date: 2021-05-11 12:15+0000\n"
+"PO-Revision-Date: 2021-05-11 19:28+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
@@ -647,6 +647,15 @@ msgstr "如果您需要再次运行它，请从右上角的菜单中启动它。
 msgid "Learn more at the Shuup Help Center"
 msgstr "在Shuup帮助中心了解更多信息"
 
+msgid "Previous"
+msgstr "上一页"
+
+msgid "OK"
+msgstr ""
+
+msgid "Next"
+msgstr "下一页"
+
 msgid "Mass actions"
 msgstr "群众行动"
 
@@ -682,12 +691,6 @@ msgstr "降序"
 
 msgid "Default sorting"
 msgstr "默认排序"
-
-msgid "Previous"
-msgstr "上一页"
-
-msgid "Next"
-msgstr "下一页"
 
 #, javascript-format
 msgid "Filter by %s"

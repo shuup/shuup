@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -812,8 +812,11 @@ msgstr "Статус оплаты"
 msgid "Shipping Status"
 msgstr "Статус отправления"
 
-msgid "Total"
-msgstr "Итог"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
+msgstr ""
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -917,6 +920,12 @@ msgstr "Невозможно осуществить полный возврат 
 msgid "Full refund created."
 msgstr "Полный возрат средств осуществлён."
 
+msgid "Description"
+msgstr "Описание"
+
+msgid "Tracking Code"
+msgstr "Код для отслеживания доставки"
+
 msgid "Tracking URL"
 msgstr ""
 
@@ -953,9 +962,6 @@ msgstr ""
 
 msgid "Supplier"
 msgstr ""
-
-msgid "Tracking Code"
-msgstr "Код для отслеживания доставки"
 
 #, python-brace-format
 msgid "Shipment {shipment_id}"
@@ -1545,10 +1551,6 @@ msgstr "Одобрено для {}"
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr "Показывает если поставщик одобрен для магазина."
 
-#, python-format
-msgid "No %s module"
-msgstr "Нет %s модуля"
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "Управлять инвентарём можно только если выбран модуль"
 
@@ -1559,8 +1561,12 @@ msgstr "{} нет в поле 'Магазины'"
 msgid "Success! %s has been marked deleted."
 msgstr "%s был отмечен для удаления"
 
-msgid "Module"
-msgstr "Модуль"
+msgid "Modules"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
+msgstr "Нет %s модуля"
 
 msgid "Shuup Support"
 msgstr "Поддержка Shuup"
@@ -1593,6 +1599,33 @@ msgstr "Ставка"
 
 msgid "Users"
 msgstr "Пользователи"
+
+msgid "Allow the user to change the passwords of other users."
+msgstr ""
+
+msgid "Allow the user send the reset password email."
+msgstr ""
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr ""
+
+msgid "Allow the user to see a user detail."
+msgstr ""
+
+msgid "Allow the user to create a new user."
+msgstr ""
+
+msgid "Allow the user to list the users."
+msgstr ""
+
+msgid "Allow the user to impersonate a different user."
+msgstr ""
+
+msgid "Allow the user to impersonate a staff user."
+msgstr ""
+
+msgid "Allow the user to change the user list columns."
+msgstr ""
 
 msgid "Add some users to help manage your shop"
 msgstr "Добавьте пользователей для управления вашим магазином"
@@ -3004,6 +3037,9 @@ msgstr "Давайте рассмотрим некоторые из вещей, 
 msgid "Date"
 msgstr "Дата"
 
+msgid "Total"
+msgstr "Итог"
+
 msgid "Save and Exit"
 msgstr "Сохранить и выйти"
 
@@ -3046,9 +3082,6 @@ msgstr "Комментарий сохранен"
 
 msgid "Updating the admin comment failed."
 msgstr "При обновлении комментария администратора произошла ошибка."
-
-msgid "Description"
-msgstr "Описание"
 
 msgid "No payments have been created yet."
 msgstr "Ни один платёж ещё не создан."
@@ -3589,8 +3622,8 @@ msgstr "Данные телеметрии"
 msgid "Here is an example of the data that would be submitted right now."
 msgstr "Здесь пример информации, которая будет подтверждена прямо сейчас."
 
-msgid "User Information"
-msgstr "Информация пользователя"
+msgid "Customer Information"
+msgstr ""
 
 #, python-format
 msgid "Send a password reset email to %(email)s?"

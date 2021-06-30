@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-05-05 17:00+0000\n"
-"Last-Translator: Christian Hess\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -803,8 +803,11 @@ msgstr "支付状态"
 msgid "Shipping Status"
 msgstr "配送状态"
 
-msgid "Total"
-msgstr "总共"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
+msgstr ""
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -908,6 +911,12 @@ msgstr ""
 msgid "Full refund created."
 msgstr "全部退款已创建"
 
+msgid "Description"
+msgstr "描述"
+
+msgid "Tracking Code"
+msgstr "追踪编号"
+
 msgid "Tracking URL"
 msgstr ""
 
@@ -944,9 +953,6 @@ msgstr ""
 
 msgid "Supplier"
 msgstr ""
-
-msgid "Tracking Code"
-msgstr "追踪编号"
 
 #, python-brace-format
 msgid "Shipment {shipment_id}"
@@ -1536,10 +1542,6 @@ msgstr ""
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr ""
 
-#, python-format
-msgid "No %s module"
-msgstr "没有 %s 模块"
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "未选择模块时无法管理库存"
 
@@ -1550,8 +1552,12 @@ msgstr ""
 msgid "Success! %s has been marked deleted."
 msgstr ""
 
-msgid "Module"
-msgstr "模块"
+msgid "Modules"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
+msgstr "没有 %s 模块"
 
 msgid "Shuup Support"
 msgstr "Shuup支持"
@@ -1584,6 +1590,33 @@ msgstr "费率"
 
 msgid "Users"
 msgstr "用户"
+
+msgid "Allow the user to change the passwords of other users."
+msgstr ""
+
+msgid "Allow the user send the reset password email."
+msgstr ""
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr ""
+
+msgid "Allow the user to see a user detail."
+msgstr ""
+
+msgid "Allow the user to create a new user."
+msgstr ""
+
+msgid "Allow the user to list the users."
+msgstr ""
+
+msgid "Allow the user to impersonate a different user."
+msgstr ""
+
+msgid "Allow the user to impersonate a staff user."
+msgstr ""
+
+msgid "Allow the user to change the user list columns."
+msgstr ""
 
 msgid "Add some users to help manage your shop"
 msgstr "添加一些用户来帮助管理您的商店"
@@ -2995,6 +3028,9 @@ msgstr "让我们来看看你在这里可以做的一些事情。 单击“下�
 msgid "Date"
 msgstr "日期"
 
+msgid "Total"
+msgstr "总共"
+
 msgid "Save and Exit"
 msgstr "保存并退出"
 
@@ -3037,9 +3073,6 @@ msgstr ""
 
 msgid "Updating the admin comment failed."
 msgstr ""
-
-msgid "Description"
-msgstr "描述"
 
 msgid "No payments have been created yet."
 msgstr "尚未创建任何付款"
@@ -3580,8 +3613,8 @@ msgstr "遥测数据"
 msgid "Here is an example of the data that would be submitted right now."
 msgstr "该数据例子现在可提交。"
 
-msgid "User Information"
-msgstr "用户信息"
+msgid "Customer Information"
+msgstr ""
 
 #, python-format
 msgid "Send a password reset email to %(email)s?"

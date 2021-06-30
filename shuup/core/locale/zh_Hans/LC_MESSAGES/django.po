@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-02 23:24+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,14 +334,71 @@ msgstr "日期时间值"
 msgid "untranslated value"
 msgstr "未译值"
 
+msgid "queue name"
+msgstr ""
+
+msgid "task identifier"
+msgstr ""
+
+msgid "created on"
+msgstr "创建"
+
+msgid "modified on"
+msgstr "修改"
+
+msgid "task function"
+msgstr ""
+
+msgid "task arguments"
+msgstr ""
+
+msgid "shop"
+msgstr "商店"
+
+msgid "supplier"
+msgstr "供应商"
+
+msgid "user"
+msgstr "用户"
+
+msgid "background task"
+msgstr ""
+
+msgid "background tasks"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "success"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "started on"
+msgstr ""
+
+msgid "finished on"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "error log"
+msgstr ""
+
+msgid "background task execution"
+msgstr ""
+
+msgid "background task executions"
+msgstr ""
+
 msgid "The following fields are protected and can not be changed."
 msgstr ""
 
 msgid "key"
 msgstr "键"
-
-msgid "shop"
-msgstr "商店"
 
 msgid "customer"
 msgstr "顾客"
@@ -351,9 +408,6 @@ msgstr "订货人"
 
 msgid "creator"
 msgstr "创建人"
-
-msgid "created on"
-msgstr "创建"
 
 msgid "updated on"
 msgstr "更新"
@@ -555,9 +609,6 @@ msgstr "无法为默认联系人组设置商店"
 msgid "Can't delete. This object is protected."
 msgstr "不能删除。此对象受到保护。"
 
-msgid "modified on"
-msgstr "修改"
-
 msgid "active"
 msgstr "活跃"
 
@@ -685,9 +736,6 @@ msgstr "其他"
 
 msgid "Person Contacts"
 msgstr "人员联系"
-
-msgid "user"
-msgstr "用户"
 
 msgid "gender"
 msgstr "性别"
@@ -824,9 +872,6 @@ msgstr "退款"
 
 msgid "rounding"
 msgstr "舍入"
-
-msgid "supplier"
-msgstr "供应商"
 
 msgid "parent line"
 msgstr "父行"
@@ -2166,6 +2211,9 @@ msgid ""
 "overwritten on a product-by-product basis."
 msgstr ""
 
+msgid "supplier modules"
+msgstr ""
+
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define"
 " the rules by which inventory is managed."
@@ -2195,6 +2243,20 @@ msgid "Approved"
 msgstr ""
 
 msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
+
+msgid "module identifier"
+msgstr ""
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr ""
+
+msgid "Module name"
+msgstr ""
+
+msgid "Supplier modules name."
 msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
@@ -2369,9 +2431,6 @@ msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
 msgstr ""
 
-msgid "No Choice"
-msgstr "没有选项"
-
 msgid "inherit"
 msgstr ""
 
@@ -2391,17 +2450,11 @@ msgstr ""
 msgid "Default Pricing"
 msgstr "默认定价"
 
-msgid "Error! Insufficient quantity in stock."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
 msgstr ""
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s(实物库存：%(quantity)s）"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: "
-"`%(product_counts)s`."
+msgid "Product"
 msgstr ""
 
 msgid "inventory"
@@ -2412,6 +2465,12 @@ msgstr "补货"
 
 msgid "restock logical"
 msgstr "补货逻辑"
+
+msgid "Failed to execute the task"
+msgstr ""
+
+msgid "An unexpeted error occurred."
+msgstr ""
 
 #, python-format
 msgid "Refund for %s"

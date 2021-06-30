@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Jonathan Hess <jhess666@gmail.com>, 2016
+# 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-06-23 18:04+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"PO-Revision-Date: 2017-09-22 19:29+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

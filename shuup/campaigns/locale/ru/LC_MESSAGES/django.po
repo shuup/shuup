@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"POT-Creation-Date: 2021-05-10 20:06+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
@@ -432,9 +432,9 @@ msgstr "Акция"
 msgid "The campaign name to show in the store front."
 msgstr "Название акции для изображения на витрине."
 
-#, python-format
-msgid "Catalog Campaign: %(name)s"
-msgstr "Кампания по каталогу:%(name)s"
+#, python-brace-format
+msgid "Catalog Campaign: {name}"
+msgstr ""
 
 msgid "basket line text"
 msgstr "Текст корзины"
@@ -460,9 +460,9 @@ msgstr ""
 msgid "public name"
 msgstr "публичное имя"
 
-#, python-format
-msgid "Basket Campaign: %(name)s"
-msgstr "Корзиночная кампания: %(name)s"
+#, python-brace-format
+msgid "Basket Campaign: {name}"
+msgstr ""
 
 msgid "Can't have multiple active campaigns with same code."
 msgstr "Нельзя иметь несколько активных кампаний с одним и тем же кодом."

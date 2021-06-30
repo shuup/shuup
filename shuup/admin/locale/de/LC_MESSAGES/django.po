@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
-"PO-Revision-Date: 2021-06-04 06:55+0000\n"
-"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -805,8 +805,11 @@ msgstr "Bezahlstatus"
 msgid "Shipping Status"
 msgstr "Versandstatus"
 
-msgid "Total"
-msgstr "Gesamtsumme"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
+msgstr ""
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -3026,6 +3029,9 @@ msgstr "Lass uns einige der Dinge durchgehen, die Du hier tun kannst. Klicke auf
 
 msgid "Date"
 msgstr "Datum"
+
+msgid "Total"
+msgstr "Gesamtsumme"
 
 msgid "Save and Exit"
 msgstr "Speichern und Verlassen"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:55+0000\n"
+"POT-Creation-Date: 2021-05-10 20:06+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -399,9 +399,9 @@ msgstr "活动"
 msgid "The campaign name to show in the store front."
 msgstr "在商店前面显示的活动名称"
 
-#, python-format
-msgid "Catalog Campaign: %(name)s"
-msgstr "目录活动：%(name)s"
+#, python-brace-format
+msgid "Catalog Campaign: {name}"
+msgstr ""
 
 msgid "basket line text"
 msgstr "购物篮文本行"
@@ -424,9 +424,9 @@ msgstr ""
 msgid "public name"
 msgstr "公用名称"
 
-#, python-format
-msgid "Basket Campaign: %(name)s"
-msgstr "购物篮活动: %(name)s"
+#, python-brace-format
+msgid "Basket Campaign: {name}"
+msgstr ""
 
 msgid "Can't have multiple active campaigns with same code."
 msgstr ""

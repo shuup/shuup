@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 13:42+0000\n"
+"POT-Creation-Date: 2019-12-02 12:09+0000\n"
 "PO-Revision-Date: 2016-06-28 10:53+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -32,13 +32,6 @@ msgstr "价格（%(shop)s/%(group)s）"
 #, python-format
 msgid "Discount (%(shop)s/%(group)s)"
 msgstr "折扣 (%(shop)s/%(group)s)"
-
-msgid "Customer Group Price"
-msgstr "顾客群定价"
-
-msgid ""
-"Customer group prices can be listed, fetched, created, updated and deleted."
-msgstr "顾客群定价可以列出、获取、创建、更新和删除。"
 
 msgid "product"
 msgstr "产品"

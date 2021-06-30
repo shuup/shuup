@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 14:26+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -96,6 +96,9 @@ msgstr "Выбор стиля"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Шрифты, цвета и стили для использования в вашей теме."
+
+msgid "Failed to render the plugin"
+msgstr ""
 
 msgid "Content in this box is shown to all user types without limitations."
 msgstr ""
@@ -299,6 +302,9 @@ msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "Существующий образец"
+
+msgid "Resource snippet for start of head"
+msgstr ""
 
 msgid "Resource snippet for end of head"
 msgstr "Образец ресурса для конца заглавия"

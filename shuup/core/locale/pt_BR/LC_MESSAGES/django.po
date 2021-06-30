@@ -3,15 +3,15 @@
 # 
 # Translators:
 # Christian Hess <christianhess.rlz@gmail.com>, 2018,2020
-# Christian Hess <christian@shuup.com>, 2021
+# Christian Hess, 2021
 # 2e5f34f1c58eda4787a14c9dc139ca5f, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 13:54+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-02 23:24+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -335,14 +335,71 @@ msgstr "valor data e hora"
 msgid "untranslated value"
 msgstr "valor não traduzido"
 
+msgid "queue name"
+msgstr ""
+
+msgid "task identifier"
+msgstr ""
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "modified on"
+msgstr "modificado em"
+
+msgid "task function"
+msgstr ""
+
+msgid "task arguments"
+msgstr ""
+
+msgid "shop"
+msgstr "loja"
+
+msgid "supplier"
+msgstr "fornecedor"
+
+msgid "user"
+msgstr "usuário"
+
+msgid "background task"
+msgstr ""
+
+msgid "background tasks"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "success"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "started on"
+msgstr ""
+
+msgid "finished on"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "error log"
+msgstr ""
+
+msgid "background task execution"
+msgstr ""
+
+msgid "background task executions"
+msgstr ""
+
 msgid "The following fields are protected and can not be changed."
 msgstr "Os campos a seguir são protegidos e não podem ser alterados."
 
 msgid "key"
 msgstr "chave"
-
-msgid "shop"
-msgstr "loja"
 
 msgid "customer"
 msgstr "cliente"
@@ -352,9 +409,6 @@ msgstr "comprador"
 
 msgid "creator"
 msgstr "O Criador"
-
-msgid "created on"
-msgstr "criado em"
 
 msgid "updated on"
 msgstr "atualizado em"
@@ -456,7 +510,7 @@ msgid "visible in menu"
 msgstr "visível no menu"
 
 msgid "Enable if this category should be visible in the store front's menu."
-msgstr ""
+msgstr "Ative se esta categoria deve estar visível no menu da fachada da loja."
 
 msgid "visible for groups"
 msgstr "visível para os grupos"
@@ -465,13 +519,13 @@ msgid ""
 "Select the customer groups you want to see this category. There are three "
 "groups created by default: Company, Person, Anonymous. In addition you can "
 "also define custom groups by searching for `Contact Groups`."
-msgstr ""
+msgstr "Selecione os grupos de clientes que deseja ver nesta categoria. Existem três grupos criados por padrão: Empresa, Pessoa, Anônimo. Além disso, você também pode definir grupos personalizados procurando por `Grupos de contatos`."
 
 msgid ""
 "Enter a descriptive name for your product category. Products can be found in"
 " the store front under the defined product category either directly in menus"
 " or while searching."
-msgstr ""
+msgstr "Insira um nome descritivo para sua categoria de produto. Os produtos podem ser encontrados na frente da loja sob a categoria de produto definida diretamente nos menus ou durante a pesquisa."
 
 msgid "description"
 msgstr "descrição"
@@ -479,7 +533,7 @@ msgstr "descrição"
 msgid ""
 "Give your product category a detailed description. This will help shoppers "
 "find your products under that category in your store and on the web."
-msgstr ""
+msgstr "Dê uma descrição detalhada da sua categoria de produto. Isso ajudará os compradores a encontrar seus produtos nessa categoria na sua loja e na web."
 
 msgid "slug"
 msgstr "slug"
@@ -489,7 +543,7 @@ msgid ""
 " short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your product category page URL in the browser address"
 " bar will look like. A default will be created using the category name."
-msgstr ""
+msgstr "Insira um slug de URL para sua categoria. Slug é um texto curto amigável ao usuário e ao mecanismo de pesquisa usado em uma URL para identificar e descrever um recurso. Nesse caso, ele determinará a aparência do URL da sua página de categoria de produto na barra de endereço do navegador. Um padrão será criado usando o nome da categoria."
 
 msgid "category"
 msgstr "categoria"
@@ -524,17 +578,17 @@ msgid "hide prices"
 msgstr "ocultar preços"
 
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #, python-format
 msgid "Price Display Options for Contact Group %s"
-msgstr ""
+msgstr "Opções de exibição de preço para Grupo de contato %s"
 
 msgid "contact group price display"
-msgstr ""
+msgstr "exibição de preço do grupo de contato"
 
 msgid "contact group price displays"
-msgstr ""
+msgstr "exibição de preço do grupo de contato"
 
 msgid "members"
 msgstr "membros"
@@ -542,7 +596,7 @@ msgstr "membros"
 msgid ""
 "The contact group name. Contact groups can be used to target sales and "
 "campaigns to a specific set of users."
-msgstr ""
+msgstr "O nome do grupo de contato. Os grupos de contatos podem ser usados para direcionar vendas e campanhas a um conjunto específico de usuários."
 
 msgid "contact group"
 msgstr "grupo de contatos"
@@ -551,25 +605,22 @@ msgid "contact groups"
 msgstr "grupos de contatos"
 
 msgid "Cannot set shop for default Contact Group."
-msgstr ""
+msgstr "Não é possível definir loja para Grupo de contato padrão."
 
 msgid "Can't delete. This object is protected."
 msgstr "Não é possível excluir. Este objeto está protegido."
-
-msgid "modified on"
-msgstr "modificado em"
 
 msgid "active"
 msgstr "ativo"
 
 msgid "Enable this if the contact is an active customer."
-msgstr ""
+msgstr "Ative-o se o contato for um cliente ativo."
 
 msgid "Inform which shops have access to this contact."
-msgstr ""
+msgstr "Informe quais lojas têm acesso a este contato."
 
 msgid "registration shop"
-msgstr ""
+msgstr "loja de registro"
 
 msgid "default shipping method"
 msgstr "forma de entrega padrão"
@@ -582,23 +633,23 @@ msgstr "idioma"
 
 msgid ""
 "The primary language to be used in all communications with the contact."
-msgstr ""
+msgstr "O idioma principal a ser usado em todas as comunicações com o contato."
 
 msgid "marketing permission"
 msgstr "permissão de marketing"
 
 msgid ""
 "Enable this if the contact can receive marketing and promotional materials."
-msgstr ""
+msgstr "Ative-o se o contato puder receber materiais de marketing e promocionais."
 
 msgid "The primary phone number of the contact."
-msgstr ""
+msgstr "O número de telefone principal do contato."
 
 msgid "web address"
 msgstr "endereço web"
 
 msgid "The web address of the contact, if any."
-msgstr ""
+msgstr "O endereço da web do contato, se houver."
 
 msgid "time zone"
 msgstr "fuso horário"
@@ -606,21 +657,21 @@ msgstr "fuso horário"
 msgid ""
 "The timezone in which the contact resides. This can be used to target the "
 "delivery of promotional materials at a particular time."
-msgstr ""
+msgstr "O fuso horário em que o contato reside. Isso pode ser usado para direcionar a entrega de materiais promocionais em um determinado momento."
 
 msgid "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
-msgstr ""
+msgstr "O prefixo do nome do contato. Por exemplo, Sr., Sra., Dr., etc."
 
 msgid "The contact name"
-msgstr ""
+msgstr "O nome do contato"
 
 msgid "The name suffix of the contact. For example, Sr, Jr, etc."
-msgstr ""
+msgstr "O sufixo do nome do contato. Por exemplo, Sr, Jr, etc."
 
 msgid ""
 "The email that will receive order confirmations and promotional materials "
 "(if permitted)."
-msgstr ""
+msgstr "O e-mail que receberá as confirmações de pedido e materiais promocionais (se permitido)."
 
 msgid "tax group"
 msgstr "grupo de impostos"
@@ -630,7 +681,7 @@ msgid ""
 " to customize the tax rules the that apply to any of this contact's orders. "
 "Tax groups are defined in `Customer Tax Groups` and can be applied to tax "
 "rules in `Tax Rules`."
-msgstr ""
+msgstr "Selecione o grupo de imposto de contato a ser usado para este contato. Os grupos de impostos podem ser usados para personalizar as regras fiscais que se aplicam a qualquer um dos pedidos desse contato. Os grupos de impostos são definidos em `Grupos de impostos do cliente` e podem ser aplicados às regras de impostos em` Regras de impostos`."
 
 msgid "merchant notes"
 msgstr "notas do lojista"
@@ -638,7 +689,7 @@ msgstr "notas do lojista"
 msgid ""
 "Enter any private notes for this customer that are only accessible in Shuup "
 "admin."
-msgstr ""
+msgstr "Insira quaisquer notas privadas para este cliente que só podem ser acessadas no administrador Shuup."
 
 msgid "account manager"
 msgstr "administrador da conta"
@@ -647,12 +698,12 @@ msgid "options"
 msgstr "opções"
 
 msgid "picture"
-msgstr ""
+msgstr "foto"
 
 msgid ""
 "Contact picture. Can be used alongside contact profile, reviews and messages"
 " for example."
-msgstr ""
+msgstr "Foto do contato. Pode ser usado ao lado de perfil de contato, comentários e mensagens, por exemplo."
 
 msgid "contact"
 msgstr "contato"
@@ -687,32 +738,29 @@ msgstr "outro"
 msgid "Person Contacts"
 msgstr "Contatos Pessoais"
 
-msgid "user"
-msgstr "usuário"
-
 msgid "gender"
 msgstr "gênero"
 
 msgid "The gender of the contact."
-msgstr ""
+msgstr "O gênero do contato."
 
 msgid "birth date"
 msgstr "data de nascimento"
 
 msgid "The birth date of the contact."
-msgstr ""
+msgstr "A data de nascimento do contato."
 
 msgid "first name"
 msgstr "primeiro nome"
 
 msgid "The first name of the contact."
-msgstr ""
+msgstr "O primeiro nome do contato."
 
 msgid "last name"
 msgstr "sobrenome"
 
 msgid "The last name of the contact."
-msgstr ""
+msgstr "O sobrenome do contato."
 
 msgid "person"
 msgstr "pessoa"
@@ -739,25 +787,25 @@ msgid "code"
 msgstr "código"
 
 msgid "The ISO-4217 code of the currency"
-msgstr ""
+msgstr "O código ISO-4217 da moeda"
 
 msgid "decimal places"
-msgstr ""
+msgstr "casas decimais"
 
 msgid "The number of decimal places supported by this currency."
-msgstr ""
+msgstr "O número de casas decimais suportadas por esta moeda."
 
 msgid "Enter a valid ISO-4217 currency code."
-msgstr ""
+msgstr "Insira um código de moeda ISO-4217 válido."
 
 msgid "currencies"
-msgstr ""
+msgstr "moedas"
 
 msgid "label"
 msgstr "rótulo"
 
 msgid "labels"
-msgstr ""
+msgstr "rótulos"
 
 msgid "added"
 msgstr "adicionado"
@@ -765,7 +813,7 @@ msgstr "adicionado"
 msgid ""
 "Enter the manufacturer’s name. Products can be filtered by the manufacturer "
 "and this can be useful for inventory and stock management."
-msgstr ""
+msgstr "Digite o nome do fabricante. Os produtos podem ser filtrados pelo fabricante e isso pode ser útil para gerenciamento de estoque e estoque."
 
 msgid "URL"
 msgstr "URL"
@@ -773,7 +821,7 @@ msgstr "URL"
 msgid ""
 "Enter the URL of the product manufacturer if you would like customers to be "
 "able to visit the manufacturer's website."
-msgstr ""
+msgstr "Insira a URL do fabricante do produto se desejar que os clientes possam visitar o site do fabricante."
 
 msgid "logo"
 msgstr "logotipo"
@@ -788,25 +836,25 @@ msgid "file"
 msgstr "arquivo"
 
 msgid "Select which shops you would like the files to be visible in."
-msgstr ""
+msgstr "Selecione em quais lojas você gostaria que os arquivos fossem visíveis."
 
 msgid "folder"
-msgstr ""
+msgstr "pasta"
 
 msgid "Select which shops you would like the folder to be visible in."
-msgstr ""
+msgstr "Selecione em quais lojas você gostaria que a pasta estivesse visível."
 
 msgid "Should this folder be visible for everyone in the media browser"
-msgstr ""
+msgstr "Esta pasta deve ser visível para todos no navegador de mídia"
 
 msgid "owning_media_folders"
-msgstr ""
+msgstr "owning_media_folders"
 
 msgid "owners"
-msgstr ""
+msgstr "os Proprietários"
 
 msgid "Select which users will own this folder."
-msgstr ""
+msgstr "Selecione quais usuários possuirão esta pasta."
 
 msgid "product"
 msgstr "produto"
@@ -825,9 +873,6 @@ msgstr "devolução"
 
 msgid "rounding"
 msgstr "arredondamento"
-
-msgid "supplier"
-msgstr "fornecedor"
 
 msgid "parent line"
 msgstr "item pai"
@@ -884,7 +929,7 @@ msgid "base amount"
 msgstr "valor base"
 
 msgid "Amount that this tax is calculated from."
-msgstr ""
+msgstr "Quantia a partir da qual este imposto é calculado."
 
 msgid "not paid"
 msgstr "não pago"
@@ -914,33 +959,33 @@ msgid "none"
 msgstr "nenhum"
 
 msgid "Initial"
-msgstr ""
+msgstr "Inicial"
 
 msgid "Complete"
-msgstr ""
+msgstr "Completo"
 
 msgid "Canceled"
-msgstr ""
+msgstr "Cancelado"
 
 msgid "Processing"
-msgstr ""
+msgstr "Em processamento"
 
 msgid "Received"
-msgstr ""
+msgstr "Recebido"
 
 msgid "In Progress"
-msgstr ""
+msgstr "Em andamento"
 
 msgid ""
 "Internal identifier for status. This is used to identify and distinguish the"
 " statuses in Shuup."
-msgstr ""
+msgstr "Identificador interno para status. Isso é usado para identificar e distinguir os status no Shuup."
 
 msgid "The processing order of statuses. Default is always processed first."
-msgstr ""
+msgstr "A ordem de processamento dos status. O padrão é sempre processado primeiro."
 
 msgid "The role of this status. One role can have multiple order statuses."
-msgstr ""
+msgstr "A função deste status. Uma função pode ter vários status de pedido."
 
 msgid "default"
 msgstr "padrão"
@@ -948,28 +993,28 @@ msgstr "padrão"
 msgid ""
 "Defines if the status should be considered as default. Default is always "
 "processed first."
-msgstr ""
+msgstr "Define se o status deve ser considerado como padrão. O padrão é sempre processado primeiro."
 
 msgid "is active"
-msgstr ""
+msgstr "está ativo"
 
 msgid "Defines if the status is usable."
-msgstr ""
+msgstr "Define se o status é utilizável."
 
 msgid "Name of the order status."
-msgstr ""
+msgstr "Nome do status do pedido."
 
 msgid "public name"
 msgstr "nome público"
 
 msgid "The name shown to the customers in shop front."
-msgstr ""
+msgstr "O nome mostrado aos clientes na frente da loja."
 
 msgid "order status"
-msgstr ""
+msgstr "status do pedido"
 
 msgid "order statuses"
-msgstr ""
+msgstr "status do pedido"
 
 msgid "order identifier"
 msgstr "identificador do pedido"
@@ -981,7 +1026,7 @@ msgid "email address"
 msgstr "endereço de e-mail"
 
 msgid "customer groups"
-msgstr ""
+msgstr "grupos de clientes"
 
 msgid "creating user"
 msgstr "usuário criação"
@@ -1053,25 +1098,25 @@ msgid "orders"
 msgstr "pedidos"
 
 msgid "Order was marked as paid."
-msgstr ""
+msgstr "O pedido foi marcado como pago."
 
 msgid "Order was marked as partially paid."
-msgstr ""
+msgstr "O pedido foi marcado como parcialmente pago."
 
 #, python-format
 msgid "Success! Shipment #%d was created."
-msgstr ""
+msgstr "Sucesso! Remessa # %d foi criada."
 
 msgid "All rows requiring verification have been verified."
 msgstr "Todas as linhas que necessitam de verificação foram verificadas."
 
 #, python-format
 msgid "New shipping status is set to: %(shipping_status)s."
-msgstr ""
+msgstr "O novo status de envio é definido como: %(shipping_status)s."
 
 #, python-format
 msgid "New payment status is set to: %(payment_status)s."
-msgstr ""
+msgstr "O novo status de pagamento é definido como: %(payment_status)s."
 
 msgid "gateway ID"
 msgstr "ID do gateway"
@@ -1107,7 +1152,7 @@ msgid "sample"
 msgstr "amostra"
 
 msgid "Select which shops you would like the product media to be visible in."
-msgstr ""
+msgstr "Selecione em quais lojas você gostaria que a mídia do produto fosse visível."
 
 msgid "kind"
 msgstr "tipo"
@@ -1115,7 +1160,7 @@ msgstr "tipo"
 msgid ""
 "Select what type the media is. It can either be a normal file, part of the "
 "documentation, or a sample."
-msgstr ""
+msgstr "Selecione o tipo de mídia. Pode ser um arquivo normal, parte da documentação ou uma amostra."
 
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
@@ -1125,7 +1170,7 @@ msgstr "Digite o URL para um arquivo externo. Se este campo for preenchido, a m�
 msgid ""
 "You can assign numerical values to images to tell the order in which they "
 "shall be displayed on the product page."
-msgstr ""
+msgstr "Você pode atribuir valores numéricos às imagens para informar a ordem em que devem ser exibidas na página do produto."
 
 msgid "public (shown on product page)"
 msgstr "público (mostrado na página do produto)"
@@ -1133,7 +1178,7 @@ msgstr "público (mostrado na página do produto)"
 msgid ""
 "Enable this if you want this image be shown on the product page. Enabled by "
 "default."
-msgstr ""
+msgstr "Ative-o se quiser que esta imagem seja mostrada na página do produto. Ativado por padrão."
 
 msgid "purchased (shown for finished purchases)"
 msgstr "comprado (mostrado para compras realizadas)"
@@ -1141,17 +1186,17 @@ msgstr "comprado (mostrado para compras realizadas)"
 msgid ""
 "Enable this if you want the product media to be shown for completed "
 "purchases."
-msgstr ""
+msgstr "Ative-o se quiser que a mídia do produto seja exibida para compras concluídas."
 
 msgid ""
 "Choose a title for your product media. This will help it be found in your "
 "store and on the web."
-msgstr ""
+msgstr "Escolha um título para a mídia do seu produto. Isso ajudará a encontrá-lo em sua loja e na web."
 
 msgid ""
 "Write a description for your product media. This will help it be found in "
 "your store and on the web."
-msgstr ""
+msgstr "Escreva uma descrição para a mídia do seu produto. Isso ajudará a encontrá-lo em sua loja e na web."
 
 msgid "product attachment"
 msgstr "anexo do produto"
@@ -1183,10 +1228,10 @@ msgstr "fornecedores"
 msgid ""
 "List your suppliers here. Suppliers can be found by searching for "
 "`Suppliers`."
-msgstr ""
+msgstr "Liste seus fornecedores aqui. Os fornecedores podem ser encontrados pesquisando por `Fornecedores`."
 
 msgid "visibility"
-msgstr ""
+msgstr "visibilidade"
 
 msgid ""
 "Choose how you want your product to be seen and found by the customers. "
@@ -1195,7 +1240,7 @@ msgid ""
 " any category page.</p><p>Listed: Product will be shown on category pages, "
 "but not shown in search results.</p><p>Always Visible: Product will be shown"
 " in your store front and found in search.</p>"
-msgstr ""
+msgstr "Escolha como deseja que seu produto seja visto e encontrado pelos clientes.<p> Não visível: o produto não será mostrado na frente da sua loja nem encontrado na pesquisa.</p><p> Pesquisável: o produto será mostrado na pesquisa, mas não listado em nenhuma página de categoria.</p><p> Listado: o produto será mostrado nas páginas de categoria, mas não nos resultados da pesquisa.</p><p> Sempre visível: o produto será mostrado na frente da sua loja e encontrado na pesquisa.</p>"
 
 msgid "purchasable"
 msgstr "comprável"
@@ -1204,12 +1249,12 @@ msgid ""
 "Select whether you want your product to have special limitations on its "
 "visibility in your store. You can make products visible to all, visible to "
 "only logged-in users, or visible only to certain customer groups."
-msgstr ""
+msgstr "Selecione se deseja que seu produto tenha limitações especiais de visibilidade em sua loja. Você pode tornar os produtos visíveis para todos, visíveis apenas para usuários logados ou visíveis apenas para determinados grupos de clientes."
 
 msgid ""
 "Select the groups you want to make your product visible for. These groups "
 "are defined in Contacts Settings - Contact Groups."
-msgstr ""
+msgstr "Selecione os grupos para os quais deseja tornar seu produto visível. Esses grupos são definidos em Configurações de contatos - Grupos de contatos."
 
 msgid "backorder maximum"
 msgstr "máximo de pedidos em espera"
@@ -1218,7 +1263,7 @@ msgid ""
 "The number of units that can be purchased after the product is already sold "
 "out (out of stock). Set to blank for product to be purchasable without "
 "limits."
-msgstr ""
+msgstr "O número de unidades que podem ser adquiridas depois que o produto já está esgotado (fora de estoque). Defina como em branco para que o produto possa ser comprado sem limites."
 
 msgid "purchase multiple"
 msgstr "múltiplos de compra"
@@ -1228,33 +1273,33 @@ msgid ""
 "For example, if the purchase multiple is set to 2, then customers are "
 "required to order the product in multiples of 2. Not to be confused with the"
 " Minimum Purchase Quantity."
-msgstr ""
+msgstr "Defina como diferente de 0 se o produto precisar ser comprado em vários. Por exemplo, se o múltiplo de compra for definido como 2, os clientes deverão pedir o produto em múltiplos de 2. Não deve ser confundido com a Quantidade Mínima de Compra."
 
 msgid "minimum purchase quantity"
-msgstr ""
+msgstr "quantidade mínima de compra"
 
 msgid ""
 "Set a minimum number of products needed to be ordered for the purchase. This"
 " is useful for setting bulk orders and B2B purchases."
-msgstr ""
+msgstr "Defina um número mínimo de produtos necessários para a compra. Isso é útil para definir pedidos em massa e compras B2B."
 
 msgid "limit the shipping methods"
-msgstr ""
+msgstr "limitar os métodos de envio"
 
 msgid ""
 "Enable this if you want to limit your product to use only the select "
 "shipping methods. You can select the allowed shipping method(s) in the field"
 " below - all the rest are disallowed."
-msgstr ""
+msgstr "Ative esta opção se desejar limitar o seu produto para usar apenas os métodos de envio selecionados. Você pode selecionar o (s) método (s) de envio permitido (s) no campo abaixo - todos os demais não são permitidos."
 
 msgid "limit the payment methods"
-msgstr ""
+msgstr "limitar os métodos de pagamento"
 
 msgid ""
 "Enable this if you want to limit your product to use only the select payment"
 " methods. You can select the allowed payment method(s) in the field below - "
 "all the rest are disallowed."
-msgstr ""
+msgstr "Habilite esta opção se você deseja limitar o seu produto para usar apenas os métodos de pagamento selecionados. Você pode selecionar os métodos de pagamento permitidos no campo abaixo - todos os demais não são permitidos."
 
 msgid "shipping methods"
 msgstr "formas de entrega"
@@ -1264,7 +1309,7 @@ msgid ""
 "can select the individual shipping methods you want to ALLOW for this "
 "product. The ones not mentioned are disabled. To change this, search for "
 "`Shipping Methods`."
-msgstr ""
+msgstr "Se você habilitou a opção `Limitar os métodos de pagamento` acima, então aqui você pode selecionar os métodos de envio individuais que deseja PERMITIR para este produto. Os não mencionados estão desativados. Para alterar isso, pesquise por `Métodos de envio`."
 
 msgid "payment methods"
 msgstr "formas de pagamento"
@@ -1274,7 +1319,7 @@ msgid ""
 "can select the individuals payment methods you want to ALLOW for this "
 "product. The ones not mentioned are disabled. To change this, search for "
 "`Payment Methods`."
-msgstr ""
+msgstr "Se você habilitou a opção `Limitar os métodos de pagamento` acima, então aqui você pode selecionar os métodos de pagamento individuais que deseja PERMITIR para este produto. Os não mencionados estão desativados. Para alterar isso, pesquise por `Métodos de pagamento`."
 
 msgid "primary category"
 msgstr "categoria principal"
@@ -1283,19 +1328,19 @@ msgid ""
 "Choose the primary category for the product. This will be the main category "
 "for classification in the system. The product will be found under this "
 "category in your store. To change this, search for `Categories`."
-msgstr ""
+msgstr "Escolha a categoria principal do produto. Esta será a principal categoria de classificação no sistema. O produto será encontrado nesta categoria em sua loja. Para mudar isso, pesquise por `Categorias`."
 
 msgid ""
 "Add secondary categories for your product. These are other categories that "
 "your product fits under and that it can be found by in your store."
-msgstr ""
+msgstr "Adicione categorias secundárias para seu produto. Estas são outras categorias nas quais o seu produto se enquadra e que pode ser encontrado na sua loja."
 
 msgid "primary image"
 msgstr "imagem principal"
 
 msgid ""
 "Click this to set this image as the primary display image for the product."
-msgstr ""
+msgstr "Clique aqui para definir esta imagem como a imagem de exibição principal do produto."
 
 msgid "default price"
 msgstr "preço padrão"
@@ -1304,7 +1349,7 @@ msgid ""
 "This is the default individual base unit (or multi-pack) price of the "
 "product. All discounts or coupons will be calculated based off of this "
 "price."
-msgstr ""
+msgstr "Este é o preço da unidade base individual (ou pacote múltiplo) padrão do produto. Todos os descontos ou cupons serão calculados com base neste preço."
 
 msgid "minimum price"
 msgstr "preço mínimo"
@@ -1313,40 +1358,40 @@ msgid ""
 "This is the default price that the product cannot go under in your store, "
 "despite coupons or discounts being applied. This is useful to make sure your"
 " product price stays above the cost."
-msgstr ""
+msgstr "Este é o preço padrão que o produto não pode custar em sua loja, apesar dos cupons ou descontos aplicados. Isso é útil para garantir que o preço do produto permaneça acima do custo."
 
 msgid "available until"
-msgstr ""
+msgstr "disponível até"
 
 msgid "After this date this product will be invisible in store front."
-msgstr ""
+msgstr "Após esta data, este produto ficará invisível na frente da loja."
 
 msgid "display unit"
-msgstr ""
+msgstr "unidade de exibição"
 
 msgid "Unit for displaying quantities of this product."
-msgstr ""
+msgstr "Unidade para exibir quantidades deste produto."
 
 msgid ""
 "Enter a descriptive name for your product. This will be its title in your "
 "store front."
-msgstr ""
+msgstr "Insira um nome descritivo para o seu produto. Este será o seu título na frente da sua loja."
 
 msgid ""
 "To make your product stands out, give it an awesome description. This is "
 "what will help your shoppers learn about your products. It will also help "
 "shoppers find them in the store and on the web."
-msgstr ""
+msgstr "Para fazer seu produto se destacar, dê uma descrição incrível. Isso é o que ajudará seus clientes a aprender sobre seus produtos. Também ajudará os compradores a encontrá-los na loja e na web."
 
 msgid "short description"
-msgstr ""
+msgstr "Pequena descrição"
 
 msgid ""
 "Enter a short description for your product. The short description will be "
 "used to get the attention of your customer with a small, but precise "
 "description of your product. It also helps with getting more traffic via "
 "search engines."
-msgstr ""
+msgstr "Insira uma breve descrição para o seu produto. A breve descrição será usada para chamar a atenção do seu cliente com uma descrição pequena, mas precisa do seu produto. Também ajuda a obter mais tráfego através dos motores de busca."
 
 msgid "status text"
 msgstr "texto de status"
@@ -1355,18 +1400,18 @@ msgid ""
 "This text will be shown alongside the product in the shop. It is useful for "
 "informing customers of special stock numbers or preorders. (Ex.: Available "
 "in a month)"
-msgstr ""
+msgstr "Este texto será mostrado ao lado do produto na loja. É útil para informar os clientes sobre números de estoque especiais ou encomendas. (Ex .: Disponível em um mês)"
 
 msgid "shop product"
-msgstr ""
+msgstr "produto da loja"
 
 msgid "shop products"
-msgstr ""
+msgstr "produtos da loja"
 
 msgid ""
 "Error! Invalid display unit: Internal unit of the selected display unit does"
 " not match with the sales unit of the product."
-msgstr ""
+msgstr "Erro! Unidade de exibição inválida: a unidade interna da unidade de exibição selecionada não corresponde à unidade de vendas do produto."
 
 msgid "This product has been deleted."
 msgstr "Este produto foi excluído."
@@ -1375,7 +1420,7 @@ msgid "This product is not visible."
 msgstr "Este produto não é visível."
 
 msgid "Error! This product is not available until the current date."
-msgstr ""
+msgstr "Erro! Este produto não está disponível até a data atual."
 
 msgid "The Product is invisible to users not logged in."
 msgstr "O Produto é invisível para os usuários não autenticados."
@@ -1384,7 +1429,7 @@ msgid "This product is not visible to your group."
 msgstr "Este produto não é visível para o seu grupo."
 
 msgid "The product is not purchasable."
-msgstr ""
+msgstr "O produto não pode ser comprado."
 
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
@@ -1394,13 +1439,13 @@ msgstr "A quantidade de compra deve ser de pelo menos %d para este produto."
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{amount}."
-msgstr ""
+msgstr "O produto só pode ser pedido em múltiplos de {package_size}, por exemplo {amount}."
 
 #, python-brace-format
 msgid ""
 "The product can only be ordered in multiples of {package_size}, for example "
 "{smaller_amount} or {larger_amount}."
-msgstr ""
+msgstr "O produto só pode ser pedido em múltiplos de {package_size}, por exemplo {smaller_amount} ou {larger_amount}."
 
 msgid "The product has no supplier."
 msgstr "O produto não tem nenhum fornecedor."
@@ -1410,7 +1455,7 @@ msgid "The product is not supplied by %s."
 msgstr "O produto não é fornecido por %s."
 
 msgid "Product has no sellable children."
-msgstr ""
+msgstr "O produto não tem filhos vendáveis."
 
 msgid "variation variable"
 msgstr "variável de variação"
@@ -1452,7 +1497,7 @@ msgid "variation child"
 msgstr "variação filho"
 
 msgid "subscription"
-msgstr ""
+msgstr "inscrição"
 
 msgid "visible to logged in"
 msgstr "visível a autenticados"
@@ -1479,10 +1524,10 @@ msgid "bought with"
 msgstr "comprado com"
 
 msgid "not shipped (non-deliverable)"
-msgstr ""
+msgstr "não enviado (não entregue)"
 
 msgid "shipped (deliverable)"
-msgstr ""
+msgstr "enviado (entrega)"
 
 msgid "no verification required"
 msgstr "nenhuma verificação necessária"
@@ -1496,12 +1541,12 @@ msgstr "verificação por terceiros necessária"
 msgid ""
 "Enter a descriptive name for your product type. Products and attributes for "
 "products of this type can be found under this name."
-msgstr ""
+msgstr "Insira um nome descritivo para o seu tipo de produto. Produtos e atributos para produtos desse tipo podem ser encontrados sob este nome."
 
 msgid ""
 "Select attributes that go with your product type. To change available "
 "attributes search for `Attributes`."
-msgstr ""
+msgstr "Selecione os atributos que correspondem ao seu tipo de produto. Para alterar os atributos disponíveis, procure `Atributos`."
 
 msgid "product type"
 msgstr "tipo de produto"
@@ -1519,7 +1564,7 @@ msgid "shipping mode"
 msgstr "modo de transporte"
 
 msgid "Set to `shipped` if the product requires shipment."
-msgstr ""
+msgstr "Defina como `enviado` se o produto precisar ser enviado."
 
 msgid "sales unit"
 msgstr "unidade de vendas"
@@ -1528,7 +1573,7 @@ msgid ""
 "Select a sales unit for your product. This is shown in your store front and "
 "is used to determine whether the product can be purchased using fractional "
 "amounts. To change settings search for `Sales Units`."
-msgstr ""
+msgstr "Selecione uma unidade de vendas para o seu produto. Isso é mostrado na fachada da sua loja e é usado para determinar se o produto pode ser comprado usando quantidades fracionárias. Para alterar as configurações, pesquise por `Unidades de vendas`."
 
 msgid "tax class"
 msgstr "classe fiscal"
@@ -1538,12 +1583,12 @@ msgid ""
 "which taxes to apply to your product. Define tax classes by searching for "
 "`Tax Classes`. To define the rules by which taxes are applied search for "
 "`Tax Rules`."
-msgstr ""
+msgstr "Selecione uma classe de imposto para o seu produto. A classe de imposto é usada para determinar quais impostos se aplicam ao seu produto. Defina as classes de impostos pesquisando `Classes de impostos`. Para definir as regras pelas quais os impostos são aplicados, pesquise `Regras fiscais &#39;."
 
 msgid ""
 "Select a product type for your product. These allow you to configure custom "
 "attributes to help with classification and analysis."
-msgstr ""
+msgstr "Selecione um tipo de produto para o seu produto. Isso permite que você configure atributos personalizados para ajudar na classificação e análise."
 
 msgid "SKU"
 msgstr "SKU"
@@ -1553,7 +1598,7 @@ msgid ""
 "identification code that helps you track products through your inventory and"
 " analyze their movement. People often use the product's barcode number, but "
 "you can set up any numerical system you want to keep track of products."
-msgstr ""
+msgstr "Insira um número de SKU (unidade de manutenção de estoque) para o seu produto. Este é um código de identificação de produto que o ajuda a rastrear produtos em seu estoque e analisar sua movimentação. As pessoas costumam usar o número do código de barras do produto, mas você pode configurar qualquer sistema numérico que desejar para controlar os produtos."
 
 msgid "GTIN"
 msgstr "GTIN"
@@ -1562,7 +1607,7 @@ msgid ""
 "You can enter a Global Trade Item Number. This is typically a 14 digit "
 "identification number for all of your trade items. It can often be found by "
 "the barcode."
-msgstr ""
+msgstr "Você pode inserir um Número de item comercial global. Normalmente, é um número de identificação de 14 dígitos para todos os seus itens comerciais. Muitas vezes, ele pode ser encontrado pelo código de barras."
 
 msgid "barcode"
 msgstr "código de barras"
@@ -1570,7 +1615,7 @@ msgstr "código de barras"
 msgid ""
 "You can enter the barcode number for your product. This is useful for "
 "inventory/stock tracking and analysis."
-msgstr ""
+msgstr "Você pode inserir o número do código de barras do seu produto. Isso é útil para rastreamento e análise de estoque / estoque."
 
 msgid "bookkeeping account"
 msgstr "conta contabilidade"
@@ -1582,65 +1627,65 @@ msgid "cost center"
 msgstr "centro de custo"
 
 msgid "width ({})"
-msgstr ""
+msgstr "largura ({})"
 
 msgid ""
 "Set the measured width of your product or product packaging. This will "
 "provide customers with the product size and help with calculating shipping "
 "costs."
-msgstr ""
+msgstr "Defina a largura medida do seu produto ou embalagem do produto. Isso fornecerá aos clientes o tamanho do produto e ajudará no cálculo dos custos de envio."
 
 msgid "height ({})"
-msgstr ""
+msgstr "altura ({})"
 
 msgid ""
 "Set the measured height of your product or product packaging. This will "
 "provide customers with the product size and help with calculating shipping "
 "costs."
-msgstr ""
+msgstr "Defina a altura medida do seu produto ou embalagem do produto. Isso fornecerá aos clientes o tamanho do produto e ajudará no cálculo dos custos de envio."
 
 msgid "depth ({})"
-msgstr ""
+msgstr "profundidade ({})"
 
 msgid ""
 "Set the measured depth or length of your product or product packaging. This "
 "will provide customers with the product size and help with calculating "
 "shipping costs."
-msgstr ""
+msgstr "Defina a profundidade medida ou comprimento de seu produto ou embalagem do produto. Isso fornecerá aos clientes o tamanho do produto e ajudará no cálculo dos custos de envio."
 
 msgid "net weight ({})"
-msgstr ""
+msgstr "peso líquido ({})"
 
 msgid ""
 "Set the measured weight of your product WITHOUT its packaging. This will "
 "provide customers with the actual product's weight."
-msgstr ""
+msgstr "Defina o peso medido do seu produto SEM a embalagem. Isso fornecerá aos clientes o peso real do produto."
 
 msgid "gross weight ({})"
-msgstr ""
+msgstr "peso bruto ({})"
 
 msgid ""
 "Set the measured gross weight of your product WITH its packaging. This will "
 "help with calculating shipping costs."
-msgstr ""
+msgstr "Defina o peso bruto medido de seu produto COM sua embalagem. Isso ajudará no cálculo dos custos de envio."
 
 msgid ""
 "Select a manufacturer for your product. To define these, search for "
 "`Manufacturers`."
-msgstr ""
+msgstr "Selecione um fabricante para o seu produto. Para defini-los, pesquise por `Fabricantes`."
 
 msgid ""
 "To make your product stand out, give it an awesome description. This is what"
 " will help your shoppers learn about your products. It will also help "
 "shoppers find them in the store and on the web."
-msgstr ""
+msgstr "Para fazer seu produto se destacar, dê uma descrição incrível. Isso é o que ajudará seus clientes a aprender sobre seus produtos. Também ajudará os compradores a encontrá-los na loja e na web."
 
 msgid ""
 "Enter a URL slug for your product. Slug is user- and search engine-friendly "
 "short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your product page URL in the browser address bar will"
 " look like. A default will be created using the product name."
-msgstr ""
+msgstr "Insira um slug de URL para seu produto. Slug é um texto curto amigável ao usuário e ao mecanismo de pesquisa usado em uma URL para identificar e descrever um recurso. Nesse caso, ele determinará a aparência do URL da página do seu produto na barra de endereço do navegador. Um padrão será criado usando o nome do produto."
 
 msgid "keywords"
 msgstr "palavras-chave"
@@ -1649,7 +1694,7 @@ msgid ""
 "You can enter keywords that describe your product. This will help your "
 "shoppers learn about your products. It will also help shoppers find them in "
 "the store and on the web."
-msgstr ""
+msgstr "Você pode inserir palavras-chave que descrevam seu produto. Isso ajudará seus clientes a aprender sobre seus produtos. Também ajudará os compradores a encontrá-los na loja e na web."
 
 msgid "variation name"
 msgstr "nome da variação"
@@ -1659,43 +1704,43 @@ msgid ""
 "example different colors, sizes or versions. To manage variations, at the "
 "top of the the individual product page, click `Actions` -> `Manage "
 "Variations`."
-msgstr ""
+msgstr "Você pode inserir um nome para a variação do seu produto. Podem ser, por exemplo, cores, tamanhos ou versões diferentes. Para gerenciar variações, na parte superior da página individual do produto, clique em `Ações` -&gt;` Gerenciar variações`."
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (parent is a child "
 "already)."
-msgstr ""
+msgstr "Hierarquias de parentesco multinível não são suportadas (o pai já é um filho)."
 
 msgid "Parent is a variable variation parent, yet variables were not passed."
-msgstr ""
+msgstr "Pai é um pai de variação de variável, mas as variáveis não foram passadas."
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a simple "
 "variation parent)."
-msgstr ""
+msgstr "Hierarquias de parentesco multinível não são suportadas (este produto é um pai de variação simples)."
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a "
 "variable variation parent)."
-msgstr ""
+msgstr "Hierarquias de parentesco multinível não são suportadas (este produto é um pai de variação variável)."
 
 msgid ""
 "Product is currently not a normal product, and can't be turned into a "
 "package."
-msgstr ""
+msgstr "O produto atualmente não é um produto normal e não pode ser transformado em um pacote."
 
 msgid "Package can't contain itself."
-msgstr ""
+msgstr "O pacote não pode se conter."
 
 msgid "Variation parents can't belong in the package."
-msgstr ""
+msgstr "Os pais da variação não podem pertencer ao pacote."
 
 msgid "Packages can't be nested."
-msgstr ""
+msgstr "Os pacotes não podem ser aninhados."
 
 #, python-format
 msgid "Quantity %s is invalid."
-msgstr ""
+msgstr "A quantidade %s é inválida."
 
 msgid "primary product"
 msgstr "produto principal"
@@ -1722,32 +1767,32 @@ msgid "product attributes"
 msgstr "atributos de produtos"
 
 msgid "Enable this if this service provider can be used when placing orders."
-msgstr ""
+msgstr "Habilite esta opção se este provedor de serviços puder ser usado ao fazer pedidos."
 
 msgid "The service provider name."
-msgstr ""
+msgstr "O nome do provedor de serviços."
 
 msgid ""
 "This service provider will be available only for order sources of the given "
 "shop. If blank, this service provider is available for any order source."
-msgstr ""
+msgstr "Este provedor de serviços estará disponível apenas para fontes de pedido da loja em questão. Se em branco, este provedor de serviços está disponível para qualquer fonte de pedido."
 
 msgid ""
 "This service provider will be available only for order sources that contain "
 "all items from the configured supplier. If blank, this service provider is "
 "available for any order source."
-msgstr ""
+msgstr "Este provedor de serviços estará disponível apenas para fontes de pedido que contenham todos os itens do fornecedor configurado. Se em branco, este provedor de serviços está disponível para qualquer fonte de pedido."
 
 msgid "Enable this if this service should be selectable on checkout."
-msgstr ""
+msgstr "Habilite-o se este serviço deve ser selecionável na finalização da compra."
 
 msgid "The shop for this service."
-msgstr ""
+msgstr "A loja para este serviço."
 
 msgid ""
 "The supplier for this service. This service will be available only for order"
 " sources that contain all items from this supplier."
-msgstr ""
+msgstr "O fornecedor deste serviço. Este serviço estará disponível apenas para fontes de pedido que contenham todos os itens deste fornecedor."
 
 msgid "choice identifier"
 msgstr "identificador de escolha"
@@ -1755,18 +1800,18 @@ msgstr "identificador de escolha"
 msgid ""
 "The tax class to use for this service. Define by searching for `Tax "
 "Classes`."
-msgstr ""
+msgstr "A classe de imposto a ser usada para este serviço. Defina pesquisando por `Classes de impostos`."
 
 msgid "behavior components"
 msgstr "componentes de comportamento"
 
 #, python-format
 msgid "%s is disabled."
-msgstr ""
+msgstr "%s está desativado."
 
 #, python-format
 msgid "%s is for different shop."
-msgstr ""
+msgstr "%s é para loja diferente."
 
 #, python-format
 msgid "%(service_name)s: %(sub_item)s"
@@ -1776,13 +1821,13 @@ msgid "Fixed cost"
 msgstr "Custo fixo"
 
 msgid "Add a fixed cost to the price of the service."
-msgstr ""
+msgstr "Adicione um custo fixo ao preço do serviço."
 
 msgid "The fixed cost to apply to this service."
-msgstr ""
+msgstr "O custo fixo a aplicar a este serviço."
 
 msgid "The order line text to display when this behavior is applied."
-msgstr ""
+msgstr "O texto da linha de pedido a ser exibido quando esse comportamento é aplicado."
 
 msgid "Waiving cost"
 msgstr "Isenção de custo"
@@ -1790,35 +1835,35 @@ msgstr "Isenção de custo"
 msgid ""
 "If the total price of the products is less than a waive limit add cost to "
 "the price of the service."
-msgstr ""
+msgstr "Se o preço total dos produtos for menor que um limite de isenção, adicione o custo ao preço do serviço."
 
 msgid ""
 "The cost to apply to this service if the total price is below the waive "
 "limit."
-msgstr ""
+msgstr "O custo a ser aplicado a este serviço se o preço total estiver abaixo do limite de isenção."
 
 msgid ""
 "The total price of products limit, at which this service cost is waived."
-msgstr ""
+msgstr "O preço total do limite de produtos, no qual este custo de serviço é dispensado."
 
 msgid "Weight limits"
 msgstr "Limites de peso"
 
 msgid ""
 "Limit availability of the service based on total weight of the products."
-msgstr ""
+msgstr "Limite a disponibilidade do serviço com base no peso total dos produtos."
 
 msgid "minimum weight"
 msgstr "peso mínimo"
 
 msgid "The minimum weight required for this service to be available."
-msgstr ""
+msgstr "Peso mínimo necessário para que este serviço esteja disponível."
 
 msgid "maximum weight"
 msgstr "peso máximo"
 
 msgid "The maximum weight allowed by this service."
-msgstr ""
+msgstr "O peso máximo permitido por este serviço."
 
 msgid "Minimum weight not met."
 msgstr "Peso mínimo não atendido."
@@ -1827,19 +1872,19 @@ msgid "Maximum weight exceeded."
 msgstr "Peso máximo excedido."
 
 msgid "min weight ({})"
-msgstr ""
+msgstr "peso mínimo ({})"
 
 msgid "The minimum weight for this price to apply."
-msgstr ""
+msgstr "O peso mínimo a ser aplicado a este preço."
 
 msgid "max weight ({})"
-msgstr ""
+msgstr "peso máximo ({})"
 
 msgid "The maximum weight before this price no longer applies."
-msgstr ""
+msgstr "O peso máximo antes deste preço não se aplica mais."
 
 msgid "The cost to apply to this service when the weight criteria is met."
-msgstr ""
+msgstr "O custo a ser aplicado a este serviço quando os critérios de peso forem atendidos."
 
 msgid "Weight-based pricing"
 msgstr "Preços com base no peso"
@@ -1849,7 +1894,7 @@ msgid ""
 "only as zero e.g. if there are 2 ranges (range1 = min 0, max 5; range2 = min"
 " 5, max 10), only range1's 'min 0' is going to be counted, but not range2's "
 "'min 5'."
-msgstr ""
+msgstr "Defina o preço com base no peso da cesta. Os mínimos do intervalo são contados no intervalo apenas como zero, por exemplo, se houver 2 intervalos (intervalo1 = mín. 0, máx. 5; intervalo2 = mín. 5, máx. 10), apenas intervalo1 &#39;mín. 0&#39; será contado, mas não intervalo2 &#39;mín 5 &#39;."
 
 msgid "Weight does not match with any range."
 msgstr "O peso não é compatível com nenhum intervalo."
@@ -1858,106 +1903,106 @@ msgid "Contact group availability"
 msgstr "Disponibilidade do grupo de contatos"
 
 msgid "Make service available only for specific contact groups."
-msgstr ""
+msgstr "Disponibilize o serviço apenas para grupos de contato específicos."
 
 msgid "groups"
 msgstr "grupos"
 
 msgid "The contact groups for which this service is available."
-msgstr ""
+msgstr "Os grupos de contato para os quais este serviço está disponível."
 
 msgid "Customer does not belong to any group."
 msgstr "Cliente não pertence a nenhum grupo."
 
 msgid "Service is not available for any of the customer's groups."
-msgstr ""
+msgstr "O serviço não está disponível para nenhum dos grupos de clientes."
 
 msgid "Access to Admin Panel only availability"
-msgstr ""
+msgstr "Acesso à disponibilidade apenas do painel de administração"
 
 msgid ""
 "Make service available only for people with `Access to Admin Panel` rights."
-msgstr ""
+msgstr "Tornar o serviço disponível apenas para pessoas com direitos de `Acesso ao painel de administração`."
 
 msgid ""
 "Service is only available for people with `Access to Admin Panel` "
 "(`is_staff`) rights."
-msgstr ""
+msgstr "O serviço está disponível apenas para pessoas com direitos de `Acesso ao painel de administração` (` is_staff`)."
 
 msgid "Order total price limit"
-msgstr ""
+msgstr "Limite de preço total do pedido"
 
 msgid "Limit service availability based on order's total price."
-msgstr ""
+msgstr "Limite a disponibilidade do serviço com base no preço total do pedido."
 
 msgid "min price value"
-msgstr ""
+msgstr "valor do preço mínimo"
 
 msgid "max price value"
-msgstr ""
+msgstr "valor de preço máximo"
 
 msgid "Order's total price is not within the defined service limits."
-msgstr ""
+msgstr "O preço total do pedido não está dentro dos limites de serviço definidos."
 
 msgid "Country limit"
-msgstr ""
+msgstr "Limite de país"
 
 msgid "Limit service availability based on countries selected."
-msgstr ""
+msgstr "Limite a disponibilidade do serviço com base nos países selecionados."
 
 msgid "available in countries"
-msgstr ""
+msgstr "disponível em países"
 
 msgid "available in european union"
-msgstr ""
+msgstr "disponível na união europeia"
 
 msgid "unavailable in countries"
-msgstr ""
+msgstr "indisponível em países"
 
 msgid "unavailable in european union"
-msgstr ""
+msgstr "indisponível na união europeia"
 
 msgid "Service is not available without a defined country."
-msgstr ""
+msgstr "O serviço não está disponível sem um país definido."
 
 msgid "Service is not available for this country."
-msgstr ""
+msgstr "O serviço não está disponível para este país."
 
 msgid "round up to the nearest number with ties going up, away from zero"
-msgstr ""
+msgstr "arredondar para cima para o número mais próximo com os empates subindo, longe de zero"
 
 msgid "round to the nearest number with ties going down, towards zero"
-msgstr ""
+msgstr "arredondar para o número mais próximo com empate caindo, em direção a zero"
 
 msgid "round up, away from zero, towards the farther round number"
-msgstr ""
+msgstr "arredondar para cima, longe de zero, em direção ao número mais redondo"
 
 msgid "round down, towards zero, towards the closest round number"
-msgstr ""
+msgstr "arredondar para baixo, em direção a zero, em direção ao número redondo mais próximo"
 
 msgid "payment processor"
 msgstr "processador de pagamentos"
 
 msgid ""
 "The payment method name. This name is shown to the customers on checkout."
-msgstr ""
+msgstr "O nome da forma de pagamento. Este nome é mostrado aos clientes na finalização da compra."
 
 msgid ""
 "The description of the payment method. This description is shown to the "
 "customers on checkout."
-msgstr ""
+msgstr "A descrição do método de pagamento. Esta descrição é mostrada aos clientes na finalização da compra."
 
 msgid "rounding quantize"
 msgstr "quantize de arredondamento"
 
 msgid "Choose rounding quantize (precision) for cash payment."
-msgstr ""
+msgstr "Escolha a quantização de arredondamento (precisão) para pagamento à vista."
 
 msgid "rounding mode"
 msgstr "modo de arredondamento"
 
 msgid "Choose rounding mode for cash payment."
-msgstr ""
+msgstr "Escolha o modo de arredondamento para pagamento em dinheiro."
 
 msgid "custom payment processor"
 msgstr "processador de pagamentos personalizado"
@@ -1976,12 +2021,12 @@ msgstr "transportadora"
 
 msgid ""
 "The shipping method name. This name is shown to the customers on checkout."
-msgstr ""
+msgstr "O nome do método de envio. Este nome é mostrado aos clientes na finalização da compra."
 
 msgid ""
 "The description of the shipping method. This name is shown to the customers "
 "on checkout."
-msgstr ""
+msgstr "A descrição do método de envio. Este nome é mostrado aos clientes na finalização da compra."
 
 msgid "custom carrier"
 msgstr "transportadora personalizada"
@@ -1993,34 +2038,34 @@ msgid "Manually processed shipment"
 msgstr "Remessa processada manualmente"
 
 msgid "Not sent"
-msgstr ""
+msgstr "Não enviado"
 
 msgid "Sent"
-msgstr ""
+msgstr "Enviei"
 
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 msgid "Deleted"
-msgstr ""
+msgstr "Excluído"
 
 msgid "outgoing"
-msgstr ""
+msgstr "extrovertido"
 
 msgid "incoming"
-msgstr ""
+msgstr "entrada"
 
 msgid "tracking code"
 msgstr "código de rastreamento"
 
 msgid "tracking url"
-msgstr ""
+msgstr "URL de rastreamento"
 
 msgid "volume ({})"
-msgstr ""
+msgstr "volume ({})"
 
 msgid "weight ({})"
-msgstr ""
+msgstr "peso ({})"
 
 msgid "shipment"
 msgstr "remessa"
@@ -2029,10 +2074,10 @@ msgid "shipments"
 msgstr "remessas"
 
 msgid "unit volume ({})"
-msgstr ""
+msgstr "volume unitário ({})"
 
 msgid "unit weight ({})"
-msgstr ""
+msgstr "unidade de peso ({})"
 
 msgid "sent product"
 msgstr "produto enviado"
@@ -2043,7 +2088,7 @@ msgstr "produtos enviados"
 msgid ""
 "The following fields can't be changed because there are existing orders for "
 "this shop."
-msgstr ""
+msgstr "Os campos a seguir não podem ser alterados porque existem pedidos para esta loja."
 
 msgid "domain"
 msgstr "domínio"
@@ -2052,35 +2097,35 @@ msgid ""
 "Your shop domain name. Use this field to configure the URL that is used to "
 "visit your store front. Note: this requires additional configuration through"
 " your internet domain registrar."
-msgstr ""
+msgstr "O nome de domínio da sua loja. Use este campo para configurar o URL que é usado para visitar a fachada da sua loja. Observação: isso requer configuração adicional por meio de seu registrador de domínio da Internet."
 
 msgid ""
 "Your shop's status. Disable your shop if it's no longer in use. For "
 "temporary closing enable the maintenance mode, available in the `Maintenance"
 " Mode` tab on the left."
-msgstr ""
+msgstr "O status da sua loja. Desative sua loja se ela não estiver mais em uso. Para o fechamento temporário, ative o modo de manutenção, disponível na guia `Modo de manutenção` à esquerda."
 
 msgid ""
 "The primary shop currency. This is the currency used when selling the "
 "products."
-msgstr ""
+msgstr "A moeda principal da loja. Esta é a moeda usada na venda dos produtos."
 
 msgid ""
 "This option defines whether product prices entered in admin include taxes. "
 "Note: this behavior can be overridden with contact group pricing."
-msgstr ""
+msgstr "Esta opção define se os preços dos produtos inseridos no admin incluem impostos. Observação: esse comportamento pode ser substituído pelo preço do grupo de contato."
 
 msgid "Shop's logo. Will be shown at theme."
-msgstr ""
+msgstr "Logotipo da loja. Será mostrado no tema."
 
 msgid "favicon"
-msgstr ""
+msgstr "favicon"
 
 msgid ""
 "Shop's favicon - a mini-image graphically representing your shop. Depending "
 "on the browser, it will be shown next to the address bar and/or on the "
 "website title tab."
-msgstr ""
+msgstr "Favicon da loja - uma mini-imagem que representa graficamente sua loja. Dependendo do navegador, ele será mostrado ao lado da barra de endereço e / ou na guia de título do site."
 
 msgid "maintenance mode"
 msgstr "modo de manutenção"
@@ -2090,33 +2135,33 @@ msgid ""
 "while you do regular shop maintenance, fight the security breach or for some"
 " other reason. If you don't plan to have this shop open again, change the "
 "`Status` on the main `General Information` tab to `Disabled`."
-msgstr ""
+msgstr "Habilite se você quiser tornar sua loja temporariamente indisponível para visitantes enquanto você faz a manutenção regular da loja, combate a quebra de segurança ou por algum outro motivo. Se você não planeja abrir esta loja novamente, altere o `Status` na guia principal de` Informações gerais` para `Desativado`."
 
 msgid "contact address"
 msgstr "endereço de contato"
 
 msgid "staff members"
-msgstr ""
+msgstr "membros da equipe"
 
 msgid "The shop name. This name is displayed throughout Admin Panel."
-msgstr ""
+msgstr "O nome da loja. Este nome é exibido em todo o painel de administração."
 
 msgid ""
 "The public shop name. This name is displayed in the store front and in any "
 "customer email correspondence."
-msgstr ""
+msgstr "O nome da loja pública. Esse nome é exibido na frente da loja e em qualquer correspondência de e-mail do cliente."
 
 msgid ""
 "To make your shop stand out, give it an awesome description. This is what "
 "will help your shoppers learn about your shop. It will also help shoppers "
 "find your store from the web."
-msgstr ""
+msgstr "Para fazer sua loja se destacar, dê uma descrição incrível. Isso é o que ajudará seus clientes a aprenderem sobre sua loja. Isso também ajudará os compradores a encontrar sua loja na web."
 
 msgid ""
 "Enter a short description for your shop. The short description will be used "
 "to get the attention of your customer with a small, but precise description "
 "of your shop. It also helps with getting more traffic via search engines."
-msgstr ""
+msgstr "Insira uma breve descrição para sua loja. A breve descrição será usada para chamar a atenção de seu cliente com uma descrição pequena, mas precisa, de sua loja. Também ajuda a obter mais tráfego através dos motores de busca."
 
 msgid "maintenance message"
 msgstr "mensagem de manutenção"
@@ -2124,7 +2169,7 @@ msgstr "mensagem de manutenção"
 msgid ""
 "The message to display to customers while your shop is in a maintenance "
 "mode."
-msgstr ""
+msgstr "A mensagem a ser exibida aos clientes enquanto sua loja está em modo de manutenção."
 
 msgid "alert limit"
 msgstr "limite de alerta"
@@ -2144,7 +2189,7 @@ msgstr "externo"
 msgid ""
 "The product supplier's name. You can enable suppliers to manage the "
 "inventory of stocked products."
-msgstr ""
+msgstr "O nome do fornecedor do produto. Você pode permitir que os fornecedores gerenciem o estoque de produtos em estoque."
 
 msgid "supplier type"
 msgstr "tipo de fornecedor"
@@ -2153,7 +2198,7 @@ msgid ""
 "The supplier type indicates whether the products are supplied through an "
 "internal supplier or an external supplier, and which group this supplier "
 "belongs to."
-msgstr ""
+msgstr "O tipo de fornecedor indica se os produtos são fornecidos por meio de um fornecedor interno ou externo e a qual grupo esse fornecedor pertence."
 
 msgid "stock managed"
 msgstr "estoque gerenciado"
@@ -2165,12 +2210,15 @@ msgid ""
 "There are some other cases when it could be an unnecessary complication. "
 "This settingmerely assigns a sensible default behavior, which can be "
 "overwritten on a product-by-product basis."
+msgstr "Ative-o se este fornecedor for gerenciar o estoque dos produtos estocados. Ter um estoque gerenciado habilitado é desnecessário se, por exemplo, vender produtos digitais que nunca acabarão, não importa quantos estejam sendo vendidos. Existem alguns outros casos em que pode ser uma complicação desnecessária. Essa configuração atribui apenas um comportamento padrão sensato, que pode ser substituído produto por produto."
+
+msgid "supplier modules"
 msgstr ""
 
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define"
 " the rules by which inventory is managed."
-msgstr ""
+msgstr "Selecione o módulo de fornecedor a ser usado para este fornecedor. Módulos de fornecedores definem as regras pelas quais o estoque é gerenciado."
 
 msgid "module data"
 msgstr "dados do módulo"
@@ -2178,36 +2226,50 @@ msgstr "dados do módulo"
 msgid ""
 "You can select which particular shops fronts the supplier should be "
 "available in."
-msgstr ""
+msgstr "Você pode selecionar em quais frentes de lojas específicas o fornecedor deve estar disponível."
 
 msgid ""
 "Indicates whether this supplier is currently enabled. In order to "
 "participate fully, the supplier also needs to be `Approved`."
-msgstr ""
+msgstr "Indica se este fornecedor está habilitado no momento. Para participar plenamente, o fornecedor também precisa ser `Aprovado &#39;."
 
 msgid ""
 "Enter a URL slug for your supplier. Slug is user- and search engine-friendly"
 " short text used in a URL to identify and describe a resource. In this case "
 "it will determine what your supplier page URL in the browser address bar "
 "will look like. A default will be created using the supplier name."
-msgstr ""
+msgstr "Insira um slug de URL para seu fornecedor. Slug é um texto curto amigável ao usuário e ao mecanismo de pesquisa usado em uma URL para identificar e descrever um recurso. Nesse caso, ele determinará a aparência do URL da página do seu fornecedor na barra de endereço do navegador. Um padrão será criado usando o nome do fornecedor."
 
 msgid "Approved"
-msgstr ""
+msgstr "Aprovado"
 
 msgid "Indicates whether this supplier is currently approved for work."
+msgstr "Indica se este fornecedor está aprovado para o trabalho."
+
+msgid "module identifier"
+msgstr ""
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr ""
+
+msgid "Module name"
+msgstr ""
+
+msgid "Supplier modules name."
 msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
-msgstr ""
+msgstr "Não é possível alterar os campos críticos de negócios do imposto em uso."
 
 msgid "The abbreviated tax code name."
-msgstr ""
+msgstr "O nome do código de imposto abreviado."
 
 msgid ""
 "The name of the tax. It is shown in order lines, in order invoices and "
 "confirmations."
-msgstr ""
+msgstr "O nome do imposto. É mostrado em linhas de pedidos, em faturas de pedidos e confirmações."
 
 msgid "tax rate"
 msgstr "taxa de imposto"
@@ -2216,29 +2278,29 @@ msgid ""
 "The percentage rate of the tax. Mutually exclusive with the flat amount tax "
 "(flat tax is rarely used and the option is therefore hidden by default; "
 "contact Shuup to enable)."
-msgstr ""
+msgstr "A porcentagem do imposto. Mutuamente exclusivo com o imposto de valor fixo (o imposto fixo raramente é usado e, portanto, a opção está oculta por padrão; entre em contato com Shuup para ativar)."
 
 msgid "tax amount value"
 msgstr "valor total do imposto"
 
 msgid ""
 "The flat amount of the tax. Mutually exclusive with percentage rates tax."
-msgstr ""
+msgstr "O valor fixo do imposto. Mutuamente exclusivo com taxas percentuais de imposto."
 
 msgid "currency of the amount tax"
-msgstr ""
+msgstr "moeda do valor do imposto"
 
 msgid "Enable if this tax is valid and should be active."
-msgstr ""
+msgstr "Ative se este imposto é válido e deve estar ativo."
 
 msgid "Either rate or amount tax is required."
-msgstr ""
+msgstr "A taxa ou o valor do imposto são obrigatórios."
 
 msgid "Can't have both rate and amount taxes. They are mutually exclusive."
-msgstr ""
+msgstr "Não é possível ter taxas e impostos sobre o valor. Eles são mutuamente exclusivos."
 
 msgid "Currency is required if the amount tax value is specified."
-msgstr ""
+msgstr "A moeda é necessária se o valor do imposto for especificado."
 
 msgid "taxes"
 msgstr "impostos"
@@ -2246,10 +2308,10 @@ msgstr "impostos"
 msgid ""
 "The tax class name. Tax classes are used to control how taxes are applied to"
 " the products."
-msgstr ""
+msgstr "O nome da classe fiscal. As classes de impostos são usadas para controlar como os impostos são aplicados aos produtos."
 
 msgid "Enable if this tax class is valid and should be active."
-msgstr ""
+msgstr "Ative se esta classe de imposto é válida e deve estar ativa."
 
 msgid "tax classes"
 msgstr "classes fiscais"
@@ -2257,7 +2319,7 @@ msgstr "classes fiscais"
 msgid ""
 "The customer tax group name. Customer tax groups can be used to control how "
 "taxes are applied to a set of customers. "
-msgstr ""
+msgstr "O nome do grupo de impostos do cliente. Os grupos de impostos do cliente podem ser usados para controlar como os impostos são aplicados a um conjunto de clientes."
 
 msgid "customer tax group"
 msgstr "grupo de impostos do cliente"
@@ -2272,13 +2334,13 @@ msgid "Company Customers"
 msgstr "Clientes Empresariais"
 
 msgid "allowed decimal places"
-msgstr ""
+msgstr "casas decimais permitidas"
 
 msgid ""
 "The number of decimal places allowed by this sales unit.Set this to a value "
 "greater than zero if products with this sales unit can be sold in fractional"
 " quantities."
-msgstr ""
+msgstr "O número de casas decimais permitido por esta unidade de venda. Defina como um valor maior que zero se os produtos com esta unidade de venda puderem ser vendidos em quantidades fracionárias."
 
 msgid "sales units"
 msgstr "unidades de vendas"
@@ -2287,122 +2349,113 @@ msgid ""
 "The sales unit name to use for products (e.g. 'pieces' or 'units'). Sales "
 "units can be set individually for each product through the product editor "
 "view."
-msgstr ""
+msgstr "O nome da unidade de vendas a ser usado para produtos (por exemplo, &#39;peças&#39; ou &#39;unidades&#39;). As unidades de vendas podem ser definidas individualmente para cada produto por meio da visualização do editor de produtos."
 
 msgid "unit symbol"
-msgstr ""
+msgstr "símbolo de unidade"
 
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "
 "order invoices."
-msgstr ""
+msgstr "Um nome abreviado para esta unidade de vendas que é mostrado em todas as faturas de administrador e de pedido."
 
 msgid "Value must be positive and non-zero."
-msgstr ""
+msgstr "O valor deve ser positivo e diferente de zero."
 
 msgid "internal unit"
-msgstr ""
+msgstr "unidade interna"
 
 msgid "The sales unit that this display unit is linked to."
-msgstr ""
+msgstr "A unidade de vendas à qual esta unidade de exibição está vinculada."
 
 msgid "ratio"
-msgstr ""
+msgstr "Razão"
 
 msgid ""
 "Size of the display unit in internal unit. E.g. if internal unit is kilogram"
 " and display unit is gram, ratio is 0.001."
-msgstr ""
+msgstr "Tamanho da unidade de exibição na unidade interna. Por exemplo, se a unidade interna for quilograma e a unidade de exibição for grama, a proporção é 0,001."
 
 msgid ""
 "The number of decimal places to use for values in the display unit. The "
 "internal values are still rounded based on the settings of the internal "
 "unit."
-msgstr ""
+msgstr "O número de casas decimais a serem usadas para valores na unidade de exibição. Os valores internos ainda são arredondados com base nas configurações da unidade interna."
 
 msgid "comparison value"
-msgstr ""
+msgstr "valor de comparação"
 
 msgid ""
 "Value to use when displaying unit prices. E.g. if the display unit is a gram"
 " and the comparison value is 100, then unit prices are shown per 100g, like:"
 " $2.95 per 100g."
-msgstr ""
+msgstr "Valor a ser usado ao exibir preços unitários. Por exemplo, se a unidade de exibição for um grama e o valor de comparação for 100, os preços unitários serão mostrados por 100g, como: $ 2,95 por 100g."
 
 msgid "allow bare number"
-msgstr ""
+msgstr "permitir número vazio"
 
 msgid ""
 "If true, values of this unit can occasionally be shown without the symbol "
 "attached to it. E.g. if the unit is a `piece`, then you might want for the "
 "product listings to only show '$5.95' rather than '$5.95 per pc.'."
-msgstr ""
+msgstr "Se verdadeiro, os valores desta unidade podem ocasionalmente ser mostrados sem o símbolo anexado a ela. Por exemplo, se a unidade for uma `peça`, então você pode querer que as listas de produtos mostrem apenas &#39;$ 5,95&#39; em vez de &#39;$ 5,95 por pc.&#39;"
 
 msgid "use by default"
-msgstr ""
+msgstr "usar por padrão"
 
 msgid ""
 "Use this display unit by default when displaying values of the internal "
 "unit."
-msgstr ""
+msgstr "Use esta unidade de exibição por padrão ao exibir os valores da unidade interna."
 
 msgid "Name of the display unit, e.g. grams."
-msgstr ""
+msgstr "Nome da unidade de exibição, por exemplo, gramas."
 
 msgid "symbol"
-msgstr ""
+msgstr "símbolo"
 
 msgid "An abbreviated name of the display unit, e.g. 'g'."
-msgstr ""
+msgstr "Um nome abreviado da unidade de exibição, por exemplo, &#39;g&#39;."
 
 msgid "display units"
-msgstr ""
+msgstr "unidades de exibição"
 
 msgid "Pieces"
-msgstr ""
+msgstr "Peças"
 
 msgctxt "Symbol for pieces unit"
 msgid "pc."
-msgstr ""
+msgstr "pc."
 
 #, python-brace-format
 msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
-msgstr ""
-
-msgid "No Choice"
-msgstr "Nenhuma Escolha"
+msgstr "{value} {symbol}"
 
 msgid "inherit"
-msgstr ""
+msgstr "herdar"
 
 msgid "skip"
-msgstr ""
+msgstr "pular"
 
 msgid "delete"
-msgstr ""
+msgstr "excluir"
 
 msgid "The total price should be greater than {} to be ordered."
-msgstr ""
+msgstr "O preço total deve ser maior que {} para ser pedido."
 
 #, python-format
 msgid "%s is not available in this shop."
-msgstr ""
+msgstr "%s não está disponível nesta loja."
 
 msgid "Default Pricing"
 msgstr "Preço Padrão"
 
-msgid "Error! Insufficient quantity in stock."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
 msgstr ""
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s (estoque físico: %(quantity)s)"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: "
-"`%(product_counts)s`."
+msgid "Product"
 msgstr ""
 
 msgid "inventory"
@@ -2414,12 +2467,18 @@ msgstr "reabastecimento"
 msgid "restock logical"
 msgstr "reabastecimento lógico"
 
+msgid "Failed to execute the task"
+msgstr ""
+
+msgid "An unexpeted error occurred."
+msgstr ""
+
 #, python-format
 msgid "Refund for %s"
 msgstr "Devolução para %s"
 
 msgid "Misc refund"
-msgstr ""
+msgstr "Reembolso diverso"
 
 msgid "Untaxed"
 msgstr "Não tributado"
@@ -2428,19 +2487,19 @@ msgid "This field cannot be changed since it is protected."
 msgstr "Este campo não pode ser alterado uma vez que está protegido."
 
 msgid "Region"
-msgstr ""
+msgstr "Região"
 
 msgid "Username"
-msgstr ""
+msgstr "Nome do usuário"
 
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 msgid "Please provide either username or email, not both."
-msgstr ""
+msgstr "Forneça um nome de usuário ou e-mail, não ambos."
 
 msgid "Please provide either username or email."
-msgstr ""
+msgstr "Forneça um nome de usuário ou e-mail."
 
 msgid "First Last"
 msgstr "Primeiro Último"

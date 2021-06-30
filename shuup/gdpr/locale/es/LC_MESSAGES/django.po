@@ -5,6 +5,7 @@
 # 
 # Translators:
 # Pablo Burgos <hispar@gmail.com>, 2020
+# Panu Tulimäki <panu@shuup.com>, 2020
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:55+0000\n"
 "PO-Revision-Date: 2018-05-29 19:55+0000\n"
-"Last-Translator: Pablo Burgos <hispar@gmail.com>, 2020\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "GDPR"
-msgstr ""
+msgstr "GDPR"
 
 msgid "Anonymize"
 msgstr "Anonimizar"
@@ -831,7 +832,7 @@ msgstr ""
 "tribunal orden o proceso legal."
 
 msgid "Cookies"
-msgstr ""
+msgstr "Galletas"
 
 #, python-format
 msgid ""
@@ -1144,7 +1145,7 @@ msgid "Always active"
 msgstr "Siempre activo"
 
 msgid "Cookies: "
-msgstr ""
+msgstr "Galletas:"
 
 msgid "Save preferences"
 msgstr "Guardar preferencias"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2020-06-30 00:17+0000\n"
+"POT-Creation-Date: 2021-05-10 20:10+0000\n"
+"PO-Revision-Date: 2021-05-11 12:25+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -158,9 +158,6 @@ msgid ""
 "approval."
 msgstr ""
 
-msgid "User account information"
-msgstr "Информация об аккаунте пользователя"
-
 msgid "Not specified"
 msgstr "Не указано"
 
@@ -188,8 +185,8 @@ msgstr "Информация о доставке"
 msgid "Copy to billing information"
 msgstr "Скопировать в расчётную информацию"
 
-msgid "Edit user account information"
-msgstr "Редактировать пользовательскую информацию аккаунта"
+msgid "Edit customer information"
+msgstr ""
 
 msgid "Save password"
 msgstr "Сохранить пароль"
@@ -205,9 +202,6 @@ msgstr "Привязать аккаунт к компании"
 
 msgid "Company information"
 msgstr "Информация о компании"
-
-msgid "User information"
-msgstr "Информация пользователя"
 
 msgid "Password changed."
 msgstr ""

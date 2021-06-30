@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -802,8 +802,11 @@ msgstr "支払状況"
 msgid "Shipping Status"
 msgstr "運送状況"
 
-msgid "Total"
-msgstr "合計"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
+msgstr ""
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -907,6 +910,12 @@ msgstr ""
 msgid "Full refund created."
 msgstr ""
 
+msgid "Description"
+msgstr "記述"
+
+msgid "Tracking Code"
+msgstr ""
+
 msgid "Tracking URL"
 msgstr ""
 
@@ -942,9 +951,6 @@ msgid "ID"
 msgstr ""
 
 msgid "Supplier"
-msgstr ""
-
-msgid "Tracking Code"
 msgstr ""
 
 #, python-brace-format
@@ -1535,10 +1541,6 @@ msgstr ""
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr ""
 
-#, python-format
-msgid "No %s module"
-msgstr ""
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr ""
 
@@ -1549,8 +1551,12 @@ msgstr ""
 msgid "Success! %s has been marked deleted."
 msgstr ""
 
-msgid "Module"
-msgstr "モジュール"
+msgid "Modules"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
+msgstr ""
 
 msgid "Shuup Support"
 msgstr ""
@@ -1583,6 +1589,33 @@ msgstr ""
 
 msgid "Users"
 msgstr "ユーザー"
+
+msgid "Allow the user to change the passwords of other users."
+msgstr ""
+
+msgid "Allow the user send the reset password email."
+msgstr ""
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr ""
+
+msgid "Allow the user to see a user detail."
+msgstr ""
+
+msgid "Allow the user to create a new user."
+msgstr ""
+
+msgid "Allow the user to list the users."
+msgstr ""
+
+msgid "Allow the user to impersonate a different user."
+msgstr ""
+
+msgid "Allow the user to impersonate a staff user."
+msgstr ""
+
+msgid "Allow the user to change the user list columns."
+msgstr ""
 
 msgid "Add some users to help manage your shop"
 msgstr ""
@@ -2994,6 +3027,9 @@ msgstr ""
 msgid "Date"
 msgstr "日付"
 
+msgid "Total"
+msgstr "合計"
+
 msgid "Save and Exit"
 msgstr "保存して終了する"
 
@@ -3036,9 +3072,6 @@ msgstr ""
 
 msgid "Updating the admin comment failed."
 msgstr ""
-
-msgid "Description"
-msgstr "記述"
 
 msgid "No payments have been created yet."
 msgstr ""
@@ -3579,8 +3612,8 @@ msgstr ""
 msgid "Here is an example of the data that would be submitted right now."
 msgstr ""
 
-msgid "User Information"
-msgstr "ユーザー情報"
+msgid "Customer Information"
+msgstr ""
 
 #, python-format
 msgid "Send a password reset email to %(email)s?"

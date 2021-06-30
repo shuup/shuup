@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"POT-Creation-Date: 2021-05-11 12:15+0000\n"
+"PO-Revision-Date: 2021-05-11 19:28+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -648,6 +648,15 @@ msgstr "Si vous avez besoin de l'exécuter à nouveau, lancez-le à partir du me
 msgid "Learn more at the Shuup Help Center"
 msgstr "En savoir plus sur le centre d'aide Shuup"
 
+msgid "Previous"
+msgstr "précédent"
+
+msgid "OK"
+msgstr ""
+
+msgid "Next"
+msgstr "Suivant"
+
 msgid "Mass actions"
 msgstr "Actions de masse"
 
@@ -683,12 +692,6 @@ msgstr "descendant"
 
 msgid "Default sorting"
 msgstr "Tri par défaut"
-
-msgid "Previous"
-msgstr "précédent"
-
-msgid "Next"
-msgstr "Suivant"
 
 #, javascript-format
 msgid "Filter by %s"

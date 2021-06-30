@@ -1,160 +1,162 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-03 17:35+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"PO-Revision-Date: 2021-05-12 08:46+0000\n"
+"Last-Translator: João Gaspar Monteiro <joao.monteiro@qintera.pt>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Addons"
-msgstr ""
+msgstr "Suplementos"
 
 #, python-format
 msgid "Enable %s"
-msgstr ""
+msgstr "Ativar %s"
 
 #, python-format
 msgid "%d new addons enabled."
-msgstr ""
+msgstr "%d novos suplementos ativados."
 
 #, python-format
 msgid "%d previously enabled addons disabled."
-msgstr ""
+msgstr "%d desativados os suplementos antes adicionados."
 
 msgid "No changes were made."
-msgstr ""
+msgstr "Não foram feitas alterações."
 
 msgid "Save addon changes"
-msgstr ""
+msgstr "Gravar alterações a suplemento."
 
 msgid "Upload new addon"
-msgstr ""
+msgstr "Carregar novo suplemento."
 
 msgid "Reload application"
-msgstr ""
+msgstr "Recarregar aplicação."
 
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr ""
+msgstr "Não há métodos viáveis de recarregamento disponíveis. Por favor contate o seu administrador de sistema."
 
 msgid "Reload Method"
-msgstr ""
+msgstr "Recarregar método."
 
 msgid "Reloading."
-msgstr ""
+msgstr "A recarregar."
 
 msgid "Addon file (ZIP)"
-msgstr ""
+msgstr "Ficheiro (ZIP) de suplemento."
 
 msgid "Only upload the addon files you trust."
-msgstr ""
+msgstr "Carregue apenas ficheiros de suplementos de fonte segura."
 
 msgid "Only wheel files (`.whl`) are supported."
-msgstr ""
+msgstr "Apenas ficheiros \"wheel\" (.whl) são suportados."
 
 msgid "Upload"
-msgstr ""
+msgstr "Carregamento"
 
 msgid "Install Addon"
-msgstr ""
+msgstr "Instalar Suplemento"
 
 msgid "Installed addons"
-msgstr ""
+msgstr "Suplementos instalados"
 
 msgid "Addon name"
-msgstr ""
+msgstr "Nome de suplemento"
 
 msgid "Is enabled"
-msgstr ""
+msgstr "Está ativado"
 
 msgid "You don't have any installed addons"
-msgstr ""
+msgstr "Não tem qualquer suplemento instalado"
 
 msgid "Reload Application Server"
-msgstr ""
+msgstr "Recarregar aplicação do servidor"
 
 msgid ""
 "When you reload the application server, it may take some time for the new "
 "instance of your application to properly initialize."
-msgstr ""
+msgstr "Quando recarrega a aplicação do servidor, poderá demorar algum tempo até que a instância da sua aplicação inicie corretamente."
 
 msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr ""
+msgstr "Além disso, existe sempre a possibilidade do servidor não iniciar corretamente de todo, caso em que poderá ter que fazer a próprio solucionamento do problema (ou ter um administrador de sistema acessível)"
 
 msgid "Reload steps"
-msgstr ""
+msgstr "Passos de recarregamento"
 
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
-msgstr ""
+msgstr "Finalize instalações para suplementos recém instalados (migração e recolha de recursos estáticos)"
 
 msgid "Reload application server"
-msgstr ""
+msgstr "Recarregar aplicação do servidor"
 
 msgid "Reload was initiated."
-msgstr ""
+msgstr "O recarregamento foi iniciado."
 
 msgid "Reloading application failed."
-msgstr ""
+msgstr "O recarregamento da aplicação falhou."
 
 msgid "Finalizing installations."
-msgstr ""
+msgstr "A finalizar instalações."
 
 msgid "Your Shuup seems to be back up!"
-msgstr ""
+msgstr "O seu Shuup para estar de novo a funcionar!"
 
 msgid "Your Shuup is not up yet. Trying again soon."
-msgstr ""
+msgstr "O seu Shuup não está ainda a funcionar. Por favor tente de novo dentro de momentos."
 
 msgid "Select file"
-msgstr ""
+msgstr "Selecione ficheiro"
 
 msgid "Installation Finished"
-msgstr ""
+msgstr "A Instalação Finalizou"
 
 msgid "Installation Failed"
-msgstr ""
+msgstr "A Instalação Falhou."
 
 msgid "Success"
-msgstr ""
+msgstr "Sucesso"
 
 #, python-format
 msgid ""
-"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
-"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
-"class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Seguinte, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>ative o suplemento recém instalado </strong></a>e<a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>recarregue o servidor de aplicação</strong></a>"
 
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 msgid "Installer Log"
-msgstr ""
+msgstr "Registro do Instalador"
 
 msgid "Upload Addon - Install"
-msgstr ""
+msgstr "Carregue Suplemento - Instalar"
 
 msgid "Package Information"
-msgstr ""
+msgstr "Informação de Pacote"
 
 msgid "No package information could be extracted."
-msgstr ""
+msgstr "Não foi possível extrair qualquer informação do pacote."
 
 msgid "File List"
-msgstr ""
+msgstr "Lista de Ficheiros"

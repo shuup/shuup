@@ -15,7 +15,7 @@
 # Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2016,2018
-# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015

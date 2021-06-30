@@ -2,33 +2,36 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-06-22 17:58+0000\n"
+"PO-Revision-Date: 2016-06-28 12:30+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Printouts"
-msgstr ""
+msgstr "Impresiones"
 
 msgid "To"
-msgstr ""
+msgstr "A"
 
 msgid "Email Subject"
-msgstr ""
+msgstr "Asunto del email"
 
 msgid "Email Body"
-msgstr ""
+msgstr "Cuerpo del correo electronico"
 
 #, python-format
 msgid ""
@@ -37,133 +40,137 @@ msgid ""
 "Best Regards,\n"
 "%(shop)s"
 msgstr ""
+"Información importante sobre su pedido, ver adjunto. Saludos cordiales, "
+"%(shop)s"
 
 #, python-format
 msgid "%(shop)s: Order %(pk)s"
-msgstr ""
+msgstr "%(shop)s: Solicite %(pk)s"
 
 msgid ""
 "The current shop doesn't match the order shop. Please change to the shop "
 "that is currently active."
 msgstr ""
+"La tienda actual no coincide con la tienda del pedido. Cambie a la tienda "
+"que está actualmente activa."
 
 msgid "Non-POST request methods are forbidden."
-msgstr ""
+msgstr "Los métodos de solicitud que no sean POST están prohibidos."
 
 msgid "Delivery slip"
-msgstr ""
+msgstr "Boleta de entrega"
 
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 msgid "Order confirmation"
-msgstr ""
+msgstr "Confirmación del pedido"
 
 msgid "Order printouts"
-msgstr ""
+msgstr "Solicitar impresiones"
 
 msgid "Shipped products"
-msgstr ""
+msgstr "Productos enviados"
 
 msgid "Payment and shipping methods"
-msgstr ""
+msgstr "Métodos de pago y envío"
 
 msgid "Order number"
-msgstr ""
+msgstr "Número de orden"
 
 msgid "Total price"
-msgstr ""
+msgstr "Precio total"
 
 msgid "Payment status"
-msgstr ""
+msgstr "Estado de pago"
 
 msgid "Shipping status"
-msgstr ""
+msgstr "Estado del envío"
 
 #, python-format
 msgid "Tracking code #%(index)s"
-msgstr ""
+msgstr "Código de seguimiento # %(index)s"
 
 msgid "Order date"
-msgstr ""
+msgstr "Fecha de orden"
 
 msgid "Comment"
-msgstr ""
+msgstr "Comentario"
 
 msgid "Identifier"
-msgstr ""
+msgstr "Identificador"
 
 msgid "Shipment date"
-msgstr ""
+msgstr "Fecha de envío"
 
 msgid "Tracking code"
-msgstr ""
+msgstr "Codigo de localización"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 msgid "Tax"
-msgstr ""
+msgstr "Impuesto"
 
 msgid "Taxful total"
-msgstr ""
+msgstr "Total imponible"
 
 msgid "Taxless total"
-msgstr ""
+msgstr "Total libre de impuestos"
 
 msgid "Tax percentage"
-msgstr ""
+msgstr "Porcentaje de impuestos"
 
 msgid "Based on amount"
-msgstr ""
+msgstr "Basado en cantidad"
 
 msgid "Amount of tax"
-msgstr ""
+msgstr "Cantidad de impuestos"
 
 msgid "Total including tax"
-msgstr ""
+msgstr "Total impuestos incluidos"
 
 msgid "Billing address"
-msgstr ""
+msgstr "Dirección de Envio"
 
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 
 msgid "Get Order Confirmation PDF"
-msgstr ""
+msgstr "Obtener PDF de confirmación de pedido"
 
 msgid "Get Order Confirmation HTML"
-msgstr ""
+msgstr "Obtener HTML de confirmación de pedido"
 
 msgid "Shipments"
-msgstr ""
+msgstr "Envíos"
 
 #, python-format
 msgid "Get Delivery Slip PDF (Shipment %(id)s)"
-msgstr ""
+msgstr "Obtener comprobante de entrega PDF (Envío %(id)s)"
 
 #, python-format
 msgid "Get Delivery Slip HTML (Shipment %(id)s)"
-msgstr ""
+msgstr "Obtenga el HTML del albarán de entrega (Envío %(id)s)"
 
 msgid "Send Email"
-msgstr ""
+msgstr "Enviar correo electrónico"
 
 msgid "Send Order Confirmation"
-msgstr ""
+msgstr "Enviar confirmación de pedido"
 
 #, python-format
 msgid "Send Delivery Slip (Shipment %(id)s)"
-msgstr ""
+msgstr "Enviar comprobante de entrega (Envío %(id)s)"
 
 msgid "Email was sent."
-msgstr ""
+msgstr "Se envió el correo electrónico."
 
 msgid "Could not sent the email, please try again."
-msgstr ""
+msgstr "No se pudo enviar el correo electrónico. Vuelva a intentarlo."

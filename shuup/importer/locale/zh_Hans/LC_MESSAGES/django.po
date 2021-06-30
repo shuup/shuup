@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -23,6 +23,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "数据导入"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "进口模式"
@@ -42,26 +61,46 @@ msgstr ""
 msgid "File"
 msgstr "文件"
 
-#, python-format
-msgid "%s is not a file."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
 msgstr ""
 
 msgid "File is missing."
 msgstr ""
 
-msgid "Failed to import the file."
-msgstr "导入文件失败。"
-
-msgid "Invalid parameters."
+msgid "The import was queued!"
 msgstr ""
 
-msgid "Invalid importer."
+msgid "Failed to process the file."
+msgstr ""
+
+msgid "Invalid parameters."
 msgstr ""
 
 msgid "Invalid file name."
 msgstr ""
 
 msgid "File was not found."
+msgstr ""
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
 msgstr ""
 
 msgid "Import"
@@ -86,6 +125,9 @@ msgstr "无法为字段%(field_name)s设置值%(original_value)s。"
 #, python-format
 msgid "Row import failed (%s)."
 msgstr "行导入失败(%s)。"
+
+msgid "Unexpected error while trying to import the file."
+msgstr ""
 
 msgid "Example files"
 msgstr "示例文件"
@@ -198,11 +240,11 @@ msgstr "如果您正在导入客户，如果您设置了电子邮件密钥，这
 msgid "Start Import"
 msgstr "启动导入"
 
-msgid "Import Data - Complete"
-msgstr "导入数据 - 完成"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "导入完成！"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "新项目"
@@ -243,3 +285,16 @@ msgstr "只创建(没有更新)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "只更新现有的(没有创建新的)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""

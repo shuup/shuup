@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -804,8 +804,11 @@ msgstr "Statut de paiement"
 msgid "Shipping Status"
 msgstr "Statut d'envoi"
 
-msgid "Total"
-msgstr "Total"
+msgid "Total, incl. tax"
+msgstr ""
+
+msgid "Total, excl. tax"
+msgstr ""
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -909,6 +912,12 @@ msgstr "Impossible de créer un remboursement complet."
 msgid "Full refund created."
 msgstr "Remboursement complet créé."
 
+msgid "Description"
+msgstr "La description"
+
+msgid "Tracking Code"
+msgstr "Code de suivi"
+
 msgid "Tracking URL"
 msgstr ""
 
@@ -945,9 +954,6 @@ msgstr ""
 
 msgid "Supplier"
 msgstr ""
-
-msgid "Tracking Code"
-msgstr "Code de suivi"
 
 #, python-brace-format
 msgid "Shipment {shipment_id}"
@@ -1537,10 +1543,6 @@ msgstr ""
 msgid "Indicates whether this supplier is approved for the shop."
 msgstr ""
 
-#, python-format
-msgid "No %s module"
-msgstr "Pas de module %s"
-
 msgid "It is not possible to manage inventory when no module is selected."
 msgstr "Il n'est pas possible de gérer l'inventaire lorsqu'aucun module n'est sélectionné."
 
@@ -1551,8 +1553,12 @@ msgstr ""
 msgid "Success! %s has been marked deleted."
 msgstr "Succès! %s a été marqué comme supprimé."
 
-msgid "Module"
-msgstr "Module"
+msgid "Modules"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
+msgstr "Pas de module %s"
 
 msgid "Shuup Support"
 msgstr "Assistance Shuup"
@@ -1585,6 +1591,33 @@ msgstr "Taux"
 
 msgid "Users"
 msgstr "Utilisateurs"
+
+msgid "Allow the user to change the passwords of other users."
+msgstr ""
+
+msgid "Allow the user send the reset password email."
+msgstr ""
+
+msgid "Allow the user to change the permission groups of other users."
+msgstr ""
+
+msgid "Allow the user to see a user detail."
+msgstr ""
+
+msgid "Allow the user to create a new user."
+msgstr ""
+
+msgid "Allow the user to list the users."
+msgstr ""
+
+msgid "Allow the user to impersonate a different user."
+msgstr ""
+
+msgid "Allow the user to impersonate a staff user."
+msgstr ""
+
+msgid "Allow the user to change the user list columns."
+msgstr ""
 
 msgid "Add some users to help manage your shop"
 msgstr "Ajoutez des utilisateurs pour vous aider à gérer votre boutique"
@@ -2996,6 +3029,9 @@ msgstr "Passons en revue certaines des choses que vous pouvez faire ici. Cliquez
 msgid "Date"
 msgstr "Date"
 
+msgid "Total"
+msgstr "Total"
+
 msgid "Save and Exit"
 msgstr "Sauvegarder et quitter"
 
@@ -3038,9 +3074,6 @@ msgstr "Le commentaire a été enregistré."
 
 msgid "Updating the admin comment failed."
 msgstr "La mise à jour du commentaire administrateur a échoué."
-
-msgid "Description"
-msgstr "La description"
 
 msgid "No payments have been created yet."
 msgstr "Aucun paiement n'a encore été créé."
@@ -3581,8 +3614,8 @@ msgstr "Données de télémétrie"
 msgid "Here is an example of the data that would be submitted right now."
 msgstr "Voici un exemple des données qui seraient soumises dès maintenant."
 
-msgid "User Information"
-msgstr "informations de l'utilisateur"
+msgid "Customer Information"
+msgstr ""
 
 #, python-format
 msgid "Send a password reset email to %(email)s?"

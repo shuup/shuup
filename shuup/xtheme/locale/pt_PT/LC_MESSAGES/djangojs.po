@@ -1,29 +1,31 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-03 17:35+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-12-05 00:12+0000\n"
+"PO-Revision-Date: 2021-05-11 14:59+0000\n"
+"Last-Translator: João Gaspar Monteiro <joao.monteiro@qintera.pt>\n"
+"Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, javascript-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Editar %s"
 
 msgid ""
-"Changing plugin cells without saving will cause changes made to this cell to "
-"be lost."
+"Changing plugin cells without saving will cause changes made to this cell to"
+" be lost."
 msgstr ""
 
 #, javascript-format
@@ -31,10 +33,10 @@ msgid "Error: Cannot add more than %s cells to one row."
 msgstr ""
 
 msgid "Are you sure you wish to delete this row?"
-msgstr ""
+msgstr "Tem a certeza que pretende eliminar esta linha?"
 
 msgid "Are you sure you wish to delete this cell?"
-msgstr ""
+msgstr "Tem a certeza que pretende eliminar esta célula?"
 
 msgid "Are you sure you wish to publish changes made to this view?"
 msgstr ""
@@ -47,7 +49,8 @@ msgid ""
 "version?"
 msgstr ""
 
-msgid "Changing plugins will cause other changes made on this form to be lost."
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
 msgstr ""
 
 msgid "Custom CSS/JS"

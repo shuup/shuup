@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-15 14:39+0000\n"
-"PO-Revision-Date: 2020-10-15 10:38+0000\n"
+"PO-Revision-Date: 2020-10-15 11:56+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -127,16 +128,16 @@ msgid "Configure some notifications"
 msgstr "Configurar algunas notificaciones"
 
 msgid "Demo"
-msgstr ""
+msgstr "Manifestación"
 
 msgid "Dummy Mass Action #1"
-msgstr ""
+msgstr "Acción masiva ficticia # 1"
 
 msgid "Dummy Mass Action #2"
-msgstr ""
+msgstr "Acción masiva ficticia # 2"
 
 msgid "mock section title"
-msgstr ""
+msgstr "título de la sección simulada"
 
 msgid "Hello"
 msgstr "Hola"
@@ -174,56 +175,56 @@ msgid ""
 msgstr "10 pinceles de maquillaje con un diseño innovador"
 
 msgid "Precision Eyelash Curler"
-msgstr ""
+msgstr "Rizador de pestañas de precisión"
 
 msgid ""
 "Precision Eyelash Curler is the professional choice of makeup artists "
 "everywhere."
-msgstr ""
+msgstr "Precision Eyelash Curler es la elección profesional de los maquilladores de todo el mundo."
 
 msgid "PureMoist Lipstick"
-msgstr ""
+msgstr "Barra de labios PureMoist"
 
 msgid ""
 "PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
 "and protect lips."
-msgstr ""
+msgstr "El lápiz labial PureMoist tiene una fórmula hidratante diseñada para calmar, reconfortar y proteger los labios."
 
 msgid "Clinique Happy"
-msgstr ""
+msgstr "Clinique Happy"
 
 msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
-msgstr ""
+msgstr "Un toque cítrico. Una gran cantidad de flores. Mezcla de emociones."
 
 msgid "Tommy Girld by Tommy Hilfiger Perfume"
-msgstr ""
+msgstr "Perfume Tommy Girld de Tommy Hilfiger"
 
 msgid ""
 "A refreshing and energetic floral - with low notes of sandalwood and "
 "heather."
-msgstr ""
+msgstr "Un floral refrescante y enérgico, con notas bajas de sándalo y brezo."
 
 msgid "Bvlgari Omnia Crystalline Eau de Toilette"
-msgstr ""
+msgstr "Eau de Toilette Bvlgari Omnia Crystalline"
 
 msgid ""
 "Give yourself over to this fragrance as intoxicating and pure as a woman's "
 "soul is fragile."
-msgstr ""
+msgstr "Entrégate a esta fragancia tan embriagadora y pura como frágil es el alma de una mujer."
 
 msgid "Still Jennifer Lopez Perfume"
-msgstr ""
+msgstr "Still Jennifer Lopez Perfume"
 
 msgid ""
 "Be driven with vitality and confidence, as you wear the Jennifer Lopez Still"
 " fragrance."
-msgstr ""
+msgstr "Déjate llevar por la vitalidad y la confianza mientras usas la fragancia Still de Jennifer Lopez."
 
 msgid "La Vie Est Belle"
 msgstr "La vida es bella"
 
 msgid "A captivating new scent joins the La vie est belle path to happiness."
-msgstr ""
+msgstr "Una nueva fragancia cautivadora se une al camino hacia la felicidad de La vie est belle."
 
 msgid "Smooth Viking Beard Brush"
 msgstr "Cepillo suave vikingo para barba"
@@ -281,7 +282,7 @@ msgid ""
 msgstr "Para empezar a comprar ahora mismo, por favor instala algunos datos de prueba en tu tienda"
 
 msgid "You must have the Access to Admin Panel permission."
-msgstr ""
+msgstr "Debe tener el permiso de acceso al panel de administración."
 
 msgid "Supplier Pricing"
 msgstr "Precios de proveedor"

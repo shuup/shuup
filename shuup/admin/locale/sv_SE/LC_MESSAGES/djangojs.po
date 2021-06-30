@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 13:25+0000\n"
+"POT-Creation-Date: 2021-05-11 12:15+0000\n"
+"PO-Revision-Date: 2021-05-11 19:28+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
@@ -649,6 +649,15 @@ msgstr "Om du behöver köra den igen, kör den från menyn längst upp till hö
 msgid "Learn more at the Shuup Help Center"
 msgstr "Läs mer i Shuups hjälpcenter"
 
+msgid "Previous"
+msgstr "Föregående"
+
+msgid "OK"
+msgstr ""
+
+msgid "Next"
+msgstr "Nästa"
+
 msgid "Mass actions"
 msgstr "Hantera många"
 
@@ -684,12 +693,6 @@ msgstr "fallande"
 
 msgid "Default sorting"
 msgstr "Standardsortering"
-
-msgid "Previous"
-msgstr "Föregående"
-
-msgid "Next"
-msgstr "Nästa"
 
 #, javascript-format
 msgid "Filter by %s"

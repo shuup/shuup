@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-10 14:18+0000\n"
 "PO-Revision-Date: 2021-05-10 14:24+0000\n"
+"Last-Translator: João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,22 +22,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Clear"
-msgstr ""
+msgstr "Limpar"
 
 msgid "Drop files here or click to browse."
-msgstr ""
+msgstr "Arraste ficheiros para aqui ou clique em procurar"
 
 msgid "only images can be uploaded!"
-msgstr ""
+msgstr "apenas imagens podem ser carregadas!"
 
 msgid "Nothing selected"
-msgstr ""
+msgstr "Nada selecionado"
 
 msgid "No results matched {0}"
-msgstr ""
+msgstr "Sem resultados encontrados {0}"
 
 msgid "Select All"
-msgstr ""
+msgstr "Selecionar Todos"
 
 msgid "Deselect All"
-msgstr ""
+msgstr "Desselecionar todos."

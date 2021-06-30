@@ -2,76 +2,79 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-06-22 17:54+0000\n"
+"PO-Revision-Date: 2017-03-30 06:49+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Saved Baskets"
-msgstr ""
+msgstr "Interfaz Shuup - Cestas guardadas"
 
 msgid "Saved Carts"
-msgstr ""
+msgstr "Carros guardados"
 
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
 msgid "Dashboard"
-msgstr ""
+msgstr "Tablero"
 
 msgid "My Saved Carts"
-msgstr ""
+msgstr "Mis carros guardados"
 
 msgid "Product"
-msgstr ""
+msgstr "Producto"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 msgid "Price"
-msgstr ""
+msgstr "Precio"
 
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 msgid "Product Count"
-msgstr ""
+msgstr "Recuento de productos"
 
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 msgid "You haven't saved any carts yet."
-msgstr ""
+msgstr "Aún no ha guardado ningún carrito."
 
 msgid "Add all products to cart"
-msgstr ""
+msgstr "Agregar todos los productos al carrito"
 
 msgid "Delete cart"
-msgstr ""
+msgstr "Eliminar carrito"
 
 msgid "Please enter a basket title."
-msgstr ""
+msgstr "Introduzca un título de la cesta."
 
 msgid "Can't save an empty basket."
-msgstr ""
+msgstr "No se puede guardar una canasta vacía."
 
 msgid "Product is not available in this shop."
-msgstr ""
+msgstr "El producto no está disponible en esta tienda."
 
 msgid "Invalid supplier."
-msgstr ""
+msgstr "Proveedor inválido."
 
 #, python-format
 msgid "%d product(s) added to cart."
-msgstr ""
+msgstr "%d producto (s) añadido (s) al carrito."

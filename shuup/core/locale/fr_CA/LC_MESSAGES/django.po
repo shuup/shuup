@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 01:20+0000\n"
-"PO-Revision-Date: 2021-04-29 12:59+0000\n"
-"Last-Translator: Christian Hess <christian@shuup.com>\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"PO-Revision-Date: 2021-06-02 23:24+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -333,14 +333,71 @@ msgstr "valeur datetime"
 msgid "untranslated value"
 msgstr "valeur non traduite"
 
+msgid "queue name"
+msgstr ""
+
+msgid "task identifier"
+msgstr ""
+
+msgid "created on"
+msgstr "créé sur"
+
+msgid "modified on"
+msgstr "modifié le"
+
+msgid "task function"
+msgstr ""
+
+msgid "task arguments"
+msgstr ""
+
+msgid "shop"
+msgstr "boutique"
+
+msgid "supplier"
+msgstr "fournisseur"
+
+msgid "user"
+msgstr "utilisateur"
+
+msgid "background task"
+msgstr ""
+
+msgid "background tasks"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "success"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "started on"
+msgstr ""
+
+msgid "finished on"
+msgstr ""
+
+msgid "results"
+msgstr ""
+
+msgid "error log"
+msgstr ""
+
+msgid "background task execution"
+msgstr ""
+
+msgid "background task executions"
+msgstr ""
+
 msgid "The following fields are protected and can not be changed."
 msgstr "Les champs suivants sont protégés et ne peuvent pas être modifiés."
 
 msgid "key"
 msgstr "clé"
-
-msgid "shop"
-msgstr "boutique"
 
 msgid "customer"
 msgstr "client"
@@ -350,9 +407,6 @@ msgstr "commande"
 
 msgid "creator"
 msgstr "créateur"
-
-msgid "created on"
-msgstr "créé sur"
 
 msgid "updated on"
 msgstr "mis à jour le"
@@ -554,9 +608,6 @@ msgstr "Impossible de définir la boutique pour le groupe de contacts par défau
 msgid "Can't delete. This object is protected."
 msgstr "Impossible de supprimer. Cet objet est protégé."
 
-msgid "modified on"
-msgstr "modifié le"
-
 msgid "active"
 msgstr "actif"
 
@@ -684,9 +735,6 @@ msgstr "autre"
 
 msgid "Person Contacts"
 msgstr "Contacts de personne"
-
-msgid "user"
-msgstr "utilisateur"
 
 msgid "gender"
 msgstr "le genre"
@@ -823,9 +871,6 @@ msgstr "rembourser"
 
 msgid "rounding"
 msgstr "arrondi"
-
-msgid "supplier"
-msgstr "fournisseur"
 
 msgid "parent line"
 msgstr "ligne parente"
@@ -2165,6 +2210,9 @@ msgid ""
 "overwritten on a product-by-product basis."
 msgstr "Activez cette option si ce fournisseur gère l'inventaire des produits stockés. Avoir un stock géré activé n'est pas nécessaire si par exemple la vente de produits numériques qui ne seront jamais épuisés, quel que soit le nombre vendu. Il existe d'autres cas où cela pourrait être une complication inutile. Ce paramètre attribue simplement un comportement par défaut raisonnable, qui peut être écrasé produit par produit."
 
+msgid "supplier modules"
+msgstr ""
+
 msgid ""
 "Select the supplier module to use for this supplier. Supplier modules define"
 " the rules by which inventory is managed."
@@ -2194,6 +2242,20 @@ msgid "Approved"
 msgstr ""
 
 msgid "Indicates whether this supplier is currently approved for work."
+msgstr ""
+
+msgid "module identifier"
+msgstr ""
+
+msgid ""
+"Select the types of products this supplier can handle.Example for normal "
+"products select just Simple Supplier."
+msgstr ""
+
+msgid "Module name"
+msgstr ""
+
+msgid "Supplier modules name."
 msgstr ""
 
 msgid "Can't change the business critical fields of the Tax that is in use."
@@ -2368,9 +2430,6 @@ msgctxt "Display the value with the unit symbol (with or without space) "
 msgid "{value}{symbol}"
 msgstr "{value} {symbol}"
 
-msgid "No Choice"
-msgstr "Pas le choix"
-
 msgid "inherit"
 msgstr "hériter"
 
@@ -2390,18 +2449,12 @@ msgstr "%s n'est pas disponible dans cette boutique."
 msgid "Default Pricing"
 msgstr "Tarification par défaut"
 
-msgid "Error! Insufficient quantity in stock."
-msgstr "Erreur! Quantité en stock insuffisante."
+#, python-brace-format
+msgid "The product kind {value} is not unique!"
+msgstr ""
 
-#, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s (stock physique: %(quantity)s)"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for the following products: "
-"`%(product_counts)s`."
-msgstr "Inventaire physique insuffisant des produits suivants: «%(product_counts)s»."
+msgid "Product"
+msgstr ""
 
 msgid "inventory"
 msgstr "inventaire"
@@ -2411,6 +2464,12 @@ msgstr "réapprovisionner"
 
 msgid "restock logical"
 msgstr "réapprovisionnement logique"
+
+msgid "Failed to execute the task"
+msgstr ""
+
+msgid "An unexpeted error occurred."
+msgstr ""
 
 #, python-format
 msgid "Refund for %s"

@@ -2,21 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: 2020-10-12 00:36+0200\n"
-"Language: es\n"
+"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"PO-Revision-Date: 2018-10-02 06:50+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.4.1\n"
 
 msgid "Archive Product Discounts"
 msgstr "Archivar descuentos de productos"
@@ -25,19 +28,19 @@ msgid "Unarchive Discounts"
 msgstr "Desarchivar descuentos"
 
 msgid "Delete Discounts"
-msgstr "Borrar Descuentos"
+msgstr "Eliminar descuentos"
 
 msgid "Product Discounts Coupon Codes"
 msgstr "Descuentos de productos Códigos de cupón"
 
 msgid "Discounts"
-msgstr "Descuentos"
+msgstr "Descuentos."
 
 msgid "Product Discounts"
-msgstr "Descuentos de Productos"
+msgstr "Descuentos de productos"
 
 msgid "Archived Product Discounts"
-msgstr "Descuentos de Productos Archivados"
+msgstr "Descuentos de productos archivados"
 
 msgid "Discounts Availability Exceptions"
 msgstr "Descuentos Excepciones de disponibilidad"
@@ -46,46 +49,46 @@ msgid "Product Discounts Availability Exceptions"
 msgstr "Descuentos de productos Excepciones de disponibilidad"
 
 msgid "Discounts Happy Hours"
-msgstr "Descuentos de hora feliz"
+msgstr "Descuentos Happy Hours"
 
 msgid "Product Discounts Happy Hours"
-msgstr "Descuentos en productos en hora feliz"
+msgstr "Descuentos en productos Happy Hours"
 
 msgid "Discount Name"
 msgstr "Nombre de descuento"
 
 msgid "Filter by name..."
-msgstr "Filtrar por nombre..."
+msgstr "Filtrar por nombre ..."
 
 msgid "Product"
 msgstr "Producto"
 
 msgid "Filter by product..."
-msgstr "Filtrar por producto..."
+msgstr "Filtrar por producto ..."
 
 msgid "Category"
 msgstr "Categoría"
 
 msgid "Filter by category..."
-msgstr "Filtrar por categoría..."
+msgstr "Filtrar por categoría ..."
 
 msgid "Contact Group"
-msgstr "Grupo de contactos"
+msgstr "Grupo de contacto"
 
 msgid "Filter by contact group..."
-msgstr "Filtrar por grupo de contacto..."
+msgstr "Filtrar por grupo de contactos ..."
 
 msgid "Contact"
 msgstr "Contacto"
 
 msgid "Filter by contact..."
-msgstr "Filtrar por contacto..."
+msgstr "Filtrar por contacto ..."
 
 msgid "Coupon code"
-msgstr "Código de cupón"
+msgstr "Código promocional"
 
 msgid "Filter by coupon code..."
-msgstr "Filtrar por código de cupón..."
+msgstr "Filtrar por código de cupón ..."
 
 msgid "Effect"
 msgstr "Efecto"
@@ -103,7 +106,7 @@ msgid "Usages Limit per contact"
 msgstr "Límite de usos por contacto"
 
 msgid "Usage Limit"
-msgstr "Límite de usos"
+msgstr "Límite de uso"
 
 msgid "Active"
 msgstr "Activo"
@@ -112,14 +115,14 @@ msgid "Created by"
 msgstr "Creado por"
 
 msgid "Date created"
-msgstr "Fecha de creación"
+msgstr "Fecha de creacion"
 
 msgid "Select discounts linked to this coupon code."
 msgstr "Seleccione descuentos vinculados a este código de cupón."
 
 #, python-format
 msgid "%s has been deleted."
-msgstr "%s ha sido eliminado."
+msgstr "%s se ha eliminado."
 
 msgid "Discount percentage"
 msgstr "Porcentaje de descuento"
@@ -134,7 +137,9 @@ msgid "Start Date and Time"
 msgstr "Fecha y hora de inicio"
 
 msgid "Select discounts to be ignored on given time frame."
-msgstr "Seleccione los descuentos que se ignorarán en un plazo determinado."
+msgstr ""
+"Seleccione los descuentos que se ignorarán en un período de tiempo "
+"determinado."
 
 msgid "Happy Hour Name"
 msgstr "Nombre de la hora feliz"
@@ -146,8 +151,8 @@ msgid ""
 "12pm is considered noon and 12am as midnight. Start hour is included to the "
 "discount."
 msgstr ""
-"Las 12 p.m. se consideran mediodía y las 12 a.m. como medianoche. La hora de "
-"inicio está incluida en el descuento."
+"Las 12 p.m. se consideran mediodía y las 12 a.m. como medianoche. La hora de"
+" inicio está incluida en el descuento."
 
 msgid ""
 "12pm is considered noon and 12am as midnight. End hours is included to the "
@@ -202,7 +207,7 @@ msgid "created on"
 msgstr "creado en"
 
 msgid "usage limit per customer"
-msgstr "límite de usos por cliente"
+msgstr "límite de uso por cliente"
 
 msgid "Limit the amount of usages per a single customer."
 msgstr "Limite la cantidad de usos por cliente."
@@ -233,18 +238,18 @@ msgid ""
 "The name for this discount. Used internally with discount lists for "
 "filtering."
 msgstr ""
-"El nombre de este descuento. Utilizado internamente con listas de descuentos "
-"para filtrado."
+"El nombre de este descuento. Utilizado internamente con listas de descuentos"
+" para filtrado."
 
 msgid "supplier"
 msgstr "proveedor"
 
 msgid "Select supplier for this discount."
-msgstr "Seleccionar proveedor para este descuento."
+msgstr "Seleccione proveedor para este descuento."
 
 msgid ""
-"Enable this if the discount is currently active. Please also set a start and "
-"an end date."
+"Enable this if the discount is currently active. Please also set a start and"
+" an end date."
 msgstr ""
 "Habilite esto si el descuento está activo actualmente. Establezca también "
 "una fecha de inicio y una de finalización."
@@ -260,11 +265,11 @@ msgstr ""
 "descuento está marcado como activo."
 
 msgid "end date and time"
-msgstr "Fecha y hora de fin"
+msgstr "fecha y hora de finalización"
 
 msgid ""
-"The date and time the discount ends. This is only applicable if the discount "
-"is marked as active."
+"The date and time the discount ends. This is only applicable if the discount"
+" is marked as active."
 msgstr ""
 "La fecha y hora en que finaliza el descuento. Esto solo es aplicable si el "
 "descuento está marcado como activo."
@@ -282,7 +287,7 @@ msgid "product"
 msgstr "producto"
 
 msgid "Select product for this discount."
-msgstr "Seleccionar producto para este descuento."
+msgstr "Seleccione el producto para este descuento."
 
 msgid "exclude selected category"
 msgstr "excluir categoría seleccionada"
@@ -294,13 +299,13 @@ msgid "category"
 msgstr "categoría"
 
 msgid "Select category for this discount."
-msgstr "Seleccionar categoría para este descuento."
+msgstr "Seleccione la categoría para este descuento."
 
 msgid "contact"
 msgstr "contacto"
 
 msgid "Select contact for this discount."
-msgstr "Seleccionar contacto para este descuento."
+msgstr "Seleccione contacto para este descuento."
 
 msgid "exclude selected contact group"
 msgstr "excluir grupo de contactos seleccionado"
@@ -310,19 +315,19 @@ msgstr ""
 "Excluya los contactos del grupo de contactos seleccionado de este descuento."
 
 msgid "contact group"
-msgstr "grupo de contactos"
+msgstr "grupo de contacto"
 
 msgid "Select contact group for this discount."
-msgstr "Seleccionar grupo de contactos para este descuento."
+msgstr "Seleccione el grupo de contacto para este descuento."
 
 msgid "coupon code"
-msgstr "código de cupón"
+msgstr "Código promocional"
 
 msgid "Select coupon code for this discount."
-msgstr "Seleccionar código de cupón para este descuento."
+msgstr "Seleccione el código de cupón para este descuento."
 
 msgid "discounted price"
-msgstr "precio con descuento"
+msgstr "Precio descontado"
 
 msgid "Discounted product price for this discount."
 msgstr "Precio del producto con descuento para este descuento."
@@ -349,7 +354,7 @@ msgid ""
 "The name for this HappyHour. Used internally with exception lists for "
 "filtering."
 msgstr ""
-"El nombre de esta hora feliz. Usado internamente con listas de excepciones "
+"El nombre de este HappyHour. Usado internamente con listas de excepciones "
 "para filtrado."
 
 msgid "happy hour"
@@ -359,25 +364,25 @@ msgid "parent"
 msgstr "padre"
 
 msgid "from hour"
-msgstr "desde la hora"
+msgstr "desde hora"
 
 msgid "to hour"
-msgstr "hasta la hora"
+msgstr "a hora"
 
 msgid "weekday"
-msgstr "día de la semana"
+msgstr "día laborable"
 
 msgid "time range"
 msgstr "intervalo de tiempo"
 
 msgid "time ranges"
-msgstr "intervalos de tiempo"
+msgstr "rangos de tiempo"
 
 msgid ""
 "The value of the field `to hour` has to be later than that of `from hour`."
 msgstr ""
-"El valor del campo \"hasta la hora\" debe ser posterior al de \"desde la hora"
-"\"."
+"El valor del campo &quot;hasta la hora&quot; debe ser posterior al de "
+"&quot;desde la hora&quot;."
 
 msgid ""
 "Select all discounts to render products from. Only active discounts that "
@@ -394,7 +399,7 @@ msgid "Title"
 msgstr "Título"
 
 msgid "Count"
-msgstr "Total"
+msgstr "Contar"
 
 msgid "Only show in-stock and orderable items"
 msgstr "Mostrar solo artículos en stock y que se pueden pedir"
@@ -403,9 +408,9 @@ msgid ""
 "Warning: The final number of products can be lower than 'Count' as it will "
 "filter out unorderable products from a set of 'Count' products."
 msgstr ""
-"Advertencia: El número final de productos puede ser menor que 'Total', ya "
-"que filtrará los productos que no se pueden pedir de un conjunto de "
-"productos 'Total'."
+"Advertencia: El número final de productos puede ser menor que "
+"&#39;Recuento&#39;, ya que filtrará los productos que no se pueden pedir de "
+"un conjunto de productos &#39;Recuento&#39;."
 
 msgid "Availability"
 msgstr "Disponibilidad"

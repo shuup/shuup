@@ -1,159 +1,159 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
-#
-#, fuzzy
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
-"Language: en\n"
+"PO-Revision-Date: 2020-10-15 11:54+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Name of the company"
-msgstr ""
+msgstr "Nombre de la compania"
 
 msgid "Registration Received"
-msgstr ""
+msgstr "Registro recibido"
 
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 msgid "Customer Email"
-msgstr ""
+msgstr "Correo electrónico del cliente"
 
 msgid "Activation URL"
-msgstr ""
+msgstr "URL de activación"
 
 msgid "Is User Active"
-msgstr ""
+msgstr "¿El usuario está activo?"
 
 msgid "Account Reactivation"
-msgstr ""
+msgstr "Reactivación de cuenta"
 
 msgid "Company Registration Received"
-msgstr ""
+msgstr "Registro de empresa recibido"
 
 msgid "Company Approved"
-msgstr ""
+msgstr "Aprobado por la empresa"
 
 msgid "Account Activation"
-msgstr ""
+msgstr "activación de cuenta"
 
 msgid "Company has been activated."
-msgstr ""
+msgstr "Se ha activado la empresa."
 
 msgid "Send Registration Received Email"
-msgstr ""
+msgstr "Enviar correo electrónico de registro recibido"
 
 msgid "Send email when a user registers."
-msgstr ""
+msgstr "Envíe un correo electrónico cuando un usuario se registre."
 
 msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a user get registered."
-msgstr ""
+msgstr "Este script enviará un correo electrónico al usuario oa cualquier correo electrónico configurado justo después de que el usuario se registre."
 
 msgid "{{ order.shop }} - Welcome!"
-msgstr "{{ order.shop }} - ¡Bienvenido!"
+msgstr "{{order.shop}} - ¡Bienvenido!"
 
 msgid "Send account reactivation email"
-msgstr "Enviar email de reactivacion"
+msgstr "Enviar correo electrónico de reactivación de la cuenta"
 
 msgid "Send email when a user account gets reactivated"
-msgstr "Enviar email cuando una cuenta de usuario es reactivada"
+msgstr "Enviar correo electrónico cuando se reactive una cuenta de usuario"
 
 msgid ""
-"This script will send an email to the user or to any configured email when a "
-"account get's reactivated"
-msgstr ""
+"This script will send an email to the user or to any configured email when a"
+" account get's reactivated"
+msgstr "Este script enviará un correo electrónico al usuario oa cualquier correo electrónico configurado cuando se reactive una cuenta."
 
 msgid "{{ customer.username }} is now active again!"
-msgstr "¡{{ customer.username }} esta activo de nuevo!"
+msgstr "¡{{customer.username}} ahora está activo nuevamente!"
 
 msgid "Send Company Registration Received Email"
-msgstr ""
+msgstr "Enviar correo electrónico recibido de registro de empresa"
 
 msgid "Send email when a user registers as a company."
-msgstr ""
+msgstr "Envíe un correo electrónico cuando un usuario se registre como empresa."
 
 msgid "Send Company Activated Email"
-msgstr ""
+msgstr "Enviar correo electrónico activado por la empresa"
 
 msgid "Notify company's contact person that company account is activated"
-msgstr ""
+msgstr "Notifique a la persona de contacto de la empresa que la cuenta de la empresa está activada"
 
 msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a company is activated."
-msgstr ""
+msgstr "Este script enviará un correo electrónico al usuario oa cualquier correo electrónico configurado justo después de que se active una empresa."
 
 msgid "Send account activation email"
-msgstr "Enbiar email de activacion de cuenta"
+msgstr "Enviar correo electrónico de activación de cuenta"
 
 msgid "Send email when a user account gets activated for the first time"
-msgstr "Enviar email cuando una cuenta de usuario se activa por primera vez"
+msgstr "Enviar correo electrónico cuando una cuenta de usuario se activa por primera vez"
 
 msgid ""
 "This script will send an email to the user or to any configured email when "
 "an account gets activated for the first time"
-msgstr ""
+msgstr "Este script enviará un correo electrónico al usuario oa cualquier correo electrónico configurado cuando una cuenta se active por primera vez."
 
 msgid "{{ customer.username }} is now active!"
-msgstr ""
+msgstr "¡{{customer.username}} ahora está activo!"
 
 msgid "Account activation"
-msgstr "Activacion de cuenta"
+msgstr "Activación de cuenta"
 
 msgid "Account activation failed."
-msgstr "La activacion de cuenta ha fallado"
+msgstr "Falló la activación de la cuenta."
 
 msgid "Register as a Company"
-msgstr "Registrar como empresa"
+msgstr "Registrarse como empresa"
 
 msgid "Company Registration"
-msgstr "Registro de empresa"
+msgstr "Registro de la empresa"
 
 msgid "Company information"
-msgstr "Informacion de empresa"
+msgstr "Información de la empresa"
 
 msgid "Company billing information"
-msgstr ""
+msgstr "Información de facturación de la empresa"
 
 msgid "Contact person"
-msgstr "Informacion de contacto"
+msgstr "Persona de contacto"
 
 msgid "Contact information for primary company contact"
-msgstr ""
+msgstr "Información de contacto del contacto principal de la empresa"
 
 msgid "Login information"
-msgstr "Informacion de inicio de sesion"
+msgstr "Información Entrar"
 
 msgid "The information you will log in with."
-msgstr ""
+msgstr "La información con la que iniciará sesión."
 
 msgid "Register"
-msgstr "Registrar"
+msgstr "Registrarse"
 
 msgid "Registration"
 msgstr "Registro"
 
 msgid "Register as a company."
-msgstr "Registrar como empresa"
+msgstr "Regístrese como empresa."
 
 msgid "Activation successful"
-msgstr "Activacion satisfactoria"
+msgstr "Activación exitosa"
 
 msgid ""
 "Registration complete. Please follow the instructions sent to your email "
 "address."
-msgstr "Registro completo. Por favor siga las instrucciones enviadas a su correo electronico."
+msgstr "Registro completo. Siga las instrucciones enviadas a su dirección de correo electrónico."

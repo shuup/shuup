@@ -1,47 +1,47 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-31 08:48+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-02-21 23:09+0000\n"
+"PO-Revision-Date: 2020-10-15 11:01+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "This theme has no special settings to configure."
-msgstr ""
+msgstr "Este tema no tiene ajustes especiales para configurar."
 
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
 #, python-format
 msgid "Welcome to %(shop_name)s!"
-msgstr ""
+msgstr "¡Bienvenido a %(shop_name)s!"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 msgid "Products"
-msgstr ""
+msgstr "Productos"
 
 msgid "Default"
-msgstr ""
+msgstr "Defecto"
 
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Azul medianoche"
 
 msgid "Candy Pink"
-msgstr ""
+msgstr "Rosa caramelo"
 
 msgid "Show Frontpage Welcome Text"
-msgstr ""
+msgstr "Mostrar texto de bienvenida en la portada"

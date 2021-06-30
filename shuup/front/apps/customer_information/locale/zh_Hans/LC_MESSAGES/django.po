@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2020-06-30 00:17+0000\n"
+"POT-Creation-Date: 2021-05-10 20:10+0000\n"
+"PO-Revision-Date: 2021-05-11 12:25+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
@@ -159,9 +159,6 @@ msgid ""
 "approval."
 msgstr "您已经将您的帐户链接到一家公司，并且正在等待批准。"
 
-msgid "User account information"
-msgstr "用户账号信息"
-
 msgid "Not specified"
 msgstr "未指定"
 
@@ -189,8 +186,8 @@ msgstr "配送信息"
 msgid "Copy to billing information"
 msgstr "复制到账单信息"
 
-msgid "Edit user account information"
-msgstr "编辑用户帐户信息"
+msgid "Edit customer information"
+msgstr ""
 
 msgid "Save password"
 msgstr "保存密码"
@@ -206,9 +203,6 @@ msgstr "链接到公司的帐户"
 
 msgid "Company information"
 msgstr "公司信息"
-
-msgid "User information"
-msgstr "用户信息"
 
 msgid "Password changed."
 msgstr ""

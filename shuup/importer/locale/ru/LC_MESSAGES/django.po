@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 14:39+0000\n"
+"POT-Creation-Date: 2021-06-02 18:31+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Translator HIO.E <translater@hiqe.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
@@ -23,6 +23,25 @@ msgstr ""
 
 msgid "Data Import"
 msgstr "Импорт данных"
+
+msgid "Allow the user to see the imports from all shops and suppliers."
+msgstr ""
+
+msgid "Allow the user to run importers."
+msgstr ""
+
+msgid "Allow the user to list imports."
+msgstr ""
+
+msgid "Allow the user to import a file."
+msgstr ""
+
+msgid "Allow the user to download sample files."
+msgstr ""
+
+#, python-brace-format
+msgid "Allow the user to use the {importer_name} importer."
+msgstr ""
 
 msgid "Import mode"
 msgstr "Режим импорта"
@@ -42,26 +61,46 @@ msgstr ""
 msgid "File"
 msgstr "Файл"
 
-#, python-format
-msgid "%s is not a file."
+msgid "Data imports"
+msgstr ""
+
+msgid "Invalid importer."
 msgstr ""
 
 msgid "File is missing."
 msgstr ""
 
-msgid "Failed to import the file."
+msgid "The import was queued!"
+msgstr ""
+
+msgid "Failed to process the file."
 msgstr ""
 
 msgid "Invalid parameters."
-msgstr ""
-
-msgid "Invalid importer."
 msgstr ""
 
 msgid "Invalid file name."
 msgstr ""
 
 msgid "File was not found."
+msgstr ""
+
+msgid "Import date"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Import file"
+msgstr ""
+
+msgid "Importdate"
+msgstr ""
+
+msgid "Mode"
 msgstr ""
 
 msgid "Import"
@@ -87,6 +126,9 @@ msgstr ""
 
 #, python-format
 msgid "Row import failed (%s)."
+msgstr ""
+
+msgid "Unexpected error while trying to import the file."
 msgstr ""
 
 msgid "Example files"
@@ -208,11 +250,11 @@ msgstr ""
 msgid "Start Import"
 msgstr "Начать импорт"
 
-msgid "Import Data - Complete"
-msgstr "Импорт данных - завершено"
+msgid "Import Results"
+msgstr ""
 
-msgid "Import Complete!"
-msgstr "Импорт завершён!"
+msgid "Error"
+msgstr ""
 
 msgid "New items"
 msgstr "Новые наименования"
@@ -253,3 +295,16 @@ msgstr "Только создать (без обновлений)"
 
 msgid "Only update existing (no new ones are created)"
 msgstr "Только обновлять существующее (без создания новых)"
+
+msgid "The file doesn't contain data."
+msgstr ""
+
+msgid "Failed to import data."
+msgstr ""
+
+#, python-brace-format
+msgid "{file_name} is not a valid file."
+msgstr ""
+
+msgid "The file is missing."
+msgstr ""

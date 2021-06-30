@@ -10,7 +10,7 @@
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli L. <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tomi Järvi <tomi@jarvi.pro>, 2015

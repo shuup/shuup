@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 14:26+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Spanish (http://www.transifex.com/shuup/shuup/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -95,6 +95,9 @@ msgstr "Hojas de estilo"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Las fuentes, colores y estilos para usar en tu tema."
+
+msgid "Failed to render the plugin"
+msgstr ""
 
 msgid "Content in this box is shown to all user types without limitations."
 msgstr "El contenido en esta caja se muestra a todos los usuarios sin limitaciones."
@@ -298,6 +301,9 @@ msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "Fragmento de código `In-Place`"
+
+msgid "Resource snippet for start of head"
+msgstr ""
 
 msgid "Resource snippet for end of head"
 msgstr "Fragmento de código para el final del encabezado"

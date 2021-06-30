@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 13:32+0000\n"
-"PO-Revision-Date: 2021-02-04 14:15+0000\n"
+"POT-Creation-Date: 2021-06-17 12:49+0000\n"
+"PO-Revision-Date: 2021-06-17 14:26+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
@@ -96,6 +96,9 @@ msgstr "样式表"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "与主题一起使用的字体、颜色和样式。"
+
+msgid "Failed to render the plugin"
+msgstr ""
 
 msgid "Content in this box is shown to all user types without limitations."
 msgstr ""
@@ -299,6 +302,9 @@ msgstr ""
 
 msgid "In-Place Snippet"
 msgstr "在广场上"
+
+msgid "Resource snippet for start of head"
+msgstr ""
 
 msgid "Resource snippet for end of head"
 msgstr "头末端的资源片段"
