@@ -17,7 +17,7 @@ from django.utils.translation import activate
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.apps.provides import override_provides
-from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
+from shuup.core.models import Product, ProductCatalogPrice, Shop, ShopProduct, ShopProductVisibility, ShopStatus
 from shuup.testing.factories import (
     CategoryFactory,
     create_product,
@@ -243,6 +243,10 @@ def test_product_edit_view(rf, admin_user, settings):
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.primary_category
+
+    # the catalog price was indexed
+    catalog_price = ProductCatalogPrice.objects.filter(shop=shop_product.shop, product=shop_product.product).first()
+    assert catalog_price.price_value == shop_product.default_price_value
 
     if settings.SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES:
         assert shop_product.categories.count() == 1

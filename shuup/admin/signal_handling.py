@@ -11,8 +11,11 @@ from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
 from shuup.admin.modules.orders.receivers import handle_custom_payment_return_requests
+from shuup.admin.signals import object_saved
 from shuup.core import cache
+from shuup.core.models import Product, ShopProduct
 from shuup.core.order_creator.signals import order_creator_finished
+from shuup.core.tasks import run_task
 
 
 @receiver(m2m_changed, sender=get_user_model().groups.through)
@@ -27,6 +30,15 @@ def on_user_groups_change(instance, action, model, **kwargs):
     # bump only the user's permission cache
     elif isinstance(instance, get_user_model()):
         cache.bump_version("{}:{}".format(USER_PERMISSIONS_CACHE_NAMESPACE, instance.pk))
+
+
+@receiver(object_saved)
+def on_object_saved(sender, object, **kwargs):
+    # make sure to index the prices of the product when a product is saved
+    if isinstance(object, ShopProduct):
+        run_task("shuup.core.catalog.tasks.index_shop_product", shop_product_id=object.pk)
+    if isinstance(object, Product):
+        run_task("shuup.core.catalog.tasks.index_product", product_id=object.pk)
 
 
 order_creator_finished.connect(handle_custom_payment_return_requests, dispatch_uid="shuup.admin.handle_cash_payments")
