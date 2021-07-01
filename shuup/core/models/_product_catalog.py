@@ -38,3 +38,10 @@ class ProductCatalogPrice(MoneyPropped, models.Model):
         indexes = [
             models.Index(fields=["product", "shop"]),
         ]
+
+
+class ProductCatalogAvailability(MoneyPropped, models.Model):
+    product = models.ForeignKey("shuup.Product", related_name="catalog_prices", on_delete=models.CASCADE)
+    shop = models.ForeignKey("shuup.Shop", related_name="catalog_prices", on_delete=models.CASCADE)
+    supplier = models.ForeignKey("shuup.Supplier", related_name="catalog_prices", on_delete=models.CASCADE)
+    is_available = models.BooleanField(verbose_name=_("is available"), default=False)
