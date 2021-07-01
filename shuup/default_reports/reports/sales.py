@@ -54,8 +54,8 @@ class SalesReport(OrderReportMixin, ShuupReportBase):
                     "date": format_date(order_date, locale=get_current_babel_locale()),
                     "order_count": order_count,
                     "product_count": int(product_count),
-                    "taxless_total": taxless_total.as_rounded().value,
-                    "taxful_total": taxful_total.as_rounded().value,
+                    "taxless_total": taxless_total,
+                    "taxful_total": taxful_total,
                 }
             )
 

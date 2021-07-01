@@ -5,8 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 import json
 import pytest
 import pytz
@@ -17,7 +15,7 @@ from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.dateparse import parse_datetime
 from django.utils.encoding import force_text
-from django.utils.timezone import activate, localtime, now
+from django.utils.timezone import activate
 from pytz import timezone
 
 from shuup.apps.provides import override_provides
@@ -48,7 +46,6 @@ from shuup.testing.factories import (
     create_random_order,
     create_random_person,
     get_address,
-    get_default_payment_method,
     get_default_product,
     get_default_shipping_method,
     get_default_shop,
@@ -134,7 +131,7 @@ def test_total_sales_report(rf):
     assert return_data.get("currency") == test_info.shop.currency
     assert return_data.get("name") == test_info.shop.name
     assert int(return_data.get("order_amount")) == 1
-    assert str(test_info.expected_taxful_total) in return_data.get("total_sales")
+    assert float(test_info.expected_taxful_total) == return_data.get("total_sales")
 
 
 @pytest.mark.django_db
@@ -143,7 +140,7 @@ def test_orders_report(rf):
     assert force_text(OrdersReport.title) in test_info.json_data.get("heading")
     return_data = test_info.json_data.get("tables")[0].get("data")[0]
     assert return_data.get("status") == test_info.order.status.name
-    assert return_data.get("order_line_quantity") == str(test_info.order.lines.count())
+    assert return_data.get("order_line_quantity") == int(test_info.order.lines.count())
     assert return_data.get("customer") == test_info.order.get_customer_name()
 
 
@@ -164,12 +161,10 @@ def test_order_line_report(rf):
     supplier = get_default_supplier()
     test_info = initialize_simple_report(OrderLineReport, {"supplier": [supplier.pk]})
     assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
-    return_data = test_info.json_data.get("tables")[0].get("data")[0]
     assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(supplier=supplier).count()
 
     test_info = initialize_simple_report(OrderLineReport, {"order_status": [1]})
     assert force_text(OrderLineReport.title) in test_info.json_data.get("heading")
-    return_data = test_info.json_data.get("tables")[0].get("data")[0]
     assert len(test_info.json_data["tables"][0]["data"]) == OrderLine.objects.filter(order__status__in=[1]).count()
 
 
@@ -220,7 +215,7 @@ def test_total_sales_customers_report(rf):
 
     assert int(data["customers"]) == 2
     assert int(data["order_amount"]) == 5
-    assert data["customer_avg_sale"] == str(avg_sales.value.quantize(Decimal("0.01")))
+    assert data["customer_avg_sale"] == float(avg_sales.value.quantize(Decimal("0.01")))
 
 
 @pytest.mark.django_db
@@ -232,7 +227,7 @@ def test_total_sales_report_with_zero_total(rf):
     assert return_data.get("currency") == test_info.shop.currency
     assert return_data.get("name") == test_info.shop.name
     assert int(return_data.get("order_amount")) == 0
-    assert str(test_info.shop.create_price(0).as_rounded().value) in return_data.get("total_sales")
+    assert float(test_info.shop.create_price(0).as_rounded().value) == return_data.get("total_sales")
 
 
 @pytest.mark.django_db
@@ -247,9 +242,9 @@ def test_total_sales_per_hour_report(rf):
     assert max([int(data_item.get("hour")) for data_item in return_data]) == 23
     for hour_data in return_data:
         if int(hour_data.get("hour")) == int(order_hour):
-            assert str(test_info.expected_taxful_total) in hour_data.get("total_sales")
+            assert float(test_info.expected_taxful_total) == hour_data.get("total_sales")
         else:
-            assert hour_data.get("total_sales") == "0"
+            assert hour_data.get("total_sales") == 0
 
 
 @pytest.mark.django_db
@@ -341,8 +336,8 @@ def _assert_expected_values(
     assert len(return_data) == 1  # only one row since both are on same day
     assert int(return_data[0].get("order_count")) == expected_order_count
     assert int(return_data[0].get("product_count")) == products_per_order * expected_order_count
-    assert return_data[0].get("taxful_total") == str(expected_taxful_total_price.as_rounded().value)
-    assert return_data[0].get("taxless_total") == str(expected_taxless_total_price.as_rounded().value)
+    assert return_data[0].get("taxful_total") == float(expected_taxful_total_price)
+    assert return_data[0].get("taxless_total") == float(expected_taxless_total_price)
 
 
 @pytest.mark.django_db
@@ -730,16 +725,16 @@ def test_customer_sales_report(rf, order_by):
             person2_data = data[0]
 
     assert person1_data["customer"] == person1.name
-    assert person1_data["order_count"] == "2"
-    assert person1_data["average_sales"] == str(person1_avg_sales.value)
-    assert person1_data["taxless_total"] == str(person1_taxless_total_sales.value.quantize(Decimal("0.01")))
-    assert person1_data["taxful_total"] == str(person1_taxful_total_sales.value.quantize(Decimal("0.01")))
+    assert person1_data["order_count"] == 2
+    assert person1_data["average_sales"] == float(person1_avg_sales.value)
+    assert person1_data["taxless_total"] == float(person1_taxless_total_sales.value.quantize(Decimal("0.01")))
+    assert person1_data["taxful_total"] == float(person1_taxful_total_sales.value.quantize(Decimal("0.01")))
 
     assert person2_data["customer"] == person2.name
-    assert person2_data["order_count"] == "3"
-    assert person2_data["average_sales"] == str(person2_avg_sales.value)
-    assert person2_data["taxless_total"] == str(person2_taxless_total_sales.value.quantize(Decimal("0.01")))
-    assert person2_data["taxful_total"] == str(person2_taxful_total_sales.value.quantize(Decimal("0.01")))
+    assert person2_data["order_count"] == 3
+    assert person2_data["average_sales"] == float(person2_avg_sales.value)
+    assert person2_data["taxless_total"] == float(person2_taxless_total_sales.value.quantize(Decimal("0.01")))
+    assert person2_data["taxful_total"] == float(person2_taxful_total_sales.value.quantize(Decimal("0.01")))
 
 
 @pytest.mark.django_db
@@ -859,10 +854,10 @@ def test_taxes_report(rf):
     for ix, tax in enumerate(data):
         assert tax["tax"] == expected_result[ix]["tax"]
         assert Decimal(tax["tax_rate"]) == expected_result[ix]["tax_rate"] * Decimal(100.0)
-        assert tax["order_count"] == str(expected_result[ix]["order_count"])
-        assert tax["total_tax_amount"] == str(expected_result[ix]["total_tax_amount"])
-        assert tax["total_pretax_amount"] == str(expected_result[ix]["total_pretax_amount"])
-        assert tax["total"] == str(expected_result[ix]["total"])
+        assert tax["order_count"] == float(expected_result[ix]["order_count"])
+        assert tax["total_tax_amount"] == float(expected_result[ix]["total_tax_amount"])
+        assert tax["total_pretax_amount"] == float(expected_result[ix]["total_pretax_amount"])
+        assert tax["total"] == float(expected_result[ix]["total"])
 
 
 def seed_source(shipping_method=None, produce_price=10, shop=None):
@@ -959,8 +954,8 @@ def test_shipping_report(rf, prices_include_tax):
     for ix, shipping in enumerate(data):
         assert shipping["carrier"] == expected_result[ix]["carrier"]
         assert shipping["shipping_method"] == expected_result[ix]["shipping_method"]
-        assert shipping["order_count"] == str(expected_result[ix]["order_count"])
-        assert shipping["total_charged"] == str(expected_result[ix]["total_charged"].quantize(Decimal("0.01")))
+        assert shipping["order_count"] == int(expected_result[ix]["order_count"])
+        assert shipping["total_charged"] == float(expected_result[ix]["total_charged"].quantize(Decimal("0.01")))
 
 
 @pytest.mark.django_db
@@ -1018,7 +1013,7 @@ def test_refunds_report(rf):
     assert len(data) == 1
     data = data[0]
 
-    expected_data = {"refunded_orders": "4", "total_refunded": str(total_refunded.value)}
+    expected_data = {"refunded_orders": 4, "total_refunded": float(total_refunded.value)}
 
     for k, v in expected_data.items():
         assert data[k] == v

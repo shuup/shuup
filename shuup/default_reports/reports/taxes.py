@@ -70,11 +70,9 @@ class TaxesReport(OrderReportMixin, ShuupReportBase):
                     "tax": tax_map[tax_total["tax"]].name,
                     "tax_rate": tax_total["tax__rate"] * Decimal(100.0),
                     "order_count": tax_total["order_count"],
-                    "total_pretax_amount": Money(tax_total["total_pretax_amount"], self.shop.currency)
-                    .as_rounded()
-                    .value,
-                    "total_tax_amount": Money(tax_total["total_tax_amount"], self.shop.currency).as_rounded().value,
-                    "total": Money(tax_total["total"], self.shop.currency).as_rounded().value,
+                    "total_pretax_amount": Money(tax_total["total_pretax_amount"], self.shop.currency),
+                    "total_tax_amount": Money(tax_total["total_tax_amount"], self.shop.currency),
+                    "total": Money(tax_total["total"], self.shop.currency),
                 }
             )
 

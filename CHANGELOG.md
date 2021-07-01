@@ -17,6 +17,10 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: hide email template button based on permission
 - Reports: improve log when an importer fails
 
+### Added
+
+- Reports: add CSV report writer
+
 ## [2.10.8] - 2021-06-30
 
 ### Changed
@@ -24,6 +28,7 @@ List all changes after the last release here (newer on top). Each change on a se
 - Pull translations from Transifex
 
 ## [2.10.7] - 2021-06-29
+
 
 ### Changed
 
