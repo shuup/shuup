@@ -156,19 +156,21 @@ def test_basic_order_flow(with_company, with_signal):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "get_shipping_method,shipping_data,get_payment_method,payment_data",
+    "get_shipping_method,shipping_data,get_payment_method,payment_data,cancel_order",
     [
-        (get_default_shipping_method, None, _get_payment_method_with_phase, {"input_field": True}),
-        (_get_shipping_method_with_phase, {"input_field": "20540"}, get_default_payment_method, None),
+        (get_default_shipping_method, None, _get_payment_method_with_phase, {"input_field": True}, True),
+        (get_default_shipping_method, None, _get_payment_method_with_phase, {"input_field": True}, False),
+        (_get_shipping_method_with_phase, {"input_field": "20540"}, get_default_payment_method, None, False),
         (
             _get_shipping_method_with_phase,
             {"input_field": "20540"},
             _get_payment_method_with_phase,
             {"input_field": True},
+            False,
         ),
     ],
 )
-def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_method, payment_data):
+def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_method, payment_data, cancel_order):
     cache.clear()
     create_default_order_statuses()
     populate_if_required()
@@ -221,6 +223,15 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
     assert response.status_code == 302, "Confirm should redirect forth"
 
     order = Order.objects.first()
+
+    if cancel_order:
+        order.set_canceled()
+        process_payment_path = reverse("shuup:order_process_payment", kwargs={"pk": order.pk, "key": order.key})
+        process_payment_return_path = reverse("shuup:order_complete", kwargs={"pk": order.pk, "key": order.key})
+        response = c.get(process_payment_path)
+        assert response.status_code == 302, "Payment page should redirect back"
+        assert response.url.endswith(process_payment_return_path)
+        return
 
     if isinstance(shipping_method.carrier, CarrierWithCheckoutPhase):
         assert order.shipping_data.get("input_value") == "20540"
