@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.utils.html import escape
 
 from shuup.utils.django_compat import force_text
 
@@ -61,10 +62,10 @@ def extract_messages(obj_list):
     for obj in obj_list:
         if isinstance(obj, ValidationError):
             for msg in obj.messages:
-                yield force_text(msg)
+                yield escape(force_text(msg))
             continue
         if isinstance(obj, Exception):
             if len(obj.args):
-                yield force_text(obj.args[0])
+                yield escape(force_text(obj.args[0]))
                 continue
-        yield force_text(obj)
+        yield escape(force_text(obj))

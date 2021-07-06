@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.http.response import HttpResponseRedirect
+from django.utils.html import escape
 
 from shuup.utils.excs import Problem
 from shuup.xtheme.editing import set_edit_mode
@@ -42,4 +43,4 @@ def command_dispatch(request):
         response = handle_command(request, command)
         if response:
             return response
-    raise Problem("Error! Unknown command: `%r`" % command)
+    raise Problem("Error! Unknown command: `%r`" % escape(command))
