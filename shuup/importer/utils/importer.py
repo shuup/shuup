@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import logging
 import os
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -14,6 +15,8 @@ from shuup.admin.utils.permissions import has_permission
 from shuup.apps.provides import get_provide_objects
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.transforms import transform_file
+
+LOGGER = logging.getLogger(__name__)
 
 
 class ImportMode(Enum):
@@ -102,8 +105,9 @@ class FileImporter:
 
         try:
             self.importer.do_import(self.import_mode)
-        except Exception:
-            raise ImporterError(_("Failed to import data."))
+        except Exception as exc:
+            LOGGER.exception("Failed to run importer.")
+            raise ImporterError(_("Failed to import data: {}.").format(str(exc)))
 
     def _transform_request_file(self):
         try:
