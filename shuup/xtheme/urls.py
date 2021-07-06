@@ -19,7 +19,7 @@ from shuup.xtheme.views.plugins import (
 
 urlpatterns = [
     url(r"^xtheme/editor/$", EditorView.as_view(), name="xtheme_editor"),
-    url(r"^xtheme/(?P<view>.+)/*$", extra_view_dispatch, name="xtheme_extra_view"),
+    url(r"^xtheme/(?P<view>.+)/?$", extra_view_dispatch, name="xtheme_extra_view"),
     url(r"^xtheme/$", command_dispatch, name="xtheme"),
     url(
         r"^xtheme-prod-hl/(?P<plugin_type>.*)/(?P<cutoff_days>\d+)/(?P<count>\d+)/(?P<cache_timeout>\d+)/$",

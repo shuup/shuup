@@ -8,6 +8,7 @@
 import json
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
+from django.utils.html import escape
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
@@ -70,7 +71,7 @@ class EditorView(TemplateView):
         if command:
             dispatcher = getattr(self, "dispatch_%s" % command, None)
             if not callable(dispatcher):
-                raise Problem(_("Unknown command: `%s`.") % command)
+                raise Problem(_("Unknown command: `%s`.") % escape(command))
             dispatch_kwargs = dict(request.POST.items())
             rv = dispatcher(**dispatch_kwargs)
             if rv:
