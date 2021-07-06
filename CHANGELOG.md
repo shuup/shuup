@@ -29,6 +29,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Core: only consider lines from the same supplier as the behavior component
 
+
 ## [2.10.6] - 2021-06-25
 
 ### Fixed
