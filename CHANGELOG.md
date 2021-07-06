@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Admin: hide email template button based on permission
+- Reports: improve log when an importer fails
 
 ## [2.10.8] - 2021-06-30
 
@@ -23,6 +24,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Core: only consider lines from the same supplier as the behavior component
+
 
 ## [2.10.6] - 2021-06-25
 
