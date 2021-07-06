@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- GDPR: create a snippet blocker to prevent injection when cookie is not consented
 - Xtheme: create `xtheme_snippet_blocker` provides to allow blocking a global script injection
 - Xtheme: add name a `Snippet` object
 

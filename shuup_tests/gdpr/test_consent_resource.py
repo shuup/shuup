@@ -9,6 +9,7 @@ import django.template
 import json
 import pytest
 import reversion
+from bs4 import BeautifulStoneSoup
 from django.conf import settings
 from django.test.utils import override_settings
 from django.utils.translation import activate
@@ -22,6 +23,7 @@ from shuup.gdpr.utils import (
 )
 from shuup.testing import factories
 from shuup.utils.django_compat import reverse
+from shuup.xtheme.models import Snippet, SnippetType
 from shuup_tests.utils import SmartClient
 
 
@@ -216,3 +218,97 @@ def test_consent_cookies(rf):
         context = {"request": request}
         rendered_cookies = set(json.loads(template.render(context)))
         assert rendered_cookies == set(["_opt2", "cookie1", "_cookie3", "_opt3", "_analytics", "cookir2", "_opt1"])
+
+
+@pytest.mark.django_db
+def test_consent_block_snippet_injection(rf):
+    """
+    Test that the GDPR consent is required to inject xtheme scripts
+    """
+    shop = factories.get_default_shop()
+
+    client = SmartClient()
+    index_url = reverse("shuup:index")
+
+    # create a GDPR setting for the shop
+    shop_gdpr = GDPRSettings.get_for_shop(shop)
+    shop_gdpr.cookie_banner_content = "my cookie banner content"
+    shop_gdpr.cookie_privacy_excerpt = "my cookie privacyexcerpt"
+    shop_gdpr.enabled = True
+    shop_gdpr.save()
+
+    # configure some snippets to be injected
+    google_snippet = Snippet.objects.create(
+        name="Google Analytics",
+        snippet_type=SnippetType.InlineHTMLMarkup,
+        location="body_end",
+        shop=shop,
+        snippet='<script id="google-script"></script>',
+    )
+
+    facebook_snippet = Snippet.objects.create(
+        name="Facebook Pixel",
+        snippet_type=SnippetType.InlineHTMLMarkup,
+        location="body_end",
+        shop=shop,
+        snippet='<script id="facebook-script"></script>',
+    )
+
+    # create cookie categories
+    required_cookie_category = GDPRCookieCategory.objects.create(
+        shop=shop,
+        always_active=True,
+        cookies="cookie1,cookir2,_cookie3",
+        name="RequiredCookies",
+        how_is_used="to make the site work",
+    )
+    google_cookie_category = GDPRCookieCategory.objects.create(
+        shop=shop,
+        always_active=False,
+        cookies="_google",
+        name="GoogleCookies",
+        how_is_used="to spy users",
+    )
+    google_cookie_category.block_snippets.add(google_snippet)
+
+    faceboook_cookie_category = GDPRCookieCategory.objects.create(
+        shop=shop,
+        always_active=False,
+        cookies="_facebook",
+        name="Facebook",
+        how_is_used="to track users",
+    )
+    faceboook_cookie_category.block_snippets.add(facebook_snippet)
+
+    # create privacy policy GDPR document
+    ensure_gdpr_privacy_policy(shop)
+    response = client.get(index_url)
+    assert settings.SHUUP_GDPR_CONSENT_COOKIE_NAME not in response.cookies
+
+    # send consent only for the required and google
+    response = client.post(
+        reverse("shuup:gdpr_consent"),
+        data={
+            "cookie_category_{}".format(required_cookie_category.id): "on",
+            "cookie_category_{}".format(google_cookie_category.id): "on",
+            "cookie_category_{}".format(faceboook_cookie_category.id): "off",
+        },
+    )
+
+    assert settings.SHUUP_GDPR_CONSENT_COOKIE_NAME in response.cookies
+    cookies_data = json.loads(response.cookies[settings.SHUUP_GDPR_CONSENT_COOKIE_NAME].value)
+
+    for cookie in required_cookie_category.cookies.split(","):
+        assert cookie in cookies_data["cookies"]
+    for cookie in google_cookie_category.cookies.split(","):
+        assert cookie in cookies_data["cookies"]
+    for cookie in faceboook_cookie_category.cookies.split(","):
+        assert cookie not in cookies_data["cookies"]
+
+    # send the request again, only the google script should be injected
+    response = client.get(index_url)
+    response.render()
+
+    content = BeautifulStoneSoup(response.content)
+    assert content.find_all("script", attrs={"id": "google-script"})
+    assert not content.find_all("script", attrs={"id": "facebook-script"})

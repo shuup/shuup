@@ -58,6 +58,7 @@ def test_gdpr_admin_settings(client, admin_user):
             "cookie_categories-0-name__en": "required",
             "cookie_categories-0-how_is_used__en": "to work",
             "cookie_categories-0-cookies": "sessionid",
+            "cookie_categories-0-block_snippets": [],
         }
     )
     response = client.post(admin_settings_url, data=payload)
@@ -73,6 +74,7 @@ def test_gdpr_admin_settings(client, admin_user):
             "cookie_categories-1-name__en": "Maybe",
             "cookie_categories-1-how_is_used__en": "to spy",
             "cookie_categories-1-cookies": "_ga",
+            "cookie_categories-1-block_snippets": [],
         }
     )
     client.post(admin_settings_url, data=payload)
