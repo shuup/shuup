@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import bleach
 import csv
 import six
 from babel.dates import format_datetime
@@ -154,6 +155,13 @@ def format_data(data, format_iso_dates=False, format_money_values=False):
     return data
 
 
+def remove_unsafe_chars(data):
+    if isinstance(data, str):
+        return "".join([char for char in data if char not in ("=", "+", "-")])
+
+    return data
+
+
 class CSVReportWriter(ReportWriter):
     content_type = "text/csv"
     extension = ".csv"
@@ -170,12 +178,12 @@ class CSVReportWriter(ReportWriter):
         self.data.append([c["title"] for c in report.schema])
         for datum in report_data:
             datum = report.read_datum(datum)
-            self.data.append([format_data(data, format_iso_dates=True) for data in datum])
+            self.data.append([format_data(remove_unsafe_chars(data), format_iso_dates=True) for data in datum])
 
         if has_totals:
             for datum in report.get_totals(report_data):
                 datum = report.read_datum(datum)
-                self.data.append([format_data(data) for data in datum])
+                self.data.append([format_data(remove_unsafe_chars(data)) for data in datum])
 
     def get_rendered_output(self):
         f = StringIO()
@@ -206,13 +214,13 @@ class ExcelReportWriter(ReportWriter):
         self.worksheet.append([c["title"] for c in report.schema])
         for datum in report_data:
             datum = report.read_datum(datum)
-            self.worksheet.append([format_data(data) for data in datum])
+            self.worksheet.append([format_data(remove_unsafe_chars(data)) for data in datum])
             self._convert_row_to_string()
 
         if has_totals:
             for datum in report.get_totals(report_data):
                 datum = report.read_datum(datum)
-                self.worksheet.append([format_data(data) for data in datum])
+                self.worksheet.append([format_data(remove_unsafe_chars(data)) for data in datum])
                 self._convert_row_to_string()
 
     def write_page_heading(self, text):
@@ -264,7 +272,7 @@ class HTMLReportWriter(ReportWriter):
         self.output.append(mark_safe(content))
 
     def _w(self, content):
-        self.output.append(format_data(content, format_money_values=True))
+        self.output.append(bleach.clean(str(format_data(content, format_money_values=True)), strip=True))
 
     def _w_tag(self, tag, content):
         self._w_raw("<%s>" % tag)
