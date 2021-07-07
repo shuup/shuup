@@ -17,11 +17,12 @@
     "@babel/cli": "7.12.7",
     "@babel/core": "7.12.7",
     "@babel/preset-env": "7.12.7",
-    "autoprefixer": "^9.6.1",
+    "autoprefixer": "^10.0.0",
     "babel-preset-env": "^1.7.0",
-    "less": "^3.0.4",
+    "less": "3.12.2",
     "parcel-bundler": "^1.12.4",
-    "postcss-modules": "^1.1.0",
+    "postcss": "^8.3.5",
+    "postcss-modules": "^4.0.0",
     "shuup-static-build-tools": "^1.0.5"
   },
   "devDependencies": {

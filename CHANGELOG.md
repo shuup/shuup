@@ -110,6 +110,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Bump npm dependencies
 - Reports: clean malicius content from the HTML and CSV exporters
 - Reports: prevent formulas from being exported in excel writer
 - Tests: log errors into a log file
