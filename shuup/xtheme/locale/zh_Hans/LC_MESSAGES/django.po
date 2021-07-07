@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 12:49+0000\n"
-"PO-Revision-Date: 2021-06-17 14:26+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-07-06 22:55+0000\n"
+"PO-Revision-Date: 2021-07-07 18:01+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/language/cmn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +66,12 @@ msgstr "选择将注入此片段的主题。将字段保留为空白，以插入
 
 msgid "Select the location of the page to inject the snippet."
 msgstr "选择要注入片段的页面位置。"
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
 
 msgid "Location"
 msgstr "位置"
@@ -178,6 +184,12 @@ msgstr "数据"
 msgid "Theme configuration for %s"
 msgstr "%s 主题配置 "
 
+msgid "snippet name"
+msgstr ""
+
+msgid "Untitled"
+msgstr ""
+
 msgid "location"
 msgstr "位置"
 
@@ -192,9 +204,6 @@ msgstr "主题"
 
 msgid "Snippet"
 msgstr "片段"
-
-msgid "Snippet for {} in {}"
-msgstr "{}in{}片段"
 
 msgid "Plugin"
 msgstr "插件"
