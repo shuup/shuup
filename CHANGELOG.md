@@ -13,9 +13,11 @@ List all changes after the last release here (newer on top). Each change on a se
 - GDPR: create a snippet blocker to prevent injection when cookie is not consented
 - Xtheme: create `xtheme_snippet_blocker` provides to allow blocking a global script injection
 - Xtheme: add name a `Snippet` object
+- Reports: add CSV report writer
 
 ### Fixed
 
+- Front: fix so orders that are canceled can't be payed for
 - General: fix critical vulnerability on views that were returning not escaped content making it open to XSS attacks
 - Admin: fix code mirror destruction by node id
 
@@ -26,10 +28,6 @@ List all changes after the last release here (newer on top). Each change on a se
 - Tests: log errors into a log file
 - Admin: hide email template button based on permission
 - Reports: improve log when an importer fails
-
-### Added
-
-- Reports: add CSV report writer
 
 ## [2.10.8] - 2021-06-30
 
