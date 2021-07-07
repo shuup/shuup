@@ -196,16 +196,24 @@ class ExcelReportWriter(ReportWriter):
     def next_page(self):
         self.worksheet = self.workbook.create_sheet()
 
+    def _convert_row_to_string(self):
+        # change the format of the last row to string if that is a formula
+        for cell in self.worksheet[self.worksheet.max_row]:
+            if cell.data_type == "f":
+                cell.data_type = "s"
+
     def write_data_table(self, report, report_data, has_totals=True):
         self.worksheet.append([c["title"] for c in report.schema])
         for datum in report_data:
             datum = report.read_datum(datum)
             self.worksheet.append([format_data(data) for data in datum])
+            self._convert_row_to_string()
 
         if has_totals:
             for datum in report.get_totals(report_data):
                 datum = report.read_datum(datum)
                 self.worksheet.append([format_data(data) for data in datum])
+                self._convert_row_to_string()
 
     def write_page_heading(self, text):
         self.worksheet.append([text])
