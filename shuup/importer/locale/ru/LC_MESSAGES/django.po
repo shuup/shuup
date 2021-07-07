@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"POT-Creation-Date: 2021-07-06 22:55+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
 "Last-Translator: Translator HIO.E <translater@hiqe.ru>, 2017\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
@@ -299,7 +299,7 @@ msgstr "Только обновлять существующее (без соз�
 msgid "The file doesn't contain data."
 msgstr ""
 
-msgid "Failed to import data."
+msgid "Failed to import data: {}."
 msgstr ""
 
 #, python-brace-format

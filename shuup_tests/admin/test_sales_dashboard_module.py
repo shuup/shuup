@@ -110,7 +110,11 @@ def test_recent_orders_block(rf, admin_user):
     with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
         shop1 = get_default_shop()
         shop2 = get_shop(identifier="shop2", status=ShopStatus.ENABLED, name="Shop2")
-        order = create_random_order(customer=create_random_person(), products=[get_default_product()])
+        customer = create_random_person()
+        # prevent weird names with random chars
+        customer.name = "Jon Doe"
+        customer.save()
+        order = create_random_order(customer=customer, products=[get_default_product()])
 
         for shop in [shop1, shop2]:
             request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)

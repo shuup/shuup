@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 12:49+0000\n"
-"PO-Revision-Date: 2021-06-17 14:26+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-07-06 22:55+0000\n"
+"PO-Revision-Date: 2021-07-07 18:01+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +66,12 @@ msgid ""
 msgstr ""
 
 msgid "Select the location of the page to inject the snippet."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
 msgstr ""
 
 msgid "Location"
@@ -179,6 +185,12 @@ msgstr "dati"
 msgid "Theme configuration for %s"
 msgstr "Configurazione tema per %s"
 
+msgid "snippet name"
+msgstr ""
+
+msgid "Untitled"
+msgstr ""
+
 msgid "location"
 msgstr ""
 
@@ -192,9 +204,6 @@ msgid "themes"
 msgstr ""
 
 msgid "Snippet"
-msgstr ""
-
-msgid "Snippet for {} in {}"
 msgstr ""
 
 msgid "Plugin"

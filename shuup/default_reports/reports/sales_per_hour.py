@@ -46,7 +46,7 @@ class SalesPerHour(OrderReportMixin, ShuupReportBase):
 
             hour = int(hour)
             hour_data[hour]["order_amount"] = amount
-            hour_data[hour]["total_sales"] = self.shop.create_price(total).as_rounded().value
+            hour_data[hour]["total_sales"] = self.shop.create_price(total)
 
         for hour, hourly_data in sorted(six.iteritems(hour_data)):
             data.append(hourly_data)

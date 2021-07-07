@@ -5,8 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 import os
 import re
 import six
@@ -15,12 +13,17 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from jinja2.utils import contextfunction
 from logging import getLogger
+from typing import TYPE_CHECKING, Iterable
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
 from shuup.core.fields import TaggedJSONEncoder
 from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import force_text
 from shuup.xtheme.utils import get_html_attrs
+
+if TYPE_CHECKING:
+    from shuup.xtheme.models import Snippet
 
 LOGGER = getLogger(__name__)
 
@@ -297,7 +300,13 @@ def valid_view(context):
     return True
 
 
-def inject_global_snippet(context, content):
+class SnippetBlocker:
+    @classmethod
+    def should_block_global_snippet_injection(cls, snippet: "Snippet", context: dict) -> bool:
+        raise NotImplementedError
+
+
+def inject_global_snippet(context, content):  # noqa: C901
     if not valid_view(context):
         return
 
@@ -319,6 +328,17 @@ def inject_global_snippet(context, content):
             current_theme = getattr(request, "theme", None) or get_current_theme(shop)
             if current_theme and current_theme.identifier not in snippet.themes:
                 continue
+
+        snippet_blockers = get_provide_objects("xtheme_snippet_blocker")  # type: Iterable[SnippetBlocker]
+        blocked = False
+
+        for snippet_blocker in snippet_blockers:
+            if snippet_blocker.should_block_global_snippet_injection(snippet, context):
+                blocked = True
+                break
+
+        if blocked:
+            continue
 
         content = snippet.snippet
         if snippet.snippet_type == SnippetType.InlineJS:

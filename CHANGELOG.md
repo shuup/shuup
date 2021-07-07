@@ -8,12 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.11.0] - 2021-07-07
+
+### Added
+
+- GDPR: create a snippet blocker to prevent injection when cookie is not consented
+- Xtheme: create `xtheme_snippet_blocker` provides to allow blocking a global script injection
+- Xtheme: add name a `Snippet` object
+- Reports: add CSV report writer
+
 ### Fixed
 
+- Front: fix so orders that are canceled can't be payed for
 - General: fix critical vulnerability on views that were returning not escaped content making it open to XSS attacks
+- Admin: fix code mirror destruction by node id
 
 ### Changed
 
+- Reports: clean malicius content from the HTML and CSV exporters
+- Reports: prevent formulas from being exported in excel writer
+- Tests: log errors into a log file
 - Admin: hide email template button based on permission
 - Reports: improve log when an importer fails
 
@@ -24,6 +38,7 @@ List all changes after the last release here (newer on top). Each change on a se
 - Pull translations from Transifex
 
 ## [2.10.7] - 2021-06-29
+
 
 ### Changed
 

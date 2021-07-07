@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 12:49+0000\n"
-"PO-Revision-Date: 2021-06-17 14:26+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-07-06 22:55+0000\n"
+"PO-Revision-Date: 2021-07-07 18:01+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,6 +65,12 @@ msgstr "Sélectionnez les thèmes qui auront cet extrait de code injecté. Laiss
 
 msgid "Select the location of the page to inject the snippet."
 msgstr "Sélectionnez l'emplacement de la page pour injecter l'extrait."
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
 
 msgid "Location"
 msgstr "Emplacement"
@@ -177,6 +183,12 @@ msgstr "Les données"
 msgid "Theme configuration for %s"
 msgstr "Configuration du thème pour %s"
 
+msgid "snippet name"
+msgstr ""
+
+msgid "Untitled"
+msgstr ""
+
 msgid "location"
 msgstr "emplacement"
 
@@ -191,9 +203,6 @@ msgstr "thèmes"
 
 msgid "Snippet"
 msgstr "Fragment"
-
-msgid "Snippet for {} in {}"
-msgstr "Extrait de {} dans {}"
 
 msgid "Plugin"
 msgstr "Brancher"

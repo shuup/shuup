@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
+from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.core.models import Order, PaymentUrls
@@ -46,8 +48,13 @@ class ProcessPaymentView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         mode = self.kwargs["mode"]
         order = self.object = self.get_object()
+
         payment_method = order.payment_method if order.payment_method_id else None
         if mode == "payment":
+            if order.is_canceled():
+                messages.add_message(request, messages.INFO, _("The order is canceled so you can't pay for it."))
+                return redirect("shuup:order_complete", pk=order.pk, key=order.key)
+
             if not order.is_paid():
                 if payment_method:
                     return payment_method.get_payment_process_response(
