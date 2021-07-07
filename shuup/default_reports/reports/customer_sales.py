@@ -50,9 +50,9 @@ class CustomerSalesReport(OrderReportMixin, ShuupReportBase):
                 {
                     "customer": contact["name"],
                     "order_count": contact["order_count"],
-                    "average_sales": self.shop.create_price(contact["average_sales"]).as_rounded().value,
-                    "taxless_total": self.shop.create_price(contact["taxless_total"]).as_rounded().value,
-                    "taxful_total": self.shop.create_price(contact["taxful_total"]).as_rounded().value,
+                    "average_sales": self.shop.create_price(contact["average_sales"]),
+                    "taxless_total": self.shop.create_price(contact["taxless_total"]),
+                    "taxful_total": self.shop.create_price(contact["taxful_total"]),
                 }
             )
 

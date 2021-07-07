@@ -68,9 +68,9 @@ class CouponsUsageReport(OrderReportMixin, ShuupReportBase):
                     "date": format_date(coupon_usage.order.order_date, locale=get_current_babel_locale()),
                     "coupon": coupon_usage.coupon.code,
                     "order": coupon_usage.order,
-                    "taxful_total": coupon_usage.order.taxful_total_price.as_rounded().value,
-                    "taxful_subtotal": (coupon_usage.order.taxful_total_price - total_discount).as_rounded().value,
-                    "total_discount": total_discount.as_rounded().value,
+                    "taxful_total": coupon_usage.order.taxful_total_price,
+                    "taxful_subtotal": (coupon_usage.order.taxful_total_price - total_discount),
+                    "total_discount": total_discount,
                 }
             )
 

@@ -44,8 +44,8 @@ class TotalSales(OrderReportMixin, ShuupReportBase):
                 "name": self.shop.name,
                 "order_amount": orders.count(),
                 "customers": customers,
-                "customer_avg_sale": self.shop.create_price(customer_avg_sale).as_rounded().value,
-                "total_sales": self.shop.create_price(total_sales_value).as_rounded().value,
+                "customer_avg_sale": self.shop.create_price(customer_avg_sale),
+                "total_sales": self.shop.create_price(total_sales_value),
                 "currency": self.shop.currency,
             }
         ]

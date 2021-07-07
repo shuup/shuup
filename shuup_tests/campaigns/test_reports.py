@@ -66,14 +66,14 @@ def seed_source(coupon, produce_price=10):
 @pytest.mark.django_db
 def test_coupons_usage_report(rf):
     shop = get_default_shop()
-    tax_class = get_default_tax_class()
+    get_default_tax_class()
     creator = OrderCreator()
 
     coupon1 = Coupon.objects.create(code="coupon1", active=True)
     coupon2 = Coupon.objects.create(code="coupon2", active=True)
 
-    campaign1 = get_default_campaign(coupon1, "10")
-    campaign2 = get_default_campaign(coupon2, "25")
+    get_default_campaign(coupon1, "10")
+    get_default_campaign(coupon2, "25")
 
     source1 = seed_source(coupon1)
     source2 = seed_source(coupon1)
@@ -118,9 +118,9 @@ def test_coupons_usage_report(rf):
                 "date": format_date(order.order_date, locale=get_current_babel_locale()),
                 "coupon": order.codes[0],
                 "order": str(order),
-                "taxful_total": str(order.taxful_total_price.as_rounded().value),
-                "taxful_subtotal": str((order.taxful_total_price - discount).as_rounded().value),
-                "total_discount": str(discount.as_rounded().value),
+                "taxful_total": float(order.taxful_total_price.as_rounded().value),
+                "taxful_subtotal": float((order.taxful_total_price - discount).as_rounded().value),
+                "total_discount": float(discount.as_rounded().value),
             }
         )
 
