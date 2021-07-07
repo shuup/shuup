@@ -106,7 +106,7 @@ REQUIRES = [
     "keyrings.alt>=2",
     "lxml>=4,<5",
     "Markdown>=3,<4",
-    "openpyxl>=2.3,<2.6",
+    "openpyxl>=3.0.7,<4",
     "python-dateutil>=2.8",
     "toml>=0.10.0,<1" "pytz>=2015.4",
     "requests>=2.7,<3",

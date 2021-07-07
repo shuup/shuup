@@ -49,6 +49,8 @@ jobs:
       run: sudo apt-get -y install gettext
     - name: Install test dependencies
       run: pip install -r requirements-tests.txt
+    - name: Create logs folder
+      run: mkdir .unit_tests
     - name: Run migrations
       run: python -m shuup_workbench migrate
     - name: Run makemessages
@@ -59,6 +61,12 @@ jobs:
       run: python -m shuup_workbench compilemessages
     - name: Code coveragerc
       run: codecov
+
+    - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: unit_tests
+        path: .unit_tests/*.*
 
   browser:
     name: "Test Shuup with browser"
@@ -92,11 +100,14 @@ jobs:
     - name: Compile messages
       run: python -m shuup_workbench compilemessages
 
+    - name: Create logs folder
+      run: mkdir .unit_tests
+
     - name: Run tests
-      run: py.test -v --nomigrations shuup_tests/browser/front shuup_tests/browser/admin --splinter-headless --splinter-screenshot-dir=.browser_tests/
+      run: py.test -v --nomigrations shuup_tests/browser/front shuup_tests/browser/admin --splinter-headless --splinter-screenshot-dir=.unit_tests/
 
     - uses: actions/upload-artifact@v2
       if: failure()
       with:
-        name: browser_tests
-        path: .browser_tests/*.*
+        name: unit_tests
+        path: .unit_tests/*.*
