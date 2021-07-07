@@ -58,7 +58,7 @@ def splinter_headless():
 
 @pytest.fixture(scope="session")
 def splinter_screenshot_dir():
-    return ".browser_tests/"
+    return ".unit_tests/"
 
 
 # use django_db on every test
