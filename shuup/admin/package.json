@@ -53,7 +53,7 @@
     "mithril": "^0.2.0",
     "npm-font-open-sans": "^1.1.0",
     "outlayer": "^2.1.1",
-    "parcel-bundler": "^1.12.4",
+    "parcel": "^2.0.0-beta.3.1",
     "postcss": "^8.3.5",
     "postcss-modules": "^4.0.0",
     "redux": "^3.0.4",
