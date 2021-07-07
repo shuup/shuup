@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 from django.core.exceptions import ImproperlyConfigured
 from django.http.response import Http404
+from django.utils.html import escape
 
 from shuup.front.basket import get_basket
 from shuup.utils.django_compat import reverse
@@ -75,7 +76,7 @@ class CheckoutProcess(object):
                     return phase
             if not phase.should_skip() and not phase.is_valid():  # A past phase is not valid, that's the current one
                 return phase
-        raise Http404("Error! Phase with identifier `%s` not found." % requested_phase_identifier)  # pragma: no cover
+        raise Http404("Error! Phase with identifier `%s` not found." % escape(requested_phase_identifier))
 
     def _get_next_phase(self, phases, current_phase, target_phase):
         found = False
