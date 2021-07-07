@@ -29,6 +29,7 @@ from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
 from shuup.reports.writer import (
     REPORT_WRITERS_MAP,
+    CSVReportWriter,
     ExcelReportWriter,
     HTMLReportWriter,
     JSONReportWriter,
@@ -279,7 +280,14 @@ def test_report_writers():
     }
     report = SalesTestReport(**data)
 
-    for writer_cls in [ExcelReportWriter, PDFReportWriter, PprintReportWriter, HTMLReportWriter, JSONReportWriter]:
+    for writer_cls in [
+        ExcelReportWriter,
+        PDFReportWriter,
+        PprintReportWriter,
+        HTMLReportWriter,
+        JSONReportWriter,
+        CSVReportWriter,
+    ]:
         writer = writer_cls()
         report_data = [
             {

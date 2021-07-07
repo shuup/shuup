@@ -38,5 +38,5 @@ class RefundedSalesReport(OrderReportMixin, ShuupReportBase):
         for order in orders:
             total_refunded += order.get_total_refunded_amount()
 
-        data = [{"refunded_orders": len(orders), "total_refunded": total_refunded.value}]
+        data = [{"refunded_orders": len(orders), "total_refunded": total_refunded}]
         return self.get_return_data(data, has_totals=False)

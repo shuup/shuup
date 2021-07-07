@@ -11,7 +11,6 @@ from shuup.core.models import OrderLineType
 from shuup.default_reports.forms import OrderLineReportForm, OrderReportForm
 from shuup.default_reports.mixins import OrderLineReportMixin, OrderReportMixin
 from shuup.reports.report import ShuupReportBase
-from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
 
 class OrdersReport(OrderReportMixin, ShuupReportBase):
@@ -39,10 +38,10 @@ class OrdersReport(OrderReportMixin, ShuupReportBase):
             data.append(
                 {
                     "order_num": order.identifier,
-                    "order_date": get_locally_formatted_datetime(order.order_date),
+                    "order_date": order.order_date,
                     "status": order.status,
                     "order_line_quantity": order.lines.filter(type=OrderLineType.PRODUCT).count(),
-                    "order_total_amount": format_money(order.taxful_total_price),
+                    "order_total_amount": order.taxful_total_price.amount,
                     "payment_status": order.get_payment_status_display(),
                     "shipment_status": order.get_shipping_status_display(),
                     "customer": order.get_customer_name(),
@@ -77,11 +76,11 @@ class OrderLineReport(OrderLineReportMixin, ShuupReportBase):
                     "order_line_sku": line.sku,
                     "order_line_text": line.text,
                     "order_line_quantity": line.quantity,
-                    "taxless_unit_price": format_money(line.taxless_base_unit_price),
-                    "taxful_unit_price": format_money(line.taxful_base_unit_price),
-                    "taxful_price": format_money(line.taxful_price),
+                    "taxless_unit_price": line.taxless_base_unit_price,
+                    "taxful_unit_price": line.taxful_base_unit_price,
+                    "taxful_price": line.taxful_price,
                     "type": line.type.name.capitalize(),
-                    "created_on": get_locally_formatted_datetime(line.created_on),
+                    "created_on": line.created_on,
                 }
             )
         return self.get_return_data(data, has_totals=False)

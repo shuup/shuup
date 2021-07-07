@@ -179,6 +179,7 @@ class Snippet(models.Model):
     Inject snippet code globally filtering by themes if configured.
     """
 
+    name = models.CharField(max_length=50, verbose_name=_("snippet name"), default=_("Untitled"))
     shop = models.ForeignKey(on_delete=models.CASCADE, to="shuup.Shop", related_name="snippets")
     location = models.CharField(max_length=64, verbose_name=_("location"))
     snippet_type = models.CharField(max_length=20, verbose_name=_("snippet type"), choices=SnippetTypeChoices)
@@ -198,4 +199,4 @@ class Snippet(models.Model):
         verbose_name_plural = _("Snippets")
 
     def __str__(self):
-        return _("Snippet for {} in {}").format(self.location, self.shop)
+        return self.name

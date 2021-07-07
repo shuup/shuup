@@ -61,8 +61,8 @@ class ProductSalesReport(OrderReportMixin, ShuupReportBase):
                     "product": product.name,
                     "sku": product.sku,
                     "quantity": quantity,
-                    "taxful_total": taxful_total.as_rounded().value,
-                    "taxless_total": taxless_total.as_rounded().value,
+                    "taxful_total": taxful_total.amount,
+                    "taxless_total": taxless_total.amount,
                 }
             )
 

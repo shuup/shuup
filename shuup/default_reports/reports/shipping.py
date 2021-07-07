@@ -77,7 +77,7 @@ class ShippingReport(OrderReportMixin, ShuupReportBase):
                         "carrier": order_line.order.shipping_method.carrier.name,
                         "shipping_method": order_line.order.shipping_method_name,
                         "order_count": len(orders),
-                        "total_charged": total_charged.as_rounded().value,
+                        "total_charged": total_charged,
                     }
                 )
 

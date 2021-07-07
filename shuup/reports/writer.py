@@ -5,10 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
+import bleach
+import csv
 import six
 from babel.dates import format_datetime
+from datetime import datetime
 from decimal import Decimal
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -20,13 +21,14 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
+from io import StringIO
 from pprint import pformat
 from six import BytesIO
 
 from shuup.apps.provides import get_provide_objects
-from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.utils.django_compat import force_text
-from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.i18n import format_money, get_current_babel_locale, get_locally_formatted_datetime
+from shuup.utils.money import Money
 from shuup.utils.pdf import render_html_to_pdf
 
 try:
@@ -122,6 +124,73 @@ class ReportWriter(object):
         return "%s%s" % ((report.filename_template % fmt_data).replace(":", "_"), self.extension)
 
 
+def format_data(data, format_iso_dates=False, format_money_values=False):
+    if data is None:
+        return ""
+
+    elif isinstance(data, Money):
+        if format_money_values:
+            return format_money(data)
+        return float(data.as_rounded().value)
+
+    elif isinstance(data, Decimal):
+        exponent = abs(data.normalize().as_tuple().exponent)
+        # Limit the amount of decimals to 10
+        return floatformat(data, min(exponent, 10))
+
+    elif callable(data):
+        return force_text(data())
+
+    elif isinstance(data, Promise):
+        return force_text(data)
+
+    elif isinstance(data, models.Model):
+        return force_text(data)
+
+    elif isinstance(data, datetime):
+        if format_iso_dates:
+            return data.isoformat()
+        return get_locally_formatted_datetime(data)
+
+    return data
+
+
+def remove_unsafe_chars(data):
+    if isinstance(data, str):
+        return "".join([char for char in data if char not in ("=", "+", "-")])
+
+    return data
+
+
+class CSVReportWriter(ReportWriter):
+    content_type = "text/csv"
+    extension = ".csv"
+    writer_type = "csv"
+
+    def __init__(self):
+        super(CSVReportWriter, self).__init__()
+        self.data = []
+
+    def write_heading(self, text):
+        self.data.append([text])
+
+    def write_data_table(self, report, report_data, has_totals=True):
+        self.data.append([c["title"] for c in report.schema])
+        for datum in report_data:
+            datum = report.read_datum(datum)
+            self.data.append([format_data(remove_unsafe_chars(data), format_iso_dates=True) for data in datum])
+
+        if has_totals:
+            for datum in report.get_totals(report_data):
+                datum = report.read_datum(datum)
+                self.data.append([format_data(remove_unsafe_chars(data)) for data in datum])
+
+    def get_rendered_output(self):
+        f = StringIO()
+        csv.writer(f).writerows(self.data)
+        return f.getvalue().encode()
+
+
 class ExcelReportWriter(ReportWriter):
     content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     extension = ".xlsx"
@@ -135,32 +204,24 @@ class ExcelReportWriter(ReportWriter):
     def next_page(self):
         self.worksheet = self.workbook.create_sheet()
 
-    def _w(self, content):
-        if content is not None:
-            if isinstance(content, TaxlessPrice) or isinstance(content, TaxfulPrice):
-                content = floatformat(content.amount.value, 2)
-
-            if isinstance(content, Decimal):
-                content = floatformat(content, 2)
-
-            if callable(content):
-                content = force_text(content())
-
-            if isinstance(content, models.Model):
-                content = force_text(content)
-
-        return content
+    def _convert_row_to_string(self):
+        # change the format of the last row to string if that is a formula
+        for cell in self.worksheet[self.worksheet.max_row]:
+            if cell.data_type == "f":
+                cell.data_type = "s"
 
     def write_data_table(self, report, report_data, has_totals=True):
         self.worksheet.append([c["title"] for c in report.schema])
         for datum in report_data:
             datum = report.read_datum(datum)
-            self.worksheet.append([self._w(data) for data in datum])
+            self.worksheet.append([format_data(remove_unsafe_chars(data)) for data in datum])
+            self._convert_row_to_string()
 
         if has_totals:
             for datum in report.get_totals(report_data):
                 datum = report.read_datum(datum)
-                self.worksheet.append([self._w(data) for data in datum])
+                self.worksheet.append([format_data(remove_unsafe_chars(data)) for data in datum])
+                self._convert_row_to_string()
 
     def write_page_heading(self, text):
         self.worksheet.append([text])
@@ -211,17 +272,7 @@ class HTMLReportWriter(ReportWriter):
         self.output.append(mark_safe(content))
 
     def _w(self, content):
-        if content is not None:
-            if isinstance(content, TaxlessPrice) or isinstance(content, TaxfulPrice):
-                content = floatformat(content.amount.value, 2)
-
-            if isinstance(content, Decimal):
-                content = floatformat(content, 2)
-
-            if isinstance(content, Promise):
-                content = force_text(content)
-
-            self.output.append(content)
+        self.output.append(bleach.clean(str(format_data(content, format_money_values=True)), strip=True))
 
     def _w_tag(self, tag, content):
         self._w_raw("<%s>" % tag)
@@ -319,8 +370,8 @@ class JSONReportWriter(ReportWriter):
             "columns": report.schema,
             "data": [
                 dict(
-                    (c["key"], force_text(val))
-                    for (c, val) in zip(report.schema, report.read_datum(datum))  # TODO: do not force all text
+                    (c["key"], format_data(val, format_iso_dates=True))
+                    for (c, val) in zip(report.schema, report.read_datum(datum))
                 )
                 for datum in report_data
             ],
@@ -338,7 +389,7 @@ class JSONReportWriter(ReportWriter):
         pass
 
     def get_rendered_output(self):
-        return DjangoJSONEncoder().encode(self.data)
+        return DjangoJSONEncoder(indent=4).encode(self.data)
 
 
 class PprintReportWriter(JSONReportWriter):
@@ -411,7 +462,7 @@ def populate_default_writers(writer_populator):
     writer_populator.register("pdf", PDFReportWriter)
     writer_populator.register("json", JSONReportWriter)
     writer_populator.register("pprint", PprintReportWriter)
-    writer_populator.register("html", HTMLReportWriter)
+    writer_populator.register("csv", CSVReportWriter)
 
     if openpyxl:
         writer_populator.register("excel", ExcelReportWriter)

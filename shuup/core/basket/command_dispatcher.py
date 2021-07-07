@@ -11,6 +11,7 @@ import six
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
+from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import get_provide_objects
@@ -68,7 +69,7 @@ class BasketCommandDispatcher(object):
         try:
             handler = self.get_command_handler(command)
             if not handler or not callable(handler):
-                raise Problem(_("Error! Invalid command `%s`.") % command)
+                raise Problem(_("Error! Invalid command `%s`.") % escape(command))
             kwargs.pop("csrfmiddlewaretoken", None)  # The CSRF token should never be passed as a kwarg
             kwargs.pop("command", None)  # Nor the command
             kwargs.update(request=self.request, basket=self.basket)

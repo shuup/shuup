@@ -8,6 +8,7 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.core.signals import setting_changed
 from django.http.response import HttpResponseNotFound
+from django.utils.html import escape
 
 from shuup.xtheme._theme import get_current_theme
 
@@ -56,6 +57,6 @@ def extra_view_dispatch(request, view):
     theme = getattr(request, "theme", None) or get_current_theme(request.shop)
     view_func = get_view_by_name(theme, view)
     if not view_func:
-        msg = "Error! %s/%s: Not found." % (getattr(theme, "identifier", None), view)
+        msg = "Error! %s/%s: Not found." % (getattr(theme, "identifier", None), escape(view))
         return HttpResponseNotFound(msg)
     return view_func(request)
