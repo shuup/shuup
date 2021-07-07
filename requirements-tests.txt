@@ -11,7 +11,7 @@ cffi==1.14.5              # via cairocffi, cryptography, weasyprint
 chardet==4.0.0            # via requests
 codecov==2.1.11
 coverage==5.5             # via codecov, pytest-cov
-cryptography==3.3.1
+cryptography==3.3.2
 cssselect2==0.4.1         # via cairosvg, weasyprint
 defusedxml==0.7.1         # via cairosvg
 django==2.2.24            # via django-filer, django-filter, django-jinja, django-mptt, django-reversion, django-timezone-field, django-polymorphic, djangorestframework, easy-thumbnails, jsonfield, shuup
