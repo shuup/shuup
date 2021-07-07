@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django import forms
 from django.conf import settings
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
@@ -42,7 +43,7 @@ class GDPRSettingsForm(MultiLanguageModelForm):
         self.request = kwargs.pop("request")
         super(GDPRSettingsForm, self).__init__(**kwargs)
         shop = get_shop(self.request)
-        choices = [(p.id, p.title) for p in get_possible_consent_pages(shop)]
+        choices = [(p.id, p.safe_translation_getter("title")) for p in get_possible_consent_pages(shop)]
         self.fields["privacy_policy_page"].choices = choices
         self.fields["consent_pages"].required = False
         self.fields["consent_pages"].choices = choices
@@ -52,6 +53,7 @@ class GDPRCookieCategoryForm(MultiLanguageModelForm):
     class Meta:
         exclude = ("shop",)
         model = GDPRCookieCategory
+        widgets = {"cookies": forms.TextInput()}
 
 
 class GDPRBaseFormPart(FormPart):

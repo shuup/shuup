@@ -26,7 +26,7 @@ from shuup.xtheme.resources import GLOBAL_SNIPPETS_CACHE_KEY
 class SnippetForm(forms.ModelForm):
     class Meta:
         model = Snippet
-        fields = ["location", "themes", "snippet_type", "snippet"]
+        fields = ["name", "location", "themes", "snippet_type", "snippet"]
         widgets = {"snippet": XthemeCodeEditorWidget()}
 
     def __init__(self, *args, **kwargs):
@@ -88,8 +88,10 @@ class SnippetEditView(CreateOrUpdateView):
 
 
 class SnippetListView(PicotableListView):
+    url_identifier = "xtheme_snippet"
     model = Snippet
     default_columns = [
+        Column("name", _("Name"), filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))),
         Column(
             "location",
             _("Location"),

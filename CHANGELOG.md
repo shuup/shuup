@@ -8,9 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- GDPR: create a snippet blocker to prevent injection when cookie is not consented
+- Xtheme: create `xtheme_snippet_blocker` provides to allow blocking a global script injection
+- Xtheme: add name a `Snippet` object
+
 ### Fixed
 
 - General: fix critical vulnerability on views that were returning not escaped content making it open to XSS attacks
+- Admin: fix code mirror destruction by node id
 
 ### Changed
 

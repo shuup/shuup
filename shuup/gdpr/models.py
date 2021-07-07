@@ -120,6 +120,13 @@ class GDPRCookieCategory(TranslatableModel):
             "e.g. _ga, mysession, user_c_"
         ),
     )
+    block_snippets = models.ManyToManyField(
+        "shuup_xtheme.Snippet",
+        related_name="blocked_gdpr_cookies",
+        verbose_name=_("Snippets to block if not consented"),
+        blank=True,
+        help_text=_("Select the snippets that shouldn't be injected if the cookie is not consented."),
+    )
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_("name")),
         how_is_used=models.TextField(

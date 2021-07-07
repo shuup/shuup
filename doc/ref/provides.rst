@@ -316,6 +316,10 @@ Core
 ``xtheme_resource_injection``
     XTheme resources injection function that takes current context and content as parameters.
 
+``xtheme_snippet_blocker``
+    Blocker classes that can prevent a global snippet from being injected
+
+
 Campaigns Provide Categories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

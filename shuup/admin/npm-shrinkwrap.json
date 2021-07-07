@@ -4493,9 +4493,9 @@
       }
     },
     "caniuse-lite": {
-      "version": "1.0.30001178",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001178.tgz",
-      "integrity": "sha512-VtdZLC0vsXykKni8Uztx45xynytOi71Ufx9T8kHptSw9AL4dpqailUJJHavttuzUe1KYuBYtChiWv+BAb7mPmQ=="
+      "version": "1.0.30001242",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001242.tgz",
+      "integrity": "sha512-KvNuZ/duufelMB3w2xtf9gEWCSxJwUgoxOx5b6ScLXC4kPc9xsczUVCPrQU26j5kOsHM4pSUL54tAZt5THQKug=="
     },
     "caseless": {
       "version": "0.12.0",
@@ -4794,11 +4794,6 @@
             "escalade": "^3.1.1",
             "node-releases": "^1.1.71"
           }
-        },
-        "caniuse-lite": {
-          "version": "1.0.30001208",
-          "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001208.tgz",
-          "integrity": "sha512-OE5UE4+nBOro8Dyvv0lfx+SRtfVIOM9uhKqFmJeUbGriqhhStgp1A0OyBpgy3OUF8AhYCT+PVwPC1gMl2ZcQMA=="
         },
         "colorette": {
           "version": "1.2.2",
