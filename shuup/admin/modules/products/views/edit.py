@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import bleach
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -230,9 +231,9 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context = super(ProductEditView, self).get_context_data(**kwargs)
         orderability_errors = []
 
+        shop = get_shop(self.request)
         if self.object.pk:
             context["title"] = self.object.product.name
-            shop = self.request.shop
             try:
                 shop_product = self.object
                 orderability_errors.extend(
@@ -245,6 +246,18 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                 )
             except ObjectDoesNotExist:
                 orderability_errors.extend(["Error! %s: %s" % (shop.name, _("Product is not available."))])
+
+            product_validator_provides = sorted(get_provide_objects("admin_product_validator"), key=lambda x: x.order)
+            context["bleach"] = bleach
+            context["validation_issues"] = []
+            for admin_product_validator in product_validator_provides:
+                for validation_issue in admin_product_validator.get_validation_issues(
+                    self.object.product, shop, self.request.user, None
+                ):
+                    if validation_issue:
+                        context["validation_issues"].append(validation_issue)
+            context["validation_issues"] = sorted(context["validation_issues"], key=lambda x: x.get_issue_type_priority())    
+
         context["orderability_errors"] = orderability_errors
         context["product_sections"] = []
         context["tour_key"] = "product"
