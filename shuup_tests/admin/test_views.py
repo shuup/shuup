@@ -16,6 +16,7 @@ from django.utils.translation import activate
 
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
+from shuup.apps.provides import override_provides
 from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
 from shuup.testing.factories import (
     CategoryFactory,
@@ -292,6 +293,37 @@ def test_product_edit_view(rf, admin_user, settings):
         assert shop_product.primary_category == cat
     else:
         assert not shop_product.primary_category
+
+    # Test for showing alert of validation issues
+    view = ProductEditView.as_view()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = view(request, pk=shop_product.pk)
+    response.render()
+    content = force_text(response.content)
+    soup = BeautifulSoup(content, "lxml")
+    alert = soup.find_all("div", {"class": "validation-issues-alert"})
+    assert not alert
+
+    with override_provides(
+        "admin_product_validator",
+        ["shuup.testing.admin_product_validator:TestAdminProductValidator"],
+    ):
+        view = ProductEditView.as_view()
+        request = apply_request_middleware(rf.get("/"), user=admin_user)
+        response = view(request, pk=shop_product.pk)
+        response.render()
+        content = force_text(response.content)
+        soup = BeautifulSoup(content, "lxml")
+        alert = soup.find_all("div", {"class": "validation-issues-alert alert alert-danger"})
+        assert alert
+        alert_danger = soup.find_all("div", {"class": "alert-danger"})
+        assert alert_danger
+        alert = soup.find_all("div", {"class": "validation-issues-alert alert alert-warning"})
+        alert_div = alert[0]
+        strong = alert_div.find_all("strong")
+        assert strong
+        script = alert_div.find_all("script")
+        assert not script
 
 
 @pytest.mark.django_db

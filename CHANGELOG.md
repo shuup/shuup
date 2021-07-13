@@ -24,6 +24,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Front: add timezone view to save the user's current timezone
+- Add warnings to the product page through signals
 
 ## [2.11.0] - 2021-07-07
 
