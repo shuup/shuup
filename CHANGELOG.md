@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Add warnings to the product page through signals
+
 ## [2.11.0] - 2021-07-07
 
 ### Added
