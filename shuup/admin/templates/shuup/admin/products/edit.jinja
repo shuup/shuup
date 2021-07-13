@@ -19,6 +19,22 @@
                     </ul>
                 </div>
             {% endif %}
+            {% if validation_issues %}
+                {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
+                <div class="alert alert-{{ validation_issues[0].get_alert_type() }}"
+                    data-toggle="tooltip"
+                    data-placement="bottom">
+                    <i class="fa fa-{{validation_issues[0].get_alert_type()}}-circle text-{{validation_issues[0].get_alert_type()}}"></i> {% trans %}The product presents some issues.{% endtrans %}
+                    <ul>
+                    {% for issue in validation_issues %}
+                        <li data-code="{{issue.code}}"
+                            data-title="{{ bleach.clean(issue.message|string) }}" >
+                            {{ bleach.clean(issue.message|string) }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
             {% csrf_token %}
             {% call content_block(_("Basic Information"), "fa-info-circle", id="basic-information-section") %}
                 {% for form_def in form.form_defs.values() %}
