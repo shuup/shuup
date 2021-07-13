@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-
+import bleach
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -22,6 +22,7 @@ from shuup.admin.modules.products.forms import (
     ProductMediaFormSet,
     ShopProductForm,
 )
+from shuup.admin.modules.products.issues import ProductValidationIssue
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.tour import is_tour_complete
@@ -230,9 +231,9 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context = super(ProductEditView, self).get_context_data(**kwargs)
         orderability_errors = []
 
+        shop = self.request.shop
         if self.object.pk:
             context["title"] = self.object.product.name
-            shop = self.request.shop
             try:
                 shop_product = self.object
                 orderability_errors.extend(
@@ -257,5 +258,15 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                 context[admin_product_section.identifier] = admin_product_section.get_context_data(
                     self.object.product, self.request
                 )
+        
+        product_validator_provides = sorted(get_provide_objects("admin_product_validator"), key=lambda x: x.order)
+        context["bleach"] = bleach
+        context["validation_issues"] = []
+        for admin_product_validator in product_validator_provides:
+            for validation_issue in admin_product_validator.get_validation_issues(self.object.product, shop, 
+                                self.request.user, None):
+                if validation_issue:
+                    context["validation_issues"].append(validation_issue)
+        context["validation_issues"] = sorted(context["validation_issues"], key=lambda x: x.get_issue_type_order())
 
         return context
