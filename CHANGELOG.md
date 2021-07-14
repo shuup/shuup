@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Front: Fix the alert class when it is an error
 - Reports: do not catch generic `Exception` to prevent hiding other issues
 
 ### Changed
