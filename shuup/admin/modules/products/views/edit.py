@@ -22,7 +22,6 @@ from shuup.admin.modules.products.forms import (
     ProductMediaFormSet,
     ShopProductForm,
 )
-from shuup.admin.modules.products.issues import ProductValidationIssue
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.tour import is_tour_complete
@@ -258,13 +257,13 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                 context[admin_product_section.identifier] = admin_product_section.get_context_data(
                     self.object.product, self.request
                 )
-        
+
         product_validator_provides = sorted(get_provide_objects("admin_product_validator"), key=lambda x: x.order)
         context["bleach"] = bleach
         context["validation_issues"] = []
         for admin_product_validator in product_validator_provides:
-            for validation_issue in admin_product_validator.get_validation_issues(self.object.product, shop, 
-                                self.request.user, None):
+            for validation_issue in admin_product_validator \
+                    .get_validation_issues(self.object.product, shop, self.request.user, None):
                 if validation_issue:
                     context["validation_issues"].append(validation_issue)
         context["validation_issues"] = sorted(context["validation_issues"], key=lambda x: x.get_issue_type_order())

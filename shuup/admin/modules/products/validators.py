@@ -17,6 +17,6 @@ from typing import Iterable
 class AdminProductValidator:
     '''Base class for validating products.'''
 
-    def get_validation_issues(shop_product:ShopProduct, shop: Shop, user,
-            supplier: Supplier=None) -> Iterable[ProductValidationIssue]:
+    def get_validation_issues(shop_product: ShopProduct, shop: Shop, user,
+            supplier: Supplier = None) -> Iterable[ProductValidationIssue]:
         pass
