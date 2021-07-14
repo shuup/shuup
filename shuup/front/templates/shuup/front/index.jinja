@@ -42,18 +42,18 @@
                     <h1>{% trans name=request.shop.public_name or _("your shop") %}Welcome to {{ name }}!{% endtrans %}</h1>
                     <p>{% trans %}You are seeing this page because there is no theme selected for the default frontend.{% endtrans %}</p>
                     <p>
-                            {% set admin_url=shuup.urls.get_url("shuup_admin:dashboard") %}
-                            {% if admin_url %}
-                                <p>
-                                    <a href="{{ admin_url }}">
-                                        {% trans %}Log in to the administration interface{% endtrans %}
-                                    </a> {% trans %}to choose a theme and set up your shop.{% endtrans %}
-                                </p>
-                            {% else %}
-                                <p>
-                                    {% trans %}The administration interface does not seem to be available. Use other means to choose a theme.{% endtrans %}
-                                </p>
-                            {% endif %}
+                        {% set admin_url=shuup.urls.get_url("shuup_admin:dashboard") %}
+                        {% if admin_url %}
+                            <p>
+                                <a href="{{ admin_url }}">
+                                    {% trans %}Log in to the administration interface{% endtrans %}
+                                </a> {% trans %}to choose a theme and set up your shop.{% endtrans %}
+                            </p>
+                        {% else %}
+                            <p>
+                                {% trans %}The administration interface does not seem to be available. Use other means to choose a theme.{% endtrans %}
+                            </p>
+                        {% endif %}
                     </p>
                 </div>
             </div>

@@ -1,0 +1,17 @@
+{% macro render_timezone_script() %}
+<script>
+    if (window.moment && window.moment.tz) {
+        var timezone = window.moment.tz.guess();
+        if (timezone !== '{{ request.TIME_ZONE }}') {
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("shuup:set_timezone") }}',
+                data: {
+                    tz_name: timezone,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                }
+            });
+        }
+    }
+</script>
+{% endmacro %}
