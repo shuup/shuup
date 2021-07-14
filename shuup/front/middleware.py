@@ -113,6 +113,13 @@ class ShuupFrontMiddleware(MiddlewareMixin):
     def _set_timezone(self, request):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
+        elif request.session.get("tz"):
+            timezone.activate(request.session["tz"])
+
+            if request.person:
+                request.person.timezone = request.session["tz"]
+                request.person.save(update_fields=["timezone"])
+
         else:
             timezone.activate(settings.TIME_ZONE)
 

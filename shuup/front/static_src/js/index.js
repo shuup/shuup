@@ -18,4 +18,5 @@ import "./update_price.js";
 import "./custom.js";
 import "./utils";
 import "./dropzone.js"
+import "./timezone.js"
 import "./xtheme_async_plugins.js";
