@@ -359,8 +359,8 @@ class ProductMetaBase(ImportMetaBase):
 
             if isinstance(related_field, ForeignKey):
                 try:
-                    value = int(value)  # this is because xlrd causes 1 to be 1.0
-                except ValueError:
+                    value = int(value or 0)  # this is because xlrd causes 1 to be 1.0
+                except (TypeError, ValueError):
                     pass
                 value = relmapper.fk_cache.get(str(value))
                 break

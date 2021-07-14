@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Reports: do not catch generic `Exception` to prevent hiding other issues
 
+### Changed
+
+- Core: reuse existing `ProductVariationResult` when a combination hash matches
+
 ### Added
 
 - Front: add timezone view to save the user's current timezone
