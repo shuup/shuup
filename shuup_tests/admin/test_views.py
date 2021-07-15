@@ -15,7 +15,6 @@ from django.utils.encoding import force_text
 from django.utils.translation import activate
 
 from shuup.admin.modules.products.views import ProductEditView
-from shuup.admin.modules.products.issues import ProductValidationIssue
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.apps.provides import override_provides
 from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus

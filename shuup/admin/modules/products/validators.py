@@ -17,4 +17,4 @@ class AdminProductValidator:
     def get_validation_issues(
         shop_product: ShopProduct, shop: Shop, user, supplier: Supplier = None
     ) -> Iterable[ProductValidationIssue]:
-        pass
+        yield None

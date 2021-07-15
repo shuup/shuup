@@ -256,7 +256,9 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                 ):
                     if validation_issue:
                         context["validation_issues"].append(validation_issue)
-            context["validation_issues"] = sorted(context["validation_issues"], key=lambda x: x.get_issue_type_priority())
+            context["validation_issues"] = sorted(
+                context["validation_issues"], key=lambda x: x.get_issue_type_priority()
+            )
 
         context["orderability_errors"] = orderability_errors
         context["product_sections"] = []
