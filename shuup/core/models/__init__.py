@@ -39,8 +39,15 @@ from ._manufacturers import Manufacturer
 from ._media import MediaFile, MediaFolder
 from ._order_lines import AbstractOrderLine, OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
-    DefaultOrderStatus, Order, OrderLogEntry, OrderStatus, OrderStatusManager,
-    OrderStatusRole, PaymentStatus, ShippingStatus, OrderStatusHistory
+    DefaultOrderStatus,
+    Order,
+    OrderLogEntry,
+    OrderStatus,
+    OrderStatusHistory,
+    OrderStatusManager,
+    OrderStatusRole,
+    PaymentStatus,
+    ShippingStatus, 
 )
 from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry

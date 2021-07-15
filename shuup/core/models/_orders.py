@@ -11,10 +11,9 @@ import datetime
 import six
 from collections import defaultdict
 from decimal import Decimal
-
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models import Q
 from django.db.transaction import atomic
@@ -29,19 +28,13 @@ from typing import TYPE_CHECKING
 
 from shuup.core import taxing
 from shuup.core.excs import (
+    InvalidOrderStatusError,
     NoPaymentToCreateException,
     NoProductsToShipException,
     NoRefundToCreateException,
     NoShippingAddressException,
-    InvalidOrderStatusError,
 )
-from shuup.core.fields import (
-    CurrencyField,
-    InternalIdentifierField,
-    LanguageField,
-    MoneyValueField,
-    UnsavedForeignKey,
-)
+from shuup.core.fields import CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
@@ -52,7 +45,7 @@ from shuup.core.signals import (
     shipment_created,
     shipment_created_and_processed,
 )
-from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.analog import LogEntryKind, define_log_model
 from shuup.utils.dates import local_now, to_aware
 from shuup.utils.django_compat import force_text
 from shuup.utils.money import Money

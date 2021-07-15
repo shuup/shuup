@@ -15,14 +15,14 @@ from shuup.admin.modules.sales_dashboard.dashboard import (
     get_recent_orders_block,
     get_shop_overview_block,
 )
-from shuup.core.models import OrderStatus, ShopStatus
+from shuup.core.models import ShopStatus
 from shuup.testing.factories import (
     DEFAULT_CURRENCY,
     create_random_order,
     create_random_person,
+    get_completed_order_status,
     get_default_product,
     get_default_shop,
-    get_completed_order_status,
     get_shop,
 )
 from shuup.testing.utils import apply_request_middleware

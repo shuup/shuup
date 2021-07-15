@@ -1,8 +1,8 @@
 import pytest
-
 from unittest import TestCase
+
 from shuup.core.excs import InvalidOrderStatusError
-from shuup.core.models import OrderStatus, DefaultOrderStatus, OrderStatusManager
+from shuup.core.models import DefaultOrderStatus, OrderStatus,  OrderStatusManager
 from shuup.testing import factories
 
 
