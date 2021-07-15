@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import decimal
 import os
 import six
+from django.db import IntegrityError
 from django.db.models import ForeignKey, ManyToManyField, Q
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -134,8 +135,9 @@ class ProductMetaBase(ImportMetaBase):
 
             product.mode = ProductMode.VARIATION_CHILD
             product.link_to_parent(parent_product, variables)
-        except Exception as e:
-            sess.log_messages.append(str(e))
+
+        except IntegrityError as err:
+            sess.log_messages.append(str(err))
 
     def _handle_image(self, shop, product, image_source, is_primary=False):
         product_media = None
@@ -273,6 +275,7 @@ class ProductMetaBase(ImportMetaBase):
             return
 
         if supplier_changed:
+            supplier.full_clean()
             supplier.save()
 
         product = sess.instance
@@ -331,6 +334,7 @@ class ProductMetaBase(ImportMetaBase):
                 else:
                     setattr(shop_product, field_name, value)
 
+        shop_product.full_clean()
         shop_product.save()
 
         # add shop relation to the manufacturer
@@ -355,8 +359,8 @@ class ProductMetaBase(ImportMetaBase):
 
             if isinstance(related_field, ForeignKey):
                 try:
-                    value = int(value)  # this is because xlrd causes 1 to be 1.0
-                except Exception:
+                    value = int(value or 0)  # this is because xlrd causes 1 to be 1.0
+                except (TypeError, ValueError):
                     pass
                 value = relmapper.fk_cache.get(str(value))
                 break

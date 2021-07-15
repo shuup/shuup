@@ -734,7 +734,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             if not combination_hash:  # No precalculated hash, need to figure that out
                 combination_hash = get_combination_hash_from_variable_mapping(parent, variables=variables)
 
-            pvr = ProductVariationResult.objects.create(product=parent, combination_hash=combination_hash, result=self)
+            pvr = ProductVariationResult.objects.update_or_create(
+                product=parent, combination_hash=combination_hash, defaults=dict(result=self)
+            )[0]
             if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT:
                 parent.verify_mode()
                 parent.save()

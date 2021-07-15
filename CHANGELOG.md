@@ -11,6 +11,12 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Front: SupplierProductListFilter to take all vendors from the category and all sub categories
+- Front: Fix the alert class when it is an error
+- Reports: do not catch generic `Exception` to prevent hiding other issues
+
+### Changed
+
+- Core: reuse existing `ProductVariationResult` when a combination hash matches
 
 ### Added
 

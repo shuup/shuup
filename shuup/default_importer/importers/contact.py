@@ -38,6 +38,8 @@ class AddressHandlerMeta(ImportMetaBase):
         contact.save()
 
     def presave_hook(self, sess):
+        sess.instance.registration_shop = sess.shop
+
         # if name extension is given and it's empty null fail will be risen
         if sess.instance.name_ext is None:
             sess.instance.name_ext = ""
