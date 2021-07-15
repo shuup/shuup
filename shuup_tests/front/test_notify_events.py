@@ -36,7 +36,7 @@ def test_class_refunded():
         return mock.MagicMock(identifier="order_status_changed")
 
     with mock.patch("shuup.front.notify_events.OrderStatusChanged", new_callable=get_mocked_cls) as mocked:
-        order.status = OrderStatus.objects.get_default_processing()
+        order.change_status(next_status=OrderStatus.objects.get_default_processing(), user=customer.user)
         order.save()
         mocked.assert_called()
         order.refresh_from_db()
@@ -47,7 +47,7 @@ def test_class_refunded():
 
     # nothing changes
     with mock.patch("shuup.front.notify_events.OrderStatusChanged", new_callable=get_mocked_cls) as mocked:
-        order.status = OrderStatus.objects.get_default_processing()
+        order.change_status(next_status=OrderStatus.objects.get_default_processing(), user=customer.user)
         order.save()
         mocked.assert_not_called()
 

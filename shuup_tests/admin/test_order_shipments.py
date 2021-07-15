@@ -21,6 +21,7 @@ from shuup.testing.factories import (
     create_random_user,
     get_default_permission_group,
     get_default_shop,
+    get_initial_order_status,
     get_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
@@ -50,6 +51,7 @@ def test_order_shipments(rf, admin_user):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     # Let's test the order shipment section for superuser
     request = apply_request_middleware(rf.get("/"), user=admin_user, shop=shop)

@@ -55,7 +55,7 @@ class OrderDetailToolbar(Toolbar):
 
     def _build_order_set_state_button(self):
         set_status_menu_items = []
-        for status in OrderStatus.objects.filter(is_active=True).exclude(pk=self.order.status.pk).order_by("ordering"):
+        for status in self.order.status.allowed_next_statuses.all().order_by("ordering"):
             btn = PostActionDropdownItem(
                 post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": self.order.pk}),
                 name="status",

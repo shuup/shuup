@@ -15,6 +15,7 @@ from shuup.testing.factories import (
     create_product,
     get_default_shop,
     get_default_supplier,
+    get_initial_order_status,
 )
 from shuup.utils.numbers import bankers_round
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -41,6 +42,7 @@ def test_rounding(prices):
 
     order = create_empty_order(prices_include_tax=False)
     order.save()
+    order.change_status(next_status=get_initial_order_status())
     for x, price in enumerate(prices):
         ol = OrderLine(
             order=order,
@@ -120,6 +122,7 @@ def test_rounding_with_taxes(prices):
 
     order = create_empty_order(shop=shop)
     order.save()
+    order.change_status(next_status=get_initial_order_status())
     product = create_product("test_sku", shop=shop, supplier=supplier)
     tax_rate = Decimal("0.22222")
     for x, price in enumerate(prices):
