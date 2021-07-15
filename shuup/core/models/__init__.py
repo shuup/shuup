@@ -47,7 +47,7 @@ from ._orders import (
     OrderStatusManager,
     OrderStatusRole,
     PaymentStatus,
-    ShippingStatus, 
+    ShippingStatus,
 )
 from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry
