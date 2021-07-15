@@ -16,7 +16,8 @@ from shuup.admin.modules.orders.views.refund import OrderCreateRefundView
 from shuup.admin.supplier_provider import get_supplier
 from shuup.core.excs import NoRefundToCreateException
 from shuup.core.models import OrderLineType, ShippingMode, Supplier
-from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
+from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop, \
+    get_initial_order_status
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -56,6 +57,7 @@ def test_refunds_with_multiple_suppliers(rf, admin_user):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     for supplier, product_data in six.iteritems(product_quantities):
         for product, quantity in six.iteritems(product_data):

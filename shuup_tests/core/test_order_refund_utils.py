@@ -13,7 +13,8 @@ from django.test import override_settings
 
 from shuup.core.excs import RefundArbitraryRefundsNotAllowedException, RefundExceedsAmountException
 from shuup.core.models import OrderLine, OrderLineType, ShippingMode, Supplier
-from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
+from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop, \
+    get_initial_order_status
 
 
 @pytest.mark.django_db
@@ -50,6 +51,7 @@ def test_order_refunds_with_multiple_suppliers():
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
 
     for supplier, product_data in six.iteritems(product_quantities):
         for product, quantity in six.iteritems(product_data):
@@ -163,6 +165,7 @@ def test_order_arbitrary_refunds_with_multiple_suppliers():
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
 
     for supplier, product_data in six.iteritems(product_quantities):
         for product, quantity in six.iteritems(product_data):
@@ -329,6 +332,7 @@ def test_order_refunds_with_other_lines():
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
 
     add_product_to_order(order, supplier, product, 4, 5)
 

@@ -10,7 +10,8 @@ import six
 from collections import defaultdict
 
 from shuup.core.models import ShippingMode, Supplier, SupplierModule
-from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
+from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop, \
+    get_initial_order_status
 
 
 @pytest.mark.django_db
@@ -50,6 +51,7 @@ def test_order_product_summary_with_multiple_suppliers():
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
 
     # Add product 3 to order for supplier 3
     add_product_to_order(order, supplier3, product3, get_quantity(supplier3, product3), 8)

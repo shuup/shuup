@@ -370,6 +370,7 @@ def test_editing_existing_order(rf, admin_user):
     order.payment_data = {"payment_data": True}
     order.shipping_data = {"shipping_data": True}
     order.extra_data = {"external_id": "123"}
+    order.change_status(next_status=get_initial_order_status(), user=admin_user)
     order.save()
     assert order.lines.count() == 0
     assert order.pk is not None

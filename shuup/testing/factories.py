@@ -661,6 +661,7 @@ def create_order_with_product(product, supplier, quantity, taxless_base_unit_pri
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
 
     pricing_context = _get_pricing_context(order.shop, order.customer)
     for x in range(n_lines):
@@ -887,7 +888,8 @@ def create_random_order(  # noqa
                 order.create_payment(order.taxful_total_price)
 
             # also set complete
-            order.status = OrderStatus.objects.get_default_complete()
+            order.save()
+            order.change_status(next_status=get_completed_order_status(), user=customer.user)
             order.save(update_fields=("status",))
         return order
 
