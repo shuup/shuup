@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Front: Fix the alert class when it is an error
+- Reports: do not catch generic `Exception` to prevent hiding other issues
+
+### Changed
+
+- Core: reuse existing `ProductVariationResult` when a combination hash matches
+
 ### Added
 
 - Front: add timezone view to save the user's current timezone

@@ -441,6 +441,7 @@ class DataImporter(object):
     def save_row(self, new, row_session):
         self._meta.presave_hook(row_session)
         try:
+            row_session.instance.full_clean()
             row_session.save()
             self._meta.postsave_hook(row_session)
             (self.new_objects if new else self.updated_objects).append(row_session.instance)
