@@ -16,6 +16,7 @@ from shuup.testing.factories import (
     create_product,
     get_default_shop,
     get_default_supplier,
+    get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -59,6 +60,7 @@ def _get_order(shop, supplier, has_price):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
     for product_data in _get_product_data(has_price):
         quantity = product_data.pop("quantity")
         tax_rate = product_data.pop("tax_rate")

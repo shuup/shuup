@@ -30,6 +30,7 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_supplier,
     get_default_tax_class,
+    get_initial_order_status,
     get_payment_method,
     get_payment_processor_with_checkout_phase,
     get_shipping_method,
@@ -367,3 +368,4 @@ def test_service_methods_with_long_name(rf):
     order.payment_method = pm
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())

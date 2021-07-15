@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.testing.factories import create_empty_order, create_random_company, create_random_person
+from shuup.testing.factories import create_empty_order, create_random_company, create_random_person, \
+    get_initial_order_status
 
 
 @pytest.mark.django_db
@@ -16,6 +17,7 @@ def test_order_customer_name_from_billing_address():
     order = create_empty_order()
     order.orderer = person
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=person)
     order.refresh_from_db()
     assert order.customer_id is None
     assert order.orderer_id is not None
@@ -30,6 +32,7 @@ def test_order_customer_name_from_shipping_address():
     assert order.orderer_id is None
     order.billing_address = None
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=person)
     order.refresh_from_db()
     assert order.get_customer_name() == order.shipping_address.name
 
@@ -41,6 +44,7 @@ def test_order_customer_name_from_orderer():
     order.orderer = person
     order.billing_address = None
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=person)
     order.refresh_from_db()
 
     assert order.customer_id is None
@@ -57,6 +61,7 @@ def test_order_customer_name_from_customer():
     order.customer = company
     order.orderer = person
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=person)
     order.refresh_from_db()
     assert order.shipping_address_id is not None
     assert order.billing_address_id is not None

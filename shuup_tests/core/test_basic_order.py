@@ -46,6 +46,7 @@ def create_order(request, creator, customer, product):
     )
     order.full_clean()
     order.save()
+    order.change_status(next_status=get_initial_order_status())
     supplier = get_default_supplier()
     product_order_line = OrderLine(order=order)
     update_order_line_from_product(

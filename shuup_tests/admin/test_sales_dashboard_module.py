@@ -22,6 +22,7 @@ from shuup.testing.factories import (
     create_random_person,
     get_default_product,
     get_default_shop,
+    get_completed_order_status,
     get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
@@ -34,7 +35,7 @@ NUM_CUSTOMERS_COLUMN_INDEX = 3
 def get_order_for_date(dt, product):
     order = create_random_order(customer=create_random_person(), products=[product])
     order.order_date = to_aware(dt)
-    order.status = OrderStatus.objects.get_default_complete()
+    order.change_status(get_completed_order_status())
     order.save()
     return order
 

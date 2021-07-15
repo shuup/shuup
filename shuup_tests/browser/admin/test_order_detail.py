@@ -17,7 +17,7 @@ from shuup.testing.browser_utils import (
     wait_until_appeared,
     wait_until_condition,
 )
-from shuup.testing.factories import create_empty_order, get_default_shop
+from shuup.testing.factories import create_empty_order, get_default_shop, get_initial_order_status
 from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
@@ -29,6 +29,7 @@ def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     order = create_empty_order(shop=shop)
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=admin_user)
     initialize_admin_browser_test(browser, live_server, settings)
     url = reverse("shuup_admin:order.detail", kwargs={"pk": order.pk})
     browser.visit("%s%s" % (live_server, url))

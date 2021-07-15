@@ -12,7 +12,7 @@ from django.test import override_settings
 from shuup import configuration
 from shuup.core.models import ConfigurationItem
 from shuup.core.models._order_utils import get_order_identifier, get_reference_number
-from shuup.testing.factories import create_empty_order, get_default_shop
+from shuup.testing.factories import create_empty_order, get_default_shop, get_initial_order_status
 
 
 def custom_refno_gen(order):
@@ -30,6 +30,7 @@ def test_refno_generation(method):
         with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
             order = create_empty_order()
             order.save()
+            order.change_status(next_status=get_initial_order_status())
             assert order.reference_number
         with pytest.raises(ValueError):
             get_reference_number(order)
@@ -42,6 +43,7 @@ def test_custom_refno_generation():
         with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
             order = create_empty_order()
             order.save()
+            order.change_status(next_status=get_initial_order_status())
             assert order.reference_number == custom_refno_gen(order)
         with pytest.raises(ValueError):
             get_reference_number(order)
@@ -54,6 +56,7 @@ def test_custom_ident_generation():
         with override_settings(SHUUP_ORDER_IDENTIFIER_METHOD=method):
             order = create_empty_order()
             order.save()
+            order.change_status(next_status=get_initial_order_status())
             assert order.identifier == custom_ident_gen(order)
         with pytest.raises(ValueError):
             get_order_identifier(order)
@@ -70,6 +73,7 @@ def test_ref_lengths():
     ConfigurationItem.objects.filter(shop=shop).delete()
     order = create_empty_order(shop=shop)
     order.save()
+    order.change_status(next_status=get_initial_order_status())
     order.reference_number = None
     order.save()
 

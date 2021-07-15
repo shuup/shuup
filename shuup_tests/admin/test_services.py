@@ -28,6 +28,7 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_supplier,
     get_default_tax_class,
+    get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -248,6 +249,7 @@ def test_delete_toolbar_button(rf, admin_user, view_cls, get_method, method_attr
     order = create_empty_order()
     setattr(order, method_attr, method)
     order.save()
+    order.change_status(next_status=get_initial_order_status(), user=admin_user)
     assert not method.can_delete()
     check_for_delete(view, request, method)
 
