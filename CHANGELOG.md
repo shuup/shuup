@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Front: Fix the alert class when it is an error
+- Xtheme: only use the id attribute if the variable is a Product instance in Async Product Cross Sells plugin
 - Reports: do not catch generic `Exception` to prevent hiding other issues
 
 ### Changed

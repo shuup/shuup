@@ -202,7 +202,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             "data_url": reverse(
                 "shuup:xtheme-product-cross-sells-highlight",
                 kwargs=dict(
-                    product_id=product.id,
+                    product_id=product.id if isinstance(product, Product) else product,
                     relation_type=relation_type.label,
                     use_parents=(1 if use_variation_parents else 0),
                     count=count,
