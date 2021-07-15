@@ -5,10 +5,10 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shuup.admin.modules.products.issues import ProductValidationIssue
 from shuup.admin.modules.products.validators import AdminProductValidator
 from shuup.testing.admin_product_validator import TestAdminProductValidator
-
 from shuup.testing.factories import create_product, get_default_shop, get_default_supplier
 from shuup_tests.utils import printable_gibberish
 
