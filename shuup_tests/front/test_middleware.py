@@ -4,6 +4,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from importlib import import_module
+
 import pytest
 from django.conf import settings
 from django.contrib.auth import logout
@@ -50,12 +52,19 @@ def check_request_attribute_basics(request):
 # TODO: Make these tests faster by faking the Shop and not using database
 
 
+def apply_session_storage(request):
+    engine = import_module(settings.SESSION_ENGINE)
+    engine.SessionStore
+    request.session = engine.SessionStore("sessionid")
+    return request
+
+
 @pytest.mark.django_db
 def test_with_anonymous_user():
     get_default_shop()  # Create a shop
 
     mw = ShuupFrontMiddleware()
-    request = get_unprocessed_request()
+    request = apply_session_storage(get_unprocessed_request())
 
     mw.process_request(request)
 
@@ -71,7 +80,7 @@ def test_with_logged_in_user(regular_user):
     get_default_shop()  # Create a shop
 
     mw = ShuupFrontMiddleware()
-    request = get_unprocessed_request()
+    request = apply_session_storage(get_unprocessed_request())
     request.user = regular_user
 
     mw.process_request(request)
@@ -88,7 +97,7 @@ def test_customer_company_member(regular_user):
     get_default_shop()  # Create a shop
 
     mw = ShuupFrontMiddleware()
-    request = get_unprocessed_request()
+    request = apply_session_storage(get_unprocessed_request())
     request.user = regular_user
     person = get_person_contact(regular_user)
     company = create_random_company()
@@ -112,8 +121,8 @@ def test_timezone_setting(regular_user, admin_user):
     get_default_shop()  # Create a shop
 
     mw = ShuupFrontMiddleware()
-    request = get_unprocessed_request()
-    second_request = get_unprocessed_request()
+    request = apply_session_storage(get_unprocessed_request())
+    second_request = apply_session_storage(get_unprocessed_request())
     request.user = regular_user
     second_request.user = admin_user
     user_tz = "US/Hawaii" if settings.TIME_ZONE != "US/Hawaii" else "Europe/Stockholm"

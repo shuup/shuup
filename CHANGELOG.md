@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Front: SupplierProductListFilter to take all vendors from the category and all sub categories
 
+### Added
+
+- Front: add timezone view to save the user's current timezone
+
 ## [2.11.0] - 2021-07-07
 
 ### Added

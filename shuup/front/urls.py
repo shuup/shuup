@@ -32,6 +32,7 @@ from .views.misc import (
 from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
 from .views.product import ProductDetailView
+from .views.timezone import SetTimezoneView
 from .views.upload import media_upload
 
 # TODO: Check _not_here_yet URLs in this file
@@ -98,6 +99,7 @@ urlpatterns = [
     ),
     url(r"^c/$", csrf_exempt(AllCategoriesView.as_view()), name="all-categories"),
     url(r"^c/(?P<pk>\d+)-(?P<slug>.*)/$", csrf_exempt(CategoryView.as_view()), name="category"),
+    url(r"^tz/", SetTimezoneView.as_view(), name="set_timezone"),
 ]
 
 # TODO: Document `front_urls_pre`, `front_urls` and `front_urls_post`.
