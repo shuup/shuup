@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.12.0] - 2021-07-15
+
 ### Fixed
 
 - Front: SupplierProductListFilter to take all vendors from the category and all sub categories
