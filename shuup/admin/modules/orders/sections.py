@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import Section
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import Shipment, Supplier
+from shuup.core.models import OrderStatusHistory, Shipment, Supplier
 from shuup.core.models._orders import OrderLogEntry
 from shuup.utils.django_compat import reverse
 
@@ -144,3 +144,20 @@ class AdminCommentSection(Section):
     @classmethod
     def get_context_data(cls, order, request=None):
         return None
+
+
+class OrderHistorySection(Section):
+    identifier = "order_status_history"
+    name = _("Order History")
+    icon = "fa-history"
+    template = "shuup/admin/orders/_order_status_history.jinja"
+    extra_js = "shuup/admin/orders/_order_status_history_js.jinja"
+    order = 5
+
+    @classmethod
+    def visible_for_object(cls, order, request=None):
+        return True
+
+    @classmethod
+    def get_context_data(cls, order, request=None):
+        return OrderStatusHistory.objects.filter(order=order).order_by("-created_on")

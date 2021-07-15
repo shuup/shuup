@@ -7,18 +7,24 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.contrib import messages
+from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.edit import BaseDeleteView
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
+from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
-from shuup.core.models import OrderStatus, OrderStatusManager, OrderStatusRole
+from shuup.core.models import Order, OrderStatus, OrderStatusHistory, OrderStatusManager, OrderStatusRole, Shop
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class OrderStatusForm(MultiLanguageModelForm):
     class Meta:
         model = OrderStatus
-        exclude = ["default"]
+        exclude = [
+            "default",
+        ]
 
     def __init__(self, **kwargs):
         super(OrderStatusForm, self).__init__(**kwargs)
@@ -76,6 +82,45 @@ class OrderStatusListView(PicotableListView):
             "default", _("Default"), linked=False, filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])
         ),
         Column(
+            "allowed_next_statuses",
+            _("Allowed Next Status"),
+            linked=False,
+            display="get_allowed_next_statuses_display",
+        ),
+        Column(
+            "visible_for_customer",
+            _("Visible For Customer"),
+            linked=False,
+            filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))]),
+        ),
+        Column(
             "is_active", _("Active"), linked=False, filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])
         ),
     ]
+
+    def get_allowed_next_statuses_display(self, instance):
+        order_status_names = [order_status.name for order_status in instance.allowed_next_statuses.all()]
+        return ", ".join(order_status_names) if order_status_names else _("No allowed next status.")
+
+
+class OrderDeleteStatusHistoryView(BaseDeleteView):
+    model = Order
+
+    def get_queryset(self):
+        shop_ids = Shop.objects.get_for_user(self.request.user).values_list("id", flat=True)
+        return Order.objects.exclude(deleted=True).filter(shop_id__in=shop_ids)
+
+    def delete(self, request, *args, **kwargs):
+        order_status_history_id = int(request.POST.get("order_status_history"))
+        order_status_history = (
+            OrderStatusHistory.objects.filter(pk=order_status_history_id).first() if order_status_history_id else None
+        )
+        order = self.get_object()
+        order_url = get_model_url(order)
+        if not order_status_history:
+            messages.error(self.request, _("Order Status change doesn't exist."))
+            return HttpResponseRedirect(order_url)
+
+        order_status_history.delete()
+        messages.success(self.request, _("Order status history deleted."))
+        return HttpResponseRedirect(order_url)

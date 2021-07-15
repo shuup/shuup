@@ -8,7 +8,7 @@ import django.views.generic
 from django.http import HttpResponseRedirect
 from django.views.generic import View
 
-from shuup.core.models import Order, ProductMode
+from shuup.core.models import Order, OrderStatusHistory, ProductMode
 from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.utils.django_compat import reverse
 
@@ -21,9 +21,26 @@ class OrderViewMixin(object):
         return qs.filter(customer=self.request.customer)
 
 
-class OrderListView(DashboardViewMixin, OrderViewMixin, django.views.generic.ListView):
+class OrderStatusHistoryViewMixin(object):
+    model = OrderStatusHistory
+
+    def get_queryset(self):
+        qs = super(OrderStatusHistoryViewMixin, self).get_queryset()
+        return qs.filter(order__customer=self.request.customer)
+
+
+class OrderListView(DashboardViewMixin, OrderStatusHistoryViewMixin, django.views.generic.ListView):
     template_name = "shuup/personal_order_history/order_list.jinja"
-    context_object_name = "orders"
+    context_object_name = "order_status_history"
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderListView, self).get_context_data(**kwargs)
+        context["order_status_history"] = (
+            OrderStatusHistory.objects.select_related("order")
+            .filter(order__customer=self.request.customer, next_order_status__visible_for_customer=True)
+            .order_by("-created_on")
+        )
+        return context
 
 
 class OrderDetailView(DashboardViewMixin, OrderViewMixin, django.views.generic.DetailView):

@@ -43,6 +43,7 @@ def test_default_status(language):
                 "role": OrderStatusRole.NONE,
                 "ordering": 100,
                 "is_active": not status.is_active,
+                "allowed_next_statuses": [o for o in OrderStatus.objects.none()],
             },
         )
         assert frm.is_valid()
@@ -88,6 +89,7 @@ def test_custom_status(language):
             "role": test_new_role,
             "ordering": test_new_ordering,
             "is_active": test_new_is_active,
+            "allowed_next_statuses": [o for o in OrderStatus.objects.all()],
         },
     )
     assert frm.is_valid()
@@ -99,3 +101,5 @@ def test_custom_status(language):
     assert frm.instance.role == test_new_role
     assert frm.instance.ordering == test_new_ordering
     assert frm.instance.is_active == test_new_is_active
+    assert OrderStatus.objects.get_default_initial() in frm.instance.allowed_next_statuses.all()
+    assert OrderStatus.objects.get_default_processing() in frm.instance.allowed_next_statuses.all()

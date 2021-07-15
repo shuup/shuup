@@ -12,6 +12,7 @@ import six
 from collections import defaultdict
 from decimal import Decimal
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
 from django.db.models import Q
@@ -27,6 +28,7 @@ from typing import TYPE_CHECKING
 
 from shuup.core import taxing
 from shuup.core.excs import (
+    InvalidOrderStatusError,
     NoPaymentToCreateException,
     NoProductsToShipException,
     NoRefundToCreateException,
@@ -174,7 +176,10 @@ class OrderStatus(TranslatableModel):
     )
 
     is_active = models.BooleanField(
-        default=True, db_index=True, verbose_name=_("is active"), help_text=_("Defines if the status is usable.")
+        default=True,
+        db_index=True,
+        verbose_name=_("is active"),
+        help_text=_("Defines if the status is usable."),
     )
 
     objects = OrderStatusQuerySet.as_manager()
@@ -182,8 +187,20 @@ class OrderStatus(TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(verbose_name=_("name"), max_length=64, help_text=_("Name of the order status.")),
         public_name=models.CharField(
-            verbose_name=_("public name"), max_length=64, help_text=_("The name shown to the customers in shop front.")
+            verbose_name=_("public name"),
+            max_length=64,
+            help_text=_("The name shown to the customers in shop front."),
         ),
+    )
+
+    allowed_next_statuses = models.ManyToManyField(
+        "self", verbose_name=_("allowed next statuses"), blank=True, symmetrical=False
+    )
+
+    visible_for_customer = models.BooleanField(
+        default=True,
+        verbose_name=_("is visible for the user"),
+        help_text=_("Indicates whether this status is visible for the customers"),
     )
 
     class Meta:
@@ -199,6 +216,46 @@ class OrderStatus(TranslatableModel):
         if self.default and self.role != OrderStatusRole.NONE:
             # If this status is the default, make the others for this role non-default.
             OrderStatus.objects.filter(role=self.role).exclude(pk=self.pk).update(default=False)
+
+
+class OrderStatusHistory(models.Model):
+    order = models.ForeignKey(
+        "Order",
+        related_name="order_history",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("order id"),
+    )
+
+    previous_order_status = models.ForeignKey(
+        "OrderStatus",
+        related_name="previous_order_status",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("previous order status"),
+    )
+
+    next_order_status = models.ForeignKey(
+        "OrderStatus",
+        related_name="next_order_status",
+        on_delete=models.PROTECT,
+        verbose_name=_("next order status"),
+    )
+
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
+
+    description = models.TextField(blank=True, null=True, verbose_name=_("description"))
+
+    creator = UnsavedForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="order_status_history_created",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("creating user"),
+    )
 
 
 class OrderStatusManager(object):
@@ -276,13 +333,42 @@ class OrderStatusManager(object):
             else:
                 OrderStatus.objects.create(**defaults)
 
+        self.ensure_allowed_next_statuses()
+
+    def ensure_allowed_next_statuses(self):
+        order_status_qs = OrderStatus.objects.all()
+
+        for order_status in order_status_qs:
+            allowed_status_list = []
+            if order_status.identifier == DefaultOrderStatus.INITIAL.value:
+                allowed_status_list = [
+                    DefaultOrderStatus.PROCESSING.value,
+                    DefaultOrderStatus.COMPLETE.value,
+                    DefaultOrderStatus.CANCELED.value,
+                ]
+            elif order_status.identifier == DefaultOrderStatus.PROCESSING.value:
+                allowed_status_list = [
+                    DefaultOrderStatus.COMPLETE.value,
+                    DefaultOrderStatus.CANCELED.value,
+                ]
+
+            if allowed_status_list:
+                allowed_queryset = OrderStatus.objects.filter(identifier__in=allowed_status_list)
+                order_status.allowed_next_statuses.add(*allowed_queryset)
+
 
 class OrderQuerySet(models.QuerySet):
     def paid(self):
         return self.filter(payment_status=PaymentStatus.FULLY_PAID)
 
     def incomplete(self):
-        return self.filter(status__role__in=(OrderStatusRole.NONE, OrderStatusRole.INITIAL, OrderStatusRole.PROCESSING))
+        return self.filter(
+            status__role__in=(
+                OrderStatusRole.NONE,
+                OrderStatusRole.INITIAL,
+                OrderStatusRole.PROCESSING,
+            )
+        )
 
     def complete(self):
         return self.filter(status__role=OrderStatusRole.COMPLETE)  # TODO: read status
@@ -325,7 +411,12 @@ class Order(MoneyPropped, models.Model):
     # not a secret. (It could, however, be used as key material for an actual secret.)
     key = models.CharField(max_length=32, unique=True, blank=False, verbose_name=_("key"))
     reference_number = models.CharField(
-        max_length=64, db_index=True, unique=True, blank=True, null=True, verbose_name=_("reference number")
+        max_length=64,
+        db_index=True,
+        unique=True,
+        blank=True,
+        null=True,
+        verbose_name=_("reference number"),
     )
 
     # Contact information
@@ -368,13 +459,24 @@ class Order(MoneyPropped, models.Model):
     # Customer related information that might change after order, but is important
     # for accounting and/or reports later.
     account_manager = models.ForeignKey(
-        "PersonContact", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_("account manager")
+        "PersonContact",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("account manager"),
     )
     customer_groups = models.ManyToManyField(
-        "ContactGroup", related_name="customer_group_orders", verbose_name=_("customer groups"), blank=True
+        "ContactGroup",
+        related_name="customer_group_orders",
+        verbose_name=_("customer groups"),
+        blank=True,
     )
     tax_group = models.ForeignKey(
-        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_("tax group")
+        "CustomerTaxGroup",
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("tax group"),
     )
 
     # Status
@@ -397,10 +499,16 @@ class Order(MoneyPropped, models.Model):
     deleted = models.BooleanField(db_index=True, default=False, verbose_name=_("deleted"))
     status = UnsavedForeignKey("OrderStatus", verbose_name=_("status"), on_delete=models.PROTECT)
     payment_status = EnumIntegerField(
-        PaymentStatus, db_index=True, default=PaymentStatus.NOT_PAID, verbose_name=_("payment status")
+        PaymentStatus,
+        db_index=True,
+        default=PaymentStatus.NOT_PAID,
+        verbose_name=_("payment status"),
     )
     shipping_status = EnumIntegerField(
-        ShippingStatus, db_index=True, default=ShippingStatus.NOT_SHIPPED, verbose_name=_("shipping status")
+        ShippingStatus,
+        db_index=True,
+        default=ShippingStatus.NOT_SHIPPED,
+        verbose_name=_("shipping status"),
     )
 
     # Methods
@@ -588,21 +696,17 @@ class Order(MoneyPropped, models.Model):
                 )
         self._cache_values()
         first_save = not self.pk
-        old_status = self.status
-
-        if not first_save:
-            old_status = Order.objects.only("status").get(pk=self.pk).status
+        if self.status is None:
+            self.status = OrderStatus.objects.get_default_initial()
 
         super(Order, self).save(*args, **kwargs)
 
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
             self._cache_contact_values_post_create()
+            self.change_status(next_status=self.status, user=self.creator, first_save=True)
 
         order_changed.send(type(self), order=self)
-
-        if self.status != old_status:
-            order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
     def delete(self, using=None):
         if not self.deleted:
@@ -1162,6 +1266,39 @@ class Order(MoneyPropped, models.Model):
         return [
             m for m in PaymentMethod.objects.available(shop=self.shop, products=product_ids) if m.is_available_for(self)
         ]
+
+    def change_status(
+        self, next_status: OrderStatus, user: User = None, description: str = None, save=True, first_save=False
+    ):
+        # validate next_status is valid or not
+
+        # if changing to the same status, then return immediately
+        if next_status == self.status and not first_save:
+            return
+
+        if first_save:
+            old_status = None
+        else:
+            old_status = self.status
+            if old_status and (next_status not in old_status.allowed_next_statuses.all()):
+                raise InvalidOrderStatusError(_("Error! Can not change to this status"))
+
+        # update new status of order
+        self.status = next_status
+
+        # create a new OrderStatusHistory entry
+        OrderStatusHistory.objects.create(
+            order=self,
+            previous_order_status=old_status,
+            next_order_status=next_status,
+            description=description,
+            creator=user,
+        )
+        if save:
+            self.save(update_fields=("status",))
+
+        # end OrderStatusHistory creation
+        order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
 
 OrderLogEntry = define_log_model(Order)

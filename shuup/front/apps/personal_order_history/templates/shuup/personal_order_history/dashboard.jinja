@@ -1,8 +1,8 @@
 {% extends "shuup/front/dashboard/dashboard_base.jinja" %}
 
 {% block dashboard_item_content %}
-{% if orders %}
-<div class="table-responsive">
+{% if order_status_history %}
+<div id="order_history" class="table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
+            {% for order_status_change in order_status_history %}
                 <tr>
-                    <td>{{- order.identifier -}}</td>
-                    <td>{{ order.order_date|datetime }}</td>
-                    <td>{{ order.get_status_display() }}</td>
-                    <td class="text-right">{{ order.taxful_total_price|money }}</td>
+                    <td>{{- order_status_change.order.identifier -}}</td>
+                    <td>{{ order_status_change.created_on|datetime }}</td>
+                    <td>{{ order_status_change.next_order_status|string }}</td>
+                    <td class="text-right">{{ order_status_change.order.taxful_total_price|money }}</td>
                     <td class="text-right">
-                        <a href="{{ url("shuup:show-order", pk=order.pk) }}">
+                        <a href="{{ url("shuup:show-order", pk=order_status_change.order.pk) }}">
                             <i class="fa fa-search"></i> {% trans %}Details{% endtrans %}
                         </a>
                     </td>
