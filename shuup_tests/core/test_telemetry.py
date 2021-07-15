@@ -38,7 +38,6 @@ from shuup.testing.factories import (
     create_random_company,
     get_default_shop,
     get_default_supplier,
-    get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
@@ -184,7 +183,6 @@ def _create_order_for_day(shop, day):
     order = create_empty_order(shop=shop)
     order.order_date = day
     order.save()
-    order.change_status(next_status=get_initial_order_status())
 
 
 def _create_product_for_day(shop, day):

@@ -19,7 +19,6 @@ from shuup.testing.factories import (
     create_product,
     get_default_shop,
     get_default_supplier,
-    get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import force_text
@@ -33,7 +32,6 @@ def test_create_refund_view(rf, admin_user):
     order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
     order.cache_prices()
     order.save()
-    order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     assert not order.has_refunds()
     assert len(order.lines.all()) == 1
@@ -102,7 +100,6 @@ def test_arbitrary_refund_availability(rf, admin_user):
     order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
     order.cache_prices()
     order.save()
-    order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     assert not order.has_refunds()
     assert len(order.lines.all()) == 1
@@ -132,7 +129,6 @@ def test_order_refunds_with_other_lines(rf, admin_user):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     add_product_to_order(order, supplier, product, 4, 5)
 

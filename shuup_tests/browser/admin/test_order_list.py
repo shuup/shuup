@@ -15,7 +15,7 @@ from shuup.testing.browser_utils import (
     wait_until_appeared,
     wait_until_condition,
 )
-from shuup.testing.factories import create_empty_order, get_default_shop, get_initial_order_status
+from shuup.testing.factories import create_empty_order, get_default_shop
 from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
@@ -28,7 +28,6 @@ def test_orders_list_view(browser, admin_user, live_server, settings):
     for i in range(0, 9):
         order = create_empty_order(shop=shop)
         order.save()
-        order.change_status(next_status=get_initial_order_status(), user=admin_user)
 
     # Set last one canceled
     Order.objects.last().set_canceled()

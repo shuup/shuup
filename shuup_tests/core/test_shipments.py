@@ -16,7 +16,6 @@ from shuup.testing.factories import (
     create_product,
     get_default_shop,
     get_default_supplier,
-    get_initial_order_status,
 )
 from shuup.utils.excs import Problem
 
@@ -188,7 +187,6 @@ def test_order_with_only_unshippable_products():
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    order.change_status(next_status=get_initial_order_status())
 
     product = create_product("unshippable", shop=shop, supplier=supplier, default_price=5.55)
     product.shipping_mode = ShippingMode.NOT_SHIPPED

@@ -745,6 +745,16 @@ class Order(MoneyPropped, models.Model):
         ):  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
             self._cache_contact_values_post_create()
+            user = None
+            if 'request' in kwargs:
+                request = kwargs.get('request')
+                user = request.user
+            OrderStatusHistory.objects.create(
+                order=self,
+                previous_order_status=self.status,
+                next_order_status=self.status.allowed_next_statuses,
+                creator=user,
+            )
 
         order_changed.send(type(self), order=self)
 

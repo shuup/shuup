@@ -16,7 +16,6 @@ from shuup.testing.factories import (
     create_product,
     get_default_shop,
     get_default_supplier,
-    get_initial_order_status,
 )
 
 
@@ -41,7 +40,6 @@ def _get_order(shop, supplier):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    order.change_status(next_status=get_initial_order_status(), user=person)
     for product_data in _get_product_data():
         quantity = product_data.pop("quantity")
         tax_rate = product_data.pop("tax_rate")

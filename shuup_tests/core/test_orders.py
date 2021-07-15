@@ -69,7 +69,6 @@ def test_order_address_immutability_unsaved_address(save):
         status=get_initial_order_status(),
     )
     order.save()
-    order.change_status(next_status=get_initial_order_status())
     order.billing_address.name = "Mute Doge"
     with pytest.raises(ValidationError):
         order.billing_address.save()
@@ -94,7 +93,6 @@ def test_broken_order_lines():
 def test_line_discount():
     order = create_empty_order(prices_include_tax=False)
     order.save()
-    order.change_status(next_status=get_initial_order_status())
     currency = order.shop.currency
     ol = OrderLine(order=order, type=OrderLineType.OTHER, quantity=5, text="Thing")
     ol.discount_amount = order.shop.create_price(50)
@@ -116,7 +114,6 @@ def test_line_discount():
 def test_line_discount_more():
     order = create_empty_order()
     order.save()
-    order.change_status(next_status=get_initial_order_status())
     ol = OrderLine(order=order, type=OrderLineType.OTHER)
     ol.quantity = 5
     ol.base_unit_price = order.shop.create_price(30)
@@ -252,7 +249,6 @@ def test_complex_order_tax(include_taxes):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    order.change_status(next_status=get_initial_order_status())
 
     pricing_context = get_pricing_module().get_context_from_data(
         shop=shop,
@@ -297,7 +293,6 @@ def test_order_verification():
 def test_empty_order():
     order = create_empty_order()
     order.save()
-    order.change_status(next_status=get_initial_order_status())
     with pytest.raises(NoProductsToShipException):
         order.create_shipment_of_all_products()
     with pytest.raises(NoProductsToShipException):
@@ -322,7 +317,6 @@ def test_known_extra_data():
     order.payment_data = {"ssn": "101010-010X"}
     order.extra_data = {"wrapping_color": "blue"}
     order.save()
-    order.change_status(next_status=get_initial_order_status())
     with override_settings(
         SHUUP_ORDER_KNOWN_SHIPPING_DATA_KEYS=[("instruction", "Instruction")],
         SHUUP_ORDER_KNOWN_PAYMENT_DATA_KEYS=[("ssn", "Social Security Number")],
@@ -340,7 +334,6 @@ def test_anon_disabling():
         with pytest.raises(ValidationError):
             order = create_empty_order()
             order.save()
-            order.change_status(next_status=get_initial_order_status())
 
 
 @pytest.mark.django_db
