@@ -305,7 +305,8 @@ def test_product_edit_view(rf, admin_user, settings):
     assert not alert
 
     with override_provides(
-        "admin_product_validator", ["shuup.testing.admin_product_validator:TestAdminProductValidator"],
+        "admin_product_validator", 
+        ["shuup.testing.admin_product_validator:TestAdminProductValidator"],
     ):
         view = ProductEditView.as_view()
         request = apply_request_middleware(rf.get("/"), user=admin_user)
