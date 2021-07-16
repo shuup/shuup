@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 
-from shuup.core.catalog import ProductCatalog
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.testing import factories
 
 
@@ -18,7 +18,7 @@ def test_product_catalog_simple_list():
     product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("10"))
     product3 = factories.create_product("p3", shop=shop, supplier=supplier, default_price=Decimal("20"))
 
-    catalog = ProductCatalog()
+    catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
     ProductCatalog.index_product(product1)
     ProductCatalog.index_product(product2)
     ProductCatalog.index_product(product3)
@@ -40,6 +40,35 @@ def test_product_catalog_simple_list():
         (product3.get_shop_instance(shop).pk, Decimal("20"), None),
         (product1.get_shop_instance(shop).pk, Decimal("30"), None),
     ]
+    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
+    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
+
+
+def test_product_catalog_purchasable():
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier()
+    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("30"))
+    product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("10"))
+
+    supplier.stock_managed = True
+    supplier.save()
+
+    # add 10 products to product1 stock
+    supplier.adjust_stock(product1.pk, delta=10)
+
+    catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=True))
+    ProductCatalog.index_product(product1)
+    ProductCatalog.index_product(product2)
+
+    products_qs = catalog.get_products_queryset().order_by("catalog_price")
+    expected_prices = [(product1.pk, Decimal("30"), None)]
+
+    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
+
     shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
     values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
     for index, value in enumerate(values):

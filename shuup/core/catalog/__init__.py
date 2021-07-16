@@ -12,23 +12,50 @@ from django.db.models.query import QuerySet
 from typing import Optional, Union
 
 from shuup.core.catalog.signals import index_catalog_shop_product
-from shuup.core.models import Contact, Product, ProductCatalogPrice, Shop, ShopProduct, Supplier
+from shuup.core.models import (
+    Contact,
+    Product,
+    ProductCatalogAvailability,
+    ProductCatalogPrice,
+    Shop,
+    ShopProduct,
+    Supplier,
+)
 
 
 class ProductCatalogContext:
+    """
+    The catalog context object helps the catalog object
+    to filter products according to the context's attributes.
+
+    `shop` can be either a Shop instance or a shop id,
+        used to filter the products for the given shop.
+
+    `supplier` can be either a Supplier instance or a supplier id,
+        used to filter the products for the given supplier.
+
+    `user` can be either a User instance or a user id,
+        used to filter the products for the given user.
+
+    `contact` can be either a Contact instance or a contact id,
+        used to filter the products for the given contact.
+
+    `purchasable_only` filter the products that can be purchased.
+    """
+
     def __init__(
         self,
         shop: Optional[Union[Shop, int]] = None,
         supplier: Optional[Union[Supplier, int]] = None,
         user: Optional[Union[AbstractUser, AnonymousUser, int]] = None,
         contact: Optional[Union[Contact, int]] = None,
-        orderable_only: bool = True,
+        purchasable_only: bool = True,
     ):
         self.shop = shop
         self.supplier = supplier
         self.user = user
         self.contact = contact
-        self.orderable_only = orderable_only
+        self.purchasable_only = purchasable_only
 
 
 class ProductCatalog:
@@ -63,7 +90,7 @@ class ProductCatalog:
 
         product_prices = ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters)
 
-        return Product.objects.annotate(
+        products_qs = Product.objects.annotate(
             catalog_price=Subquery(product_prices.order_by("-price_value").values("price_value")[:1]),
             catalog_discounted_price=Subquery(
                 product_prices.filter(discounted_price_value__isnull=False)
@@ -71,6 +98,19 @@ class ProductCatalog:
                 .values("discounted_price_value")[:1]
             ),
         )
+
+        if self.context.purchasable_only:
+            availability_filter = Q(is_available=True)
+            if shop:
+                availability_filter &= Q(shop=shop)
+            if supplier:
+                availability_filter &= Q(supplier=supplier)
+
+            products_qs = products_qs.filter(
+                pk__in=ProductCatalogAvailability.objects.filter(availability_filter).values_list("product").distinct()
+            )
+
+        return products_qs
 
     def get_shop_products_queryset(self) -> "QuerySet[ShopProduct]":
         """
@@ -96,7 +136,7 @@ class ProductCatalog:
 
         product_prices = ProductCatalogPrice.objects.filter(product=OuterRef("product_id")).filter(filters)
 
-        return ShopProduct.objects.annotate(
+        shop_products_qs = ShopProduct.objects.annotate(
             catalog_price=Coalesce(
                 Subquery(product_prices.order_by("-price_value").values("price_value")[:1]),
                 F("default_price_value"),
@@ -107,6 +147,21 @@ class ProductCatalog:
                 .values("discounted_price_value")[:1]
             ),
         )
+
+        if self.context.purchasable_only:
+            availability_filter = Q(is_available=True)
+            if shop:
+                availability_filter &= Q(shop=shop)
+            if supplier:
+                availability_filter &= Q(supplier=supplier)
+
+            shop_products_qs = shop_products_qs.filter(
+                product__in=ProductCatalogAvailability.objects.filter(availability_filter)
+                .values_list("product")
+                .distinct()
+            )
+
+        return shop_products_qs
 
     @classmethod
     def index_product(cls, product: Union[Product, int]):

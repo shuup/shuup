@@ -37,4 +37,18 @@ class ProductCatalogPrice(MoneyPropped, models.Model):
         unique_together = ("product", "shop", "supplier", "contact_group", "contact")
         indexes = [
             models.Index(fields=["product", "shop"]),
+            models.Index(fields=["product", "shop", "supplier"])
+        ]
+
+
+class ProductCatalogAvailability(MoneyPropped, models.Model):
+    product = models.ForeignKey("shuup.Product", related_name="catalog_availability", on_delete=models.CASCADE)
+    shop = models.ForeignKey("shuup.Shop", related_name="catalog_availability", on_delete=models.CASCADE)
+    supplier = models.ForeignKey("shuup.Supplier", related_name="catalog_availability", on_delete=models.CASCADE)
+    is_available = models.BooleanField(verbose_name=_("is available"), default=False, db_index=True)
+
+    class Meta:
+        unique_together = ("product", "shop", "supplier")
+        indexes = [
+            models.Index(fields=["product", "shop", "supplier", "is_available"])
         ]
