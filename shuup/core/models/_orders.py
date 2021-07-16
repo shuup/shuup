@@ -744,8 +744,8 @@ class Order(MoneyPropped, models.Model):
                 user = request.user
             OrderStatusHistory.objects.create(
                 order=self,
-                previous_order_status=self.status,
-                next_order_status=self.status.allowed_next_statuses,
+                previous_order_status=None,
+                next_order_status=self.status,
                 creator=user,
             )
 
@@ -1347,13 +1347,15 @@ class Order(MoneyPropped, models.Model):
     def change_status(self, next_status: OrderStatus, user: User = None, description: str = None):
         # validate next_status is valid or not
 
-        if not self.status.allowed_next_statuses.filter(
-            identifier=next_status.identifier
-        ).exists():
+        # if changing to the same status, then return immediately
+        if next_status == self.status:
+            return
+
+        if not self.status.allowed_next_statuses.filter(identifier=next_status.identifier).exists():
             raise InvalidOrderStatusError(_("Error! Can not change to this status"))
 
         # Have to do this as we will assign new value to current status
-        old_status = OrderStatus.objects.filter(identifier=self.status.identifier)
+        old_status = OrderStatus.objects.filter(identifier=self.status.identifier).first()
 
         # update new status of order
         self.status = next_status

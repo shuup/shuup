@@ -219,7 +219,7 @@ def test_basic_order_without_supplier_module():
     assert not order.can_set_complete(), "Finalization is possible"
 
     # Force to be complete
-    order.change_status(next_status=OrderStatus.objects.get_default_complete(), user=order.customer.user)
+    order.change_status(next_status=OrderStatus.objects.get_default_complete())
     assert order.is_complete(), "Finalization done"
 
     summary = order.get_tax_summary()

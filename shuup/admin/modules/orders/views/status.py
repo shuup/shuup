@@ -18,7 +18,10 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 class OrderStatusForm(MultiLanguageModelForm):
     class Meta:
         model = OrderStatus
-        exclude = ["default"]
+        exclude = [
+            "default",
+            "allowed_next_statuses",
+        ]
 
     def __init__(self, **kwargs):
         super(OrderStatusForm, self).__init__(**kwargs)
