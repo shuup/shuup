@@ -131,9 +131,7 @@ class OrderStatusQuerySet(TranslatableQuerySet):
         try:
             return self.get(default=True, role=role)
         except ObjectDoesNotExist:
-            raise ObjectDoesNotExist(
-                "Error! No default `%s` OrderStatus exists." % getattr(role, "label", role)
-            )
+            raise ObjectDoesNotExist("Error! No default `%s` OrderStatus exists." % getattr(role, "label", role))
 
     def get_default_initial(self):
         return self._default_for_role(OrderStatusRole.INITIAL)
@@ -155,9 +153,7 @@ class OrderStatus(TranslatableModel):
         blank=False,
         editable=True,
         unique=True,
-        help_text=_(
-            "Internal identifier for status. This is used to identify and distinguish the statuses in Shuup."
-        ),
+        help_text=_("Internal identifier for status. This is used to identify and distinguish the statuses in Shuup."),
     )
     ordering = models.IntegerField(
         db_index=True,
@@ -176,9 +172,7 @@ class OrderStatus(TranslatableModel):
         default=False,
         db_index=True,
         verbose_name=_("default"),
-        help_text=_(
-            "Defines if the status should be considered as default. Default is always processed first."
-        ),
+        help_text=_("Defines if the status should be considered as default. Default is always processed first."),
     )
 
     is_active = models.BooleanField(
@@ -191,9 +185,7 @@ class OrderStatus(TranslatableModel):
     objects = OrderStatusQuerySet.as_manager()
 
     translations = TranslatedFields(
-        name=models.CharField(
-            verbose_name=_("name"), max_length=64, help_text=_("Name of the order status.")
-        ),
+        name=models.CharField(verbose_name=_("name"), max_length=64, help_text=_("Name of the order status.")),
         public_name=models.CharField(
             verbose_name=_("public name"),
             max_length=64,
@@ -201,9 +193,7 @@ class OrderStatus(TranslatableModel):
         ),
     )
 
-    allowed_next_statuses = models.ManyToManyField(
-        "self", verbose_name=_("allowed next statuses"), symmetrical=False
-    )
+    allowed_next_statuses = models.ManyToManyField("self", verbose_name=_("allowed next statuses"), symmetrical=False)
 
     class Meta:
         unique_together = ("identifier", "role")
@@ -259,13 +249,9 @@ class OrderStatusHistory(models.Model):
         ),
     )
 
-    created_on = (
-        models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on")),
-    )
+    created_on = (models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on")),)
 
-    description = (
-        models.TextField(max_length=200, blank=True, null=True, verbose_name=_("description")),
-    )
+    description = (models.TextField(max_length=200, blank=True, null=True, verbose_name=_("description")),)
 
     creator = UnsavedForeignKey(
         settings.AUTH_USER_MODEL,
@@ -392,9 +378,7 @@ class OrderQuerySet(models.QuerySet):
         return self.filter(status__role=OrderStatusRole.COMPLETE)  # TODO: read status
 
     def valid(self):
-        return self.exclude(
-            Q(deleted=True) | Q(status__role=OrderStatusRole.CANCELED)
-        )  # TODO: read status
+        return self.exclude(Q(deleted=True) | Q(status__role=OrderStatusRole.CANCELED))  # TODO: read status
 
     def since(self, days, tz=None):
         since_date = (local_now(tz) - datetime.timedelta(days=days)).date()
@@ -422,15 +406,9 @@ class OrderQuerySet(models.QuerySet):
 class Order(MoneyPropped, models.Model):
     # Identification
     shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT, verbose_name=_("shop"))
-    created_on = models.DateTimeField(
-        auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on")
-    )
-    modified_on = models.DateTimeField(
-        auto_now=True, editable=False, db_index=True, verbose_name=_("modified on")
-    )
-    identifier = InternalIdentifierField(
-        unique=True, db_index=True, verbose_name=_("order identifier")
-    )
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_("created on"))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_("modified on"))
+    identifier = InternalIdentifierField(unique=True, db_index=True, verbose_name=_("order identifier"))
     # TODO: label is actually a choice field, need to check migrations/choice deconstruction
     label = models.CharField(max_length=32, db_index=True, verbose_name=_("label"))
     # The key shouldn't be possible to deduce (i.e. it should be random), but it is
@@ -572,12 +550,8 @@ class Order(MoneyPropped, models.Model):
     taxful_total_price = TaxfulPriceProperty("taxful_total_price_value", "currency")
     taxless_total_price = TaxlessPriceProperty("taxless_total_price_value", "currency")
 
-    taxful_total_price_value = MoneyValueField(
-        editable=False, verbose_name=_("grand total"), default=0
-    )
-    taxless_total_price_value = MoneyValueField(
-        editable=False, verbose_name=_("taxless total"), default=0
-    )
+    taxful_total_price_value = MoneyValueField(editable=False, verbose_name=_("grand total"), default=0)
+    taxless_total_price_value = MoneyValueField(editable=False, verbose_name=_("taxless total"), default=0)
     currency = CurrencyField(verbose_name=_("currency"))
     prices_include_tax = models.BooleanField(verbose_name=_("prices include tax"))
 
@@ -595,13 +569,9 @@ class Order(MoneyPropped, models.Model):
     language = LanguageField(blank=True, verbose_name=_("language"))
     customer_comment = models.TextField(blank=True, verbose_name=_("customer comment"))
     admin_comment = models.TextField(blank=True, verbose_name=_("admin comment/notes"))
-    require_verification = models.BooleanField(
-        default=False, verbose_name=_("requires verification")
-    )
+    require_verification = models.BooleanField(default=False, verbose_name=_("requires verification"))
     all_verified = models.BooleanField(default=False, verbose_name=_("all lines verified"))
-    marketing_permission = models.BooleanField(
-        default=False, verbose_name=_("marketing permission")
-    )
+    marketing_permission = models.BooleanField(default=False, verbose_name=_("marketing permission"))
     _codes = JSONField(blank=True, null=True, verbose_name=_("codes"))
 
     common_select_related = ("billing_address",)
@@ -733,14 +703,12 @@ class Order(MoneyPropped, models.Model):
 
         super(Order, self).save(*args, **kwargs)
 
-        if (
-            first_save
-        ):  # Have to do a double save the first time around to be able to save identifiers
+        if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
             self._cache_contact_values_post_create()
             user = None
-            if 'request' in kwargs:
-                request = kwargs.get('request')
+            if "request" in kwargs:
+                request = kwargs.get("request")
                 user = request.user
             OrderStatusHistory.objects.create(
                 order=self,
@@ -881,17 +849,13 @@ class Order(MoneyPropped, models.Model):
         :return: Saved, complete Shipment object.
         :rtype: shuup.core.models.Shipment
         """
-        if not product_quantities or not any(
-            quantity > 0 for quantity in product_quantities.values()
-        ):
+        if not product_quantities or not any(quantity > 0 for quantity in product_quantities.values()):
             raise NoProductsToShipException(
                 "Error! No products to ship (`quantities` is empty or has no quantity over 0)."
             )
 
         if self.shipping_address is None:
-            raise NoShippingAddressException(
-                "Error! Shipping address is not defined for this order."
-            )
+            raise NoShippingAddressException("Error! Shipping address is not defined for this order.")
 
         assert supplier or shipment
         if shipment:
@@ -987,9 +951,7 @@ class Order(MoneyPropped, models.Model):
             total_refund_amount = sum(
                 [
                     line.max_refundable_amount.value
-                    for line in self.lines.filter(supplier=supplier).exclude(
-                        type=OrderLineType.REFUND
-                    )
+                    for line in self.lines.filter(supplier=supplier).exclude(type=OrderLineType.REFUND)
                 ]
             )
             arbitrary_refunds = abs(
@@ -1036,9 +998,9 @@ class Order(MoneyPropped, models.Model):
         from ._products import ShippingMode
 
         suppliers_to_product_quantities = defaultdict(lambda: defaultdict(lambda: 0))
-        lines = self.lines.filter(
-            type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED
-        ).values_list("supplier_id", "product_id", "quantity")
+        lines = self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED).values_list(
+            "supplier_id", "product_id", "quantity"
+        )
         for supplier_id, product_id, quantity in lines:
             if product_id:
                 suppliers_to_product_quantities[supplier_id][product_id] += quantity
@@ -1056,12 +1018,8 @@ class Order(MoneyPropped, models.Model):
         else:
             quantities = suppliers_to_product_quantities[supplier.id]
 
-        products = dict(
-            (product.pk, product) for product in Product.objects.filter(pk__in=quantities.keys())
-        )
-        quantities = dict(
-            (products[product_id], quantity) for (product_id, quantity) in quantities.items()
-        )
+        products = dict((product.pk, product) for product in Product.objects.filter(pk__in=quantities.keys()))
+        quantities = dict((products[product_id], quantity) for (product_id, quantity) in quantities.items())
         return self.create_shipment(quantities, supplier=supplier)
 
     def check_all_verified(self):
@@ -1123,9 +1081,7 @@ class Order(MoneyPropped, models.Model):
         return self.status.role == OrderStatusRole.COMPLETE
 
     def can_set_complete(self):
-        return not (
-            self.is_complete() or self.is_canceled() or bool(self.get_unshipped_products())
-        )
+        return not (self.is_complete() or self.is_canceled() or bool(self.get_unshipped_products()))
 
     def is_fully_shipped(self):
         return self.shipping_status == ShippingStatus.FULLY_SHIPPED
@@ -1152,10 +1108,7 @@ class Order(MoneyPropped, models.Model):
             self.shipping_status = ShippingStatus.NOT_SHIPPED
         if status_before_update != self.shipping_status:
             self.add_log_entry(
-                _(
-                    "New shipping status is set to: %(shipping_status)s."
-                    % {"shipping_status": self.shipping_status}
-                )
+                _("New shipping status is set to: %(shipping_status)s." % {"shipping_status": self.shipping_status})
             )
             self.save(update_fields=("shipping_status",))
 
@@ -1169,10 +1122,7 @@ class Order(MoneyPropped, models.Model):
             self.payment_status = PaymentStatus.NOT_PAID
         if status_before_update != self.payment_status:
             self.add_log_entry(
-                _(
-                    "New payment status is set to: %(payment_status)s."
-                    % {"payment_status": self.payment_status}
-                )
+                _("New payment status is set to: %(payment_status)s." % {"payment_status": self.payment_status})
             )
             self.save(update_fields=("payment_status",))
 
@@ -1197,11 +1147,7 @@ class Order(MoneyPropped, models.Model):
 
     def get_product_summary(self, supplier=None):
         """Return a dict of product IDs -> {ordered, unshipped, refunded, shipped, line_text, suppliers}"""
-        supplier_id = (
-            (supplier if isinstance(supplier, six.integer_types) else supplier.pk)
-            if supplier
-            else None
-        )
+        supplier_id = (supplier if isinstance(supplier, six.integer_types) else supplier.pk) if supplier else None
 
         products = defaultdict(lambda: defaultdict(lambda: Decimal(0)))
 
@@ -1238,18 +1184,14 @@ class Order(MoneyPropped, models.Model):
             refunds = self.lines.refunds().filter(parent_line__product_id=product_id)
             refunded_quantity = refunds.aggregate(total=models.Sum("quantity"))["total"] or 0
             products[product_id]["refunded"] = refunded_quantity
-            products[product_id]["unshipped"] = max(
-                products[product_id]["unshipped"] - refunded_quantity, 0
-            )
+            products[product_id]["unshipped"] = max(products[product_id]["unshipped"] - refunded_quantity, 0)
 
         return products
 
     def _get_to_ship_quantities(self, supplier_id):
         from ._products import ShippingMode
 
-        lines_to_ship = self.lines.filter(
-            type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED
-        )
+        lines_to_ship = self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
         if supplier_id:
             lines_to_ship = lines_to_ship.filter(supplier_id=supplier_id)
         return lines_to_ship.values_list("product_id", "quantity")
@@ -1265,9 +1207,7 @@ class Order(MoneyPropped, models.Model):
         return shipment_prods.values_list("product_id", "quantity")
 
     def _get_refunded_product_ids(self, supplier_id):
-        refunded_prods = self.lines.refunds().filter(
-            type=OrderLineType.REFUND, parent_line__type=OrderLineType.PRODUCT
-        )
+        refunded_prods = self.lines.refunds().filter(type=OrderLineType.REFUND, parent_line__type=OrderLineType.PRODUCT)
         if supplier_id:
             refunded_prods = refunded_prods.filter(parent_line__supplier_id=supplier_id)
         return refunded_prods.distinct().values_list("parent_line__product_id", flat=True)
@@ -1289,11 +1229,7 @@ class Order(MoneyPropped, models.Model):
         return force_text(self.shipping_method_name)
 
     def get_tracking_codes(self):
-        return [
-            shipment.tracking_code
-            for shipment in self.shipments.all_except_deleted()
-            if shipment.tracking_code
-        ]
+        return [shipment.tracking_code for shipment in self.shipments.all_except_deleted() if shipment.tracking_code]
 
     def get_sent_shipments(self):
         return self.shipments.all_except_deleted().sent()
@@ -1339,9 +1275,7 @@ class Order(MoneyPropped, models.Model):
 
         product_ids = self.lines.products().values_list("id", flat=True)
         return [
-            m
-            for m in PaymentMethod.objects.available(shop=self.shop, products=product_ids)
-            if m.is_available_for(self)
+            m for m in PaymentMethod.objects.available(shop=self.shop, products=product_ids) if m.is_available_for(self)
         ]
 
     def change_status(self, next_status: OrderStatus, user: User = None, description: str = None):
@@ -1370,9 +1304,7 @@ class Order(MoneyPropped, models.Model):
         )
 
         # end OrderStatusHistory creation
-        order_status_changed.send(
-            type(self), order=self, old_status=old_status, new_status=self.status
-        )
+        order_status_changed.send(type(self), order=self, old_status=old_status, new_status=self.status)
 
 
 OrderLogEntry = define_log_model(Order)
