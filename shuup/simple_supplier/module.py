@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product
+from shuup.core.models import AnonymousContact, Product, ProductCatalogAvailability, ShopProduct
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
@@ -189,3 +189,25 @@ class SimpleSupplierModule(BaseSupplierModule):
 
         shipment.cache_values()
         shipment.save()
+
+
+def index_shop_product(shop_product: ShopProduct):
+    # get all the suppliers that are linked to the shop product
+    # that has the simple_supplier module
+
+    suppliers = shop_product.suppliers.filter(supplier_modules__module_identifier=SimpleSupplierModule.identifier).only(
+        "pk", "module_data"
+    )
+    for supplier in suppliers:
+        is_purchasable = shop_product.is_orderable(
+            supplier=supplier,
+            customer=AnonymousContact(),
+            quantity=shop_product.minimum_purchase_quantity,
+            allow_cache=False,
+        )
+        ProductCatalogAvailability.objects.update_or_create(
+            product_id=shop_product.product_id,
+            shop_id=shop_product.shop_id,
+            supplier_id=supplier.pk,
+            is_available=is_purchasable,
+        )
