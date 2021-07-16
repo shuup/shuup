@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 
+from shuup.core.models import PersonContact
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.testing import factories
+from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 
 
 def test_product_catalog_simple_list():
@@ -117,5 +119,48 @@ def test_product_catalog_variations():
     shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
     values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
     assert shop_products_qs.count() == 4
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
+
+
+def test_product_catalog_discounted_price():
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier()
+    contact = factories.create_random_person()
+    contact.groups.add(PersonContact.get_default_group())
+    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("50"))
+    product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("30"))
+
+    CgpPrice.objects.create(
+        shop=shop, product=product2, group=PersonContact.get_default_group(), price_value=Decimal(25)
+    )
+    # create a discount for product2
+    CgpDiscount.objects.create(
+        shop=shop, product=product2, group=PersonContact.get_default_group(), discount_amount_value=Decimal(2)
+    )
+
+    catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=False, contact=contact))
+    ProductCatalog.index_product(product1)
+    ProductCatalog.index_product(product2)
+
+    # return a Product queryset annotated with price and discounted price
+    products_qs = catalog.get_products_queryset().order_by("catalog_price")
+    expected_prices = [
+        (product2.pk, Decimal("25"), Decimal("23")),
+        (product1.pk, Decimal("50"), None),
+    ]
+    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert products_qs.count() == 2
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
+
+    # return a ShopProduct queryset, annotated with price and discounted price
+    expected_prices = [
+        (product2.get_shop_instance(shop).pk, Decimal("25"), Decimal("23")),
+        (product1.get_shop_instance(shop).pk, Decimal("50"), None),
+    ]
+    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
+    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert shop_products_qs.count() == 2
     for index, value in enumerate(values):
         assert value == expected_prices[index]

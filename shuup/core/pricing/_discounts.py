@@ -6,8 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import abc
 import six
+from typing import TYPE_CHECKING, Union
 
 from shuup.apps.provides import load_module_instances
+
+if TYPE_CHECKING:
+    from shuup.core.models import ShopProduct
 
 
 def get_discount_modules():
@@ -83,3 +87,9 @@ class DiscountModule(six.with_metaclass(abc.ABCMeta)):
         """
         pks_and_products = ((getattr(x, "pk", x), x) for x in products)
         return {pk: self.get_pricing_steps(context, product, steps[pk]) for (pk, product) in pks_and_products}
+
+    def index_shop_product(self, shop_product: Union["ShopProduct", int]):
+        """
+        Index the shop product discounts
+        """
+        pass

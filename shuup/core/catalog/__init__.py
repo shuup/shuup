@@ -6,13 +6,22 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AbstractUser, AnonymousUser
-from django.db.models import F, OuterRef, Q, Subquery, Case, When
+from django.db.models import Case, F, OuterRef, Q, Subquery, When
 from django.db.models.query import QuerySet
 from typing import Optional, Union
 
 from shuup.core.catalog.signals import index_catalog_shop_product
-from shuup.core.models import Contact, Product, ProductCatalogPrice, Shop, ShopProduct, Supplier, ProductMode
-from shuup.core.pricing import get_pricing_module
+from shuup.core.models import (
+    AnonymousContact,
+    Contact,
+    Product,
+    ProductCatalogPrice,
+    ProductMode,
+    Shop,
+    ShopProduct,
+    Supplier,
+)
+from shuup.core.pricing import get_discount_modules, get_pricing_module
 
 
 class ProductCatalogContext:
@@ -58,6 +67,42 @@ class ProductCatalog:
     def __init__(self, context: Optional[ProductCatalogContext] = None):
         self.context = context or ProductCatalogContext()
 
+    def _get_common_filters(self):
+        filters = Q()
+        shop = self.context.shop
+        supplier = self.context.supplier
+        contact = self.context.contact
+        purchasable_only = self.context.purchasable_only
+
+        if shop:
+            filters &= Q(shop=shop)
+        if supplier:
+            filters &= Q(supplier=supplier)
+        if purchasable_only:
+            filters &= Q(is_available=True)
+
+        if contact:
+            # filter all prices for the contact OR to the groups of the contact
+            filters = Q(
+                Q(filters)
+                & Q(
+                    Q(contact=contact)
+                    | Q(contact_group__in=contact.groups.values_list("pk", flat=True))
+                    | Q(contact_group__isnull=True, contact__isnull=True)
+                )
+            )
+        else:
+            # anonymous contact
+            filters = Q(
+                Q(filters)
+                & Q(
+                    Q(contact_group__isnull=True, contact__isnull=True)
+                    | Q(contact_group=AnonymousContact.get_default_group())
+                )
+            )
+
+        return filters
+
     def get_products_queryset(self) -> "QuerySet[Product]":
         """
         Returns a queryset of Product annotated with price and discounted price:
@@ -66,24 +111,10 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        filters = Q()
-        shop = self.context.shop
-        supplier = self.context.supplier
-        contact = self.context.contact
-
-        if shop:
-            filters &= Q(shop=shop)
-        if supplier:
-            filters &= Q(supplier=supplier)
-        if self.context.purchasable_only:
-            filters &= Q(is_available=True)
-
-        if contact:
-            # filter all prices for the contact OR to the groups of the contact
-            filters = Q(Q(filters) & Q(Q(contact=contact) | Q(contact_group__members=contact)))
+        filters = self._get_common_filters()
 
         product_prices = (
-            ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters).order_by("-price_value")
+            ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters).order_by("price_value")
         )
 
         return Product.objects.annotate(
@@ -99,23 +130,11 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        filters = Q()
-        shop = self.context.shop
-        supplier = self.context.supplier
-        contact = self.context.contact
+        filters = self._get_common_filters()
 
-        if shop:
-            filters &= Q(shop=shop)
-        if supplier:
-            filters &= Q(supplier=supplier)
-        if self.context.purchasable_only:
-            filters &= Q(is_available=True)
-
-        if contact:
-            # filter all prices for the contact OR to the groups of the contact
-            filters = Q(Q(filters) & Q(Q(contact=contact) | Q(contact_group__members=contact)))
-
-        product_prices = ProductCatalogPrice.objects.filter(product=OuterRef("product_id")).filter(filters)
+        product_prices = (
+            ProductCatalogPrice.objects.filter(product=OuterRef("product_id")).filter(filters).order_by("price_value")
+        )
 
         return ShopProduct.objects.annotate(
             # as we are filtering ShopProducts, we can fallback to default_price_value
@@ -153,4 +172,6 @@ class ProductCatalog:
         """
         pricing_module = get_pricing_module()
         pricing_module.index_shop_product(shop_product)
+        for discount_module in get_discount_modules():
+            discount_module.index_shop_product(shop_product)
         index_catalog_shop_product.send(sender=cls, shop_product=shop_product)

@@ -50,28 +50,33 @@ class CustomerGroupPricingModule(PricingModule):
 
     def index_shop_product(self, shop_product: Union["ShopProduct", int]):
         if isinstance(shop_product, int):
-            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product_id", "default_price_value")
+            shop_product = (
+                ShopProduct.objects.select_related()
+                .get(pk=shop_product)
+                .only("shop_id", "product", "default_price_value")
+            )
 
         is_variation_parent = shop_product.product.is_variation_parent()
-        children_product_ids = []
 
         # index the price of all children shop products
         if is_variation_parent:
             children_shop_product = ShopProduct.objects.filter(
-                shop=shop_product.shop, product__variation_parent=shop_product.product
+                shop=shop_product.shop, product__variation_parent_id=shop_product.product_id
             )
             for child_shop_product in children_shop_product:
                 self.index_shop_product(child_shop_product)
-                children_product_ids.append(child_shop_product.product_id)
         else:
             # index all the prices with groups
-            for customer_group_price in CgpPrice.objects.filter(product=shop_product.product, shop=shop_product.shop):
+            for customer_group_price in CgpPrice.objects.filter(
+                product_id=shop_product.product_id, shop_id=shop_product.shop_id
+            ):
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
                     ProductCatalogPrice.objects.update_or_create(
                         product_id=shop_product.product_id,
                         shop_id=shop_product.shop_id,
                         contact_group=customer_group_price.group,
                         supplier_id=supplier_id,
+                        contact=None,
                         defaults=dict(price_value=customer_group_price.price_value),
                     )
 
@@ -81,6 +86,8 @@ class CustomerGroupPricingModule(PricingModule):
                     product_id=shop_product.product_id,
                     shop_id=shop_product.shop_id,
                     supplier_id=supplier_id,
+                    contact_group=None,  # need to force null
+                    contact=None,
                     defaults=dict(price_value=shop_product.default_price_value),
                 )
 
@@ -113,3 +120,44 @@ class CustomerGroupDiscountModule(DiscountModule):
             price_info.price = max(price_info.price - total_discount, context.shop.create_price(0))
 
         return price_info
+
+    def index_shop_product(self, shop_product: Union["ShopProduct", int]):
+        """
+        Index the shop product discounts
+        """
+        if isinstance(shop_product, int):
+            shop_product = (
+                ShopProduct.objects.select_related()
+                .get(pk=shop_product)
+                .only("shop_id", "product", "default_price_value")
+            )
+
+        is_variation_parent = shop_product.product.is_variation_parent()
+
+        # index the discounted price of all children shop products
+        if is_variation_parent:
+            children_shop_product = ShopProduct.objects.filter(
+                shop=shop_product.shop, product__variation_parent=shop_product.product
+            )
+            for child_shop_product in children_shop_product:
+                self.index_shop_product(child_shop_product)
+        else:
+            # index all the prices with groups
+            for customer_group_discount in CgpDiscount.objects.filter(
+                product_id=shop_product.product_id, shop_id=shop_product.shop_id
+            ):
+                product_price = CgpPrice.objects.filter(
+                    product_id=shop_product.product_id,
+                    shop_id=shop_product.shop_id,
+                    group=customer_group_discount.group,
+                ).first()
+                normal_price = product_price.price_value if product_price else shop_product.default_price_value
+                discounted_price = normal_price - customer_group_discount.discount_amount_value
+
+                for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
+                    ProductCatalogPrice.objects.filter(
+                        product_id=shop_product.product_id,
+                        shop_id=shop_product.shop_id,
+                        contact_group=customer_group_discount.group,
+                        supplier_id=supplier_id,
+                    ).update(discounted_price_value=discounted_price)
