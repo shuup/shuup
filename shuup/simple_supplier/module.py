@@ -9,11 +9,12 @@ from django.core.exceptions import ValidationError
 from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import AnonymousContact, Product, ProductCatalogAvailability, ShopProduct
+from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
+from shuup.core.tasks import run_task
 from shuup.core.utils import context_cache
 from shuup.simple_supplier.utils import get_current_stock_value
 from shuup.utils.django_compat import force_text
@@ -156,6 +157,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
         )
+        run_task("shuup.simple_supplier.tasks.index_product", product=product_id)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         # stocks are managed, do stocks check
@@ -189,25 +191,3 @@ class SimpleSupplierModule(BaseSupplierModule):
 
         shipment.cache_values()
         shipment.save()
-
-
-def index_shop_product(shop_product: ShopProduct):
-    # get all the suppliers that are linked to the shop product
-    # that has the simple_supplier module
-
-    suppliers = shop_product.suppliers.filter(supplier_modules__module_identifier=SimpleSupplierModule.identifier).only(
-        "pk", "module_data"
-    )
-    for supplier in suppliers:
-        is_purchasable = shop_product.is_orderable(
-            supplier=supplier,
-            customer=AnonymousContact(),
-            quantity=shop_product.minimum_purchase_quantity,
-            allow_cache=False,
-        )
-        ProductCatalogAvailability.objects.update_or_create(
-            product_id=shop_product.product_id,
-            shop_id=shop_product.shop_id,
-            supplier_id=supplier.pk,
-            is_available=is_purchasable,
-        )

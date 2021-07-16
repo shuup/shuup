@@ -21,6 +21,7 @@ from shuup.core.models import (
     ShopProduct,
     Supplier,
 )
+from shuup.core.pricing import get_pricing_module
 
 
 class ProductCatalogContext:
@@ -177,15 +178,10 @@ class ProductCatalog:
         """
         Index the prices for the given `shop_product`
         which can be either a ShopProduct instance or a shop product ID.
+
+        This method will forward the indexing for the default pricing module
+        and then trigger a signal for other apps to do their job if they need.
         """
-        if isinstance(shop_product, int):
-            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product_id", "default_price_value")
-
-        # save the default product price
-        ProductCatalogPrice.objects.update_or_create(
-            product_id=shop_product.product_id,
-            shop_id=shop_product.shop_id,
-            defaults=dict(price_value=shop_product.default_price_value),
-        )
-
+        pricing_module = get_pricing_module()
+        pricing_module.index_shop_product(shop_product)
         index_catalog_shop_product.send(sender=cls, shop_product=shop_product)
