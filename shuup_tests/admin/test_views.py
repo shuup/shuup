@@ -18,7 +18,14 @@ from mock import patch
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.apps.provides import override_provides
-from shuup.core.models import Product, ProductCatalogPrice, Shop, ShopProduct, ShopProductVisibility, ShopStatus
+from shuup.core.models import (
+    Product,
+    ProductCatalogPrice,
+    Shop,
+    ShopProduct,
+    ShopProductVisibility,
+    ShopStatus,
+)
 from shuup.testing.factories import (
     CategoryFactory,
     create_product,
