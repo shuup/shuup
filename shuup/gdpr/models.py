@@ -22,7 +22,7 @@ GDPR_ANONYMIZE_TASK_TYPE_IDENTIFIER = "gdpr_anonymize"
 
 @lang_lru_cache
 def get_setting(shop):
-    instance, created = GDPRSettings.objects.get_or_create(shop=shop)
+    instance, created = GDPRSettings.objects.prefetch_related("translations").get_or_create(shop=shop)
     if created or not instance.safe_translation_getter("cookie_banner_content"):
         instance.set_default_content()
     return instance
