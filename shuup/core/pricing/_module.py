@@ -154,5 +154,7 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
                 product_id=shop_product.product_id,
                 shop_id=shop_product.shop_id,
                 supplier_id=supplier_id,
+                contact_group=None,
+                contact=None,
                 defaults=dict(price_value=shop_product.default_price_value),
             )
