@@ -6,21 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AbstractUser, AnonymousUser
-from django.db.models import F, OuterRef, Q, Subquery
-from django.db.models.functions import Coalesce
+from django.db.models import F, OuterRef, Q, Subquery, Case, When
 from django.db.models.query import QuerySet
 from typing import Optional, Union
 
 from shuup.core.catalog.signals import index_catalog_shop_product
-from shuup.core.models import (
-    Contact,
-    Product,
-    ProductCatalogAvailability,
-    ProductCatalogPrice,
-    Shop,
-    ShopProduct,
-    Supplier,
-)
+from shuup.core.models import Contact, Product, ProductCatalogPrice, Shop, ShopProduct, Supplier, ProductMode
 from shuup.core.pricing import get_pricing_module
 
 
@@ -84,34 +75,21 @@ class ProductCatalog:
             filters &= Q(shop=shop)
         if supplier:
             filters &= Q(supplier=supplier)
+        if self.context.purchasable_only:
+            filters &= Q(is_available=True)
 
         if contact:
             # filter all prices for the contact OR to the groups of the contact
             filters = Q(Q(filters) & Q(Q(contact=contact) | Q(contact_group__members=contact)))
 
-        product_prices = ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters)
-
-        products_qs = Product.objects.annotate(
-            catalog_price=Subquery(product_prices.order_by("-price_value").values("price_value")[:1]),
-            catalog_discounted_price=Subquery(
-                product_prices.filter(discounted_price_value__isnull=False)
-                .order_by("-discounted_price_value")
-                .values("discounted_price_value")[:1]
-            ),
+        product_prices = (
+            ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters).order_by("-price_value")
         )
 
-        if self.context.purchasable_only:
-            availability_filter = Q(is_available=True)
-            if shop:
-                availability_filter &= Q(shop=shop)
-            if supplier:
-                availability_filter &= Q(supplier=supplier)
-
-            products_qs = products_qs.filter(
-                pk__in=ProductCatalogAvailability.objects.filter(availability_filter).values_list("product").distinct()
-            )
-
-        return products_qs
+        return Product.objects.annotate(
+            catalog_price=Subquery(product_prices.values("price_value")[:1]),
+            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
+        ).filter(catalog_price__isnull=False)
 
     def get_shop_products_queryset(self) -> "QuerySet[ShopProduct]":
         """
@@ -130,6 +108,8 @@ class ProductCatalog:
             filters &= Q(shop=shop)
         if supplier:
             filters &= Q(supplier=supplier)
+        if self.context.purchasable_only:
+            filters &= Q(is_available=True)
 
         if contact:
             # filter all prices for the contact OR to the groups of the contact
@@ -137,32 +117,21 @@ class ProductCatalog:
 
         product_prices = ProductCatalogPrice.objects.filter(product=OuterRef("product_id")).filter(filters)
 
-        shop_products_qs = ShopProduct.objects.annotate(
-            catalog_price=Coalesce(
-                Subquery(product_prices.order_by("-price_value").values("price_value")[:1]),
-                F("default_price_value"),
+        return ShopProduct.objects.annotate(
+            # as we are filtering ShopProducts, we can fallback to default_price_value
+            # when the product is a variation parent (this is not possible with product queryset)
+            catalog_price=Case(
+                When(
+                    product__mode__in=[
+                        ProductMode.VARIABLE_VARIATION_PARENT,
+                        ProductMode.SIMPLE_VARIATION_PARENT,
+                    ],
+                    then=F("default_price_value"),
+                ),
+                default=Subquery(product_prices.values("price_value")[:1]),
             ),
-            catalog_discounted_price=Subquery(
-                product_prices.filter(discounted_price_value__isnull=False)
-                .order_by("-discounted_price_value")
-                .values("discounted_price_value")[:1]
-            ),
-        )
-
-        if self.context.purchasable_only:
-            availability_filter = Q(is_available=True)
-            if shop:
-                availability_filter &= Q(shop=shop)
-            if supplier:
-                availability_filter &= Q(supplier=supplier)
-
-            shop_products_qs = shop_products_qs.filter(
-                product__in=ProductCatalogAvailability.objects.filter(availability_filter)
-                .values_list("product")
-                .distinct()
-            )
-
-        return shop_products_qs
+            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
+        ).filter(catalog_price__isnull=False)
 
     @classmethod
     def index_product(cls, product: Union[Product, int]):
