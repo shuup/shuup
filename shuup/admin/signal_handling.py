@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.db import transaction
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
@@ -36,9 +37,11 @@ def on_user_groups_change(instance, action, model, **kwargs):
 def on_object_saved(sender, object, **kwargs):
     # make sure to index the prices of the product when a product is saved
     if isinstance(object, ShopProduct):
-        run_task("shuup.core.catalog.tasks.index_shop_product", shop_product_id=object.pk)
+        transaction.on_commit(
+            lambda: run_task("shuup.core.catalog.tasks.index_shop_product", shop_product_id=object.pk)
+        )
     if isinstance(object, Product):
-        run_task("shuup.core.catalog.tasks.index_product", product_id=object.pk)
+        transaction.on_commit(lambda: run_task("shuup.core.catalog.tasks.index_product", product_id=object.pk))
 
 
 order_creator_finished.connect(handle_custom_payment_return_requests, dispatch_uid="shuup.admin.handle_cash_payments")
