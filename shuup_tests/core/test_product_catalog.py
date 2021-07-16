@@ -31,6 +31,7 @@ def test_product_catalog_simple_list():
         (product1.pk, Decimal("30"), None),
     ]
     values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert products_qs.count() == 3
     for index, value in enumerate(values):
         assert value == expected_prices[index]
 
@@ -42,6 +43,7 @@ def test_product_catalog_simple_list():
     ]
     shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
     values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert shop_products_qs.count() == 3
     for index, value in enumerate(values):
         assert value == expected_prices[index]
 
@@ -64,6 +66,7 @@ def test_product_catalog_purchasable():
 
     products_qs = catalog.get_products_queryset().order_by("catalog_price")
     expected_prices = [(product1.pk, Decimal("30"), None)]
+    assert products_qs.count() == 1
 
     values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
     for index, value in enumerate(values):
@@ -71,5 +74,7 @@ def test_product_catalog_purchasable():
 
     shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
     values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    expected_prices = [(product1.get_shop_instance(shop).pk, Decimal("30"), None)]
+    assert shop_products_qs.count() == 1
     for index, value in enumerate(values):
         assert value == expected_prices[index]

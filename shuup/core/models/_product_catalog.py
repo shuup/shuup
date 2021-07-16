@@ -35,10 +35,7 @@ class ProductCatalogPrice(MoneyPropped, models.Model):
 
     class Meta:
         unique_together = ("product", "shop", "supplier", "contact_group", "contact")
-        indexes = [
-            models.Index(fields=["product", "shop"]),
-            models.Index(fields=["product", "shop", "supplier"])
-        ]
+        indexes = [models.Index(fields=["product", "shop"]), models.Index(fields=["product", "shop", "supplier"])]
 
 
 class ProductCatalogAvailability(MoneyPropped, models.Model):
@@ -49,6 +46,4 @@ class ProductCatalogAvailability(MoneyPropped, models.Model):
 
     class Meta:
         unique_together = ("product", "shop", "supplier")
-        indexes = [
-            models.Index(fields=["product", "shop", "supplier", "is_available"])
-        ]
+        indexes = [models.Index(fields=["product", "shop", "supplier", "is_available"])]

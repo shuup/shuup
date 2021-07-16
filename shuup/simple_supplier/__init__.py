@@ -24,6 +24,7 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
 
     def ready(self):
         import shuup.simple_supplier.product_copy_signal_handler  # noqa: F401
+        import shuup.simple_supplier.signal_handlers  # noqa: F401
 
 
 default_app_config = "shuup.simple_supplier.ShuupSimpleSupplierAppConfig"
