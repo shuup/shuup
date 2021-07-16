@@ -4,15 +4,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 import abc
 import six
 from django.http import HttpRequest
+from typing import TYPE_CHECKING, Union
 
 from shuup.apps.provides import load_module
 
 from ._context import PricingContext
+
+if TYPE_CHECKING:
+    from shuup.core.models import ShopProduct
 
 
 def get_pricing_module():
@@ -135,3 +137,16 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         return {
             product_id: self.get_pricing_steps(context, product) for (product_id, product) in six.iteritems(product_map)
         }
+
+    def index_shop_product(self, shop_product: Union["ShopProduct", int]):
+        from shuup.core.models import ProductCatalogPrice, ShopProduct
+
+        if isinstance(shop_product, int):
+            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product_id", "default_price_value")
+
+        # save the default product price
+        ProductCatalogPrice.objects.update_or_create(
+            product_id=shop_product.product_id,
+            shop_id=shop_product.shop_id,
+            defaults=dict(price_value=shop_product.default_price_value),
+        )

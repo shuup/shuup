@@ -8,9 +8,9 @@
 from django.dispatch import receiver
 
 from shuup.core.catalog.signals import index_catalog_shop_product
-from shuup.simple_supplier.module import index_shop_product
+from shuup.core.tasks import run_task
 
 
 @receiver(index_catalog_shop_product)
 def on_index_catalog_shop_product(sender, shop_product, **kwargs):
-    index_shop_product(shop_product)
+    run_task("shuup.simple_supplier.tasks.index_shop_product", shop_product=shop_product.pk)

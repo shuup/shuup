@@ -13,6 +13,7 @@ from django.test import override_settings
 from django.test.client import Client
 from django.utils.encoding import force_text
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
@@ -238,8 +239,13 @@ def test_product_edit_view(rf, admin_user, settings):
             continue
         usable_post[k] = v
 
-    request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=shop_product.pk)
+    def on_commit_mock(func):
+        # make it atomic, don't commit after the transaction commits
+        func()
+
+    with patch("django.db.transaction.on_commit", new=on_commit_mock):
+        request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
+        response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.primary_category
