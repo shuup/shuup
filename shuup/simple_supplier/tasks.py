@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from typing import Union
 
-from shuup.core.models import AnonymousContact, Product, ProductCatalogAvailability, ShopProduct, Supplier
+from shuup.core.models import AnonymousContact, Product, ProductCatalogPrice, ShopProduct, Supplier
 
 
 def index_product(product: Union[Product, int]):
@@ -35,12 +35,9 @@ def index_shop_product(shop_product: Union[ShopProduct, int]):
             quantity=shop_product.minimum_purchase_quantity,
             allow_cache=False,
         )
-        ProductCatalogAvailability.objects.update_or_create(
-            product_id=shop_product.product_id,
-            shop_id=shop_product.shop_id,
-            supplier_id=supplier.pk,
-            defaults=dict(is_available=is_purchasable),
-        )
+        ProductCatalogPrice.objects.filter(
+            product_id=shop_product.product_id, shop_id=shop_product.shop_id, supplier_id=supplier.pk
+        ).update(is_available=is_purchasable)
 
     if shop_product.product.is_variation_parent():
         # also index child products

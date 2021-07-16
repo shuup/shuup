@@ -142,11 +142,17 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         from shuup.core.models import ProductCatalogPrice, ShopProduct
 
         if isinstance(shop_product, int):
-            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product_id", "default_price_value")
+            shop_product = (
+                ShopProduct.objects.prefetch_related("suppliers")
+                .get(pk=shop_product)
+                .only("shop_id", "product_id", "default_price_value")
+            )
 
-        # save the default product price
-        ProductCatalogPrice.objects.update_or_create(
-            product_id=shop_product.product_id,
-            shop_id=shop_product.shop_id,
-            defaults=dict(price_value=shop_product.default_price_value),
-        )
+        for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
+            # save the default product price
+            ProductCatalogPrice.objects.update_or_create(
+                product_id=shop_product.product_id,
+                shop_id=shop_product.shop_id,
+                supplier_id=supplier_id,
+                defaults=dict(price_value=shop_product.default_price_value),
+            )
