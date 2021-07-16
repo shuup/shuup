@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db.transaction import atomic
+from shuup.tasks.notify_events import TaskCreated
 
 
 def create_task(shop, creator, task_type, task_name, comment=None, **kwargs):
@@ -17,4 +18,12 @@ def create_task(shop, creator, task_type, task_name, comment=None, **kwargs):
         task.save()
         if comment:
             task.comment(creator, comment)
+
+        params = dict(
+            type=task_type,
+            task=task_name,
+            status=task.status,
+            priority=task.priority,
+        )
+        TaskCreated(**params).run(shop)
         return task

@@ -14,7 +14,6 @@ from django.utils.translation import activate, get_language, ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from reversion.models import Version
 
-from shuup.gdpr.utils import get_active_consent_pages
 from shuup.simple_cms.models import Page
 from shuup.utils.i18n import lang_lru_cache
 
@@ -190,6 +189,8 @@ class GDPRUserConsent(models.Model):
         return cls.objects.filter(user=user, shop=shop).order_by("-created_on").first()
 
     def should_reconsent(self, shop, user):
+        from shuup.gdpr.utils import get_active_consent_pages
+
         consent_pages_ids = set([page.id for page in get_active_consent_pages(shop)])
         page_ids = set([doc.page.id for doc in self.documents.all()])
         if consent_pages_ids != page_ids:

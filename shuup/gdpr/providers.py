@@ -5,16 +5,19 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from typing import Dict, Tuple
 from django import forms
+from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 from shuup.gdpr.forms import CompanyAgreementForm
-from shuup.gdpr.models import GDPRSettings, GDPRUserConsent
-from shuup.gdpr.utils import get_active_consent_pages
 from shuup.utils.django_compat import is_authenticated, reverse
 from shuup.utils.djangoenv import has_installed
+from shuup.core.models import Contact, Shop
+
+UserModel = get_user_model()
 
 
 class TextOnlyWidget(forms.Widget):
@@ -32,6 +35,8 @@ class GDPRFormDefProvider(FormDefProvider):
 
 
 def get_gdpr_settings(request):
+    from shuup.gdpr.models import GDPRSettings
+
     if not has_installed("shuup.gdpr") or not request:
         return None
 
@@ -43,6 +48,9 @@ class GDPRFieldProvider(FormFieldProvider):
     error_message = ""
 
     def get_fields(self, **kwargs):
+        from shuup.gdpr.models import GDPRUserConsent
+        from shuup.gdp.utils import get_active_consent_pages
+
         request = kwargs.get("request", None)
         gdpr_settings = get_gdpr_settings(request)
         if not gdpr_settings:
@@ -102,3 +110,13 @@ class GDPRAuthFieldProvider(GDPRFieldProvider):
             ]
         else:
             return super(GDPRAuthFieldProvider, self).get_fields(**kwargs)
+
+
+class GDPRBaseUserDataProvider(object):
+    @classmethod
+    def get_user_data(cls, shop: Shop, user: UserModel = None, contact: Contact = None) -> Tuple[str, Dict]:
+        """
+        Returns a tuple of string, dictionary. The string is the key that identifies the
+        data and the dict contains all the user data this provider returns.
+        """
+        raise NotImplementedError
