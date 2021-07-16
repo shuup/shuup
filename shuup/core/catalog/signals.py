@@ -7,5 +7,5 @@
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import Signal
 
-# triggered when a shop product price must be indexed
-index_catalog_price = Signal(providing_args=["shop_product"])
+# triggered when a shop product must be indexed
+index_catalog_shop_product = Signal(providing_args=["shop_product"])

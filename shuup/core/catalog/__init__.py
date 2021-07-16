@@ -11,7 +11,7 @@ from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from typing import Optional, Union
 
-from shuup.core.catalog.signals import index_catalog_price
+from shuup.core.catalog.signals import index_catalog_shop_product
 from shuup.core.models import Contact, Product, ProductCatalogPrice, Shop, ShopProduct, Supplier
 
 
@@ -133,4 +133,4 @@ class ProductCatalog:
             defaults=dict(price_value=shop_product.default_price_value),
         )
 
-        index_catalog_price.send(sender=cls, shop_product=shop_product)
+        index_catalog_shop_product.send(sender=cls, shop_product=shop_product)
