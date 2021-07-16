@@ -19,9 +19,9 @@ from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.core.models import CompanyContact, Contact, PersonContact
+from shuup.core.models import Contact
+from shuup.core.tasks import run_task
 from shuup.gdpr.admin_module.forms import GDPRBaseFormPart, GDPRCookieCategoryFormPart
-from shuup.gdpr.anonymizer import Anonymizer
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
 from shuup.gdpr.utils import create_initial_required_cookie_category, ensure_gdpr_privacy_policy
 from shuup.utils.analog import LogEntryKind
@@ -94,7 +94,7 @@ class GDPRDownloadDataView(BaseContactView):
         )
         from shuup.gdpr.utils import get_all_contact_data
 
-        data = json.dumps(get_all_contact_data(contact))
+        data = json.dumps(get_all_contact_data(self.request.shop, contact))
         response = HttpResponse(data, content_type="application/json")
         filename = "attachment; filename=user_data_{}.json".format(now().strftime("%Y-%m-%d_%H:%M:%S"))
         response["Content-Disposition"] = filename
@@ -106,11 +106,13 @@ class GDPRAnonymizeView(BaseContactView):
         contact = self.get_object()
         contact.add_log_entry("Info! User anonymization requested.", kind=LogEntryKind.NOTE, user=self.request.user)
         with atomic():
-            anonymizer = Anonymizer()
-            if isinstance(contact, PersonContact):
-                anonymizer.anonymize_person(contact)
-            elif isinstance(contact, CompanyContact):
-                anonymizer.anonymize_company(contact)
+            user_id = self.request.user.pk if self.request.user.pk else None
+            run_task(
+                "shuup.gdpr.task.anonymize",
+                shop_id=self.request.shop.pk,
+                contact_id=contact.pk,
+                user_id=user_id,
+            )
 
         messages.success(request, _("Contact was anonymized."))
         return HttpResponseRedirect(reverse("shuup_admin:contact.detail", kwargs=dict(pk=contact.pk)))

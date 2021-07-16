@@ -73,7 +73,7 @@ def test_anonymize_contact():
         )
 
     anonymized_person = PersonContact.objects.get(id=customer.id)
-    anonymizer.anonymize_person(anonymized_person)
+    anonymizer._anonymize_person(anonymized_person)
     anonymized_person.refresh_from_db()
     assert anonymized_person.first_name != customer.first_name
     assert anonymized_person.last_name != customer.last_name
@@ -83,7 +83,7 @@ def test_anonymize_contact():
     assert anonymized_person.default_billing_address.city != customer.default_billing_address.city
 
     anonymized_company = CompanyContact.objects.get(id=company.id)
-    anonymizer.anonymize_company(anonymized_company)
+    anonymizer._anonymize_company(anonymized_company)
     anonymized_company.refresh_from_db()
     assert anonymized_company.tax_number != company.tax_number
     assert anonymized_company.email != company.email
@@ -107,7 +107,7 @@ def test_anonymize_contact():
         assert basket.data is None
 
     anonymized_user = get_user_model().objects.get(id=user.id)
-    anonymizer.anonymize_user(anonymized_user)
+    anonymizer._anonymize_user(anonymized_user)
     anonymized_user.refresh_from_db()
     assert user.username != anonymized_user.username
     assert user.first_name != anonymized_user.first_name
