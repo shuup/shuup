@@ -108,7 +108,7 @@ class GDPRAnonymizeView(BaseContactView):
         with atomic():
             user_id = self.request.user.pk if self.request.user.pk else None
             run_task(
-                "shuup.gdpr.task.anonymize",
+                "shuup.gdpr.tasks.anonymize",
                 shop_id=self.request.shop.pk,
                 contact_id=contact.pk,
                 user_id=user_id,
