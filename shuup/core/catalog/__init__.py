@@ -105,6 +105,25 @@ class ProductCatalog:
 
         return filters
 
+    def annotate_products_queryset(self, queryset: "QuerySet[Product]") -> "QuerySet[Product]":
+        """
+        Returns the given Product queryset annotated with price and discounted price.
+        The catalog will filter the products according to the `context`.
+
+            - `catalog_price` -> the cheapest price found for the context
+            - `catalog_discounted_price` -> the cheapest discounted price found for the context
+        """
+        filters = self._get_common_filters()
+        product_prices = (
+            ProductCatalogPrice.objects.filter(product=OuterRef("pk"))
+            .filter(filters)
+            .order_by(Coalesce("discounted_price_value", "price_value").asc())
+        )
+        return queryset.annotate(
+            catalog_price=Subquery(product_prices.values("price_value")[:1]),
+            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
+        )
+
     def get_products_queryset(self) -> "QuerySet[Product]":
         """
         Returns a queryset of Product annotated with price and discounted price:
@@ -113,35 +132,24 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        filters = self._get_common_filters()
+        return self.annotate_products_queryset(Product.objects.all()).filter(catalog_price__isnull=False)
 
-        product_prices = (
-            ProductCatalogPrice.objects.filter(product=OuterRef("pk"))
-            .filter(filters)
-            .order_by(Coalesce("discounted_price_value", "price_value").asc())
-        )
-        return Product.objects.annotate(
-            catalog_price=Subquery(product_prices.values("price_value")[:1]),
-            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
-        ).filter(catalog_price__isnull=False)
-
-    def get_shop_products_queryset(self) -> "QuerySet[ShopProduct]":
+    def annotate_shop_products_queryset(self, queryset: "QuerySet[ShopProduct]") -> "QuerySet[ShopProduct]":
         """
-        Returns a queryset of ShopProduct annotated with price and discounted price:
+        Returns a the given ShopProduct queryset annotated with price and discounted price:
         The catalog will filter the shop products according to the `context`.
 
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
         filters = self._get_common_filters()
-
         product_prices = (
             ProductCatalogPrice.objects.filter(product=OuterRef("product_id"))
             .filter(filters)
             .order_by(Coalesce("discounted_price_value", "price_value").asc())
         )
 
-        return ShopProduct.objects.annotate(
+        return queryset.annotate(
             # as we are filtering ShopProducts, we can fallback to default_price_value
             # when the product is a variation parent (this is not possible with product queryset)
             catalog_price=Case(
@@ -155,7 +163,17 @@ class ProductCatalog:
                 default=Subquery(product_prices.values("price_value")[:1]),
             ),
             catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
-        ).filter(catalog_price__isnull=False)
+        )
+
+    def get_shop_products_queryset(self) -> "QuerySet[ShopProduct]":
+        """
+        Returns a queryset of ShopProduct annotated with price and discounted price:
+        The catalog will filter the shop products according to the `context`.
+
+            - `catalog_price` -> the cheapest price found for the context
+            - `catalog_discounted_price` -> the cheapest discounted price found for the context
+        """
+        return self.annotate_shop_products_queryset(ShopProduct.objects.all()).filter(catalog_price__isnull=False)
 
     @classmethod
     def index_product(cls, product: Union[Product, int]):
