@@ -155,9 +155,11 @@ class CustomerGroupDiscountModule(DiscountModule):
                 discounted_price = normal_price - customer_group_discount.discount_amount_value
 
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
-                    ProductCatalogPrice.objects.filter(
+                    ProductCatalogPrice.objects.update_or_create(
                         product_id=shop_product.product_id,
                         shop_id=shop_product.shop_id,
                         contact_group=customer_group_discount.group,
                         supplier_id=supplier_id,
-                    ).update(discounted_price_value=discounted_price)
+                        contact=None,
+                        defaults=dict(price_value=normal_price, discounted_price_value=discounted_price),
+                    )

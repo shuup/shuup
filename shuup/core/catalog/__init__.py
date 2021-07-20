@@ -114,9 +114,16 @@ class ProductCatalog:
         filters = self._get_common_filters()
 
         product_prices = (
-            ProductCatalogPrice.objects.filter(product=OuterRef("pk")).filter(filters).order_by("price_value")
+            ProductCatalogPrice.objects.filter(product=OuterRef("pk"))
+            .filter(filters)
+            .annotate(
+                final_price=Case(
+                    When(discounted_price_value__isnull=False, then=F("discounted_price_value")),
+                    default=F("price_value"),
+                )
+            )
+            .order_by("final_price")
         )
-
         return Product.objects.annotate(
             catalog_price=Subquery(product_prices.values("price_value")[:1]),
             catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
@@ -133,7 +140,15 @@ class ProductCatalog:
         filters = self._get_common_filters()
 
         product_prices = (
-            ProductCatalogPrice.objects.filter(product=OuterRef("product_id")).filter(filters).order_by("price_value")
+            ProductCatalogPrice.objects.filter(product=OuterRef("product_id"))
+            .filter(filters)
+            .annotate(
+                final_price=Case(
+                    When(discounted_price_value__isnull=False, then=F("discounted_price_value")),
+                    default=F("price_value"),
+                )
+            )
+            .order_by("final_price")
         )
 
         return ShopProduct.objects.annotate(
