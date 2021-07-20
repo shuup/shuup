@@ -19,14 +19,14 @@
         outline: 0;
 
         &:hover {
-            border-color: $primary;
+            border-color: var(--primary);
         }
 
         &::after {
             content: '\f078';
             font-family: 'FontAwesome';
             font-size: 0.6rem;
-            color: rgba($secondary, 0.5);
+            color: var(--secondary-lighter);
             position: absolute;
             right: 15px;
             top: 50%;
@@ -48,7 +48,7 @@ span.select2-selection__placeholder,
 span.select2-container--default,
 span.select2-selection--single,
 span.select2-selection__rendered {
-    color: $text-color;
+    color: var(--text-color)
 }
 span.select2-selection__rendered {
     width: 100%;
@@ -56,7 +56,7 @@ span.select2-selection__rendered {
 
     .select2-selection__clear {
         font-size: 1.5rem;
-        color: rgba($secondary, 0.5);
+        color: var(--secondary-lighter);
     }
 }
 
@@ -64,7 +64,7 @@ span.select2-selection__rendered {
 .select2-selection--multiple
 .select2-selection__clear {
     font-size: 1.5rem;
-    color: rgba($secondary, 0.5);
+    color: var(--secondary-lighter);
     padding-right: 2.0rem !important;
     margin: 0;
 }
@@ -72,8 +72,8 @@ span.select2-selection__rendered {
 .select2-container--open
 .select2-selection {
     background-color: $white;
-    border-color: $primary;
-    box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-lightest);
     border-radius: 4px !important;
 
     &::after {
@@ -112,7 +112,7 @@ span.select2-selection__rendered {
     transition: all 0.15s ease-in-out;
 
     &:focus {
-        border: 1px solid $primary;
+        border: 1px solid var(--primary);
     }
 }
 
@@ -132,14 +132,14 @@ span.select2-selection__rendered {
 
 .select2-container--default
 .select2-results__option--highlighted[aria-selected] {
-    background: rgba($primary, 0.08);
-    color: $primary;
+    background: var(--primary-opaque);
+    color: var(--primary);
 }
 
 .select2-container--default
 .select2-selection--multiple
 .select2-selection__choice {
-    background-color: $primary;
+    background-color: var(--primary);
     color: $white;
     border: none;
     margin-top: 5px;
@@ -152,7 +152,7 @@ span.select2-selection__rendered {
 .select2-container--default
 .select2-selection--multiple
 .select2-selection__choice__remove {
-    background-color: rgba($secondary, 0.7);
+    background-color: var(--secondary-light);
     color: $white;
     border-radius: 20px;
     padding: 0 0.4rem;
@@ -164,7 +164,7 @@ span.select2-selection__rendered {
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: $primary;
+    border-color: var(--primary);
 }
 
 @include media-breakpoint-up(md) {

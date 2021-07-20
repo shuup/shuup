@@ -44,7 +44,7 @@
             .block-title,
             .block-subtitle {
                 @include media-breakpoint-up(md)  {
-                    border-color: $primary;
+                    border-color: var(--primary);
                     padding-bottom: 15px;
                 }
             }
@@ -237,7 +237,7 @@
         .title {
             &.open {
                 .block-title, .block-subtitle {
-                    border-color: $primary;
+                    border-color: var(--primary);
                     padding-bottom: 15px;
                 }
             }
@@ -327,7 +327,7 @@
     margin-bottom: 1rem;
 
     h5 {
-        color: rgba($text-color, 0.7);
+        color: var(--text-color-light);
     }
 
     span.amount {

@@ -91,7 +91,7 @@
 
     &:focus,
     .btn.focus {
-        box-shadow: 0 0 0 0.1em rgba($primary, 0.25);
+        box-shadow: 0 0 0 0.1em var(--primary-lighter);
     }
 
     &.btn-red {
@@ -115,32 +115,32 @@ fieldset[disabled] .btn {
 .btn-default {
     border-color: $border-color;
     background-color: $white;
-    color: $text-color;
+    color: var(--text-color)
     box-shadow: $shadow-md;
 
     &:hover {
-        border-color: $primary;
+        border-color: var(--primary);
         box-shadow: $shadow-lg;
 
         i {
-            color: $primary;
+            color: var(--primary);
         }
     }
 
     &:active:focus {
         background-color: darken($white, 2%);
-        border-color: $primary;
-        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+        border-color: var(--primary);
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem var(--primary-lightest);
 
         i {
-            color: $primary;
+            color: var(--primary);
         }
     }
 
     &:focus {
-        color: $primary;
-        border-color: $primary;
-        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+        color: var(--primary);
+        border-color: var(--primary);
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem var(--primary-lightest);
     }
 
     i {
@@ -149,18 +149,18 @@ fieldset[disabled] .btn {
 
     &.dropdown-toggle {
         &:focus {
-            box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+            box-shadow: 0 0 0 0.2rem var(--primary-lightest);
         }
     }
 }
 
 .btn-primary {
     @include btn-override-mixin($primary, 7%, 12%, 11%);
-    box-shadow: 0 2px 8px rgba(darken($primary, 10%), 0.3);
+    box-shadow: 0 2px 8px var(--primary-lightest);
     border: none;
 
     &.btn-dropdown-toggle {
-        background-color: darken($primary, 5%);
+        background-color: var(--primary-dark);
 
         &::after {
             color: $white;
@@ -220,20 +220,20 @@ fieldset[disabled] .btn {
     @include btn-override-mixin($danger, 10%, 17%, 13%);
     background-color: transparent;
     border-color: transparent;
-    color: $danger;
+    color: var(--danger);
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
 
     &:hover {
-        background-color: rgba($danger, 0.2);
-        color: $danger;
+        background-color: var(--danger-very-light);
+        color: var(--danger);
         border-color: transparent;
     }
 
     &.btn-inverse {
-        background-color: rgba($danger, 0.2);
-        border-color: rgba($danger, 0.05);
+        background-color: var(--danger-very-light);
+        border-color: var(--danger-opaque);
     }
 
     &:focus {
@@ -247,9 +247,9 @@ fieldset[disabled] .btn {
 }
 
 .btn-inverse {
-    background-color: rgba($secondary, 0.05);
+    background-color: var(--secondary-opaque);
     border-color: transparent;
-    color: rgba($secondary, 0.8);
+    color: var(--secondary-light);
     font-weight: 700;
 
     i {
@@ -258,8 +258,8 @@ fieldset[disabled] .btn {
 
     &:hover,
     &:focus {
-        background-color: rgba($secondary, 0.12);
-        color: rgba($secondary, 0.9);
+        background-color: var(--secondary-lighter);
+        color: var(--secondary-light);
 
         i {
             opacity: 0.8;
@@ -268,22 +268,22 @@ fieldset[disabled] .btn {
 
     &:active,
     &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.3);
+        box-shadow: 0 0 0 0.2rem var(--secondary-lightest);
     }
 }
 
 .btn-label {
-    background-color: rgba($secondary, 0.05);
-    color: rgba($secondary, 0.7);
+    background-color: var(--secondary-opaque);
+    color: var(--secondary-light);
     border-radius: 100px;
 
     &:hover {
-        background-color: rgba($secondary, 0.1);
-        color: rgba($secondary, 0.9);
+        background-color: var(--secondary-opaque);
+        color: var(--secondary-light);
     }
 
     &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+        box-shadow: 0 0 0 0.2rem var(--secondary-lighter);
     }
 }
 
@@ -294,7 +294,7 @@ fieldset[disabled] .btn {
 }
 
 .btn-text {
-    color: $primary;
+    color: var(--primary);
     border: none;
     background-color: transparent;
 

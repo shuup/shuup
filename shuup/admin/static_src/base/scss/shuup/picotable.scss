@@ -27,7 +27,7 @@
             border-bottom: 2px solid #dae0e8;
 
             th {
-                color: rgba($secondary, 0.6);
+                color: var(--secondary-light);
                 font-size: 0.9rem;
                 border: 0;
                 padding-top: 1.5rem;
@@ -36,7 +36,7 @@
                 transition: all 0.2s ease-in-out;
 
                 span:hover {
-                    color: $primary;
+                    color: var(--primary);
                 }
 
                 @include media-breakpoint-up(xl) {
@@ -49,10 +49,10 @@
 
                 &.sorted-asc,
                 &.sorted-desc {
-                    color: $secondary;
+                    color: var(--secondary);
 
                     i {
-                        color: $primary;
+                        color: var(--primary);
                     }
                 }
 
@@ -132,7 +132,7 @@
             transition: all 0.1s linear;
 
             &:not(:last-child) {
-                border-bottom: 1px solid rgba($secondary, 0.12);
+                border-bottom: 1px solid var(--secondary-opaque);
             }
         }
 
@@ -140,7 +140,7 @@
             background-color: darken($white, 2%);
 
             td img {
-                border-color: rgba($secondary, 0.6);
+                border-color: var(--secondary-light);
             }
         }
 
@@ -182,7 +182,7 @@
                 }
 
                 td img {
-                    border-color: rgba($secondary, 0.6);
+                    border-color: var(--secondary-light);
                 }
             }
         }
@@ -205,7 +205,7 @@
             height: 42px;
             padding: 4px;
             background-color: $white;
-            border: 1px solid rgba($secondary, 0.25);
+            border: 1px solid var(--secondary-lightest);
             border-radius: 2px;
             transition: all 0.2s ease-in-out;
         }
@@ -216,8 +216,8 @@
 
         td span.row-sku {
             font-size: 0.8rem;
-            color: rgba($secondary, 0.6);
-            background-color: rgba($secondary, 0.08);
+            color: var(--secondary-light);
+            background-color: var(--secondary-opaque);
             border-radius: 20px;
             padding: 5px 12px;
         }
@@ -381,7 +381,7 @@
 
                 .column {
                     font-size: 1rem;
-                    color: $primary;
+                    color: var(--primary);
                     word-wrap: break-word;
                 }
 
@@ -419,14 +419,14 @@
 }
 
 .mobile-row {
-    color: rgba($text-color, 0.8);
+    color: var(--text-color-light);
     font-size: 1rem;
     padding: 0.8rem 0.5rem;
     margin: 0;
     border-bottom: 1px solid rgba($border-color, 0.08);
 
     &.header {
-        color: $text-color;
+        color: var(--text-color)
         font-weight: 700;
     }
 

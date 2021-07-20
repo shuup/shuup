@@ -5,23 +5,23 @@
     li.page-item {
         a.page-link {
             background-color: $white;
-            color: $secondary;
+            color: var(--secondary);
             font-weight: 700;
             border: 0;
 
             &:hover {
                 z-index: 0;
-                color: $primary;
+                color: var(--primary);
                 background-color: $white;
             }
         }
 
         &.disabled .page-link {
-            color: rgba($secondary, 0.2);
+            color: var(--secondary-opaque);
         }
 
         &.active .page-link {
-            color: $primary;
+            color: var(--primary);
             background-image: none;
             background-color: rgba($primary, 0.08);
         }

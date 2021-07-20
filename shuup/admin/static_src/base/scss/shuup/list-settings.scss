@@ -18,13 +18,13 @@
 
         &.sortable-ghost,
         &.sortable-chosen {
-            color: $primary;
+            color: var(--primary);
             cursor: hand;
-            background-color: rgba($primary, 0.2);
+            background-color: var(--primary-opaque);
             border-bottom-color: transparent;
 
             i {
-                background-color: $primary;
+                background-color: var(--primary);
                 color: $white;
             }
 

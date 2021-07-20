@@ -10,12 +10,12 @@
     display: block;
     padding: 12px 8px;
     margin-bottom: 8px;
-    color: $text-color;
+    color: var(--text-color)
     position: relative;
     border-radius: 4px;
 
     &:hover, &:focus {
-        color: $primary;
+        color: var(--primary);
         text-decoration: none;
 
         i {
@@ -24,7 +24,7 @@
     }
     &.active {
         background: #fff;
-        color: $primary;
+        color: var(--primary);
         font-weight: normal;
         box-shadow: $box-shadow-sm;
 

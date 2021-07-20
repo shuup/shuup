@@ -10,7 +10,7 @@
 .loader-block {
     min-width: 80px;
     height: 10px;
-    background-color: rgba($secondary, 0.2);
+    background-color: var(--secondary-opaque);
     border-radius: 80px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .loader-spinner {
-    color: $primary;
+    color: var(--primary);
     font-size: 1.5rem;
 
     &::before {

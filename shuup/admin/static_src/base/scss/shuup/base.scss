@@ -9,7 +9,7 @@ html {
 
 body {
     background: $gray-bg;
-    color: $text-color;
+    color: var(--text-color)
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     padding-top: 60px;
@@ -176,18 +176,18 @@ body.order-create #scroll-to-top .scroll-to-top-button {
         margin-bottom: 0.5rem;
         box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.15);
         border-radius: 50%;
-        background-color: lighten($primary, 50%);
+        color: var(--primary-very-light);
 
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
-        color: $primary;
+        color: var(--primary);
         transform: translateY(0);
 
         &:hover {
-            color: lighten($primary, 20%);
+            color: var(--primary-light);
             animation-timing-function: ease-in-out;
             animation: jump 0.1s linear forwards;
         }
@@ -236,7 +236,7 @@ canvas {
         color: #fff;
         > tr > th {
             border-bottom: 0;
-            background: $primary;
+            background: var(--primary);
             padding: 8px;
             border: 0;
             border-right: 1px solid rgba(255,255,255,0.5);
@@ -259,7 +259,7 @@ canvas {
 }
 
 .section-description {
-    color: rgba($text-color, 0.8);
+    color: var(--text-color-light);
 }
 
 .hidden {

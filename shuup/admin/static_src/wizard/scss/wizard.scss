@@ -36,7 +36,7 @@
 
             li {
                 background: $gray-bg;
-                color: $text-color;
+                color: var(--text-color)
                 float: left;
                 margin: 0;
                 padding: 0 20px 0 30px;
@@ -48,7 +48,7 @@
                 &.active {
                     font-weight: normal;
                     background: #fff;
-                    color: $primary;
+                    color: var(--primary);
 
                     .chevron:before {
                         border-left: 14px solid #fff;

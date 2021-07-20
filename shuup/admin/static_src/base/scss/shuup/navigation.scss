@@ -33,7 +33,7 @@
         &.open {
             .dropdown-toggle {
                 background: $nav-bg-hover;
-                color: $primary;
+                color: var(--primary);
                 &:hover, &:active, &:focus {
                     background: $nav-bg-hover;
                 }
@@ -66,21 +66,21 @@
                     display: block;
                     margin: 0;
                     padding: 10px;
-                    color: $text-color;
+                    color: var(--text-color)
                     &:hover {
-                        color: $primary;
+                        color: var(--primary);
                         background: $gray-bg;
                     }
                     &.active {
                         color: $active-text-color;
-                        background: $primary;
+                        background: var(--primary);
                     }
                 }
             }
 
             .username {
                 padding: 10px;
-                color: $text-color;
+                color: var(--text-color)
 
                 .icon {
                     border-radius: 50%;
@@ -129,15 +129,15 @@
                 @include transition(all 0.5s);
 
                 span, span:before, span:after {
-                    background: $primary;
+                    background: var(--primary);
                 }
 
                 span:before {
-                    background: $primary !important;
+                    background: var(--primary) !important;
                 }
 
                 span:after {
-                    background: $primary !important;
+                    background: var(--primary) !important;
                 }
             }
 
@@ -161,7 +161,7 @@
             span, span:before, span:after {
                 @include transition(all 0.2s);
 
-                background: $text-color;
+                background: var(--text-color);
                 width: 22px;
                 height: 2px;
                 display: block;
@@ -198,6 +198,6 @@
     transition: box-shadow 0.2s ease-in-out;
 
     &.site-scrolling {
-        box-shadow: 0 8px 20px rgba($secondary, 0.12);
+        box-shadow: 0 8px 20px var(--secondary-opaque);
     }
 }

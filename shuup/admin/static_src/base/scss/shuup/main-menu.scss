@@ -38,7 +38,7 @@
             font-size: 0.9rem;
             font-weight: 400;
             letter-spacing: .5px;
-            color: rgba($secondary, 0.8);
+            color: var(--secondary-light);
             display: flex;
             padding: 0.5em 0.7em;
             align-items: center;
@@ -56,8 +56,8 @@
             }
 
             .item-icon {
-                background-color: rgba($primary, 0.1);
-                color: $primary;
+                background-color: var(--primary-opaque);
+                color: var(--primary);
                 width: 2.4em;
                 height: 2.4em;
                 display: inline-flex;
@@ -69,21 +69,21 @@
 
             .item-arrow {
                 font-size: 0.8rem;
-                color: rgba($secondary, 0.3);
+                color: var(--secondary-lightest);
                 transition: color 0.2s ease-in-out;
             }
 
             &:hover {
                 text-decoration: none;
-                color: $primary;
+                color: var(--primary);
 
                 .item-icon {
-                    background-color: $primary;
+                    background-color: var(--primary);
                     color: $white;
                 }
 
                 .item-arrow {
-                    color: rgba($secondary, 0.5);
+                    color: var(--secondary-lighter);
                     transition: transform 0.2s ease-in-out;
 
                     &.rotate {
@@ -93,16 +93,16 @@
             }
 
             &.item-active {
-                color: $primary;
+                color: var(--primary);
                 margin-bottom: 0 !important;
 
                 .item-icon {
-                    background-color: $primary;
+                    background-color: var(--primary);
                     color: $white;
                 }
 
                 .item-arrow.rotate {
-                    color: rgba($secondary, 0.7);
+                    color: var(--secondary-light);
                     transform: rotate(-180deg);
                 }
             }
@@ -166,7 +166,7 @@ ul.quicklinks-submenu {
     h5 {
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: rgba($secondary, 0.5);
+        color: rvar(--secondary-lighter);
     }
 
     li a {
@@ -186,7 +186,7 @@ a.item-submenu {
         content: '';
         width: 8px;
         height: 8px;
-        background-color: rgba($secondary, 0.2);
+        background-color: var(--secondary-opaque);
         border-radius: 20px;
         display: block;
         position: absolute;
@@ -197,7 +197,7 @@ a.item-submenu {
     }
 
     &:hover::before {
-        background-color: $primary;
+        background-color: var(--primary);
         transform: scale(1);
     }
 
@@ -318,13 +318,13 @@ a.item-submenu {
     }
 
     .category-menu-title {
-        color: $text-color;
+        color: var(--text-color)
     }
 
     .category-menu-content {
 
         h3 {
-            color: $text-color;
+            color: var(--text-color)
             margin-top: 0;
             margin-bottom: 0;
             @include media-breakpoint-down(md) {
@@ -346,10 +346,10 @@ a.item-submenu {
                     }
 
                     a {
-                        color: $primary;
+                        color: var(--primary);
 
                         &:hover {
-                            background-color:$primary;
+                            background-color:var(--primary);
                             color:#fff;
                         }
                     }

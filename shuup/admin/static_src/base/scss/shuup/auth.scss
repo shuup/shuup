@@ -74,7 +74,7 @@ body.auth {
 }
 
 .auth-body .help-block.error-block {
-    background-color: lighten($danger, 35%);
+    background-color: var(--danger-lightest);
     padding: 0.5rem;
     border-radius: $border-radius-lg;
     top: -4.5rem;

@@ -20,6 +20,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Core: reuse existing `ProductVariationResult` when a combination hash matches
+- Admin: Migrate primary secondary and text color SCSS variables to CSS variables
 
 ### Added
 

@@ -80,10 +80,10 @@
         }
 
         .panel-selected {
-            border-color: $text-color;
+            border-color: var(--text-color);
 
             .panel-heading {
-                background: $text-color;
+                background: var(--text-color);
                 color: #fff;
 
                 .primary-action {
@@ -236,13 +236,13 @@
     }
 
     &.dz-drag-hover {
-        border-color: $primary;
+        border-color: var(--primary);
         border-style: dashed;
         box-shadow: 0 8px 30px -4px rgba($primary, 0.12);
     }
 
     span {
-        color: $text-color;
+        color: var(--text-color)
     }
 }
 
@@ -278,11 +278,11 @@ a.thumbnail-image {
     display: inline-block;
     padding: 0.3rem;
     border-radius: 6px;
-    border: 1px solid rgba($secondary, 0.3);
+    border: 1px solid var(--secondary-lightest);
     transition: border-color 0.2s ease-in-out;
 
     &:hover {
-        border-color: rgba($secondary, 0.5);
+        border-color: var(--secondary-lighter);
     }
 }
 
@@ -295,7 +295,7 @@ a.thumbnail-file {
 
     i {
         font-size: 1.4rem;
-        color: $primary;
+        color: var(--primary);
     }
 }
 
@@ -316,7 +316,7 @@ span.is-primary-image {
     a.panel-title {
         text-decoration: none;
         font-weight: 600;
-        color: $text-color;
+        color: var(--text-color)
         transition: color 0.2s ease-in-out;
 
         p {
@@ -336,7 +336,7 @@ span.is-primary-image {
         }
 
         &[aria-expanded="true"] {
-            color: $primary;
+            color: var(--primary);
 
             &.panel-carousel-image::before {
                 background-color: rgba($primary, 0.12);
@@ -353,7 +353,7 @@ span.is-primary-image {
                 font-family: 'FontAwesome';
                 display: inline-block;
                 margin-right: 0.5rem;
-                background-color: rgba($secondary, 0.12);
+                background-color: var(--secondary-opaque);
                 font-size: 12px;
                 width: 28px;
                 height: 28px;
