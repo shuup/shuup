@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import Case, F, OuterRef, Q, Subquery, When
+from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from typing import Optional, Union
 
@@ -75,9 +76,9 @@ class ProductCatalog:
         purchasable_only = self.context.purchasable_only
 
         if shop:
-            filters &= Q(shop=shop)
+            filters &= Q(shop_id=shop.pk)
         if supplier:
-            filters &= Q(supplier=supplier)
+            filters &= Q(supplier_id=supplier.pk)
         if purchasable_only:
             filters &= Q(is_available=True)
 
@@ -86,8 +87,9 @@ class ProductCatalog:
             filters = Q(
                 Q(filters)
                 & Q(
-                    Q(contact=contact)
-                    | Q(contact_group__in=contact.groups.values_list("pk", flat=True))
+                    Q(contact_id=contact.pk)
+                    # evaluate contact group to prevent doing expensive joins on db
+                    | Q(contact_group_id__in=list(contact.groups.values_list("pk", flat=True)))
                     | Q(contact_group__isnull=True, contact__isnull=True)
                 )
             )
@@ -97,7 +99,7 @@ class ProductCatalog:
                 Q(filters)
                 & Q(
                     Q(contact_group__isnull=True, contact__isnull=True)
-                    | Q(contact_group=AnonymousContact.get_default_group())
+                    | Q(contact_group_id=AnonymousContact.get_default_group().pk)
                 )
             )
 
@@ -116,13 +118,7 @@ class ProductCatalog:
         product_prices = (
             ProductCatalogPrice.objects.filter(product=OuterRef("pk"))
             .filter(filters)
-            .annotate(
-                final_price=Case(
-                    When(discounted_price_value__isnull=False, then=F("discounted_price_value")),
-                    default=F("price_value"),
-                )
-            )
-            .order_by("final_price")
+            .order_by(Coalesce("discounted_price_value", "price_value").asc())
         )
         return Product.objects.annotate(
             catalog_price=Subquery(product_prices.values("price_value")[:1]),
@@ -142,13 +138,7 @@ class ProductCatalog:
         product_prices = (
             ProductCatalogPrice.objects.filter(product=OuterRef("product_id"))
             .filter(filters)
-            .annotate(
-                final_price=Case(
-                    When(discounted_price_value__isnull=False, then=F("discounted_price_value")),
-                    default=F("price_value"),
-                )
-            )
-            .order_by("final_price")
+            .order_by(Coalesce("discounted_price_value", "price_value").asc())
         )
 
         return ShopProduct.objects.annotate(
