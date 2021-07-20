@@ -5,12 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from decimal import Decimal
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import ShopProduct, ShopProductVisibility
 from shuup.testing import factories
 
 
+@pytest.mark.django_db
 def test_product_catalog_simple_list():
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
@@ -48,6 +51,7 @@ def test_product_catalog_simple_list():
         assert value == expected_prices[index]
 
 
+@pytest.mark.django_db
 def test_product_catalog_purchasable():
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
@@ -80,6 +84,7 @@ def test_product_catalog_purchasable():
         assert value == expected_prices[index]
 
 
+@pytest.mark.django_db
 def test_product_catalog_variations():
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
@@ -103,6 +108,7 @@ def test_product_catalog_variations():
         (child3.pk, Decimal("50"), None),
     ]
     values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+
     assert products_qs.count() == 3
     for index, value in enumerate(values):
         assert value == expected_prices[index]
@@ -119,3 +125,33 @@ def test_product_catalog_variations():
     assert shop_products_qs.count() == 4
     for index, value in enumerate(values):
         assert value == expected_prices[index]
+
+
+@pytest.mark.django_db
+def test_product_catalog_availability():
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier()
+    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("30"))
+    product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("10"))
+
+    supplier.stock_managed = True
+    supplier.save()
+
+    # add 10 products to product1 stock
+    supplier.adjust_stock(product1.pk, delta=10)
+
+    catalog_available_only = ProductCatalog(context=ProductCatalogContext(purchasable_only=True))
+    catalog_all = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
+    ProductCatalog.index_product(product1)
+    ProductCatalog.index_product(product2)
+
+    assert catalog_available_only.get_products_queryset().count() == 1
+    assert catalog_all.get_products_queryset().count() == 2
+
+    # change the product1 visibility
+    ShopProduct.objects.all().update(visibility=ShopProductVisibility.NOT_VISIBLE)
+    ProductCatalog.index_product(product1)
+    ProductCatalog.index_product(product2)
+
+    assert catalog_available_only.get_products_queryset().count() == 0
+    assert catalog_all.get_products_queryset().count() == 2
