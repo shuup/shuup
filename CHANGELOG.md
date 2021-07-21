@@ -14,6 +14,10 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: add the groups field in user picotable list
 - Admin: improve the format of the user list for mobile devices
 
+### Added
+
+- Admin: add warnings to the product page through provides
+
 ## [2.12.0] - 2021-07-15
 
 ### Fixed
