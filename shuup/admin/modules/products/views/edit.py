@@ -30,7 +30,6 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Product, ProductType, SalesUnit, ShopProduct, Supplier, TaxClass
 from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_specs
-from shuup.front.templatetags.shuup_front import markdown
 
 from .toolbars import EditProductToolbar
 
@@ -248,13 +247,14 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
             except ObjectDoesNotExist:
                 orderability_errors.extend(["Error! %s: %s" % (shop.name, _("Product is not available."))])
 
-            product_validator_provides = sorted(get_provide_objects("admin_product_validator"), key=lambda x: x.order)
+            product_validator_provides = sorted(
+                get_provide_objects("admin_product_validator"), key=lambda provides: provides.ordering
+            )
             context["bleach"] = bleach
-            context["markdown"] = markdown
             validation_issues = []
             for admin_product_validator in product_validator_provides:
                 for validation_issue in admin_product_validator.get_validation_issues(
-                    self.object.product, shop, self.request.user, None
+                    shop_product=self.object, shop=shop, user=self.request.user, supplier=get_supplier(self.request)
                 ):
                     if validation_issue:
                         validation_issues.append(validation_issue)

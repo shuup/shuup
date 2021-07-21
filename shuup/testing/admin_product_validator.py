@@ -17,7 +17,7 @@ class TestAdminProductValidator(AdminProductValidator):
     Test class for validating products.
     """
 
-    order = 1
+    ordering = 1
 
     def get_validation_issues(
         shop_product: ShopProduct, shop: Shop, user, supplier: Supplier = None

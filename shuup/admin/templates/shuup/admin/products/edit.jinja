@@ -24,9 +24,9 @@
                 {% for issue in validation_issues %}
                     {% set issue_content = bleach.clean(issue.message|string, strip=True) %}
                     <div class="validation-issues-alert alert alert-{{ issue.get_alert_type() }}"
-                        data-toggle="tooltip" data-placement="bottom" 
+                        data-toggle="tooltip" data-placement="bottom"
                         data-code="{{ issue.code }}" data-title="{{ issue_content }}" >
-                        {{ issue_content|safe if issue.is_html else issue_content }}
+                        <i class="fa fa-warning"></i> {{ issue_content|safe if issue.is_html else issue_content }}
                     </div>
                 {% endfor %}
             {% endif %}

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add warnings to the product page through provides
+
 ## [2.12.0] - 2021-07-15
 
 ### Fixed
@@ -24,7 +28,6 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Front: add timezone view to save the user's current timezone
-- Add warnings to the product page through signals
 
 ## [2.11.0] - 2021-07-07
 
