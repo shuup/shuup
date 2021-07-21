@@ -14,6 +14,10 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: add the groups field in user picotable list
 - Admin: improve the format of the user list for mobile devices
 
+### Fixed
+
+- Front: enforce setting the current customer to the basket
+
 ### Added
 
 - Admin: add warnings to the product page through provides
