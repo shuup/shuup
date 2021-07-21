@@ -19,13 +19,13 @@ def anonymize(shop_id: int, contact_id: int = None, user_id: int = None):
 
     contact = None
     if contact_id:
-        contact = PersonContact.objects.get(pk=contact_id)
+        contact = PersonContact.objects.filter(pk=contact_id).first()
         if not contact:
-            contact = CompanyContact.objects.get(pk=contact_id)
+            contact = CompanyContact.objects.filter(pk=contact_id).first()
 
     user = None
     if user_id:
-        user = get_user_model().objects.get(pk=user_id)
+        user = get_user_model().objects.filter(pk=user_id).first()
 
     anonymizer = Anonymizer()
     if contact or user:
