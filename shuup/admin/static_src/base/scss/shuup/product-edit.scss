@@ -163,7 +163,7 @@
 
                 &:hover {
                     text-decoration: none;
-                    color: $danger;
+                    color: var(--danger);
                 }
 
                 @include media-breakpoint-up(sm) {
@@ -316,7 +316,7 @@ span.is-primary-image {
     a.panel-title {
         text-decoration: none;
         font-weight: 600;
-        color: var(--text-color)
+        color: var(--text-color);
         transition: color 0.2s ease-in-out;
 
         p {

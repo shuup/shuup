@@ -30,7 +30,7 @@
         padding: 5px 0;
         display: block;
         text-decoration: none;
-        color: var(--text-color)
+        color: var(--text-color);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -178,7 +178,7 @@
                 }
 
                 a {
-                    color: var(--text-color)
+                    color: var(--text-color);
                     text-decoration: none;
 
                     &:hover {

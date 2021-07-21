@@ -166,7 +166,7 @@ ul.quicklinks-submenu {
     h5 {
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: rvar(--secondary-lighter);
+        color: var(--secondary-lighter);
     }
 
     li a {
@@ -203,7 +203,11 @@ a.item-submenu {
 
     &.active-menu {
         font-weight: bold !important;
-        color: #007bff !important;
+        color: var(--primary-dark) !important;
+        &::before {
+            background-color: var(--primary-dark);
+            transform: scale(1);
+        }
     }
 }
 
@@ -324,7 +328,7 @@ a.item-submenu {
     .category-menu-content {
 
         h3 {
-            color: var(--text-color)
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 0;
             @include media-breakpoint-down(md) {

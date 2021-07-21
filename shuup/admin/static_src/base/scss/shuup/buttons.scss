@@ -115,7 +115,7 @@ fieldset[disabled] .btn {
 .btn-default {
     border-color: $border-color;
     background-color: $white;
-    color: var(--text-color)
+    color: var(--text-color);
     box-shadow: $shadow-md;
 
     &:hover {
@@ -169,24 +169,88 @@ fieldset[disabled] .btn {
 }
 
 .btn-success {
-    @include btn-override-mixin($success, 7%, 12%, 11%);
-    background-color: rgba($success, 0.2);
-    color: $success;
+    background-color: var(--success-very-light);
+    color: var(--success);
     font-weight: 700;
-    border-color: rgba($success, 0.05);
+    border-color: var(--success-opaque);
 
     &:hover {
-        background-color: rgba($success, 0.4);
+        background-color: var(--success-very-light);
+        color: var(--success);
+        border-color: transparent;
+    }
+
+    &.btn-inverse {
+        background-color: var(--success-very-light);
+        border-color: var(--success-opaque);
+    }
+
+    &:focus {
+        border-color: var(--success-dark);
+        background: var(--success-dark);
+        color: #fff;
+        box-shadow: none;
+    }
+    
+    &:active {
+        border-top-color: var(--success-darker);
+        border-left-color: var(--success-darker);
+        border-right-color: var(--success-darker);
+    }
+    
+    &.disabled, &[disabled] {
+        border-color: var(--success);
+        background-color: var(--success);
+    }
+    
+    &.btn-inverse {
+        border-color: var(--success);
+        background: transparent;
+        color: var(--success);
+        &:hover, &:focus {
+            color: #fff;
+            background: var(--success);
+        }
+        &:active {
+            border-top-color: var(--success-darker);
+            border-left-color: var(--success-darker);
+            border-right-color: var(--success-darker);
+        }
+    }
+    
+    .btn + .dropdown-toggle {
+        border-left-color: var(--success-darker);
+    
+        &:active {
+            border-top-color: var(--success-dark);
+            border-left-color: var(--success-dark);
+            border-right-color: var(--success-dark);
+        }
+    }
+    
+    .open > .dropdown-toggle {
+        background: var(--success-darker);
+        border-color: var(--success-darker);
+    }
+    
+    .open > .btn + .dropdown-toggle {
+        background: var(--success-darker);
+        border-color: transparent;
+        border-left-color: var(--success-darker);
+    }  
+
+    &:hover {
+        background-color: var(--success-lighter);
         color: $success;
-        border-color: rgba($success, 0.15);
+        border-color: var(--success-lighter);
     }
 
     &.btn-dropdown-toggle {
-        background-color: rgba($success, 0.4);
+        background-color: var(--success-lighter);
         transition: none;
 
         &.opaque {
-            background-color: darken($success, 0.1);
+            background-color: var(--sucess-darker);
 
             &::after {
                 color: $white !important;
@@ -198,7 +262,7 @@ fieldset[disabled] .btn {
         transition: none;
 
         &.opaque {
-            background-color: darken($success, 5%);
+            background-color: var(--success-darker);
             color: $white;
             position: fixed;
             bottom: 10px;
@@ -217,7 +281,6 @@ fieldset[disabled] .btn {
 }
 
 .btn-danger {
-    @include btn-override-mixin($danger, 10%, 17%, 13%);
     background-color: transparent;
     border-color: transparent;
     color: var(--danger);
@@ -237,8 +300,58 @@ fieldset[disabled] .btn {
     }
 
     &:focus {
+        border-color: var(--danger-dark);
+        background: var(--danger-dark);
+        color: #fff;
         box-shadow: none;
     }
+    
+    &:active {
+        border-top-color: var(--danger-darker);
+        border-left-color: var(--danger-darker);
+        border-right-color: var(--danger-darker);
+    }
+    
+    &.disabled, &[disabled] {
+        border-color: var(--danger);
+        background-color: var(--danger);
+    }
+    
+    &.btn-inverse {
+        border-color: var(--danger);
+        background: transparent;
+        color: var(--danger);
+        &:hover, &:focus {
+            color: #fff;
+            background: var(--danger);
+        }
+        &:active {
+            border-top-color: var(--danger-darker);
+            border-left-color: var(--danger-darker);
+            border-right-color: var(--danger-darker);
+        }
+    }
+    
+    .btn + .dropdown-toggle {
+        border-left-color: var(--danger-darker);
+    
+        &:active {
+            border-top-color: var(--danger-dark);
+            border-left-color: var(--danger-dark);
+            border-right-color: var(--danger-dark);
+        }
+    }
+    
+    .open > .dropdown-toggle {
+        background: var(--danger-darker);
+        border-color: var(--danger-darker);
+    }
+    
+    .open > .btn + .dropdown-toggle {
+        background: var(--danger-darker);
+        border-color: transparent;
+        border-left-color: var(--danger-darker);
+    }    
 }
 
 .btn-gray {
@@ -258,7 +371,7 @@ fieldset[disabled] .btn {
 
     &:hover,
     &:focus {
-        background-color: var(--secondary-lighter);
+        background-color: var(--secondary-lightest);
         color: var(--secondary-light);
 
         i {
@@ -269,6 +382,7 @@ fieldset[disabled] .btn {
     &:active,
     &:focus {
         box-shadow: 0 0 0 0.2rem var(--secondary-lightest);
+        background-color: var(--secondary-lighter);
     }
 }
 

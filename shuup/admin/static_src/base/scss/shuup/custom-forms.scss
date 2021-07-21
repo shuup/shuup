@@ -197,7 +197,7 @@ fieldset[disabled] .form-control {
 
     &:hover {
         color: var(--primary);
-        background-color: var(--primary-lightest);
+        background-color: var(--primary-opaque);
     }
 
     &.active {

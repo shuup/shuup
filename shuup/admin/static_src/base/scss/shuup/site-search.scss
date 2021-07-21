@@ -40,7 +40,7 @@
 
         .dropdown-toggle {
             border: 0;
-            color: var(--text-color)
+            color: var(--text-color);
             background: none;
             line-height: 60px;
             margin-left: -1px;
@@ -84,7 +84,7 @@
     border: none;
     background: darken($gray-bg, 10%);
     font-size: 0.9rem;
-    color: var(--text-color)
+    color: var(--text-color);
     padding: 0 4.5em;
     transition: background 0.2s;
     box-shadow: none;

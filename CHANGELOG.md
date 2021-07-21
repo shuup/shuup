@@ -20,7 +20,9 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - Core: reuse existing `ProductVariationResult` when a combination hash matches
-- Admin: Migrate primary secondary and text color SCSS variables to CSS variables
+- Admin: Migrate primary, secondary, success, danger, and text color SCSS variables to CSS variables
+- Admin: Made active state side menu list icon share same color as text
+- Admin: Made the CSS variables stem from initialized Sass variables in Colors object
 
 ### Added
 
