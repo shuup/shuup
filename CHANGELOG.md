@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Admin: remove the members field from the permission groups
+- Admin: add the groups field in user picotable list
+- Admin: improve the format of the user list for mobile devices
+
 ### Added
 
 - Admin: add warnings to the product page through provides
