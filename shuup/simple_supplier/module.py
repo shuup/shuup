@@ -111,6 +111,7 @@ class SimpleSupplierModule(BaseSupplierModule):
             type=type,
         )
         self.update_stock(product_id)
+        run_task("shuup.simple_supplier.tasks.index_product", product=product_id)
         return adjustment
 
     def update_stock(self, product_id, *args, **kwargs):
@@ -157,7 +158,6 @@ class SimpleSupplierModule(BaseSupplierModule):
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
         )
-        run_task("shuup.simple_supplier.tasks.index_product", product=product_id)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         # stocks are managed, do stocks check

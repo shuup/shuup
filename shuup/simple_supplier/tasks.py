@@ -11,9 +11,32 @@ from shuup.core.models import AnonymousContact, Product, ProductCatalogPrice, Sh
 
 
 def index_product(product: Union[Product, int]):
-    product_id = product if isinstance(product, int) else product.pk
+    product_id = product if not isinstance(product, Product) else product.pk
     for shop_product in ShopProduct.objects.filter(product_id=product_id):
         index_shop_product(shop_product=shop_product)
+
+
+def update_shop_product_stocks(shop_product: Union[ShopProduct, int]):
+    from shuup.simple_supplier.module import SimpleSupplierModule
+
+    if not isinstance(shop_product, ShopProduct):
+        shop_product = ShopProduct.objects.select_related("product").get(pk=shop_product)
+
+    suppliers = Supplier.objects.filter(
+        shop_products=shop_product.pk, supplier_modules__module_identifier=SimpleSupplierModule.identifier
+    ).distinct()
+    for supplier in suppliers:
+        supplier.update_stock(product_id=shop_product.product_id)
+
+
+def update_product_stocks(product: Union[Product, int]):
+    from shuup.simple_supplier.module import SimpleSupplierModule
+
+    suppliers = Supplier.objects.filter(
+        shop_products__product_id=product, supplier_modules__module_identifier=SimpleSupplierModule.identifier
+    ).distinct()
+    for supplier in suppliers:
+        supplier.update_stock(product_id=product)
 
 
 def index_shop_product(shop_product: Union[ShopProduct, int]):
@@ -21,12 +44,16 @@ def index_shop_product(shop_product: Union[ShopProduct, int]):
     # that has the simple_supplier module
     from shuup.simple_supplier.module import SimpleSupplierModule
 
-    if isinstance(shop_product, int):
+    if not isinstance(shop_product, ShopProduct):
         shop_product = ShopProduct.objects.select_related("product").get(pk=shop_product)
 
-    suppliers = Supplier.objects.filter(
-        shop_products=shop_product.pk, supplier_modules__module_identifier=SimpleSupplierModule.identifier
-    ).only("pk", "module_data")
+    suppliers = (
+        Supplier.objects.filter(
+            shop_products=shop_product.pk, supplier_modules__module_identifier=SimpleSupplierModule.identifier
+        )
+        .distinct()
+        .only("pk", "module_data")
+    )
 
     for supplier in suppliers:
         is_purchasable = shop_product.is_orderable(
