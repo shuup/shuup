@@ -14,7 +14,7 @@ DiscountModule
 
 This module can give discounts based on the given context for a given product.
 There is one implementation using the `DiscountModule <shuup.core.pricing.DiscountModule>`
-currently in shuup: `CatalogCampaignModule <shuup.campaigns.modules.CatalogCampaignModule>`.
+currently in shuup: `ProductDiscountModule <shuup.discounts.modules.ProductDiscountModule>`.
 
 
 OrderSourceModifierModule
@@ -30,8 +30,7 @@ Shuup: `BasketCampaignModule <shuup.campaigns.modules.BasketCampaignModule>`.
 Campaigns
 ---------
 
-The Shuup base installation comes with :ref:`catalog-campaigns`
-and :ref:`basket-campaigns` which are polymorphic models.
+The Shuup base installation comes with :ref:`basket-campaigns` which are polymorphic models.
 
 To determine if a campaign should be applied, Shuup looks for
 the filters and conditions for the campaign. If a matching campaign is
