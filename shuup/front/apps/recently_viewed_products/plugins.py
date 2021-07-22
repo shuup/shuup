@@ -7,7 +7,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
-from shuup.core.models import ProductMode
+from shuup.core.models import ProductMode, ShopProductVisibility
 from shuup.core.utils.static import get_shuup_static_url
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.resources import add_resource
@@ -25,7 +25,11 @@ class RecentlyViewedProductsPlugin(TemplatedPlugin):
 
         catalog = ProductCatalog(
             ProductCatalogContext(
-                shop=request.shop, user=request.user, contact=getattr(request, "customer", None), purchasable_only=True
+                shop=request.shop,
+                user=request.user,
+                contact=getattr(request, "customer", None),
+                purchasable_only=True,
+                visibility=ShopProductVisibility.LISTED,
             )
         )
         context["products"] = sorted(

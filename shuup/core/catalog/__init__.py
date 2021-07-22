@@ -71,7 +71,7 @@ class ProductCatalogContext:
         self.supplier = supplier
         self.user = user
         self.contact = contact
-        self.visible_only = visible_only
+        self.visible_only = True if purchasable_only else visible_only
         self.purchasable_only = purchasable_only
         self.visibility = visibility
 
@@ -137,7 +137,7 @@ class ProductCatalog:
         )
 
         # only visible products, we need to filter those through queryset
-        if not self.context.purchasable_only and self.context.visible_only:
+        if self.context.visible_only:
             visible_shop_products = self._filter_visible_shop_products(ShopProduct.objects.all())
             queryset = queryset.filter(
                 pk__in=visible_shop_products.values_list("product_id", flat=True), deleted=False
@@ -218,7 +218,7 @@ class ProductCatalog:
             .order_by(Coalesce("discounted_price_value", "price_value").asc())
         )
 
-        if not self.context.purchasable_only and self.context.visible_only:
+        if self.context.visible_only:
             queryset = self._filter_visible_shop_products(queryset).filter(product__deleted=False)
 
         return queryset.annotate(

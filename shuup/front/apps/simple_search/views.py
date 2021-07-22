@@ -5,11 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
+from django.db.models import Q
 from django.views.generic import ListView
 
-from shuup.core.models import Product
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import Product, ProductMode, ShopProductVisibility
 from shuup.front.template_helpers.product import is_visible
 from shuup.front.utils.sorts_and_filters import (
     ProductListForm,
@@ -37,7 +37,19 @@ class SearchView(ListView):
         data = self.form.cleaned_data
         if not (data and data.get("q")):  # pragma: no cover
             return Product.objects.none()
-        products = Product.objects.filter(get_query_filters(self.request, None, data=data))
+
+        catalog = ProductCatalog(
+            ProductCatalogContext(
+                shop=self.request.shop,
+                user=self.request.user,
+                contact=getattr(self.request, "customer", None),
+                purchasable_only=True,
+                visibility=ShopProductVisibility.SEARCHABLE,
+            )
+        )
+        products = catalog.get_products_queryset().filter(
+            Q(mode__in=ProductMode.get_parent_modes()), Q(get_query_filters(self.request, None, data=data))
+        )
         return get_product_queryset(products, self.request, None, data).distinct()
 
     def get_context_data(self, **kwargs):
