@@ -24,7 +24,7 @@ def new_product(i, shop, category):
 
 
 @pytest.mark.django_db
-def test_recently_viewed_products(browser, live_server, settings):
+def test_recently_viewed_products(browser, live_server, reindex_catalog):
     shop = get_default_shop()
     category = get_default_category()
     category.shops.add(shop)
@@ -35,6 +35,8 @@ def test_recently_viewed_products(browser, live_server, settings):
     products = []
     for i in range(1, 7):
         products.append(new_product(i, shop, category))
+
+    reindex_catalog()
 
     browser = initialize_front_browser_test(browser, live_server)
     for i, product in enumerate(products, 1):

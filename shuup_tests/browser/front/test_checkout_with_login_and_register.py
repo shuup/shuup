@@ -41,7 +41,7 @@ def create_orderable_product(name, sku, price):
 @override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
 @pytest.mark.urls("shuup.testing.checkout_with_login_and_register_urls")
 @pytest.mark.django_db
-def test_checkout_with_login_and_register(browser, live_server, settings):
+def test_checkout_with_login_and_register(browser, live_server, reindex_catalog):
     cache.clear()  # Avoid caches from past tests
     # initialize
     product_name = "Test Product"
@@ -49,6 +49,7 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
     get_default_payment_method()
     get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
+    reindex_catalog()
     OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # Initialize test and go to front page
@@ -75,7 +76,7 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
 @pytest.mark.urls("shuup.testing.single_page_checkout_with_login_and_register_conf")
 @pytest.mark.django_db
 @pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
-def test_single_page_checkout_with_login_and_register(browser, live_server, settings):
+def test_single_page_checkout_with_login_and_register(browser, live_server, reindex_catalog):
     cache.clear()  # Avoid caches from past tests
 
     # initialize
@@ -84,6 +85,7 @@ def test_single_page_checkout_with_login_and_register(browser, live_server, sett
     get_default_payment_method()
     get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
+    reindex_catalog()
     OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # Initialize test and go to front page

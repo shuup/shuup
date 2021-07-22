@@ -142,11 +142,13 @@ def test_product_catalog_availability():
     supplier.adjust_stock(product1.pk, delta=10)
 
     catalog_available_only = ProductCatalog(context=ProductCatalogContext(purchasable_only=True))
-    catalog_all = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
+    catalog_visible_only = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
+    catalog_all = ProductCatalog(context=ProductCatalogContext(purchasable_only=False, visible_only=False))
     ProductCatalog.index_product(product1)
     ProductCatalog.index_product(product2)
 
     assert catalog_available_only.get_products_queryset().count() == 1
+    assert catalog_visible_only.get_products_queryset().count() == 2
     assert catalog_all.get_products_queryset().count() == 2
 
     # change the product1 visibility
@@ -155,4 +157,5 @@ def test_product_catalog_availability():
     ProductCatalog.index_product(product2)
 
     assert catalog_available_only.get_products_queryset().count() == 0
+    assert catalog_visible_only.get_products_queryset().count() == 0
     assert catalog_all.get_products_queryset().count() == 2
