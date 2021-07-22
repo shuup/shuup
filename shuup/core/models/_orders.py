@@ -822,7 +822,7 @@ class Order(MoneyPropped, models.Model):
     def can_create_shipment(self):
         return self.get_unshipped_products() and not self.is_canceled() and self.shipping_address
 
-    # TODO: Rethink either the usage of shipment parameter or renaming the method for 2.0
+    # TODO: Rethink either the usage of shipment parameter or renaming the method for 3.0
     @atomic
     def create_shipment(self, product_quantities, supplier=None, shipment=None):
         """
