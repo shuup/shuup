@@ -30,7 +30,7 @@ def get_context(rf, customer=None):
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin(rf):
+def test_product_selection_plugin(rf, reindex_catalog):
     shop = factories.get_default_shop()
     category1 = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
     category2 = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
@@ -81,6 +81,7 @@ def test_product_selection_plugin(rf):
         category=category2,
     )
 
+    reindex_catalog()
     context = get_context(rf)
 
     # test only discount1
@@ -96,13 +97,14 @@ def test_product_selection_plugin(rf):
         if status == 1:
             discount2.active = False
             discount2.save()
+            reindex_catalog()
 
         # test only discount2
         plugin = DiscountedProductsPlugin({"discounts": [discount2.pk], "count": 10})
         context_products = plugin.get_context_data(context)["products"]
 
         if status == 1:
-            assert context_products == []
+            assert list(context_products) == []
         else:
             assert p1 in context_products
             assert p2 not in context_products
@@ -112,10 +114,11 @@ def test_product_selection_plugin(rf):
 
     # test discount3
     plugin = DiscountedProductsPlugin({"discounts": [discount3.pk], "count": 10})
-    assert plugin.get_context_data(context)["products"] == []
+    assert list(plugin.get_context_data(context)["products"]) == []
 
     discount2.active = True
     discount2.save()
+    reindex_catalog()
 
     # test both discount1 and discount2
     plugin = DiscountedProductsPlugin({"discounts": [discount1.pk, discount2.pk], "count": 10})

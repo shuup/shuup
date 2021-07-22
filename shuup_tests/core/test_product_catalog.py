@@ -103,13 +103,14 @@ def test_product_catalog_variations():
     # return a Product queryset annotated with price and discounted price
     products_qs = catalog.get_products_queryset().order_by("catalog_price")
     expected_prices = [
+        (parent.pk, Decimal("10"), None),
         (child1.pk, Decimal("20"), None),
         (child2.pk, Decimal("40"), None),
         (child3.pk, Decimal("50"), None),
     ]
     values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
 
-    assert products_qs.count() == 3
+    assert products_qs.count() == 4
     for index, value in enumerate(values):
         assert value == expected_prices[index]
 

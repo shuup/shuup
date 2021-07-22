@@ -14,7 +14,7 @@ from shuup_tests.front.fixtures import get_jinja_context
 
 
 @pytest.mark.django_db
-def test_cross_sell_plugin_renders():
+def test_cross_sell_plugin_renders(reindex_catalog):
     """
     Test that the plugin renders a product
     """
@@ -23,6 +23,7 @@ def test_cross_sell_plugin_renders():
     product = create_product("test-sku", shop=shop, supplier=supplier)
     computed = create_product("test-computed-sku", shop=shop, supplier=supplier)
     type = ProductCrossSellType.COMPUTED
+    reindex_catalog()
 
     ProductCrossSell.objects.create(product1=product, product2=computed, type=type)
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == 1

@@ -20,7 +20,7 @@ from shuup.xtheme.testing import override_current_theme_class
 
 
 @pytest.mark.django_db
-def test_category_detail(client):
+def test_category_detail(client, reindex_catalog):
     shop = factories.get_default_shop()
 
     # Activate show supplier info for front
@@ -52,8 +52,7 @@ def test_category_detail(client):
         ("Simon Inc", 0.8),
     ]
     for name, percentage_from_original_price in supplier_data:
-        supplier = Supplier.objects.create(name=name)
-        supplier.shops.add(shop)
+        supplier = factories.get_supplier("simple_supplier", shop, name=name)
 
         for product in products:
             shop_product = product.get_shop_instance(shop)
@@ -65,6 +64,8 @@ def test_category_detail(client):
                 percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0]
             )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
+
+    reindex_catalog()
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
@@ -112,7 +113,7 @@ def test_category_detail(client):
 def _get_category_detail_soup(client, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url)
-    return BeautifulSoup(response.content)
+    return BeautifulSoup(response.content, "lxml")
 
 
 def _assert_supplier_info(box_soup, expected_supplier_name):

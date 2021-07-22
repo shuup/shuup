@@ -7,23 +7,24 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.core.models import Category, ProductAttribute, ProductType
+from shuup.core.models import Category, ProductType
 from shuup.front.utils.sorts_and_filters import set_configuration
 from shuup.testing import factories
-from shuup.testing.factories import create_attribute_with_options, create_product, get_default_shop
+from shuup.testing.factories import create_attribute_with_options
 from shuup.utils.django_compat import reverse
 from shuup_tests.utils import SmartClient
 
 
 @pytest.mark.django_db
-def test_product_price_range_filter():
+def test_product_price_range_filter(reindex_catalog):
     shop = factories.get_default_shop()
     product = factories.get_default_product()
     category = factories.get_default_category()
     shop_product = product.get_shop_instance(shop)
     shop_product.default_price_value = 10
-    shop_product.categories.add(category)
     shop_product.save()
+    shop_product.categories.add(category)
+    reindex_catalog()
 
     client = SmartClient()
     config = {
@@ -71,7 +72,7 @@ def test_product_price_range_filter():
 
 
 @pytest.mark.django_db
-def test_category_filter():
+def test_category_filter(reindex_catalog):
     shop = factories.get_default_shop()
 
     category1 = Category.objects.create(name="Category 1")
@@ -85,6 +86,7 @@ def test_category_filter():
     product2 = factories.create_product("p2", shop, factories.get_default_supplier(), "20")
     shop_product2 = product2.get_shop_instance(shop)
     shop_product2.categories.add(category2)
+    reindex_catalog()
 
     client = SmartClient()
     config = {"filter_products_by_category": True}
@@ -119,7 +121,7 @@ def test_category_filter():
 
 
 @pytest.mark.django_db
-def test_product_attributes_filter():
+def test_product_attributes_filter(reindex_catalog):
     shop = factories.get_default_shop()
 
     category1 = Category.objects.create(name="Category 1")
@@ -140,6 +142,8 @@ def test_product_attributes_filter():
     shop_product2 = product2.get_shop_instance(shop)
     shop_product2.categories.add(category1)
     product2.set_attribute_value("attribute1", [option_c.pk])
+
+    reindex_catalog()
 
     client = SmartClient()
     config = {"filter_products_by_products_attribute": True, "override_default_configuration": True}

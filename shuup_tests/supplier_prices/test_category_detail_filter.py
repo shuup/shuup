@@ -22,7 +22,7 @@ from shuup.xtheme.testing import override_current_theme_class
 
 
 @pytest.mark.django_db
-def test_supplier_filter_get_fields(rf):
+def test_supplier_filter_get_fields(rf, reindex_catalog):
     shop = factories.get_default_shop()
     request = apply_request_middleware(rf.get("/"))
     category = factories.get_default_category()
@@ -35,6 +35,7 @@ def test_supplier_filter_get_fields(rf):
     shop_product = product.get_shop_instance(shop=shop)
     shop_product.primary_category = category
     shop_product.save()
+    reindex_catalog()
 
     assert SupplierProductListFilter().get_fields(request, category) is None
 
@@ -76,7 +77,7 @@ def test_supplier_filter_get_fields(rf):
 
 
 @pytest.mark.django_db
-def test_category_detail_filters(client):
+def test_category_detail_filters(client, reindex_catalog):
     shop = factories.get_default_shop()
 
     # Activate show supplier info for front
@@ -106,8 +107,7 @@ def test_category_detail_filters(client):
         ("Simon Inc", 0.8),
     ]
     for name, percentage_from_original_price in supplier_data:
-        supplier = Supplier.objects.create(name=name)
-        supplier.shops.add(shop)
+        supplier = factories.get_supplier("simple_supplier", shop, name=name)
 
         for product in products:
             shop_product = product.get_shop_instance(shop)
@@ -120,6 +120,8 @@ def test_category_detail_filters(client):
                 percentage_from_original_price * [price for sku, price in product_data if product.sku == sku][0]
             )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
+
+    reindex_catalog()
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
@@ -163,7 +165,7 @@ def test_category_detail_filters(client):
 
 
 @pytest.mark.django_db
-def test_category_detail_multiselect_supplier_filters(client):
+def test_category_detail_multiselect_supplier_filters(client, reindex_catalog):
     shop = factories.get_default_shop()
 
     # Activate show supplier info for front
@@ -190,8 +192,7 @@ def test_category_detail_multiselect_supplier_filters(client):
     ]
 
     for name, percentage_from_original_price in supplier_data:
-        supplier = Supplier.objects.create(name=name)
-        supplier.shops.add(shop)
+        supplier = factories.get_supplier("simple_supplier", shop, name=name)
         sku = name
         price_value = 10
         product = factories.create_product(sku, shop=shop, default_price=price_value)
@@ -203,6 +204,8 @@ def test_category_detail_multiselect_supplier_filters(client):
 
         supplier_price = percentage_from_original_price * price_value
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
+
+    reindex_catalog()
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):

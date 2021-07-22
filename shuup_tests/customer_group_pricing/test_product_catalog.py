@@ -84,12 +84,13 @@ def test_product_catalog_cgp_with_variations():
     products_qs = catalog.get_products_queryset().order_by("catalog_price")
     expected_prices = [
         (child2.pk, Decimal("5"), None),
+        (parent.pk, Decimal("10"), None),
         (child1.pk, Decimal("20"), None),
         (child3.pk, Decimal("50"), Decimal("15")),
     ]
     values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
 
-    assert products_qs.count() == 3
+    assert products_qs.count() == 4
     for index, value in enumerate(values):
         assert value == expected_prices[index]
 

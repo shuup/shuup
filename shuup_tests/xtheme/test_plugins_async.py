@@ -67,10 +67,7 @@ def check_expected_product_count(url, expected_count):
     ],
 )
 @pytest.mark.django_db
-def test_product_hightlight_plugin(
-    rf,
-    highlight_type,
-):
+def test_product_hightlight_plugin(rf, highlight_type, reindex_catalog):
     shop = get_default_shop()
     supplier = get_default_supplier()
     p1 = create_product("p1", shop, supplier, "10")
@@ -81,6 +78,8 @@ def test_product_hightlight_plugin(
     sp4 = p4.get_shop_instance(shop)
     sp4.purchasable = False
     sp4.save()
+
+    reindex_catalog()
 
     plugin = ProductHighlightPlugin({"type": highlight_type, "count": 4, "cache_timeout": 120})
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
@@ -104,7 +103,7 @@ def test_product_hightlight_plugin(
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin(rf):
+def test_product_selection_plugin(rf, reindex_catalog):
     shop = get_default_shop()
     supplier = get_default_supplier()
     p1 = create_product("p1", shop, supplier, "10")
@@ -116,6 +115,7 @@ def test_product_selection_plugin(rf):
     sp2 = p2.get_shop_instance(shop)
     sp3 = p3.get_shop_instance(shop)
 
+    reindex_catalog()
     plugin = ProductSelectionPlugin(
         {"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk], "cache_timeout": 120}
     )
@@ -160,7 +160,7 @@ def test_product_selection_plugin(rf):
 
 
 @pytest.mark.django_db
-def test_product_from_category_plugin(rf):
+def test_product_from_category_plugin(rf, reindex_catalog):
     shop = get_default_shop()
     category1 = get_default_category()
     category2 = CategoryFactory(status=CategoryStatus.VISIBLE)
@@ -180,6 +180,7 @@ def test_product_from_category_plugin(rf):
     sp2.categories.add(category1)
     sp3.categories.add(category2)
 
+    reindex_catalog()
     plugin = ProductsFromCategoryPlugin({"category": category1.pk, "cache_timeout": 120})
     plugin_context = plugin.get_context_data(get_context(rf, is_ajax=False))
     context_products = plugin_context["products"]
@@ -221,7 +222,7 @@ def test_product_from_category_plugin(rf):
 
 
 @pytest.mark.django_db
-def test_cross_sell_plugin_renders(rf):
+def test_cross_sell_plugin_renders(rf, reindex_catalog):
     """
     Test that the plugin renders a product
     """
@@ -229,6 +230,8 @@ def test_cross_sell_plugin_renders(rf):
     supplier = get_default_supplier()
     product = create_product("test-sku", shop=shop, supplier=supplier)
     computed = create_product("test-computed-sku", shop=shop, supplier=supplier)
+    reindex_catalog()
+
     type = ProductCrossSellType.COMPUTED
 
     ProductCrossSell.objects.create(product1=product, product2=computed, type=type)

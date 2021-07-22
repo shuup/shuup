@@ -64,8 +64,6 @@ def test_social_media_plugin_ordering():
     """
     Test that social media plugin ordering works as expected
     """
-    context = get_jinja_context()
-    icon_classes = SocialMediaLinksPlugin.icon_classes
     link_1_type = "Facebook"
     link_1 = {
         "url": "http://www.facebook.com",
@@ -185,7 +183,7 @@ def test_plugin_image_id_field():
     Test that ImageIDField only accepts ID values. We're not necessarily testing
     that the ID value is a valid File
     """
-    image = File.objects.create()
+    File.objects.create()
     image_id = ImageIDField()
     assert image_id.clean("1") == 1
 
@@ -209,7 +207,7 @@ def test_image_plugin_choice_widget_get_object():
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin_v1(rf):
+def test_product_selection_plugin_v1(rf, reindex_catalog):
     shop = get_default_shop()
     p1 = create_product("p1", shop, get_default_supplier(), "10")
     p2 = create_product("p2", shop, get_default_supplier(), "20")
@@ -220,7 +218,9 @@ def test_product_selection_plugin_v1(rf):
     sp2 = p2.get_shop_instance(shop)
     sp3 = p3.get_shop_instance(shop)
 
+    reindex_catalog()
     context = get_context(rf)
+
     plugin = ProductSelectionPlugin({"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]})
     context_products = plugin.get_context_data(context)["products"]
     assert p1 in context_products
@@ -257,7 +257,7 @@ def test_product_selection_plugin_v1(rf):
     ],
 )
 @pytest.mark.django_db
-def test_product_hightlight_plugin(rf, highlight_type, orderable):
+def test_product_hightlight_plugin(rf, highlight_type, orderable, reindex_catalog):
     shop = get_default_shop()
     p1 = create_product("p1", shop, get_default_supplier(), "10")
     p2 = create_product("p2", shop, get_default_supplier(), "20")
@@ -270,6 +270,7 @@ def test_product_hightlight_plugin(rf, highlight_type, orderable):
 
     context = get_context(rf)
     plugin = ProductHighlightPlugin({"type": highlight_type, "count": 4, "orderable_only": orderable})
+    reindex_catalog()
     context_products = plugin.get_context_data(context)["products"]
 
     assert p1 in context_products
@@ -282,7 +283,7 @@ def test_product_hightlight_plugin(rf, highlight_type, orderable):
 
 
 @pytest.mark.django_db
-def test_product_selection_plugin_v2(rf):
+def test_product_selection_plugin_v2(rf, reindex_catalog):
     shop = get_default_shop()
     p1 = create_product("p1", shop, get_default_supplier(), "10")
     p2 = create_product("p2", shop, get_default_supplier(), "20")
@@ -293,6 +294,7 @@ def test_product_selection_plugin_v2(rf):
     sp2 = p2.get_shop_instance(shop)
     sp3 = p3.get_shop_instance(shop)
 
+    reindex_catalog()
     context = get_context(rf)
     plugin = ProductSelectionPlugin({"products": [sp1.product.pk, sp2.product.pk, sp3.product.pk]})
     context_products = plugin.get_context_data(context)["products"]
@@ -321,7 +323,7 @@ def test_product_selection_plugin_v2(rf):
 
 
 @pytest.mark.django_db
-def test_product_from_category_plugin(rf):
+def test_product_from_category_plugin(rf, reindex_catalog):
     shop = get_default_shop()
     category1 = get_default_category()
     category2 = CategoryFactory(status=CategoryStatus.VISIBLE)
@@ -341,6 +343,7 @@ def test_product_from_category_plugin(rf):
     sp2.categories.add(category1)
     sp3.categories.add(category2)
 
+    reindex_catalog()
     context = get_context(rf)
     plugin = ProductsFromCategoryPlugin({"category": category1.pk})
     context_products = plugin.get_context_data(context)["products"]

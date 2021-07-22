@@ -9,7 +9,7 @@ import pytest
 import random
 from bs4 import BeautifulSoup
 
-from shuup.core.models import Category, CategoryStatus, ShopProduct
+from shuup.core.models import Category, CategoryStatus
 from shuup.front.views.category import AllCategoriesView
 from shuup.testing.factories import (
     create_product,
@@ -23,16 +23,18 @@ from shuup_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db
-def test_all_categories_view(rf, admin_user):
+def test_all_categories_view(rf, reindex_catalog):
     shop = get_default_shop()
     supplier = get_default_supplier()
     category = get_default_category()
     product = get_default_product()
     request = apply_request_middleware(rf.get("/"))
+    reindex_catalog()
     _check_product_count(request, 0)
 
     shop_product = product.get_shop_instance(shop)
     shop_product.categories.add(category)
+    reindex_catalog()
     _check_product_count(request, 1)
 
     # Create few categories for better test results
@@ -50,15 +52,19 @@ def test_all_categories_view(rf, admin_user):
         # not listed
         shop_product.categories.set(Category.objects.exclude(id=category.pk).order_by("?")[:i])
 
+    reindex_catalog()
+
     _check_product_count(request, new_product_count)
 
     category.status = CategoryStatus.INVISIBLE
     category.save()
+    reindex_catalog()
+
     _check_product_count(request, new_product_count - 1)
 
 
 def _check_product_count(request, expected_count):
     response = AllCategoriesView.as_view()(request)
     response.render()
-    soup = BeautifulSoup(response.content)
+    soup = BeautifulSoup(response.content, "lxml")
     assert len(soup.findAll("div", {"class": "single-product"})) == expected_count

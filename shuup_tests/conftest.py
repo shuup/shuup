@@ -97,3 +97,13 @@ def staff_user():
     from django.contrib.auth import get_user_model
 
     return get_user_model().objects.create(is_staff=True, is_superuser=False, username="staff_user")
+
+
+@pytest.fixture()
+def reindex_catalog():
+    def _():
+        from django.core.management import call_command
+
+        call_command("reindex_product_catalog")
+
+    return _
