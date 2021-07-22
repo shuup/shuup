@@ -9,6 +9,7 @@ from django import forms
 from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum
 
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
     get_best_selling_products,
@@ -266,6 +267,14 @@ class ProductSelectionPlugin(TemplatedPlugin):
         products_qs = Product.objects.none()
 
         if products:
-            products_qs = Product.objects.listed(shop=request.shop, customer=request.customer).filter(pk__in=products)
+            catalog = ProductCatalog(
+                ProductCatalogContext(
+                    shop=request.shop,
+                    user=request.user,
+                    contact=getattr(request, "customer", None),
+                    purchasable_only=True,
+                )
+            )
+            products_qs = catalog.get_products_queryset().filter(pk__in=products)
 
         return {"request": request, "title": self.get_translated_value("title"), "products": products_qs}
