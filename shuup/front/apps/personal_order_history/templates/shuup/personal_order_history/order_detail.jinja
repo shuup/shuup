@@ -53,10 +53,9 @@
         <div class="col-sm-12">
             {{ order_contents() }}
         </div>
-        {% set _order_history = order.order_history.all() %}
-        {% if _order_history %}
+        {% if order.order_history.exists() %}
         <div class="col-sm-12">
-            {{ order_status_history(_order_history) }}
+            {{ order_status_history(order.order_history.filter(next_order_status__visible_for_customer=True)) }}
         </div>
         {% endif %}
         <div class="col-sm-12">
