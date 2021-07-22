@@ -39,13 +39,14 @@ def create_orderable_product(name, sku, price):
 
 
 @pytest.mark.django_db
-def test_browser_checkout_horizontal(browser, live_server, settings):
+def test_browser_checkout_horizontal(browser, live_server, reindex_catalog):
     # initialize
     product_name = "Test Product"
     get_default_shop()
     pm = get_default_payment_method()
     sm = get_default_shipping_method()
     product = create_orderable_product(product_name, "test-123", price=100)
+    reindex_catalog()
     OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # initialize test and go to front page
@@ -124,7 +125,7 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
 
 @pytest.mark.urls("shuup.testing.single_page_checkout_test_urls")
 @pytest.mark.django_db
-def test_browser_checkout_vertical(browser, live_server, settings):
+def test_browser_checkout_vertical(browser, live_server, reindex_catalog):
     with override_settings(SHUUP_CHECKOUT_VIEW_SPEC=("shuup.front.views.checkout:SinglePageCheckoutView")):
         # initialize
         product_name = "Test Product"
@@ -132,6 +133,7 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         pm = get_default_payment_method()
         sm = get_default_shipping_method()
         product = create_orderable_product(product_name, "test-123", price=100)
+        reindex_catalog()
         OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
         # initialize test and go to front page
@@ -211,15 +213,15 @@ def test_browser_checkout_vertical(browser, live_server, settings):
 
 @pytest.mark.parametrize("delete_method", ["shipping", "payment"])
 @pytest.mark.django_db
-def test_browser_checkout_disable_methods(browser, live_server, settings, delete_method):
-    # initialize
+def test_browser_checkout_disable_methods(browser, live_server, reindex_catalog, delete_method):
     product_name = "Test Product"
-    shop = get_default_shop()
+    get_default_shop()
 
     payment_method = get_default_payment_method()
     shipping_method = get_default_shipping_method()
 
     product = create_orderable_product(product_name, "test-123", price=100)
+    reindex_catalog()
     OrderStatus.objects.create(identifier="initial", role=OrderStatusRole.INITIAL, name="initial", default=True)
 
     # initialize test and go to front page

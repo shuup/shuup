@@ -46,7 +46,7 @@ CATEGORY_PRODUCT_DATA = [
 
 
 @pytest.mark.django_db
-def test_coupon(browser, live_server, settings):
+def test_coupon(browser, live_server, reindex_catalog):
     activate("en")
     # initialize
     cache.clear()
@@ -59,10 +59,12 @@ def test_coupon(browser, live_server, settings):
 
     _populate_products_form_data(CATEGORY_PRODUCT_DATA, shop, first_category)
 
+    reindex_catalog()
+
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
 
-    _add_product_to_basket_from_category(live_server, browser, first_category, shop)
+    _add_product_to_basket_from_category(live_server, browser, first_category, shop, reindex_catalog)
     _activate_basket_campaign_through_coupon(browser, first_category, shop)
 
 
@@ -83,7 +85,7 @@ def _create_orderable_product(name, sku, price):
     return product
 
 
-def _add_product_to_basket_from_category(live_server, browser, first_category, shop):
+def _add_product_to_basket_from_category(live_server, browser, first_category, shop, reindex_catalog):
     url = reverse("shuup:category", kwargs={"pk": first_category.pk, "slug": first_category.slug})
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_text_present(first_category.name))
@@ -101,6 +103,8 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
 
     discount_amount = 5
     _create_category_product_discount(first_category, shop, discount_amount)
+
+    reindex_catalog()
 
     browser.reload()
     wait_until_condition(browser, lambda x: str(new_price - discount_amount) in x.find_by_css(selector).first.text)
@@ -121,6 +125,8 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
 
     new_discount_amount = 10
     _create_category_product_discount(first_category, shop, new_discount_amount)
+
+    reindex_catalog()
 
     browser.reload()
     wait_until_condition(
