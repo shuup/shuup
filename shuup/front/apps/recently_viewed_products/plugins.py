@@ -6,7 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import ProductMode
 from shuup.core.utils.static import get_shuup_static_url
 from shuup.xtheme import TemplatedPlugin
 from shuup.xtheme.resources import add_resource
@@ -18,11 +19,17 @@ class RecentlyViewedProductsPlugin(TemplatedPlugin):
     template_name = "shuup/recently_viewed_products/list_view.jinja"
 
     def get_context_data(self, context):
-        context = super(RecentlyViewedProductsPlugin, self).get_context_data(context)
+        context = super().get_context_data(context)
         request = context["request"]
         product_ids = [int(pid) for pid in request.COOKIES.get("rvp", "").split(",") if pid != ""]
+
+        catalog = ProductCatalog(
+            ProductCatalogContext(
+                shop=request.shop, user=request.user, contact=getattr(request, "customer", None), purchasable_only=True
+            )
+        )
         context["products"] = sorted(
-            Product.objects.listed(customer=request.customer, shop=request.shop).filter(id__in=product_ids),
+            catalog.get_products_queryset().filter(id__in=product_ids, mode__in=ProductMode.get_parent_modes()),
             key=lambda p: product_ids.index(p.pk),
         )
         return context

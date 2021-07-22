@@ -8,31 +8,53 @@
 from __future__ import unicode_literals, with_statement
 
 import datetime
-from django.db.models import Sum
+from django.db.models import Case, F, Sum, When
 from django.utils.translation import get_language
 
 from shuup.core import cache
-from shuup.core.models import OrderLine, OrderLineType, Product
+from shuup.core.models import OrderLine, OrderLineType, Product, ProductCatalogPrice
 from shuup.utils.dates import to_aware
 
 
-def get_best_selling_product_info(shop_ids, cutoff_days=30, supplier=None):
+def get_best_selling_product_info(shop_ids, cutoff_days=30, supplier=None, orderable_only=True, quantity=100):
     shop_ids = sorted(map(int, shop_ids))
     cutoff_date = datetime.date.today() - datetime.timedelta(days=cutoff_days)
-    cache_key = "best_sellers:%r_%s_%s" % (shop_ids, cutoff_date, (supplier.pk if supplier else ""))
+    cache_key = "best_sellers:%r_%s_%s_%s_%s" % (
+        shop_ids,
+        cutoff_date,
+        (supplier.pk if supplier else ""),
+        (1 if orderable_only else 0),
+        quantity,
+    )
     sales_data = cache.get(cache_key)
+
     if sales_data is None:
+        valid_products = ProductCatalogPrice.objects.filter(shop__in=shop_ids)
+        if orderable_only:
+            valid_products = valid_products.filter(is_available=True)
+        if supplier:
+            valid_products = valid_products.filter(supplier=supplier)
+
         queryset = OrderLine.objects.filter(
-            order__shop_id__in=shop_ids, order__order_date__gte=to_aware(cutoff_date), type=OrderLineType.PRODUCT
+            order__shop_id__in=shop_ids,
+            order__order_date__gte=to_aware(cutoff_date),
+            type=OrderLineType.PRODUCT,
+            product_id__in=valid_products.values_list("product_id", flat=True).distinct(),
         )
         if supplier:
             queryset = queryset.filter(supplier=supplier)
 
         sales_data = (
-            queryset.values("product")
-            .annotate(n=Sum("quantity"))
-            .order_by("-n")[:100]
-            .values_list("product", "product__variation_parent_id", "n")
+            queryset.annotate(
+                group_product_id=Case(
+                    When(product__variation_parent_id__isnull=False, then=F("product__variation_parent_id")),
+                    default=F("product_id"),
+                )
+            )
+            .values("group_product_id")
+            .annotate(total=Sum("quantity"))
+            .order_by("-total")[:quantity]
+            .values_list("group_product_id", "total")
         )
         cache.set(cache_key, sales_data, 3 * 60 * 60)  # three hours
     return sales_data

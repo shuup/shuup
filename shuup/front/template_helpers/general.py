@@ -5,18 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import hashlib
 import six
-from collections import defaultdict
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.middleware.csrf import get_token
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 
-from shuup.core.models import Category, Manufacturer, Product, ShopProduct, Supplier
-from shuup.core.utils import context_cache
-from shuup.front.utils import cache as cache_utils
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import Category, Manufacturer, ProductMode
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.translation import get_language_choices
@@ -35,14 +32,7 @@ def get_login_form(request, id_prefix="quick-login"):
     return form
 
 
-def _group_list_items(group_list, number):
-    for i in range(0, len(group_list), number):
-        yield tuple(group_list[i : i + number])
-
-
-def _get_listed_products(  # noqa (C901)
-    context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None
-):
+def _get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True, extra_filters=None):
     """
     Returns all products marked as listed that are determined to be
     visible based on the current context.
@@ -62,18 +52,21 @@ def _get_listed_products(  # noqa (C901)
     :rtype: list[shuup.core.models.Product]
     """
     request = context["request"]
-    customer = request.customer
+    customer = getattr(request, "customer", None)
     shop = request.shop
 
-    # Todo: Check if this should be cached
+    catalog = ProductCatalog(
+        ProductCatalogContext(shop=shop, user=request.user, contact=customer, purchasable_only=orderable_only)
+    )
 
     if not filter_dict:
         filter_dict = {}
-    products_qs = Product.objects.listed(
-        shop=shop,
-        customer=customer,
-        language=get_language(),
-    ).filter(**filter_dict)
+
+    products_qs = (
+        catalog.get_products_queryset()
+        .language(get_language())
+        .filter(mode__in=ProductMode.get_parent_modes(), **filter_dict)
+    )
 
     if extra_filters:
         products_qs = products_qs.filter(extra_filters)
@@ -81,28 +74,7 @@ def _get_listed_products(  # noqa (C901)
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
-    products = list(products_qs.distinct()[:n_products])
-
-    if orderable_only:
-        suppliers = Supplier.objects.enabled(shop=shop)
-        valid_products = []
-
-        for product in products:
-            if len(valid_products) == n_products:
-                break
-            try:
-                shop_product = product.get_shop_instance(shop, allow_cache=True)
-            except ShopProduct.DoesNotExist:
-                continue
-
-            for supplier in suppliers:
-                if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
-                    valid_products.append(product)
-                    break
-
-        return valid_products
-
-    return products
+    return products_qs.distinct()[:n_products]
 
 
 @contextfunction
@@ -111,20 +83,6 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
     A cached version of _get_listed_products
     """
     request = context["request"]
-
-    key, products = context_cache.get_cached_value(
-        identifier="listed_products",
-        item=cache_utils.get_listed_products_cache_item(request.shop),
-        context=request,
-        n_products=n_products,
-        ordering=ordering,
-        filter_dict=filter_dict,
-        orderable_only=orderable_only,
-        extra_filters=hashlib.sha1(str(extra_filters).encode("utf-8")).hexdigest(),
-    )
-    if products is not None:
-        return products
-
     products = _get_listed_products(
         context,
         n_products,
@@ -134,140 +92,71 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         extra_filters=extra_filters,
     )
     products = cache_product_things(request, products)
-    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True, supplier=None):
     request = context["request"]
-
-    key, products = context_cache.get_cached_value(
-        identifier="best_selling_products_%s" % (supplier.pk if supplier else ""),
-        item=cache_utils.get_best_selling_products_cache_item(request.shop),
-        context=request,
-        n_products=n_products,
-        cutoff_days=cutoff_days,
-        orderable_only=orderable_only,
-    )
-
-    if products is not None:
-        return products
-
     products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=supplier)
-    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
-def _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=None):  # noqa (C901)
-    data = get_best_selling_product_info(shop_ids=[request.shop.pk], cutoff_days=cutoff_days, supplier=supplier)
-    combined_variation_products = defaultdict(int)
-    for product_id, parent_id, qty in data:
-        if parent_id:
-            combined_variation_products[parent_id] += qty
-        else:
-            combined_variation_products[product_id] += qty
+def _get_best_selling_products(cutoff_days, n_products, orderable_only, request, supplier=None):
+    data = get_best_selling_product_info(
+        shop_ids=[request.shop.pk],
+        cutoff_days=cutoff_days,
+        supplier=supplier,
+        orderable_only=orderable_only,
+        quantity=n_products,
+    )
+    sorted_product_ids = sorted(data, key=lambda item: item[1], reverse=True)
+    product_ids = [item[0] for item in sorted_product_ids]
 
-    # get all the product ids
-    product_ids = [d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)]
-
-    # group product ids in groups of n_products
-    # to prevent querying ALL products at once
-    products = []
-    for grouped_product_ids in _group_list_items(product_ids, n_products):
-        valid_products_qs = Product.objects.listed(shop=request.shop, customer=request.customer).filter(
-            id__in=grouped_product_ids, shop_products__shop=request.shop, shop_products__suppliers__enabled=True
+    catalog = ProductCatalog(
+        ProductCatalogContext(
+            shop=request.shop,
+            user=request.user,
+            supplier=supplier,
+            contact=getattr(request, "customer", None),
+            purchasable_only=orderable_only,
         )
-        for product in valid_products_qs.iterator():
-            products.append(product)
+    )
+    valid_products_qs = (
+        catalog.get_products_queryset()
+        .filter(id__in=product_ids, mode__in=ProductMode.get_parent_modes(), shop_products__suppliers__enabled=True)
+        .distinct()[:n_products]
+    )
 
-            if len(products) == n_products:
-                break
-
-        if len(products) == n_products:
-            break
-
-    if orderable_only:
-        valid_products = []
-        if supplier:
-            suppliers = [supplier]
-        else:
-            suppliers = Supplier.objects.enabled(shop=request.shop)
-
-        for product in products:
-            # this instance should always exist as the listed() queryset uses the current shop as a filter
-            shop_product = product.get_shop_instance(request.shop, allow_cache=True)
-
-            for supplier in suppliers:
-                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
-                    valid_products.append(product)
-                    break
-
-        products = valid_products
-
-    products = cache_product_things(request, products)
-    products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch
+    products = cache_product_things(request, valid_products_qs)
+    # order products by the best selling order
+    products = sorted(products, key=lambda product: product_ids.index(product.pk))
     return products
 
 
 @contextfunction
 def get_newest_products(context, n_products=6, orderable_only=True):
     request = context["request"]
-
-    key, products = context_cache.get_cached_value(
-        identifier="newest_products",
-        item=cache_utils.get_newest_products_cache_item(request.shop),
-        context=request,
-        n_products=n_products,
-        orderable_only=orderable_only,
-    )
-    if products is not None:
-        return products
-
     products = _get_listed_products(
         context, n_products, ordering="-pk", filter_dict={"variation_parent": None}, orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
-    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_random_products(context, n_products=6, orderable_only=True):
     request = context["request"]
-    key, products = context_cache.get_cached_value(
-        identifier="random_products",
-        item=cache_utils.get_random_products_cache_item(request.shop),
-        context=request,
-        n_products=n_products,
-        orderable_only=orderable_only,
-    )
-    if products is not None:
-        return products
-
     products = _get_listed_products(
         context, n_products, ordering="?", filter_dict={"variation_parent": None}, orderable_only=orderable_only
     )
     products = cache_product_things(request, products)
-    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_products_for_categories(context, categories, n_products=6, orderable_only=True):
     request = context["request"]
-    key, products = context_cache.get_cached_value(
-        identifier="products_for_category",
-        item=cache_utils.get_products_for_category_cache_item(request.shop),
-        context=request,
-        n_products=n_products,
-        categories=categories,
-        orderable_only=orderable_only,
-    )
-
-    if products is not None:
-        return products
-
     products = _get_listed_products(
         context,
         n_products,
@@ -276,23 +165,23 @@ def get_products_for_categories(context, categories, n_products=6, orderable_onl
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
-    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
-def get_all_manufacturers(context):
+def get_all_manufacturers(context, purchasable_only=False):
     request = context["request"]
-    key, manufacturers = context_cache.get_cached_value(
-        identifier="all_manufacturers", item=cache_utils.get_all_manufacturers_cache_item(request.shop), context=request
+    catalog = ProductCatalog(
+        ProductCatalogContext(
+            shop=request.shop,
+            user=request.user,
+            contact=getattr(request, "customer", None),
+            purchasable_only=purchasable_only,
+        )
     )
-    if manufacturers is not None:
-        return manufacturers
-
-    products = Product.objects.listed(shop=request.shop, customer=request.customer)
-    manufacturers_ids = products.values_list("manufacturer__id").distinct()
-    manufacturers = Manufacturer.objects.filter(pk__in=manufacturers_ids)
-    context_cache.set_cached_value(key, manufacturers, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    manufacturers = Manufacturer.objects.filter(
+        pk__in=catalog.get_products_queryset().values_list("manufacturer_id", flat=True).distinct()
+    )
     return manufacturers
 
 
