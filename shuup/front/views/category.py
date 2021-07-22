@@ -9,7 +9,8 @@ from __future__ import with_statement
 
 from django.views.generic import DetailView, TemplateView
 
-from shuup.core.models import Category, Product, Supplier
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import Category, Supplier
 from shuup.front.utils.sorts_and_filters import (
     ProductListForm,
     get_product_queryset,
@@ -29,9 +30,18 @@ def get_context_data(context, request, category, product_filters):
         # Use first choice by default
         data["sort"] = form.fields["sort"].widget.choices[0][0]
 
-    # TODO: Check if context cache can be utilized here
+    catalog = ProductCatalog(
+        ProductCatalogContext(
+            shop=request.shop,
+            user=request.user,
+            contact=getattr(request, "customer", None),
+            purchasable_only=True,
+            supplier=data.get("supplier") or None,
+        )
+    )
+
     products = (
-        Product.objects.listed(customer=request.customer, shop=request.shop)
+        catalog.get_products_queryset()
         .filter(**product_filters)
         .filter(get_query_filters(request, category, data=data))
         .prefetch_related("sales_unit", "sales_unit__translations")

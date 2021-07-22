@@ -19,6 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+from typing import Iterable
 
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
@@ -56,6 +57,19 @@ class ProductMode(Enum):
         VARIABLE_VARIATION_PARENT = _("variation parent (variable)")
         VARIATION_CHILD = _("variation child")
         SUBSCRIPTION = _("subscription")
+
+    @classmethod
+    def get_parent_modes(cls) -> Iterable["ProductMode"]:
+        """
+        Returns a list of modes that are parents, likely
+        the products that are listed in frontend
+        """
+        return [
+            cls.NORMAL,
+            cls.SIMPLE_VARIATION_PARENT,
+            cls.VARIABLE_VARIATION_PARENT,
+            cls.SUBSCRIPTION,
+        ]
 
 
 class ProductVisibility(Enum):
