@@ -1,8 +1,12 @@
-{% macro auth_block(extra_classes="") %}
+{% macro auth_block(logo=None, extra_classes="") %}
     <div class="auth-block {{ extra_classes }}">
         <div class="auth-block-content">
             <div class="auth-block-logo">
+            {% if logo %}
+                <img src="{{ logo.url }}" class="set-logo" alt="{{_('shop logo') }}">
+            {% else %}
                 <img src="{{ static("shuup_admin/img/logo_icon.svg") }}" alt="Shuup">
+            {% endif %}
             </div>
             <div class="auth-block-body">{{ caller() }}</div>
         </div>

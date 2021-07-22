@@ -11,7 +11,8 @@
         {% if request.GET.autoRefresh %}
             <meta http-equiv="refresh" content="{{ request.GET.autoRefresh }}"/>
         {% endif %}
-        <link href="{{ shuup_static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
+        {%- set favicon = request.shop.favicon.url if request.shop.favicon else static("shuup/front/img/favicon.ico") -%}
+        <link rel="icon" type="image/x-icon" href="{{ favicon }}">
         <link href="{{ shuup_static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
