@@ -15,6 +15,8 @@ from shuup.core.order_creator._source import LineSource
 from shuup.core.pricing import DiscountModule
 
 
+# DEPRECATED: 3.0
+# This discount module will be completely removed on next major version
 class CatalogCampaignModule(DiscountModule):
     identifier = "catalog_campaigns"
     name = _("Campaigns")

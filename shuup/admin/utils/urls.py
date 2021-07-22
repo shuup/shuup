@@ -135,7 +135,7 @@ def admin_url(regex, view, kwargs=None, name=None, prefix="", require_authentica
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=()):
+def get_edit_and_list_urls(url_prefix, view_template, name_template):
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
@@ -149,13 +149,6 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
     :return: List of URLs.
     :rtype: list[AdminRegexURLPattern]
     """
-    if permissions:
-        warnings.warn(
-            "Warning! `get_edit_and_list_urls` permissions attribute will be "
-            "deprecated in Shuup 2.0 as unused for this util.",
-            DeprecationWarning,
-        )
-
     return [
         admin_url(
             r"%s/(?P<pk>\d+)/$" % url_prefix,

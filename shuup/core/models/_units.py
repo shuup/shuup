@@ -39,7 +39,7 @@ def get_display_unit(sales_unit):
     return default_display_unit
 
 
-# TODO: (2.0) Remove deprecated SalesUnit.short_name
+# TODO: (3.0) Remove deprecated SalesUnit.short_name
 class _ShortNameToSymbol(object):
     def __init__(self, *args, **kwargs):
         if "short_name" in kwargs:
