@@ -10,7 +10,7 @@ from __future__ import with_statement
 from django.views.generic import DetailView, TemplateView
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
-from shuup.core.models import Category, Supplier
+from shuup.core.models import Category, ShopProductVisibility, Supplier
 from shuup.front.utils.sorts_and_filters import (
     ProductListForm,
     get_product_queryset,
@@ -37,6 +37,7 @@ def get_context_data(context, request, category, product_filters):
             contact=getattr(request, "customer", None),
             purchasable_only=True,
             supplier=data.get("supplier") or None,
+            visibility=ShopProductVisibility.LISTED,
         )
     )
 

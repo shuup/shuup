@@ -16,6 +16,7 @@ from shuup.core.models import (
     ProductAttribute,
     ProductCrossSell,
     ProductCrossSellType,
+    ShopProductVisibility,
     get_person_contact,
 )
 from shuup.core.utils.product_subscription import ProductSubscriptionContext, get_product_subscription_options
@@ -67,7 +68,13 @@ def _get_cross_sell_products(
     request = context["request"]
     customer = get_person_contact(request.user)
     catalog = ProductCatalog(
-        ProductCatalogContext(shop=request.shop, user=request.user, contact=customer, purchasable_only=orderable_only)
+        ProductCatalogContext(
+            shop=request.shop,
+            user=request.user,
+            contact=customer,
+            purchasable_only=orderable_only,
+            visibility=ShopProductVisibility.LISTED,
+        )
     )
     products = catalog.get_products_queryset().filter(pk__in=products_ids).distinct()[:count]
     return sorted(products, key=lambda product: products_ids.index(product.id))

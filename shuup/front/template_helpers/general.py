@@ -13,7 +13,7 @@ from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
-from shuup.core.models import Category, Manufacturer, ProductMode
+from shuup.core.models import Category, Manufacturer, ProductMode, ShopProductVisibility
 from shuup.front.utils.companies import allow_company_registration
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.translation import get_language_choices
@@ -56,7 +56,13 @@ def _get_listed_products(context, n_products, ordering=None, filter_dict=None, o
     shop = request.shop
 
     catalog = ProductCatalog(
-        ProductCatalogContext(shop=shop, user=request.user, contact=customer, purchasable_only=orderable_only)
+        ProductCatalogContext(
+            shop=shop,
+            user=request.user,
+            contact=customer,
+            purchasable_only=orderable_only,
+            visibility=ShopProductVisibility.LISTED,
+        )
     )
 
     if not filter_dict:
@@ -120,6 +126,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
             supplier=supplier,
             contact=getattr(request, "customer", None),
             purchasable_only=orderable_only,
+            visibility=ShopProductVisibility.LISTED,
         )
     )
     valid_products_qs = (
@@ -177,6 +184,7 @@ def get_all_manufacturers(context, purchasable_only=False):
             user=request.user,
             contact=getattr(request, "customer", None),
             purchasable_only=purchasable_only,
+            visibility=ShopProductVisibility.LISTED,
         )
     )
     manufacturers = Manufacturer.objects.filter(
