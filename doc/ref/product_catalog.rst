@@ -28,4 +28,9 @@ To access the products prices in a quick way, they are indexed in the ``ProductC
 
 The ``ProductCatalog`` will call the pricing module to index prices for the given shop product and after that it will trigger a the signal ``index_catalog_shop_product`` which can be then handled by other apps to handle other tasks like cache bumping.
 
-The indexed prices contain a shop and can contain a specific supplier, a specific contact group and a specific contact. The discounted price can also be saved in case the pricing module has a discount for it.
+The indexed prices contain a shop and can contain a specific supplier, a specific contact group and a specific contact.
+
+The discounted price will also index as the discounted price as the ``ProductCatalog`` will call every discount module to index the product.
+
+It's the responsibility of the supplier modules to listen to the ``index_catalog_shop_product`` signal and index the availability of the product, updating the ``ProductCatalogPrice`` model instance accordingly. If the supplier module don't do that, the product won't be marked as available (purchasable) and it won't be visible in listing when the ``ProductCatalogContext`` is configured to have ``purchasable_only`` flag set to ``True``.
+
