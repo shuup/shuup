@@ -39,10 +39,9 @@ from shuup.core.utils.price_cache import bump_all_price_caches, bump_prices_for_
 
 @receiver(post_migrate)
 def on_migrate(sender, **kwargs):
-    from .models import OrderStatusManager, SupplierModule
+    from .models import SupplierModule
 
     SupplierModule.ensure_all_supplier_modules()
-    OrderStatusManager().ensure_allowed_next_statuses()
 
 
 def handle_post_save_bump_all_prices_caches(sender, instance, **kwargs):
