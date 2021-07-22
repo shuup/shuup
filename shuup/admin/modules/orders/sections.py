@@ -71,7 +71,7 @@ class ShipmentSection(Section):
     def visible_for_object(order, request=None):
         if not order.shipping_method:
             return False
-        if not order.shipping_method.carrier.uses_default_shipments_manager:
+        if order.shipping_method.carrier and not order.shipping_method.carrier.uses_default_shipments_manager:
             return False
         return (
             order.has_products_requiring_shipment()

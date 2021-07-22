@@ -17,6 +17,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Front: enforce setting the current customer to the basket
+- Admin: fix crash when viewing an order with a shipment_method without a carrier defined
 
 ### Added
 
