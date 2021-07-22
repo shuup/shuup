@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import abc
 import six
+from decimal import Decimal
 from django.http import HttpRequest
 from typing import TYPE_CHECKING, Union
 
@@ -148,6 +149,16 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
                 .only("shop_id", "product_id", "default_price_value")
             )
 
+        is_variation_parent = shop_product.product.is_variation_parent()
+
+        # index the price of all children shop products
+        if is_variation_parent:
+            children_shop_product = ShopProduct.objects.filter(
+                shop=shop_product.shop, product__variation_parent_id=shop_product.product_id
+            )
+            for child_shop_product in children_shop_product:
+                self.index_shop_product(child_shop_product)
+
         for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
             # save the default product price
             ProductCatalogPrice.objects.update_or_create(
@@ -156,5 +167,5 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
                 supplier_id=supplier_id,
                 contact_group=None,
                 contact=None,
-                defaults=dict(price_value=shop_product.default_price_value),
+                defaults=dict(price_value=shop_product.default_price_value or Decimal()),
             )

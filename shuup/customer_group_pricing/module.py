@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import six
+from decimal import Decimal
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from typing import Union
@@ -77,19 +78,19 @@ class CustomerGroupPricingModule(PricingModule):
                         contact_group=customer_group_price.group,
                         supplier_id=supplier_id,
                         contact=None,
-                        defaults=dict(price_value=customer_group_price.price_value),
+                        defaults=dict(price_value=customer_group_price.price_value or Decimal()),
                     )
 
-            for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
-                # index the default price value
-                ProductCatalogPrice.objects.update_or_create(
-                    product_id=shop_product.product_id,
-                    shop_id=shop_product.shop_id,
-                    supplier_id=supplier_id,
-                    contact_group=None,  # need to force null
-                    contact=None,
-                    defaults=dict(price_value=shop_product.default_price_value),
-                )
+        for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
+            # index the default price value
+            ProductCatalogPrice.objects.update_or_create(
+                product_id=shop_product.product_id,
+                shop_id=shop_product.shop_id,
+                supplier_id=supplier_id,
+                contact_group=None,  # need to force null
+                contact=None,
+                defaults=dict(price_value=shop_product.default_price_value or Decimal()),
+            )
 
 
 class CustomerGroupDiscountModule(DiscountModule):
@@ -151,7 +152,9 @@ class CustomerGroupDiscountModule(DiscountModule):
                     shop_id=shop_product.shop_id,
                     group=customer_group_discount.group,
                 ).first()
-                normal_price = product_price.price_value if product_price else shop_product.default_price_value
+                normal_price = (
+                    product_price.price_value if product_price else (shop_product.default_price_value or Decimal())
+                )
                 discounted_price = normal_price - customer_group_discount.discount_amount_value
 
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
