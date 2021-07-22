@@ -23,9 +23,8 @@ CATEGORY_PRODUCT_DATA = [
 
 
 @pytest.mark.django_db
-def test_products_from_category_plugin():
+def test_products_from_category_plugin(reindex_catalog):
     shop = get_default_shop()
-    supplier = get_default_supplier()
     cat = Category.objects.create(identifier="cat-1")
     for name, sku, price in CATEGORY_PRODUCT_DATA:
         product = _create_orderable_product(name, sku, price=price)
@@ -35,9 +34,10 @@ def test_products_from_category_plugin():
         shop_product.save()
         shop_product.categories.add(cat)
 
+    reindex_catalog()
     context = get_jinja_context()
     rendered = ProductsFromCategoryPlugin({"title": "Products", "count": 4, "category": cat.id}).render(context)
-    soup = BeautifulSoup(rendered)
+    soup = BeautifulSoup(rendered, "lxml")
     assert "Products" in soup.find("h2").contents[0]
     assert len(soup.findAll("div", {"class": "product-card"})) == 4
 

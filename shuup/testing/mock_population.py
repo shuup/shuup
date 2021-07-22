@@ -68,6 +68,10 @@ class Populator:
         if ShopProduct.objects.filter(shop=self.shop).count() < 5:
             self.populate()
 
+        from django.core.management import call_command
+
+        call_command("reindex_product_catalog")
+
 
 def populate_if_required():
     Populator().populate_if_required()

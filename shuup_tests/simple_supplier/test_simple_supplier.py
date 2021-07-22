@@ -167,7 +167,7 @@ def test_new_product_admin_form_renders(rf, client, admin_user):
     Make sure that no exceptions are raised when creating a new product
     with simple supplier enabled
     """
-    shop = get_default_shop()
+    get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view = ProductEditView.as_view()
     supplier = get_simple_supplier()
@@ -188,6 +188,7 @@ def test_alert_limit_view(rf, admin_user):
     supplier = get_simple_supplier()
     shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
+    supplier.update_stock(product.pk)
     sc = StockCount.objects.get(supplier=supplier, product=product)
     assert not sc.alert_limit
 
@@ -218,7 +219,7 @@ def test_alert_limit_notification(rf, admin_user):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         product = create_product("simple-test-product", shop, supplier)
-
+        supplier.update_stock(product.pk)
         sc = StockCount.objects.get(supplier=supplier, product=product)
         sc.alert_limit = 10
         sc.save()
