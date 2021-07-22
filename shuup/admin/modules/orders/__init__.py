@@ -102,11 +102,6 @@ class OrderModule(AdminModule):
                 name="order.create-full-refund",
             ),
             admin_url(
-                r"^orders/(?P<pk>\d+)/delete-order-status-history/$",
-                "shuup.admin.modules.orders.views.OrderDeleteStatusHistoryView",
-                name="order.delete-order-status-history",
-            ),
-            admin_url(
                 r"^orders/(?P<pk>\d+)/$", "shuup.admin.modules.orders.views.OrderDetailView", name="order.detail"
             ),
             admin_url(r"^orders/new/$", "shuup.admin.modules.orders.views.OrderEditView", name="order.new"),

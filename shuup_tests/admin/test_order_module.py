@@ -16,7 +16,6 @@ from shuup.admin.modules.orders.views import (
     OrderCreateRefundView,
     OrderCreateShipmentView,
     OrderDeletePaymentView,
-    OrderDeleteStatusHistoryView,
     OrderDetailView,
     OrderSetPaidView,
     OrderSetStatusView,
@@ -224,24 +223,3 @@ def test_view_availability(admin_user, rf):
     test_payment_delete_view(payment, shop_one, peter)
     with pytest.raises(Http404):
         test_payment_delete_view(payment, shop_two, calle)
-
-
-@pytest.mark.django_db
-def test_delete_order_status_change(admin_user, rf):
-    OrderStatusManager().ensure_default_statuses()
-    product = create_product("p", get_default_shop(), get_default_supplier())
-
-    customer = create_random_person()
-    # Initial Order
-    order = create_random_order(customer=customer, products=[product])
-    order.change_status(OrderStatus.objects.get_default_initial())
-
-    # delete the order status change
-    order_status_change = order.order_history.last()
-    view = OrderDeleteStatusHistoryView.as_view()
-    request = apply_request_middleware(rf.post("/", {"order_status_history": order_status_change.pk}), user=admin_user)
-    response = view(request, pk=order.pk)
-    assert response.status_code == 302
-
-    order_status_change = OrderStatusHistory.objects.filter(pk=order_status_change.pk).first()
-    assert order_status_change is None

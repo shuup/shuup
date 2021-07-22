@@ -1,6 +1,6 @@
 {% extends "shuup/front/dashboard/dashboard.jinja" %}
 {% from "shuup/personal_order_history/macros/buttons.jinja" import render_action_buttons with context %}
-{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, order_contents, sent_shipments with context %}
+{% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, order_contents, sent_shipments, order_status_history with context %}
 
 {% block title %}{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{% endblock %}
 {% set main_title = _("Details of order %(identifier)s", identifier=order.identifier) %}
@@ -53,6 +53,12 @@
         <div class="col-sm-12">
             {{ order_contents() }}
         </div>
+        {% set _order_history = order.order_history.all() %}
+        {% if _order_history %}
+        <div class="col-sm-12">
+            {{ order_status_history(_order_history) }}
+        </div>
+        {% endif %}
         <div class="col-sm-12">
             {{ order_macros.render_ordered_files(order) }}
         </div>

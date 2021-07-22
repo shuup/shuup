@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db.backends.signals import connection_created
-from django.db.models.query_utils import Q
 from django.db.models.signals import m2m_changed, post_migrate, post_save
 from django.dispatch import receiver
 
@@ -40,13 +39,10 @@ from shuup.core.utils.price_cache import bump_all_price_caches, bump_prices_for_
 
 @receiver(post_migrate)
 def on_migrate(sender, **kwargs):
-    from .models import OrderStatus, OrderStatusManager, SupplierModule
+    from .models import OrderStatusManager, SupplierModule
 
     SupplierModule.ensure_all_supplier_modules()
-
-    os_qs = OrderStatus.objects.filter(~Q(allowed_next_statuses=None))
-    if not os_qs:
-        OrderStatusManager().ensure_allowed_next_statuses()
+    OrderStatusManager().ensure_allowed_next_statuses()
 
 
 def handle_post_save_bump_all_prices_caches(sender, instance, **kwargs):

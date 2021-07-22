@@ -151,7 +151,6 @@ class OrderHistorySection(Section):
     name = _("Order History")
     icon = "fa-history"
     template = "shuup/admin/orders/_order_status_history.jinja"
-    extra_js = "shuup/admin/orders/_order_status_history_js.jinja"
     order = 5
 
     @classmethod

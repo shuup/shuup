@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import OrderStatusHistory
+from shuup.core.models import Order
 from shuup.front.utils.dashboard import DashboardItem
 
 
@@ -21,9 +21,5 @@ class OrderHistoryItem(DashboardItem):
 
     def get_context(self):
         context = super(OrderHistoryItem, self).get_context()
-        context["order_status_history"] = (
-            OrderStatusHistory.objects.select_related("order")
-            .filter(order__customer=self.request.customer, next_order_status__visible_for_customer=True)
-            .order_by("-created_on")[:5]
-        )
+        context["orders"] = Order.objects.filter(customer=self.request.customer).order_by("-created_on")[:5]
         return context

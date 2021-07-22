@@ -21,6 +21,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Admin: add warnings to the product page through provides
+- Core: add history for order status changes
 
 ## [2.12.0] - 2021-07-15
 
@@ -38,7 +39,6 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Front: add timezone view to save the user's current timezone
-- Core: add history for order status changes
 
 ## [2.11.0] - 2021-07-07
 

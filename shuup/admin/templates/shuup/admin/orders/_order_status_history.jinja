@@ -6,29 +6,15 @@
             <th>{% trans %}User{% endtrans %}</th>
             <th>{% trans %}Status{% endtrans %}</th>
             <th>{% trans %}Description{% endtrans %}</th>
-            <th>{% trans %}Actions{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>
         {% for status_history_item in order_status_history %}
             <tr>
                 <td>{{ status_history_item.created_on|datetime }}</td>
-                <td>{{ status_history_item.creator }}</td>
+                <td>{{ status_history_item.creator if status_history_item.creator else "-" }}</td>
                 <td>{{ status_history_item.next_order_status }}</td>
                 <td>{{ status_history_item.description if status_history_item.description else '-' }}</td>
-                <td>
-                    {% if not (status_history_item.order.is_complete() or status_history_item.order.is_canceled()) %}
-                    <a
-                        href="{{ url('shuup_admin:order.delete-order-status-history', pk=status_history_item.order_id) }}"
-                        data-order-status-history="{{ status_history_item.pk }}"
-                        name="delete-order-status-history-link"
-                        class="btn btn-danger btn-sm"
-                    >
-                        <i class="fa fa-close"></i> {{ _("Delete") }}
-                    </a>
-                    {% endif %}
-
-                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -41,23 +27,11 @@
                 <div class="row">
                     <div class="col-sm-8">
                         {{ status_history_item.created_on|datetime }}<br>
-                        {{ status_history_item.creator }}<br>
+                        {{ status_history_item.creator if status_history_item.creator else "-" }}<br>
                         {% trans %}Description{% endtrans %}: {{ status_history_item.description if status_history_item.description else '-' }}
                     </div>
                     <div class="col-sm-4 text-right">
                         <strong>{{ status_history_item.next_order_status }}</strong>
-                    </div>
-                    <div class="col-xs-1 text-center">
-                        {% if not (status_history_item.order.is_complete() or status_history_item.order.is_canceled()) %}
-                        <a
-                            href="{{ url('shuup_admin:order.delete-order-status-history', pk=status_history_item.order_id) }}"
-                            data-order-status-history="{{ status_history_item.pk }}"
-                            name="delete-order-status-history-link"
-                            class="btn btn-danger btn-sm"
-                        >
-                            <i class="fa fa-close"></i>
-                        </a>
-                        {% endif %}
                     </div>
                 </div>
             </li>
