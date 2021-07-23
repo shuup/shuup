@@ -18,6 +18,13 @@
 {% block extrajs %}
     {{ super() }}
     <script>
+        window.addEventListener("unload", function() {
+            window.localStorage.removeItem("confirm-comment");
+        });
+        $("#id_comment").on("change keydown paste input", function(){
+            window.localStorage.setItem("confirm-comment", $("#id_comment").val());
+        });
+        document.getElementById("id_comment").value = window.localStorage.getItem("confirm-comment");
         $("#confirm_form").on("submit", function() {
             $(".btn-lg").text("{% trans %}Please wait...{% endtrans %}").prop("disabled", "true");
         });
