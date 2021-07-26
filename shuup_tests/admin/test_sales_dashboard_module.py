@@ -15,11 +15,12 @@ from shuup.admin.modules.sales_dashboard.dashboard import (
     get_recent_orders_block,
     get_shop_overview_block,
 )
-from shuup.core.models import OrderStatus, ShopStatus
+from shuup.core.models import ShopStatus
 from shuup.testing.factories import (
     DEFAULT_CURRENCY,
     create_random_order,
     create_random_person,
+    get_completed_order_status,
     get_default_product,
     get_default_shop,
     get_shop,
@@ -34,7 +35,7 @@ NUM_CUSTOMERS_COLUMN_INDEX = 3
 def get_order_for_date(dt, product):
     order = create_random_order(customer=create_random_person(), products=[product])
     order.order_date = to_aware(dt)
-    order.status = OrderStatus.objects.get_default_complete()
+    order.change_status(get_completed_order_status(), save=False)
     order.save()
     return order
 

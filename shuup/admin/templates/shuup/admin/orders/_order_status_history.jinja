@@ -1,0 +1,45 @@
+<div class="d-sm-none d-md-block table-responsive">
+    <table class="table table-striped {% if not order_status_history %} hidden {% endif %}">
+        <thead>
+        <tr>
+            <th>{% trans %}When{% endtrans %}</th>
+            <th>{% trans %}User{% endtrans %}</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+            <th>{% trans %}Description{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for status_history_item in order_status_history %}
+            <tr>
+                <td>{{ status_history_item.created_on|datetime }}</td>
+                <td>{{ status_history_item.creator if status_history_item.creator else "-" }}</td>
+                <td>{{ status_history_item.next_order_status }}</td>
+                <td>{{ status_history_item.description if status_history_item.description else '-' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="d-none d-sm-block d-md-none mobile-list-group {% if not order_status_history %} hidden {% endif %}">
+    <ul class="list-group">
+        {% for status_history_item in order_status_history %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-8">
+                        {{ status_history_item.created_on|datetime }}<br>
+                        {{ status_history_item.creator if status_history_item.creator else "-" }}<br>
+                        {% trans %}Description{% endtrans %}: {{ status_history_item.description if status_history_item.description else '-' }}
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        <strong>{{ status_history_item.next_order_status }}</strong>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if not order_status_history %}
+    <div id="no-order-status-history-text">
+        <p>{% trans %}The order has no status history.{% endtrans %}</p>
+    </div>
+{% endif %}

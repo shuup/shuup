@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"POT-Creation-Date: 2021-07-26 12:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1007,10 +1007,31 @@ msgstr ""
 msgid "The name shown to the customers in shop front."
 msgstr ""
 
+msgid "allowed next statuses"
+msgstr ""
+
+msgid "is visible for the user"
+msgstr ""
+
+msgid "Indicates whether this status is visible for the customers"
+msgstr ""
+
 msgid "order status"
 msgstr ""
 
 msgid "order statuses"
+msgstr ""
+
+msgid "order id"
+msgstr ""
+
+msgid "previous order status"
+msgstr ""
+
+msgid "next order status"
+msgstr ""
+
+msgid "creating user"
 msgstr ""
 
 msgid "order identifier"
@@ -1023,9 +1044,6 @@ msgid "email address"
 msgstr ""
 
 msgid "customer groups"
-msgstr ""
-
-msgid "creating user"
 msgstr ""
 
 msgid "modifier user"
@@ -1113,6 +1131,9 @@ msgstr ""
 
 #, python-format
 msgid "New payment status is set to: %(payment_status)s."
+msgstr ""
+
+msgid "Error! Can not change to this status"
 msgstr ""
 
 msgid "gateway ID"

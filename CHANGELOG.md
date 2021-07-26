@@ -17,10 +17,12 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Front: enforce setting the current customer to the basket
+- Admin: fix crash when viewing an order with a shipment_method without a carrier defined
 
 ### Added
 
 - Admin: add warnings to the product page through provides
+- Core: add history for order status changes
 
 ## [2.12.0] - 2021-07-15
 
