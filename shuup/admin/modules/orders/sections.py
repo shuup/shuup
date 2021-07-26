@@ -148,7 +148,7 @@ class AdminCommentSection(Section):
 
 class OrderHistorySection(Section):
     identifier = "order_status_history"
-    name = _("Order History")
+    name = _("Status history")
     icon = "fa-history"
     template = "shuup/admin/orders/_order_status_history.jinja"
     order = 5
