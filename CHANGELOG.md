@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Reports: prevent tables from overflowing to the right in pdf reports.
+
 ### Changed
 
 - Admin: remove the members field from the permission groups
