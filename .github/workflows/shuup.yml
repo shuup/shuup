@@ -51,8 +51,6 @@ jobs:
       run: pip install -r requirements-tests.txt
     - name: Create logs folder
       run: mkdir .unit_tests
-    - name: Run migrations
-      run: python -m shuup_workbench migrate
     - name: Run makemessages
       run: python -m shuup_workbench shuup_makemessages -l en
     - name: Run tests
