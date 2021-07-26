@@ -271,7 +271,7 @@ class AppliedAttribute(TranslatableModel):
 
     attribute = models.ForeignKey(on_delete=models.CASCADE, to=Attribute, verbose_name=_("attribute"))
 
-    chosen_options = models.ManyToManyField(to=AttributeChoiceOption, verbose_name=_("chosen options"))
+    chosen_options = models.ManyToManyField(to=AttributeChoiceOption, verbose_name=_("chosen options"), blank=True)
 
     numeric_value = models.DecimalField(
         null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"), db_index=True

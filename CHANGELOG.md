@@ -16,6 +16,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Core: don't make attribute choices required fields
 - Front: enforce setting the current customer to the basket
 - Admin: fix crash when viewing an order with a shipment_method without a carrier defined
 
