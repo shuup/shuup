@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.toolbar import PostActionButton, get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Attribute, ProductType
@@ -19,7 +19,7 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class ProductTypeForm(MultiLanguageModelForm):
-    attributes = Select2MultipleField(
+    attributes = ObjectSelect2MultipleField(
         model=Attribute,
         required=False,
         help_text=_(

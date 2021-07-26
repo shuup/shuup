@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import QuickAddLabelMultiSelect, QuickAddUserMultiSelect
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.settings_provider import ShuupSettings
@@ -45,8 +45,11 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
             help_text=_("The primary shop currency. This is the currency used when selling your products."),
         )
 
-        staff_members = Select2MultipleField(
-            label=_("Staff"), help_text=_("Select staff members for this shop."), model=get_user_model(), required=False
+        staff_members = ObjectSelect2MultipleField(
+            label=_("Staff"),
+            help_text=_("Select staff members for this shop."),
+            model=get_user_model(),
+            required=False,
         )
         staff_members.widget = QuickAddUserMultiSelect(attrs={"data-model": "auth.User"})
         initial_members = self.instance.staff_members.all() if self.instance.pk else []

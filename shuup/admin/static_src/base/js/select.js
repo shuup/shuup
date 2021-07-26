@@ -11,7 +11,7 @@ import $ from 'jquery';
 import select2 from 'select2';
 select2($);
 
-export function activateSelect($select, model, searchMode, extraFilters = null, noExpand = false, attrs = {}) {
+export function activateSelect($select, model, searchMode, extraFilters = null, noExpand = false, attrs = {}, isObjectSelector = false) {
     if (!noExpand) {
         // make sure to expand the select2 to use all the available space
         $select.width("100%");
@@ -57,20 +57,35 @@ export function activateSelect($select, model, searchMode, extraFilters = null, 
             language,
         });
     }
-
+    let url = null;
+    if (isObjectSelector) {
+        url = window.ShuupAdminConfig.browserUrls.object_selector;
+    } else {
+        url = window.ShuupAdminConfig.browserUrls.select;
+    }
+    
     return $select.select2(Object.assign({
         language,
         minimumInputLength: window.ShuupAdminConfig.settings.minSearchInputLength,
         ajax: {
-            url: window.ShuupAdminConfig.browserUrls.select,
+            url: url,
             dataType: "json",
             data: function (params) {
-                const data = {
-                    model: model,
-                    searchMode: searchMode,
-                    search: params.term,
-                };
                 // extraFilters is a fn that returns extra params for the query
+                let data = null;
+                if (isObjectSelector) {
+                    data = {
+                        selector: model,
+                        q: params.term,
+                        searchMode: searchMode,
+                    };
+                } else {
+                    data = {
+                        model: model,
+                        searchMode: searchMode,
+                        search: params.term,
+                    };
+                }
                 if (extraFilters) {
                     Object.assign(data, extraFilters(params));
                 }
@@ -111,7 +126,8 @@ export function activateSelects() {
                 placeholder,
                 allowClear
             };
-            activateSelect(select, model, searchMode, null, noExpand, attrs);
+            const isObjectSelector = select.hasClass("object-selector")
+            activateSelect(select, model, searchMode, null, noExpand, attrs, isObjectSelector);
         }
     });
 }

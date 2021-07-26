@@ -11,7 +11,7 @@ from django_countries import countries
 from django_countries.fields import LazyTypedChoiceField
 from enumfields import EnumField
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget,
     PersonContactChoiceWidget,
@@ -143,8 +143,10 @@ class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
     def init_fields(self):
         super(CompanyContactBaseForm, self).init_fields()
         self.fields["name"].help_text = _("The company name.")
-        members_field = Select2MultipleField(
-            model=PersonContact, required=False, help_text=_("The contacts that are members of this company.")
+        members_field = ObjectSelect2MultipleField(
+            model=PersonContact,
+            required=False,
+            help_text=_("The contacts that are members of this company."),
         )
         if self.instance.pk and hasattr(self.instance, "members"):
             members_field.widget.choices = [(object.pk, force_text(object)) for object in self.instance.members.all()]

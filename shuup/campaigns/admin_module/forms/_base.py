@@ -9,7 +9,7 @@ from django.db.models import ManyToManyField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
 from shuup.admin.shop_provider import get_shop
 from shuup.utils.django_compat import reverse_lazy
@@ -47,7 +47,7 @@ class BaseCampaignForm(ShuupAdminForm):
             self.add_error("end_datetime", _("Campaign end date can't be before a start date."))
 
 
-class CampaignsSelectMultipleField(Select2MultipleField):
+class CampaignsSelectMultipleField(ObjectSelect2MultipleField):
     def __init__(self, campaign_model, field, *args, **kwargs):
         field_count = len(
             [f for f in campaign_model._meta.get_fields(include_parents=False) if isinstance(f, ManyToManyField)]

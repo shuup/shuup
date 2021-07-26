@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
@@ -63,3 +64,17 @@ class TaxModule(AdminModule):
             or derive_model_url(TaxClass, "shuup_admin:tax_class", object, kind)
             or derive_model_url(CustomerTaxGroup, "shuup_admin:customer_tax_group", object, kind)
         )
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return [
+            "customer_tax_group.object_selector",
+            "tax.object_selector",
+            "tax_class.object_selector",
+        ]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            "customer_tax_group.object_selector": _("Allow the user to select customer tax groups in admin."),
+            "tax.object_selector": _("Allow the user to select taxes in admin."),
+            "tax_class.object_selector": _("Allow the user to select tax classes in admin."),
+        }

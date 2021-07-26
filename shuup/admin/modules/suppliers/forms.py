@@ -13,7 +13,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MutableAddress, Shop, Supplier, SupplierShop
@@ -39,7 +39,7 @@ class SupplierBaseForm(ShuupAdminForm):
         # add shops field when superuser only
         if getattr(self.request.user, "is_superuser", False):
             initial_shops = self.instance.shops.all() if self.instance.pk else []
-            self.fields["shops"] = Select2MultipleField(
+            self.fields["shops"] = ObjectSelect2MultipleField(
                 label=_("Shops"),
                 help_text=_("Select shops for this supplier. Keep it blank to share with all shops."),
                 model=Shop,

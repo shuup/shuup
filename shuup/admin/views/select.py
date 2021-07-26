@@ -16,8 +16,11 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
+from http import HTTPStatus
+from typing import Iterable, Tuple
 
 from shuup.admin.supplier_provider import get_supplier
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     Carrier,
     Category,
@@ -41,6 +44,10 @@ def _field_exists(model, field):
 
 
 class MultiselectAjaxView(TemplateView):
+    """
+    This view is deprecated and it will be removed on version 3.
+    """
+
     model = None
     search_fields = []
     result_limit = 20
@@ -193,3 +200,68 @@ class MultiselectAjaxView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({"results": self.get_data(request, *args, **kwargs)})
+
+
+class ObjectSelectorView(TemplateView):
+    """
+    Base class for responding to searches from select2 components.
+    """
+
+    def get(self, request, *args, **kwargs):
+
+        selector = request.GET.get("selector")
+        search_term = request.GET.get("q").strip()
+        search_mode = request.GET.get("searchMode")
+        sales_units = request.GET.get("salesUnits")
+        user = request.user
+
+        shop = request.GET.get("shop")
+        if shop:
+            query_shop = Shop.objects.get_for_user(request.user).filter(pk=request.GET["shop"]).first()
+            if query_shop:
+                shop = query_shop
+        else:
+            shop = Shop.objects.get_for_user(request.user).first()
+
+        supplier = get_supplier(request)
+
+        if not (selector and search_term):
+            return JsonResponse({}, status=HTTPStatus.BAD_REQUEST)  # Error 400
+
+        for admin_object_selector_class in sorted(
+            get_provide_objects("admin_object_selector"), key=lambda provides: provides.ordering
+        ):
+            if not issubclass(admin_object_selector_class, BaseAdminObjectSelector):
+                continue
+
+            if not admin_object_selector_class.handles_selector(selector):
+                continue
+
+            admin_object_selector = admin_object_selector_class(selector, request=request)
+
+            if not admin_object_selector.has_permission(user=request.user):
+                return JsonResponse({}, status=HTTPStatus.NOT_ACCEPTABLE)  # Error 406
+
+            data = admin_object_selector.get_objects(
+                search_term, search_mode=search_mode, shop=shop, supplier=supplier, sales_units=sales_units, user=user
+            )
+            return JsonResponse({"results": data})
+
+        return JsonResponse({}, status=HTTPStatus.NOT_FOUND)  # Error 404
+
+
+class BaseAdminObjectSelector:
+    search_limit = 20
+
+    def __init__(self, selector, *args, **kwargs):
+        self.selector = selector
+
+    @classmethod
+    def handles_selector(cls, selector) -> bool:
+        raise NotImplementedError()
+
+    def has_permission(self, user) -> bool:
+        raise NotImplementedError()
+
+    def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
+        raise NotImplementedError()

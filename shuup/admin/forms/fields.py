@@ -37,6 +37,11 @@ class PercentageField(DecimalField):
 
 
 class Select2ModelField(Field):
+    """
+    This form field class is deprecated and it will be removed on version 3.
+    Use ObjectSelect2ModelField class instead.
+    """
+
     widget = Select
 
     def __init__(self, model, *args, **kwargs):
@@ -61,6 +66,11 @@ class Select2ModelField(Field):
 
 
 class Select2MultipleField(Field):
+    """
+    This form field class is deprecated and it will be removed on version 3.
+    Use ObjectSelect2MultipleField class instead.
+    """
+
     widget = SelectMultiple
 
     def __init__(self, model, search_mode=None, *args, **kwargs):
@@ -100,6 +110,9 @@ class Select2MultipleField(Field):
 class Select2ModelMultipleField(Select2MultipleField):
     """
     Just like Select2MultipleField, but return instances instead of ids.
+
+    This form field class is deprecated and it will be removed on version 3.
+    Use ObjectSelect2ModelMultipleField class instead.
     """
 
     def prepare_value(self, value):
@@ -114,7 +127,12 @@ class Select2ModelMultipleField(Select2MultipleField):
 
 
 class Select2MultipleMainProductField(Select2MultipleField):
-    """Search only from parent and normal products."""
+    """
+    Search only from parent and normal products.
+
+    This form field class is deprecated and it will be removed on version 3.
+    Use ObjectSelect2MultipleMainProductField class instead.
+    """
 
     def widget_attrs(self, widget):
         attrs = super(Select2MultipleMainProductField, self).widget_attrs(widget)
@@ -165,3 +183,51 @@ class WeekdayField(MultipleChoiceField):
 
     def clean(self, value):
         return ",".join(super(WeekdayField, self).clean(value))
+
+
+class ObjectSelect2ModelField(Select2ModelField):
+    """
+    Class for select2 form fields.
+    Replacement for the class Select2ModelField.
+    """
+
+    def widget_attrs(self, widget):
+        attrs = super(ObjectSelect2ModelField, self).widget_attrs(widget)
+        attrs["class"] = "object-selector"
+        return attrs
+
+
+class ObjectSelect2MultipleField(Select2MultipleField):
+    """
+    Class for select2 form fields.
+    Replacement for the class Select2MultipleField.
+    """
+
+    def widget_attrs(self, widget):
+        attrs = super(ObjectSelect2MultipleField, self).widget_attrs(widget)
+        attrs["class"] = "object-selector"
+        return attrs
+
+
+class ObjectSelect2ModelMultipleField(Select2ModelMultipleField):
+    """
+    Class for select2 form fields.
+    Replacement for the class Select2ModelMultipleField.
+    """
+
+    def widget_attrs(self, widget):
+        attrs = super(ObjectSelect2ModelMultipleField, self).widget_attrs(widget)
+        attrs["class"] = "object-selector"
+        return attrs
+
+
+class ObjectSelect2MultipleMainProductField(Select2MultipleMainProductField):
+    """
+    Class for select2 form fields.
+    Replacement for the class Select2MultipleMainProductField.
+    """
+
+    def widget_attrs(self, widget):
+        attrs = super(ObjectSelect2MultipleMainProductField, self).widget_attrs(widget)
+        attrs["class"] = "object-selector"
+        return attrs

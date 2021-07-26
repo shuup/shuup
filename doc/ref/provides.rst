@@ -92,16 +92,6 @@ Core
     Additional ``BaseActionButton`` subclasses for Contact edit.
     Subclass init should take current contact as a parameter.
 
-``admin_toolbar_button_provider``
-    Object that provides buttons to all toolbars.
-    Providers must subclass from ``shuup.admin.toolbar.BaseToolbarButtonProvider``
-    and implement the ``get_buttons_for_view`` method.
-
-``admin_mass_actions_provider```
-    Object that provides mass actions to all views.
-    Providers must subclass from ``shuup.admin.utils.picotable.PicotableMassActionProvider``
-    and implement the ``get_mass_actions_for_view`` method.
-
 ``admin_contact_section``
     Additional ``Section`` subclasses for Contact detail sections.
 
@@ -109,13 +99,26 @@ Core
     Allows providing extension for shipment creation in admin.
     Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
 
-``admin_order_information``
-    Additional information rows for Order detail page. Provide objects should inherit
-    from `~shuup.admin.modules.orders.utils.OrderInformation` class.
-
 ``admin_main_menu_updater``
     Allows updating the Admin Main Menu with new elements. The objects offered through this
     provide should inherit from ``~shuup.core.utils.menu.MainMenuUpdater`` class.
+
+``admin_mass_actions_provider```
+    Object that provides mass actions to all views.
+    Providers must subclass from ``shuup.admin.utils.picotable.PicotableMassActionProvider``
+    and implement the ``get_mass_actions_for_view`` method.
+
+``admin_module``
+    Admin module classes. Practically all of the functionality in the admin is built
+    via admin modules.
+
+``admin_object_selector``
+    Object selector classes for filtering models in select2 objects.
+    Providers must subclass from `~shuup.admin.views.select.BaseAdminObjectSelector` class.
+
+``admin_order_information``
+    Additional information rows for Order detail page. Provide objects should inherit
+    from `~shuup.admin.modules.orders.utils.OrderInformation` class.
 
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
@@ -143,9 +146,10 @@ Core
 ``admin_shop_form_part``
     Additional ``FormPart`` classes for Shop editing. See :doc:`example <../howto/new_tab>`.
 
-``admin_module``
-    Admin module classes. Practically all of the functionality in the admin is built
-    via admin modules.
+``admin_toolbar_button_provider``
+    Object that provides buttons to all toolbars.
+    Providers must subclass from ``shuup.admin.toolbar.BaseToolbarButtonProvider``
+    and implement the ``get_buttons_for_view`` method.
 
 ``basket_command_middleware``
     Injects a middleware in the basket command dispatcher that can be used

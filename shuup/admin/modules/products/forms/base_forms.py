@@ -18,7 +18,7 @@ from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext, ugettext_lazy as _
 from filer.models import Image
 
-from shuup.admin.forms.fields import Select2ModelField, Select2ModelMultipleField
+from shuup.admin.forms.fields import ObjectSelect2ModelField, ObjectSelect2ModelMultipleField
 from shuup.admin.forms.quick_select import NoModel
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget,
@@ -109,7 +109,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         if self.instance.pk:
             del self.fields["file"]
 
-        self.fields["manufacturer"] = Select2ModelField(
+        self.fields["manufacturer"] = ObjectSelect2ModelField(
             required=False,
             initial=(self.instance.manufacturer if self.instance.pk else None),
             model=Manufacturer,
@@ -124,7 +124,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         else:
             initial_type = kwargs.get("initial", {}).get("type")
 
-        self.fields["type"] = Select2ModelField(
+        self.fields["type"] = ObjectSelect2ModelField(
             label=_("Product type"),
             initial=initial_type,
             model=ProductType,
@@ -238,7 +238,7 @@ class ShopProductForm(MultiLanguageModelForm):
             initial_suppliers = [supplier] if supplier else []
 
         if settings.SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC.get("suppliers"):
-            self.fields["suppliers"] = Select2ModelMultipleField(
+            self.fields["suppliers"] = ObjectSelect2ModelMultipleField(
                 initial=initial_suppliers,
                 model=Supplier,
                 widget=QuickAddSupplierMultiSelect(initial=initial_suppliers, attrs={"data-search-mode": "enabled"}),
@@ -249,7 +249,7 @@ class ShopProductForm(MultiLanguageModelForm):
             self.fields["suppliers"].widget = QuickAddSupplierMultiSelect(initial=initial_suppliers)
 
         if settings.SHUUP_ADMIN_LOAD_SELECT_OBJECTS_ASYNC.get("categories"):
-            self.fields["primary_category"] = Select2ModelField(
+            self.fields["primary_category"] = ObjectSelect2ModelField(
                 initial=(self.instance.primary_category if self.instance.pk else None),
                 model=Category,
                 widget=QuickAddCategorySelect(
@@ -260,7 +260,7 @@ class ShopProductForm(MultiLanguageModelForm):
                 label=self.fields["primary_category"].label,
                 required=False,
             )
-            self.fields["categories"] = Select2ModelMultipleField(
+            self.fields["categories"] = ObjectSelect2ModelMultipleField(
                 initial=initial_categories,
                 model=Category,
                 widget=QuickAddCategoryMultiSelect(initial=initial_categories),

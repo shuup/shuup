@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
@@ -61,7 +61,7 @@ class CouponCodeForm(forms.ModelForm):
         super(CouponCodeForm, self).__init__(*args, **kwargs)
 
         if self.instance.pk:
-            self.fields["coupon_code_discounts"] = Select2MultipleField(
+            self.fields["coupon_code_discounts"] = ObjectSelect2MultipleField(
                 label=_("Product Discounts"),
                 help_text=_("Select discounts linked to this coupon code."),
                 model=Discount,

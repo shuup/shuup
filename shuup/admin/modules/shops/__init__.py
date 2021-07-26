@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
@@ -98,3 +99,9 @@ class ShopModule(AdminModule):
                     category=(_("Available Shops [currently active: {}]")).format(request.shop.name),
                     relevance=relevance,
                 )
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return ["shop.object_selector"]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {"shop.object_selector": _("Allow the user to select shops in admin.")}

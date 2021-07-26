@@ -13,6 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
@@ -158,6 +159,18 @@ class ProductModule(AdminModule):
             except ObjectDoesNotExist:
                 return None
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return [
+            "product.object_selector",
+            "shop_product.object_selector",
+        ]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            "product.object_selector": _("Allow the user to select products in admin."),
+            "shop_product.object_selector": _("Allow the user to select shop_products in admin."),
+        }
 
 
 m2m_changed.connect(

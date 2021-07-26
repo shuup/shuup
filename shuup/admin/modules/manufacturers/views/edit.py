@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.admin.forms import ShuupAdminFormNoTranslation
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -34,7 +34,7 @@ class ManufacturerForm(ShuupAdminFormNoTranslation):
         super(ManufacturerForm, self).__init__(*args, **kwargs)
         # add shops field when superuser only
         if getattr(self.request.user, "is_superuser", False):
-            self.fields["shops"] = Select2MultipleField(
+            self.fields["shops"] = ObjectSelect2MultipleField(
                 label=_("Shops"),
                 help_text=_("Select shops for this manufacturer. Keep it blank to share with all shops."),
                 model=Shop,

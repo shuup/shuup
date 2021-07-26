@@ -17,7 +17,7 @@ from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_select2multiplefield(rf, admin_user):
+def test_objectSelectField(rf, admin_user):
     activate("en")
     attr1 = Attribute.objects.create(type=AttributeType.INTEGER, identifier="attr-1", name="Attribute 1")
     attr2 = Attribute.objects.create(type=AttributeType.INTEGER, identifier="attr-2", name="Attribute 2")

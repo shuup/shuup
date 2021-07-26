@@ -17,7 +17,7 @@ from django.utils.translation import get_language, ugettext_lazy as _
 from itertools import chain
 
 from shuup import configuration as shuup_config
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.core.models import (
     Attribute,
     AttributeType,
@@ -682,7 +682,7 @@ class AttributeProductListFilter(SimpleProductListModifier):
         active, ordering = super(AttributeProductListFilter, self).get_admin_fields()
         active[1].help_text = _("Allow products to be filtered according to their attributes.")
 
-        attributes = Select2MultipleField(
+        attributes = ObjectSelect2MultipleField(
             model=Attribute,
             label=_("Attributes that can be filtered"),
             required=False,

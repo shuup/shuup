@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.picotable import Column, DateRangeFilter, TextFilter
@@ -62,7 +62,7 @@ class AvailabilityExceptionForm(forms.ModelForm):
         super(AvailabilityExceptionForm, self).__init__(*args, **kwargs)
 
         if self.instance.pk:
-            self.fields["discounts"] = Select2MultipleField(
+            self.fields["discounts"] = ObjectSelect2MultipleField(
                 label=_("Product Discounts"),
                 help_text=_("Select discounts to be ignored on given time frame."),
                 model=Discount,

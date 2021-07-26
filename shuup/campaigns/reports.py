@@ -9,7 +9,7 @@ from babel.dates import format_date
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.campaigns.models.campaigns import Coupon, CouponUsage
 from shuup.default_reports.forms import OrderReportForm
 from shuup.default_reports.mixins import OrderReportMixin
@@ -18,7 +18,7 @@ from shuup.utils.i18n import get_current_babel_locale
 
 
 class CouponsUsageForm(OrderReportForm):
-    coupon = Select2MultipleField(
+    coupon = ObjectSelect2MultipleField(
         label=_("Coupon"), model=Coupon, required=False, help_text=_("Filter report results by coupon.")
     )
 
