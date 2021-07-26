@@ -50,9 +50,10 @@ FIRST_CATEGORY_PRODUCT_DATA = [
 
 @pytest.mark.django_db
 @pytest.mark.skipif(os.environ.get("SHUUP_TESTS_CI", "0") == "1", reason="Disable when run in CI.")
-def test_category_product_filters_1(browser, live_server, settings):
+def test_category_product_filters_1(browser, live_server, settings, reindex_catalog):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -71,7 +72,7 @@ def test_category_product_filters_1(browser, live_server, settings):
 
 
 @pytest.mark.django_db
-def test_category_product_filters_2(browser, live_server, settings):
+def test_category_product_filters_2(browser, live_server, settings, reindex_catalog):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
 
@@ -86,6 +87,7 @@ def test_category_product_filters_2(browser, live_server, settings):
             "limit_product_list_page_size": True,
         },
     )
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -103,9 +105,10 @@ def test_category_product_filters_2(browser, live_server, settings):
 
 
 @pytest.mark.django_db
-def test_category_product_filters_3(browser, live_server, settings):
+def test_category_product_filters_3(browser, live_server, settings, reindex_catalog):
     cache.clear()  # Avoid cache from past tests
     shop, first_cat, second_cat, third_cat, first_manufacturer = initialize_db()
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -130,7 +133,7 @@ def test_category_product_filters_3(browser, live_server, settings):
 
 
 @pytest.mark.django_db
-def test_category_product_filters_4(browser, live_server, settings):
+def test_category_product_filters_4(browser, live_server, settings, reindex_catalog):
     """
     Do not show manufacturer option if there is any product
     """
@@ -151,6 +154,7 @@ def test_category_product_filters_4(browser, live_server, settings):
             "filter_products_by_manufacturer": True,
         },
     )
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -168,6 +172,7 @@ def test_category_product_filters_4(browser, live_server, settings):
     last_product = Product.objects.last()
     last_product.manufacturer = first_manufacturer
     last_product.save()
+    reindex_catalog()
     browser.visit("%s%s" % (live_server, url))
     assert browser.is_text_present("Manufacturers")
 
@@ -175,6 +180,7 @@ def test_category_product_filters_4(browser, live_server, settings):
     shop_product = last_product.get_shop_instance(shop)
     shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
     shop_product.save()
+    reindex_catalog()
 
     # the manufacturer filter is removed
     browser.visit("%s%s" % (live_server, url))
