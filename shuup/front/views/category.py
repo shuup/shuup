@@ -45,7 +45,8 @@ def get_context_data(context, request, category, product_filters):
         catalog.get_products_queryset()
         .filter(**product_filters)
         .filter(get_query_filters(request, category, data=data))
-        .prefetch_related("sales_unit", "sales_unit__translations")
+        .select_related("primary_image", "sales_unit", "tax_class", "primary_image__file")
+        .prefetch_related("translations", "sales_unit__translations")
     )
 
     products = get_product_queryset(products, request, category, data).distinct()
