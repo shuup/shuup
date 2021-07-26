@@ -10,7 +10,6 @@ import shuup.core.fields
 def ensure_allowed_next_statuses(apps, schema_editor):
     from shuup.core.models import OrderStatusManager
 
-    # OrderStatus = apps.getModel("shuup", "OrderStatus")
     OrderStatusManager().ensure_allowed_next_statuses()
 
 
@@ -86,5 +85,5 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
-        migrations.RunPython(ensure_allowed_next_statuses),
+        migrations.RunPython(ensure_allowed_next_statuses, migrations.RunPython.noop),
     ]
