@@ -56,11 +56,14 @@ def index_shop_product(shop_product: Union[ShopProduct, int]):
     )
 
     for supplier in suppliers:
-        is_purchasable = shop_product.is_orderable(
-            supplier=supplier,
-            customer=AnonymousContact(),
-            quantity=shop_product.minimum_purchase_quantity,
-            allow_cache=False,
+        is_purchasable = not (
+            list(
+                shop_product.get_purchasability_errors(
+                    supplier=supplier,
+                    customer=AnonymousContact(),
+                    quantity=shop_product.minimum_purchase_quantity,
+                )
+            )
         )
         ProductCatalogPrice.objects.filter(
             product_id=shop_product.product_id, shop_id=shop_product.shop_id, supplier_id=supplier.pk
