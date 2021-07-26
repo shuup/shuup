@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.management import call_command
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils import translation
@@ -150,6 +151,9 @@ class SampleObjectsWizardPane(WizardPane):
 
         # user will no longer see this pane
         configuration.set(None, "sample_data_wizard_completed", True)
+
+        # reindex the product catalog
+        call_command("reindex_product_catalog")
 
     @classmethod
     def _create_sample_categories(cls, shop, business_segment):
