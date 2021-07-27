@@ -177,7 +177,7 @@ def get_priced_children_for_price_range(request, product, quantity, supplier):
     catalog = ProductCatalog(
         ProductCatalogContext(
             shop=request.shop,
-            user=request.user,
+            user=getattr(request, "user", None),
             supplier=supplier,
             contact=getattr(request, "customer", None),
             purchasable_only=True,
@@ -191,6 +191,10 @@ def get_priced_children_for_price_range(request, product, quantity, supplier):
     )
 
     low = product_queryset.first()
+
+    if low is None:
+        return []
+
     high = product_queryset.last()
 
     return [

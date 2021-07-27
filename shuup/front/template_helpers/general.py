@@ -58,7 +58,7 @@ def _get_listed_products(context, n_products, ordering=None, filter_dict=None, o
     catalog = ProductCatalog(
         ProductCatalogContext(
             shop=shop,
-            user=request.user,
+            user=getattr(request, "user", None),
             contact=customer,
             purchasable_only=orderable_only,
             visibility=ShopProductVisibility.LISTED,
@@ -122,7 +122,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
     catalog = ProductCatalog(
         ProductCatalogContext(
             shop=request.shop,
-            user=request.user,
+            user=getattr(request, "user", None),
             supplier=supplier,
             contact=getattr(request, "customer", None),
             purchasable_only=orderable_only,
@@ -181,7 +181,7 @@ def get_all_manufacturers(context, purchasable_only=False):
     catalog = ProductCatalog(
         ProductCatalogContext(
             shop=request.shop,
-            user=request.user,
+            user=getattr(request, "user", None),
             contact=getattr(request, "customer", None),
             purchasable_only=purchasable_only,
             visibility=ShopProductVisibility.LISTED,

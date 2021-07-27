@@ -70,7 +70,7 @@ def _get_cross_sell_products(
     catalog = ProductCatalog(
         ProductCatalogContext(
             shop=request.shop,
-            user=request.user,
+            user=getattr(request, "user", None),
             contact=customer,
             purchasable_only=orderable_only,
             visibility=ShopProductVisibility.LISTED,

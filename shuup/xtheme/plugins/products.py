@@ -270,7 +270,7 @@ class ProductSelectionPlugin(TemplatedPlugin):
             catalog = ProductCatalog(
                 ProductCatalogContext(
                     shop=request.shop,
-                    user=request.user,
+                    user=getattr(request, "user", None),
                     contact=getattr(request, "customer", None),
                     purchasable_only=True,
                     visibility=ShopProductVisibility.LISTED,
