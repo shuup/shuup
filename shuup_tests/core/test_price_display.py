@@ -111,7 +111,7 @@ TEST_DATA = [
     ("prod|is_discounted", "True"),
     ("prod|discount_percent", "75%"),
     ("prod|discount_rate", "0.75"),
-    ("var_prod|price_range|safe", "(u'$4.50', u'$12.00')" if six.PY2 else "('$4.50', '$12.00')"),
+    ("var_prod|price_range|safe", "('$4.50', '$12.00')"),
     ("prod|price(quantity=2)", "$12.15"),
     ("prod|price(quantity=2, include_taxes=False)", "$12.15"),
     ("prod|price(quantity=2, include_taxes=True)", "$18.22"),
@@ -158,8 +158,9 @@ TEST_DATA = [
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
 @pytest.mark.django_db
-def test_filter(expr, expected_result):
+def test_filter(expr, expected_result, reindex_catalog):
     (engine, context) = _get_template_engine_and_context(create_var_product=True)
+    reindex_catalog()
     template = engine.from_string("{{ " + expr + "  }}")
     try:
         result = template.render(context)
@@ -251,11 +252,16 @@ def _get_template_engine_and_context(product_sku="6.0745", create_var_product=Fa
     order, order_line = _get_order_and_order_line(request)
 
     product = create_product(sku=product_sku, shop=shop, tax_class=tax_class)
+    supplier = get_default_supplier(shop)
 
     if create_var_product:
         var_product = create_product(sku="32.9", shop=shop, tax_class=tax_class)
-        child_product_1 = create_product(sku="4.50", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
-        child_product_2 = create_product(sku="12.00", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
+        child_product_1 = create_product(
+            sku="4.50", shop=shop, tax_class=tax_class, supplier=supplier, default_price="4.5"
+        )
+        child_product_2 = create_product(
+            sku="12.00", shop=shop, tax_class=tax_class, supplier=supplier, default_price="12"
+        )
         child_product_1.link_to_parent(var_product, variables={"color": "red"})
         child_product_2.link_to_parent(var_product, variables={"color": "blue"})
 

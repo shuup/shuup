@@ -130,21 +130,12 @@ class SortProductListByName(SimpleProductListModifier):
             ),
         ]
 
-    def sort_products(self, request, products, data):
+    def sort_products_queryset(self, request, queryset, data):
         sort = data.get("sort", "name_a")
-
-        def _get_product_name_lowered_stripped(product):
-            return product.name.lower().strip()
-
-        if not sort:
-            sort = ""
-
-        key = sort[:-2] if sort.endswith(("_a", "_d")) else sort
-        if key == "name":
-            sorter = _get_product_name_lowered_stripped
+        if sort in ("name_a", "name_d"):
             reverse = bool(sort.endswith("_d"))
-            products = sorted(products, key=sorter, reverse=reverse)
-        return products
+            queryset = queryset.translated(get_language()).order_by(f"{'-' if reverse else ''}translations__name")
+        return queryset
 
     def get_admin_fields(self):
         default_fields = super(SortProductListByName, self).get_admin_fields()
@@ -180,24 +171,17 @@ class SortProductListByPrice(SimpleProductListModifier):
             ),
         ]
 
-    def sort_products(self, request, products, data):
+    def sort_products_queryset(self, request, queryset, data):
         sort = data.get("sort")
 
-        def _get_product_price_getter_for_request(request):
-            def _get_product_price(product):
-                return product.get_price(request)
-
-            return _get_product_price
-
         if not sort:
-            sort = ""
+            return queryset
 
         key = sort[:-2] if sort.endswith(("_a", "_d")) else sort
         if key == "price":
             reverse = bool(sort.endswith("_d"))
-            sorter = _get_product_price_getter_for_request(request)
-            return sorted(products, key=sorter, reverse=reverse)
-        return products
+            queryset = queryset.order_by(f"{'-' if reverse else ''}catalog_price")
+        return queryset
 
     def get_admin_fields(self):
         default_fields = super(SortProductListByPrice, self).get_admin_fields()
@@ -234,21 +218,16 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
             ),
         ]
 
-    def sort_products(self, request, products, data):
+    def sort_products_queryset(self, request, queryset, data):
         sort = data.get("sort")
-
-        def _get_product_created_on_datetime(product):
-            return product.created_on
-
         if not sort:
-            sort = ""
+            return queryset
 
         key = sort[:-2] if sort.endswith(("_a", "_d")) else sort
         if key == "created_date":
-            sorter = _get_product_created_on_datetime
             reverse = bool(sort.endswith("_d"))
-            products = sorted(products, key=sorter, reverse=reverse)
-        return products
+            queryset = queryset.order_by(f"{'-' if reverse else ''}created_on")
+        return queryset
 
     def get_admin_fields(self):
         default_fields = super(SortProductListByCreatedDate, self).get_admin_fields()
@@ -540,23 +519,22 @@ class ProductPriceFilter(SimpleProductListModifier):
             ),
         ]
 
-    def filter_products(self, request, products, data):
+    def get_queryset(self, queryset, data):
         selected_range = data.get("price_range")
         if not selected_range:
-            return products
+            return queryset
 
         min_price, max_price = selected_range.split("-", 1)
         min_price_value = decimal.Decimal(min_price or 0)
         max_price_value = decimal.Decimal(max_price or 0)
-        filtered_products = []
-        for product in products:
-            price_value = product.get_price(request).amount.value
-            if price_value >= min_price_value and (max_price == "" or price_value < max_price_value):
-                filtered_products.append(product)
-        return filtered_products
+
+        return queryset.filter(
+            catalog_price__gte=min_price_value,
+            catalog_price__lte=max_price_value,
+        )
 
     def get_admin_fields(self):
-        default_fields = super(ProductPriceFilter, self).get_admin_fields()
+        default_fields = super().get_admin_fields()
         default_fields[0][1].help_text = _(
             "Enable this to allow products to be filtered by price. "
             "Prices will be listed in groups from the price range minimum to price range maximum in increments of "

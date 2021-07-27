@@ -10,7 +10,6 @@ from django.views.generic import ListView
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import Product, ProductMode, ShopProductVisibility
-from shuup.front.template_helpers.product import is_visible
 from shuup.front.utils.sorts_and_filters import (
     ProductListForm,
     get_product_queryset,
@@ -18,7 +17,6 @@ from shuup.front.utils.sorts_and_filters import (
     post_filter_products,
     sort_products,
 )
-from shuup.front.utils.views import cache_product_things
 
 
 class SearchView(ListView):
@@ -50,18 +48,14 @@ class SearchView(ListView):
         products = catalog.get_products_queryset().filter(
             Q(mode__in=ProductMode.get_parent_modes()), Q(get_query_filters(self.request, None, data=data))
         )
-        return get_product_queryset(products, self.request, None, data).distinct()
+        products = get_product_queryset(products, self.request, None, data)
+        products = post_filter_products(self.request, None, products, data)
+        products = sort_products(self.request, None, products, data)
+        return products.distinct()
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context["form"] = self.form
         products = context["products"]
-        if products:
-            data = self.form.cleaned_data
-            products = post_filter_products(self.request, None, products, data)
-            products = cache_product_things(self.request, products)
-            products = sort_products(self.request, None, products, data)
-            products = [p for p in products if is_visible({"request": self.request}, p)]
-            context["products"] = products
-        context["no_results"] = self.form.is_valid() and not products
+        context["no_results"] = self.form.is_valid() and not products.exists()
         return context
