@@ -525,7 +525,7 @@ class BaseBasket(OrderSource):
                                 break
                         if orderable:
                             orderable_lines.append(line)
-                            orderable_counter[product.id] += quantity
+                            orderable_counter[product.id] = quantity
                             for child_product, child_quantity in six.iteritems(quantity_map):
                                 orderable_counter[child_product.id] += child_quantity * line.quantity
                     else:

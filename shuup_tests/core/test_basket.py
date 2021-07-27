@@ -87,3 +87,36 @@ def test_basket_with_custom_shop(rf):
         product_shop2 = factories.create_product("product_shop2", shop2, factories.get_default_supplier(), 10)
         line = basket.add_product(factories.get_default_supplier(), shop2, product_shop2, 1)
         assert line.shop == shop2
+
+
+@pytest.mark.django_db
+def test_basket_whit_package_products(rf):
+    with override_settings(**CORE_BASKET_SETTINGS):
+        shop = factories.get_default_shop()
+        user = factories.create_random_user()
+        supplier = factories.get_default_supplier()
+        request = apply_request_middleware(rf.get("/"), user=user, shop=shop)
+        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
+        basket = basket_class(request, "basket", shop=shop)
+        assert basket.shop == shop
+        supplier.stock_managed = True
+        supplier.save()
+
+        package_product = factories.create_package_product("product", shop, supplier, default_price=10, children=4)
+        product_stock = supplier.get_stock_status(package_product.id)
+        stock = product_stock.physical_count
+        supplier.adjust_stock(package_product.id, -(stock - 6))
+        product_stock = supplier.get_stock_status(package_product.id)
+
+        for index, child_product in enumerate(list(package_product.get_package_child_to_quantity_map().keys()), 1):
+            child_product_stock = supplier.get_stock_status(child_product.id)
+            stock = child_product_stock.physical_count
+            supplier.adjust_stock(child_product.id, -(stock - 10 * index))
+            child_product_stock = supplier.get_stock_status(child_product.id)
+
+        basket.add_product(supplier, shop, package_product, 2, force_new_line=True)
+        basket.add_product(supplier, shop, package_product, 2, force_new_line=True)
+        basket.add_product(supplier, shop, package_product, 2, force_new_line=True)
+
+        basket.uncache()
+        assert len(basket.get_unorderable_lines()) == 0
