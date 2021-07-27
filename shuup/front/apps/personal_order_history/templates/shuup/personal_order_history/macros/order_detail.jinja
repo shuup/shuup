@@ -74,6 +74,29 @@
     {% endcall %}
 {% endmacro %}
 
+{% macro order_status_history(order_history) %}
+    {% call content_block(_("Status history")) %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{% trans %}When{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Description{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for status_history_item in order_history %}
+                <tr>
+                    <td>{{ status_history_item.created_on|datetime }}</td>
+                    <td>{{ status_history_item.next_order_status }}</td>
+                    <td>{{ status_history_item.description or '-' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endcall %}
+{% endmacro %}
+
 {% macro order_contents() %}
     {% call content_block(_("Order Contents")) %}
         {{ render_lines_table(order.lines.order_by("ordering"), order.taxful_total_price, order.taxless_total_price) }}

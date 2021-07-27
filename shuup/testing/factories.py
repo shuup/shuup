@@ -887,8 +887,8 @@ def create_random_order(  # noqa
                 order.create_payment(order.taxful_total_price)
 
             # also set complete
-            order.status = OrderStatus.objects.get_default_complete()
-            order.save(update_fields=("status",))
+            order.save()
+            order.change_status(next_status=get_completed_order_status(), user=customer.user)
         return order
 
 

@@ -18,7 +18,9 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 class OrderStatusForm(MultiLanguageModelForm):
     class Meta:
         model = OrderStatus
-        exclude = ["default"]
+        exclude = [
+            "default",
+        ]
 
     def __init__(self, **kwargs):
         super(OrderStatusForm, self).__init__(**kwargs)
@@ -76,6 +78,22 @@ class OrderStatusListView(PicotableListView):
             "default", _("Default"), linked=False, filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])
         ),
         Column(
+            "allowed_next_statuses",
+            _("Allowed Next Status"),
+            linked=False,
+            display="get_allowed_next_statuses_display",
+        ),
+        Column(
+            "visible_for_customer",
+            _("Visible For Customer"),
+            linked=False,
+            filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))]),
+        ),
+        Column(
             "is_active", _("Active"), linked=False, filter_config=ChoicesFilter([(False, _("yes")), (True, _("no"))])
         ),
     ]
+
+    def get_allowed_next_statuses_display(self, instance):
+        order_status_names = [order_status.name for order_status in instance.allowed_next_statuses.all()]
+        return ", ".join(order_status_names) if order_status_names else _("No allowed next status.")

@@ -22,7 +22,15 @@ from shuup.admin.modules.orders.views import (
     ShipmentDeleteView,
     UpdateAdminCommentView,
 )
-from shuup.core.models import Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
+from shuup.core.models import (
+    Order,
+    OrderLogEntry,
+    OrderStatus,
+    OrderStatusHistory,
+    OrderStatusManager,
+    OrderStatusRole,
+    ShippingStatus,
+)
 from shuup.testing.factories import (
     create_order_with_product,
     create_product,

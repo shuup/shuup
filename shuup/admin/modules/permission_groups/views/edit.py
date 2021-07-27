@@ -5,14 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 from django import forms
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
     get_permissions_from_group,
@@ -20,7 +16,6 @@ from shuup.admin.utils.permissions import (
     set_permissions_for_group,
 )
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.utils.django_compat import force_text
 
 
 class PermissionGroupForm(forms.ModelForm):
@@ -31,16 +26,6 @@ class PermissionGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PermissionGroupForm, self).__init__(*args, **kwargs)
         self.fields["name"].help_text = _("The Permission Group name.")
-        initial_members = self._get_initial_members()
-        members_field = Select2MultipleField(
-            model=get_user_model(),
-            initial=[member.pk for member in initial_members],
-            required=False,
-            label=_("Members"),
-            help_text=_("Set the users that belong to this Permission Group."),
-        )
-        members_field.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
-        self.fields["members"] = members_field
 
         initial_permissions = list(get_permissions_from_group(self.instance.pk)) if self.instance.pk else []
         self.admin_modules = self._get_module_choices()
@@ -90,16 +75,6 @@ class PermissionGroupForm(forms.ModelForm):
         modules.sort(key=lambda module: module.name)
         return modules
 
-    def _get_initial_members(self):
-        if self.instance.pk:
-            return self.instance.user_set.all()
-        else:
-            return []
-
-    def clean_members(self):
-        members = self.cleaned_data.get("members", [])
-        return get_user_model().objects.filter(pk__in=members).all()
-
     def clean(self):
         cleaned_data = super(PermissionGroupForm, self).clean()
         permissions = set()
@@ -113,7 +88,6 @@ class PermissionGroupForm(forms.ModelForm):
 
     def save(self):
         obj = super(PermissionGroupForm, self).save()
-        obj.user_set.set(set(self.cleaned_data["members"]))
         set_permissions_for_group(obj.pk, self.cleaned_data["permissions"])
         return obj
 
