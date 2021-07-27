@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 16:25+0000\n"
+"POT-Creation-Date: 2021-07-26 12:05+0000\n"
+"PO-Revision-Date: 2021-07-26 13:14+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -111,6 +111,15 @@ msgstr ""
 
 msgid "Billing Address"
 msgstr "Расчётный адрес"
+
+msgid "Status history"
+msgstr ""
+
+msgid "When"
+msgstr ""
+
+msgid "Description"
+msgstr ""
 
 msgid "Order Contents"
 msgstr "Содержание заказа"

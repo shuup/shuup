@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
-"PO-Revision-Date: 2021-06-02 23:24+0000\n"
-"Last-Translator: Christian Hess\n"
+"POT-Creation-Date: 2021-07-26 12:05+0000\n"
+"PO-Revision-Date: 2021-07-26 14:24+0000\n"
+"Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1014,11 +1014,32 @@ msgstr "публичное имя"
 msgid "The name shown to the customers in shop front."
 msgstr "Имя, показываемое покупателям в магазине."
 
+msgid "allowed next statuses"
+msgstr ""
+
+msgid "is visible for the user"
+msgstr ""
+
+msgid "Indicates whether this status is visible for the customers"
+msgstr ""
+
 msgid "order status"
 msgstr "статус заказа"
 
 msgid "order statuses"
 msgstr "статусы заказов"
+
+msgid "order id"
+msgstr ""
+
+msgid "previous order status"
+msgstr ""
+
+msgid "next order status"
+msgstr ""
+
+msgid "creating user"
+msgstr "Создание пользователя"
 
 msgid "order identifier"
 msgstr "идентификатор заказа"
@@ -1031,9 +1052,6 @@ msgstr "Адрес электронной почты"
 
 msgid "customer groups"
 msgstr "группы клиентов"
-
-msgid "creating user"
-msgstr "Создание пользователя"
 
 msgid "modifier user"
 msgstr "Пользователь-модификатор"
@@ -1121,6 +1139,9 @@ msgstr "Настройка нового статуса доставки: %(shipp
 #, python-format
 msgid "New payment status is set to: %(payment_status)s."
 msgstr "Статус нового платежа установлен: %(payment_status)s"
+
+msgid "Error! Can not change to this status"
+msgstr ""
 
 msgid "gateway ID"
 msgstr "Идентификатор шлюза"

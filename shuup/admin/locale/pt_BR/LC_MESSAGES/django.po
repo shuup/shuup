@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 12:49+0000\n"
-"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"POT-Creation-Date: 2021-07-26 12:05+0000\n"
+"PO-Revision-Date: 2021-07-26 12:17+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -702,6 +702,9 @@ msgstr "Entradas de Log"
 msgid "Admin comment/notes"
 msgstr "Comentários/notas do administrador"
 
+msgid "Status history"
+msgstr ""
+
 msgid "Set Status"
 msgstr "Atribuir estado"
 
@@ -976,14 +979,20 @@ msgstr "Função"
 msgid "Default"
 msgstr "Padrão"
 
+msgid "Allowed Next Status"
+msgstr ""
+
+msgid "Visible For Customer"
+msgstr ""
+
+msgid "No allowed next status."
+msgstr ""
+
 msgid "Granular Permission Groups"
 msgstr "Grupos Granulares de Permissão"
 
 msgid "The Permission Group name."
 msgstr "O nome do Grupo de Permissão."
-
-msgid "Set the users that belong to this Permission Group."
-msgstr "Defina os usuários que pertencem a este Grupo de Permissão."
 
 msgid "Create new Permission Group"
 msgstr "Criar um novo Grupo de Permissão"
@@ -1767,14 +1776,6 @@ msgstr "Primeiro Nome"
 
 msgid "Last Name"
 msgstr "Sobrenome"
-
-#, python-format
-msgid "First Name: %s"
-msgstr "Primeiro Nome: %s"
-
-#, python-format
-msgid "Last Name: %s"
-msgstr "Sobrenome: %s"
 
 msgid "The two password fields didn't match."
 msgstr "Os dois campos de senha não conferem."
@@ -3208,6 +3209,15 @@ msgid ""
 msgstr "Remessas enviadas não devem ser excluídas. A exclusão afetará a contagem de estoque físico dos produtos. Excluir assim mesmo?"
 
 msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
+msgid "When"
+msgstr ""
+
+msgid "The order has no status history."
+msgstr ""
+
+msgid "Are you sure you want to delete this order status history item?"
 msgstr ""
 
 msgid "Line #"
