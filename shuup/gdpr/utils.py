@@ -13,6 +13,7 @@ from django.utils.timezone import now
 from django.utils.translation import activate, get_language, ugettext_lazy as _
 from reversion import create_revision
 
+from shuup.core.models import PersonContact
 from shuup.simple_cms.models import Page
 from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import format_datetime
@@ -39,13 +40,22 @@ def get_cookie_consent_data(cookie_categories, consent_documents):
     }
 
 
-def get_all_contact_data(contact):
-    from shuup.core.models import CompanyContact
-    from shuup.gdpr.serializers import GDPRCompanyContactSerializer, GDPRPersonContactSerializer
+def get_all_contact_data(shop, contact):
+    from shuup.apps.provides import get_provide_objects
+    from shuup.gdpr.providers import GDPRBaseUserDataProvider
 
-    if isinstance(contact, CompanyContact):
-        return GDPRCompanyContactSerializer(contact).data
-    return GDPRPersonContactSerializer(contact).data
+    user_data = {}
+    for gdpr_user_data_provider in get_provide_objects("gdpr_user_data_provider"):
+        if not isinstance(gdpr_user_data_provider, GDPRBaseUserDataProvider):
+            continue
+
+        user = None
+        if isinstance(contact, PersonContact):
+            user = contact.user
+        for key, data in gdpr_user_data_provider.get_user_data(shop=shop, contact=contact, user=user):
+            user_data[key] = data
+
+    return user_data
 
 
 def ensure_gdpr_privacy_policy(shop, force_update=False):

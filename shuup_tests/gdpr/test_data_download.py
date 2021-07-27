@@ -34,7 +34,8 @@ def test_data_download(rf):
     response = view(request=request)
     assert response.status_code == 200
     data = json.loads(response.content.decode("utf-8"))
-    assert data["user"]["gdpr_consents"]
+
+    assert data == {}
 
     request = apply_request_middleware(rf.post("/"), shop=shop)
     response = view(request=request)

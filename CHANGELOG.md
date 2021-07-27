@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- GDPR: allow provides to extend the user data serialization
 - Admin: remove the members field from the permission groups
 - Admin: add the groups field in user picotable list
 - Admin: improve the format of the user list for mobile devices
@@ -26,6 +27,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Added
 
+- Tasks: trigger a notification event when a task is created
 - Admin: add warnings to the product page through provides
 - Core: add history for order status changes
 

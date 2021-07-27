@@ -108,7 +108,7 @@ class GDPRDownloadDataView(View):
 
         from shuup.gdpr.utils import get_all_contact_data
 
-        data = json.dumps(get_all_contact_data(self.request.person))
+        data = json.dumps(get_all_contact_data(self.request.shop, self.request.person))
         response = HttpResponse(data, content_type="application/json")
         response["Content-Disposition"] = "attachment; filename=user_data.json"
         return response
