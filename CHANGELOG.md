@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [2.13.0] - 2021-07-27
+
 ### Changed
 
 - GDPR: allow provides to extend the user data serialization
