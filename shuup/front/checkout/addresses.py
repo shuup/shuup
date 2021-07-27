@@ -150,7 +150,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         if self.storage.get("company"):
             basket.customer = self.storage.get("company")
         elif not basket.customer:
-            basket.customer = getattr(self.request, "customer") or AnonymousContact()
+            basket.customer = getattr(self.request, "customer", None) or AnonymousContact()
 
         if isinstance(basket.customer, CompanyContact):
             for address_kind in self.address_kinds:
