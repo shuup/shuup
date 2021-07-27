@@ -33,7 +33,7 @@ def test_permission_group_edit_view(rf, admin_user):
 
 
 @pytest.mark.django_db
-def test_permission_group_form_updates_members(regular_user):
+def test_permission_group_form_updates_members():
     with replace_modules([ARestrictedTestModule]):
         modules = [m for m in get_modules()]
         test_module = modules[0]
@@ -49,7 +49,6 @@ def test_permission_group_form_updates_members(regular_user):
 
         data = {
             "name": "New Name",
-            "members": [force_text(regular_user.pk)],
         }
         for permission in ARestrictedTestModule().get_required_permissions():
             data["perm:%s" % permission] = permission
@@ -59,7 +58,6 @@ def test_permission_group_form_updates_members(regular_user):
 
         assert group.name == "New Name"
         assert set(module_permissions) == get_permissions_from_group(group)
-        assert regular_user in group.user_set.all()
 
         form = PermissionGroupForm(instance=group, prefix=None, data={"name": "Name"})
         form.save()

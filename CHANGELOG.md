@@ -8,9 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Fixed
+
+- Reports: prevent tables from overflowing to the right in pdf reports.
+
+### Changed
+
+- Admin: remove the members field from the permission groups
+- Admin: add the groups field in user picotable list
+- Admin: improve the format of the user list for mobile devices
+
+### Fixed
+
+- Core: don't make attribute choices required fields
+- Front: enforce setting the current customer to the basket
+- Admin: fix crash when viewing an order with a shipment_method without a carrier defined
+
 ### Added
 
 - Admin: add warnings to the product page through provides
+- Core: add history for order status changes
 
 ## [2.12.0] - 2021-07-15
 

@@ -245,23 +245,39 @@ class HTMLReportWriter(ReportWriter):
     writer_type = "html"
 
     INLINE_TEMPLATE = """
-    <style type="text/css">%(style)s</style>
+<body>
     %(body)s
+</body>
     """.strip()
 
     TEMPLATE = (
         """
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>%(title)s</title>
 %(extrahead)s
+<style type="text/css">%(style)s</style>
 </head>""".strip()
         + INLINE_TEMPLATE
         + """</html>"""
     )
 
-    styles = """@page { prince-shrink-to-fit: auto }""".strip()
+    # styles = """@page { prince-shrink-to-fit: auto }""".strip()
+    styles = """
+@page { size: 8.5in 11in }
+body { max-width: 95%}
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+table, th, td {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+    """.strip()
+
     extra_header = ""
 
     def __init__(self):

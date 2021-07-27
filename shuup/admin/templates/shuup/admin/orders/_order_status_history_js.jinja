@@ -1,0 +1,28 @@
+<script>
+    (function() {
+        $("a[name='delete-order-status-history-link']").click(function (evt) {
+            evt.preventDefault();
+            var orderStatusHistoryId = $(this).data("order-status-history");
+            if (orderStatusHistoryId && confirm("{{ _('Are you sure you want to delete this order status history item?') }}")) {
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = $(this).attr("href");
+
+                var csrfInput = document.createElement("input");
+                csrfInput.type = "hidden";
+                csrfInput.name = "csrfmiddlewaretoken";
+                csrfInput.value = "{{ csrf_token }}";
+                form.appendChild(csrfInput);
+
+                var orderStatusHistoryInput = document.createElement("input");
+                orderStatusHistoryInput.type = "hidden";
+                orderStatusHistoryInput.name = "order_status_history";
+                orderStatusHistoryInput.value = orderStatusHistoryId;
+                form.appendChild(orderStatusHistoryInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    })();
+</script>

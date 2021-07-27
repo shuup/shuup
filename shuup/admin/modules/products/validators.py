@@ -12,7 +12,7 @@ from shuup.core.models import Shop, ShopProduct, Supplier
 
 
 class AdminProductValidator:
-    """Base class for validating products."""
+    """ Base class for validating products. """
 
     ordering = 0
 
