@@ -8,8 +8,16 @@
 import six
 from django.conf import settings
 from django.db.models import Q
+from typing import Iterable
 
-from shuup.core.models import Category
+from shuup.core.models import (
+    AnonymousContact,
+    ProductCatalogDiscountedPrice,
+    ProductCatalogDiscountedPriceRule,
+    ShopProduct,
+    Supplier,
+)
+from shuup.core.pricing import PricingContext
 from shuup.core.utils import context_cache
 from shuup.utils.dates import to_timestamp
 
@@ -18,12 +26,12 @@ def _get_price_expiration_cache_key(shop_id):
     return "price_expiration_%s" % shop_id
 
 
-def get_potential_discounts_for_product(context, product, available_only=True):
+def get_potential_discounts_for_product(context, product, available_only=True, groups_ids=None):
     """
     Get a queryset of all possible discounts for a given context and product
 
     If `available_only` is True, only the discounts which match
-        happy hours, availability exceptions and start/end dates will be returned
+        happy hours, start/end dates will be returned
 
     If `available_only` is False, all discounts that match with the context and product,
         that are active will be returned.
@@ -31,8 +39,10 @@ def get_potential_discounts_for_product(context, product, available_only=True):
     shop = context.shop
     product_id = product if isinstance(product, six.integer_types) else product.pk
 
-    category_ids = list(Category.objects.filter(shop_products__product_id=product_id).values_list("id", flat=True))
-    group_ids = list(context.customer.groups_ids)
+    category_ids = ShopProduct.objects.filter(product_id=product_id, shop=context.shop).values_list(
+        "categories__id", flat=True
+    )
+    group_ids = groups_ids if groups_ids else list(context.customer.groups_ids)
 
     # Product condition is always applied
     condition_query = Q(product__isnull=True) | Q(product_id=product_id)
@@ -47,53 +57,30 @@ def get_potential_discounts_for_product(context, product, available_only=True):
         condition_query &= Q(supplier__isnull=True)
 
     # Apply category conditions
-    if len(category_ids) == 1:
-        condition_query &= (
-            Q(category__isnull=True)
-            | (Q(exclude_selected_category=False) & Q(category__id=category_ids[0]))
-            | (Q(exclude_selected_category=True) & ~Q(category__id=category_ids[0]))
-        )
-    else:
-        condition_query &= (
-            Q(category__isnull=True)
-            | (Q(exclude_selected_category=False) & Q(category__id__in=category_ids))
-            | (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
-        )
+    condition_query &= (
+        Q(category__isnull=True)
+        | (Q(exclude_selected_category=False) & Q(category__id__in=category_ids))
+        | (Q(exclude_selected_category=True) & ~Q(category__id__in=category_ids))
+    )
 
     # Apply contact conditions
-    condition_query &= Q(contact__isnull=True) | Q(contact_id=context.customer.pk)
-
-    # Apply contact group conditions
-    if len(group_ids) == 1:
-        condition_query &= (
-            Q(contact_group__isnull=True)
-            | (Q(exclude_selected_contact_group=False) & Q(contact_group__id=group_ids[0]))
-            | (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id=group_ids[0]))
-        )
+    if context.customer:
+        condition_query &= Q(contact__isnull=True) | Q(contact=context.customer)
     else:
-        condition_query &= (
-            Q(contact_group__isnull=True)
-            | (Q(exclude_selected_contact_group=False) & Q(contact_group__id__in=group_ids))
-            | (Q(exclude_selected_contact_group=True) & ~Q(contact_group__id__in=group_ids))
-        )
+        condition_query &= Q(contact__isnull=True)
 
-    # Apply coupon code condition
-    basket = getattr(context, "basket", None)
-    if basket and basket.codes:
-        coupon_queries = Q()
-        for code in basket.codes:  # TODO: Revise! Likely there is not too many codes in basket.
-            coupon_queries |= Q(Q(coupon_code__active=True) & Q(coupon_code__code__iexact=code))
-
-        condition_query &= Q(coupon_code__isnull=True) | coupon_queries
+    if group_ids:
+        # Apply contact group conditions
+        condition_query &= Q(Q(contact_group__isnull=True) | Q(contact_group__id__in=group_ids))
     else:
-        condition_query &= Q(coupon_code__isnull=True)
+        condition_query &= Q(contact_group__isnull=True)
 
     from shuup.discounts.models import Discount
 
     if available_only:
         base_queryset = Discount.objects.available(shop)
     else:
-        base_queryset = Discount.objects.filter(shops=shop, active=True)
+        base_queryset = Discount.objects.filter(shop=shop, active=True)
 
     # Get all possible discounts for the current product and context
     return base_queryset.filter(condition_query).distinct()
@@ -103,9 +90,7 @@ def get_active_discount_for_code(order_or_order_source, code):
     from shuup.discounts.models import Discount
 
     shop = order_or_order_source.shop
-    return (
-        Discount.objects.available(shop).filter(Q(coupon_code__active=True) & Q(coupon_code__code__iexact=code)).first()
-    )
+    return Discount.objects.available(shop).first()
 
 
 def get_next_dates_for_range(weekday, from_hour, to_hour):
@@ -144,16 +129,10 @@ def get_next_dates_for_range(weekday, from_hour, to_hour):
     return ranges
 
 
-def bump_price_expiration(shops):
+def bump_price_expiration(shop_ids: Iterable[int]):
     """
-    Bump price expiration cache for shops
-
-    :param itetable[int|Shop] shops: list of shops to bump caches
+    Bump price expiration cache for shop ids
     """
-    from shuup.core.models import Shop
-
-    shop_ids = [shop.pk if isinstance(shop, Shop) else int(shop) for shop in shops]
-
     for shop_id in shop_ids:
         context_cache.bump_cache_for_item(_get_price_expiration_cache_key(shop_id))
 
@@ -173,8 +152,6 @@ def get_price_expiration(context, product):
                 next_discount_ends,
                 next_happy_hour_start,
                 next_happy_hour_end,
-                next_availability_exception_start,
-                next_availability_exception_end
             ]
             if event_date > now
         )
@@ -198,7 +175,7 @@ def get_price_expiration(context, product):
     if hasattr(context, "context_cache_key"):
         return getattr(context, context_cache_key)
 
-    from shuup.discounts.models import AvailabilityException, Discount, TimeRange
+    from shuup.discounts.models import Discount, TimeRange
 
     if settings.SHUUP_DISCOUNTS_PER_PRODUCT_EXPIRATION_DATES:
         potential_discounts = get_potential_discounts_for_product(context, product, available_only=False)
@@ -206,10 +183,6 @@ def get_price_expiration(context, product):
         potential_discounts = Discount.objects.active(context.shop)
 
     event_dates = []
-
-    availability_exceptions = AvailabilityException.objects.filter(discounts__in=potential_discounts).distinct()
-    for start_datetime, end_datetime in availability_exceptions.values_list("start_datetime", "end_datetime"):
-        event_dates.extend([start_datetime, end_datetime])
 
     time_ranges = TimeRange.objects.filter(happy_hour__discounts__in=potential_discounts).distinct()
     for weekday, from_hour, to_hour in time_ranges.values_list("weekday", "from_hour", "to_hour"):
@@ -231,3 +204,60 @@ def get_price_expiration(context, product):
         setattr(context, context_cache_key, min_event_date_timestamp)
 
         return min_event_date_timestamp
+
+
+def index_shop_product_price(
+    shop_product: ShopProduct,
+    supplier: Supplier,
+    discount_module_identifier: str,
+    contact_groups_ids: Iterable[int] = [],
+):
+    default_price = shop_product.default_price_value
+    context = PricingContext(shop=shop_product.shop, customer=AnonymousContact(), supplier=supplier)
+    discounts = get_potential_discounts_for_product(
+        context, shop_product.product, available_only=False, groups_ids=contact_groups_ids
+    )
+
+    for discount in discounts:
+        discount_options = [default_price]
+
+        if discount.discounted_price_value is not None:
+            discount_options.append(discount.discounted_price_value)
+
+        if discount.discount_amount_value is not None:
+            discount_options.append(default_price - discount.discount_amount_value)
+
+        if discount.discount_percentage is not None:
+            discount_options.append(default_price - (default_price * discount.discount_percentage))
+
+        best_discounted_price = max(min(discount_options), 0)
+        happy_hours_times = list(
+            discount.happy_hours.values_list(
+                "time_ranges__from_hour",
+                "time_ranges__to_hour",
+                "time_ranges__weekday",
+            )
+        )
+        # if ther is no happy hour condifured,
+        # let's create one rule without time constraints
+        if not happy_hours_times:
+            happy_hours_times.append((None, None, None))
+
+        for from_hour, to_hour, weekday in happy_hours_times:
+            catalog_rule = ProductCatalogDiscountedPriceRule.objects.get_or_create(
+                module_identifier=discount_module_identifier,
+                contact_group=discount.contact_group,
+                contact=discount.contact,
+                valid_start_date=discount.start_datetime,
+                valid_end_date=discount.end_datetime,
+                valid_start_hour=from_hour,
+                valid_end_hour=to_hour,
+                valid_weekday=weekday,
+            )[0]
+            ProductCatalogDiscountedPrice.objects.update_or_create(
+                product=shop_product.product,
+                shop=shop_product.shop,
+                supplier=supplier,
+                catalog_rule=catalog_rule,
+                discounted_price_value=best_discounted_price,
+            )

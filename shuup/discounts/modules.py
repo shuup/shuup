@@ -9,14 +9,8 @@ import six
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import ShopProduct
-from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.pricing import DiscountModule
-from shuup.discounts.models import CouponCode, CouponUsage
-from shuup.discounts.utils import (
-    get_active_discount_for_code,
-    get_potential_discounts_for_product,
-    get_price_expiration,
-)
+from shuup.discounts.utils import get_potential_discounts_for_product, get_price_expiration
 
 
 class ProductDiscountModule(DiscountModule):
@@ -25,18 +19,14 @@ class ProductDiscountModule(DiscountModule):
 
     def discount_price(self, context, product, price_info):
         shop = context.shop
-        basket = getattr(context, "basket", None)
         potential_discounts = get_potential_discounts_for_product(context, product).values_list(
-            "discounted_price_value", "discount_amount_value", "discount_percentage", "coupon_code__code"
+            "discounted_price_value",
+            "discount_amount_value",
+            "discount_percentage",
         )
 
         discounted_prices = []
-        for discounted_price_value, discount_amount_value, discount_percentage, coupon_code in potential_discounts:
-            if basket and coupon_code and not CouponCode.is_usable(shop, coupon_code, customer=basket.customer):
-                # TODO: Revise! This will cause some queries. Are do we want those? Maybe some cache for this check?
-                # Maybe somewhere we should just remove coupon codes that is not usable from basket all together?
-                continue
-
+        for discounted_price_value, discount_amount_value, discount_percentage in potential_discounts:
             if discounted_price_value:  # Applies the new product price per item
                 discounted_prices.append(
                     min(
@@ -77,25 +67,3 @@ class ProductDiscountModule(DiscountModule):
             price_info.expires_on = price_expiration
 
         return price_info
-
-
-class CouponCodeModule(OrderSourceModifierModule):
-    identifier = "discounts_coupon_codes"
-    name = _("Product Discounts Coupon Codes")
-
-    def can_use_code(self, order_source, code):
-        active_discount = get_active_discount_for_code(order_source, code)
-        if not active_discount:
-            return False
-
-        return active_discount.coupon_code.can_use_code(order_source.shop, order_source.customer)
-
-    def use_code(self, order, code):
-        active_discount = get_active_discount_for_code(order, code)
-        if not active_discount:  # TODO: Revise! Likely "shouldn't" happen too often
-            return
-
-        return active_discount.coupon_code.use(order)
-
-    def clear_codes(self, order):
-        CouponUsage.objects.filter(order=order).delete()

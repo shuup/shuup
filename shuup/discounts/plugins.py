@@ -31,7 +31,7 @@ class ProductSelectionConfigForm(GenericPluginForm):
                 self.fields[name] = value
 
         discounts_qs = Discount.objects.filter(
-            Q(shops=self.request.shop, active=True),
+            Q(shop=self.request.shop, active=True),
             Q(Q(product__isnull=False) | Q(category__isnull=False, exclude_selected_category=False)),
         )
 

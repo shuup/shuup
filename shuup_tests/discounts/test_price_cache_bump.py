@@ -14,8 +14,8 @@ from mock import patch
 
 from shuup.core.utils.price_cache import cache_price_info, get_cached_price_info
 from shuup.discounts.exceptions import DiscountM2MChangeError
-from shuup.discounts.models import AvailabilityException, Discount, HappyHour, TimeRange
-from shuup.discounts.signal_handers import handle_generic_m2m_changed
+from shuup.discounts.models import Discount, HappyHour, TimeRange
+from shuup.discounts.signal_handlers import handle_generic_m2m_changed
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 
@@ -48,6 +48,7 @@ def test_bump_caches_signal(rf):
             start_datetime=now - timedelta(days=10),
             end_datetime=now + timedelta(days=10),
             discounted_price_value=discounted_price,
+            shop=shop1,
         )
 
         request = apply_request_middleware(rf.get("/"))
@@ -67,14 +68,10 @@ def test_bump_caches_signal(rf):
             assert get_cached_price_info(request_shop2, product2) is not None
 
         assert_product1_is_not_cached()
-        assert_cache_product1()
+        assert_cache_product1(True)
 
         # cache bumped - the cache should be dropped - then, cache again
         discount.save()
-        assert_product1_is_not_cached()
-        assert_cache_product1()
-
-        discount.shops.add(shop1)
         assert_product1_is_not_cached()
         assert_cache_product1(True)
 
@@ -89,22 +86,7 @@ def test_bump_caches_signal(rf):
         assert_cache_product1(True)
         assert_product2_is_cached()
 
-        availability_exception = AvailabilityException.objects.create(
-            name="ae1",
-            start_datetime=now + timedelta(days=20),
-            end_datetime=now + timedelta(days=30),
-        )
-        availability_exception.discounts.add(discount)
-        assert_product1_is_not_cached()
-        assert_cache_product1(True)
-        assert_product2_is_cached()
-
-        availability_exception.save()
-        assert_product1_is_not_cached()
-        assert_cache_product1(True)
-        assert_product2_is_cached()
-
-        happy_hour = HappyHour.objects.create(name="hh 1")
+        happy_hour = HappyHour.objects.create(name="hh 1", shop=shop1)
         happy_hour.discounts.add(discount)
         assert_product1_is_not_cached()
         assert_cache_product1(True)

@@ -76,7 +76,7 @@ SHUUP_DISCOUNT_MODULES = ["customer_group_discount", "product_discounts"]
 #: The list of identifiers of order source modifier modules.
 #:
 #: See `shuup.core.order_creator.OrderSourceModifierModule` for details.
-SHUUP_ORDER_SOURCE_MODIFIER_MODULES = ["basket_campaigns", "discounts_coupon_codes"]
+SHUUP_ORDER_SOURCE_MODIFIER_MODULES = ["basket_campaigns"]
 
 #: The identifier of the tax module used to determining taxes of products and order lines.
 #:

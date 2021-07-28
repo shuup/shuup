@@ -8,7 +8,7 @@
 
 import pytest
 
-from shuup.core.models import AnonymousContact
+from shuup.core.models import AnonymousContact, PersonContact
 from shuup.discounts.models import Discount
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -351,12 +351,10 @@ def test_discount_for_logged_in_contacts(rf):
     request, product = _init_test_for_product(rf, default_price)
     assert request.customer == AnonymousContact()
 
-    anon_default_group = AnonymousContact().get_default_group()
     product_discount_amount = 2
     discount = Discount.objects.create(
         active=True,
-        exclude_selected_contact_group=True,
-        contact_group=anon_default_group,
+        contact_group=PersonContact.get_default_group(),
         discount_amount_value=product_discount_amount,
     )
     discount.shops.add(request.shop)

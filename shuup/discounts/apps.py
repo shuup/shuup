@@ -14,17 +14,14 @@ class AppConfig(shuup.apps.AppConfig):
         "admin_module": [
             "shuup.discounts.admin.modules.DiscountModule",
             "shuup.discounts.admin.modules.DiscountArchiveModule",
-            "shuup.discounts.admin.modules.AvailabilityExceptionModule",
             "shuup.discounts.admin.modules.HappyHourModule",
-            "shuup.discounts.admin.modules.CouponCodeModule",
         ],
         "admin_object_selector": [
             "shuup.discounts.admin.object_selector.DiscountAdminObjectSelector",
         ],
         "discount_module": ["shuup.discounts.modules:ProductDiscountModule"],
-        "order_source_modifier_module": ["shuup.discounts.modules:CouponCodeModule"],
         "xtheme_plugin": ["shuup.discounts.plugins:DiscountedProductsPlugin"],
     }
 
     def ready(self):
-        import shuup.discounts.signal_handers  # noqa F401
+        import shuup.discounts.signal_handlers  # noqa: F401

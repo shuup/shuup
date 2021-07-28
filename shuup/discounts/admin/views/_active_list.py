@@ -56,12 +56,6 @@ class DiscountListView(PicotableListView):
             display="contact",
             filter_config=TextFilter(filter_field="contact__translations__name", placeholder=_("Filter by contact...")),
         ),
-        Column(
-            "coupon_code",
-            _("Coupon code"),
-            display="coupon_code",
-            filter_config=TextFilter(filter_field="coupon_code__code", placeholder=_("Filter by coupon code...")),
-        ),
         Column("discount_effect", _("Effect"), display="get_discount_effect"),
         Column("end_datetime", _("End Date and Time"), display="format_end_datetime", filter_config=DateRangeFilter()),
     ]

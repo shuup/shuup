@@ -12,50 +12,32 @@ from django.db.models.signals import m2m_changed, post_save, pre_delete
 from shuup.core.models import Category, ShopProduct
 from shuup.core.utils.price_cache import bump_all_price_caches
 from shuup.discounts.exceptions import DiscountM2MChangeError
-from shuup.discounts.models import AvailabilityException, CouponCode, Discount, HappyHour, TimeRange
+from shuup.discounts.models import Discount, HappyHour, TimeRange
 from shuup.discounts.utils import bump_price_expiration
 
 
 def handle_discount_post_save(sender, instance, **kwargs):
-    shops = set(instance.shops.values_list("pk", flat=True))
-    bump_price_expiration(shops)
-    bump_all_price_caches(shops)
+    shop_ids = set([instance.shop.pk])
+    bump_price_expiration(shop_ids)
+    bump_all_price_caches(shop_ids)
 
 
 def handle_happy_hour_post_save(sender, instance, **kwargs):
     # Bump caches only if discount object exists
     # This prevents to bump caches when an instance is created and it is not attached yey
     if instance.discounts.exists():
-        shops = set(instance.discounts.values_list("shops__pk", flat=True))
-        bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        shop_ids = set(instance.discounts.values_list("shop__pk", flat=True))
+        bump_price_expiration(shop_ids)
+        bump_all_price_caches(shop_ids)
 
 
 def handle_time_range_post_save(sender, instance, **kwargs):
     # Bump caches only if discount object exists
     # This prevents to bump caches when an instance is created and it is not attached yey
     if instance.happy_hour.discounts.exists():
-        shops = set(instance.happy_hour.discounts.values_list("shops__pk", flat=True))
-        bump_price_expiration(shops)
-        bump_all_price_caches(shops)
-
-
-def handle_availability_exception_post_save(sender, instance, **kwargs):
-    # Bump caches only if discount object exists
-    # This prevents to bump caches when an instance is created and it is not attached yey
-    if instance.discounts.exists():
-        shops = set(instance.discounts.values_list("shops__pk", flat=True))
-        bump_price_expiration(shops)
-        bump_all_price_caches(shops)
-
-
-def handle_coupon_post_save(sender, instance, **kwargs):
-    # Bump caches only if discount object exists
-    # This prevents to bump caches when an instance is created and it is not attached yey
-    if instance.coupon_code_discounts.exists():
-        shops = set(instance.coupon_code_discounts.values_list("shops__pk", flat=True))
-        bump_price_expiration(shops)
-        bump_all_price_caches(shops)
+        shop_ids = set(instance.happy_hour.discounts.values_list("shop__pk", flat=True))
+        bump_price_expiration(shop_ids)
+        bump_all_price_caches(shop_ids)
 
 
 def handle_generic_m2m_changed(sender, instance, **kwargs):
@@ -74,23 +56,13 @@ def handle_generic_m2m_changed(sender, instance, **kwargs):
         handle_discount_post_save(sender, instance, **kwargs)
     elif isinstance(instance, HappyHour):
         handle_happy_hour_post_save(sender, instance, **kwargs)
-    elif isinstance(instance, AvailabilityException):
-        handle_availability_exception_post_save(sender, instance, **kwargs)
     else:
         raise DiscountM2MChangeError("Invalid instance type.")
 
 
 # Bump price info and price expiration caches when Discount related models are changed
 m2m_changed.connect(
-    handle_generic_m2m_changed, sender=Discount.shops.through, dispatch_uid="discounts:changed_shops_m2m"
-)
-m2m_changed.connect(
     handle_generic_m2m_changed, sender=Discount.happy_hours.through, dispatch_uid="discounts:changed_happy_hours_m2m"
-)
-m2m_changed.connect(
-    handle_generic_m2m_changed,
-    sender=Discount.availability_exceptions.through,
-    dispatch_uid="discounts:changed_availability_exceptions_m2m",
 )
 
 # Bump price info and price expiration caches when categories from shop products change
@@ -110,14 +82,3 @@ pre_delete.connect(handle_happy_hour_post_save, sender=HappyHour, dispatch_uid="
 # Bump price info and price expiration caches when TimeRange instances are changed or deleted
 post_save.connect(handle_time_range_post_save, sender=TimeRange, dispatch_uid="discounts:change_time_range")
 pre_delete.connect(handle_time_range_post_save, sender=TimeRange, dispatch_uid="discounts:delete_time_range")
-
-# Bump price info and price expiration caches when CouponCode instances are changed or deleted
-post_save.connect(handle_coupon_post_save, sender=CouponCode, dispatch_uid="discounts:change_coupon")
-pre_delete.connect(handle_coupon_post_save, sender=CouponCode, dispatch_uid="discounts:delete_coupon")
-
-# Bump price info and price expiration caches when AvailabilityException instances are changed
-post_save.connect(
-    handle_availability_exception_post_save,
-    sender=AvailabilityException,
-    dispatch_uid="discounts:availability_exception",
-)

@@ -40,7 +40,7 @@ class HappyHourListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        return HappyHour.objects.filter(shops=get_shop(self.request))
+        return HappyHour.objects.filter(shop=get_shop(self.request))
 
 
 def _get_initial_data_for_time_ranges(happy_hour):
@@ -87,7 +87,7 @@ class HappyHourForm(forms.ModelForm):
 
     class Meta:
         model = HappyHour
-        exclude = ("shops",)
+        exclude = ("shop",)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -128,14 +128,15 @@ class HappyHourForm(forms.ModelForm):
 
     def save(self, commit=True):
         with transaction.atomic():
-            instance = super(HappyHourForm, self).save(commit)
-            instance.shops.set([self.shop])
+            instance = super(HappyHourForm, self).save(commit=False)
+            instance.shop = self.shop
+            instance.save()
 
             data = self.cleaned_data
             if "discounts" in self.fields:
                 data = self.cleaned_data
                 discount_ids = data.get("discounts", [])
-                instance.discounts.set(Discount.objects.filter(shops=self.shop, id__in=discount_ids))
+                instance.discounts.set(Discount.objects.filter(shop=self.shop, id__in=discount_ids))
 
             instance.time_ranges.all().delete()
 
@@ -154,7 +155,7 @@ class HappyHourEditView(CreateOrUpdateView):
     context_object_name = "discounts"
 
     def get_queryset(self):
-        return HappyHour.objects.filter(shops=get_shop(self.request))
+        return HappyHour.objects.filter(shop=get_shop(self.request))
 
     def get_toolbar(self):
         object = self.get_object()
@@ -173,7 +174,7 @@ class HappyHourDeleteView(DetailView):
     model = HappyHour
 
     def get_queryset(self):
-        return HappyHour.objects.filter(shops=get_shop(self.request))
+        return HappyHour.objects.filter(shop=get_shop(self.request))
 
     def post(self, request, *args, **kwargs):
         happy_hour = self.get_object()

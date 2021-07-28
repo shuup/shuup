@@ -196,8 +196,7 @@ def _test_happy_hours_list_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
 
-    happy_hour = HappyHour.objects.create(name="After Work %s" % index)
-    happy_hour.shops.add(shop)
+    HappyHour.objects.create(name="After Work %s" % index, shop=shop)
 
     view_func = HappyHourListView.as_view()
     request = apply_request_middleware(
@@ -241,10 +240,8 @@ def _test_happy_hours_delete_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     happy_hour_name = "The Hour %s" % index
-    happy_hour = HappyHour.objects.create(name=happy_hour_name)
-    happy_hour.shops.add(shop)
-    extra_happy_hour = HappyHour.objects.create(name="Extra Hour %s" % index)
-    extra_happy_hour.shops.add(shop)
+    happy_hour = HappyHour.objects.create(name=happy_hour_name, shop=shop)
+    HappyHour.objects.create(name="Extra Hour %s" % index, shop=shop)
 
     assert HappyHour.objects.filter(name=happy_hour_name).exists()
     view_func = HappyHourDeleteView.as_view()

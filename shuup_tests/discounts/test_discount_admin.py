@@ -277,10 +277,8 @@ def _test_discount_delete_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     discount_identifier = "discount%s" % index
-    discount = Discount.objects.create(identifier=discount_identifier)
-    discount.shops.add(shop)
-    extra_discount = Discount.objects.create(identifier="extra_discount%s" % index)
-    extra_discount.shops.add(shop)
+    discount = Discount.objects.create(identifier=discount_identifier, shop=shop)
+    Discount.objects.create(identifier="extra_discount%s" % index, shop=shop)
 
     assert Discount.objects.filter(identifier=discount_identifier).exists()
     view_func = DiscountDeleteView.as_view()

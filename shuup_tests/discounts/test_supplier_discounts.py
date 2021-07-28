@@ -31,9 +31,8 @@ def test_discounted_price(rf):
     # Set discount with discount amount for $2
     discount_amount = 2
     discount = Discount.objects.create(
-        active=True, product=product, supplier=supplier, discount_amount_value=discount_amount
+        active=True, product=product, supplier=supplier, discount_amount_value=discount_amount, shop=shop
     )
-    discount.shops.add(shop)
 
     # Even though the supplier is matching with the product there is no discount
     # since the supplier is not in pricing context.

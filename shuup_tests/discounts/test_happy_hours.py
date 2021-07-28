@@ -25,10 +25,8 @@ from shuup.utils.i18n import format_money
 def init_test():
     shop = factories.get_default_shop()
     product = factories.create_product("test", shop=shop, default_price=10)
-    discount = Discount.objects.create(active=True, product=product, discounted_price_value=6)
-    discount.shops.add(shop)
-    happy_hour = HappyHour.objects.create(name="Happy")
-    happy_hour.shops.add(shop)
+    discount = Discount.objects.create(active=True, product=product, discounted_price_value=6, shop=shop)
+    happy_hour = HappyHour.objects.create(name="Happy", shop=shop)
     discount.happy_hours.add(happy_hour)
     return happy_hour
 
