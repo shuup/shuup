@@ -6,8 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AbstractUser, AnonymousUser
-from django.db.models import Case, F, OuterRef, Q, Subquery, When
-from django.db.models.functions import Coalesce
+from django.db.models import OuterRef, Q, Subquery
 from django.db.models.query import QuerySet
 from django.utils import timezone
 from typing import Optional, Union
@@ -17,8 +16,10 @@ from shuup.core.models import (
     AnonymousContact,
     Contact,
     Product,
+    ProductCatalogDiscountedPrice,
+    ProductCatalogDiscountedPriceRule,
     ProductCatalogPrice,
-    ProductMode,
+    ProductCatalogPriceRule,
     ProductVisibility,
     Shop,
     ShopProduct,
@@ -76,6 +77,22 @@ class ProductCatalogContext:
         self.visibility = visibility
 
 
+def get_contact_filter(contact: Optional[Contact]):
+    if contact:
+        # filter all prices for the contact OR to the groups of the contact
+        return Q(
+            Q(contact=contact)
+            # evaluate contact group to prevent doing expensive joins on db
+            | Q(contact_group_id__in=list(contact.groups.values_list("pk", flat=True)))
+            | Q(contact_group__isnull=True, contact__isnull=True)
+        )
+    # anonymous contact
+    return Q(
+        Q(contact_group__isnull=True, contact__isnull=True)
+        | Q(contact_group_id=AnonymousContact.get_default_group().pk)
+    )
+
+
 class ProductCatalog:
     """
     A helper class to return products and shop products from the database
@@ -84,7 +101,7 @@ class ProductCatalog:
     def __init__(self, context: Optional[ProductCatalogContext] = None):
         self.context = context or ProductCatalogContext()
 
-    def _get_common_filters(self):
+    def _get_prices_filters(self):
         filters = Q()
         shop = self.context.shop
         supplier = self.context.supplier
@@ -98,30 +115,59 @@ class ProductCatalog:
         if purchasable_only:
             filters &= Q(is_available=True)
 
-        if contact:
-            # filter all prices for the contact OR to the groups of the contact
-            filters = Q(
-                Q(filters)
-                & Q(
-                    Q(contact=contact)
-                    # evaluate contact group to prevent doing expensive joins on db
-                    | Q(contact_group_id__in=list(contact.groups.values_list("pk", flat=True)))
-                    | Q(contact_group__isnull=True, contact__isnull=True)
-                )
-            )
-        else:
-            # anonymous contact
-            filters = Q(
-                Q(filters)
-                & Q(
-                    Q(contact_group__isnull=True, contact__isnull=True)
-                    | Q(contact_group_id=AnonymousContact.get_default_group().pk)
-                )
-            )
+        filters &= Q(
+            Q(catalog_rule__isnull=True)
+            | Q(catalog_rule__in=ProductCatalogPriceRule.objects.filter(get_contact_filter(contact)))
+        )
 
         return filters
 
-    def annotate_products_queryset(self, queryset: "QuerySet[Product]") -> "QuerySet[Product]":
+    def _get_discounted_prices_filters(self):
+        now_dt = timezone.now()
+        now_time = timezone.now().utcnow().time()
+
+        filters = Q()
+        shop = self.context.shop
+        supplier = self.context.supplier
+
+        if shop:
+            filters &= Q(shop=shop)
+        if supplier:
+            filters &= Q(supplier=supplier)
+
+        filters &= Q(
+            catalog_rule__in=ProductCatalogDiscountedPriceRule.objects.filter(
+                Q(get_contact_filter(self.context.contact)),
+                Q(
+                    valid_start_date__isnull=True,
+                    valid_start_hour__isnull=True,
+                )
+                | Q(
+                    valid_start_date__gt=now_dt,
+                    valid_end_date__lt=now_dt,
+                    valid_start_hour__isnull=True,
+                )
+                | Q(
+                    valid_start_date__gt=now_dt,
+                    valid_end_date__lt=now_dt,
+                    valid_start_hour__gt=now_time,
+                    valid_end_hour__lt=now_time,
+                    valid_weekday__isnull=True,
+                )
+                | Q(
+                    valid_start_date__gt=now_dt,
+                    valid_end_date__lt=now_dt,
+                    valid_start_hour__gt=now_time,
+                    valid_end_hour__lt=now_time,
+                    valid_weekday=now_dt.weekday(),
+                ),
+            )
+        )
+        return filters
+
+    def annotate_products_queryset(
+        self, queryset: "QuerySet[Product]", annotate_discounts: bool = True
+    ) -> "QuerySet[Product]":
         """
         Returns the given Product queryset annotated with price and discounted price.
         The catalog will filter the products according to the `context`.
@@ -129,26 +175,35 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        filters = self._get_common_filters()
         product_prices = (
             ProductCatalogPrice.objects.filter(product=OuterRef("pk"))
-            .filter(filters)
-            .order_by(Coalesce("discounted_price_value", "price_value").asc())
+            .filter(self._get_prices_filters())
+            .order_by("price_value")
         )
 
         # only visible products, we need to filter those through queryset
         if self.context.visible_only:
-            visible_shop_products = self._filter_visible_shop_products(ShopProduct.objects.all())
+            visible_shop_products = self.filter_visible_shop_products(ShopProduct.objects.all())
             queryset = queryset.filter(
                 pk__in=visible_shop_products.values_list("product_id", flat=True), deleted=False
             ).distinct()
 
-        return queryset.annotate(
+        queryset = queryset.annotate(
             catalog_price=Subquery(product_prices.values("price_value")[:1]),
-            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
         )
 
-    def _filter_visible_shop_products(self, queryset: "QuerySet[ShopProduct]") -> "QuerySet[ShopProduct]":
+        if annotate_discounts:
+            product_discounted_prices = (
+                ProductCatalogDiscountedPrice.objects.filter(product=OuterRef("pk"))
+                .filter(self._get_discounted_prices_filters())
+                .order_by("discounted_price_value")
+            )
+            queryset = queryset.annotate(
+                catalog_discounted_price=Subquery(product_discounted_prices.values("discounted_price_value")[:1]),
+            )
+        return queryset
+
+    def filter_visible_shop_products(self, queryset: "QuerySet[ShopProduct]") -> "QuerySet[ShopProduct]":
         """
         Filter visible shop products according to the context
         """
@@ -193,7 +248,7 @@ class ProductCatalog:
 
         return queryset.filter(shop_product_filters).distinct()
 
-    def get_products_queryset(self) -> "QuerySet[Product]":
+    def get_products_queryset(self, annotate_discounts=True) -> "QuerySet[Product]":
         """
         Returns a queryset of Product annotated with price and discounted price:
         The catalog will filter the products according to the `context`.
@@ -201,9 +256,13 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        return self.annotate_products_queryset(Product.objects.all()).filter(catalog_price__isnull=False)
+        return self.annotate_products_queryset(Product.objects.all(), annotate_discounts=annotate_discounts).filter(
+            catalog_price__isnull=False
+        )
 
-    def annotate_shop_products_queryset(self, queryset: "QuerySet[ShopProduct]") -> "QuerySet[ShopProduct]":
+    def annotate_shop_products_queryset(
+        self, queryset: "QuerySet[ShopProduct]", annotate_discounts: bool = True
+    ) -> "QuerySet[ShopProduct]":
         """
         Returns a the given ShopProduct queryset annotated with price and discounted price:
         The catalog will filter the shop products according to the `context`.
@@ -211,33 +270,33 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        filters = self._get_common_filters()
         product_prices = (
             ProductCatalogPrice.objects.filter(product=OuterRef("product_id"))
-            .filter(filters)
-            .order_by(Coalesce("discounted_price_value", "price_value").asc())
+            .filter(self._get_prices_filters())
+            .order_by("price_value")
         )
 
         if self.context.visible_only:
-            queryset = self._filter_visible_shop_products(queryset).filter(product__deleted=False)
+            queryset = self.filter_visible_shop_products(queryset).filter(product__deleted=False)
 
-        return queryset.annotate(
+        queryset = queryset.annotate(
             # as we are filtering ShopProducts, we can fallback to default_price_value
             # when the product is a variation parent (this is not possible with product queryset)
-            catalog_price=Case(
-                When(
-                    product__mode__in=[
-                        ProductMode.VARIABLE_VARIATION_PARENT,
-                        ProductMode.SIMPLE_VARIATION_PARENT,
-                    ],
-                    then=F("default_price_value"),
-                ),
-                default=Subquery(product_prices.values("price_value")[:1]),
-            ),
-            catalog_discounted_price=Subquery(product_prices.values("discounted_price_value")[:1]),
+            catalog_price=Subquery(product_prices.values("price_value")[:1]),
         )
+        if annotate_discounts:
+            product_discounted_prices = (
+                ProductCatalogDiscountedPrice.objects.filter(product=OuterRef("product_id"))
+                .filter(self._get_discounted_prices_filters())
+                .order_by("discounted_price_value")
+            )
+            queryset = queryset.annotate(
+                catalog_discounted_price=Subquery(product_discounted_prices.values("discounted_price_value")[:1]),
+            )
 
-    def get_shop_products_queryset(self) -> "QuerySet[ShopProduct]":
+        return queryset
+
+    def get_shop_products_queryset(self, annotate_discounts=True) -> "QuerySet[ShopProduct]":
         """
         Returns a queryset of ShopProduct annotated with price and discounted price:
         The catalog will filter the shop products according to the `context`.
@@ -245,7 +304,9 @@ class ProductCatalog:
             - `catalog_price` -> the cheapest price found for the context
             - `catalog_discounted_price` -> the cheapest discounted price found for the context
         """
-        return self.annotate_shop_products_queryset(ShopProduct.objects.all()).filter(catalog_price__isnull=False)
+        return self.annotate_shop_products_queryset(
+            ShopProduct.objects.all(), annotate_discounts=annotate_discounts
+        ).filter(catalog_price__isnull=False)
 
     @classmethod
     def index_product(cls, product: Union[Product, int]):

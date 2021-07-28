@@ -10,24 +10,33 @@ from decimal import Decimal
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import PersonContact
-from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.testing import factories
+from shuup.discounts.models import Discount, HappyHour, TimeRange
 
 
 @pytest.mark.django_db
-def test_product_catalog_discounted_price():
+def test_product_catalog_discounts():
     shop = factories.get_default_shop()
     supplier = factories.get_default_supplier()
     contact = factories.create_random_person()
     group = PersonContact.get_default_group()
+    category = factories.get_default_category()
     contact.groups.add(group)
-    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("50"))
-    product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("30"))
+    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("10"))
+    product2 = factories.create_product("p2", shop=shop, supplier=supplier, default_price=Decimal("20"))
+    product3 = factories.create_product("p3", shop=shop, supplier=supplier, default_price=Decimal("30"))
+    product4 = factories.create_product("p4", shop=shop, supplier=supplier, default_price=Decimal("40"))
 
-    # set price for product2
-    CgpPrice.objects.create(shop=shop, product=product2, group=group, price_value=Decimal(25))
-    # create a discount for product2
-    CgpDiscount.objects.create(shop=shop, product=product2, group=group, discount_amount_value=Decimal(7))
+    # product1 has a category
+    product1.get_shop_instance(shop).categories.add(category)
+
+    # create a 10% discount for the category
+    dis1 = Discount.objects.create(category=category, discount_percentage=Decimal(0.1))
+    dis1.shops.add(shop)
+
+    # create a $5 discount for the contact and product1
+    dis1 = Discount.objects.create(product=product2, contact=contact, discount_amount_value=Decimal(5))
+    dis1.shops.add(shop)
 
     catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=False, contact=contact))
     ProductCatalog.index_product(product1)

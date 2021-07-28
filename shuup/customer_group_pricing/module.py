@@ -11,7 +11,13 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from typing import Union
 
-from shuup.core.models import ProductCatalogPrice, ShopProduct
+from shuup.core.models import (
+    ProductCatalogDiscountedPrice,
+    ProductCatalogDiscountedPriceRule,
+    ProductCatalogPrice,
+    ProductCatalogPriceRule,
+    ShopProduct,
+)
 from shuup.core.pricing import DiscountModule, PriceInfo, PricingModule
 
 from .models import CgpDiscount, CgpPrice
@@ -24,14 +30,12 @@ class CustomerGroupPricingModule(PricingModule):
     def get_price_info(self, context, product, quantity=1):
         shop = context.shop
         product_id = product if isinstance(product, six.integer_types) else product.pk
-        default_price_values = list(
-            ShopProduct.objects.filter(product_id=product_id, shop=shop).values_list("default_price_value", flat=True)
-        )
+        shop_product = ShopProduct.objects.filter(product_id=product_id, shop=shop).only("default_price_value").first()
 
-        if len(default_price_values) == 0:  # No shop product
+        if not shop_product:
             return PriceInfo(price=shop.create_price(0), base_price=shop.create_price(0), quantity=quantity)
-        else:
-            default_price = default_price_values[0] or 0
+
+        default_price = shop_product.default_price_values or 0
 
         filter = Q(product_id=product_id, shop=shop, price_value__gt=0, group__in=context.customer.groups.all())
         result = CgpPrice.objects.filter(filter).order_by("price_value")[:1].values_list("price_value", flat=True)
@@ -45,7 +49,7 @@ class CustomerGroupPricingModule(PricingModule):
 
         return PriceInfo(
             price=shop.create_price(price * quantity),
-            base_price=shop.create_price(price * quantity),
+            base_price=shop.create_price(default_price * quantity),
             quantity=quantity,
         )
 
@@ -71,13 +75,15 @@ class CustomerGroupPricingModule(PricingModule):
             for customer_group_price in CgpPrice.objects.filter(
                 product_id=shop_product.product_id, shop_id=shop_product.shop_id
             ):
+                catalog_rule = ProductCatalogPriceRule.objects.get_or_create(
+                    contact_group=customer_group_price.group, contact=None
+                )[0]
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
                     ProductCatalogPrice.objects.update_or_create(
                         product_id=shop_product.product_id,
                         shop_id=shop_product.shop_id,
-                        contact_group=customer_group_price.group,
                         supplier_id=supplier_id,
-                        contact=None,
+                        catalog_rule=catalog_rule,
                         defaults=dict(price_value=customer_group_price.price_value or Decimal()),
                     )
 
@@ -87,8 +93,7 @@ class CustomerGroupPricingModule(PricingModule):
                 product_id=shop_product.product_id,
                 shop_id=shop_product.shop_id,
                 supplier_id=supplier_id,
-                contact_group=None,  # need to force null
-                contact=None,
+                catalog_rule=None,
                 defaults=dict(price_value=shop_product.default_price_value or Decimal()),
             )
 
@@ -143,26 +148,41 @@ class CustomerGroupDiscountModule(DiscountModule):
             for child_shop_product in children_shop_product:
                 self.index_shop_product(child_shop_product)
         else:
-            # index all the prices with groups
+            # clear all existing discounted prices for this discount module
+            ProductCatalogDiscountedPrice.objects.filter(
+                catalog_rule__module_identifier=self.identifier,
+                product_id=shop_product.product_id,
+                shop_id=shop_product.shop_id,
+            ).delete()
+
+            normal_price = shop_product.default_price_value or Decimal()
+
+            # there is no valid price
+            if not normal_price:
+                return
+
+            # index all the discounted prices
             for customer_group_discount in CgpDiscount.objects.filter(
                 product_id=shop_product.product_id, shop_id=shop_product.shop_id
             ):
-                product_price = CgpPrice.objects.filter(
-                    product_id=shop_product.product_id,
-                    shop_id=shop_product.shop_id,
-                    group=customer_group_discount.group,
-                ).first()
-                normal_price = (
-                    product_price.price_value if product_price else (shop_product.default_price_value or Decimal())
-                )
-                discounted_price = normal_price - customer_group_discount.discount_amount_value
+                catalog_rule = ProductCatalogDiscountedPriceRule.objects.get_or_create(
+                    module_identifier=self.identifier,
+                    contact_group=customer_group_discount.group,
+                    contact=None,
+                    valid_start_date=None,
+                    valid_end_date=None,
+                    valid_start_hour=None,
+                    valid_end_hour=None,
+                    valid_weekday=None,
+                )[0]
+                # the discount is always over the default product price
+                discounted_price = max(normal_price - customer_group_discount.discount_amount_value, Decimal())
 
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
-                    ProductCatalogPrice.objects.update_or_create(
+                    ProductCatalogDiscountedPrice.objects.update_or_create(
                         product_id=shop_product.product_id,
                         shop_id=shop_product.shop_id,
-                        contact_group=customer_group_discount.group,
                         supplier_id=supplier_id,
-                        contact=None,
-                        defaults=dict(price_value=normal_price, discounted_price_value=discounted_price),
+                        catalog_rule=catalog_rule,
+                        defaults=dict(discounted_price_value=discounted_price),
                     )
