@@ -43,6 +43,22 @@ class XthemeAdminModule(AdminModule):
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
                 name="xtheme.config_detail",
             ),
+            admin_url(
+                r"^xtheme/font/new/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.admin_font.new",
+                kwargs={"pk": None},
+            ),
+            admin_url(
+                r"^xtheme/font/(?P<pk>\d+)/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.admin_font.edit",
+            ),
+            admin_url(
+                r"^xtheme/admin-configure/",
+                "shuup.xtheme.admin_module.views.AdminThemeConfigDetailView",
+                name="xtheme.admin_config_detail",
+            ),
             admin_url(r"^xtheme/theme", "shuup.xtheme.admin_module.views.ThemeConfigView", name="xtheme.config"),
         ]
 

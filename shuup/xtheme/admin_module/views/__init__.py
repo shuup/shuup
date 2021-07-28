@@ -8,6 +8,10 @@
 from shuup.xtheme.admin_module.views._snippet import SnippetDeleteView, SnippetEditView, SnippetListView
 from shuup.xtheme.admin_module.views._theme import (
     ActivationForm,
+    AdminThemeForm,
+    AdminThemeConfigDetailView,
+    FontForm,
+    FontEditView,
     TemplateView,
     ThemeConfigDetailView,
     ThemeConfigView,
@@ -17,6 +21,10 @@ from shuup.xtheme.admin_module.views._theme import (
 
 __all__ = [
     "ActivationForm",
+    "FontEditView",
+    "AdminThemeForm",
+    "AdminThemeConfigDetailView",
+    "FontForm",
     "SnippetDeleteView",
     "SnippetEditView",
     "SnippetListView",

@@ -1,0 +1,75 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% block title %}{% trans %}Admin Theme Configuration{% endtrans %}{% endblock %}
+
+{% block body_class %}shuup-details{% endblock %}
+{% block content %}
+    <form method="POST" id="form_admin_theme_settings_form">
+        {% csrf_token %}
+        {% if form.fields %}
+            {% for field in form %}
+                {% if 'color' in field.name %}
+                    <div style="display:flex;align-items: flex-end; margin-bottom: 2rem;">
+                        {{ bs3.field(field, form_group_class="col-sm-3") }}
+                        <input id="hex_{{ field.name }}" type="text" class="form-control col-sm-6" maxlength="7" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" />
+                    </div>
+                {% else %}
+                    <div style="display:flex;align-items: flex-end; margin-bottom: 2rem;">
+                        {{ bs3.field(field, form_group_class="col-sm-9") }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </form>
+    <div class="col-sm-12 pull-right" style="margin-bottom: 3rem;">
+        <button
+            name="edit-theme"
+            type="submit"
+            form="form_admin_theme_settings_form"
+            class="btn btn-sm btn-success">
+            <i class="fa fa-check-circle"></i> {% trans %}Change Theme{% endtrans %}
+        </button>
+    </div>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ shuup_static("xtheme/admin/xtheme_admin.css") }}">
+{% endblock %}
+{% block extra_js %}
+    <script src="{{ shuup_static("xtheme/admin/script.js") }}"></script>
+    <script>
+        $(window).on("load", function() {
+        {% if form.fields %}
+            {% for field in form if 'color' in field.name %}
+                var value = $("#id_{{field.name}}").val();
+                $("#hex_{{field.name}}").css({
+                    background: value + "10",
+                    boxShadow: `0 0 0 .1rem ${value}`
+                });
+                $("#hex_{{field.name}}").attr('placeholder', value);
+                $("label[for='id_{{field.name}}']").html(`{{ field.label }} <br><span style="color: ${value};">${gettext(`(Current ${value})`)}</span>`);
+                $("#id_{{field.name}}").on("input", function() {
+                    var updated_value = $("#id_{{field.name}}").val();
+                    $("#hex_{{field.name}}").css({
+                        background: updated_value + "10",
+                        boxShadow: `0 0 0 .1rem ${updated_value}`
+                    });
+                    $("#hex_{{field.name}}").val(updated_value);
+                    $("label[for='id_{{field.name}}']").html(`{{ field.label }} <br><span style="color: ${updated_value};">${gettext(`(Current ${updated_value})`)}</span>`);
+                });
+                $("#hex_{{field.name}}").on("input", function() {
+                    var updated_value = $("#hex_{{field.name}}").val();
+                    if ($("#hex_{{field.name}}").val().length > 6 ){
+                        $("#hex_{{field.name}}").css({
+                            background: $("#hex_{{field.name}}").val() + "10",
+                            boxShadow: `0 0 0 .1rem ${updated_value}`
+                        });
+                    }
+                    $("#id_{{field.name}}").val(updated_value);
+                    $("label[for='id_{{field.name}}']").html(`{{ field.label }} <br><span style="color: ${updated_value};">${gettext(`(Current ${updated_value})`)}</span>`);
+                });
+            {% endfor %}
+        {% endif %}
+        });
+    </script>
+{% endblock %}

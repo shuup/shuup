@@ -39,6 +39,22 @@
     </script>
 {% endmacro %}
 
+{% macro admin_edit_theme_card(on_activate="", new_tab=False) %}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="theme-card mb-3 active-theme">
+                {# TODO: Get the actual theme screenshot #}
+                <img class="card-img-top" src="{{ static("shuup_admin/img/theme_placeholder.png") }}" alt="Theme screenshot">
+                <div class="theme-card-body text-center p-3">
+                    <h5>{% trans %}Admin Theme{% endtrans %}</h5>
+                    <a class="btn btn-sm btn-default"href="{{ url("shuup_admin:xtheme.admin_config_detail")}}"><i class="fa fa-cogs"></i> {% trans %}Edit Admin Theme{% endtrans %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
 {% macro wizard_theme_table(theme_classes, current_theme, shop, on_activate="", new_tab=False) %}
     <table class="table table-striped table-bordered table-shuup theme-table">
         <thead>

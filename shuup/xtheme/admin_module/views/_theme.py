@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
@@ -22,7 +23,8 @@ from shuup.core import cache
 from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
 from shuup.xtheme._theme import get_theme_by_identifier, get_theme_cache_key, set_current_theme
-from shuup.xtheme.models import ThemeSettings
+from shuup.xtheme.forms import AdminThemeForm, FontForm
+from shuup.xtheme.models import ThemeSettings, AdminThemeSettings, Font
 
 
 class ActivationForm(forms.Form):
@@ -175,3 +177,45 @@ class ThemeGuideTemplateView(TemplateView):
         theme = get_theme_by_identifier(kwargs["theme_identifier"], shop=get_shop(self.request))
         self.template_name = theme.guide_template
         return super(ThemeGuideTemplateView, self).dispatch(request, *args, **kwargs)
+
+
+class FontEditView(CreateOrUpdateView):
+    model = Font
+    form_class = FontForm
+    template_name = "shuup/xtheme/admin/font_create.jinja"
+    context_object_name = "admin_font"
+
+    def get_queryset(self):
+        return Font.objects.filter(shop=get_shop(self.request))
+
+    def get_form_kwargs(self):
+        kwargs = super(FontEditView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super(FontEditView, self).form_valid(form)
+
+
+def AdminThemeConfigDetailView(request):
+    """
+    A view for editing the admin base theme.
+    """
+
+    context ={}
+  
+    current_theme = AdminThemeSettings.objects.get_or_create(shop=get_shop(request))
+
+    if current_theme[0]:
+        form = AdminThemeForm(request.POST or None, instance=current_theme[0])
+    else:
+        form = AdminThemeForm(request.POST or None)
+      
+    # check if form data is valid
+    if form.is_valid() and request.method == 'POST':
+        # save the form data to model
+        form.save()
+  
+    context['form']= form
+    return render(request, "shuup/xtheme/admin/admin_config_detail.jinja", context)
