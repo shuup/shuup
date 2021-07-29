@@ -9,7 +9,8 @@ import pytest
 from decimal import Decimal
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
-from shuup.core.models import ShopProduct, ShopProductVisibility
+from shuup.core.models import AnonymousContact, ShopProduct, ShopProductVisibility
+from shuup.core.pricing import PricingContext
 from shuup.testing import factories
 
 
@@ -26,29 +27,25 @@ def test_product_catalog_simple_list():
     ProductCatalog.index_product(product2)
     ProductCatalog.index_product(product3)
 
-    # return a Product queryset annotated with price and discounted price
-    products_qs = catalog.get_products_queryset().order_by("catalog_price")
-    expected_prices = [
-        (product2.pk, Decimal("10"), None),
-        (product3.pk, Decimal("20"), None),
-        (product1.pk, Decimal("30"), None),
-    ]
-    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-    assert products_qs.count() == 3
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
-
-    # return a ShopProduct queryset, annotated with price and discounted price
-    expected_prices = [
-        (product2.get_shop_instance(shop).pk, Decimal("10"), None),
-        (product3.get_shop_instance(shop).pk, Decimal("20"), None),
-        (product1.get_shop_instance(shop).pk, Decimal("30"), None),
-    ]
-    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
-    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-    assert shop_products_qs.count() == 3
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
+    _assert_products_queryset(
+        catalog,
+        [
+            (product2.pk, Decimal("10"), None),
+            (product3.pk, Decimal("20"), None),
+            (product1.pk, Decimal("30"), None),
+        ],
+    )
+    _assert_shop_products_queryset(
+        catalog,
+        [
+            (product2.get_shop_instance(shop).pk, Decimal("10"), None),
+            (product3.get_shop_instance(shop).pk, Decimal("20"), None),
+            (product1.get_shop_instance(shop).pk, Decimal("30"), None),
+        ],
+    )
+    _assert_price(product1, shop, Decimal("30"), Decimal("30"))
+    _assert_price(product2, shop, Decimal("10"), Decimal("10"))
+    _assert_price(product3, shop, Decimal("20"), Decimal("20"))
 
 
 @pytest.mark.django_db
@@ -68,20 +65,8 @@ def test_product_catalog_purchasable():
     ProductCatalog.index_product(product1)
     ProductCatalog.index_product(product2)
 
-    products_qs = catalog.get_products_queryset().order_by("catalog_price")
-    expected_prices = [(product1.pk, Decimal("30"), None)]
-    assert products_qs.count() == 1
-
-    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
-
-    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
-    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-    expected_prices = [(product1.get_shop_instance(shop).pk, Decimal("30"), None)]
-    assert shop_products_qs.count() == 1
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
+    _assert_products_queryset(catalog, [(product1.pk, Decimal("30"), None)])
+    _assert_shop_products_queryset(catalog, [(product1.get_shop_instance(shop).pk, Decimal("30"), None)])
 
 
 @pytest.mark.django_db
@@ -100,32 +85,28 @@ def test_product_catalog_variations():
     catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
     ProductCatalog.index_product(parent)
 
-    # return a Product queryset annotated with price and discounted price
-    products_qs = catalog.get_products_queryset().order_by("catalog_price")
-    expected_prices = [
-        (parent.pk, Decimal("10"), None),
-        (child1.pk, Decimal("20"), None),
-        (child2.pk, Decimal("40"), None),
-        (child3.pk, Decimal("50"), None),
-    ]
-    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-
-    assert products_qs.count() == 4
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
-
-    # return a ShopProduct queryset
-    expected_prices = [
-        (parent.get_shop_instance(shop).pk, Decimal("10"), None),
-        (child1.get_shop_instance(shop).pk, Decimal("20"), None),
-        (child2.get_shop_instance(shop).pk, Decimal("40"), None),
-        (child3.get_shop_instance(shop).pk, Decimal("50"), None),
-    ]
-    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
-    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
-    assert shop_products_qs.count() == 4
-    for index, value in enumerate(values):
-        assert value == expected_prices[index]
+    _assert_products_queryset(
+        catalog,
+        [
+            (parent.pk, Decimal("10"), None),
+            (child1.pk, Decimal("20"), None),
+            (child2.pk, Decimal("40"), None),
+            (child3.pk, Decimal("50"), None),
+        ],
+    )
+    _assert_shop_products_queryset(
+        catalog,
+        [
+            (parent.get_shop_instance(shop).pk, Decimal("10"), None),
+            (child1.get_shop_instance(shop).pk, Decimal("20"), None),
+            (child2.get_shop_instance(shop).pk, Decimal("40"), None),
+            (child3.get_shop_instance(shop).pk, Decimal("50"), None),
+        ],
+    )
+    _assert_price(parent, shop, Decimal("10"), Decimal("10"))
+    _assert_price(child1, shop, Decimal("20"), Decimal("20"))
+    _assert_price(child2, shop, Decimal("40"), Decimal("40"))
+    _assert_price(child3, shop, Decimal("50"), Decimal("50"))
 
 
 @pytest.mark.django_db
@@ -159,3 +140,26 @@ def test_product_catalog_availability():
     assert catalog_available_only.get_products_queryset().count() == 0
     assert catalog_visible_only.get_products_queryset().count() == 0
     assert catalog_all.get_products_queryset().count() == 2
+
+
+def _assert_price(product, shop, expected_price, expected_base_price, customer=None):
+    context = PricingContext(shop=shop, customer=customer or AnonymousContact())
+    price = product.get_price_info(context)
+    assert price.price.value == expected_price
+    assert price.base_price.value == expected_base_price
+
+
+def _assert_products_queryset(catalog, expected_prices):
+    products_qs = catalog.get_products_queryset().order_by("catalog_price")
+    values = products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert products_qs.count() == len(expected_prices)
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
+
+
+def _assert_shop_products_queryset(catalog, expected_prices):
+    shop_products_qs = catalog.get_shop_products_queryset().order_by("catalog_price")
+    values = shop_products_qs.values_list("pk", "catalog_price", "catalog_discounted_price")
+    assert shop_products_qs.count() == len(expected_prices)
+    for index, value in enumerate(values):
+        assert value == expected_prices[index]
