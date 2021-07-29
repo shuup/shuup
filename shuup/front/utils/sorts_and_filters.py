@@ -81,14 +81,6 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
-    def sort_products(self, request, products, data):
-        """
-        DEPRECATED 3.0: method will be removed on next major version
-
-        This method is not called anymore
-        """
-        return products
-
     def sort_products_queryset(self, request, queryset: "QuerySet[Product]", data: Dict):
         """
         Sort the products queryset
@@ -117,41 +109,6 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         :rtype: Product.queryset
         """
         pass
-
-    def get_queryset(self, queryset: "QuerySet[Product]", data) -> "QuerySet[Product]":
-        """
-        DEPRECATED 3.0: Will be removed on next major version.
-        Use `get_products_queryset` instead.
-
-        Modify product queryset
-
-        Modify current queryset and return the new one. This
-        can be used when there is need for stacking multiple
-        filters for one queryset.
-
-        :return: Updated product queryset
-        :rtype: Product.queryset
-        """
-        pass
-
-    def filter_products(self, request, products: "QuerySet[Product]", data) -> "QuerySet[Product]":
-        """
-        DEPRECATED 3.0: Will be removed on next major version
-
-        Filter product objects
-
-        Filtering products list based on current request and
-        ProductListForm data.
-
-        :param request:
-        :param products: List of products
-        :rtype products: list[shuup.core.models.Product]
-        :param data: Data from ProductListForm
-        :type data: dict
-        :return: Filtered product list
-        :rtype: list[shuup.core.models.Product]
-        """
-        return products
 
     def get_admin_fields(self):
         """
@@ -247,12 +204,6 @@ def get_query_filters(request, category, data):
     return filter_q
 
 
-def post_filter_products(request, category, products, data):
-    for extend_obj in _get_active_modifiers(request.shop, category):
-        products = extend_obj.filter_products(request, products, data)
-    return products
-
-
 def sort_products(request, category, products: "QuerySet[Product]", data):
     for extend_obj in _get_active_modifiers(request.shop, category):
         products = extend_obj.sort_products_queryset(request, products, data)
@@ -269,10 +220,6 @@ def get_product_queryset(queryset, request, category, data):
     queryset_data.update({"request": request, "category": category})
 
     for extend_obj in _get_active_modifiers(request.shop, category):
-        new_queryset = extend_obj.get_queryset(queryset, queryset_data)
-        if new_queryset is not None:
-            queryset = new_queryset
-
         new_queryset = extend_obj.get_products_queryset(request, queryset, queryset_data)
         if new_queryset is not None:
             queryset = new_queryset

@@ -9,13 +9,7 @@ from django.views.generic import DetailView, TemplateView
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import Category, ShopProductVisibility, Supplier
-from shuup.front.utils.sorts_and_filters import (
-    ProductListForm,
-    get_product_queryset,
-    get_query_filters,
-    post_filter_products,
-    sort_products,
-)
+from shuup.front.utils.sorts_and_filters import ProductListForm, get_product_queryset, get_query_filters, sort_products
 
 
 def get_context_data(context, request, category, product_filters):
@@ -46,7 +40,6 @@ def get_context_data(context, request, category, product_filters):
         .prefetch_related("translations", "sales_unit__translations")
     )
     products = get_product_queryset(products, request, category, data)
-    products = post_filter_products(request, category, products, data)
     products = sort_products(request, category, products, data).distinct()
     context["page_size"] = data.get("limit", 12)
     context["products"] = products

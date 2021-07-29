@@ -10,13 +10,7 @@ from django.views.generic import ListView
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import Product, ProductMode, ShopProductVisibility
-from shuup.front.utils.sorts_and_filters import (
-    ProductListForm,
-    get_product_queryset,
-    get_query_filters,
-    post_filter_products,
-    sort_products,
-)
+from shuup.front.utils.sorts_and_filters import ProductListForm, get_product_queryset, get_query_filters, sort_products
 
 
 class SearchView(ListView):
@@ -49,7 +43,6 @@ class SearchView(ListView):
             Q(mode__in=ProductMode.get_parent_modes()), Q(get_query_filters(self.request, None, data=data))
         )
         products = get_product_queryset(products, self.request, None, data)
-        products = post_filter_products(self.request, None, products, data)
         products = sort_products(self.request, None, products, data)
         return products.distinct()
 

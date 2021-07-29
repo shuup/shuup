@@ -177,7 +177,7 @@ class ProductQuerySet(TranslatableQuerySet):
 
     def listed(self, shop, customer=None, language=None, purchasable_only=False):
         """
-        Deprecated 3.0: Use ProductCatalog directly
+        Deprecated 4.0: Use ProductCatalog directly
         """
         from ._product_shops import ShopProductVisibility
 
@@ -185,7 +185,7 @@ class ProductQuerySet(TranslatableQuerySet):
 
     def searchable(self, shop, customer=None, language=None, purchasable_only=False):
         """
-        Deprecated 3.0: Use ProductCatalog directly
+        Deprecated 4.0: Use ProductCatalog directly
         """
         from ._product_shops import ShopProductVisibility
 
@@ -193,13 +193,13 @@ class ProductQuerySet(TranslatableQuerySet):
 
     def visible(self, shop, customer=None, language=None, purchasable_only=False):
         """
-        Deprecated 3.0: Use ProductCatalog directly
+        Deprecated 4.0: Use ProductCatalog directly
         """
         return self._visible(shop, customer=customer, language=language, purchasable_only=purchasable_only)
 
     def all_except_deleted(self, language=None, shop=None):
         """
-        Deprecated 3.0: Use ProductCatalog directly
+        Deprecated 4.0: Use ProductCatalog directly
         """
         qs = (self.language(language) if language else self).exclude(Q(deleted=True) | Q(type__isnull=True))
         if shop:
