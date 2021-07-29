@@ -9,7 +9,7 @@ import pytest
 from decimal import Decimal
 
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
-from shuup.core.models import AnonymousContact, ShopProduct, ShopProductVisibility
+from shuup.core.models import AnonymousContact, ProductVisibility, ShopProduct, ShopProductVisibility
 from shuup.core.pricing import PricingContext
 from shuup.testing import factories
 
@@ -140,6 +140,45 @@ def test_product_catalog_availability():
     assert catalog_available_only.get_products_queryset().count() == 0
     assert catalog_visible_only.get_products_queryset().count() == 0
     assert catalog_all.get_products_queryset().count() == 2
+
+
+@pytest.mark.django_db
+def test_product_catalog_visibilities():
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier()
+    contact = factories.create_random_person()
+    group = factories.create_random_contact_group(shop)
+    contact.groups.add(group)
+    product = factories.create_product("p", shop=shop, supplier=supplier, default_price=Decimal("10"))
+
+    catalog_visible_only = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
+    catalog_visible_contact = ProductCatalog(context=ProductCatalogContext(purchasable_only=False, contact=contact))
+    catalog_all = ProductCatalog(context=ProductCatalogContext(purchasable_only=False, visible_only=False))
+    ProductCatalog.index_product(product)
+
+    assert catalog_visible_only.get_products_queryset().count() == 1
+    assert catalog_visible_contact.get_products_queryset().count() == 1
+    assert catalog_all.get_products_queryset().count() == 1
+
+    # change the visibility to groups
+    shop_product = product.get_shop_instance(shop)
+    shop_product.visibility_limit = ProductVisibility.VISIBLE_TO_GROUPS
+    shop_product.save()
+    shop_product.visibility_groups.add(group)
+    ProductCatalog.index_product(product)
+
+    assert catalog_visible_only.get_products_queryset().count() == 0
+    assert catalog_visible_contact.get_products_queryset().count() == 1
+    assert catalog_all.get_products_queryset().count() == 1
+
+    # change the visibility to logged in
+    shop_product.visibility_limit = ProductVisibility.VISIBLE_TO_LOGGED_IN
+    shop_product.save()
+    ProductCatalog.index_product(product)
+
+    assert catalog_visible_only.get_products_queryset().count() == 0
+    assert catalog_visible_contact.get_products_queryset().count() == 1
+    assert catalog_all.get_products_queryset().count() == 1
 
 
 def _assert_price(product, shop, expected_price, expected_base_price, customer=None):

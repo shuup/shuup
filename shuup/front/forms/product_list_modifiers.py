@@ -459,7 +459,7 @@ class ProductVariationFilter(SimpleProductListModifier):
         context_cache.set_cached_value(key, fields)
         return fields
 
-    def get_queryset(self, queryset, data):
+    def get_products_queryset(self, request, queryset, data):
         if not any([key for key in data.keys() if key.startswith("variation")]):
             return
 
@@ -519,19 +519,22 @@ class ProductPriceFilter(SimpleProductListModifier):
             ),
         ]
 
-    def get_queryset(self, queryset, data):
+    def get_products_queryset(self, request, queryset, data):
         selected_range = data.get("price_range")
         if not selected_range:
             return queryset
 
         min_price, max_price = selected_range.split("-", 1)
-        min_price_value = decimal.Decimal(min_price or 0)
-        max_price_value = decimal.Decimal(max_price or 0)
 
-        return queryset.filter(
-            catalog_price__gte=min_price_value,
-            catalog_price__lte=max_price_value,
-        )
+        if min_price.strip():
+            min_price_value = decimal.Decimal(min_price.strip() or 0)
+            queryset = queryset.filter(catalog_price__gte=min_price_value)
+
+        if max_price.strip():
+            max_price_value = decimal.Decimal(max_price or 0)
+            queryset = queryset.filter(catalog_price__lte=max_price_value)
+
+        return queryset
 
     def get_admin_fields(self):
         default_fields = super().get_admin_fields()
@@ -641,7 +644,7 @@ class AttributeProductListFilter(SimpleProductListModifier):
 
         return attribute_query_strings
 
-    def get_queryset(self, queryset, data):
+    def get_products_queryset(self, request, queryset, data):
         # Filter for chosen attributes
         attributes = self._get_product_attribute_query_strings(data)
         if not attributes:

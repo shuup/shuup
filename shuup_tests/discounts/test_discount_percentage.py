@@ -39,6 +39,7 @@ def test_discount_amount(rf):
     # Let's make discount percentage between 80% to 90%
     discount_percentage = decimal.Decimal(random.randrange(80, 90)) / 100
     discount.discount_percentage = discount_percentage
+    discount.save()
     assert product.get_price_info(request).price == request.shop.create_price(
         original_price - original_price * discount_percentage
     )

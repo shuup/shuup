@@ -5,15 +5,27 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
+from django.db import transaction
 from django.db.models.signals import m2m_changed, post_save, pre_delete
+from django.dispatch.dispatcher import receiver
 
+from shuup.admin.signals import object_saved
 from shuup.core.models import Category, ShopProduct
+from shuup.core.tasks import run_task
 from shuup.core.utils.price_cache import bump_all_price_caches
 from shuup.discounts.exceptions import DiscountM2MChangeError
 from shuup.discounts.models import Discount, HappyHour, TimeRange
 from shuup.discounts.utils import bump_price_expiration
+
+
+@receiver(object_saved, sender=Discount)
+def on_discount_object_saved(sender, object: Discount, **kwargs):
+    transaction.on_commit(lambda: run_task("shuup.discounts.tasks.reindex_discount", discount_id=object.pk))
+
+
+@receiver(object_saved, sender=HappyHour)
+def on_happy_hour_object_saved(sender, object: HappyHour, **kwargs):
+    transaction.on_commit(lambda: run_task("shuup.discounts.tasks.reindex_happy_hour", happy_hour_id=object.pk))
 
 
 def handle_discount_post_save(sender, instance, **kwargs):

@@ -53,7 +53,7 @@ class CustomerGroupPricingModule(PricingModule):
 
     def index_shop_product(self, shop_product: Union["ShopProduct", int], **kwargs):
         if isinstance(shop_product, int):
-            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product", "default_price_value")
+            shop_product = ShopProduct.objects.select_related("shop", "product").get(pk=shop_product)
 
         is_variation_parent = shop_product.product.is_variation_parent()
 
@@ -65,12 +65,17 @@ class CustomerGroupPricingModule(PricingModule):
             for child_shop_product in children_shop_product:
                 self.index_shop_product(child_shop_product)
         else:
+            # clean up all prices for this product and shop
+            ProductCatalogPrice.objects.filter(
+                product_id=shop_product.product_id, shop_id=shop_product.shop_id
+            ).delete()
+
             # index all the prices with groups
             for customer_group_price in CgpPrice.objects.filter(
                 product_id=shop_product.product_id, shop_id=shop_product.shop_id
             ):
                 catalog_rule = ProductCatalogPriceRule.objects.get_or_create(
-                    contact_group=customer_group_price.group, contact=None
+                    module_identifier=self.identifier, contact_group=customer_group_price.group, contact=None
                 )[0]
                 for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
                     ProductCatalogPrice.objects.update_or_create(
@@ -131,7 +136,7 @@ class CustomerGroupDiscountModule(DiscountModule):
         Index the shop product discounts
         """
         if isinstance(shop_product, int):
-            shop_product = ShopProduct.objects.get(pk=shop_product).only("shop_id", "product", "default_price_value")
+            shop_product = ShopProduct.objects.select_related("shop", "product").get(pk=shop_product)
 
         is_variation_parent = shop_product.product.is_variation_parent()
 

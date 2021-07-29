@@ -65,7 +65,6 @@ class ProductDiscountModule(DiscountModule):
             )
 
             minimum_price_value = minimum_price_values[0] if minimum_price_values else 0
-
             new_price_info.price = max(
                 min(discounted_prices), shop.create_price(minimum_price_value or 0) or shop.create_price(0)
             )
@@ -113,4 +112,4 @@ class ProductDiscountModule(DiscountModule):
             discounts_groups_ids.append(AnonymousContact.get_default_group().pk)
 
             for supplier in shop_product.suppliers.all().only("pk"):
-                index_shop_product_price(shop_product, supplier, self.identifier, discounts_groups_ids)
+                index_shop_product_price(shop_product, supplier, discounts_groups_ids)

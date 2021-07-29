@@ -37,6 +37,7 @@ class ProductCatalogPriceRule(models.Model):
     Store rules for catalog prices
     """
 
+    module_identifier = models.CharField(max_length=100, verbose_name=_("Pricing module identifier"))
     contact_group = models.ForeignKey(
         "shuup.ContactGroup", related_name="catalog_prices", on_delete=models.CASCADE, null=True, editable=False
     )
@@ -45,7 +46,7 @@ class ProductCatalogPriceRule(models.Model):
     )
 
     class Meta:
-        unique_together = ("contact_group", "contact")
+        unique_together = ("module_identifier", "contact_group", "contact")
 
 
 class ProductCatalogPrice(MoneyPropped, models.Model):

@@ -32,6 +32,7 @@ from shuup.testing.factories import (
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
+from shuup_tests.utils import atomic_commit_mock
 
 
 @pytest.mark.parametrize(
@@ -239,11 +240,7 @@ def test_product_edit_view(rf, admin_user, settings):
             continue
         usable_post[k] = v
 
-    def on_commit_mock(func):
-        # make it atomic, don't commit after the transaction commits
-        func()
-
-    with patch("django.db.transaction.on_commit", new=on_commit_mock):
+    with patch("django.db.transaction.on_commit", new=atomic_commit_mock):
         request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
         response = view(request, pk=shop_product.pk)
 

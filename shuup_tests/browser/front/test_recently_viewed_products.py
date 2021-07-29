@@ -9,14 +9,17 @@ import pytest
 
 from shuup.core.models import CategoryStatus
 from shuup.testing.browser_utils import initialize_front_browser_test, wait_until_appeared
-from shuup.testing.factories import create_product, get_default_category, get_default_shop
+from shuup.testing.factories import create_product, get_default_category, get_default_shop, get_default_supplier
 from shuup.utils.django_compat import reverse
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
 def new_product(i, shop, category):
-    product = create_product(sku="test%s" % i, shop=shop, name="test%s" % i)
+    supplier = get_default_supplier(shop)
+    supplier.stock_managed = False
+    supplier.save()
+    product = create_product(sku="test%s" % i, shop=shop, name="test%s" % i, supplier=supplier)
     sp = product.get_shop_instance(shop)
     sp.primary_category = category
     sp.save()

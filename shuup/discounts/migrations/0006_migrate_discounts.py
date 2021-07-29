@@ -16,7 +16,7 @@ def migrate_data(apps, schema_editor):
 
     Discount.objects.filter(
         Q(availability_exceptions__isnull=False) |
-        Q(coupon__isnull=False) |
+        Q(coupon_code__isnull=False) |
         Q(exclude_selected_contact_group=True)
     ).update(active=False)
 

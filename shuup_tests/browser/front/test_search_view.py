@@ -41,7 +41,7 @@ def create_orderable_product(name, sku, price):
 
 
 @pytest.mark.django_db
-def test_search_product_list(browser, live_server, settings):
+def test_search_product_list(browser, live_server, settings, reindex_catalog):
     activate("en")
     # initialize
     cache.clear()
@@ -49,6 +49,8 @@ def test_search_product_list(browser, live_server, settings):
 
     for name, sku, price in PRODUCT_DATA:
         create_orderable_product(name, sku, price=price)
+
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
@@ -66,13 +68,14 @@ def test_search_product_list(browser, live_server, settings):
 
 
 def check_default_ordering(browser):
-    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-1").first().id
+    # default order is by -ID
+    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-11").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
-    expected_second_prod_id = "product-%s" % Product.objects.filter(sku="sku-3").first().id
+    expected_second_prod_id = "product-%s" % Product.objects.filter(sku="sku-10").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card")[1]["id"] == expected_second_prod_id)
 
-    expected_third_prod_id = "product-%s" % Product.objects.filter(sku="sku-2").first().id
+    expected_third_prod_id = "product-%s" % Product.objects.filter(sku="sku-8").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card")[2]["id"] == expected_third_prod_id)
 
 
@@ -105,14 +108,14 @@ def basic_sorting_test(browser):
 def second_test_query(browser, live_server, url):
     browser.visit("%s%s?q=Test" % (live_server, url))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 7)
-    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-4").first().id
+    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="sku-10").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 
-    expected_second_prod_id = "product-%s" % Product.objects.filter(sku="sku-10").first().id
+    expected_second_prod_id = "product-%s" % Product.objects.filter(sku="sku-8").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card")[1]["id"] == expected_second_prod_id)
 
-    expected_third_prod_id = "product-%s" % Product.objects.filter(sku="sku-8").first().id
+    expected_third_prod_id = "product-%s" % Product.objects.filter(sku="sku-6").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card")[2]["id"] == expected_third_prod_id)
 
-    expected_last_prod_id = "product-%s" % Product.objects.filter(sku="sku-2").first().id
+    expected_last_prod_id = "product-%s" % Product.objects.filter(sku="sku-1").first().id
     wait_until_condition(browser, lambda x: x.find_by_css(".product-card").last["id"] == expected_last_prod_id)

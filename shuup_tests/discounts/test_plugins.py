@@ -32,6 +32,7 @@ def get_context(rf, customer=None):
 @pytest.mark.django_db
 def test_product_selection_plugin(rf, reindex_catalog):
     shop = factories.get_default_shop()
+    shop2 = factories.get_shop(identifier="shop2")
     category1 = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
     category2 = factories.CategoryFactory(status=CategoryStatus.VISIBLE)
 
@@ -53,6 +54,7 @@ def test_product_selection_plugin(rf, reindex_catalog):
 
     # this discount should show products: p1, p2 and p5
     discount1 = Discount.objects.create(
+        shop=shop,
         name="discount1",
         active=True,
         start_datetime=now() - timedelta(days=10),
@@ -60,20 +62,20 @@ def test_product_selection_plugin(rf, reindex_catalog):
         product=p5,
         category=category1,
     )
-    discount1.shops.add(shop)
 
     # this discount should show products: p1, p3 and p4
     discount2 = Discount.objects.create(
+        shop=shop,
         name="discount2",
         active=True,
         start_datetime=now() - timedelta(days=10),
         end_datetime=now() + timedelta(days=1),
         category=category2,
     )
-    discount2.shops.add(shop)
 
     # this discount shouldn't be available for this shop
     discount3 = Discount.objects.create(
+        shop=shop2,
         name="discount3",
         active=True,
         start_datetime=now() - timedelta(days=10),

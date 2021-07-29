@@ -8,7 +8,7 @@
 import six
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import ShopProduct
+from shuup.core.models import ProductCatalogPrice, ShopProduct
 from shuup.core.pricing import PriceInfo, PricingModule
 from shuup.testing.models import SupplierPrice
 from shuup.utils.importing import cached_load
@@ -47,13 +47,12 @@ class SupplierPricingModule(PricingModule):
             supplier = supplier_strategy().get_supplier(**kwargs)
 
         # Like now in customer group pricing let's take default price from shop product
-        default_price_values = list(
-            ShopProduct.objects.filter(product_id=product_id, shop=shop).values_list("default_price_value", flat=True)
-        )
-        if len(default_price_values) == 0:  # No shop product
+        shop_product = ShopProduct.objects.filter(product_id=product_id, shop=shop).only("default_price_value").first()
+
+        if not shop_product:
             return PriceInfo(price=shop.create_price(0), base_price=shop.create_price(0), quantity=quantity)
-        else:
-            default_price = default_price_values[0] or 0
+
+        default_price = shop_product.default_price_value
 
         # Then the actual supplier price in case we have
         # been able to figure out some supplier. I guess
@@ -79,3 +78,24 @@ class SupplierPricingModule(PricingModule):
             base_price=shop.create_price(price * quantity),
             quantity=quantity,
         )
+
+    def index_shop_product(self, shop_product, **kwargs):
+        is_variation_parent = shop_product.product.is_variation_parent()
+        if is_variation_parent:
+            children_shop_product = ShopProduct.objects.select_related("product", "shop").filter(
+                shop=shop_product.shop, product__variation_parent_id=shop_product.product_id
+            )
+            for child_shop_product in children_shop_product:
+                self.index_shop_product(child_shop_product)
+        else:
+            for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
+                supplier_price = SupplierPrice.objects.filter(
+                    shop=shop_product.shop, product_id=shop_product.product, supplier_id=supplier_id
+                ).first()
+                ProductCatalogPrice.objects.update_or_create(
+                    product_id=shop_product.product_id,
+                    shop_id=shop_product.shop_id,
+                    supplier_id=supplier_id,
+                    catalog_rule=None,
+                    defaults=dict(price_value=supplier_price.amount_value or shop_product.default_price_value),
+                )

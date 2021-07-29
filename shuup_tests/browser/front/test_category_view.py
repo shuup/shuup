@@ -192,6 +192,9 @@ def initialize_db():
     # initialize
     cache.clear()
     shop = get_default_shop()
+    supplier = get_default_supplier(shop)
+    supplier.stock_managed = False
+    supplier.save()
 
     for name, identifier in CATEGORY_DATA:
         category = Category()
@@ -453,6 +456,7 @@ def second_category_sort_test(browser, live_server, shop, category):
 
 
 def add_variations(shop, parent, colors, sizes):
+    supplier = get_default_supplier()
     color_var = ProductVariationVariable.objects.create(product_id=parent.id, identifier="color", name="Color")
     size_var = ProductVariationVariable.objects.create(product_id=parent.id, identifier="size", name="Size")
 
@@ -465,7 +469,7 @@ def add_variations(shop, parent, colors, sizes):
     assert len(combinations) == (len(sizes) * len(colors))
     for combo in combinations:
         assert not combo["result_product_pk"]
-        child = create_product(sku="%s-xyz-%s" % (parent.sku, combo["sku_part"]), shop=shop)
+        child = create_product(sku="%s-xyz-%s" % (parent.sku, combo["sku_part"]), shop=shop, supplier=supplier)
         child.link_to_parent(parent, combination_hash=combo["hash"])
     assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
 
@@ -484,18 +488,18 @@ def second_category_sort_with_price_filter(browser, category):
     browser.reload()
 
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5)
-    # 5 products and let's filter all products with price less than 5
+
+    # let's filter all products with price less than 5 => 5
     click_element(browser, "button[data-id='id_price_range']")
     click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(2) a")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 5)
 
-    # 4 products and let's filter products with price +12
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)
+    # let's filter products with price +12 => 2
     click_element(browser, "button[data-id='id_price_range']")
     click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(5) a")
-
-    # Now 2 products left and now filter with price 8-11
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
+
+    # filter with price 8-11 => 4
     click_element(browser, "button[data-id='id_price_range']")
     click_element(browser, "button[data-id='id_price_range'] + .dropdown-menu li:nth-child(4) a")
-
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)

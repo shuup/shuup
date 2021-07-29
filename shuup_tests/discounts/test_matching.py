@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 import pytest
 
-from shuup.core.models import AnonymousContact, PersonContact
+from shuup.core.models import AnonymousContact, CompanyContact, PersonContact
 from shuup.discounts.models import Discount
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
@@ -33,11 +32,7 @@ def test_matching_product_discount(rf):
     request, product = _init_test_for_product(rf, default_price)
 
     discount_amount = 4
-    discount = Discount.objects.create(active=True, product=product, discount_amount_value=discount_amount)
-    assert product.get_price_info(request).price == request.shop.create_price(default_price)
-
-    # Shop required for discount
-    discount.shops.add(request.shop)
+    Discount.objects.create(shop=request.shop, active=True, product=product, discount_amount_value=discount_amount)
     assert product.get_price_info(request).price == request.shop.create_price(default_price - discount_amount)
 
 
@@ -47,8 +42,9 @@ def test_matching_product_discount_with_category(rf):
     request, product = _init_test_for_product(rf, default_price)
 
     product_discount_amount = 4
-    discount = Discount.objects.create(active=True, product=product, discount_amount_value=product_discount_amount)
-    discount.shops.add(request.shop)
+    Discount.objects.create(
+        shop=request.shop, active=True, product=product, discount_amount_value=product_discount_amount
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     another_product = factories.create_product("test1", shop=request.shop, default_price=default_price)
@@ -58,8 +54,9 @@ def test_matching_product_discount_with_category(rf):
 
     # Let's create category with some discounts
     category_discount_amount = 8
-    discount = Discount.objects.create(active=True, category=category, discount_amount_value=category_discount_amount)
-    discount.shops.add(request.shop)
+    Discount.objects.create(
+        shop=request.shop, active=True, category=category, discount_amount_value=category_discount_amount
+    )
     assert another_product.get_price_info(request).price == (
         request.shop.create_price(default_price - category_discount_amount)
     )
@@ -72,10 +69,9 @@ def test_matching_product_discount_with_category(rf):
     # Let's create worse discount for category and make sure we have
     # multiple lines matching for these products and the best discount
     # is activated.
-    discount = Discount.objects.create(
-        active=True, category=category, discount_amount_value=category_discount_amount - 3
+    Discount.objects.create(
+        shop=request.shop, active=True, category=category, discount_amount_value=category_discount_amount - 3
     )
-    discount.shops.add(request.shop)
 
     assert another_product.get_price_info(request).price == (
         request.shop.create_price(default_price - category_discount_amount)
@@ -89,8 +85,9 @@ def test_matching_product_discount_with_contact(rf):
     request, product = _init_test_for_product(rf, default_price)
 
     product_discount_amount = 4
-    discount = Discount.objects.create(active=True, product=product, discount_amount_value=product_discount_amount)
-    discount.shops.add(request.shop)
+    discount = Discount.objects.create(
+        shop=request.shop, active=True, product=product, discount_amount_value=product_discount_amount
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Adding contact condition to the discount should make
@@ -118,8 +115,9 @@ def test_matching_product_discount_with_contact_group(rf):
     request, product = _init_test_for_product(rf, default_price)
 
     product_discount_amount = 4
-    discount = Discount.objects.create(active=True, product=product, discount_amount_value=product_discount_amount)
-    discount.shops.add(request.shop)
+    discount = Discount.objects.create(
+        shop=request.shop, active=True, product=product, discount_amount_value=product_discount_amount
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Adding contact group limitation to the discount should
@@ -147,8 +145,9 @@ def test_category_product_discount_with_contact(rf):
     category = factories.get_default_category()
     category.shop_products.add(product.get_shop_instance(request.shop))
     product_discount_amount = 4
-    discount = Discount.objects.create(active=True, category=category, discount_amount_value=product_discount_amount)
-    discount.shops.add(request.shop)
+    discount = Discount.objects.create(
+        shop=request.shop, active=True, category=category, discount_amount_value=product_discount_amount
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Adding contact condition to the discount should make
@@ -177,10 +176,14 @@ def test_category_selection_excluded(rf):
 
     category = factories.get_default_category()
     product_discount_amount = 4
-    discount = Discount.objects.create(
-        active=True, exclude_selected_category=True, category=category, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop,
+        active=True,
+        exclude_selected_category=True,
+        category=category,
+        discount_amount_value=product_discount_amount,
     )
-    discount.shops.add(request.shop)
+    # applies to all products, except the selected category
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Setting default category for product disables the discount
@@ -196,8 +199,9 @@ def test_category_product_discount_with_contact_group(rf):
     category = factories.get_default_category()
     product.get_shop_instance(request.shop).categories.add(category)
     product_discount_amount = 4
-    discount = Discount.objects.create(active=True, category=category, discount_amount_value=product_discount_amount)
-    discount.shops.add(request.shop)
+    discount = Discount.objects.create(
+        shop=request.shop, active=True, category=category, discount_amount_value=product_discount_amount
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Adding contact group limitation to the discount should
@@ -228,10 +232,9 @@ def test_contact_discount(rf):
     random_company = factories.create_random_company()
     request.customer = random_company
 
-    discount = Discount.objects.create(
-        active=True, contact=random_company, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop, active=True, contact=random_company, discount_amount_value=product_discount_amount
     )
-    discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     new_product_price = 7
@@ -259,10 +262,9 @@ def test_contact_group_discount(rf):
     random_company.groups.add(contact_group)
     request.customer = random_company
 
-    discount = Discount.objects.create(
-        active=True, contact_group=contact_group, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop, active=True, contact_group=contact_group, discount_amount_value=product_discount_amount
     )
-    discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     new_product_price = 7
@@ -286,10 +288,9 @@ def test_discount_for_anons(rf):
 
     anon_default_group = AnonymousContact().get_default_group()
     product_discount_amount = 2
-    discount = Discount.objects.create(
-        active=True, contact_group=anon_default_group, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop, active=True, contact_group=anon_default_group, discount_amount_value=product_discount_amount
     )
-    discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 
     # Setting customer to request takes out the discount
@@ -303,13 +304,13 @@ def test_discount_for_person_contacts(rf):
     request, product = _init_test_for_product(rf, default_price)
     assert request.customer == AnonymousContact()
 
-    random_person = factories.create_random_person()
-    person_contact_group = random_person.get_default_group()
     product_discount_amount = 2
-    discount = Discount.objects.create(
-        active=True, contact_group=person_contact_group, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop,
+        active=True,
+        contact_group=PersonContact.get_default_group(),
+        discount_amount_value=product_discount_amount,
     )
-    discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price)
 
     # Setting customer to request activates the discount
@@ -327,13 +328,13 @@ def test_discount_for_companies(rf):
     request, product = _init_test_for_product(rf, default_price)
     assert request.customer == AnonymousContact()
 
-    random_company = factories.create_random_company()
-    company_contact_group = random_company.get_default_group()
     product_discount_amount = 2
-    discount = Discount.objects.create(
-        active=True, contact_group=company_contact_group, discount_amount_value=product_discount_amount
+    Discount.objects.create(
+        shop=request.shop,
+        active=True,
+        contact_group=CompanyContact.get_default_group(),
+        discount_amount_value=product_discount_amount,
     )
-    discount.shops.add(request.shop)
     assert product.get_price_info(request).price == request.shop.create_price(default_price)
 
     # Setting customer to request activates the discount
@@ -352,15 +353,21 @@ def test_discount_for_logged_in_contacts(rf):
     assert request.customer == AnonymousContact()
 
     product_discount_amount = 2
-    discount = Discount.objects.create(
+    Discount.objects.create(
+        shop=request.shop,
         active=True,
         contact_group=PersonContact.get_default_group(),
         discount_amount_value=product_discount_amount,
     )
-    discount.shops.add(request.shop)
+    Discount.objects.create(
+        shop=request.shop,
+        active=True,
+        contact_group=CompanyContact.get_default_group(),
+        discount_amount_value=product_discount_amount,
+    )
     assert product.get_price_info(request).price == request.shop.create_price(default_price)
 
-    # Setting customer to request takes out the discount
+    # setting customer to request should apply the discount
     request.customer = factories.create_random_person()
     assert product.get_price_info(request).price == request.shop.create_price(default_price - product_discount_amount)
 

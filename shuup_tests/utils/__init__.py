@@ -103,6 +103,11 @@ def very_recently(datetime, how_recently=1):
     return abs(datetime - now()).total_seconds() < how_recently
 
 
+def atomic_commit_mock(func):
+    # make it atomic, don't commit after the transaction commit
+    func()
+
+
 _test_case = TestCase("setUp")  # gotta pass something to the ctor.
 
 assert_contains = _test_case.assertContains

@@ -65,11 +65,11 @@ def test_category_detail(client, reindex_catalog):
             )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
-    reindex_catalog()
-
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
         with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+            reindex_catalog()
+
             soup = _get_category_detail_soup(client, category)
 
             # Johnny Inc has the best prices for everything
@@ -94,6 +94,7 @@ def test_category_detail(client, reindex_catalog):
             # Let's say Mike has the cheapest laptop
             mike_supplier = Supplier.objects.get(name="Mike Inc")
             SupplierPrice.objects.filter(supplier=mike_supplier, shop=shop, product=laptop).update(amount_value=333)
+            reindex_catalog()
 
             soup = _get_category_detail_soup(client, category)
             laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
@@ -103,6 +104,7 @@ def test_category_detail(client, reindex_catalog):
             # Just to make sure Simon takes over the mouse biz
             simon_supplier = Supplier.objects.get(name="Simon Inc")
             SupplierPrice.objects.filter(supplier=simon_supplier, shop=shop, product=mouse).update(amount_value=1)
+            reindex_catalog()
 
             soup = _get_category_detail_soup(client, category)
             mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})

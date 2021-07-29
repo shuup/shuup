@@ -2,8 +2,12 @@
 {% from "shuup/admin/macros/general.jinja" import single_section_form, content_block_subtitle with context %}
 
 {% block body_class %}shuup-details{% endblock %}
+
 {% block content %}
     {% call single_section_form("discounts_form", form) %}
+        {% for error in form.non_field_errors() %}
+            <p class="alert alert-danger"><i class="fa fa-warning"></i> {{ error }}</p>
+        {% endfor %}
         {{ bs3.field(form.name) }}
         {{ content_block_subtitle("h4", _("Availability"), "fa-calendar-check-o") }}
         {{ bs3.field(form.active) }}
@@ -13,6 +17,7 @@
         {{ content_block_subtitle("h4", _("Condition"), "fa-random") }}
         {{ bs3.field(form.product) }}
         {{ bs3.field(form.category) }}
+        {{ bs3.field(form.exclude_selected_category) }}
         {{ bs3.field(form.contact) }}
         {{ bs3.field(form.contact_group) }}
         {{ bs3.field(form.supplier) }}

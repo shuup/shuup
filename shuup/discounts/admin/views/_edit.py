@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 from django import forms
+from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -53,7 +52,7 @@ class DiscountForm(forms.ModelForm):
 
         self.fields["category"].queryset = Category.objects.filter(shops=self.shop)
         self.fields["contact"].widget = ContactChoiceWidget(clearable=True)
-        self.fields["contact_group"].queryset = ContactGroup.objects.filter(shop=self.shop)
+        self.fields["contact_group"].queryset = ContactGroup.objects.filter(Q(shop=self.shop) | Q(shop__isnull=True))
         self.fields["happy_hours"].queryset = HappyHour.objects.filter(shop=self.shop)
         self.fields["product"].widget = ProductChoiceWidget(clearable=True)
         self.fields["supplier"].queryset = Supplier.objects.enabled(shop=self.shop)
@@ -62,21 +61,8 @@ class DiscountForm(forms.ModelForm):
         instance = super(DiscountForm, self).save(commit=False)
         instance.shop = self.shop
         instance.save()
+        instance.happy_hours.set(self.cleaned_data["happy_hours"])
         return instance
-
-    def clean(self):
-        data = self.cleaned_data
-        values = (
-            data.get("discount_percentage"),
-            data.get("discounted_price_value"),
-            data.get("discount_amount_value"),
-        )
-        valid_values_count = len([v for v in values if v])
-        if valid_values_count == 0 or valid_values_count > 1:
-            raise forms.ValidationError(
-                _("Either discounted price or discount percentage or discount amount should be configured.")
-            )
-        return data
 
 
 class DiscountEditView(CreateOrUpdateView):

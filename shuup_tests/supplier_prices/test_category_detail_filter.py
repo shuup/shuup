@@ -121,11 +121,10 @@ def test_category_detail_filters(client, reindex_catalog):
             )
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
-    reindex_catalog()
-
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
         with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+            reindex_catalog()
 
             laptop = [product for product in products if product.sku == "laptop"][0]
             keyboard = [product for product in products if product.sku == "keyboard"][0]
@@ -229,13 +228,13 @@ def test_category_detail_multiselect_supplier_filters(client, reindex_catalog):
 def _get_category_detail_soup(client, category, supplier_id):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url, data={"supplier": supplier_id})
-    return BeautifulSoup(response.content)
+    return BeautifulSoup(response.content, "lxml")
 
 
 def _get_category_detail_soup_multiselect(client, category, supplier_ids):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url, data={"suppliers": ",".join(["%s" % sid for sid in supplier_ids])})
-    return BeautifulSoup(response.content)
+    return BeautifulSoup(response.content, "lxml")
 
 
 def _assert_supplier_info(box_soup, expected_supplier_name):
