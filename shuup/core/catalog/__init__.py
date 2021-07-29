@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytz
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import OuterRef, Q, Subquery
 from django.db.models.query import QuerySet
@@ -123,8 +124,8 @@ class ProductCatalog:
         return filters
 
     def _get_discounted_prices_filters(self):
-        now_dt = timezone.now()
-        now_time = timezone.now().utcnow().time()
+        now_dt = timezone.now().astimezone(pytz.utc)
+        now_time = now_dt.time()
 
         filters = Q()
         shop = self.context.shop
@@ -139,27 +140,29 @@ class ProductCatalog:
             catalog_rule__in=ProductCatalogDiscountedPriceRule.objects.filter(
                 Q(get_contact_filter(self.context.contact)),
                 Q(
-                    valid_start_date__isnull=True,
-                    valid_start_hour__isnull=True,
-                )
-                | Q(
-                    valid_start_date__gt=now_dt,
-                    valid_end_date__lt=now_dt,
-                    valid_start_hour__isnull=True,
-                )
-                | Q(
-                    valid_start_date__gt=now_dt,
-                    valid_end_date__lt=now_dt,
-                    valid_start_hour__gt=now_time,
-                    valid_end_hour__lt=now_time,
-                    valid_weekday__isnull=True,
-                )
-                | Q(
-                    valid_start_date__gt=now_dt,
-                    valid_end_date__lt=now_dt,
-                    valid_start_hour__gt=now_time,
-                    valid_end_hour__lt=now_time,
-                    valid_weekday=now_dt.weekday(),
+                    Q(
+                        valid_start_date__isnull=True,
+                        valid_start_hour__isnull=True,
+                    )
+                    | Q(
+                        valid_start_date__lte=now_dt,
+                        valid_end_date__gt=now_dt,
+                        valid_start_hour__isnull=True,
+                    )
+                    | Q(
+                        valid_start_date__lte=now_dt,
+                        valid_end_date__gt=now_dt,
+                        valid_start_hour__lte=now_time,
+                        valid_end_hour__gt=now_time,
+                        valid_weekday__isnull=True,
+                    )
+                    | Q(
+                        valid_start_date__lte=now_dt,
+                        valid_end_date__gt=now_dt,
+                        valid_start_hour__lte=now_time,
+                        valid_end_hour__gt=now_time,
+                        valid_weekday=now_dt.weekday(),
+                    ),
                 ),
             )
         )
@@ -318,7 +321,7 @@ class ProductCatalog:
             cls.index_shop_product(shop_product)
 
     @classmethod
-    def index_shop_product(cls, shop_product: Union[Product, int]):
+    def index_shop_product(cls, shop_product: Union[Product, int], **kwargs):
         """
         Index the prices for the given `shop_product`
         which can be either a ShopProduct instance or a shop product ID.

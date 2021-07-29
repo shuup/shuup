@@ -12,7 +12,7 @@ from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign, Co
 from shuup.core.models import OrderLineType, ShopProduct
 from shuup.core.order_creator import OrderSourceModifierModule
 from shuup.core.order_creator._source import LineSource
-from shuup.core.pricing import DiscountModule
+from shuup.core.pricing import DiscountModule, PriceInfo
 
 
 # DEPRECATED: 3.0
@@ -21,7 +21,7 @@ class CatalogCampaignModule(DiscountModule):
     identifier = "catalog_campaigns"
     name = _("Campaigns")
 
-    def discount_price(self, context, product, price_info):
+    def discount_price(self, context, product, price_info: PriceInfo):
         """
         Get the discounted price for context.
 
@@ -29,14 +29,14 @@ class CatalogCampaignModule(DiscountModule):
         Minimum price will be selected if the cheapest price is under that.
         """
         create_price = context.shop.create_price
-        try:
-            shop_product = product.get_shop_instance(context.shop)
-        except ShopProduct.DoesNotExist:
+        shop_product = ShopProduct.objects.filter(shop=context.shop, product=product).first()
+        if not shop_product:
             return price_info
 
         best_discount = None
         for campaign in CatalogCampaign.get_matching(context, shop_product):
             price = price_info.price
+
             # get first matching effect
             for effect in campaign.effects.all():
                 price -= effect.apply_for_product(context=context, product=product, price_info=price_info)
@@ -47,16 +47,21 @@ class CatalogCampaignModule(DiscountModule):
             if price < best_discount:
                 best_discount = price
 
-        if best_discount:
-            if shop_product.minimum_price and best_discount < shop_product.minimum_price:
-                best_discount = shop_product.minimum_price
+        if not best_discount:
+            return price_info
 
-            if best_discount < create_price("0"):
-                best_discount = create_price("0")
+        if shop_product.minimum_price and best_discount < shop_product.minimum_price:
+            best_discount = shop_product.minimum_price
 
-            price_info.price = best_discount
+        if best_discount < create_price("0"):
+            best_discount = create_price("0")
 
-        return price_info
+        return PriceInfo(
+            best_discount,
+            base_price=price_info.base_price,
+            quantity=price_info.quantity,
+            expires_on=price_info.expires_on,
+        )
 
 
 class BasketCampaignModule(OrderSourceModifierModule):

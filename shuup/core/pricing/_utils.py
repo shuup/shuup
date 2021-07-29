@@ -26,10 +26,17 @@ def get_price_info(context, product, quantity=1):
     :rtype: shuup.core.pricing.PriceInfo
     """
     (mod, ctx) = _get_module_and_context(context)
-    price_info = mod.get_price_info(ctx, product, quantity)
+    base_price = mod.get_price_info(ctx, product, quantity)
+    discounted_prices = []
+
     for module in get_discount_modules():
-        price_info = module.discount_price(ctx, product, price_info)
-    return price_info
+        discounted_prices.append(module.discount_price(ctx, product, base_price))
+
+    # return the best discounted price when there are discounts
+    if discounted_prices:
+        return min(discounted_prices)
+
+    return base_price
 
 
 def get_pricing_steps(context, product):

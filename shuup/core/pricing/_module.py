@@ -138,7 +138,7 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
             product_id: self.get_pricing_steps(context, product) for (product_id, product) in six.iteritems(product_map)
         }
 
-    def index_shop_product(self, shop_product: Union["ShopProduct", int]):
+    def index_shop_product(self, shop_product: Union["ShopProduct", int], **kwargs):
         """
         Index the prices for the given shop product
         """
