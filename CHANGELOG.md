@@ -56,6 +56,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
 - Admin: Uploaded shop logo and favicon is updated in admin and auth views
 
 ### Changed

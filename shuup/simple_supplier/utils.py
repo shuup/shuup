@@ -147,7 +147,13 @@ def get_stock_adjustment_div(request, supplier, product):
         "product": product,
         "supplier": supplier,
         "delta_step": pow(0.1, product.sales_unit.decimals) if product.sales_unit.decimals else 0,
-        "adjustment_form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None}),
+        "adjustment_form": StockAdjustmentForm(
+            initial={
+                "purchase_price": purchase_price,
+                "delta": None,
+                "decimal_places": product.sales_unit.decimals,
+            },
+        ),
         "stock": stock,
         "stock_managed_form": StockManagedForm(initial={"stock_managed": not stock.stock_managed}),
     }

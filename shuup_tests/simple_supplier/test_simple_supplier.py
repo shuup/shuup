@@ -113,7 +113,7 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         supplier.adjust_stock(product.pk, quantity)
         adjust_quantity = random.randint(100, 600)
         request = apply_request_middleware(rf.get("/"), user=admin_user)
-        request.POST = {"purchase_price": decimal.Decimal(32.00), "delta": adjust_quantity}
+        request.POST = {"purchase_price": decimal.Decimal(32.00), "delta": adjust_quantity, "decimal_places": 2}
         response = process_stock_adjustment(request, supplier.id, product.id)
         assert response.status_code == 400  # Only POST is allowed
         request.method = "POST"
