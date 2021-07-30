@@ -17,21 +17,21 @@ class TaxAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.tax"
+        return selector == cls.get_selector_for_model(Tax)
 
-    def has_permission(self, user):
-        return has_permission(user, "tax.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "tax.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            Tax.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
+        qs = (
+            Tax.objects.exclude(enabled=False)
+            .translated(name__icontains=search_term)
+            .values_list("id", "translations__name")[: self.search_limit]
         )
-        return [{"id": id, "name": name} for id, name in objects]
+        return [{"id": id, "name": name} for id, name in list(qs)]
 
 
 class CustomerTaxGroupAdminObjectSelector(BaseAdminObjectSelector):
@@ -39,21 +39,19 @@ class CustomerTaxGroupAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.customer_tax_group"
+        return selector == cls.get_selector_for_model(CustomerTaxGroup)
 
-    def has_permission(self, user):
-        return has_permission(user, "customer_tax_group.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "customer_tax_group.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            CustomerTaxGroup.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = CustomerTaxGroup.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
+            : self.search_limit
+        ]
+        return [{"id": id, "name": name} for id, name in list(qs)]
 
 
 class TaxClassAdminObjectSelector(BaseAdminObjectSelector):
@@ -61,18 +59,16 @@ class TaxClassAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.taxclass"
+        return selector == cls.get_selector_for_model(TaxClass)
 
-    def has_permission(self, user):
-        return has_permission(user, "tax_class.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "tax_class.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            TaxClass.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = TaxClass.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
+            : self.search_limit
+        ]
+        return [{"id": id, "name": name} for id, name in list(qs)]

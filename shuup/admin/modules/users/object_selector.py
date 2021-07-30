@@ -20,10 +20,10 @@ class UserAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "auth.user"
+        return selector == cls.get_selector_for_model(User)
 
-    def has_permission(self, user):
-        return has_permission(user, "user.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "user.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

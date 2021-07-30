@@ -17,21 +17,20 @@ class SupplierAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.supplier"
+        return selector == cls.get_selector_for_model(Supplier)
 
-    def has_permission(self, user):
-        return has_permission(user, "supplier.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "supplier.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        search_mode = kwargs.get("search_mode")
-        shop = kwargs.get("shop")
+        search_mode = kwargs.get("searchMode")
 
         qs = Supplier.objects.filter(deleted=False, name__icontains=search_term)
-        qs = qs.filter(shops=shop)
+        qs = qs.filter(shops=self.shop)
         if search_mode == "enabled":
-            qs = qs.enabled(shop=shop)
+            qs = qs.enabled(shop=self.shop)
         qs = qs.values_list("id", "name")[: self.search_limit]
         return [{"id": id, "name": name} for id, name in list(qs)]

@@ -18,28 +18,26 @@ class ProductAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.product"
+        return selector == cls.get_selector_for_model(Product)
 
-    def has_permission(self, user):
-        return has_permission(user, "product.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "product.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        search_mode = kwargs.get("search_mode")
-        shop = kwargs.get("shop")
-        supplier = kwargs.get("supplier")
-        sales_units = kwargs.get("sales_units")
+        search_mode = kwargs.get("searchMode")
+        sales_units = kwargs.get("salesUnits")
 
-        qs = Product.objects.all_except_deleted(shop=shop)
+        qs = Product.objects.all_except_deleted(shop=self.shop)
         qs = qs.exclude(Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)).filter(
             Q(translations__name__icontains=search_term)
             | Q(sku__icontains=search_term)
             | Q(barcode__icontains=search_term)
         )
-        if supplier:
-            qs = qs.filter(shop_products__suppliers=supplier)
+        if self.supplier:
+            qs = qs.filter(shop_products__suppliers=self.supplier)
         if sales_units:
             qs = qs.filter(sales_unit__translations__symbol__in=sales_units.strip().split(","))
         if search_mode == "main":
@@ -64,23 +62,18 @@ class ShopProductAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.shopproduct"
+        return selector == cls.get_selector_for_model(ShopProduct)
 
-    def has_permission(self, user):
-        return has_permission(user, "shop_product.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "shop_product.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        shop = kwargs.get("shop")
-        supplier = kwargs.get("supplier")
-
-        if shop:
-            qs = ShopProduct.objects.filter(shop=shop)
-        else:
-            qs = ShopProduct.objects.all()
-        if supplier:
-            qs = qs.filter(suppliers=supplier)
+        qs = ShopProduct.objects.filter(shop=self.shop)
+        if self.supplier:
+            qs = qs.filter(suppliers=self.supplier)
         qs = qs.filter(product__deleted=False, product__translations__name__icontains=search_term)
+
         return [{"id": instance.id, "name": instance.product.name} for instance in qs]

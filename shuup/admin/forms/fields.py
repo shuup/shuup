@@ -5,6 +5,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
+from django.core.exceptions import ValidationError
 from django.forms import DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -191,8 +192,29 @@ class ObjectSelect2ModelField(Select2ModelField):
     Replacement for the class Select2ModelField.
     """
 
+    def __init__(self, model, selector=None, search_mode=None, *args, **kwargs):
+        super(ObjectSelect2ModelField, self).__init__(model, *args, **kwargs)
+        self.selector = selector
+
+    def prepare_value(self, value):
+        if self.model:
+            return super(ObjectSelect2ModelField, self).prepare_value(value)
+        return value
+
+    def to_python(self, value):
+        if self.model:
+            return super(ObjectSelect2ModelField, self).to_python(value)
+        return value
+
     def widget_attrs(self, widget):
-        attrs = super(ObjectSelect2ModelField, self).widget_attrs(widget)
+        if self.model:
+            attrs = super(ObjectSelect2ModelField, self).widget_attrs(widget)
+        else:
+            attrs = super(Select2ModelField, self).widget_attrs(widget)
+            attrs["data-model"] = self.selector
+            if not self.required:
+                attrs["data-allow-clear"] = "true"
+                attrs["data-placeholder"] = _("Select an option")
         attrs["class"] = "object-selector"
         return attrs
 
@@ -203,8 +225,34 @@ class ObjectSelect2MultipleField(Select2MultipleField):
     Replacement for the class Select2MultipleField.
     """
 
+    def __init__(self, model, selector=None, search_mode=None, *args, **kwargs):
+        super(ObjectSelect2MultipleField, self).__init__(model, *args, **kwargs)
+        self.selector = selector
+
+    def prepare_value(self, value):
+        if self.model:
+            return super(ObjectSelect2MultipleField, self).prepare_value(value)
+        return value
+
+    def to_python(self, value):
+        if self.model:
+            return super(ObjectSelect2MultipleField, self).to_python(value)
+        if not value:
+            return []
+        elif not isinstance(value, (list, tuple)):
+            raise ValidationError(self.error_messages["invalid_list"], code="invalid_list")
+        return [str(val) for val in value]
+
     def widget_attrs(self, widget):
-        attrs = super(ObjectSelect2MultipleField, self).widget_attrs(widget)
+        if self.model:
+            attrs = super(ObjectSelect2MultipleField, self).widget_attrs(widget)
+        else:
+            attrs = super(Select2MultipleField, self).widget_attrs(widget)
+            attrs["data-model"] = self.selector
+            if getattr(self, "search_mode", None):
+                attrs.update({"data-search-mode": self.search_mode})
+            if not self.required:
+                attrs["data-allow-clear"] = "true"
         attrs["class"] = "object-selector"
         return attrs
 
@@ -215,8 +263,32 @@ class ObjectSelect2ModelMultipleField(Select2ModelMultipleField):
     Replacement for the class Select2ModelMultipleField.
     """
 
+    def __init__(self, model, selector=None, search_mode=None, *args, **kwargs):
+        super(ObjectSelect2ModelMultipleField, self).__init__(model, *args, **kwargs)
+        self.selector = selector
+
+    def prepare_value(self, value):
+        if self.model:
+            return super(ObjectSelect2ModelMultipleField, self).prepare_value(value)
+        return [v for v in value or []]
+
+    def to_python(self, value):
+        if self.model:
+            return super(ObjectSelect2ModelMultipleField, self).to_python(value)
+        if value and isinstance(value, (list, tuple)):
+            return value
+        return []
+
     def widget_attrs(self, widget):
-        attrs = super(ObjectSelect2ModelMultipleField, self).widget_attrs(widget)
+        if self.model:
+            attrs = super(ObjectSelect2ModelMultipleField, self).widget_attrs(widget)
+        else:
+            attrs = super(Select2MultipleField, self).widget_attrs(widget)
+            attrs["data-model"] = self.selector
+            if getattr(self, "search_mode", None):
+                attrs.update({"data-search-mode": self.search_mode})
+            if not self.required:
+                attrs["data-allow-clear"] = "true"
         attrs["class"] = "object-selector"
         return attrs
 
@@ -227,7 +299,33 @@ class ObjectSelect2MultipleMainProductField(Select2MultipleMainProductField):
     Replacement for the class Select2MultipleMainProductField.
     """
 
+    def __init__(self, model, selector=None, search_mode=None, *args, **kwargs):
+        super(ObjectSelect2MultipleMainProductField, self).__init__(model, *args, **kwargs)
+        self.selector = selector
+
+    def prepare_value(self, value):
+        if self.model:
+            return super(ObjectSelect2MultipleMainProductField, self).prepare_value(value)
+        return [v for v in value or []]
+
+    def to_python(self, value):
+        if self.model:
+            return super(ObjectSelect2MultipleMainProductField, self).to_python(value)
+        if value and isinstance(value, (list, tuple)):
+            return value
+        return []
+
     def widget_attrs(self, widget):
-        attrs = super(ObjectSelect2MultipleMainProductField, self).widget_attrs(widget)
+        if self.model:
+            attrs = super(ObjectSelect2MultipleMainProductField, self).widget_attrs(widget)
+        else:
+            attrs = super(Select2MultipleField, self).widget_attrs(widget)
+            attrs["data-model"] = self.selector
+            if getattr(self, "search_mode", None):
+                attrs.update({"data-search-mode": self.search_mode})
+            if not self.required:
+                attrs["data-allow-clear"] = "true"
+            return attrs
+
         attrs["class"] = "object-selector"
         return attrs

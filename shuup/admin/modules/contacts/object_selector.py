@@ -18,20 +18,17 @@ class ContactAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.%s" % Contact._meta.model_name
+        return selector == cls.get_selector_for_model(Contact)
 
-    def has_permission(self, user):
-        return has_permission(user, "contact.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "contact.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        shop = kwargs.get("shop")
-
         qs = Contact.objects.filter(email__icontains=search_term).values_list("pk", "email")[: self.search_limit]
-        if shop:
-            qs = qs.filter(shops=shop)
+        qs = qs.filter(shops=self.shop)
 
         return [{"id": id, "name": name} for id, name in list(qs)]
 
@@ -41,23 +38,20 @@ class PersonContactAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.%s" % PersonContact._meta.model_name
+        return selector == cls.get_selector_for_model(PersonContact)
 
-    def has_permission(self, user):
-        return has_permission(user, "personcontact.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "personcontact.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        shop = kwargs.get("shop")
-
         qs = PersonContact.objects.filter(
             Q(email__icontains=search_term) | Q(first_name__icontains=search_term) | Q(last_name__icontains=search_term)
         )
         qs = qs.filter(is_active=True)
-        if shop:
-            qs = qs.filter(shops=shop)
+        qs = qs.filter(shops=self.shop)
         qs = qs.values_list("pk", "name")[: self.search_limit]
 
         return [{"id": id, "name": name} for id, name in list(qs)]
@@ -68,19 +62,16 @@ class CompanyContactAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.%s" % CompanyContact._meta.model_name
+        return selector == cls.get_selector_for_model(CompanyContact)
 
-    def has_permission(self, user):
-        return has_permission(user, "companycontact.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "companycontact.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        shop = kwargs.get("shop")
-
         qs = CompanyContact.objects.filter(Q(name__icontains=search_term) | Q(email__icontains=search_term))
-        if shop:
-            qs = qs.filter(shops=shop)
+        qs = qs.filter(shops=self.shop)
         qs = qs.values_list("pk", "name")[: self.search_limit]
         return [{"id": id, "name": name} for id, name in list(qs)]

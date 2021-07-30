@@ -17,20 +17,17 @@ class ShopAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.shop"
+        return selector == cls.get_selector_for_model(Shop)
 
-    def has_permission(self, user):
-        return has_permission(user, "shop.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "shop.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        user = kwargs.get("user")
 
-        qs = Shop.objects.translated(name__icontains=search_term)
-        if user:
-            qs = qs.get_for_user(self.request.user)
-
+        qs = Shop.objects.get_for_user(self.user)
+        qs = qs.translated(name__icontains=search_term)
         qs = qs.values_list("id", "translations__name")[: self.search_limit]
         return [{"id": id, "name": name} for id, name in list(qs)]

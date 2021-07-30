@@ -9,7 +9,7 @@ from typing import Iterable, Tuple
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
-from shuup.core.models import Carrier, PaymentMethod, ShippingMethod
+from shuup.core.models import Carrier, CustomCarrier, PaymentMethod, ShippingMethod
 
 
 class CarrierAdminObjectSelector(BaseAdminObjectSelector):
@@ -17,21 +17,24 @@ class CarrierAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.carrier"
+        if selector == cls.get_selector_for_model(Carrier) or selector == cls.get_selector_for_model(CustomCarrier):
+            return True
+        return cls.handle_subclass_selector(selector, Carrier)
 
-    def has_permission(self, user):
-        return has_permission(user, "carrier.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "carrier.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            Carrier.objects.translated(name__icontains=search_term).values_list("id", "base_translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+
+        qs = Carrier.objects.translated(name__icontains=search_term)
+        qs = qs.filter(shops=self.shop)
+        if self.supplier:
+            qs = qs.filter(supplier=self.supplier)
+        qs = qs.values_list("id", "base_translations__name")[: self.search_limit]
+        return [{"id": id, "name": name} for id, name in list(qs)]
 
 
 class PaymentMethodAdminObjectSelector(BaseAdminObjectSelector):
@@ -39,21 +42,24 @@ class PaymentMethodAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.paymentmethod"
+        if selector == cls.get_selector_for_model(PaymentMethod):
+            return True
+        return cls.handle_subclass_selector(selector, PaymentMethod)
 
-    def has_permission(self, user):
-        return has_permission(user, "payment_method.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "payment_method.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            PaymentMethod.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+
+        qs = PaymentMethod.objects.translated(name__icontains=search_term)
+        qs = qs.filter(shop=self.shop)
+        if self.supplier:
+            qs = qs.filter(supplier=self.supplier)
+        qs = qs.values_list("id", "translations__name")[: self.search_limit]
+        return [{"id": id, "name": name} for id, name in list(qs)]
 
 
 class ShippingMethodAdminObjectSelector(BaseAdminObjectSelector):
@@ -61,18 +67,18 @@ class ShippingMethodAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.shippingmethod"
+        if selector == cls.get_selector_for_model(ShippingMethod):
+            return True
+        return cls.handle_subclass_selector(selector, ShippingMethod)
 
-    def has_permission(self, user):
-        return has_permission(user, "shipping_method.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "shipping_method.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            ShippingMethod.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = ShippingMethod.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
+            : self.search_limit
+        ]
+        return [{"id": id, "name": name} for id, name in list(qs)]

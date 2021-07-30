@@ -27,4 +27,6 @@ def get_extra_permissions_for_admin_module():
     for provide_key in provide_keys:
         for provide_object in get_provide_objects(provide_key):
             permissions.add(provide_object.__name__)
+
+    permissions.add("coupon.object_selector")
     return permissions

@@ -120,8 +120,6 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.contacts.object_selector.PersonContactAdminObjectSelector",
             "shuup.admin.modules.contacts.object_selector.CompanyContactAdminObjectSelector",
             "shuup.admin.modules.manufacturers.object_selector.ManufacturerAdminObjectSelector",
-            "shuup.admin.modules.orders.object_selector.CouponAdminObjectSelector",
-            "shuup.admin.modules.orders.object_selector.DiscountAdminObjectSelector",
             "shuup.admin.modules.permission_groups.object_selector.PermissionGroupAdminObjectSelector",
             "shuup.admin.modules.product_types.object_selector.ProductTypeAdminObjectSelector",
             "shuup.admin.modules.products.object_selector.ProductAdminObjectSelector",

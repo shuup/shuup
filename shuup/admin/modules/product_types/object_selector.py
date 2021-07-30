@@ -17,18 +17,16 @@ class ProductTypeAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.producttype"
+        return selector == cls.get_selector_for_model(ProductType)
 
-    def has_permission(self, user):
-        return has_permission(user, "producttype.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "producttype.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            ProductType.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = ProductType.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
+            : self.search_limit
+        ]
+        return [{"id": id, "name": name} for id, name in list(qs)]

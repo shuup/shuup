@@ -17,18 +17,16 @@ class AttributeAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "shuup.attribute"
+        return selector == cls.get_selector_for_model(Attribute)
 
-    def has_permission(self, user):
-        return has_permission(user, "attribute.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "attribute.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            Attribute.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
-                : self.search_limit
-            ]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = Attribute.objects.translated(name__icontains=search_term).values_list("id", "translations__name")[
+            : self.search_limit
+        ]
+        return [{"id": id, "name": name} for id, name in list(qs)]

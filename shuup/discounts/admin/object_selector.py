@@ -9,22 +9,27 @@ from typing import Iterable, Tuple
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
-from shuup.core.models import Manufacturer
+from shuup.discounts.models import Discount
 
 
-class ManufacturerAdminObjectSelector(BaseAdminObjectSelector):
-    ordering = 6
+class DiscountAdminObjectSelector(BaseAdminObjectSelector):
+    ordering = 8
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(Manufacturer)
+        return selector == cls.get_selector_for_model(Discount)
 
     def has_permission(self):
-        return has_permission(self.user, "manufacturer.object_selector")
+        return has_permission(self.user, "discount.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        qs = Manufacturer.objects.filter(name__icontains=search_term).values_list("id", "name")[: self.search_limit]
+
+        qs = Discount.objects.exclude(active=False).filter(name__icontains=search_term)
+        qs = qs.filter(shops=self.shop)
+        if self.supplier:
+            qs = qs.filter(supplier=self.supplier)
+        qs = qs.values_list("id", "name")[: self.search_limit]
         return [{"id": id, "name": name} for id, name in list(qs)]

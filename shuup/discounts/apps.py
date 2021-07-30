@@ -18,6 +18,9 @@ class AppConfig(shuup.apps.AppConfig):
             "shuup.discounts.admin.modules.HappyHourModule",
             "shuup.discounts.admin.modules.CouponCodeModule",
         ],
+        "admin_object_selector": [
+            "shuup.discounts.admin.object_selector.DiscountAdminObjectSelector",
+        ],
         "discount_module": ["shuup.discounts.modules:ProductDiscountModule"],
         "order_source_modifier_module": ["shuup.discounts.modules:CouponCodeModule"],
         "xtheme_plugin": ["shuup.discounts.plugins:DiscountedProductsPlugin"],

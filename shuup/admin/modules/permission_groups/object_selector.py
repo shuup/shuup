@@ -17,16 +17,14 @@ class PermissionGroupAdminObjectSelector(BaseAdminObjectSelector):
 
     @classmethod
     def handles_selector(cls, selector):
-        return selector == "auth.group"
+        return selector == cls.get_selector_for_model(PermissionGroup)
 
-    def has_permission(self, user):
-        return has_permission(user, "permission_group.object_selector")
+    def has_permission(self):
+        return has_permission(self.user, "permission_group.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
         Returns an iterable of tuples of (id, text)
         """
-        objects = list(
-            PermissionGroup.objects.filter(name__icontains=search_term).values_list("id", "name")[: self.search_limit]
-        )
-        return [{"id": id, "name": name} for id, name in objects]
+        qs = PermissionGroup.objects.filter(name__icontains=search_term).values_list("id", "name")[: self.search_limit]
+        return [{"id": id, "name": name} for id, name in list(qs)]

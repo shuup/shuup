@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from __future__ import unicode_literals
 
 from django.apps import apps
@@ -13,7 +12,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from http import HTTPStatus
@@ -209,12 +208,12 @@ class ObjectSelectorView(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        selector = request.GET.get("selector")
-        search_term = request.GET.get("q").strip()
-        search_mode = request.GET.get("searchMode")
-        sales_units = request.GET.get("salesUnits")
+        parameters = request.GET.dict()
+        selector = parameters.pop("selector", "")
+        if not selector:
+            HttpResponse(_("Selector not found."), status=HTTPStatus.BAD_REQUEST)
+        search_term = parameters.pop("q", "").strip()
         user = request.user
-
         shop = request.GET.get("shop")
         if shop:
             query_shop = Shop.objects.get_for_user(request.user).filter(pk=request.GET["shop"]).first()
@@ -222,7 +221,6 @@ class ObjectSelectorView(TemplateView):
                 shop = query_shop
         else:
             shop = Shop.objects.get_for_user(request.user).first()
-
         supplier = get_supplier(request)
 
         if not (selector and search_term):
@@ -237,14 +235,12 @@ class ObjectSelectorView(TemplateView):
             if not admin_object_selector_class.handles_selector(selector):
                 continue
 
-            admin_object_selector = admin_object_selector_class(selector, request=request)
+            admin_object_selector = admin_object_selector_class(selector, shop, user, supplier)
 
-            if not admin_object_selector.has_permission(user=request.user):
+            if not admin_object_selector.has_permission():
                 return JsonResponse({}, status=HTTPStatus.NOT_ACCEPTABLE)  # Error 406
 
-            data = admin_object_selector.get_objects(
-                search_term, search_mode=search_mode, shop=shop, supplier=supplier, sales_units=sales_units, user=user
-            )
+            data = admin_object_selector.get_objects(search_term, **parameters)
             return JsonResponse({"results": data})
 
         return JsonResponse({}, status=HTTPStatus.NOT_FOUND)  # Error 404
@@ -253,12 +249,28 @@ class ObjectSelectorView(TemplateView):
 class BaseAdminObjectSelector:
     search_limit = 20
 
-    def __init__(self, selector, *args, **kwargs):
+    def __init__(self, selector, shop, user, supplier=None, *args, **kwargs):
         self.selector = selector
+        self.shop = shop
+        self.user = user
+        self.supplier = supplier
+
+    @classmethod
+    def get_selector_for_model(cls, model):
+        return f"{model._meta.app_label}.{model._meta.model_name}"
 
     @classmethod
     def handles_selector(cls, selector) -> bool:
         raise NotImplementedError()
+
+    @classmethod
+    def handle_subclass_selector(cls, selector, parent_model):
+        try:
+            app_name, model_name = selector.split(".")
+            Model = apps.get_model(app_label=app_name, model_name=model_name)
+            return isinstance(Model, type) and issubclass(Model, parent_model)
+        except LookupError:
+            return False
 
     def has_permission(self, user) -> bool:
         raise NotImplementedError()
