@@ -56,8 +56,8 @@ To blacklist provides, you need to set a special Django setting named `SHUUP_PRO
         ]
     }
 
-This will prevent the spec `pigeon.admin_forms:PigeonShippingAdminForm` from category
-`service_provider_admin_form` of being loaded.
+This will allow the spec `pigeon.admin_forms:PigeonShippingAdminForm` from category
+`service_provider_admin_form` to be loaded.
 
 
 Using Provides
@@ -123,6 +123,9 @@ Core
 
 ``admin_product_section``
     Additional ``Section`` subclasses for Product edit sections.
+
+``admin_product_validator``
+    Provide an AdminProductValidator class, which validates a product according to some criteria.
 
 ``admin_product_toolbar_action_item``
     Additional ``DropdownItem`` subclass for Product edit action buttons.

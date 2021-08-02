@@ -13,7 +13,7 @@ from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
-from shuup.core.models import CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
+from shuup.core.models import AnonymousContact, CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.front.utils.companies import TaxNumberCleanMixin, allow_company_registration
 from shuup.utils.django_compat import force_text
@@ -146,8 +146,11 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     def process(self):
         basket = self.basket
         self._process_addresses(basket)
+
         if self.storage.get("company"):
             basket.customer = self.storage.get("company")
+        elif not basket.customer:
+            basket.customer = getattr(self.request, "customer", None) or AnonymousContact()
 
         if isinstance(basket.customer, CompanyContact):
             for address_kind in self.address_kinds:

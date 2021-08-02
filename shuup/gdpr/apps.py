@@ -24,6 +24,9 @@ class AppConfig(shuup.apps.AppConfig):
         "checkout_confirm_form_field_provider": ["shuup.gdpr.providers:GDPRCheckoutFieldProvider"],
         "front_company_registration_form_provider": ["shuup.gdpr.providers:GDPRFormDefProvider"],
         "xtheme_snippet_blocker": ["shuup.gdpr.snippet_blocker.GDPRSnippetBlocker"],
+        "notify_event": [
+            "shuup.tasks.notify_events:TaskCreated",
+        ],
     }
 
     def ready(self):

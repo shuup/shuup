@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 12:49+0000\n"
-"PO-Revision-Date: 2021-06-17 15:19+0000\n"
+"POT-Creation-Date: 2021-07-26 12:05+0000\n"
+"PO-Revision-Date: 2021-07-26 12:17+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -708,6 +708,9 @@ msgstr "Записи журнала"
 msgid "Admin comment/notes"
 msgstr "Комментарии/заметки администратора"
 
+msgid "Status history"
+msgstr ""
+
 msgid "Set Status"
 msgstr "Установить статус"
 
@@ -982,14 +985,20 @@ msgstr "Роль"
 msgid "Default"
 msgstr "Стандартное"
 
+msgid "Allowed Next Status"
+msgstr ""
+
+msgid "Visible For Customer"
+msgstr ""
+
+msgid "No allowed next status."
+msgstr ""
+
 msgid "Granular Permission Groups"
 msgstr "Дополнительные группы доступа"
 
 msgid "The Permission Group name."
 msgstr "Имя группы доступа"
-
-msgid "Set the users that belong to this Permission Group."
-msgstr "Выбрать пользователей, которые принадлежат к данной группе доступа."
 
 msgid "Create new Permission Group"
 msgstr "Создать новую группу доступа."
@@ -1773,14 +1782,6 @@ msgstr "Имя"
 
 msgid "Last Name"
 msgstr "Фамилия"
-
-#, python-format
-msgid "First Name: %s"
-msgstr "Имя: %s"
-
-#, python-format
-msgid "Last Name: %s"
-msgstr "Фамилия: %s"
 
 msgid "The two password fields didn't match."
 msgstr "Поля пароля не совпадают"
@@ -3214,6 +3215,15 @@ msgid ""
 msgstr "Отправленные посылки не стоит удалять. Удаление будет влиять на подсчёт количества товаров на складе. Удалить в любом случае?"
 
 msgid "Do you want to mark this shipment as sent?"
+msgstr ""
+
+msgid "When"
+msgstr ""
+
+msgid "The order has no status history."
+msgstr ""
+
+msgid "Are you sure you want to delete this order status history item?"
 msgstr ""
 
 msgid "Line #"

@@ -166,7 +166,7 @@ def test_basic_order():
         order.create_payment(Money(6, currency))
     assert order.is_paid(), "Order got paid"
     assert order.can_set_complete(), "Finalization is possible"
-    order.status = OrderStatus.objects.get_default_complete()
+    order.change_status(next_status=OrderStatus.objects.get_default_complete(), save=False)
     assert order.is_complete(), "Finalization done"
 
     summary = order.get_tax_summary()
@@ -219,7 +219,7 @@ def test_basic_order_without_supplier_module():
     assert not order.can_set_complete(), "Finalization is possible"
 
     # Force to be complete
-    order.status = OrderStatus.objects.get_default_complete()
+    order.change_status(next_status=OrderStatus.objects.get_default_complete(), save=False)
     assert order.is_complete(), "Finalization done"
 
     summary = order.get_tax_summary()
