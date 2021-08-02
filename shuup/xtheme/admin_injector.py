@@ -7,13 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 import logging
 from django.template import loader
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from shuup.admin.base import AdminTemplateInjector
-from shuup.core.models import Shop, Supplier, User
+from shuup.core.models import Shop, Supplier
 from shuup.xtheme.models import AdminThemeSettings
 
 LOGGER = logging.getLogger(__name__)
+
+if TYPE_CHECKING:
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
 
 
 class XthemeAdminTemplateInjector(AdminTemplateInjector):
