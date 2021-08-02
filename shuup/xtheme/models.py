@@ -5,10 +5,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
+from django.core.validators import MinLengthValidator
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from enumfields.fields import EnumIntegerField
+from filer.fields.image import FilerFileField
 
 from shuup.core.fields import SeparatedValuesField, TaggedJSONField
 
@@ -172,6 +178,126 @@ class ThemeSettings(models.Model):
 
     def __str__(self):
         return _("Theme configuration for %s") % self.theme_identifier
+
+
+@python_2_unicode_compatible
+class Font(models.Model):
+    shop = models.ForeignKey("shuup.Shop", verbose_name=_("Shop"), related_name="admin_fonts", on_delete=models.CASCADE)
+    name = models.CharField(max_length=128, verbose_name=_("name"), help_text=_("Font family name"))
+    css_value = models.CharField(
+        max_length=128,
+        blank=True,
+        verbose_name=_("Font Family CSS Property"),
+        help_text=_("(Optional) Input css font family property directly. Ex: font-family: Roboto;"),
+    )
+
+    woff = FilerFileField(
+        verbose_name=_("WOFF Font"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="xtheme_woff_fonts",
+    )
+    woff2 = FilerFileField(
+        verbose_name=_("WOFF2 Font"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="xtheme_woff2_fonts",
+    )
+    ttf = FilerFileField(
+        verbose_name=_("TTF font"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="xtheme_ttf_fonts",
+    )
+    svg = FilerFileField(
+        verbose_name=_("SVG font"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="xtheme_svg_fonts",
+    )
+    eot = FilerFileField(
+        verbose_name=_("EOT font"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="xtheme_eot_fonts",
+    )
+
+    class Meta:
+        verbose_name = _("Font Family")
+        verbose_name_plural = _("Font Families")
+        unique_together = ("shop", "name")
+
+    def __str__(self):
+        return self.name
+
+    def get_font_sources(self):
+        font_sources = []
+
+        if self.eot:
+            font_sources.append("url('%s?#iefix') format('embedded-opentype')" % self.eot.url)
+        if self.woff:
+            font_sources.append("url('%s') format('woff')" % self.woff.url)
+        if self.woff2:
+            font_sources.append("url('%s') format('woff2')" % self.woff2.url)
+        if self.ttf:
+            font_sources.append("url('%s') format('truetype')" % self.ttf.url)
+        if self.svg:
+            font_sources.append("url('%s#svgFontName') format('svg')" % self.svg.url)
+
+        return font_sources
+
+
+class AdminThemeSettings(models.Model):
+    shop = models.OneToOneField(on_delete=models.CASCADE, to="shuup.Shop", related_name="admin_theme_settings")
+    primary_color = models.CharField(
+        max_length=7, default="#07B0F2", verbose_name=_("primary color"), validators=[MinLengthValidator(7)], blank=True
+    )
+    secondary_color = models.CharField(
+        max_length=7,
+        default="#041E40",
+        verbose_name=_("secondary color"),
+        validators=[MinLengthValidator(7)],
+        blank=True,
+    )
+    text_color = models.CharField(
+        max_length=7, default="#384850", verbose_name=_("text color"), validators=[MinLengthValidator(7)], blank=True
+    )
+    success_color = models.CharField(
+        max_length=7, default="#27ae60", verbose_name=_("success color"), validators=[MinLengthValidator(7)], blank=True
+    )
+    danger_color = models.CharField(
+        max_length=7, default="#e74c3c", verbose_name=_("danger color"), validators=[MinLengthValidator(7)], blank=True
+    )
+    admin_header_font = models.ForeignKey(
+        Font, null=True, blank=True, related_name="admin_header_font", on_delete=models.SET_NULL
+    )
+    admin_body_font = models.ForeignKey(
+        Font, null=True, blank=True, related_name="admin_body_font", on_delete=models.SET_NULL
+    )
+    base_font_size = models.CharField(max_length=10, default="0.9rem", verbose_name=_("base font size"), blank=True)
+    active = models.BooleanField(db_index=True, default=False, verbose_name=_("active"))
+
+    def __str__(self):
+        return _("Admin Theme configuration for %s") % self.shop
+
+    def colored_name(self, field):
+        return format_html(
+            '<span style="color: ;">{}</span>',
+            self[field],
+        )
+
+    @classmethod
+    def object(cls):
+        return cls._default_manager.all().first()
+
+    def save(self, *args, **kwargs):
+        self.pk = self.id = 1
+        return super().save(*args, **kwargs)
 
 
 class Snippet(models.Model):

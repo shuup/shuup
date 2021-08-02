@@ -91,7 +91,7 @@ $block-columns: 12;
 
         &.open {
             .toggle-settings {
-                color: $primary;
+                color: var(--primary);
             }
         }
 
@@ -102,7 +102,7 @@ $block-columns: 12;
             color: $gray-light;
 
             &:hover {
-                color: $primary;
+                color: var(--primary);
             }
 
             i {
@@ -116,7 +116,7 @@ $block-columns: 12;
             right: 0;
             border-radius: 0;
             border: 0;
-            background: $primary;
+            background: var(--primary);
             font-size: 0.85em;
             box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.2);
 
@@ -124,7 +124,7 @@ $block-columns: 12;
                 content: "";
                 border-left: 6px solid transparent;
                 border-right: 6px solid transparent;
-                border-bottom: 6px solid $primary;
+                border-bottom: 6px solid var(--primary);
                 position: absolute;
                 top: -6px;
                 right: 7px;

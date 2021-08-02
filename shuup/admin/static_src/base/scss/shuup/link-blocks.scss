@@ -60,7 +60,7 @@
         }
 
         &.green {
-            background-color: $primary;
+            background-color: var(--primary);
             color: white;
 
             .btn {
@@ -107,7 +107,7 @@
     .done-icon {
         font-size: 3.8rem;
         margin-top: 2px;
-        color: $primary;
+        color: var(--primary);
     }
 
     .content {

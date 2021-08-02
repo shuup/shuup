@@ -49,7 +49,7 @@ body {
         font-size: 0.8rem;
         width: 100%;
         font-weight: normal;
-        color: $text-color;
+        color: var(--text-color);
 
         @include media-breakpoint-up(md) {
             margin-top: -10px;
@@ -77,11 +77,11 @@ body {
             }
         }
         a {
-            color: $text-color;
+            color: var(--text-color);
 
             &:hover,
             &:focus {
-                color: $primary;
+                color: var(--primary);
             }
         }
     }
@@ -104,7 +104,7 @@ body {
         }
 
         small {
-            color: lighten($text-color, 20%);
+            color: var(--text-color-lighter);
         }
     }
 

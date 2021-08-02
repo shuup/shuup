@@ -91,7 +91,7 @@
 
     &:focus,
     .btn.focus {
-        box-shadow: 0 0 0 0.1em rgba($primary, 0.25);
+        box-shadow: 0 0 0 0.1em var(--primary-lighter);
     }
 
     &.btn-red {
@@ -115,32 +115,32 @@ fieldset[disabled] .btn {
 .btn-default {
     border-color: $border-color;
     background-color: $white;
-    color: $text-color;
+    color: var(--text-color);
     box-shadow: $shadow-md;
 
     &:hover {
-        border-color: $primary;
+        border-color: var(--primary);
         box-shadow: $shadow-lg;
 
         i {
-            color: $primary;
+            color: var(--primary);
         }
     }
 
     &:active:focus {
         background-color: darken($white, 2%);
-        border-color: $primary;
-        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+        border-color: var(--primary);
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem var(--primary-lightest);
 
         i {
-            color: $primary;
+            color: var(--primary);
         }
     }
 
     &:focus {
-        color: $primary;
-        border-color: $primary;
-        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem rgba($primary, 0.15);
+        color: var(--primary);
+        border-color: var(--primary);
+        box-shadow: inset 0 5px 8px -2px rgba($black, 0.08), 0 0 0 0.2rem var(--primary-lightest);
     }
 
     i {
@@ -149,18 +149,18 @@ fieldset[disabled] .btn {
 
     &.dropdown-toggle {
         &:focus {
-            box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+            box-shadow: 0 0 0 0.2rem var(--primary-lightest);
         }
     }
 }
 
 .btn-primary {
     @include btn-override-mixin($primary, 7%, 12%, 11%);
-    box-shadow: 0 2px 8px rgba(darken($primary, 10%), 0.3);
+    box-shadow: 0 2px 8px var(--primary-lightest);
     border: none;
 
     &.btn-dropdown-toggle {
-        background-color: darken($primary, 5%);
+        background-color: var(--primary-dark);
 
         &::after {
             color: $white;
@@ -169,24 +169,88 @@ fieldset[disabled] .btn {
 }
 
 .btn-success {
-    @include btn-override-mixin($success, 7%, 12%, 11%);
-    background-color: rgba($success, 0.2);
-    color: $success;
+    background-color: var(--success-very-light);
+    color: var(--success);
     font-weight: 700;
-    border-color: rgba($success, 0.05);
+    border-color: var(--success-opaque);
 
     &:hover {
-        background-color: rgba($success, 0.4);
+        background-color: var(--success-very-light);
+        color: var(--success);
+        border-color: transparent;
+    }
+
+    &.btn-inverse {
+        background-color: var(--success-very-light);
+        border-color: var(--success-opaque);
+    }
+
+    &:focus {
+        border-color: var(--success-dark);
+        background: var(--success-dark);
+        color: #fff;
+        box-shadow: none;
+    }
+    
+    &:active {
+        border-top-color: var(--success-darker);
+        border-left-color: var(--success-darker);
+        border-right-color: var(--success-darker);
+    }
+    
+    &.disabled, &[disabled] {
+        border-color: var(--success);
+        background-color: var(--success);
+    }
+    
+    &.btn-inverse {
+        border-color: var(--success);
+        background: transparent;
+        color: var(--success);
+        &:hover, &:focus {
+            color: #fff;
+            background: var(--success);
+        }
+        &:active {
+            border-top-color: var(--success-darker);
+            border-left-color: var(--success-darker);
+            border-right-color: var(--success-darker);
+        }
+    }
+    
+    .btn + .dropdown-toggle {
+        border-left-color: var(--success-darker);
+    
+        &:active {
+            border-top-color: var(--success-dark);
+            border-left-color: var(--success-dark);
+            border-right-color: var(--success-dark);
+        }
+    }
+    
+    .open > .dropdown-toggle {
+        background: var(--success-darker);
+        border-color: var(--success-darker);
+    }
+    
+    .open > .btn + .dropdown-toggle {
+        background: var(--success-darker);
+        border-color: transparent;
+        border-left-color: var(--success-darker);
+    }  
+
+    &:hover {
+        background-color: var(--success-lighter);
         color: $success;
-        border-color: rgba($success, 0.15);
+        border-color: var(--success-lighter);
     }
 
     &.btn-dropdown-toggle {
-        background-color: rgba($success, 0.4);
+        background-color: var(--success-lighter);
         transition: none;
 
         &.opaque {
-            background-color: darken($success, 0.1);
+            background-color: var(--sucess-darker);
 
             &::after {
                 color: $white !important;
@@ -198,7 +262,7 @@ fieldset[disabled] .btn {
         transition: none;
 
         &.opaque {
-            background-color: darken($success, 5%);
+            background-color: var(--success-darker);
             color: $white;
             position: fixed;
             bottom: 10px;
@@ -217,28 +281,77 @@ fieldset[disabled] .btn {
 }
 
 .btn-danger {
-    @include btn-override-mixin($danger, 10%, 17%, 13%);
     background-color: transparent;
     border-color: transparent;
-    color: $danger;
+    color: var(--danger);
     font-weight: 700;
     letter-spacing: 0.4px;
     text-transform: uppercase;
 
     &:hover {
-        background-color: rgba($danger, 0.2);
-        color: $danger;
+        background-color: var(--danger-very-light);
+        color: var(--danger);
         border-color: transparent;
     }
 
     &.btn-inverse {
-        background-color: rgba($danger, 0.2);
-        border-color: rgba($danger, 0.05);
+        background-color: var(--danger-very-light);
+        border-color: var(--danger-opaque);
     }
 
     &:focus {
+        border-color: var(--danger-dark);
+        background: var(--danger-dark);
+        color: #fff;
         box-shadow: none;
     }
+    
+    &:active {
+        border-top-color: var(--danger-darker);
+        border-left-color: var(--danger-darker);
+        border-right-color: var(--danger-darker);
+    }
+    
+    &.disabled, &[disabled] {
+        border-color: var(--danger);
+        background-color: var(--danger);
+    }
+    
+    &.btn-inverse {
+        border-color: var(--danger);
+        background: transparent;
+        color: var(--danger);
+        &:hover, &:focus {
+            color: #fff;
+            background: var(--danger);
+        }
+        &:active {
+            border-top-color: var(--danger-darker);
+            border-left-color: var(--danger-darker);
+            border-right-color: var(--danger-darker);
+        }
+    }
+    
+    .btn + .dropdown-toggle {
+        border-left-color: var(--danger-darker);
+    
+        &:active {
+            border-top-color: var(--danger-dark);
+            border-left-color: var(--danger-dark);
+            border-right-color: var(--danger-dark);
+        }
+    }
+    
+    .open > .dropdown-toggle {
+        background: var(--danger-darker);
+        border-color: var(--danger-darker);
+    }
+    
+    .open > .btn + .dropdown-toggle {
+        background: var(--danger-darker);
+        border-color: transparent;
+        border-left-color: var(--danger-darker);
+    }    
 }
 
 .btn-gray {
@@ -247,9 +360,9 @@ fieldset[disabled] .btn {
 }
 
 .btn-inverse {
-    background-color: rgba($secondary, 0.05);
+    background-color: var(--secondary-opaque);
     border-color: transparent;
-    color: rgba($secondary, 0.8);
+    color: var(--secondary-light);
     font-weight: 700;
 
     i {
@@ -258,8 +371,8 @@ fieldset[disabled] .btn {
 
     &:hover,
     &:focus {
-        background-color: rgba($secondary, 0.12);
-        color: rgba($secondary, 0.9);
+        background-color: var(--secondary-lightest);
+        color: var(--secondary-light);
 
         i {
             opacity: 0.8;
@@ -268,22 +381,23 @@ fieldset[disabled] .btn {
 
     &:active,
     &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.3);
+        box-shadow: 0 0 0 0.2rem var(--secondary-lightest);
+        background-color: var(--secondary-lighter);
     }
 }
 
 .btn-label {
-    background-color: rgba($secondary, 0.05);
-    color: rgba($secondary, 0.7);
+    background-color: var(--secondary-opaque);
+    color: var(--secondary-light);
     border-radius: 100px;
 
     &:hover {
-        background-color: rgba($secondary, 0.1);
-        color: rgba($secondary, 0.9);
+        background-color: var(--secondary-opaque);
+        color: var(--secondary-light);
     }
 
     &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+        box-shadow: 0 0 0 0.2rem var(--secondary-lighter);
     }
 }
 
@@ -294,7 +408,7 @@ fieldset[disabled] .btn {
 }
 
 .btn-text {
-    color: $primary;
+    color: var(--primary);
     border: none;
     background-color: transparent;
 

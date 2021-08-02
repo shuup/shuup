@@ -1,0 +1,100 @@
+<style>
+    {% macro render_font_face(font) %}
+        @font-face {
+            font-family: '{{- font.name -}}';
+            {% if font.eot -%}src: url('{{ font.eot.url }}');{%- endif %}
+            src: {% for font_source in font.get_font_sources() -%}
+                {{- font_source|safe -}}{%- if loop.last -%};{%- else -%},{%- endif -%}
+            {%- endfor %}
+        }
+    {% endmacro%}
+
+    {% set header_font = admin_theme.admin_header_font or None %}
+    {% set body_font = admin_theme.admin_body_font or None %}
+    {%- if body_font %}
+        {{ render_font_face(body_font) }}
+    {% endif -%}
+    {%- if header_font %}
+        {{ render_font_face(header_font) }}
+    {% endif -%}
+
+    :root{
+        {% if admin_theme.primary_color %}
+            --primary: {{ admin_theme.primary_color }};
+            --primary-light: {{ admin_theme.primary_color }}70;
+            --primary-very-light: {{ admin_theme.primary_color }}20;
+            --primary-lighter: {{ admin_theme.primary_color }}50;
+            --primary-lightest: {{ admin_theme.primary_color }}30;
+            --primary-opaque: {{ admin_theme.primary_color }}10;
+            --primary-dark: {{ colorscale(admin_theme.primary_color, 0.88) }};
+        {% endif %}
+        {% if admin_theme.secondary_color %}
+            --secondary: {{ admin_theme.secondary_color }};
+            --secondary-light: {{ admin_theme.secondary_color }}70;
+            --secondary-very-light: {{ admin_theme.secondary_color }}20;
+            --secondary-lighter: {{ admin_theme.secondary_color }}50;
+            --secondary-lightest: {{ admin_theme.secondary_color }}30;
+            --secondary-opaque: {{ admin_theme.secondary_color }}10;
+            --secondary-dark: {{ colorscale(admin_theme.secondary_color, 0.88) }};
+        {% endif %}
+        {% if admin_theme.success_color %}
+            --success: {{ admin_theme.success_color }};
+            --success-light: {{ admin_theme.success_color }}70;
+            --success-lighter: {{ admin_theme.success_color }}50;
+            --success-lightest: {{ admin_theme.success_color }}30;
+            --success-very-light: {{ admin_theme.success_color }}20;
+            --success-opaque: {{ admin_theme.success_color }}10;
+            --success-dark: {{ colorscale(admin_theme.success_color, 0.88) }};
+        {% endif %}
+        {% if admin_theme.danger_color %}
+            --danger: {{ admin_theme.danger_color }};
+            --danger-light: {{ admin_theme.danger_color }}70;
+            --danger-lighter: {{ admin_theme.danger_color }}50;
+            --danger-lightest: {{ admin_theme.danger_color }}30;
+            --danger-very-light: {{ admin_theme.danger_color }}20;
+            --danger-opaque: {{ admin_theme.danger_color }}10;
+            --danger-dark: {{ colorscale(admin_theme.danger_color, 0.88) }};
+            --danger-darker: {{ colorscale(admin_theme.danger_color, 0.80) }};
+        {% endif %}
+        {% if admin_theme.danger_color %}
+            --text-color: {{ admin_theme.text_color }};
+            --text-color-light: {{ admin_theme.text_color }}70;
+            --text-color-lighter: {{ admin_theme.text_color }}50;
+            --text-color-lightest: {{ admin_theme.text_color }}30;
+            --text-color-very-light: {{ admin_theme.text_color }}20;
+            --text-color-opaque: {{ admin_theme.text_color }}10;
+            --text-color-dark: {{ colorscale(admin_theme.text_color, 0.88) }};
+        {% endif %}
+    }
+
+    {%- if admin_theme.base_font_size %}
+        html {
+            font-size: {{ admin_theme.base_font_size }}!important;
+        }
+    {% endif -%}
+
+    h1, h2, h3, h4, h5, h6{
+        {% if header_font and header_font.css_value %}
+            font-family: Open Sans, sans-serif;
+            {% if header_font.css_value %}
+            {{ header_font.css_value }}
+            {% endif %}
+        {% elif header_font and not header_font.css_value %}
+            font-family: '{{ header_font.name }}';
+        {% else %}
+            font-family: Open Sans,sans-serif;
+        {% endif %}
+    }
+    body{
+        {% if body_font and body_font.css_value %}
+            font-family: Open Sans, sans-serif;
+            {% if body_font.css_value %}
+            {{ body_font.css_value }}
+            {% endif %}
+        {% elif body_font and not body_font.css_value %}
+            font-family: '{{ body_font.name }}';
+        {% else %}
+            font-family: Open Sans,sans-serif;
+        {% endif %}
+    }
+</style>

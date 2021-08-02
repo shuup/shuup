@@ -1,5 +1,5 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/xtheme/admin/macros.jinja" import theme_card %}
+{% from "shuup/xtheme/admin/macros.jinja" import theme_card, admin_edit_theme_card %}
 {% block title %}{% trans %}Themes{% endtrans %}{% endblock %}
 
 {% block body_class %}shuup-details{% endblock %}
@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="content-block">
             <div class="title">
-                <h2 class="block-title d-flex align-items-center"><i class="fa fa-cog"></i> {% trans %}Theme Configuration{% endtrans %}</h2>
+                <h2 class="block-title d-flex align-items-center"><i class="fa fa-cog"></i> {% trans %}Shop Theme Configuration{% endtrans %}</h2>
             </div>
             <div class="content-wrap">
                 <div class="content">
@@ -21,6 +21,16 @@
                             {% trans %}No themes are installed.{% endtrans %}
                         </div>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+            <div class="title">
+                <h2 class="block-title d-flex align-items-center"><i class="fa fa-cog"></i> {% trans %}Admin Theme Configuration{% endtrans %}</h2>
+            </div>
+            <div class="content-wrap">
+                <div class="content">
+                    {{ admin_edit_theme_card() }}
                 </div>
             </div>
         </div>

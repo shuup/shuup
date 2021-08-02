@@ -15,8 +15,8 @@ $input-bg-color: #F3F3F3;
     box-shadow: 0 2px 4px $shadow-color;
 
     &:focus {
-        border-color: $primary;
-        box-shadow: 0 0 0 0.2rem rgba($primary, 0.15);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem var(--primary-lightest);
     }
 
     &.template {
@@ -39,7 +39,7 @@ $input-bg-color: #F3F3F3;
     }
 
     label {
-        color: rgba($text-color, 0.9);
+        color: var(--text-color);
         font-weight: 600;
     }
 
@@ -54,7 +54,7 @@ $input-bg-color: #F3F3F3;
 .required-field {
     label::after {
         content: '*';
-        color: $danger;
+        color: var(--danger);
         padding: 0.3rem;
         position: relative;
         top: 3px;
@@ -91,7 +91,7 @@ fieldset[disabled] .form-control {
 
 .has-error {
     .help-block {
-        color: lighten($text-color, 25%);
+        color: var(--text-color-lighter);
         &.error-block {
             color:$state-danger-text;
         }
@@ -102,7 +102,7 @@ fieldset[disabled] .form-control {
 .error-indicator {
     display: inline-block;
     margin-left: 0.5em;
-    color: $danger;
+    color: var(--danger);
     animation-name: section-error-indicator-anim;
     animation-duration: 3s;
     animation-iteration-count: infinite;
@@ -123,7 +123,7 @@ fieldset[disabled] .form-control {
 
 .mobile-error-indicator {
     @include media-breakpoint-down(md) {
-        color: $danger;
+        color: var(--danger);
     }
 }
 
@@ -155,14 +155,14 @@ fieldset[disabled] .form-control {
         top: 6px;
 
         &:hover {
-            border-color: $primary;
+            border-color: var(--primary);
         }
 
         &::before {
             content: '\f00c';
             font-family: 'FontAwesome';
             position: absolute;
-            color: $primary;
+            color: var(--primary);
             top: 0;
             left: 2px;
             font-size: 10px;
@@ -173,7 +173,7 @@ fieldset[disabled] .form-control {
     }
 
     input[type=checkbox]:checked + label {
-        border-color: $primary;
+        border-color: var(--primary);
     }
 
     input[type=checkbox]:checked + label::before {
@@ -181,7 +181,7 @@ fieldset[disabled] .form-control {
     }
 
     label:active {
-        box-shadow: 0 1px 2px $shadow-color, inset 0 0 0 1px $primary;
+        box-shadow: 0 1px 2px $shadow-color, inset 0 0 0 1px var(--primary);
     }
 }
 
@@ -196,12 +196,12 @@ fieldset[disabled] .form-control {
     border-radius: 4px;
 
     &:hover {
-        color: $primary;
-        background-color: rgba($primary, 0.08);
+        color: var(--primary);
+        background-color: var(--primary-opaque);
     }
 
     &.active {
-        background-color: $primary;
+        background-color: var(--primary);
         color: $white;
     }
 }
@@ -212,7 +212,7 @@ fieldset[disabled] .form-control {
         content: '\f078';
         font-family: 'FontAwesome';
         font-size: 0.6rem;
-        color: rgba($secondary, 0.5);
+        color: var(--secondary-lighter);
         position: relative;
         transform: rotate(0);
         transition: all 0.15s ease-in-out;
@@ -353,7 +353,7 @@ fieldset[disabled] .form-control {
         i {
             margin-right: 7px;
             line-height: inherit;
-            color: $primary;
+            color: var(--primary);
         }
     }
 }

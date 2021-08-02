@@ -30,7 +30,7 @@
         padding: 5px 0;
         display: block;
         text-decoration: none;
-        color: $text-color;
+        color: var(--text-color);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -41,11 +41,11 @@
     }
 
     li.in-path > a .name {
-        color: $text-color;
+        color: var(--text-color)
     }
 
     li.current > a .name {
-        color: $primary;
+        color: var(--primary);
         font-weight: 500;
     }
 
@@ -68,7 +68,7 @@
     }
     a.current {
         font-size: 1.5rem;
-        color: $text-color;
+        color: var(--text-color)
     }
 }
 
@@ -150,7 +150,7 @@
 
                 &:hover,
                 &:focus {
-                    border-color: $primary;
+                    border-color: var(--primary);
                 }
 
                 .preview-img-wrap {
@@ -178,11 +178,11 @@
                 }
 
                 a {
-                    color: $text-color;
+                    color: var(--text-color);
                     text-decoration: none;
 
                     &:hover {
-                        color: $primary;
+                        color: var(--primary);
                     }
                 }
             }
@@ -337,11 +337,11 @@
         transition: background 0.5s;
 
         &.uploading {
-            background: rgba($primary, 0.2);
+            background: var(--primary-lightest);
         }
 
         &.error {
-            background: rgba($danger, 0.2);
+            background: var(--danger-very-light);
         }
 
         &.done {
@@ -362,7 +362,7 @@
 
         .qf-progress {
             height: 5px;
-            background: $primary;
+            background: --primary;
             border-radius: 2px;
             transition: width 0.1s, opacity 1s;
         }

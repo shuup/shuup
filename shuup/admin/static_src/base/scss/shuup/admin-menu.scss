@@ -61,7 +61,7 @@
                     &:checked {
                         ~.custom-control-label {
                             &:before {
-                                background-color: $primary;
+                                background-color: var(--primary);
                             }
                         }
                     }
@@ -70,7 +70,7 @@
         }
 
         .sortable-placeholder {
-            background-color: rgba($primary, 0.1);
+            background-color: var(--primary-lightest);
         }
 
         .sortable-handler {
@@ -83,8 +83,8 @@
             align-items: center;
             width: 2.4em;
             height: 2.4em;
-            background-color: rgba($primary, 0.1);
-            color: $primary;
+            background-color: var(--primary-lightest);
+            color: var(--primary);
             border-radius: 20px;
         }
     }

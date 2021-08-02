@@ -12,8 +12,8 @@
         left: 30px;
         top: 50%;
         transform: translateY(-50%);
-        color: rgba($secondary, 0.3);
-        border-right: 1px solid rgba($secondary, 0.1);
+        color: var(--secondary-lightest);
+        border-right: 1px solid var(--secondary-opaque);
         padding-right: 0.8em;
         transition: color 0.2s ease-in-out;
 
@@ -31,7 +31,7 @@
         &.show {
             .dropdown-toggle {
                 background: $white;
-                color: $primary !important;
+                color: var(--primary) !important;
                 border: 1px solid $border-color;
                 border-bottom: 0;
                 border-top: 0;
@@ -40,7 +40,7 @@
 
         .dropdown-toggle {
             border: 0;
-            color: $text-color;
+            color: var(--text-color);
             background: none;
             line-height: 60px;
             margin-left: -1px;
@@ -56,7 +56,7 @@
 
             &:hover {
                 background: $white;
-                color: $primary;
+                color: var(--primary);
             }
         }
 
@@ -84,7 +84,7 @@
     border: none;
     background: darken($gray-bg, 10%);
     font-size: 0.9rem;
-    color: $text-color;
+    color: var(--text-color);
     padding: 0 4.5em;
     transition: background 0.2s;
     box-shadow: none;

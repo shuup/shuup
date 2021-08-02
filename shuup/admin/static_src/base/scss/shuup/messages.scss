@@ -109,7 +109,7 @@
         }
 
         &.error {
-            background-color: $danger;
+            background-color: var(--danger);
 
             .status:before {
                 content: $fa-var-exclamation-circle; //Font Awesome "exclamation-circle" variable

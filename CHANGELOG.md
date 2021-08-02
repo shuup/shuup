@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Admin: add new provides `admin_template_injector` that allows injection snippet in admin templates
+
+### Fixed
+
+- Admin: Uploaded shop logo and favicon is updated in admin and auth views
+
+### Changed
+
+- Admin: Migrate primary, secondary, success, danger, and text color SCSS variables to CSS variables
+- Admin: Made active state side menu list icon share same color as text
+- Admin: Made the CSS variables stem from initialized Sass variables in Colors object
+- Xtheme: Add typography models
+
 ## [2.13.0] - 2021-07-27
 
 ### Changed

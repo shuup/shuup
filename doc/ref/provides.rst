@@ -130,6 +130,10 @@ Core
 ``admin_product_toolbar_action_item``
     Additional ``DropdownItem`` subclass for Product edit action buttons.
 
+``admin_template_injector``
+    Allow snippet injection inside admin templates. The classes must inherit
+    from the ``~shuup.admin.base.AdminTemplateInjector`` class.
+
 ``admin_shop_edit_toolbar_button``
     Additional ``BaseActionButton`` subclasses for Shop edit.
     Subclass init should take current shop as a parameter. Current shop is

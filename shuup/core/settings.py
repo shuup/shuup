@@ -258,7 +258,7 @@ SHUUP_ALLOW_ARBITRARY_REFUNDS = True
 #: List allowed extensions for file uploads, when using `shuup.utils.filer.UploadFileForm` or
 #: `shuup.utils.filer.UploadImageForm`.
 #:
-SHUUP_ALLOWED_UPLOAD_EXTENSIONS = ["pdf"]
+SHUUP_ALLOWED_UPLOAD_EXTENSIONS = ["pdf", "ttf", "eot", "woff", "woff2", "otf"]
 
 #: Maximum allowed file size (in bytes) for uploads, when using `shuup.utils.filer.UploadFileForm` or
 #: `shuup.utils.filer.UploadImageForm`.

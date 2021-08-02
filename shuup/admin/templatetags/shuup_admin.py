@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from bootstrap3.renderers import FormRenderer
 from django.utils.safestring import mark_safe
 from django_jinja import library

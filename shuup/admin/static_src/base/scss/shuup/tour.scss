@@ -81,8 +81,8 @@ body.shepherd-active {
     }
 
     .btn-primary {
-        border-color: $primary !important;
-        background-color: $primary !important;
+        border-color: var(--primary) !important;
+        background-color: var(--primary) !important;
     }
 
     .btn-primary:focus,

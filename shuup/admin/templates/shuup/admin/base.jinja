@@ -7,19 +7,33 @@
             {% elif view and view.title %}{{ view.title }}{% endif %}
         {%- endblock %}
         </title>
+
+        {% for snippet in shuup_admin.get_admin_snippets("head_start", request) %}
+            {{ snippet|safe }}
+        {% endfor %}
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% if request.GET.autoRefresh %}
             <meta http-equiv="refresh" content="{{ request.GET.autoRefresh }}"/>
         {% endif %}
-        <link href="{{ shuup_static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
+        {%- set favicon = request.shop.favicon.url if request.shop.favicon else static("shuup/front/img/favicon.ico") -%}
+        <link rel="icon" type="image/x-icon" href="{{ favicon }}">
         <link href="{{ shuup_static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
         {% set conf = shuup_admin.get_config() %}
         <script>var ShuupAdminConfig = {{ conf|json }};</script>
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}&v={{ get_shuup_version() }}"></script>
+
+        {% for snippet in shuup_admin.get_admin_snippets("head_end", request) %}
+            {{ snippet|safe }}
+        {% endfor %}
+
     </head>
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}{% if not conf["menuOpen"] %} desktop-menu-closed{% endif %}">
+        {% for snippet in shuup_admin.get_admin_snippets("body_start", request) %}
+            {{ snippet|safe }}
+        {% endfor %}
         {% if iframe_close %}
             <script>
                 {% if quick_add_target %}
@@ -110,5 +124,8 @@
         {% block tour %}
             <script>$(function() {window.runTour();});</script>
         {% endblock %}
+        {% for snippet in shuup_admin.get_admin_snippets("body_end", request) %}
+            {{ snippet|safe }}
+        {% endfor %}
     </body>
 </html>

@@ -13,12 +13,13 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
+from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.utils.django_compat import reverse
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.engine import XthemeEnvironment
-from shuup.xtheme.models import Snippet
+from shuup.xtheme.models import Font, Snippet
 
 
 class XthemeAdminModule(AdminModule):
@@ -43,6 +44,11 @@ class XthemeAdminModule(AdminModule):
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
                 name="xtheme.config_detail",
             ),
+            admin_url(
+                r"^xtheme/admin-configure/",
+                "shuup.xtheme.admin_module.views.AdminThemeConfigDetailView",
+                name="xtheme.admin_config_detail",
+            ),
             admin_url(r"^xtheme/theme", "shuup.xtheme.admin_module.views.ThemeConfigView", name="xtheme.config"),
         ]
 
@@ -54,7 +60,7 @@ class XthemeAdminModule(AdminModule):
                 url="shuup_admin:xtheme.config",
                 category=CONTENT_MENU_CATEGORY,
                 ordering=1,
-            )
+            ),
         ]
 
     def get_help_blocks(self, request, kind):
@@ -91,6 +97,48 @@ class XthemeAdminModule(AdminModule):
                         title=_("Theming"),
                         url="shuup_admin:xtheme.config",
                     )
+
+
+class XthemeFontsAdminModule(AdminModule):
+    name = _("Shuup Extensible Theme Engine Fonts")
+    breadcrumbs_menu_entry = MenuEntry(_("Fonts"), "shuup_admin:xtheme.font.list", category=CONTENT_MENU_CATEGORY)
+
+    def get_urls(self):  # doccov: ignore
+        return [
+            admin_url(
+                r"^xtheme/font/$",
+                "shuup.xtheme.admin_module.views.FontListView",
+                name="xtheme.font.list",
+            ),
+            admin_url(
+                r"^xtheme/font/new/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.font.new",
+                kwargs={"pk": None},
+            ),
+            admin_url(
+                r"^xtheme/font/(?P<pk>\d+)/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.font.edit",
+            ),
+        ]
+
+    def get_menu_entries(self, request):  # doccov: ignore
+        return [
+            MenuEntry(
+                text=_("Fonts"),
+                icon="fa fa-font",
+                url="shuup_admin:xtheme.font.list",
+                category=CONTENT_MENU_CATEGORY,
+                ordering=10,
+            ),
+        ]
+
+    def get_model_url(self, object, kind, shop=None):
+        return derive_model_url(Font, "shuup_admin:xtheme.font", object, kind)
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Font)
 
 
 class XthemeSnippetsAdminModule(AdminModule):
