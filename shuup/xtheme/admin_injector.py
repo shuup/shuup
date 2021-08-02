@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 import logging
 from django.template import loader
+from typing import Optional
 
 from shuup.admin.base import AdminTemplateInjector
+from shuup.core.models import Shop, Supplier, User
 from shuup.xtheme.models import AdminThemeSettings
 
 LOGGER = logging.getLogger(__name__)

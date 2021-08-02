@@ -12,6 +12,7 @@ This module is installed as the `shuup_admin` template function namespace.
 import itertools
 from django.conf import settings
 from django.middleware.csrf import get_token
+from django.http.request import HttpRequest
 from functools import lru_cache
 from jinja2.utils import contextfunction
 
@@ -249,7 +250,7 @@ def is_authenticated(user):
     return django_compat.is_authenticated(user)
 
 
-def get_admin_snippets(place: str, request: "HttpRequest"):
+def get_admin_snippets(place: str, request: HttpRequest):
     shop = get_shop(request)
     supplier = get_supplier(request)
 

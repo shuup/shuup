@@ -45,22 +45,6 @@ class XthemeAdminModule(AdminModule):
                 name="xtheme.config_detail",
             ),
             admin_url(
-                r"^xtheme/font/$",
-                "shuup.xtheme.admin_module.views.FontListView",
-                name="xtheme.font.list",
-            ),
-            admin_url(
-                r"^xtheme/font/new/$",
-                "shuup.xtheme.admin_module.views.FontEditView",
-                name="xtheme.font.new",
-                kwargs={"pk": None},
-            ),
-            admin_url(
-                r"^xtheme/font/(?P<pk>\d+)/$",
-                "shuup.xtheme.admin_module.views.FontEditView",
-                name="xtheme.font.edit",
-            ),
-            admin_url(
                 r"^xtheme/admin-configure/",
                 "shuup.xtheme.admin_module.views.AdminThemeConfigDetailView",
                 name="xtheme.admin_config_detail",
@@ -76,14 +60,6 @@ class XthemeAdminModule(AdminModule):
                 url="shuup_admin:xtheme.config",
                 category=CONTENT_MENU_CATEGORY,
                 ordering=1,
-            ),
-            MenuEntry(
-                text=_("Fonts"),
-                icon="fa fa-font",
-                url="shuup_admin:xtheme.font.list",
-                category=CONTENT_MENU_CATEGORY,
-                subcategory="design",
-                ordering=10,
             ),
         ]
 
@@ -121,6 +97,42 @@ class XthemeAdminModule(AdminModule):
                         title=_("Theming"),
                         url="shuup_admin:xtheme.config",
                     )
+
+
+class XthemeFontsAdminModule(AdminModule):
+    name = _("Shuup Extensible Theme Engine Fonts")
+    breadcrumbs_menu_entry = MenuEntry(_("Fonts"), "shuup_admin:xtheme.font.list", category=CONTENT_MENU_CATEGORY)
+
+    def get_urls(self):  # doccov: ignore
+        return [
+            admin_url(
+                r"^xtheme/font/$",
+                "shuup.xtheme.admin_module.views.FontListView",
+                name="xtheme.font.list",
+            ),
+            admin_url(
+                r"^xtheme/font/new/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.font.new",
+                kwargs={"pk": None},
+            ),
+            admin_url(
+                r"^xtheme/font/(?P<pk>\d+)/$",
+                "shuup.xtheme.admin_module.views.FontEditView",
+                name="xtheme.font.edit",
+            ),
+        ]
+
+    def get_menu_entries(self, request):  # doccov: ignore
+        return [
+            MenuEntry(
+                text=_("Fonts"),
+                icon="fa fa-font",
+                url="shuup_admin:xtheme.font.list",
+                category=CONTENT_MENU_CATEGORY,
+                ordering=10,
+            ),
+        ]
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Font, "shuup_admin:xtheme.font", object, kind)
