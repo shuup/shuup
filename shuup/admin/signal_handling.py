@@ -40,9 +40,6 @@ def on_object_saved(sender, object, **kwargs):
         transaction.on_commit(
             lambda: run_task("shuup.core.catalog.tasks.index_shop_product", shop_product_id=object.pk)
         )
-        # update stocks
-        for supplier in object.suppliers.all():
-            supplier.update_stock(object.product.pk)
 
     if isinstance(object, Product):
         transaction.on_commit(lambda: run_task("shuup.core.catalog.tasks.index_product", product_id=object.pk))

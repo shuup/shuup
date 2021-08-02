@@ -16,7 +16,7 @@ def index_product(product: Union[Product, int]):
         index_shop_product(shop_product=shop_product)
 
 
-def update_shop_product_stocks(shop_product: Union[ShopProduct, int]):
+def update_shop_product_stocks(shop_product: Union[ShopProduct, int], supplier_id=None):
     from shuup.simple_supplier.module import SimpleSupplierModule
 
     if not isinstance(shop_product, ShopProduct):
@@ -25,16 +25,20 @@ def update_shop_product_stocks(shop_product: Union[ShopProduct, int]):
     suppliers = Supplier.objects.filter(
         shop_products=shop_product.pk, supplier_modules__module_identifier=SimpleSupplierModule.identifier
     ).distinct()
+    if supplier_id:
+        suppliers = suppliers.filter(pk=supplier_id)
     for supplier in suppliers:
         supplier.update_stock(product_id=shop_product.product_id)
 
 
-def update_product_stocks(product: Union[Product, int]):
+def update_product_stocks(product: Union[Product, int], supplier_id=None):
     from shuup.simple_supplier.module import SimpleSupplierModule
 
     suppliers = Supplier.objects.filter(
         shop_products__product_id=product, supplier_modules__module_identifier=SimpleSupplierModule.identifier
     ).distinct()
+    if supplier_id:
+        suppliers = suppliers.filter(pk=supplier_id)
     for supplier in suppliers:
         supplier.update_stock(product_id=product)
 
