@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
@@ -17,14 +16,15 @@ from django.views.generic.edit import FormView
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import URLActionButton, get_default_edit_toolbar
-from shuup.admin.utils.views import CreateOrUpdateView
+from shuup.admin.utils.picotable import Column, TextFilter
+from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core import cache
 from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
 from shuup.xtheme._theme import get_theme_by_identifier, get_theme_cache_key, set_current_theme
 from shuup.xtheme.forms import AdminThemeForm, FontForm
-from shuup.xtheme.models import ThemeSettings, AdminThemeSettings, Font
+from shuup.xtheme.models import AdminThemeSettings, Font, ThemeSettings
 
 
 class ActivationForm(forms.Form):
@@ -183,7 +183,7 @@ class FontEditView(CreateOrUpdateView):
     model = Font
     form_class = FontForm
     template_name = "shuup/xtheme/admin/font_create.jinja"
-    context_object_name = "admin_font"
+    context_object_name = "font"
 
     def get_queryset(self):
         return Font.objects.filter(shop=get_shop(self.request))
@@ -193,29 +193,56 @@ class FontEditView(CreateOrUpdateView):
         kwargs["request"] = self.request
         return kwargs
 
+
+class FontListView(PicotableListView):
+    url_identifier = "xtheme.font"
+    model = Font
+    default_columns = [
+        Column(
+            "name",
+            _("Name"),
+            sort_field="name",
+            display="name",
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name...")),
+        ),
+        Column("woff", _("Woff"), display="format_woff"),
+        Column("woff2", _("Woff2"), display="format_woff2"),
+        Column("ttf", _("TTF"), display="format_ttf"),
+        Column("svg", _("SVG"), display="format_svg"),
+        Column("eot", _("EOT"), display="format_eot"),
+    ]
+
+    def format_eot(self, instance):
+        return instance.eot.label if instance.eot else ""
+
+    def format_ttf(self, instance):
+        return instance.ttf.label if instance.ttf else ""
+
+    def format_woff(self, instance):
+        return instance.woff.label if instance.woff else ""
+
+    def format_woff2(self, instance):
+        return instance.woff2.label if instance.woff2 else ""
+
+    def format_svg(self, instance):
+        return instance.svg.label if instance.svg else ""
+
+    def get_queryset(self):
+        return Font.objects.filter(shop=get_shop(self.request))
+
+
+class AdminThemeConfigDetailView(FormView):
+    form_class = AdminThemeForm
+    template_name = "shuup/xtheme/admin/admin_config_detail.jinja"
+
     def form_valid(self, form):
         form.save()
-        return super(FontEditView, self).form_valid(form)
+        return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["instance"] = AdminThemeSettings.objects.get_or_create(shop=get_shop(self.request))[0]
+        return kwargs
 
-def AdminThemeConfigDetailView(request):
-    """
-    A view for editing the admin base theme.
-    """
-
-    context ={}
-  
-    current_theme = AdminThemeSettings.objects.get_or_create(shop=get_shop(request))
-
-    if current_theme[0]:
-        form = AdminThemeForm(request.POST or None, instance=current_theme[0])
-    else:
-        form = AdminThemeForm(request.POST or None)
-      
-    # check if form data is valid
-    if form.is_valid() and request.method == 'POST':
-        # save the form data to model
-        form.save()
-  
-    context['form']= form
-    return render(request, "shuup/xtheme/admin/admin_config_detail.jinja", context)
+    def get_success_url(self):
+        return reverse("shuup_admin:xtheme.admin_config_detail")

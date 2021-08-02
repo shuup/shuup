@@ -16,11 +16,11 @@ from shuup.admin.forms.fields import Select2ModelField
 from shuup.admin.forms.quick_select import QuickAddRelatedObjectSelect
 from shuup.admin.forms.widgets import FileDnDUploaderWidget
 from shuup.admin.shop_provider import get_shop
-from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.utils.deprecation import RemovedInFutureShuupWarning
-from shuup.xtheme.models import ThemeSettings, Font
+from shuup.xtheme.models import Font, ThemeSettings
 
 from .models import AdminThemeSettings
+
 
 class GenericThemeForm(forms.ModelForm):
     """
@@ -96,15 +96,14 @@ class FontForm(forms.ModelForm):
     def save(self, commit=True):
         self.instance.shop = get_shop(self.request)
         return super(FontForm, self).save(commit)
-        
+
 
 class QuickAddFontSelect(QuickAddRelatedObjectSelect):
-    url = reverse_lazy("shuup_admin:xtheme.admin_font.new")
-    model = Font
+    url = reverse_lazy("shuup_admin:xtheme.font.new")
+    model = "xtheme.Font"
 
 
 class AdminThemeForm(forms.ModelForm):
-
     class Meta:
         model = AdminThemeSettings
         fields = "__all__"
@@ -113,7 +112,7 @@ class AdminThemeForm(forms.ModelForm):
             "secondary_color": _("Choose the secondary color:"),
             "text_color": _("Choose the primary text color:"),
             "success_color": _("Choose the success (green) style primary color:"),
-            "danger_color": _("Choose the danger (red) style primary color:"),  
+            "danger_color": _("Choose the danger (red) style primary color:"),
         }
         widgets = {
             "primary_color": TextInput(attrs={"type": "color"}),
@@ -125,10 +124,10 @@ class AdminThemeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminThemeForm, self).__init__(*args, **kwargs)
-        
+
         if self.instance.pk:
             initial_header_font = self.instance.admin_header_font
-            initial_body_font = self.instance.admin_body_font   
+            initial_body_font = self.instance.admin_body_font
         else:
             initial_header_font = kwargs.get("initial", {}).get("admin_header_font")
             initial_body_font = kwargs.get("initial", {}).get("admin_body_font")

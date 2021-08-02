@@ -6,15 +6,16 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
+import django_jinja
 from bootstrap3.renderers import FormRenderer
 from django.utils.safestring import mark_safe
-import django_jinja
 from django_jinja import library
 
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.template_helpers import shuup_admin as shuup_admin_template_helpers
 from shuup.admin.utils.bs3_renderers import AdminFieldRenderer
-from shuup.xtheme.models import AdminThemeSettings, Font
+from shuup.xtheme.models import AdminThemeSettings
+
 
 class Bootstrap3Namespace(object):
     def field(self, field, **kwargs):
@@ -29,25 +30,12 @@ class Bootstrap3Namespace(object):
 library.global_function(name="shuup_admin", fn=shuup_admin_template_helpers)
 library.global_function(name="bs3", fn=Bootstrap3Namespace())
 
+
 @django_jinja.library.global_function
 def get_current_admin_theme(request):
     """Return the set admin theme"""
-    return AdminThemeSettings.objects.get_or_create(shop=get_shop(request))[0]
+    return AdminThemeSettings.objects.filter(shop=get_shop(request)).first()
 
-def clamp(val, minimum=0, maximum=255):
-    if val < minimum:
-        return minimum
-    if val > maximum:
-        return maximum
-    return val
-
-@django_jinja.library.global_function
-def get_font(request, pk):
-    """Return the set admin theme"""
-    found_font = Font.objects.filter(id=pk).first()
-    if found_font:
-        return found_font
-    return None
 
 def clamp(val, minimum=0, maximum=255):
     if val < minimum:
@@ -73,7 +61,7 @@ def colorscale(hexstr, scalefactor):
     #4F75D2
     """
 
-    hexstr = hexstr.strip('#')
+    hexstr = hexstr.strip("#")
 
     if scalefactor < 0 or len(hexstr) != 6:
         return hexstr

@@ -23,6 +23,25 @@
         {% set admin_theme = get_current_admin_theme(request) or None %}    
         {% if admin_theme and admin_theme.active %}
             <style>
+                {% macro render_font_face(font) %}
+                    @font-face {
+                        font-family: '{{- font.name -}}';
+                        {% if font.eot -%}src: url('{{ font.eot.url }}');{%- endif %}
+                        src: {% for font_source in font.get_font_sources() -%}
+                            {{- font_source|safe -}}{%- if loop.last -%};{%- else -%},{%- endif -%}
+                        {%- endfor %}
+                    }
+                {% endmacro%}
+                
+                {% set header_font = admin_theme.admin_header_font or None %}
+                {% set body_font = admin_theme.admin_body_font or None %}
+                {%- if body_font %}
+                    {{ render_font_face(body_font) }}
+                {% endif -%}
+                {%- if header_font %}
+                    {{ render_font_face(header_font) }}
+                {% endif -%}
+
                 :root{
                     {% if admin_theme.primary_color %}
                         --primary: {{ admin_theme.primary_color }};
@@ -71,26 +90,40 @@
                         --text-color-dark: {{ colorscale(admin_theme.text_color, 0.88) }};
                     {% endif %}
                 }
-                h1, h2, h3, h4{
-                    {% set header_font = get_font(request, admin_theme.admin_header_font_id) %}
-                    {% if header_font %}
+                
+                {%- if admin_theme.base_font_size %}
+                    html {
+                        font-size: {{ admin_theme.base_font_size }}!important;
+                    }
+                {% endif -%}
+
+                h1, h2, h3, h4, h5, h6{
+                    {% if header_font and header_font.css_value %}
                         font-family: Open Sans, sans-serif;
+                        {% if header_font.css_value %}
                         {{ header_font.css_value }}
+                        {% endif %}
+                    {% elif header_font and not header_font.css_value %}
+                        font-family: '{{ header_font.name }}';
                     {% else %}
                         font-family: Open Sans,sans-serif;
                     {% endif %}
                 }
                 body{
-                    {% set body_font = get_font(request, admin_theme.admin_body_font_id) %}
-                    {% if body_font %}
+                    {% if body_font and body_font.css_value %}
                         font-family: Open Sans, sans-serif;
+                        {% if body_font.css_value %}
                         {{ body_font.css_value }}
+                        {% endif %}
+                    {% elif body_font and not body_font.css_value %}
+                        font-family: '{{ body_font.name }}';
                     {% else %}
                         font-family: Open Sans,sans-serif;
                     {% endif %}
                 }
             </style>
         {% endif %}
+        
     </head>
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}{% if not conf["menuOpen"] %} desktop-menu-closed{% endif %}">
         {% if iframe_close %}
