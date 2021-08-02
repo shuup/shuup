@@ -39,7 +39,7 @@ from ._product_variation import (
     get_combination_hash_from_variable_mapping,
 )
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from ._products import ShopProductVisibility
 
 

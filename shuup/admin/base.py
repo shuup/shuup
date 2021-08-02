@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING, Dict, Iterable, Optional
 
 from shuup.utils.django_compat import reverse
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from django.contrib.auth import get_user_model
 
     from shuup.core.models import Shop, Supplier

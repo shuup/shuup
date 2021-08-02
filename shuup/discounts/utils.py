@@ -21,7 +21,7 @@ from shuup.core.pricing import PricingContext
 from shuup.core.utils import context_cache
 from shuup.utils.dates import to_timestamp
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.discounts.models import Discount
 
 

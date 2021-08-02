@@ -22,7 +22,7 @@ from shuup.core.shop_provider import get_shop
 from shuup.utils.django_compat import force_text
 from shuup.xtheme.utils import get_html_attrs
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.xtheme.models import Snippet
 
 LOGGER = getLogger(__name__)

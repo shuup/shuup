@@ -13,7 +13,7 @@ from shuup.apps.provides import load_module
 
 from ._context import PricingContext
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import ShopProduct
 
 

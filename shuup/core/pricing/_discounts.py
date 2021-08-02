@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Dict, Iterable, Union
 
 from shuup.apps.provides import load_module_instances
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Product, ShopProduct
     from shuup.core.pricing import PriceInfo, PricingContext
 

@@ -26,7 +26,7 @@ from shuup.utils.money import Money
 from ._context import TaxingContext
 from .utils import get_tax_class_proportions
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Order
     from shuup.core.order_creator import OrderSource
 

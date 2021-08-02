@@ -56,8 +56,8 @@ from ._order_utils import get_order_identifier, get_reference_number
 from ._products import Product
 from ._suppliers import Supplier
 
-if TYPE_CHECKING:
-    from ._service_base import Service, ServiceBehaviorComponent  # noqa (F401)
+if TYPE_CHECKING:  # pragma: no cover
+    from ._service_base import Service, ServiceBehaviorComponent  # noqa: F401
 
 
 class PaymentStatus(Enum):
