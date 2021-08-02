@@ -8,8 +8,8 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
+from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.shop_provider import get_shop

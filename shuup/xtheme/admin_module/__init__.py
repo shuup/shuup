@@ -137,9 +137,6 @@ class XthemeFontsAdminModule(AdminModule):
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Font, "shuup_admin:xtheme.font", object, kind)
 
-    def get_required_permissions(self):
-        return get_default_model_permissions(Font)
-
 
 class XthemeSnippetsAdminModule(AdminModule):
     name = _("Shuup Extensible Theme Engine Snippets")
