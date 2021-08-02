@@ -253,9 +253,7 @@ class Font(models.Model):
 
 
 class AdminThemeSettings(models.Model):
-    shop = models.ForeignKey(
-        on_delete=models.CASCADE, to="shuup.Shop", related_name="admin_themes_settings", unique=True, null=False
-    )
+    shop = models.OneToOneField(on_delete=models.CASCADE, to="shuup.Shop", related_name="admin_theme_settings")
     primary_color = models.CharField(
         max_length=7, default="#07B0F2", verbose_name=_("primary color"), validators=[MinLengthValidator(7)], blank=True
     )

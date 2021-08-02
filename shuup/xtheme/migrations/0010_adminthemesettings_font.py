@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(help_text='Font family name', max_length=128, verbose_name='name')),
-                ('css_value', models.CharField(help_text='(Optional) Input css font family property directly. Ex: font-family: Roboto;', max_length=128, verbose_name='name')),
+                ('css_value', models.CharField(blank=True, help_text='(Optional) Input css font family property directly. Ex: font-family: Roboto;', max_length=128, verbose_name='Font Family CSS Property')),
                 ('eot', filer.fields.file.FilerFileField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='xtheme_eot_fonts', to='filer.File', verbose_name='EOT font')),
                 ('shop', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='admin_fonts', to='shuup.Shop', verbose_name='Shop')),
                 ('svg', filer.fields.file.FilerFileField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='xtheme_svg_fonts', to='filer.File', verbose_name='SVG font')),
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('active', models.BooleanField(db_index=True, default=False, verbose_name='active')),
                 ('admin_body_font', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='admin_body_font', to='shuup_xtheme.Font')),
                 ('admin_header_font', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='admin_header_font', to='shuup_xtheme.Font')),
-                ('shop', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='admin_themes_settings', to='shuup.Shop')),
+                ('shop', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='admin_theme_settings', to='shuup.Shop')),
             ],
         ),
     ]

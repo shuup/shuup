@@ -9,9 +9,16 @@ import hashlib
 import six
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
-from typing import Dict, Iterable, Optional
+from typing import TYPE_CHECKING, Dict, Iterable, Optional
 
 from shuup.utils.django_compat import reverse
+
+if TYPE_CHECKING:
+    from django.contrib.auth import get_user_model
+
+    from shuup.core.models import Shop, Supplier
+
+    User = get_user_model()
 
 
 class AdminModule(object):
@@ -341,3 +348,13 @@ class Section(object):
         :rtype: object|None
         """
         return None
+
+
+class AdminTemplateInjector:
+    @classmethod
+    def get_admin_template_snippet(cls, place: str, shop: "Shop", user: "User", supplier: "Optional[Supplier]"):
+        """
+        Get snippets to be injected on base admin template.
+        The `place` can be: `body_start`, `body_end`, `hear_start` or `head_end`.
+        """
+        raise NotImplementedError()

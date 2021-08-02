@@ -9,7 +9,6 @@
 """
 This module is installed as the `shuup_admin` template function namespace.
 """
-
 import itertools
 from django.conf import settings
 from django.middleware.csrf import get_token
@@ -248,3 +247,15 @@ def get_logout_url(context):
 
 def is_authenticated(user):
     return django_compat.is_authenticated(user)
+
+
+def get_admin_snippets(place: str, request: "HttpRequest"):
+    shop = get_shop(request)
+    supplier = get_supplier(request)
+
+    for admin_template_injector in get_provide_objects("admin_template_injector"):
+        snippet = admin_template_injector.get_admin_template_snippet(
+            place, shop=shop, user=request.user, supplier=supplier
+        )
+        if snippet:
+            yield snippet
