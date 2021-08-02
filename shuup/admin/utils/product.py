@@ -5,10 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.db import transaction
 from django.db.transaction import atomic
 
 from shuup.admin.signals import product_copied
 from shuup.core.models import Product, ProductAttribute, ProductMedia, Shop, ShopProduct, Supplier
+from shuup.core.tasks import run_task
 from shuup.utils.models import copy_model_instance, get_data_dict
 
 
@@ -85,6 +87,10 @@ class ProductCloner:
 
         product_copied.send(
             sender=type(self), shop=shop_product.shop, suppliers=self.current_supplier, copied=product, copy=new_product
+        )
+
+        transaction.on_commit(
+            lambda: run_task("shuup.core.catalog.tasks.index_shop_product", shop_product_id=new_product.pk)
         )
 
         return new_shop_product
