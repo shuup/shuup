@@ -13,7 +13,6 @@ from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.utils.django_compat import reverse
