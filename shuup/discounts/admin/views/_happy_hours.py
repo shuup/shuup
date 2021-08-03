@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.forms.fields import Select2MultipleField, WeekdayField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField, WeekdayField
 from shuup.admin.forms.widgets import TimeInput
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
@@ -95,7 +95,7 @@ class HappyHourForm(forms.ModelForm):
         super(HappyHourForm, self).__init__(*args, **kwargs)
 
         if self.instance.pk:
-            self.fields["discounts"] = Select2MultipleField(
+            self.fields["discounts"] = ObjectSelect2MultipleField(
                 label=_("Product Discounts"),
                 help_text=_("Select discounts for this happy hour."),
                 model=Discount,

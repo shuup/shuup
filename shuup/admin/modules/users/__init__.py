@@ -9,7 +9,7 @@ import six
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
-from typing import Dict
+from typing import Dict, Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
@@ -69,6 +69,7 @@ class UserModule(AdminModule):
             "user.login-as": _("Allow the user to impersonate a different user."),
             "user.login-as-staff": _("Allow the user to impersonate a staff user."),
             "user.list_settings": _("Allow the user to change the user list columns."),
+            "user.object_selector": _("Allow the user to select users in admin."),
         }
 
     def get_menu_entries(self, request):
@@ -105,3 +106,6 @@ class UserModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(get_user_model(), "shuup_admin:user", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return ["user.object_selector"]

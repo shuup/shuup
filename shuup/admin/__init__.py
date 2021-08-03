@@ -113,6 +113,27 @@ class ShuupAdminAppConfig(AppConfig):
         "user_list_mass_actions_provider": [
             "shuup.admin.modules.users.mass_actions.UserMassActionProvider",
         ],
+        "admin_object_selector": [
+            "shuup.admin.modules.attributes.object_selector.AttributeAdminObjectSelector",
+            "shuup.admin.modules.categories.object_selector.CategoryAdminObjectSelector",
+            "shuup.admin.modules.contacts.object_selector.ContactAdminObjectSelector",
+            "shuup.admin.modules.contacts.object_selector.PersonContactAdminObjectSelector",
+            "shuup.admin.modules.contacts.object_selector.CompanyContactAdminObjectSelector",
+            "shuup.admin.modules.manufacturers.object_selector.ManufacturerAdminObjectSelector",
+            "shuup.admin.modules.permission_groups.object_selector.PermissionGroupAdminObjectSelector",
+            "shuup.admin.modules.product_types.object_selector.ProductTypeAdminObjectSelector",
+            "shuup.admin.modules.products.object_selector.ProductAdminObjectSelector",
+            "shuup.admin.modules.products.object_selector.ShopProductAdminObjectSelector",
+            "shuup.admin.modules.services.object_selector.CarrierAdminObjectSelector",
+            "shuup.admin.modules.services.object_selector.PaymentMethodAdminObjectSelector",
+            "shuup.admin.modules.services.object_selector.ShippingMethodAdminObjectSelector",
+            "shuup.admin.modules.shops.object_selector.ShopAdminObjectSelector",
+            "shuup.admin.modules.suppliers.object_selector.SupplierAdminObjectSelector",
+            "shuup.admin.modules.taxes.object_selector.CustomerTaxGroupAdminObjectSelector",
+            "shuup.admin.modules.taxes.object_selector.TaxAdminObjectSelector",
+            "shuup.admin.modules.taxes.object_selector.TaxClassAdminObjectSelector",
+            "shuup.admin.modules.users.object_selector.UserAdminObjectSelector",
+        ],
     }
 
     def ready(self):

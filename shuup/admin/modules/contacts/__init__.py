@@ -9,6 +9,7 @@ import six
 from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
@@ -93,3 +94,17 @@ class ContactModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Contact, "shuup_admin:contact", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return [
+            "contact.object_selector",
+            "personcontact.object_selector",
+            "companycontact.object_selector",
+        ]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            "contact.object_selector": _("Allow the user to select contacts in admin."),
+            "personcontact.object_selector": _("Allow the user to select person contacts in admin."),
+            "companycontact.object_selector": _("Allow the user to select company contacts in admin."),
+        }

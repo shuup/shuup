@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
@@ -103,8 +104,13 @@ class CampaignAdminModule(AdminModule):
         admin_url = "shuup_admin:%s" % object.admin_url_suffix
         return derive_model_url(type(object), admin_url, object, kind)
 
-    def get_extra_permissions(self):
+    def get_extra_permissions(self) -> Iterable[str]:
         return get_extra_permissions_for_admin_module()
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            "coupon.object_selector": _("Allow the user to select coupons in admin."),
+        }
 
 
 def _show_catalog_campaigns_in_admin():

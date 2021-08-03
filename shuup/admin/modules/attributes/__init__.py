@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
@@ -48,3 +49,9 @@ class AttributeModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Attribute, "shuup_admin:attribute", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return ["attribute.object_selector"]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {"attribute.object_selector": _("Allow the user to select attributes in admin.")}

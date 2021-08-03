@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from django.http.response import Http404
 from django.test.utils import override_settings
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.modules.contacts.forms import CompanyContactBaseForm, PersonContactBaseForm
 from shuup.admin.modules.contacts.views import ContactDetailView, ContactEditView, ContactListView
 from shuup.core.models import CompanyContact, Gender, PersonContact, get_person_contact
@@ -146,7 +146,7 @@ def test_company_contact_edit_form(rf, admin_user):
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
-    assert isinstance(contact_base_form.fields["members"], Select2MultipleField)
+    assert isinstance(contact_base_form.fields["members"], ObjectSelect2MultipleField)
     assert contact.name == new_company_name
     assert company.in_shop(shop)
     assert company.registered_in(shop)
@@ -172,7 +172,7 @@ def test_company_contact_edit_form_2(rf, admin_user):
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
-    assert isinstance(contact_base_form.fields["members"], Select2MultipleField)
+    assert isinstance(contact_base_form.fields["members"], ObjectSelect2MultipleField)
     assert contact.name == new_company_name
     assert company.in_shop(shop)
     assert company.registered_in(shop)

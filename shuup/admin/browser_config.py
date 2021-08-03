@@ -28,6 +28,7 @@ class DefaultBrowserConfigProvider(BaseBrowserConfigProvider):
         return {
             "edit": "shuup_admin:edit",
             "select": "shuup_admin:select",
+            "object_selector": "shuup_admin:object_selector",
             "media": ("shuup_admin:media.browse" if has_permission(request.user, "media.browse") else None),
             "upload": ("shuup_admin:media.upload" if has_permission(request.user, "media.upload") else None),
             "product": "shuup_admin:shop_product.list",

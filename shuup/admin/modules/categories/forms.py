@@ -12,7 +12,7 @@ from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import QuickAddCategorySelect, TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.forms import filter_form_field_choices
@@ -68,13 +68,13 @@ class CategoryBaseForm(ShuupAdminForm):
 
 
 class CategoryProductForm(forms.Form):
-    primary_products = Select2MultipleField(
+    primary_products = ObjectSelect2MultipleField(
         label=_("Primary Category"),
         help_text=_("Set this category as a primary category for selected products."),
         model=Product,
         required=False,
     )
-    additional_products = Select2MultipleField(
+    additional_products = ObjectSelect2MultipleField(
         label=_("Additional Category"),
         help_text=_("Add selected products to this category."),
         model=Product,

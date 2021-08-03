@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.core.models import ShopProduct
 from shuup.core.order_creator import OrderSourceModifierModule
@@ -77,6 +78,16 @@ class ProductDiscountModule(DiscountModule):
             price_info.expires_on = price_expiration
 
         return price_info
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return [
+            "discount.object_selector",
+        ]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            "discount.object_selector": _("Allow the user to select discounts in admin."),
+        }
 
 
 class CouponCodeModule(OrderSourceModifierModule):

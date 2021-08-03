@@ -24,7 +24,7 @@ from shuup.admin.views.impersonate import stop_impersonating_staff
 from shuup.admin.views.menu import MenuToggleView, MenuView
 from shuup.admin.views.password import RequestPasswordView, ResetPasswordView
 from shuup.admin.views.search import SearchView
-from shuup.admin.views.select import MultiselectAjaxView
+from shuup.admin.views.select import MultiselectAjaxView, ObjectSelectorView
 from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
 from shuup.utils.django_compat import is_anonymous
@@ -51,6 +51,7 @@ def get_urls():
             admin_url(r"^tour/$", TourView.as_view(), name="tour", permissions=()),
             admin_url(r"^search/$", SearchView.as_view(), name="search", permissions=()),
             admin_url(r"^select/$", MultiselectAjaxView.as_view(), name="select", permissions=()),
+            admin_url(r"^object-selector/$", ObjectSelectorView.as_view(), name="object_selector", permissions=()),
             admin_url(r"^edit/$", EditObjectView.as_view(), name="edit", permissions=()),
             admin_url(r"^menu/$", MenuView.as_view(), name="menu", permissions=()),
             admin_url(r"^toggle-menu/$", MenuToggleView.as_view(), name="menu_toggle", permissions=()),

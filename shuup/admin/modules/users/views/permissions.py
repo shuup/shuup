@@ -17,7 +17,7 @@ from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.utils.django_compat import force_text
@@ -58,7 +58,7 @@ class PermissionChangeFormBase(forms.ModelForm):
             "be able to access the Admin Panel."
         )
 
-        permission_groups_field = Select2MultipleField(
+        permission_groups_field = ObjectSelect2MultipleField(
             model=PermissionGroup,
             required=False,
             label=_("Granular Permission Groups"),

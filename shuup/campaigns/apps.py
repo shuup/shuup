@@ -20,6 +20,9 @@ class CampaignAppConfig(AppConfig):
             "shuup.campaigns.admin_module:CampaignAdminModule",
         ],
         "admin_product_section": ["shuup.campaigns.admin_module.sections:ProductCampaignsSection"],
+        "admin_object_selector": [
+            "shuup.campaigns.admin_module.object_selector.CouponAdminObjectSelector",
+        ],
         "campaign_basket_condition": [
             "shuup.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm",
             "shuup.campaigns.admin_module.forms:BasketTotalAmountConditionForm",

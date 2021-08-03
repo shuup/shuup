@@ -9,7 +9,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.core.models import Carrier, Contact, OrderLineType, OrderStatus, ShippingMethod, Supplier, Tax, TaxClass
 from shuup.reports.forms import BaseReportForm
 
@@ -18,14 +18,17 @@ class OrderReportForm(BaseReportForm):
     def __init__(self, *args, **kwargs):
         super(OrderReportForm, self).__init__(*args, **kwargs)
 
-        customer_field = Select2MultipleField(
-            label=_("Customer"), model=Contact, required=False, help_text=_("Filter report results by customer.")
+        customer_field = ObjectSelect2MultipleField(
+            label=_("Customer"),
+            model=Contact,
+            required=False,
+            help_text=_("Filter report results by customer."),
         )
         customers = self.initial_contacts("customer")
         if customers:
             customer_field.initial = customers
             customer_field.widget.choices = [(obj.pk, obj.name) for obj in customers]
-        orderer_field = Select2MultipleField(
+        orderer_field = ObjectSelect2MultipleField(
             label=_("Orderer"),
             model=Contact,
             required=False,
@@ -56,8 +59,11 @@ class OrderLineReportForm(BaseReportForm):
     def __init__(self, *args, **kwargs):
         super(OrderLineReportForm, self).__init__(*args, **kwargs)
 
-        supplier = Select2MultipleField(
-            label=_("Suppliers"), model=Supplier, required=False, help_text=_("Filter order lines by suppliers.")
+        supplier = ObjectSelect2MultipleField(
+            label=_("Suppliers"),
+            model=Supplier,
+            required=False,
+            help_text=_("Filter order lines by suppliers."),
         )
         order_status = forms.ModelMultipleChoiceField(
             label=_("Order status"),
@@ -116,10 +122,15 @@ class CustomerSalesReportForm(OrderReportForm):
 
 
 class TaxesReportForm(OrderReportForm):
-    tax = Select2MultipleField(label=_("Tax"), model=Tax, required=False, help_text=_("Filter report results by tax."))
+    tax = ObjectSelect2MultipleField(
+        label=_("Tax"), model=Tax, required=False, help_text=_("Filter report results by tax.")
+    )
 
-    tax_class = Select2MultipleField(
-        label=_("Tax Class"), model=TaxClass, required=False, help_text=_("Filter report results by tax class.")
+    tax_class = ObjectSelect2MultipleField(
+        label=_("Tax Class"),
+        model=TaxClass,
+        required=False,
+        help_text=_("Filter report results by tax class."),
     )
 
     def __init__(self, *args, **kwargs):
@@ -137,15 +148,18 @@ class TaxesReportForm(OrderReportForm):
 
 
 class ShippingReportForm(OrderReportForm):
-    shipping_method = Select2MultipleField(
+    shipping_method = ObjectSelect2MultipleField(
         label=_("Shipping Method"),
         model=ShippingMethod,
         required=False,
         help_text=_("Filter report results by shipping method."),
     )
 
-    carrier = Select2MultipleField(
-        label=_("Carrier"), model=Carrier, required=False, help_text=_("Filter report results by carrier.")
+    carrier = ObjectSelect2MultipleField(
+        label=_("Carrier"),
+        model=Carrier,
+        required=False,
+        help_text=_("Filter report results by carrier."),
     )
 
     def __init__(self, *args, **kwargs):
