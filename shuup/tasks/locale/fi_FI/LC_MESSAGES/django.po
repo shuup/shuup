@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"POT-Creation-Date: 2021-07-27 19:58+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -141,6 +141,15 @@ msgstr "näkyvyys"
 msgid "body"
 msgstr "runko"
 
+msgid "Task Created"
+msgstr ""
+
+msgid "Task"
+msgstr "Tehtävä"
+
+msgid "Type"
+msgstr ""
+
 msgid "New Task"
 msgstr "Uusi tehtävä"
 
@@ -173,6 +182,3 @@ msgstr "Uusi tehtävän tyyppi"
 
 msgid "Last 10 pending tasks assigned for you"
 msgstr "10 viimeistä tehtävääsi"
-
-msgid "Task"
-msgstr "Tehtävä"

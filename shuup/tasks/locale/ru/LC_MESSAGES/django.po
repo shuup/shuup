@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"POT-Creation-Date: 2021-07-27 19:58+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
 "Last-Translator: An Nesterov <arch.nesterov@gmail.com>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/shuup/teams/55306/ru/)\n"
@@ -139,6 +139,15 @@ msgstr "видимость"
 msgid "body"
 msgstr "тело"
 
+msgid "Task Created"
+msgstr ""
+
+msgid "Task"
+msgstr "Задача"
+
+msgid "Type"
+msgstr ""
+
 msgid "New Task"
 msgstr "Новая задача"
 
@@ -171,6 +180,3 @@ msgstr "Новый тип задачи"
 
 msgid "Last 10 pending tasks assigned for you"
 msgstr "Последние 10 нерешенных задач, поставленных перед вами"
-
-msgid "Task"
-msgstr "Задача"

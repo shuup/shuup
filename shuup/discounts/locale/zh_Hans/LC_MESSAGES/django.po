@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -38,6 +38,12 @@ msgstr "折扣"
 
 msgid "Product Discounts"
 msgstr "产品折扣"
+
+msgid "Allow the user to select coupons in admin."
+msgstr ""
+
+msgid "Allow the user to select discounts in admin."
+msgstr ""
 
 msgid "Archived Product Discounts"
 msgstr "存档产品折扣"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
@@ -39,6 +39,12 @@ msgstr "Rabatter"
 
 msgid "Product Discounts"
 msgstr "Produktrabatter"
+
+msgid "Allow the user to select coupons in admin."
+msgstr ""
+
+msgid "Allow the user to select discounts in admin."
+msgstr ""
 
 msgid "Archived Product Discounts"
 msgstr "Arkiverade produktrabatter"

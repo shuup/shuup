@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"POT-Creation-Date: 2021-07-27 19:58+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
 "Last-Translator: Pablo Burgos <hispar@gmail.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/shuup/teams/55306/es/)\n"
@@ -140,6 +140,15 @@ msgstr "visibilidad"
 msgid "body"
 msgstr "cuerpo"
 
+msgid "Task Created"
+msgstr ""
+
+msgid "Task"
+msgstr "Tarea"
+
+msgid "Type"
+msgstr ""
+
 msgid "New Task"
 msgstr "Nueva Tarea"
 
@@ -172,6 +181,3 @@ msgstr "Nuevo tipo de tarea"
 
 msgid "Last 10 pending tasks assigned for you"
 msgstr "Ultimas 10 tareas pendientes asignadas a ti"
-
-msgid "Task"
-msgstr "Tarea"

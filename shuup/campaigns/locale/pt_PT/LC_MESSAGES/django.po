@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 20:06+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: Christian Hess, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
@@ -50,6 +50,9 @@ msgstr "Nova campanha de cesto de compras"
 
 msgid "New coupon"
 msgstr "Novo cupão"
+
+msgid "Allow the user to select coupons in admin."
+msgstr ""
 
 msgid "Minimum value"
 msgstr "Valor mínimo"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-22 17:57+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,12 @@ msgid "Discounts"
 msgstr ""
 
 msgid "Product Discounts"
+msgstr ""
+
+msgid "Allow the user to select coupons in admin."
+msgstr ""
+
+msgid "Allow the user to select discounts in admin."
 msgstr ""
 
 msgid "Archived Product Discounts"

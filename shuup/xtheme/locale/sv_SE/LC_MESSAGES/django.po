@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-06 22:55+0000\n"
-"PO-Revision-Date: 2021-07-07 18:01+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"PO-Revision-Date: 2021-08-03 19:14+0000\n"
 "Last-Translator: Christian Hess\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/language/sv_SE/)\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,15 @@ msgstr "Inget aktiverat tema. Klicka här för att aktivera ett."
 
 msgid "Theming"
 msgstr "Ställ in tema"
+
+msgid "Shuup Extensible Theme Engine Fonts"
+msgstr ""
+
+msgid "Fonts"
+msgstr ""
+
+msgid "Allow the user to select fonts in admin."
+msgstr ""
 
 msgid "Shuup Extensible Theme Engine Snippets"
 msgstr "Shuup Extensible Theme Engine Snippets"
@@ -97,11 +106,47 @@ msgstr "Tema aktiverat."
 msgid "Custom CSS/JS"
 msgstr "Anpassad CSS / JS"
 
+msgid "Woff"
+msgstr ""
+
+msgid "Woff2"
+msgstr ""
+
+msgid "TTF"
+msgstr ""
+
+msgid "SVG"
+msgstr ""
+
+msgid "EOT"
+msgstr ""
+
 msgid "Stylesheets"
 msgstr "Utseendemallar"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Typsnitt, färger och annan styling för ditt tema."
+
+msgid "Choose the primary color:"
+msgstr ""
+
+msgid "Choose the secondary color:"
+msgstr ""
+
+msgid "Choose the primary text color:"
+msgstr ""
+
+msgid "Choose the success (green) style primary color:"
+msgstr ""
+
+msgid "Choose the danger (red) style primary color:"
+msgstr ""
+
+msgid "Admin Header Font"
+msgstr ""
+
+msgid "Admin Body Font"
+msgstr ""
 
 msgid "Failed to render the plugin"
 msgstr ""
@@ -183,6 +228,65 @@ msgstr "information"
 #, python-format
 msgid "Theme configuration for %s"
 msgstr "Konfiguration för temat %s"
+
+msgid "Shop"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Font family name"
+msgstr ""
+
+msgid "Font Family CSS Property"
+msgstr ""
+
+msgid ""
+"(Optional) Input css font family property directly. Ex: font-family: Roboto;"
+msgstr ""
+
+msgid "WOFF Font"
+msgstr ""
+
+msgid "WOFF2 Font"
+msgstr ""
+
+msgid "TTF font"
+msgstr ""
+
+msgid "SVG font"
+msgstr ""
+
+msgid "EOT font"
+msgstr ""
+
+msgid "Font Family"
+msgstr ""
+
+msgid "Font Families"
+msgstr ""
+
+msgid "primary color"
+msgstr ""
+
+msgid "secondary color"
+msgstr ""
+
+msgid "text color"
+msgstr ""
+
+msgid "success color"
+msgstr ""
+
+msgid "danger color"
+msgstr ""
+
+msgid "base font size"
+msgstr ""
+
+#, python-format
+msgid "Admin Theme configuration for %s"
+msgstr ""
 
 msgid "snippet name"
 msgstr ""
@@ -432,8 +536,14 @@ msgstr "Flytta rad"
 msgid "Add new row"
 msgstr "Lägg till ny rad"
 
-msgid "Theme Configuration"
-msgstr "Temats inställningar"
+msgid "Admin Theme Configuration"
+msgstr ""
+
+msgid "Change Theme"
+msgstr ""
+
+msgid "Shop Theme Configuration"
+msgstr ""
 
 msgid "No themes are installed."
 msgstr "Inga teman är installerat."
@@ -441,6 +551,9 @@ msgstr "Inga teman är installerat."
 #, python-format
 msgid "Theme Configuration: %(name)s"
 msgstr "Temat inställningar: %(name)s"
+
+msgid "Theme Configuration"
+msgstr "Temats inställningar"
 
 msgid "There's nothing to configure in this theme."
 msgstr "Det finns inget att konfigurera i detta tema."
@@ -451,6 +564,9 @@ msgstr "Välj tema"
 msgid "Theme Guide"
 msgstr "Temaguide"
 
+msgid "Theme screenshot"
+msgstr ""
+
 msgid "Author"
 msgstr "Skapare"
 
@@ -459,6 +575,12 @@ msgstr "Konfigurera"
 
 msgid "Activate"
 msgstr "Aktivera"
+
+msgid "Admin Theme"
+msgstr ""
+
+msgid "Edit Admin Theme"
+msgstr ""
 
 msgid "Theme Name"
 msgstr "Temats namn"

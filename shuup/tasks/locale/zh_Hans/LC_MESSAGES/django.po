@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 20:21+0000\n"
+"POT-Creation-Date: 2021-07-27 19:58+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -139,6 +139,15 @@ msgstr "可见性"
 msgid "body"
 msgstr "身体"
 
+msgid "Task Created"
+msgstr ""
+
+msgid "Task"
+msgstr "任务"
+
+msgid "Type"
+msgstr ""
+
 msgid "New Task"
 msgstr "新任务"
 
@@ -171,6 +180,3 @@ msgstr "新任务类型"
 
 msgid "Last 10 pending tasks assigned for you"
 msgstr "最后10项为您分配的待定任务"
-
-msgid "Task"
-msgstr "任务"

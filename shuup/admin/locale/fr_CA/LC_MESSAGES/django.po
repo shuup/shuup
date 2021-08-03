@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-26 12:05+0000\n"
-"PO-Revision-Date: 2021-07-26 12:17+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"POT-Creation-Date: 2021-08-03 19:12+0000\n"
+"PO-Revision-Date: 2021-08-03 19:13+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: French (Canada) (http://www.transifex.com/shuup/shuup/language/fr_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -113,6 +113,9 @@ msgstr "messages"
 msgid "Attributes"
 msgstr "Les attributs"
 
+msgid "Allow the user to select attributes in admin."
+msgstr ""
+
 #, python-format
 msgid "%s has been deleted."
 msgstr "%s a été supprimé."
@@ -149,6 +152,9 @@ msgstr "Ajoutez une catégorie de produits pour organiser vos produits."
 
 msgid "New category"
 msgstr "Nouvelle catégorie"
+
+msgid "Allow the user to select categories in admin."
+msgstr ""
 
 msgid "Can't use this category as a parent for this shop."
 msgstr "Impossible d'utiliser cette catégorie en tant que parent pour cette boutique."
@@ -243,6 +249,15 @@ msgstr[1] "%(count)s membres supprimés."
 
 msgid "Number of Members"
 msgstr "Nombre de membres"
+
+msgid "Allow the user to select contacts in admin."
+msgstr ""
+
+msgid "Allow the user to select person contacts in admin."
+msgstr ""
+
+msgid "Allow the user to select company contacts in admin."
+msgstr ""
 
 #, python-format
 msgid "User `%(bind_user)s` already has a contact."
@@ -489,6 +504,9 @@ msgstr "Modifié le"
 
 msgid "Manufacturers"
 msgstr "Fabricants"
+
+msgid "Allow the user to select manufacturers in admin."
+msgstr ""
 
 msgid ""
 "Select shops for this manufacturer. Keep it blank to share with all shops."
@@ -989,6 +1007,9 @@ msgstr ""
 msgid "Granular Permission Groups"
 msgstr "Groupes d'autorisations granulaires"
 
+msgid "Allow the user to select permission group in admin."
+msgstr ""
+
 msgid "The Permission Group name."
 msgstr "Le nom du groupe d'autorisations."
 
@@ -1000,6 +1021,9 @@ msgstr "Types de produits"
 
 msgid "Product types"
 msgstr "Types de produits"
+
+msgid "Allow the user to select product types in admin."
+msgstr ""
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -1038,6 +1062,12 @@ msgstr "Importer"
 
 msgid "Add a product to see it in your store"
 msgstr "Ajoutez un produit pour le voir dans votre boutique"
+
+msgid "Allow the user to select products in admin."
+msgstr ""
+
+msgid "Allow the user to select shop_products in admin."
+msgstr ""
 
 msgid "Primary Product Image"
 msgstr "Image principale du produit"
@@ -1324,6 +1354,15 @@ msgstr "Instructions"
 msgid "Additional instructions shown in the shop checkout process."
 msgstr "Instructions supplémentaires affichées dans le processus de paiement en boutique."
 
+msgid "Allow the user to select carriers in admin."
+msgstr ""
+
+msgid "Allow the user to select payment methods in admin."
+msgstr ""
+
+msgid "Allow the user to select shipping methods in admin."
+msgstr ""
+
 msgid "Shipping Methods"
 msgstr "méthodes de livraison"
 
@@ -1463,6 +1502,9 @@ msgstr "Définir &quot;{}&quot; comme boutique active"
 msgid "Available Shops [currently active: {}]"
 msgstr "Boutiques disponibles [actuellement actives: {}]"
 
+msgid "Allow the user to select shops in admin."
+msgstr ""
+
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "Ce champ ne peut pas être modifié car il existe des commandes existantes pour cette boutique."
@@ -1543,6 +1585,9 @@ msgstr "Ajoutez une adresse pour être payé"
 msgid "Default Tax Class"
 msgstr "Classe de taxe par défaut"
 
+msgid "Allow the user to select suppliers in admin."
+msgstr ""
+
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Sélectionnez les magasins pour ce fournisseur. Gardez-le vide pour partager avec tous les magasins."
 
@@ -1595,6 +1640,15 @@ msgstr "Groupes de taxes client"
 msgid "Tax Classes"
 msgstr "Classes fiscales"
 
+msgid "Allow the user to select customer tax groups in admin."
+msgstr ""
+
+msgid "Allow the user to select taxes in admin."
+msgstr ""
+
+msgid "Allow the user to select tax classes in admin."
+msgstr ""
+
 msgid "Rate"
 msgstr "Taux"
 
@@ -1626,6 +1680,9 @@ msgid "Allow the user to impersonate a staff user."
 msgstr ""
 
 msgid "Allow the user to change the user list columns."
+msgstr ""
+
+msgid "Allow the user to select users in admin."
 msgstr ""
 
 msgid "Add some users to help manage your shop"
@@ -3027,6 +3084,9 @@ msgid ""
 "Let’s go through some of the things you can do here. Click next to begin."
 msgstr "Passons en revue certaines des choses que vous pouvez faire ici. Cliquez sur suivant pour commencer."
 
+msgid "shop logo"
+msgstr ""
+
 msgid "Date"
 msgstr "Date"
 
@@ -3775,3 +3835,6 @@ msgstr "Le mot de passe a été changé."
 #, python-format
 msgid "Couldn't get selections for %s."
 msgstr "Impossible d'obtenir les sélections pour %s."
+
+msgid "Selector not found."
+msgstr ""

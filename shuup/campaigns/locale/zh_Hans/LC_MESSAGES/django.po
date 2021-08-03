@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 20:06+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: 2016-06-28 10:48+0000\n"
 "Last-Translator: Jiechao Li <jiechao.li@sesamechat.com>, 2019\n"
 "Language-Team: Chinese (Mandarin) (https://www.transifex.com/shuup/teams/55306/cmn/)\n"
@@ -49,6 +49,9 @@ msgstr "新购物篮活动"
 
 msgid "New coupon"
 msgstr "新优惠券"
+
+msgid "Allow the user to select coupons in admin."
+msgstr ""
 
 msgid "Minimum value"
 msgstr "最小值"

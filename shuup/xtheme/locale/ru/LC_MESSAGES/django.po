@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-06 22:55+0000\n"
-"PO-Revision-Date: 2021-07-07 18:01+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"PO-Revision-Date: 2021-08-03 19:14+0000\n"
 "Last-Translator: Christian Hess\n"
 "Language-Team: Russian (http://www.transifex.com/shuup/shuup/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,15 @@ msgstr "Нет активных тем. Кликните тут чтобы ак�
 
 msgid "Theming"
 msgstr "Применение тем"
+
+msgid "Shuup Extensible Theme Engine Fonts"
+msgstr ""
+
+msgid "Fonts"
+msgstr ""
+
+msgid "Allow the user to select fonts in admin."
+msgstr ""
 
 msgid "Shuup Extensible Theme Engine Snippets"
 msgstr ""
@@ -97,11 +106,47 @@ msgstr "Тема активирована."
 msgid "Custom CSS/JS"
 msgstr ""
 
+msgid "Woff"
+msgstr ""
+
+msgid "Woff2"
+msgstr ""
+
+msgid "TTF"
+msgstr ""
+
+msgid "SVG"
+msgstr ""
+
+msgid "EOT"
+msgstr ""
+
 msgid "Stylesheets"
 msgstr "Выбор стиля"
 
 msgid "The fonts, colors, and styles to use with your theme."
 msgstr "Шрифты, цвета и стили для использования в вашей теме."
+
+msgid "Choose the primary color:"
+msgstr ""
+
+msgid "Choose the secondary color:"
+msgstr ""
+
+msgid "Choose the primary text color:"
+msgstr ""
+
+msgid "Choose the success (green) style primary color:"
+msgstr ""
+
+msgid "Choose the danger (red) style primary color:"
+msgstr ""
+
+msgid "Admin Header Font"
+msgstr ""
+
+msgid "Admin Body Font"
+msgstr ""
 
 msgid "Failed to render the plugin"
 msgstr ""
@@ -183,6 +228,65 @@ msgstr "дата"
 #, python-format
 msgid "Theme configuration for %s"
 msgstr "Настройки темы %s"
+
+msgid "Shop"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Font family name"
+msgstr ""
+
+msgid "Font Family CSS Property"
+msgstr ""
+
+msgid ""
+"(Optional) Input css font family property directly. Ex: font-family: Roboto;"
+msgstr ""
+
+msgid "WOFF Font"
+msgstr ""
+
+msgid "WOFF2 Font"
+msgstr ""
+
+msgid "TTF font"
+msgstr ""
+
+msgid "SVG font"
+msgstr ""
+
+msgid "EOT font"
+msgstr ""
+
+msgid "Font Family"
+msgstr ""
+
+msgid "Font Families"
+msgstr ""
+
+msgid "primary color"
+msgstr ""
+
+msgid "secondary color"
+msgstr ""
+
+msgid "text color"
+msgstr ""
+
+msgid "success color"
+msgstr ""
+
+msgid "danger color"
+msgstr ""
+
+msgid "base font size"
+msgstr ""
+
+#, python-format
+msgid "Admin Theme configuration for %s"
+msgstr ""
 
 msgid "snippet name"
 msgstr ""
@@ -432,8 +536,14 @@ msgstr "Сдвинуть ряд"
 msgid "Add new row"
 msgstr "Добавить новый ряд"
 
-msgid "Theme Configuration"
-msgstr "Настройки темы"
+msgid "Admin Theme Configuration"
+msgstr ""
+
+msgid "Change Theme"
+msgstr ""
+
+msgid "Shop Theme Configuration"
+msgstr ""
 
 msgid "No themes are installed."
 msgstr "Темы не установлены"
@@ -441,6 +551,9 @@ msgstr "Темы не установлены"
 #, python-format
 msgid "Theme Configuration: %(name)s"
 msgstr ""
+
+msgid "Theme Configuration"
+msgstr "Настройки темы"
 
 msgid "There's nothing to configure in this theme."
 msgstr "В данной теме нет настроек"
@@ -451,6 +564,9 @@ msgstr "Выбрать тему"
 msgid "Theme Guide"
 msgstr ""
 
+msgid "Theme screenshot"
+msgstr ""
+
 msgid "Author"
 msgstr "Автор"
 
@@ -459,6 +575,12 @@ msgstr ""
 
 msgid "Activate"
 msgstr "Активировать"
+
+msgid "Admin Theme"
+msgstr ""
+
+msgid "Edit Admin Theme"
+msgstr ""
 
 msgid "Theme Name"
 msgstr "Название темы"
