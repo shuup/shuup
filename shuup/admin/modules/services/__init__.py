@@ -56,12 +56,19 @@ class ServiceModule(AdminModule):
         return derive_model_url(self.model, self.url_name_prefix, object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return [get_object_selector_permission_name(Carrier), get_object_selector_permission_name(PaymentMethod)]
+        return [
+            get_object_selector_permission_name(Carrier),
+            get_object_selector_permission_name(PaymentMethod),
+            get_object_selector_permission_name(ShippingMethod),
+        ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
             get_object_selector_permission_name(Carrier): _("Allow the user to select carriers in admin."),
             get_object_selector_permission_name(PaymentMethod): _("Allow the user to select payment methods in admin."),
+            get_object_selector_permission_name(ShippingMethod): _(
+                "Allow the user to select shipping methods in admin."
+            ),
         }
 
 
