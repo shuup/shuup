@@ -19,6 +19,7 @@ from http import HTTPStatus
 from typing import Iterable, Tuple
 
 from shuup.admin.supplier_provider import get_supplier
+from shuup.admin.utils.object_selector import get_object_selector_permission_name_for
 from shuup.admin.utils.permissions import has_permission
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
@@ -261,10 +262,6 @@ class BaseAdminObjectSelector:
         return f"{model._meta.app_label}.{model._meta.model_name}"
 
     @classmethod
-    def get_permission_name(cls):
-        return "%s.object_selector" % cls.model._meta.model_name
-
-    @classmethod
     def handles_selector(cls, selector) -> bool:
         return selector == cls.get_selector_for_model(cls.model)
 
@@ -278,7 +275,7 @@ class BaseAdminObjectSelector:
             return False
 
     def has_permission(self) -> bool:
-        return has_permission(self.user, self.get_permission_name())
+        return has_permission(self.user, get_object_selector_permission_name_for(self.model))
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         raise NotImplementedError()
