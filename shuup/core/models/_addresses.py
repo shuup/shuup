@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import six
 from django.conf import settings
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
@@ -172,7 +173,11 @@ class Address(NameMixin, ShuupModel):
         help_text=_("The business tax number. For example, EIN in the USA or VAT code in the EU."),
     )
     phone = models.CharField(
-        verbose_name=_("phone"), max_length=64, blank=True, help_text=_("The primary phone number for the address.")
+        verbose_name=_("phone"),
+        max_length=18,
+        blank=True,
+        help_text=_("The primary phone number for the address."),
+        validators=[RegexValidator(regex=r'[ +|0-9]{1,18}')],
     )
     email = models.EmailField(
         verbose_name=_("email"), max_length=128, blank=True, help_text=_("The primary email for the address.")

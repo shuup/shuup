@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- Core: Add a RegExValidator to the `phone` field of the `Address` model and change `max_length` to be `18`.
+
 ### Added
 
 - Admin: add new provides `admin_template_injector` that allows injection snippet in admin templates
