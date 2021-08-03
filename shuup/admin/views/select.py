@@ -250,6 +250,7 @@ class ObjectSelectorView(TemplateView):
 
 class BaseAdminObjectSelector:
     search_limit = 20
+    model = None
 
     def __init__(self, selector, shop, user, supplier=None, *args, **kwargs):
         self.selector = selector
