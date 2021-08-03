@@ -40,6 +40,7 @@ from shuup.testing.factories import (
     get_default_supplier,
     get_default_tax_class,
 )
+from shuup.xtheme.models import Font
 
 User = get_user_model()
 
@@ -215,6 +216,13 @@ def test_user_selector(admin_user):
     shop = get_default_shop()
     u = create_random_user()
     assert get_object_selector_results(User, shop, admin_user, u.first_name)
+
+
+@pytest.mark.django_db
+def test_font_selector(admin_user):
+    shop = get_default_shop()
+    font = Font.objects.create(name="font", shop=shop)
+    assert get_object_selector_results(Font, shop, admin_user, "font")
 
 
 @pytest.mark.django_db

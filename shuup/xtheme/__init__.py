@@ -69,6 +69,9 @@ class XThemeAppConfig(AppConfig):
             "shuup.xtheme.admin_module:XthemeFontsAdminModule",
             "shuup.xtheme.admin_module:XthemeSnippetsAdminModule",
         ],
+        "admin_object_selector": [
+            "shuup.xtheme.object_selector:FontAdminObjectSelector",
+        ],
         "xtheme_resource_injection": ["shuup.xtheme.resources:inject_global_snippet"],
         "admin_template_injector": ["shuup.xtheme.admin_injector.XthemeAdminTemplateInjector"],
     }
