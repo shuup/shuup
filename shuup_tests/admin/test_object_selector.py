@@ -75,8 +75,7 @@ def test_product_selector(admin_user):
     shop = get_default_shop()
     product_name_en = "The Product"
     product = create_product("the product", shop=shop, **{"name": product_name_en})
-    shop_product = product.get_shop_instance(shop)
-
+    product.get_shop_instance(shop)
     assert get_object_selector_results(Product, shop, admin_user, "product")
 
 
@@ -91,9 +90,7 @@ def test_manufacturer_selector(admin_user):
 @pytest.mark.django_db
 def test_discount_selector(admin_user):
     shop = get_default_shop()
-    discount = Discount.objects.create(name="test")
-    assert get_object_selector_results(Discount, shop, admin_user, "test") == []
-    discount.shops.add(shop.pk)
+    Discount.objects.create(name="test", shop=shop)
     assert get_object_selector_results(Discount, shop, admin_user, "test")
 
 

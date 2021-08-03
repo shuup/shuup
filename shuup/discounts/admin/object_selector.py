@@ -21,7 +21,7 @@ class DiscountAdminObjectSelector(BaseAdminObjectSelector):
         """
 
         qs = Discount.objects.exclude(active=False).filter(name__icontains=search_term)
-        qs = qs.filter(shops=self.shop)
+        qs = qs.filter(shop=self.shop)
         if self.supplier:
             qs = qs.filter(supplier=self.supplier)
         qs = qs.values_list("id", "name")[: self.search_limit]
