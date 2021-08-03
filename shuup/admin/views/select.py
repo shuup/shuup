@@ -19,6 +19,8 @@ from http import HTTPStatus
 from typing import Iterable, Tuple
 
 from shuup.admin.supplier_provider import get_supplier
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
+from shuup.admin.utils.permissions import has_permission
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     Carrier,
@@ -261,7 +263,7 @@ class BaseAdminObjectSelector:
 
     @classmethod
     def handles_selector(cls, selector) -> bool:
-        raise NotImplementedError()
+        return selector == cls.get_selector_for_model(cls.model)
 
     @classmethod
     def handle_subclass_selector(cls, selector, parent_model):
@@ -272,8 +274,8 @@ class BaseAdminObjectSelector:
         except LookupError:
             return False
 
-    def has_permission(self, user) -> bool:
-        raise NotImplementedError()
+    def has_permission(self) -> bool:
+        return has_permission(self.user, get_object_selector_permission_name(self.model))
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         raise NotImplementedError()

@@ -13,8 +13,9 @@ from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shuup.core.models import Contact
+from shuup.core.models import CompanyContact, Contact, PersonContact
 
 
 class ContactModule(AdminModule):
@@ -97,14 +98,16 @@ class ContactModule(AdminModule):
 
     def get_extra_permissions(self) -> Iterable[str]:
         return [
-            "contact.object_selector",
-            "personcontact.object_selector",
-            "companycontact.object_selector",
+            get_object_selector_permission_name(Contact),
+            get_object_selector_permission_name(PersonContact),
+            get_object_selector_permission_name(CompanyContact),
         ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "contact.object_selector": _("Allow the user to select contacts in admin."),
-            "personcontact.object_selector": _("Allow the user to select person contacts in admin."),
-            "companycontact.object_selector": _("Allow the user to select company contacts in admin."),
+            get_object_selector_permission_name(Contact): _("Allow the user to select contacts in admin."),
+            get_object_selector_permission_name(PersonContact): _("Allow the user to select person contacts in admin."),
+            get_object_selector_permission_name(CompanyContact): _(
+                "Allow the user to select company contacts in admin."
+            ),
         }

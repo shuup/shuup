@@ -7,20 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 from shuup.core.models import Category
 
 
 class CategoryAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 2
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(Category)
-
-    def has_permission(self):
-        return has_permission(self.user, "category.object_selector")
+    model = Category
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

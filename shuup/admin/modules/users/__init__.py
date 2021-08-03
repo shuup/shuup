@@ -13,8 +13,11 @@ from typing import Dict, Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
+
+User = get_user_model()
 
 
 class UserModule(AdminModule):
@@ -69,7 +72,7 @@ class UserModule(AdminModule):
             "user.login-as": _("Allow the user to impersonate a different user."),
             "user.login-as-staff": _("Allow the user to impersonate a staff user."),
             "user.list_settings": _("Allow the user to change the user list columns."),
-            "user.object_selector": _("Allow the user to select users in admin."),
+            get_object_selector_permission_name(User): _("Allow the user to select users in admin."),
         }
 
     def get_menu_entries(self, request):
@@ -86,7 +89,7 @@ class UserModule(AdminModule):
     def get_search_results(self, request, query):
         minimum_query_length = 3
         if len(query) >= minimum_query_length:
-            users = get_user_model().objects.filter(Q(username__icontains=query) | Q(email=query))
+            users = User.objects.filter(Q(username__icontains=query) | Q(email=query))
             for i, user in enumerate(users[:10]):
                 relevance = 100 - i
                 yield SearchResult(
@@ -96,7 +99,7 @@ class UserModule(AdminModule):
     def get_help_blocks(self, request, kind):
         yield SimpleHelpBlock(
             text=_("Add some users to help manage your shop"),
-            actions=[{"text": _("New user"), "url": self.get_model_url(get_user_model(), "new")}],
+            actions=[{"text": _("New user"), "url": self.get_model_url(User, "new")}],
             priority=3,
             category=HelpBlockCategory.CONTACTS,
             icon_url="shuup_admin/img/users.png",
@@ -105,7 +108,7 @@ class UserModule(AdminModule):
         )
 
     def get_model_url(self, object, kind, shop=None):
-        return derive_model_url(get_user_model(), "shuup_admin:user", object, kind)
+        return derive_model_url(User, "shuup_admin:user", object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return ["user.object_selector"]
+        return [get_object_selector_permission_name(User)]

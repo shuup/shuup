@@ -12,6 +12,7 @@ from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Attribute
 
@@ -51,7 +52,7 @@ class AttributeModule(AdminModule):
         return derive_model_url(Attribute, "shuup_admin:attribute", object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return ["attribute.object_selector"]
+        return [get_object_selector_permission_name(Attribute)]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
-        return {"attribute.object_selector": _("Allow the user to select attributes in admin.")}
+        return {get_object_selector_permission_name(Attribute): _("Allow the user to select attributes in admin.")}

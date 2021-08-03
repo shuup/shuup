@@ -9,7 +9,6 @@ from django.contrib.auth import get_user_model
 from django.db.models.query_utils import Q
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 
 User = get_user_model()
@@ -17,13 +16,7 @@ User = get_user_model()
 
 class UserAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 20
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(User)
-
-    def has_permission(self):
-        return has_permission(self.user, "user.object_selector")
+    model = User
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

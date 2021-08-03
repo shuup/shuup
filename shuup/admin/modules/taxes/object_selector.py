@@ -7,20 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 
 
 class TaxAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 18
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(Tax)
-
-    def has_permission(self):
-        return has_permission(self.user, "tax.object_selector")
+    model = Tax
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -36,13 +29,7 @@ class TaxAdminObjectSelector(BaseAdminObjectSelector):
 
 class CustomerTaxGroupAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 18
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(CustomerTaxGroup)
-
-    def has_permission(self):
-        return has_permission(self.user, "customer_tax_group.object_selector")
+    model = CustomerTaxGroup
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -56,13 +43,7 @@ class CustomerTaxGroupAdminObjectSelector(BaseAdminObjectSelector):
 
 class TaxClassAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 19
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(TaxClass)
-
-    def has_permission(self):
-        return has_permission(self.user, "tax_class.object_selector")
+    model = TaxClass
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

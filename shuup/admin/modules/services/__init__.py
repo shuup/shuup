@@ -13,8 +13,9 @@ from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
-from shuup.core.models import PaymentMethod, ShippingMethod
+from shuup.core.models import Carrier, PaymentMethod, ShippingMethod
 
 
 class ServiceModule(AdminModule):
@@ -55,12 +56,19 @@ class ServiceModule(AdminModule):
         return derive_model_url(self.model, self.url_name_prefix, object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return ["carrier.object_selector", "payment_method.object_selector"]
+        return [
+            get_object_selector_permission_name(Carrier),
+            get_object_selector_permission_name(PaymentMethod),
+            get_object_selector_permission_name(ShippingMethod),
+        ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "carrier.object_selector": _("Allow the user to select carriers in admin."),
-            "payment_method.object_selector": _("Allow the user to select payment methods in admin."),
+            get_object_selector_permission_name(Carrier): _("Allow the user to select carriers in admin."),
+            get_object_selector_permission_name(PaymentMethod): _("Allow the user to select payment methods in admin."),
+            get_object_selector_permission_name(ShippingMethod): _(
+                "Allow the user to select shipping methods in admin."
+            ),
         }
 
 

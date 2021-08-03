@@ -12,6 +12,8 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Core: Add a RegExValidator to the `phone` field of the `Address` model and change `max_length` to be `18`.
 
+## [2.14.0] - 2021-08-03
+
 ### Added
 
 - Admin: add new provides `admin_template_injector` that allows injection snippet in admin templates

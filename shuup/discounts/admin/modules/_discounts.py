@@ -5,15 +5,15 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 from django.utils.translation import ugettext_lazy as _
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
 from shuup.admin.urls import admin_url
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shuup.discounts.models import Discount
+from shuup.discounts.models import CouponCode, Discount
 
 
 class DiscountModule(AdminModule):
@@ -39,6 +39,18 @@ class DiscountModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Discount, "shuup_admin:discounts", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return [
+            get_object_selector_permission_name(Discount),
+            get_object_selector_permission_name(CouponCode),
+        ]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {
+            get_object_selector_permission_name(CouponCode): _("Allow the user to select coupons in admin."),
+            get_object_selector_permission_name(Discount): _("Allow the user to select discounts in admin."),
+        }
 
 
 class DiscountArchiveModule(AdminModule):

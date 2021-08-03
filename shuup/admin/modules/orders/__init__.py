@@ -10,7 +10,6 @@ from datetime import timedelta
 from django.db.models import Q
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shuup.admin.menu import ORDERS_MENU_CATEGORY, STOREFRONT_MENU_CATEGORY
@@ -213,15 +212,3 @@ class OrderStatusModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
-
-    def get_extra_permissions(self) -> Iterable[str]:
-        return [
-            "coupon.object_selector",
-            "discount.object_selector",
-        ]
-
-    def get_permissions_help_texts(self) -> Iterable[str]:
-        return {
-            "coupon.object_selector": _("Allow the user to select coupons in admin."),
-            "discount.object_selector": _("Allow the user to select discounts in admin."),
-        }

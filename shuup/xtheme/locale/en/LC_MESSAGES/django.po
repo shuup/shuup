@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-02 19:41+0000\n"
+"POT-Creation-Date: 2021-08-03 16:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -53,6 +53,9 @@ msgid "Shuup Extensible Theme Engine Fonts"
 msgstr ""
 
 msgid "Fonts"
+msgstr ""
+
+msgid "Allow the user to select fonts in admin."
 msgstr ""
 
 msgid "Shuup Extensible Theme Engine Snippets"
