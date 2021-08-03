@@ -26,6 +26,7 @@ from shuup.core.models import (
     ShopProduct,
     ShopProductVisibility,
     Supplier,
+    SupplierShop,
 )
 from shuup.core.pricing import get_discount_modules, get_pricing_module
 from shuup.core.utils.users import is_user_all_seeing
@@ -224,8 +225,14 @@ class ProductCatalog:
 
         shop_product_filters = Q(Q(available_until__isnull=True) | Q(available_until__gte=timezone.now()))
 
+        visible_suppliers = SupplierShop.objects.filter(supplier__enabled=True, is_approved=True)
         if self.context.shop:
             shop_product_filters &= Q(shop=self.context.shop)
+            visible_suppliers = visible_suppliers.filter(shop=self.context.shop)
+        if self.context.supplier:
+            visible_suppliers = visible_suppliers.filter(supplier=self.context.supplier)
+
+        shop_product_filters &= Q(suppliers__in=visible_suppliers.values_list("supplier", flat=True))
 
         if contact:
             shop_product_filters &= Q(

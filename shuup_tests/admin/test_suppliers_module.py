@@ -7,10 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 import json
 import pytest
+from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.text import slugify
 
 from shuup.admin.modules.suppliers.views import SupplierDeleteView, SupplierEditView, SupplierListView
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 from shuup.core.models import Supplier, SupplierType
 from shuup.testing import factories
 from shuup.testing.factories import get_default_supplier
@@ -148,3 +150,48 @@ def test_suppliers_ensure_deleted_inlist(rf, admin_user):
     response = list_view(request)
     data = json.loads(response.content.decode("utf-8"))
     assert data["pagination"]["nItems"] == 0
+
+
+@pytest.mark.django_db
+def test_supplier_changed_reindex_catalog(rf, admin_user):
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier(shop)
+    supplier.stock_managed = True
+    supplier.save()
+    product = factories.create_product("p1", shop, supplier, default_price=Decimal("10"))
+    supplier.adjust_stock(product.pk, 40)  # add 40 to the stock
+    ProductCatalog.index_product(product)
+
+    catalog = ProductCatalog(ProductCatalogContext(purchasable_only=True))
+    assert product in catalog.get_products_queryset()
+
+    # disable the supplier
+    edit_view = SupplierEditView.as_view()
+    payload = {
+        "base-name": supplier.name,
+        "base-description__en": "",
+        "base-type": SupplierType.INTERNAL.value,
+        "base-stock_managed": True,
+        "base-supplier_modules": [supplier.supplier_modules.first().pk],
+        "base-shops": shop.pk,
+        "base-enabled": "",
+        "base-logo": "",
+        "address-name": "Address Name",
+        "address-email": "email@example.com",
+        "address-phone": "23742578329",
+        "address-tax_number": "ABC123",
+        "address-street": "Streetz",
+        "address-postal_code": "90014",
+        "address-city": "Los Angeles",
+        "address-region_code": "CA",
+        "address-country": "US",
+    }
+    request = apply_request_middleware(rf.post("/", payload), user=admin_user)
+    response = edit_view(request, pk=supplier.pk)
+    assert response.status_code == 302
+
+    supplier.refresh_from_db()
+    assert not supplier.enabled
+
+    # product is not available anymore
+    assert product not in catalog.get_products_queryset()

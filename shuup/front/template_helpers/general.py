@@ -131,7 +131,7 @@ def _get_best_selling_products(cutoff_days, n_products, orderable_only, request,
     )
     valid_products_qs = (
         catalog.get_products_queryset()
-        .filter(id__in=product_ids, mode__in=ProductMode.get_parent_modes(), shop_products__suppliers__enabled=True)
+        .filter(id__in=product_ids, mode__in=ProductMode.get_parent_modes())
         .distinct()[:n_products]
     )
 
