@@ -18,6 +18,7 @@ from typing import Iterable
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.modules.products.signal_handlers import update_categories_post_save, update_categories_through
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.search import split_query
 from shuup.admin.utils.urls import (
     admin_url,
@@ -161,15 +162,12 @@ class ProductModule(AdminModule):
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return [
-            "product.object_selector",
-            "shopproduct.object_selector",
-        ]
+        return [get_object_selector_permission_name(Product), get_object_selector_permission_name(ShopProduct)]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "product.object_selector": _("Allow the user to select products in admin."),
-            "shopproduct.object_selector": _("Allow the user to select shop_products in admin."),
+            get_object_selector_permission_name(Product): _("Allow the user to select products in admin."),
+            get_object_selector_permission_name(ShopProduct): _("Allow the user to select shop_products in admin."),
         }
 
 

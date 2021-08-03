@@ -12,6 +12,7 @@ from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 
@@ -67,14 +68,16 @@ class TaxModule(AdminModule):
 
     def get_extra_permissions(self) -> Iterable[str]:
         return [
-            "customer_tax_group.object_selector",
-            "tax.object_selector",
-            "taxclass.object_selector",
+            get_object_selector_permission_name(CustomerTaxGroup),
+            get_object_selector_permission_name(Tax),
+            get_object_selector_permission_name(TaxClass),
         ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "customertaxgroup.object_selector": _("Allow the user to select customer tax groups in admin."),
-            "tax.object_selector": _("Allow the user to select taxes in admin."),
-            "taxclass.object_selector": _("Allow the user to select tax classes in admin."),
+            get_object_selector_permission_name(CustomerTaxGroup): _(
+                "Allow the user to select customer tax groups in admin."
+            ),
+            get_object_selector_permission_name(Tax): _("Allow the user to select taxes in admin."),
+            get_object_selector_permission_name(TaxClass): _("Allow the user to select tax classes in admin."),
         }

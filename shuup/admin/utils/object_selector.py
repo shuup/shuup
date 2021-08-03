@@ -7,5 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 
 
-def get_object_selector_permission_name_for(model):
+def get_object_selector_permission_name(model):
+    """
+    Returns the object selector permission name for the given model
+    """
     return "%s.object_selector" % model._meta.model_name
