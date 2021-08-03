@@ -18,6 +18,7 @@ from shuup.testing.factories import get_default_shop
 from shuup.utils.i18n import get_language_name
 from shuup.utils.importing import clear_load_cache
 from shuup.xtheme.testing import override_current_theme_class
+from shuup_tests.utils.fixtures import *  # noqa: F401,F403
 
 
 def clear_caches(setting, **kwargs):

@@ -7,16 +7,17 @@
 import pytest
 
 from shuup.core.models import AnonymousContact, ContactGroup, ProductVisibility, get_person_contact
-from shuup.core.pricing import TaxfulPrice, TaxlessPrice
-from shuup.testing.factories import create_product, get_default_product, get_default_shop
+from shuup.testing.factories import create_product, get_default_product, get_default_shop, get_default_supplier
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils.fixtures import regular_user
 
 
 def init_test(request, shop, prices):
     apply_request_middleware(request)
     parent = create_product("parent_product", shop=shop)
-    children = [create_product("child-%d" % price, shop=shop, default_price=price) for price in prices]
+    supplier = get_default_supplier(shop)
+    children = [
+        create_product("child-%d" % price, shop=shop, supplier=supplier, default_price=price) for price in prices
+    ]
     for child in children:
         child.link_to_parent(parent)
     return parent
@@ -80,9 +81,9 @@ def test_only_one_variation_child(rf):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("regular_user")
 def test_cheapest_price_per_customer(rf, regular_user):
     shop = get_default_shop()
+    supplier = get_default_supplier(shop)
     prices = [100, 20, 50, 80, 90]
 
     anon_contact = AnonymousContact()
@@ -95,7 +96,7 @@ def test_cheapest_price_per_customer(rf, regular_user):
 
     # Let's create extra children available only for certain group
     custom_price_for_gold_club = 3.5
-    super_child = create_product("child-super", shop=shop, default_price=custom_price_for_gold_club)
+    super_child = create_product("child-super", shop=shop, supplier=supplier, default_price=custom_price_for_gold_club)
     super_child_shop_product = super_child.get_shop_instance(shop)
     super_child_shop_product.visibility_limit = ProductVisibility.VISIBLE_TO_GROUPS
     super_child_shop_product.save()
