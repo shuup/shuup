@@ -12,7 +12,7 @@ from django.forms.widgets import TextInput
 from django.urls.base import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.fields import Select2ModelField
+from shuup.admin.forms.fields import ObjectSelect2ModelField
 from shuup.admin.forms.quick_select import QuickAddRelatedObjectSelect
 from shuup.admin.forms.widgets import FileDnDUploaderWidget
 from shuup.admin.shop_provider import get_shop
@@ -132,14 +132,14 @@ class AdminThemeForm(forms.ModelForm):
             initial_header_font = kwargs.get("initial", {}).get("admin_header_font")
             initial_body_font = kwargs.get("initial", {}).get("admin_body_font")
 
-        self.fields["admin_header_font"] = Select2ModelField(
+        self.fields["admin_header_font"] = ObjectSelect2ModelField(
             label=_("Admin Header Font"),
             initial=initial_header_font,
             model=Font,
             required=False,
             widget=QuickAddFontSelect(editable_model=Font, initial=initial_header_font),
         )
-        self.fields["admin_body_font"] = Select2ModelField(
+        self.fields["admin_body_font"] = ObjectSelect2ModelField(
             label=_("Admin Body Font"),
             initial=initial_body_font,
             model=Font,

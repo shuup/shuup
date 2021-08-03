@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.template import engines
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
+from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import CONTENT_MENU_CATEGORY
@@ -135,6 +136,12 @@ class XthemeFontsAdminModule(AdminModule):
 
     def get_model_url(self, object, kind, shop=None):
         return derive_model_url(Font, "shuup_admin:xtheme.font", object, kind)
+
+    def get_extra_permissions(self) -> Iterable[str]:
+        return ["font.object_selector"]
+
+    def get_permissions_help_texts(self) -> Iterable[str]:
+        return {"font.object_selector": _("Allow the user to select fonts in admin.")}
 
 
 class XthemeSnippetsAdminModule(AdminModule):
