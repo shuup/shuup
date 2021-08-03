@@ -13,6 +13,7 @@ from typing import Iterable
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
+from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.campaigns.admin_module.utils import get_extra_permissions_for_admin_module
@@ -105,11 +106,13 @@ class CampaignAdminModule(AdminModule):
         return derive_model_url(type(object), admin_url, object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return get_extra_permissions_for_admin_module()
+        extra_permissions = list(get_extra_permissions_for_admin_module())
+        extra_permissions.append(get_object_selector_permission_name(Coupon))
+        return extra_permissions
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "coupon.object_selector": _("Allow the user to select coupons in admin."),
+            get_object_selector_permission_name(Coupon): _("Allow the user to select coupons in admin."),
         }
 
 

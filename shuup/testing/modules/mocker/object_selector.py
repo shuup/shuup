@@ -12,7 +12,7 @@ from shuup.admin.views.select import BaseAdminObjectSelector
 
 
 class MockAdminObjectSelector(BaseAdminObjectSelector):
-    ordering = 18
+    ordering = 50
 
     @classmethod
     def handles_selector(cls, selector):
