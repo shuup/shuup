@@ -7,22 +7,19 @@
 # LICENSE file in the root directory of this source tree.
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 from shuup.core.models import Carrier, CustomCarrier, PaymentMethod, ShippingMethod
 
 
 class CarrierAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 13
+    model = Carrier
 
     @classmethod
     def handles_selector(cls, selector):
         if selector == cls.get_selector_for_model(Carrier) or selector == cls.get_selector_for_model(CustomCarrier):
             return True
         return cls.handle_subclass_selector(selector, Carrier)
-
-    def has_permission(self):
-        return has_permission(self.user, "carrier.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -39,15 +36,13 @@ class CarrierAdminObjectSelector(BaseAdminObjectSelector):
 
 class PaymentMethodAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 14
+    model = PaymentMethod
 
     @classmethod
     def handles_selector(cls, selector):
         if selector == cls.get_selector_for_model(PaymentMethod):
             return True
         return cls.handle_subclass_selector(selector, PaymentMethod)
-
-    def has_permission(self):
-        return has_permission(self.user, "payment_method.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -64,15 +59,13 @@ class PaymentMethodAdminObjectSelector(BaseAdminObjectSelector):
 
 class ShippingMethodAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 15
+    model = ShippingMethod
 
     @classmethod
     def handles_selector(cls, selector):
         if selector == cls.get_selector_for_model(ShippingMethod):
             return True
         return cls.handle_subclass_selector(selector, ShippingMethod)
-
-    def has_permission(self):
-        return has_permission(self.user, "shipping_method.object_selector")
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

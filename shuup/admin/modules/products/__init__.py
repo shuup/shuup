@@ -163,13 +163,13 @@ class ProductModule(AdminModule):
     def get_extra_permissions(self) -> Iterable[str]:
         return [
             "product.object_selector",
-            "shop_product.object_selector",
+            "shopproduct.object_selector",
         ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
             "product.object_selector": _("Allow the user to select products in admin."),
-            "shop_product.object_selector": _("Allow the user to select shop_products in admin."),
+            "shopproduct.object_selector": _("Allow the user to select shop_products in admin."),
         }
 
 

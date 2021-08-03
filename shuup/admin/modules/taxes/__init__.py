@@ -69,12 +69,12 @@ class TaxModule(AdminModule):
         return [
             "customer_tax_group.object_selector",
             "tax.object_selector",
-            "tax_class.object_selector",
+            "taxclass.object_selector",
         ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            "customer_tax_group.object_selector": _("Allow the user to select customer tax groups in admin."),
+            "customertaxgroup.object_selector": _("Allow the user to select customer tax groups in admin."),
             "tax.object_selector": _("Allow the user to select taxes in admin."),
-            "tax_class.object_selector": _("Allow the user to select tax classes in admin."),
+            "taxclass.object_selector": _("Allow the user to select tax classes in admin."),
         }

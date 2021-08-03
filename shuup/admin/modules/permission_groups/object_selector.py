@@ -8,19 +8,12 @@
 from django.contrib.auth.models import Group as PermissionGroup
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 
 
 class PermissionGroupAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 9
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(PermissionGroup)
-
-    def has_permission(self):
-        return has_permission(self.user, "permission_group.object_selector")
+    model = PermissionGroup
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

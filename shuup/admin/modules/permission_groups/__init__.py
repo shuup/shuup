@@ -40,7 +40,7 @@ class PermissionGroupModule(AdminModule):
         return derive_model_url(PermissionGroup, "shuup_admin:permission_group", object, kind)
 
     def get_extra_permissions(self) -> Iterable[str]:
-        return ["permission_group.object_selector"]
+        return ["group.object_selector"]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
-        return {"permission_group.object_selector": _("Allow the user to select permission group in admin.")}
+        return {"group.object_selector": _("Allow the user to select permission group in admin.")}

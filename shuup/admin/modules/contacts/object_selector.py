@@ -8,20 +8,13 @@
 from django.db.models import Q
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 from shuup.core.models import CompanyContact, Contact, PersonContact
 
 
 class ContactAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 3
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(Contact)
-
-    def has_permission(self):
-        return has_permission(self.user, "contact.object_selector")
+    model = Contact
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -35,13 +28,7 @@ class ContactAdminObjectSelector(BaseAdminObjectSelector):
 
 class PersonContactAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 4
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(PersonContact)
-
-    def has_permission(self):
-        return has_permission(self.user, "personcontact.object_selector")
+    model = PersonContact
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -59,13 +46,7 @@ class PersonContactAdminObjectSelector(BaseAdminObjectSelector):
 
 class CompanyContactAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 5
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(CompanyContact)
-
-    def has_permission(self):
-        return has_permission(self.user, "companycontact.object_selector")
+    model = CompanyContact
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """

@@ -8,20 +8,13 @@
 from django.db.models import Q
 from typing import Iterable, Tuple
 
-from shuup.admin.utils.permissions import has_permission
 from shuup.admin.views.select import BaseAdminObjectSelector
 from shuup.core.models import Product, ProductMode, ShopProduct, ShopProductVisibility
 
 
 class ProductAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 11
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(Product)
-
-    def has_permission(self):
-        return has_permission(self.user, "product.object_selector")
+    model = Product
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
@@ -59,13 +52,7 @@ class ProductAdminObjectSelector(BaseAdminObjectSelector):
 
 class ShopProductAdminObjectSelector(BaseAdminObjectSelector):
     ordering = 12
-
-    @classmethod
-    def handles_selector(cls, selector):
-        return selector == cls.get_selector_for_model(ShopProduct)
-
-    def has_permission(self):
-        return has_permission(self.user, "shop_product.object_selector")
+    model = ShopProduct
 
     def get_objects(self, search_term, *args, **kwargs) -> Iterable[Tuple[int, str]]:
         """
