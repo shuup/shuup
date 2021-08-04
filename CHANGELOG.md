@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
+
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
 ### Added
@@ -56,7 +60,6 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
-- Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
 - Admin: Uploaded shop logo and favicon is updated in admin and auth views
 
 ### Changed

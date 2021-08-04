@@ -11,9 +11,10 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
+from typing import Optional
 
 from shuup.admin.forms.fields import DecimalPlaceField
-from shuup.core.models import Shop
+from shuup.core.models import SalesUnit, Shop
 from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.i18n import get_currency_name
 
@@ -26,25 +27,18 @@ class StockAdjustmentForm(forms.Form):
         )
     )
     delta = DecimalPlaceField(label=_("Quantity"))
-    decimal_places = forms.IntegerField(widget=forms.HiddenInput())
 
-    def __init__(self, *args, **kwargs):
-        self.decimals = 0
-        if len(args) > 0 and "decimal_places" in args[0]:
-            self.decimals = int(args[0]["decimal_places"])
+    def __init__(self, sales_unit: Optional[SalesUnit] = None, *args, **kwargs):
         super(StockAdjustmentForm, self).__init__(*args, **kwargs)
         if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             self.fields["purchase_price"].label = format_lazy(
                 _("Purchase price per unit ({currency_name})"),
                 currency_name=get_currency_name(Shop.objects.first().currency),
             )
-        if self.decimals == 0 and "decimal_places" in self.initial:
-            self.decimals = self.initial["decimal_places"]
-        else:
-            if self.decimals == 0 and "decimal_places" in self.data:
-                self.decimals = self.data["decimal_places"]
-        self.fields["delta"].decimal_places = self.decimals
-        self.fields["delta"].widget = DecimalPlaceField(label=_("Quantity"), decimal_places=self.decimals).widget
+        if sales_unit:
+            self.decimals = sales_unit.decimals
+            self.fields["delta"].decimal_places = self.decimals
+            self.fields["delta"].widget = DecimalPlaceField(label=_("Quantity"), decimal_places=self.decimals).widget
 
     def clean_delta(self):
         delta = self.cleaned_data.get("delta")

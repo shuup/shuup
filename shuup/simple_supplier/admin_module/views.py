@@ -145,7 +145,19 @@ def _process_stock_adjustment(form, request, supplier_id, product_id):
 
 
 def process_stock_adjustment(request, supplier_id, product_id):
-    return _process_and_catch_errors(_process_stock_adjustment, StockAdjustmentForm, request, supplier_id, product_id)
+    try:
+        if request.method != "POST":
+            raise Exception(_("Non-POST request methods are forbidden."))
+        product = Product.objects.select_related("sales_unit").filter(pk=product_id).first()
+        form = StockAdjustmentForm(data=request.POST, sales_unit=product.sales_unit)
+        if form.is_valid():
+            return _process_stock_adjustment(form, request, supplier_id, product_id)
+
+        error_message = ugettext("Please check submitted values and try again.")
+        return JsonResponse({"message": error_message}, status=400)
+    except Exception as exc:
+        error_message = ugettext("Please check submitted values and try again (%(error)s).") % {"error": exc}
+        return JsonResponse({"message": error_message}, status=400)
 
 
 def _process_alert_limit(form, request, supplier_id, product_id):

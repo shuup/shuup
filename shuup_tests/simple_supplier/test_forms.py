@@ -28,8 +28,8 @@ def test_form(rf, admin_user):
         data={
             "purchase_price": 10,
             "delta": 1.2,
-            "decimal_places": partial_sales_unit.decimals,
         },
+        sales_unit=partial_sales_unit,
     )
     assert form.errors == {}
     form.full_clean()
@@ -44,8 +44,8 @@ def test_form(rf, admin_user):
         data={
             "purchase_price": 10,
             "delta": 1.2,
-            "decimal_places": integer_sales_unit.decimals,
         },
+        sales_unit=integer_sales_unit,
     )
     assert form.errors == {}
     form.full_clean()

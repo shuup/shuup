@@ -45,7 +45,8 @@ class DecimalPlaceField(DecimalField):
         if self.max_value is not None:
             attrs["max"] = self.max_value
         if self.decimal_places == 0:
-            attrs["onkeydown"] = "if(event.key==='.'){event.preventDefault();}"
+            attrs["onkeydown"] = "comma=0.1.toLocaleString().replace(/"
+            "d/g, '');if(event.key===comma){event.preventDefault();}"
             attrs["oninput"] = "event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
         return attrs
 
