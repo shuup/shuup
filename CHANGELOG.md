@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Admin: add `model` attribute to `BaseAdminObjectSelector`
+- Admin: Title to use the shop's `requst.shop.public_name` value or `Shuup` as default
 
 ## [2.14.0] - 2021-08-03
 

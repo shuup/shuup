@@ -2,7 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Shuup &dash; {% block title -%}
+        {% set shop_name = request.shop.public_name if request.shop.public_name else "Shuup" %}
+        <title>{{ shop_name }} &dash; {% block title -%}
             {% if title %}{{ title }}
             {% elif view and view.title %}{{ view.title }}{% endif %}
         {%- endblock %}
