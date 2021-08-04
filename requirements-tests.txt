@@ -1,82 +1,82 @@
 -e .
-apipkg==1.5               # via execnet
-attrs==20.3.0             # via pytest
-babel==2.5.3              # via shuup
+apipkg==1.5                     # via execnet
+attrs==20.3.0                   # via pytest
+babel==2.5.3                    # via shuup
 beautifulsoup4==4.5.3
-bleach==3.1.5             # via shuup
-cairocffi==1.2.0          # via cairosvg, weasyprint
-cairosvg==2.5.2           # via weasyprint
-certifi==2020.12.5        # via requests
-cffi==1.14.5              # via cairocffi, cryptography, weasyprint
-chardet==4.0.0            # via requests
+bleach==3.1.5                   # via shuup
+cairocffi==1.2.0                 # via cairosvg, weasyprint
+cairosvg==2.5.2                 # via weasyprint
+certifi==2020.12.5               # via requests
+cffi==1.14.5                     # via cairocffi, cryptography, weasyprint
+chardet==4.0.0                  # via requests
 codecov==2.1.11
-coverage==5.5             # via codecov, pytest-cov
-cryptography==3.3.1
-cssselect2==0.4.1         # via cairosvg, weasyprint
-defusedxml==0.7.1         # via cairosvg
-django==2.2.24            # via django-filer, django-filter, django-jinja, django-mptt, django-reversion, django-timezone-field, django-polymorphic, djangorestframework, easy-thumbnails, jsonfield, shuup
-django-bootstrap3==11.0.0  # via shuup
-django-countries==6.1.3   # via shuup
-django-enumfields==2.0.0  # via shuup
-django-filer==1.7.1       # via shuup
-django-filter==2.2.0      # via shuup
-django-jinja==2.5.0       # via shuup
-django-js-asset==1.2.2    # via django-mptt
-django-mptt==0.9.1        # via django-filer, shuup
-django-parler==2.0.1      # via shuup
-django_polymorphic==2.1.2  # via django-filer, shuup
+coverage==5.5                   # via codecov, pytest-cov
+cryptography==3.4.7
+cssselect2==0.4.1               # via cairosvg, weasyprint
+defusedxml==0.7.1               # via cairosvg
+django==2.2.24                  # via django-filer, django-filter, django-jinja, django-mptt, django-reversion, django-timezone-field, django-polymorphic, djangorestframework, easy-thumbnails, jsonfield, shuup
+django-bootstrap3==11.0.0       # via shuup
+django-countries==6.1.3         # via shuup
+django-enumfields==2.0.0         # via shuup
+django-filer==1.7.1              # via shuup
+django-filter==2.2.0             # via shuup
+django-jinja==2.5.0             # via shuup
+django-js-asset==1.2.2          # via django-mptt
+django-mptt==0.9.1              # via django-filer, shuup
+django-parler==2.0.1            # via shuup
+django_polymorphic==2.1.2       # via django-filer, shuup
 django-registration-redux==2.7  # via shuup
-django-reversion==3.0.5   # via shuup
-django-timezone-field==3.1  # via shuup
-djangorestframework==3.11  # via shuup
-easy-thumbnails==2.7.1    # via django-filer
-et-xmlfile==1.0.1         # via openpyxl
-execnet==1.8.0            # via pytest-cache
-factory-boy==2.7.0        # via shuup
-fake-factory==0.5.3       # via factory-boy, shuup
+django-reversion==3.0.5         # via shuup
+django-timezone-field==3.1       # via shuup
+djangorestframework==3.11       # via shuup
+easy-thumbnails==2.7.1          # via django-filer
+et-xmlfile==1.0.1                # via openpyxl
+execnet==1.8.0                  # via pytest-cache
+factory-boy==2.7.0              # via shuup
+fake-factory==0.5.3             # via factory-boy, shuup
 html5lib==0.999999999
-idna==2.10                # via requests
-importlib-metadata==3.10.0  # via keyring, markdown, pluggy, pytest
-jinja2==2.8.1             # via django-jinja, shuup
-jsonfield==2.1.1          # via shuup
-keyring==23.0.1           # via shuup
-keyrings.alt==4.0.2       # via shuup
-lxml==4.6.3               # via shuup
-markdown==3.3.4           # via shuup
-markupsafe==1.1.1         # via jinja2
+idna==2.10                      # via requests
+importlib-metadata==3.10.0      # via keyring, markdown, pluggy, pytest
+jeepney==0.6
+jinja2==2.8.1                   # via django-jinja, shuup
+jsonfield==2.1.1                 # via shuup
+keyring==23.0.1                 # via shuup
+keyrings.alt==4.0.2             # via shuup
+lxml==4.6.3                     # via shuup
+markdown==3.3.4                 # via shuup
+markupsafe==1.1.1               # via jinja2
 mock==3.0.5
-more-itertools==8.7.0     # via pytest
-openpyxl==3.0.7           # via shuup
-packaging==20.9           # via bleach, pytest
-pillow==8.2.0             # via cairosvg, easy-thumbnails, weasyprint
-pluggy==0.13.1            # via pytest
-py==1.10.0                # via pytest
-pycparser==2.20           # via cffi
-pyparsing==2.4.7          # via packaging
-pyphen==0.10.0            # via weasyprint
+more-itertools==8.7.0           # via pytest
+openpyxl==3.0.7                 # via shuup
+packaging==20.9                 # via bleach, pytest
+pillow==8.2.0                   # via cairosvg, easy-thumbnails, weasyprint
+pluggy==0.13.1                  # via pytest
+py==1.10.0                      # via pytest
+pycparser==2.20                 # via cffi
+pyparsing==2.4.7                # via packaging
+pyphen==0.10.0                  # via weasyprint
 pytest==5.4.1
 pytest-cache==1.0
 pytest-cov==2.4.0
 pytest-django==3.9.0
 pytest-splinter==3.3.0
-python-dateutil==2.8.1    # via shuup
-pytz==2021.1              # via babel, django, django-timezone-field
-requests==2.25.1          # via codecov, shuup
+python-dateutil==2.8.1          # via shuup
+pytz==2021.1                    # via babel, django, django-timezone-field
+requests==2.25.1                # via codecov, shuup
 selenium==3.141.0
-six==1.15.0               # via bleach, cryptography, django-filer, django-parler, html5lib, jsonfield, mock, python-dateutil, shuup, splinter
+six==1.15.0                     # via bleach, cryptography, django-filer, django-parler, html5lib, jsonfield, mock, python-dateutil, shuup, splinter
 splinter==0.14.0
-sqlparse==0.4.1           # via django
-tinycss2==1.1.0           # via cairosvg, cssselect2, weasyprint
-toml==0.10.2              # via shuup
-typing-extensions==3.10.0.0  # via importlib-metadata
-unicodecsv==0.14.1        # via shuup
-unidecode==1.1.2          # via django-filer
-urllib3==1.26.4           # via pytest-splinter, requests, selenium
-wcwidth==0.2.5            # via pytest
+sqlparse==0.4.1                 # via django
+tinycss2==1.1.0                 # via cairosvg, cssselect2, weasyprint
+toml==0.10.2                    # via shuup
+unicodecsv==0.14.1              # via shuup
+unidecode==1.1.2                # via django-filer
+urllib3==1.26.4                 # via pytest-splinter, requests, selenium
+wcwidth==0.2.5                  # via pytest
 weasyprint==52.2
-webencodings==0.5.1       # via bleach, cssselect2, html5lib, tinycss2
-xlrd==2.0.1               # via shuup
-zipp==3.4.1               # via importlib-metadata
+webencodings==0.5.1             # via bleach, cssselect2, html5lib, tinycss2
+xlrd==2.0.1                     # via shuup
+zipp==3.4.1                     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools                # via html5lib, pytest-splinter, weasyprint
+# setuptools                    # via html5lib, pytest-splinter, weasyprint
