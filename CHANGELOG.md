@@ -15,9 +15,11 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Admin: Fix primary buttons, list buttons, and filter dropdowns to use css variables
+- Discounts: show the `exclude_selected_category` field in admin
 
 ### Changed
 
+- Core: Block an attempt to delete a service provider that still has associated shipping or payment methods.
 - Front: improve SEO by tuning description meta tag to product, category and CMS pages
 - Importer: index product after importing it
 - BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.
@@ -29,10 +31,6 @@ List all changes after the last release here (newer on top). Each change on a se
   and `ProductListFormModifier.get_queryset`.
 - Front: user the new Catalog API on every place that retrieve products from the database
 - Xtheme: user the new Catalog API on plugins that retrieve products
-
-### Fixed
-
-- Discounts: show the `exclude_selected_category` field in admin
 
 ## [2.14.2] - 2021-08-10
 
