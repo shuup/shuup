@@ -49,22 +49,20 @@ class DiscountQueryset(models.QuerySet):
         return self.exclude(_get_basic_available_query(timezone.now(), shop)).filter(shop_query)
 
     def available(self, shop=None):
-        current_local_dt = timezone.localtime(timezone.now())
-        current_local_weekday = current_local_dt.date().weekday()
-        current_local_time = current_local_dt.time()
+        user_current_datetime = timezone.localtime(timezone.now())
+        user_current_weekday = user_current_datetime.weekday()
+        user_current_time = user_current_datetime.time()
 
         query = Q(
             Q(active=True)
-            & (Q(start_datetime__isnull=True) | Q(start_datetime__lte=current_local_dt))
-            & (Q(end_datetime__isnull=True) | Q(end_datetime__gte=current_local_dt))
+            & (Q(start_datetime__isnull=True) | Q(start_datetime__lte=user_current_datetime))
+            & (Q(end_datetime__isnull=True) | Q(end_datetime__gte=user_current_datetime))
             & (
                 Q(happy_hours__time_ranges__isnull=True)
                 | Q(
-                    # TODO: check whether there is a bug here when a time
-                    # advances a day in a UTC day, e.g: 11pm - 01am
-                    happy_hours__time_ranges__weekday=current_local_weekday,
-                    happy_hours__time_ranges__from_hour__lte=current_local_time,
-                    happy_hours__time_ranges__to_hour__gt=current_local_time,
+                    happy_hours__time_ranges__weekday=user_current_weekday,
+                    happy_hours__time_ranges__from_hour__lte=user_current_time,
+                    happy_hours__time_ranges__to_hour__gt=user_current_time,
                 )
             )
         )

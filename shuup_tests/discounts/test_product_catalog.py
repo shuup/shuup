@@ -168,6 +168,51 @@ def test_product_catalog_happy_hour_discount():
         _assert_price(product2, shop, Decimal("16"), Decimal("20"))
 
 
+@pytest.mark.django_db
+def test_product_catalog_happy_hour_timezone_discount():
+    """
+    Make sure a discount is valid for different timezones
+    """
+    shop = factories.get_default_shop()
+    supplier = factories.get_default_supplier()
+    product1 = factories.create_product("p1", shop=shop, supplier=supplier, default_price=Decimal("10"))
+
+    discount = Discount.objects.create(
+        shop=shop,
+        discount_percentage=Decimal(0.1),
+        start_datetime=datetime(2021, 1, 1, tzinfo=pytz.utc),
+        end_datetime=datetime(2021, 1, 30, tzinfo=pytz.utc),
+    )
+    happy_hour = HappyHour.objects.create(name="Super Happy", shop=shop)
+    # the happy hour is available on Mondays, from 2am-4am (UTC)
+    TimeRange.objects.create(from_hour=time(2, 0), to_hour=time(4, 0), weekday=0, happy_hour=happy_hour)
+    discount.happy_hours.add(happy_hour)
+
+    catalog = ProductCatalog(context=ProductCatalogContext(purchasable_only=False))
+    ProductCatalog.index_product(product1)
+
+    # Monday, 2am UTC - valid discounts
+    with patch.object(timezone, "now", return_value=datetime(2021, 1, 4, 2, 0, tzinfo=pytz.utc)):
+        _assert_price(product1, shop, Decimal("9"), Decimal("10"))
+        _assert_products_queryset(catalog, [(product1.pk, Decimal("10"), Decimal("9"))])
+
+    # it's Monday, 11:58pm in Brazil, the discount shouldn't be valid
+    sao_paulo_tz = pytz.timezone("America/Sao_Paulo")
+    with patch.object(timezone, "now", return_value=sao_paulo_tz.localize(datetime(2021, 1, 4, 23, 58))):
+        _assert_price(product1, shop, Decimal("10"), Decimal("10"))
+        _assert_products_queryset(catalog, [(product1.pk, Decimal("10"), None)])
+
+    # it's Monday, 2:58am in Brazil on Monday, the discount shouldn't be valid
+    with patch.object(timezone, "now", return_value=sao_paulo_tz.localize(datetime(2021, 1, 4, 2, 58))):
+        _assert_price(product1, shop, Decimal("10"), Decimal("10"))
+        _assert_products_queryset(catalog, [(product1.pk, Decimal("10"), None)])
+
+    # it's Sunday, 11:58pm in Brazil, the discount should be available as it is Monday 2:58am in UTC
+    with patch.object(timezone, "now", return_value=sao_paulo_tz.localize(datetime(2021, 1, 3, 23, 58))):
+        _assert_price(product1, shop, Decimal("9"), Decimal("10"))
+        _assert_products_queryset(catalog, [(product1.pk, Decimal("10"), Decimal("9"))])
+
+
 def _assert_price(product, shop, expected_price, expected_base_price):
     context = PricingContext(shop=shop, customer=AnonymousContact())
     price = product.get_price_info(context)

@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytz
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import OuterRef, Q, Subquery
 from django.db.models.query import QuerySet
@@ -125,7 +124,7 @@ class ProductCatalog:
         return filters
 
     def _get_discounted_prices_filters(self):
-        now_dt = timezone.now().astimezone(pytz.utc)
+        now_dt = timezone.localtime(timezone.now())
         now_time = now_dt.time()
 
         filters = Q()
