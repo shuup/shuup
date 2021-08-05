@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -16,8 +15,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import InternalIdentifierField, MoneyValueField
 from shuup.utils.properties import MoneyPropped
-
-from . import AvailabilityException
 
 
 def _get_basic_available_query(for_datetime, shop=None):
@@ -35,7 +32,7 @@ def _get_basic_available_query(for_datetime, shop=None):
     query = Q(Q(active=True) & (Q(end_datetime__isnull=True) | Q(end_datetime__gte=for_datetime)))
 
     if shop:
-        query &= Q(shops=shop)
+        query &= Q(shop=shop)
 
     return query
 
@@ -45,41 +42,35 @@ class DiscountQueryset(models.QuerySet):
         return self.filter(_get_basic_available_query(timezone.now(), shop))
 
     def archived(self, shop=None):
-        shop_query = Q()  # Since the exclude returns active discounts for other shops too
+        shop_query = Q()  # Since the exclude returns active discounts for other shop too
         if shop:
-            shop_query &= Q(shops=shop)
+            shop_query &= Q(shop=shop)
 
         return self.exclude(_get_basic_available_query(timezone.now(), shop)).filter(shop_query)
 
     def available(self, shop=None):
-        current_local_dt = timezone.localtime(timezone.now())
-        current_local_weekday = current_local_dt.date().weekday()
-        current_local_time = current_local_dt.time()
+        user_current_datetime = timezone.localtime(timezone.now())
+        user_current_weekday = user_current_datetime.weekday()
+        user_current_time = user_current_datetime.time()
 
         query = Q(
             Q(active=True)
-            & (Q(start_datetime__isnull=True) | Q(start_datetime__lte=current_local_dt))
-            & (Q(end_datetime__isnull=True) | Q(end_datetime__gte=current_local_dt))
+            & (Q(start_datetime__isnull=True) | Q(start_datetime__lte=user_current_datetime))
+            & (Q(end_datetime__isnull=True) | Q(end_datetime__gte=user_current_datetime))
             & (
                 Q(happy_hours__time_ranges__isnull=True)
                 | Q(
-                    happy_hours__time_ranges__weekday=current_local_weekday,
-                    happy_hours__time_ranges__from_hour__lte=current_local_time,
-                    happy_hours__time_ranges__to_hour__gt=current_local_time,
+                    happy_hours__time_ranges__weekday=user_current_weekday,
+                    happy_hours__time_ranges__from_hour__lte=user_current_time,
+                    happy_hours__time_ranges__to_hour__gt=user_current_time,
                 )
             )
         )
 
-        availability_query = Q(
-            availability_exceptions__in=AvailabilityException.objects.filter(
-                start_datetime__lte=current_local_dt, end_datetime__gte=current_local_dt
-            )
-        )
-
         if shop:
-            query &= Q(shops=shop)
+            query &= Q(shop=shop)
 
-        return self.filter(query).exclude(availability_query)
+        return self.filter(query)
 
 
 @python_2_unicode_compatible
@@ -91,12 +82,15 @@ class Discount(models.Model, MoneyPropped):
         verbose_name=_("name"),
         help_text=_("The name for this discount. Used internally with discount lists for filtering."),
     )
+    shop = models.ForeignKey(
+        "shuup.Shop", verbose_name=_("shop"), related_name="shop_discounts", on_delete=models.CASCADE
+    )
     identifier = InternalIdentifierField(unique=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name="+",
+        related_name="discounts_created_by",
         on_delete=models.SET_NULL,
         verbose_name=_("created by"),
     )
@@ -104,14 +98,13 @@ class Discount(models.Model, MoneyPropped):
         settings.AUTH_USER_MODEL,
         blank=True,
         null=True,
-        related_name="+",
+        related_name="discounts_modified_by",
         on_delete=models.SET_NULL,
         verbose_name=_("modified by"),
     )
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
 
-    shops = models.ManyToManyField("shuup.Shop", blank=True, verbose_name=_("shops"))
     supplier = models.ForeignKey(
         on_delete=models.CASCADE,
         to="shuup.Supplier",
@@ -149,14 +142,6 @@ class Discount(models.Model, MoneyPropped):
         verbose_name=_("happy hours"),
         help_text=_("Select happy hours for this discount."),
     )
-    availability_exceptions = models.ManyToManyField(
-        "discounts.AvailabilityException",
-        related_name="discounts",
-        blank=True,
-        verbose_name=_("availability exceptions"),
-        help_text=_("Select availability for this discount."),
-    )
-
     product = models.ForeignKey(
         "shuup.Product",
         related_name="product_discounts",
@@ -189,11 +174,6 @@ class Discount(models.Model, MoneyPropped):
         verbose_name=_("contact"),
         help_text=_("Select contact for this discount."),
     )
-    exclude_selected_contact_group = models.BooleanField(
-        default=False,
-        verbose_name=_("exclude selected contact group"),
-        help_text=_("Exclude contacts in selected contact group from this discount."),
-    )
     contact_group = models.ForeignKey(
         "shuup.ContactGroup",
         related_name="contact_group_discounts",
@@ -203,16 +183,6 @@ class Discount(models.Model, MoneyPropped):
         verbose_name=_("contact group"),
         help_text=_("Select contact group for this discount."),
     )
-    coupon_code = models.ForeignKey(
-        "discounts.CouponCode",
-        related_name="coupon_code_discounts",
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        verbose_name=_("coupon code"),
-        help_text=_("Select coupon code for this discount."),
-    )
-
     discounted_price_value = MoneyValueField(
         null=True,
         blank=True,
@@ -245,3 +215,14 @@ class Discount(models.Model, MoneyPropped):
 
     def save(self, *args, **kwargs):
         super(Discount, self).save(*args, **kwargs)
+
+    def clean(self):
+        if self.active and (not self.start_datetime or not self.end_datetime):
+            raise ValidationError(_("Start date and end date are required when the discount is active."))
+
+        values = (self.discount_percentage, self.discount_amount_value, self.discounted_price_value)
+        valid_values_count = len([v for v in values if v])
+        if valid_values_count == 0 or valid_values_count > 1:
+            raise ValidationError(
+                _("Either discounted price or discount percentage or discount amount should be configured.")
+            )

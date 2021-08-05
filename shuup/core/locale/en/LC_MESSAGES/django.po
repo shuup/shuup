@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-26 12:05+0000\n"
+"POT-Creation-Date: 2021-08-03 19:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1161,6 +1161,77 @@ msgid "cache entry"
 msgstr ""
 
 msgid "cache entries"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Pricing module identifier"
+msgstr ""
+
+msgid "price"
+msgstr ""
+
+msgid "The indexed product price"
+msgstr ""
+
+msgid "is available"
+msgstr ""
+
+msgid ""
+"Whether the product is available for purchasing. This status is managed by "
+"the supplier module."
+msgstr ""
+
+msgid "Catalog rule"
+msgstr ""
+
+msgid "The rule in which this price is available."
+msgstr ""
+
+msgid "Discount module identifier"
+msgstr ""
+
+msgid "Valid start date and time"
+msgstr ""
+
+msgid "Valid end date and time"
+msgstr ""
+
+msgid "Valid start hour"
+msgstr ""
+
+msgid "Valid end hour"
+msgstr ""
+
+msgid "Valid weekday"
+msgstr ""
+
+msgid "discounted price"
+msgstr ""
+
+msgid "The indexed discounted product price."
+msgstr ""
+
+msgid "The rule in which this discounted price is available."
 msgstr ""
 
 msgid "documentation"

@@ -15,7 +15,7 @@ from shuup.xtheme.models import AdminThemeSettings
 
 LOGGER = logging.getLogger(__name__)
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from django.contrib.auth import get_user_model
 
     User = get_user_model()

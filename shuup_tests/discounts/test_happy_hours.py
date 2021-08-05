@@ -25,10 +25,8 @@ from shuup.utils.i18n import format_money
 def init_test():
     shop = factories.get_default_shop()
     product = factories.create_product("test", shop=shop, default_price=10)
-    discount = Discount.objects.create(active=True, product=product, discounted_price_value=6)
-    discount.shops.add(shop)
-    happy_hour = HappyHour.objects.create(name="Happy")
-    happy_hour.shops.add(shop)
+    discount = Discount.objects.create(active=True, product=product, discounted_price_value=6, shop=shop)
+    happy_hour = HappyHour.objects.create(name="Happy", shop=shop)
     discount.happy_hours.add(happy_hour)
     return happy_hour
 
@@ -74,7 +72,7 @@ def test_happy_hour(rf):
     happy_hour = init_test()
 
     discount = happy_hour.discounts.first()
-    shop = discount.shops.first()
+    shop = discount.shop
     assert Discount.objects.available().count() == 1
     assert Discount.objects.available(shop).count() == 1
 
@@ -169,7 +167,7 @@ def test_time_ranges_are_still_honored(rf):
     timezone.activate(pytz.UTC)
     happy_hour = init_test()
 
-    shop = happy_hour.shops.first()
+    shop = happy_hour.shop
     assert Discount.objects.available().count() == 1
     assert Discount.objects.available(shop).count() == 1
 
@@ -201,7 +199,7 @@ def mocked_now_weekday_change():
 def test_happy_hour_localized_weekday(rf):
     timezone.activate(pytz.UTC)
     happy_hour = init_test()
-    shop = happy_hour.shops.first()
+    shop = happy_hour.shop
 
     w_today = timezone.now().date().weekday()
     w_yesterday = (timezone.now() - datetime.timedelta(days=1)).date().weekday()
@@ -237,7 +235,7 @@ def test_happy_hour_localized_weekday(rf):
 def test_hour_conditions_end_before_start():
     timezone.activate(pytz.UTC)
     happy_hour = init_test()
-    shop = happy_hour.shops.first()
+    shop = happy_hour.shop
 
     # Create condition from 5pm to 1am for monday
     hour_start = (timezone.now().replace(hour=17, minute=0)).time()  # 5:00 PM
@@ -316,7 +314,7 @@ def test_happy_hour_prices_expiration(rf):
         hour_end = datetime.datetime(2018, 1, 1, 11, 0, tzinfo=pytz.UTC).time()  # 11:00 AM
         set_valid_times_condition(happy_hour, hour_start, hour_end, str(before_happy_hour.weekday()))
 
-        shop = happy_hour.shops.first()
+        shop = happy_hour.shop
         discount = happy_hour.discounts.first()
         product = discount.product
         shop_product = product.get_shop_instance(shop)

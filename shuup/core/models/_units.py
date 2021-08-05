@@ -16,6 +16,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import pgettext, ugettext_lazy as _
 from functools import lru_cache
+from parler.fields import TranslationsForeignKey
 from parler.models import TranslatedField, TranslatedFields, TranslatedFieldsModel
 
 from shuup.core import cache
@@ -39,7 +40,7 @@ def get_display_unit(sales_unit):
     return default_display_unit
 
 
-# TODO: (2.0) Remove deprecated SalesUnit.short_name
+# TODO: (3.0) Remove deprecated SalesUnit.short_name
 class _ShortNameToSymbol(object):
     def __init__(self, *args, **kwargs):
         if "short_name" in kwargs:
@@ -124,7 +125,7 @@ class SalesUnit(_ShortNameToSymbol, TranslatableShuupModel):
 
 
 class SalesUnitTranslation(_ShortNameToSymbol, TranslatedFieldsModel):
-    master = models.ForeignKey(
+    master = TranslationsForeignKey(
         on_delete=models.CASCADE, to=SalesUnit, related_name="translations", null=True, editable=False
     )
     name = models.CharField(

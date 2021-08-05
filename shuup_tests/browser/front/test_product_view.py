@@ -19,7 +19,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 
 @pytest.mark.django_db
-def test_product_descriptions(browser, live_server, settings):
+def test_product_descriptions(browser, live_server, reindex_catalog):
     activate("en")
     cache.clear()
     shop = get_default_shop()
@@ -34,6 +34,7 @@ def test_product_descriptions(browser, live_server, settings):
     sp.primary_category = get_default_category()
     sp.categories.add(get_default_category())
     sp.save()
+    reindex_catalog()
 
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)

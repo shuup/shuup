@@ -23,7 +23,7 @@ from shuup.utils.analog import define_log_model
 
 from ._base import TranslatableShuupModel
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Shop
 
 

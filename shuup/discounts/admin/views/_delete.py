@@ -21,7 +21,7 @@ class DiscountDeleteView(DetailView):
     model = Discount
 
     def get_queryset(self):
-        return Discount.objects.filter(shops=get_shop(self.request))
+        return Discount.objects.filter(shop=get_shop(self.request))
 
     def post(self, request, *args, **kwargs):
         discount = self.get_object()

@@ -11,6 +11,7 @@ from django.conf import settings
 from shuup.apps.provides import override_provides
 from shuup.core.pricing import (
     DiscountModule,
+    PriceInfo,
     get_price_info,
     get_price_infos,
     get_pricing_steps,
@@ -47,8 +48,12 @@ class Minus25DiscountModule(DiscountModule):
     identifier = "minus25"
 
     def discount_price(self, context, product, price_info):
-        price_info.price *= 1 - decimal.Decimal("0.25")
-        return price_info
+        return PriceInfo(
+            price=price_info.price * (1 - decimal.Decimal("0.25")),
+            base_price=price_info.base_price,
+            quantity=price_info.quantity,
+            expires_on=price_info.expires_on,
+        )
 
 
 def initialize_test(rf):

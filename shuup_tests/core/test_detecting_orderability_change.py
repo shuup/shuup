@@ -34,6 +34,7 @@ def test_product_visibility_change_basic(hide_unorderable_product):
 
     shop_product.purchasable = False
     shop_product.save()
+    supplier.update_stock(product.pk)
     shop_product.refresh_from_db()
 
     if hide_unorderable_product:

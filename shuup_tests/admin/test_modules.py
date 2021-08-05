@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import os
 import pytest
-from copy import deepcopy
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.test.utils import override_settings

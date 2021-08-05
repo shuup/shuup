@@ -20,8 +20,6 @@ from shuup.testing.factories import (
     get_default_shop_product,
     get_default_supplier,
 )
-from shuup_tests.core.utils import modify
-from shuup_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.parametrize(
@@ -36,10 +34,11 @@ from shuup_tests.utils.fixtures import regular_user
 @pytest.mark.django_db
 def test_product_query(visibility, show_in_list, show_in_search, admin_user, regular_user):
     shop = get_default_shop()
-    product = create_product("test-sku", shop=shop)
+    supplier = get_default_supplier(shop)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
     shop_product = product.get_shop_instance(shop)
     anon_contact = AnonymousContact()
-    regular_contact = get_person_contact(regular_user)
+    get_person_contact(regular_user)
     admin_contact = get_person_contact(admin_user)
 
     shop_product.visibility = visibility
@@ -130,7 +129,8 @@ def test_get_prices_children(rf, regular_user):
 @pytest.mark.django_db
 def test_product_available(admin_user, regular_user, available_until, visible):
     shop = get_default_shop()
-    product = create_product("test-sku", shop=shop)
+    supplier = get_default_supplier(shop)
+    product = create_product("test-sku", shop=shop, supplier=supplier)
     shop_product = product.get_shop_instance(shop)
     regular_contact = get_person_contact(regular_user)
     admin_contact = get_person_contact(admin_user)

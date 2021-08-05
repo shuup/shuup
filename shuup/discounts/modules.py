@@ -7,16 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.utils.translation import ugettext_lazy as _
+from typing import Union
 
-from shuup.core.models import ShopProduct
-from shuup.core.order_creator import OrderSourceModifierModule
-from shuup.core.pricing import DiscountModule
-from shuup.discounts.models import CouponCode, CouponUsage
-from shuup.discounts.utils import (
-    get_active_discount_for_code,
-    get_potential_discounts_for_product,
-    get_price_expiration,
-)
+from shuup.core.models import AnonymousContact, ProductCatalogDiscountedPrice, ShopProduct
+from shuup.core.pricing import DiscountModule, PriceInfo
+from shuup.discounts.utils import get_potential_discounts_for_product, get_price_expiration, index_shop_product_price
 
 
 class ProductDiscountModule(DiscountModule):
@@ -25,18 +20,14 @@ class ProductDiscountModule(DiscountModule):
 
     def discount_price(self, context, product, price_info):
         shop = context.shop
-        basket = getattr(context, "basket", None)
         potential_discounts = get_potential_discounts_for_product(context, product).values_list(
-            "discounted_price_value", "discount_amount_value", "discount_percentage", "coupon_code__code"
+            "discounted_price_value",
+            "discount_amount_value",
+            "discount_percentage",
         )
 
         discounted_prices = []
-        for discounted_price_value, discount_amount_value, discount_percentage, coupon_code in potential_discounts:
-            if basket and coupon_code and not CouponCode.is_usable(shop, coupon_code, customer=basket.customer):
-                # TODO: Revise! This will cause some queries. Are do we want those? Maybe some cache for this check?
-                # Maybe somewhere we should just remove coupon codes that is not usable from basket all together?
-                continue
-
+        for discounted_price_value, discount_amount_value, discount_percentage in potential_discounts:
             if discounted_price_value:  # Applies the new product price per item
                 discounted_prices.append(
                     min(
@@ -58,6 +49,13 @@ class ProductDiscountModule(DiscountModule):
                     max(price_info.price - price_info.price * discount_percentage, shop.create_price(0))
                 )
 
+        new_price_info = PriceInfo(
+            price=price_info.price,
+            base_price=price_info.base_price,
+            quantity=price_info.quantity,
+            expires_on=price_info.expires_on,
+        )
+
         if discounted_prices:
             product_id = product if isinstance(product, six.integer_types) else product.pk
             minimum_price_values = list(
@@ -67,35 +65,51 @@ class ProductDiscountModule(DiscountModule):
             )
 
             minimum_price_value = minimum_price_values[0] if minimum_price_values else 0
-
-            price_info.price = max(
+            new_price_info.price = max(
                 min(discounted_prices), shop.create_price(minimum_price_value or 0) or shop.create_price(0)
             )
 
         price_expiration = get_price_expiration(context, product)
         if price_expiration and (not price_info.expires_on or price_expiration < price_info.expires_on):
-            price_info.expires_on = price_expiration
+            new_price_info.expires_on = price_expiration
 
-        return price_info
+        return new_price_info
 
+    def index_shop_product(self, shop_product: Union["ShopProduct", int], **kwargs):
+        """
+        Index the shop product discounts. This is a heavy procedure, use with precaution
+        and through some background task.
+        """
+        if isinstance(shop_product, int):
+            shop_product = ShopProduct.objects.select_related("product", "shop").get(pk=shop_product)
 
-class CouponCodeModule(OrderSourceModifierModule):
-    identifier = "discounts_coupon_codes"
-    name = _("Product Discounts Coupon Codes")
+        is_variation_parent = shop_product.product.is_variation_parent()
 
-    def can_use_code(self, order_source, code):
-        active_discount = get_active_discount_for_code(order_source, code)
-        if not active_discount:
-            return False
+        # index the discounted price of all children shop products
+        if is_variation_parent:
+            children_shop_product = ShopProduct.objects.select_related("product", "shop").filter(
+                shop=shop_product.shop, product__variation_parent=shop_product.product
+            )
+            for child_shop_product in children_shop_product:
+                self.index_shop_product(child_shop_product)
+        else:
+            ProductCatalogDiscountedPrice.objects.filter(
+                catalog_rule__module_identifier=self.identifier, shop=shop_product.shop, product=shop_product.product
+            ).delete()
 
-        return active_discount.coupon_code.can_use_code(order_source.shop, order_source.customer)
+            from shuup.discounts.models import Discount
 
-    def use_code(self, order, code):
-        active_discount = get_active_discount_for_code(order, code)
-        if not active_discount:  # TODO: Revise! Likely "shouldn't" happen too often
-            return
+            # get the different contact groups ids to index the prices
+            discounts_groups_ids = list(
+                Discount.objects.filter(
+                    shop=shop_product.shop,
+                    active=True,
+                    contact_group__isnull=False,
+                )
+                .values_list("contact_group__id", flat=True)
+                .distinct()
+            )
+            discounts_groups_ids.append(AnonymousContact.get_default_group().pk)
 
-        return active_discount.coupon_code.use(order)
-
-    def clear_codes(self, order):
-        CouponUsage.objects.filter(order=order).delete()
+            for supplier in shop_product.suppliers.all().only("pk"):
+                index_shop_product_price(shop_product, supplier, discounts_groups_ids)

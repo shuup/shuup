@@ -26,7 +26,7 @@ from ._base import PolymorphicShuupModel, PolymorphicTranslatableShuupModel, Pol
 from ._product_shops import ShopProduct
 from ._shops import Shop
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Order
     from shuup.core.order_creator import OrderSource
 

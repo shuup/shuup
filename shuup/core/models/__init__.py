@@ -51,6 +51,12 @@ from ._orders import (
 )
 from ._payments import AbstractPayment, Payment
 from ._persistent_cache import PersistentCacheEntry
+from ._product_catalog import (
+    ProductCatalogDiscountedPrice,
+    ProductCatalogDiscountedPriceRule,
+    ProductCatalogPrice,
+    ProductCatalogPriceRule,
+)
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
 from ._product_shops import ProductVisibility, ShopProduct, ShopProductVisibility
@@ -166,6 +172,10 @@ __all__ = [
     "PolymorphicTranslatableShuupModel",
     "Product",
     "ProductAttribute",
+    "ProductCatalogPrice",
+    "ProductCatalogPriceRule",
+    "ProductCatalogDiscountedPrice",
+    "ProductCatalogDiscountedPriceRule",
     "ProductCrossSell",
     "ProductCrossSellType",
     "ProductMedia",

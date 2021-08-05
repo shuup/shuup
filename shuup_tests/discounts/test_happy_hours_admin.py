@@ -56,7 +56,7 @@ def test_happy_hours_admin_edit_view(rf, staff_user, admin_user):
         assert response.status_code == 302
         happy_hour1 = HappyHour.objects.first()
         assert happy_hour1 is not None
-        assert happy_hour1.shops.first() == shop
+        assert happy_hour1.shop == shop
         assert happy_hour1.time_ranges.count() == 1  # Since happy hour starts and ends on same day
 
         # Test with superuser and with different shop
@@ -70,8 +70,7 @@ def test_happy_hours_admin_edit_view(rf, staff_user, admin_user):
 
         happy_hour2 = HappyHour.objects.exclude(id=happy_hour1.pk).first()
         assert happy_hour1 != happy_hour2
-        assert happy_hour2.shops.count() == 1
-        assert happy_hour2.shops.filter(id=shop2.pk).first()
+        assert happy_hour2.shop == shop2
 
         # Staff user can only view coupon codes since that has the right shop
         _assert_view_get(rf, happy_hour1, shop, staff_user)
@@ -106,7 +105,7 @@ def test_happy_hours_admin_edit_view_over_midnight(rf, staff_user, admin_user):
 
     happy_hour = HappyHour.objects.first()
     assert happy_hour is not None
-    assert happy_hour.shops.first() == shop
+    assert happy_hour.shop == shop
     assert happy_hour.time_ranges.count() == 2  # Since happy hour starts and ends on different day
     assert happy_hour.time_ranges.filter(weekday=1).exists()
     assert happy_hour.time_ranges.filter(weekday=1, from_hour=from_hour, to_hour=datetime.time(23, 59)).exists()
@@ -137,7 +136,7 @@ def test_happy_hours_admin_edit_view_just_before_midnight(rf, staff_user, admin_
 
     happy_hour = HappyHour.objects.first()
     assert happy_hour is not None
-    assert happy_hour.shops.first() == shop
+    assert happy_hour.shop == shop
     assert happy_hour.time_ranges.count() == 1
     assert happy_hour.time_ranges.filter(weekday=1).exists()
     assert happy_hour.time_ranges.filter(weekday=1, from_hour=from_hour, to_hour=datetime.time(23, 58)).exists()
@@ -149,7 +148,7 @@ def test_happy_hours_admin_edit_form_set_discount(rf, staff_user, admin_user):
     shop = factories.get_default_shop()
     shop.staff_members.add(staff_user)
 
-    discount = Discount.objects.create()
+    discount = Discount.objects.create(shop=shop)
     data = {
         "name": "Happiest Hour 2pm",
         "weekdays": [6],  # Sun
@@ -175,10 +174,7 @@ def test_happy_hours_admin_edit_form_set_discount(rf, staff_user, admin_user):
 
     assert response.status_code == 302
     discount = Discount.objects.first()
-    assert discount.coupon_code is None  # discount is missing shop so this shouldn't be set
-    assert discount.shops.count() == 0
 
-    discount.shops.set([shop])
     request = apply_request_middleware(rf.post("/", data=data), user=staff_user, shop=shop)
     view_func = HappyHourEditView.as_view()
     response = view_func(request, pk=happy_hour.pk)
@@ -196,8 +192,7 @@ def _test_happy_hours_list_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
 
-    happy_hour = HappyHour.objects.create(name="After Work %s" % index)
-    happy_hour.shops.add(shop)
+    HappyHour.objects.create(name="After Work %s" % index, shop=shop)
 
     view_func = HappyHourListView.as_view()
     request = apply_request_middleware(
@@ -241,10 +236,8 @@ def _test_happy_hours_delete_view(rf, index):
     staff_user = factories.create_random_user(is_staff=True)
     shop.staff_members.add(staff_user)
     happy_hour_name = "The Hour %s" % index
-    happy_hour = HappyHour.objects.create(name=happy_hour_name)
-    happy_hour.shops.add(shop)
-    extra_happy_hour = HappyHour.objects.create(name="Extra Hour %s" % index)
-    extra_happy_hour.shops.add(shop)
+    happy_hour = HappyHour.objects.create(name=happy_hour_name, shop=shop)
+    HappyHour.objects.create(name="Extra Hour %s" % index, shop=shop)
 
     assert HappyHour.objects.filter(name=happy_hour_name).exists()
     view_func = HappyHourDeleteView.as_view()
@@ -257,18 +250,18 @@ def _test_happy_hours_delete_view(rf, index):
     assert not HappyHour.objects.filter(name=happy_hour_name).exists()
 
     # Make sure that this staff can't remove other people discounts
-    other_exceptions = HappyHour.objects.exclude(shops=shop)
+    other_exceptions = HappyHour.objects.exclude(shop=shop)
     exception_count = other_exceptions.count()
-    for coupon in other_exceptions:
+    for happy_hour in other_exceptions:
         view_func = HappyHourDeleteView.as_view()
         request = apply_request_middleware(rf.post("/"), user=staff_user, shop=shop)
         set_shop(request, shop)
         with pytest.raises(Http404):
-            response = view_func(request, pk=coupon.pk)
+            response = view_func(request, pk=happy_hour.pk)
             if hasattr(response, "render"):
                 response.render()
 
-    assert exception_count == HappyHour.objects.exclude(shops=shop).count()
+    assert exception_count == HappyHour.objects.exclude(shop=shop).count()
 
 
 @pytest.mark.django_db

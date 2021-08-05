@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import re
-from difflib import SequenceMatcher
 from django import forms
 from django.conf import settings
 from django.db.models import Q
@@ -109,20 +108,3 @@ class FilterProductListByQuery(ProductListFormModifier):
     def clean_hook(self, form):
         if form.cleaned_data.get("q"):
             form.cleaned_data["q"] = form.cleaned_data["q"].strip()
-
-    def sort_products(self, request, products, data):
-        sort = data.get("sort")
-        if sort:  # Sort only if not sort available
-            return products
-
-        query_str = data.get("q")
-        if not query_str:  # Do not sort if no query string
-            return products
-
-        def _get_product_distance_to_query_str(product):
-            ratio = SequenceMatcher(None, product.name, query_str).quick_ratio()
-            return 1 / ratio if ratio else 0
-
-        sorter = _get_product_distance_to_query_str
-        products = sorted(products, key=sorter)
-        return products

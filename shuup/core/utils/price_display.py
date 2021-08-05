@@ -20,7 +20,8 @@ Contents:
 import django_jinja.library
 import jinja2
 
-from shuup.core.pricing import PriceDisplayOptions, Priceful
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.pricing import PriceDisplayOptions, Priceful, PriceInfo
 from shuup.core.templatetags.shuup_common import money, percent
 from shuup.core.utils.price_cache import (
     cache_many_price_info,
@@ -72,6 +73,21 @@ class _ContextFunction(_ContextObject):
         django_jinja.library.global_function(name=self.name, fn=jinja2.contextfunction(self))
 
 
+def _get_item_price_info(request, item, quantity, supplier=None):
+    # the item has a catalog price annotate, use it
+    # this speeds up when using querysets coming from ProductCatalog
+    if hasattr(item, "catalog_price") and hasattr(item, "catalog_discounted_price") and item.catalog_price is not None:
+        shop = request.shop
+        discounted_price = item.catalog_discounted_price if item.catalog_discounted_price is not None else None
+        return PriceInfo(
+            price=shop.create_price((discounted_price if discounted_price else item.catalog_price) * quantity),
+            base_price=shop.create_price(item.catalog_price * quantity),
+            quantity=quantity,
+        )
+
+    return _get_priceful(request, item, quantity, supplier)
+
+
 class PriceDisplayFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, include_taxes=None, allow_cache=True, supplier=None):
         options = PriceDisplayOptions.from_context(context)
@@ -82,6 +98,7 @@ class PriceDisplayFilter(_ContextFilter):
             include_taxes = options.include_taxes
 
         request = context.get("request")
+
         price_info = (
             get_cached_price_info(request, item, quantity, include_taxes=include_taxes, supplier=supplier)
             if allow_cache
@@ -89,7 +106,7 @@ class PriceDisplayFilter(_ContextFilter):
         )
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity, supplier)
+            price_info = _get_item_price_info(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
@@ -107,7 +124,7 @@ class PricePropertyFilter(_ContextFilter):
         price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity, supplier)
+            price_info = _get_item_price_info(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
@@ -123,7 +140,7 @@ class PricePercentPropertyFilter(_ContextFilter):
         price_info = get_cached_price_info(request, item, quantity, supplier=supplier) if allow_cache else None
 
         if not price_info:
-            price_info = _get_priceful(request, item, quantity, supplier)
+            price_info = _get_item_price_info(request, item, quantity, supplier)
 
             if not price_info:
                 return ""
@@ -157,21 +174,32 @@ class TotalPriceDisplayFilter(_ContextFilter):
 
 
 def get_priced_children_for_price_range(request, product, quantity, supplier):
-    product_queryset = product.variation_children.visible(shop=request.shop, customer=request.customer).order_by(
-        "shop_products__default_price_value", "pk"
+    catalog = ProductCatalog(
+        ProductCatalogContext(
+            shop=request.shop,
+            user=getattr(request, "user", None),
+            supplier=supplier,
+            contact=getattr(request, "customer", None),
+            purchasable_only=True,
+        )
     )
-    if supplier:
-        product_queryset = product_queryset.filter(shop_products__suppliers=supplier)
+
+    product_queryset = (
+        catalog.get_products_queryset()
+        .filter(pk__in=product.variation_children.values_list("pk", flat=True))
+        .order_by("catalog_price")
+    )
 
     low = product_queryset.first()
+
+    if low is None:
+        return []
+
     high = product_queryset.last()
 
-    if not (low or high):
-        return
-
     return [
-        (low, _get_priceful(request, low, quantity, supplier)),
-        (high, _get_priceful(request, high, quantity, supplier)),
+        (low, _get_item_price_info(request, low, quantity, supplier)),
+        (high, _get_item_price_info(request, high, quantity, supplier)),
     ]
 
 
@@ -201,7 +229,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
                 priced_children = getattr(request, priced_children_key)
             else:
                 priced_children = get_priced_children_for_price_range(request, product, quantity, supplier) or [
-                    (product, _get_priceful(request, product, quantity, supplier))
+                    (product, _get_item_price_info(request, product, quantity, supplier))
                 ]
                 setattr(request, priced_children_key, priced_children)
 

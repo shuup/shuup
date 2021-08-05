@@ -14,6 +14,7 @@ from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
+from shuup.core.tasks import run_task
 from shuup.core.utils import context_cache
 from shuup.simple_supplier.utils import get_current_stock_value
 from shuup.utils.django_compat import force_text
@@ -121,11 +122,17 @@ class SimpleSupplierModule(BaseSupplierModule):
         sv, _ = StockCount.objects.select_related("product").get_or_create(
             supplier_id=supplier_id, product_id=product_id
         )
-        if not sv.stock_managed or sv.product.kind not in self.get_supported_product_kinds_values():
-            # item doesn't manage stocks
+
+        # kind not supported
+        if sv.product.kind not in self.get_supported_product_kinds_values():
             return
 
-        # TODO: Consider whether this should be done without a cache table
+        # item doesn't manage stocks
+        if not sv.stock_managed:
+            # make sure to index products either way
+            run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier_id=self.supplier.pk)
+            return
+
         values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
         sv.logical_count = values["logical_count"]
         sv.physical_count = values["physical_count"]
@@ -135,6 +142,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         if latest_event:
             sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
 
+        # TODO: get rid of this and move to shuup.notify app instead, through signals
         if self.supplier.stock_managed and has_installed("shuup.notify"):
             if sv.alert_limit and sv.physical_count < sv.alert_limit:
                 product = Product.objects.filter(id=product_id).first()
@@ -156,6 +164,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
         )
+        run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier_id=self.supplier.pk)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         # stocks are managed, do stocks check

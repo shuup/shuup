@@ -13,7 +13,7 @@ from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
 from shuup.admin.urls import admin_url
 from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shuup.discounts.models import CouponCode, Discount
+from shuup.discounts.models import Discount
 
 
 class DiscountModule(AdminModule):
@@ -43,12 +43,10 @@ class DiscountModule(AdminModule):
     def get_extra_permissions(self) -> Iterable[str]:
         return [
             get_object_selector_permission_name(Discount),
-            get_object_selector_permission_name(CouponCode),
         ]
 
     def get_permissions_help_texts(self) -> Iterable[str]:
         return {
-            get_object_selector_permission_name(CouponCode): _("Allow the user to select coupons in admin."),
             get_object_selector_permission_name(Discount): _("Allow the user to select discounts in admin."),
         }
 

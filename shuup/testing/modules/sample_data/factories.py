@@ -80,8 +80,11 @@ def create_sample_product(name, description, business_segment, image_file, shop)
         shop=shop,
         shop_primary_image=media,
     )
+    supplier = get_default_supplier(shop)
+    supplier.stock_managed = False
+    supplier.save()
     sp.categories.set(shop.categories.all())
-    sp.suppliers.add(get_default_supplier())
+    sp.suppliers.add(supplier)
 
     # configure prices
     if "shuup.customer_group_pricing" in settings.INSTALLED_APPS:

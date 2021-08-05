@@ -5,9 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from ._availability_exceptions import AvailabilityException
-from ._coupon_codes import CouponCode, CouponUsage
+from ._catalog import ShopProductCatalogDiscountsLink
 from ._discounts import Discount
 from ._happy_hours import HappyHour, TimeRange
 
-__all__ = ["AvailabilityException", "CouponCode", "CouponUsage", "HappyHour", "Discount", "TimeRange"]
+__all__ = ["HappyHour", "Discount", "TimeRange", "ShopProductCatalogDiscountsLink"]

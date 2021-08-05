@@ -16,7 +16,7 @@ from shuup.core.tasks import TaskResult
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.utils.importer import FileImporter, ImportMode
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.importer.importing import DataImporter
 
 LOGGER = logging.getLogger(__name__)

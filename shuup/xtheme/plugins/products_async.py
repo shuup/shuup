@@ -10,7 +10,8 @@ from django.urls import reverse
 from django.utils.translation import get_language, ugettext_lazy as _
 from enumfields import Enum
 
-from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType, ProductMode, ShopProductVisibility
 from shuup.front.template_helpers.general import (
     get_best_selling_products,
     get_newest_products,
@@ -336,7 +337,18 @@ class ProductSelectionPlugin(TemplatedPlugin):
         products_qs = Product.objects.none()
 
         if request.is_ajax() and products:
-            products_qs = Product.objects.listed(shop=request.shop, customer=request.customer).filter(pk__in=products)
+            catalog = ProductCatalog(
+                ProductCatalogContext(
+                    shop=request.shop,
+                    user=getattr(request, "user", None),
+                    contact=getattr(request, "customer", None),
+                    purchasable_only=True,
+                    visibility=ShopProductVisibility.LISTED,
+                )
+            )
+            products_qs = catalog.get_products_queryset().filter(
+                pk__in=products, mode__in=ProductMode.get_parent_modes()
+            )
 
         return {
             "request": request,

@@ -14,11 +14,11 @@ from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.text import format_lazy
-from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+from typing import TYPE_CHECKING, Iterable
 
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
@@ -39,6 +39,9 @@ from ._product_variation import (
     get_combination_hash_from_variable_mapping,
 )
 
+if TYPE_CHECKING:  # pragma: no cover
+    from ._products import ShopProductVisibility
+
 
 # TODO (3.0): This should be extandable
 class ProductMode(Enum):
@@ -56,6 +59,19 @@ class ProductMode(Enum):
         VARIABLE_VARIATION_PARENT = _("variation parent (variable)")
         VARIATION_CHILD = _("variation child")
         SUBSCRIPTION = _("subscription")
+
+    @classmethod
+    def get_parent_modes(cls) -> Iterable["ProductMode"]:
+        """
+        Returns a list of modes that are parents, likely
+        the products that are listed in frontend
+        """
+        return [
+            cls.NORMAL,
+            cls.SIMPLE_VARIATION_PARENT,
+            cls.VARIABLE_VARIATION_PARENT,
+            cls.SUBSCRIPTION,
+        ]
 
 
 class ProductVisibility(Enum):
@@ -144,68 +160,48 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
-    def _visible(self, shop, customer, language=None, invisible_modes=[ProductMode.VARIATION_CHILD]):
+    def _visible(
+        self, shop, customer, language=None, purchasable_only=False, visibility: "ShopProductVisibility" = None
+    ):
         root = self.language(language) if language else self
-        qs = root.all().filter(shop_products__shop=shop)
 
-        if customer and customer.is_all_seeing:
-            if invisible_modes:
-                qs = qs.exclude(mode__in=invisible_modes)
-        else:
-            from ._product_shops import ShopProductVisibility
+        from shuup.core.catalog import ProductCatalog, ProductCatalogContext
 
-            qs = qs.exclude(
-                Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
-                | Q(shop_products__available_until__lte=now())
-            )
-            if invisible_modes:
-                qs = qs.exclude(mode__in=invisible_modes)
+        catalog = ProductCatalog(
+            ProductCatalogContext(shop=shop, contact=customer, purchasable_only=purchasable_only, visibility=visibility)
+        )
 
-            if customer and not customer.is_anonymous:
-                visible_to_logged_in_q = Q(
-                    shop_products__visibility_limit__in=(
-                        ProductVisibility.VISIBLE_TO_ALL,
-                        ProductVisibility.VISIBLE_TO_LOGGED_IN,
-                    )
-                )
-                visible_to_my_groups_q = Q(
-                    shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_GROUPS,
-                    shop_products__visibility_groups__in=customer.groups.all(),
-                )
-                qs = qs.filter(visible_to_logged_in_q | visible_to_my_groups_q)
-            else:
-                qs = qs.filter(shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_ALL)
-
+        qs = catalog.annotate_products_queryset(root.all())
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED).prefetch_related(*Product.COMMON_PREFETCH_RELATED)
-        return qs.exclude(deleted=True).exclude(type__isnull=True).distinct()
+        return qs.exclude(type__isnull=True)
 
-    def _get_qs(self, shop, customer, language, visibility_type):
-        qs = self._visible(shop=shop, customer=customer, language=language)
-        if customer and customer.is_all_seeing:
-            return qs
-        else:
-            from ._product_shops import ShopProductVisibility
-
-            return qs.filter(
-                shop_products__shop=shop,
-                shop_products__visibility__in=(visibility_type, ShopProductVisibility.ALWAYS_VISIBLE),
-            )
-
-    def listed(self, shop, customer=None, language=None):
+    def listed(self, shop, customer=None, language=None, purchasable_only=False):
+        """
+        Deprecated 4.0: Use ProductCatalog directly
+        """
         from ._product_shops import ShopProductVisibility
 
-        return self._get_qs(shop, customer, language, ShopProductVisibility.LISTED)
+        return self._visible(shop, customer, language, purchasable_only, ShopProductVisibility.LISTED)
 
-    def searchable(self, shop, customer=None, language=None):
+    def searchable(self, shop, customer=None, language=None, purchasable_only=False):
+        """
+        Deprecated 4.0: Use ProductCatalog directly
+        """
         from ._product_shops import ShopProductVisibility
 
-        return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
+        return self._visible(shop, customer, language, purchasable_only, ShopProductVisibility.SEARCHABLE)
 
-    def visible(self, shop, customer=None, language=None):
-        return self._visible(shop, customer=customer, language=language, invisible_modes=[])
+    def visible(self, shop, customer=None, language=None, purchasable_only=False):
+        """
+        Deprecated 4.0: Use ProductCatalog directly
+        """
+        return self._visible(shop, customer=customer, language=language, purchasable_only=purchasable_only)
 
     def all_except_deleted(self, language=None, shop=None):
-        qs = (self.language(language) if language else self).exclude(deleted=True).exclude(type__isnull=True)
+        """
+        Deprecated 4.0: Use ProductCatalog directly
+        """
+        qs = (self.language(language) if language else self).exclude(Q(deleted=True) | Q(type__isnull=True))
         if shop:
             qs = qs.filter(shop_products__shop=shop)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED).prefetch_related(*Product.COMMON_PREFETCH_RELATED)

@@ -19,7 +19,7 @@ from .enums import StockAdjustmentType
 
 USER_MODEL = get_user_model()
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Contact, Product, Shipment, ShopProduct, Supplier
 
 

@@ -10,12 +10,14 @@ import six
 from collections import OrderedDict
 from django import forms
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.forms import ChoiceField, ModelChoiceField, ModelMultipleChoiceField, MultipleChoiceField
+from typing import Dict
 
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core import cache
+from shuup.core.models import Product
 from shuup.core.utils import context_cache
 from shuup.xtheme import get_theme_cache_key
 
@@ -79,40 +81,23 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
-    def sort_products(self, request, products, data):
+    def sort_products_queryset(self, request, queryset: "QuerySet[Product]", data: Dict):
         """
-        Sort products in case sort choices is provided
-
-        Sort products in cse the list should be sorted based on
-        sort choice provided by this class.
-
-        :param request: Current request
-        :param products: Products to sort
-        :type products: list[shuup.code.models.Product]
-        :param data: product list form data
-        :type data: dict
-        :return: List of products that might be sorted
-        :rtype: list[shuup.code.models.Product]
+        Sort the products queryset
+        Modify current queryset and return the new one.
         """
-        return products
+        return queryset
 
-    def get_filters(self, request, data):
+    def get_filters(self, request, data: Dict) -> Q:
         """
         Get filters based for the product list view
 
         Add Django query filters for Product queryset based
         on current request and ProductListForm data.
-
-        :param request: current request
-        :param data: Data from ProductListForm
-        :type data: dict
-        :return: Django query filter that can be used to
-        filter Product queryset.
-        :rtype: django.db.models.Q`
         """
         pass
 
-    def get_queryset(self, queryset, data):
+    def get_products_queryset(self, request, queryset: "QuerySet[Product]", data: Dict) -> "QuerySet[Product]":
         """
         Modify product queryset
 
@@ -124,23 +109,6 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         :rtype: Product.queryset
         """
         pass
-
-    def filter_products(self, request, products, data):
-        """
-        Filter product objects
-
-        Filtering products list based on current request and
-        ProductListForm data.
-
-        :param request:
-        :param products: List of products
-        :rtype products: list[shuup.core.models.Product]
-        :param data: Data from ProductListForm
-        :type data: dict
-        :return: Filtered product list
-        :rtype: list[shuup.core.models.Product]
-        """
-        return products
 
     def get_admin_fields(self):
         """
@@ -236,15 +204,9 @@ def get_query_filters(request, category, data):
     return filter_q
 
 
-def post_filter_products(request, category, products, data):
+def sort_products(request, category, products: "QuerySet[Product]", data):
     for extend_obj in _get_active_modifiers(request.shop, category):
-        products = extend_obj.filter_products(request, products, data)
-    return products
-
-
-def sort_products(request, category, products, data):
-    for extend_obj in _get_active_modifiers(request.shop, category):
-        products = extend_obj.sort_products(request, products, data)
+        products = extend_obj.sort_products_queryset(request, products, data)
     return products
 
 
@@ -256,10 +218,12 @@ def get_product_queryset(queryset, request, category, data):
     # pass the request and category down to the `get_queryset` method
     queryset_data = data.copy()
     queryset_data.update({"request": request, "category": category})
+
     for extend_obj in _get_active_modifiers(request.shop, category):
-        new_queryset = extend_obj.get_queryset(queryset, queryset_data)
+        new_queryset = extend_obj.get_products_queryset(request, queryset, queryset_data)
         if new_queryset is not None:
             queryset = new_queryset
+
     return queryset
 
 

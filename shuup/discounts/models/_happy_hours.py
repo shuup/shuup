@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 
 @python_2_unicode_compatible
 class HappyHour(models.Model):
-    shops = models.ManyToManyField("shuup.Shop", blank=True, db_index=True, verbose_name=_("shops"))
+    shop = models.ForeignKey("shuup.Shop", verbose_name=_("shop"), on_delete=models.CASCADE)
     name = models.CharField(
         max_length=120,
         verbose_name=_("name"),

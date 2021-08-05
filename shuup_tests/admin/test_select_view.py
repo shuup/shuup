@@ -26,7 +26,7 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import create_product, create_random_user, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils.fixtures import regular_user
+from shuup_tests.utils.fixtures import regular_user  # noqa: F401
 
 
 def _get_search_results(rf, view, model_name, search_str, user, search_mode=None, sales_units=None, shop=None):
@@ -110,7 +110,7 @@ def test_ajax_select_view_with_products(rf, admin_user):
     shop2 = get_shop(identifier="shop2")
     supplier2 = Supplier.objects.create(name="supplier2", enabled=False)
     supplier2.shops.add(shop2)
-    product2 = create_product(
+    create_product(
         "test-product-two", shop2, default_price="200", supplier=supplier2, mode=ProductMode.SIMPLE_VARIATION_PARENT
     )
     results = _get_search_results(rf, view, "shuup.Product", "  product  ", admin_user, "parent_product")

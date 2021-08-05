@@ -7,6 +7,7 @@
 import hashlib
 import random
 import string
+import warnings
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -151,6 +152,7 @@ class CatalogCampaign(Campaign):
         return force_text(_("Catalog Campaign: {name}").format(name=self.name))
 
     def save(self, *args, **kwargs):
+        warnings.warn("The CatalogCampaign discount module will be removed on next major version.", DeprecationWarning)
         super(CatalogCampaign, self).save(*args, **kwargs)
         self.filters.update(active=self.active)
         for f in self.filters.all():

@@ -5,19 +5,11 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import with_statement
-
 from django.views.generic import DetailView, TemplateView
 
-from shuup.core.models import Category, Product, Supplier
-from shuup.front.utils.sorts_and_filters import (
-    ProductListForm,
-    get_product_queryset,
-    get_query_filters,
-    post_filter_products,
-    sort_products,
-)
-from shuup.front.utils.views import cache_product_things
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import Category, ShopProductVisibility, Supplier
+from shuup.front.utils.sorts_and_filters import ProductListForm, get_product_queryset, get_query_filters, sort_products
 
 
 def get_context_data(context, request, category, product_filters):
@@ -29,18 +21,26 @@ def get_context_data(context, request, category, product_filters):
         # Use first choice by default
         data["sort"] = form.fields["sort"].widget.choices[0][0]
 
-    # TODO: Check if context cache can be utilized here
-    products = (
-        Product.objects.listed(customer=request.customer, shop=request.shop)
-        .filter(**product_filters)
-        .filter(get_query_filters(request, category, data=data))
-        .prefetch_related("sales_unit", "sales_unit__translations")
+    catalog = ProductCatalog(
+        ProductCatalogContext(
+            shop=request.shop,
+            user=getattr(request, "user", None),
+            contact=getattr(request, "customer", None),
+            purchasable_only=True,
+            supplier=data.get("supplier") or None,
+            visibility=ShopProductVisibility.LISTED,
+        )
     )
 
-    products = get_product_queryset(products, request, category, data).distinct()
-    products = post_filter_products(request, category, products, data)
-    products = cache_product_things(request, products)
-    products = sort_products(request, category, products, data)
+    products = (
+        catalog.get_products_queryset()
+        .filter(**product_filters)
+        .filter(get_query_filters(request, category, data=data))
+        .select_related("primary_image", "sales_unit", "tax_class")
+        .prefetch_related("translations", "sales_unit__translations")
+    )
+    products = get_product_queryset(products, request, category, data)
+    products = sort_products(request, category, products, data).distinct()
     context["page_size"] = data.get("limit", 12)
     context["products"] = products
 

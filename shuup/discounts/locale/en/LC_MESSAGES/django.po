@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"POT-Creation-Date: 2021-08-03 19:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,28 +26,16 @@ msgstr ""
 msgid "Delete Discounts"
 msgstr ""
 
-msgid "Product Discounts Coupon Codes"
-msgstr ""
-
 msgid "Discounts"
 msgstr ""
 
 msgid "Product Discounts"
 msgstr ""
 
-msgid "Allow the user to select coupons in admin."
-msgstr ""
-
 msgid "Allow the user to select discounts in admin."
 msgstr ""
 
 msgid "Archived Product Discounts"
-msgstr ""
-
-msgid "Discounts Availability Exceptions"
-msgstr ""
-
-msgid "Product Discounts Availability Exceptions"
 msgstr ""
 
 msgid "Discounts Happy Hours"
@@ -86,40 +74,10 @@ msgstr ""
 msgid "Filter by contact..."
 msgstr ""
 
-msgid "Coupon code"
-msgstr ""
-
-msgid "Filter by coupon code..."
-msgstr ""
-
 msgid "Effect"
 msgstr ""
 
 msgid "End Date and Time"
-msgstr ""
-
-msgid "Code"
-msgstr ""
-
-msgid "Usages"
-msgstr ""
-
-msgid "Usages Limit per contact"
-msgstr ""
-
-msgid "Usage Limit"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Created by"
-msgstr ""
-
-msgid "Date created"
-msgstr ""
-
-msgid "Select discounts linked to this coupon code."
 msgstr ""
 
 #, python-format
@@ -130,15 +88,6 @@ msgid "Discount percentage"
 msgstr ""
 
 msgid "The discount percentage for this discount."
-msgstr ""
-
-msgid "Exception Name"
-msgstr ""
-
-msgid "Start Date and Time"
-msgstr ""
-
-msgid "Select discounts to be ignored on given time frame."
 msgstr ""
 
 msgid "Happy Hour Name"
@@ -160,57 +109,15 @@ msgstr ""
 msgid "Weekdays the happy hour is active."
 msgstr ""
 
-msgid "shops"
-msgstr ""
-
 msgid "name"
 msgstr ""
 
 msgid ""
-"The name for this exception. Used internally with exception lists for "
+"The name for this discount. Used internally with discount lists for "
 "filtering."
 msgstr ""
 
-msgid "start since"
-msgstr ""
-
-msgid ""
-"Set to restrict the availability exception to be available only after a "
-"certain date and time."
-msgstr ""
-
-msgid "end until"
-msgstr ""
-
-msgid ""
-"Set to restrict the availability exception to be available only until a "
-"certain date and time."
-msgstr ""
-
-msgid "availability exception"
-msgstr ""
-
-msgid "availability exceptions"
-msgstr ""
-
-msgid "created on"
-msgstr ""
-
-msgid "usage limit per customer"
-msgstr ""
-
-msgid "Limit the amount of usages per a single customer."
-msgstr ""
-
-msgid "usage limit"
-msgstr ""
-
-msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
-msgstr ""
-
-msgid "active"
+msgid "shop"
 msgstr ""
 
 msgid "created by"
@@ -219,18 +126,19 @@ msgstr ""
 msgid "modified by"
 msgstr ""
 
-msgid "modified on"
+msgid "created on"
 msgstr ""
 
-msgid ""
-"The name for this discount. Used internally with discount lists for "
-"filtering."
+msgid "modified on"
 msgstr ""
 
 msgid "supplier"
 msgstr ""
 
 msgid "Select supplier for this discount."
+msgstr ""
+
+msgid "active"
 msgstr ""
 
 msgid ""
@@ -260,9 +168,6 @@ msgstr ""
 msgid "Select happy hours for this discount."
 msgstr ""
 
-msgid "Select availability for this discount."
-msgstr ""
-
 msgid "product"
 msgstr ""
 
@@ -287,22 +192,10 @@ msgstr ""
 msgid "Select contact for this discount."
 msgstr ""
 
-msgid "exclude selected contact group"
-msgstr ""
-
-msgid "Exclude contacts in selected contact group from this discount."
-msgstr ""
-
 msgid "contact group"
 msgstr ""
 
 msgid "Select contact group for this discount."
-msgstr ""
-
-msgid "coupon code"
-msgstr ""
-
-msgid "Select coupon code for this discount."
 msgstr ""
 
 msgid "discounted price"
@@ -327,6 +220,14 @@ msgid "product discount"
 msgstr ""
 
 msgid "product discounts"
+msgstr ""
+
+msgid "Start date and end date are required when the discount is active."
+msgstr ""
+
+msgid ""
+"Either discounted price or discount percentage or discount amount should be "
+"configured."
 msgstr ""
 
 msgid ""

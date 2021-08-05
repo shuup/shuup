@@ -27,8 +27,7 @@ def test_discount_amount(rf):
 
     # Let's create discounted price $7
     discounted_price = 7
-    discount = Discount.objects.create(active=True, product=product, discounted_price_value=discounted_price)
-    discount.shops.add(shop)
+    discount = Discount.objects.create(active=True, product=product, discounted_price_value=discounted_price, shop=shop)
     assert product.get_price_info(request).price == request.shop.create_price(7)
 
     # Let's add higher discount amount for this discount
@@ -47,8 +46,7 @@ def test_discount_amount(rf):
 
     # Let's add separate discount for 90% - 100% discount
     discount_percentage = decimal.Decimal(random.randrange(90, 100)) / 100
-    discount = Discount.objects.create(active=True, product=product, discount_percentage=discount_percentage)
-    discount.shops.add(shop)
+    discount = Discount.objects.create(active=True, product=product, discount_percentage=discount_percentage, shop=shop)
     assert product.get_price_info(request).price == request.shop.create_price(
         original_price - original_price * discount_percentage
     )

@@ -13,11 +13,12 @@ from django.test import override_settings
 from django.test.client import Client
 from django.utils.encoding import force_text
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.admin.modules.products.views import ProductEditView
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.apps.provides import override_provides
-from shuup.core.models import Product, Shop, ShopProduct, ShopProductVisibility, ShopStatus
+from shuup.core.models import Product, ProductCatalogPrice, Shop, ShopProduct, ShopProductVisibility, ShopStatus
 from shuup.testing.factories import (
     CategoryFactory,
     create_product,
@@ -31,6 +32,7 @@ from shuup.testing.factories import (
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
+from shuup_tests.utils import atomic_commit_mock
 
 
 @pytest.mark.parametrize(
@@ -238,11 +240,16 @@ def test_product_edit_view(rf, admin_user, settings):
             continue
         usable_post[k] = v
 
-    request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
-    response = view(request, pk=shop_product.pk)
+    with patch("django.db.transaction.on_commit", new=atomic_commit_mock):
+        request = apply_request_middleware(rf.post("/", usable_post), user=admin_user)
+        response = view(request, pk=shop_product.pk)
 
     shop_product = ShopProduct.objects.first()
     assert shop_product.primary_category
+
+    # the catalog price was indexed
+    catalog_price = ProductCatalogPrice.objects.filter(shop=shop_product.shop, product=shop_product.product).first()
+    assert catalog_price.price_value == shop_product.default_price_value
 
     if settings.SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES:
         assert shop_product.categories.count() == 1

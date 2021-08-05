@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Added
+
+- Add new Catalog API to index and fetch products with annotated price and discounted price
+
+### Changed
+
+- BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.
+- BREAKING: Discounts: Remove coupon code, availability exception and exclude selected contact group from the Discount model.
+  All the related feature were also removed.
+- BREAKING: Front: replaced the `ProductListFormModifier.sort_products`
+  with a new method: `ProductListFormModifier.sort_products_queryset` and
+  removed `ProductListFormModifier.filter_products` and `ProductListFormModifier.filter_products`
+  and `ProductListFormModifier.get_queryset`.
+- Front: user the new Catalog API on every place that retrieve products from the database
+- Xtheme: user the new Catalog API on plugins that retrieve products
+
+### Fixed
+
+- Discounts: show the `exclude_selected_category` field in admin
+
 ## [2.14.0] - 2021-08-03
 
 ### Added

@@ -33,7 +33,7 @@ from shuup.importer.utils import copy_update, fold_mapping_name
 from shuup.importer.utils.importer import ImportMode
 from shuup.utils.django_compat import force_text
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Shop, Supplier
 
 LOGGER = logging.getLogger(__name__)

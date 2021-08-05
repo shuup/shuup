@@ -13,7 +13,9 @@ from time import time
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core import cache
-from shuup.core.models import ShippingMode
+from shuup.core.catalog import ProductCatalog, ProductCatalogContext
+from shuup.core.models import OrderLineType, ShippingMode
+from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
     process_alert_limit,
@@ -22,7 +24,12 @@ from shuup.simple_supplier.admin_module.views import (
 )
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.simple_supplier.notify_events import AlertLimitReached
-from shuup.testing.factories import create_order_with_product, create_product, get_default_shop
+from shuup.testing.factories import (
+    create_order_with_product,
+    create_product,
+    get_default_shop,
+    get_initial_order_status,
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
@@ -167,7 +174,7 @@ def test_new_product_admin_form_renders(rf, client, admin_user):
     Make sure that no exceptions are raised when creating a new product
     with simple supplier enabled
     """
-    shop = get_default_shop()
+    get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     view = ProductEditView.as_view()
     supplier = get_simple_supplier()
@@ -188,6 +195,7 @@ def test_alert_limit_view(rf, admin_user):
     supplier = get_simple_supplier()
     shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
+    supplier.update_stock(product.pk)
     sc = StockCount.objects.get(supplier=supplier, product=product)
     assert not sc.alert_limit
 
@@ -218,7 +226,7 @@ def test_alert_limit_notification(rf, admin_user):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         product = create_product("simple-test-product", shop, supplier)
-
+        supplier.update_stock(product.pk)
         sc = StockCount.objects.get(supplier=supplier, product=product)
         sc.alert_limit = 10
         sc.save()
@@ -358,3 +366,50 @@ def test_supplier_non_shipped_products(rf, shipping_mode):
     stock_status = supplier.get_stock_status(product.id)
     assert stock_status.logical_count == quantity
     assert stock_status.physical_count == stock_status.logical_count
+
+
+@pytest.mark.django_db
+def test_product_catalog_indexing(rf, admin_user, settings):
+    shop = get_default_shop()
+    supplier = get_simple_supplier(shop=shop)
+    supplier.stock_managed = True
+    supplier.save()
+    product = create_product("simple-test-product", shop, supplier)
+
+    ProductCatalog.index_product(product)
+
+    # no purchasable products
+    catalog = ProductCatalog(ProductCatalogContext(shop=shop, purchasable_only=True))
+    assert catalog.get_products_queryset().count() == 0
+
+    # add 10 items to the stock
+    stock_qty = 10
+    request = apply_request_middleware(
+        rf.post("/", data={"purchase_price": decimal.Decimal(32.00), "delta": stock_qty}), user=admin_user
+    )
+    response = process_stock_adjustment(request, supplier.id, product.id)
+    assert response.status_code == 200
+    pss = supplier.get_stock_status(product.pk)
+    assert pss.logical_count == stock_qty
+
+    # now there are purchasable products
+    assert catalog.get_products_queryset().count() == 1
+    assert product in catalog.get_products_queryset()
+
+    # create a random order with 10 units of the product
+    source = OrderSource(shop)
+    source.status = get_initial_order_status()
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        supplier=supplier,
+        product=product,
+        base_unit_price=source.create_price(1),
+        quantity=10,
+    )
+    OrderCreator().create_order(source)
+
+    pss = supplier.get_stock_status(product.pk)
+    assert pss.logical_count == 0
+
+    # stocks are gone
+    assert catalog.get_products_queryset().count() == 0

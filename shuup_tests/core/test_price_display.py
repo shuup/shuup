@@ -11,7 +11,6 @@ Tests for utils.price_display and the price filters.
 import django.template
 import django_jinja.backend
 import pytest
-import six
 from decimal import Decimal
 from django.conf import settings
 from django.test.client import RequestFactory
@@ -19,7 +18,16 @@ from django.test.utils import override_settings
 from mock import patch
 
 from shuup.apps.provides import override_provides
-from shuup.core.models import AnonymousContact, Order, OrderLine, OrderLineType, Product, Shop
+from shuup.core.models import (
+    AnonymousContact,
+    Order,
+    OrderLine,
+    OrderLineType,
+    Product,
+    ProductCatalogPrice,
+    Shop,
+    ShopProduct,
+)
 from shuup.core.order_creator import OrderSource
 from shuup.core.pricing import (
     PriceDisplayOptions,
@@ -64,6 +72,26 @@ class DummyPricingModule(PricingModule):
 
     def get_price_info(self, context, product, quantity=1):
         return _get_price_info(context.shop, product, quantity)
+
+    def index_shop_product(self, shop_product, **kwargs):
+        is_variation_parent = shop_product.product.is_variation_parent()
+
+        # index the price of all children shop products
+        if is_variation_parent:
+            children_shop_product = ShopProduct.objects.select_related("product", "shop").filter(
+                shop=shop_product.shop, product__variation_parent_id=shop_product.product_id
+            )
+            for child_shop_product in children_shop_product:
+                self.index_shop_product(child_shop_product)
+        else:
+            for supplier_id in shop_product.suppliers.values_list("pk", flat=True):
+                ProductCatalogPrice.objects.update_or_create(
+                    product_id=shop_product.product_id,
+                    shop_id=shop_product.shop_id,
+                    supplier_id=supplier_id,
+                    catalog_rule=None,
+                    defaults=dict(price_value=shop_product.default_price_value or Decimal()),
+                )
 
 
 def _get_price_info(shop, product=None, quantity=2):
@@ -111,7 +139,7 @@ TEST_DATA = [
     ("prod|is_discounted", "True"),
     ("prod|discount_percent", "75%"),
     ("prod|discount_rate", "0.75"),
-    ("var_prod|price_range|safe", "(u'$4.50', u'$12.00')" if six.PY2 else "('$4.50', '$12.00')"),
+    ("var_prod|price_range|safe", "('$4.50', '$12.00')"),
     ("prod|price(quantity=2)", "$12.15"),
     ("prod|price(quantity=2, include_taxes=False)", "$12.15"),
     ("prod|price(quantity=2, include_taxes=True)", "$18.22"),
@@ -158,8 +186,9 @@ TEST_DATA = [
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
 @pytest.mark.django_db
-def test_filter(expr, expected_result):
+def test_filter(expr, expected_result, reindex_catalog):
     (engine, context) = _get_template_engine_and_context(create_var_product=True)
+    reindex_catalog()
     template = engine.from_string("{{ " + expr + "  }}")
     try:
         result = template.render(context)
@@ -171,7 +200,7 @@ def test_filter(expr, expected_result):
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
 @pytest.mark.django_db
-def test_filter_cache(expr, expected_result):
+def test_filter_cache(expr, expected_result, reindex_catalog):
     with override_settings(
         CACHES={
             "default": {
@@ -181,6 +210,7 @@ def test_filter_cache(expr, expected_result):
         }
     ):
         (engine, context) = _get_template_engine_and_context(create_var_product=True)
+        reindex_catalog()
         template = engine.from_string("{{ " + expr + "  }}")
         # run 2 times, the first call should cache and the second read from the cache
         for cache_test in range(2):
@@ -251,11 +281,16 @@ def _get_template_engine_and_context(product_sku="6.0745", create_var_product=Fa
     order, order_line = _get_order_and_order_line(request)
 
     product = create_product(sku=product_sku, shop=shop, tax_class=tax_class)
+    supplier = get_default_supplier(shop)
 
     if create_var_product:
         var_product = create_product(sku="32.9", shop=shop, tax_class=tax_class)
-        child_product_1 = create_product(sku="4.50", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
-        child_product_2 = create_product(sku="12.00", shop=shop, tax_class=tax_class, supplier=get_default_supplier())
+        child_product_1 = create_product(
+            sku="4.50", shop=shop, tax_class=tax_class, supplier=supplier, default_price="4.5"
+        )
+        child_product_2 = create_product(
+            sku="12.00", shop=shop, tax_class=tax_class, supplier=supplier, default_price="12"
+        )
         child_product_1.link_to_parent(var_product, variables={"color": "red"})
         child_product_2.link_to_parent(var_product, variables={"color": "blue"})
 

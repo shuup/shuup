@@ -20,7 +20,7 @@ from shuup.xtheme.testing import override_current_theme_class
 
 
 @pytest.mark.django_db
-def test_category_detail(client):
+def test_category_detail(client, reindex_catalog):
     shop = factories.get_default_shop()
 
     # Activate show supplier info for front
@@ -52,8 +52,7 @@ def test_category_detail(client):
         ("Simon Inc", 0.8),
     ]
     for name, percentage_from_original_price in supplier_data:
-        supplier = Supplier.objects.create(name=name)
-        supplier.shops.add(shop)
+        supplier = factories.get_supplier("simple_supplier", shop, name=name)
 
         for product in products:
             shop_product = product.get_shop_instance(shop)
@@ -69,6 +68,8 @@ def test_category_detail(client):
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
     with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
         with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+            reindex_catalog()
+
             soup = _get_category_detail_soup(client, category)
 
             # Johnny Inc has the best prices for everything
@@ -93,6 +94,7 @@ def test_category_detail(client):
             # Let's say Mike has the cheapest laptop
             mike_supplier = Supplier.objects.get(name="Mike Inc")
             SupplierPrice.objects.filter(supplier=mike_supplier, shop=shop, product=laptop).update(amount_value=333)
+            reindex_catalog()
 
             soup = _get_category_detail_soup(client, category)
             laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
@@ -102,6 +104,7 @@ def test_category_detail(client):
             # Just to make sure Simon takes over the mouse biz
             simon_supplier = Supplier.objects.get(name="Simon Inc")
             SupplierPrice.objects.filter(supplier=simon_supplier, shop=shop, product=mouse).update(amount_value=1)
+            reindex_catalog()
 
             soup = _get_category_detail_soup(client, category)
             mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
@@ -112,7 +115,7 @@ def test_category_detail(client):
 def _get_category_detail_soup(client, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     response = client.get(url)
-    return BeautifulSoup(response.content)
+    return BeautifulSoup(response.content, "lxml")
 
 
 def _assert_supplier_info(box_soup, expected_supplier_name):

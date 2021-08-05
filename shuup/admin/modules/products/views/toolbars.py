@@ -30,7 +30,7 @@ class ProductActionCategory(Enum):
     CHILD_OTHER = 5
 
 
-# TODO: Rewrite this for 2.0.
+# TODO: Rewrite this for 3.0.
 class EditProductToolbar(Toolbar):
     def __init__(self, view):
         super(EditProductToolbar, self).__init__()

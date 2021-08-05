@@ -143,7 +143,7 @@ def test_set_taxful_price_works_with_product_id(rf):
 
 
 @pytest.mark.django_db
-def test_price_infos(rf):
+def test_price_infos(rf, reindex_catalog):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
 
@@ -155,6 +155,7 @@ def test_price_infos(rf):
 
     spp = CgpPrice(product=product_two, shop=shop, group=group, price_value=200)
     spp.save()
+    reindex_catalog()
 
     product_ids = [product_one.pk, product_two.pk]
 
@@ -170,8 +171,8 @@ def test_price_infos(rf):
     assert price_infos[product_one.pk].price == price(100)
     assert price_infos[product_two.pk].price == price(200)
 
-    assert price_infos[product_one.pk].base_price == price(100)
-    assert price_infos[product_two.pk].base_price == price(200)
+    assert price_infos[product_one.pk].base_price == price(150)
+    assert price_infos[product_two.pk].base_price == price(250)
 
 
 @pytest.mark.django_db
