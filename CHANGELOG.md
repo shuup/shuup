@@ -14,6 +14,12 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Core: allow saving encrypted configurations
 - Core: add new Catalog API to index and fetch products with annotated price and discounted price
+- SupplierHasNoSupplierModules exception.
+- Suppliers with no supplier modules cannot create shipments.
+
+### Added
+
+- Add new Catalog API to index and fetch products with annotated price and discounted price
 
 ### Fixed
 

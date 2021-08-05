@@ -17,6 +17,7 @@ from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from typing import TYPE_CHECKING, Union
 
+from shuup.core.excs import SupplierHasNoSupplierModules
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
 from shuup.utils.analog import define_log_model
@@ -229,6 +230,10 @@ class Supplier(ModuleInterface, TranslatableShuupModel):
             module.update_stocks(product_ids, *args, **kwargs)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
+        if not self.modules:
+            raise SupplierHasNoSupplierModules(
+                "Cannot create shipments for this supplier as it has no supplier modules."
+            )
         for module in self.modules:
             module.ship_products(shipment, product_quantities, *args, **kwargs)
 

@@ -19,6 +19,7 @@ from shuup.core.excs import (
     RefundArbitraryRefundsNotAllowedException,
     RefundExceedsAmountException,
     RefundExceedsQuantityException,
+    SupplierHasNoSupplierModules,
 )
 from shuup.core.pricing import TaxfulPrice
 from shuup.utils.money import Money
@@ -255,6 +256,14 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         lines = order.lines.all()
         if supplier:
             lines = lines.filter(supplier=supplier)
+        supplier_module_problem = any(
+            [
+                refund.get("restock_products") and not refund.get("line").supplier.supplier_modules.exists()
+                for refund in refund_data
+            ]
+        )
+        if supplier_module_problem:
+            raise SupplierHasNoSupplierModules("There are items to restock but the supplier has no supplier modules.")
 
         index = lines.aggregate(models.Max("ordering"))["ordering__max"]
         tax_proportions = self._get_tax_class_proportions(order)
