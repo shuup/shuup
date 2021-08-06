@@ -312,6 +312,9 @@ Core
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
     as used by `~shuup.core.models.Supplier`.
 
+``system_settings_form_part``
+    Form part classes that shows on the admin menu System Settings.
+
 ``tax_module``
     Tax module classes; the tax module in use is set with the ``SHUUP_TAX_MODULE`` setting.
 

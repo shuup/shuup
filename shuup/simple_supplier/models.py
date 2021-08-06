@@ -11,7 +11,9 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
+from shuup import configuration
 from shuup.core.fields import MoneyValueField, QuantityField
+from shuup.core.setting_keys import SHUUP_HOME_CURRENCY
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.utils.properties import PriceProperty
@@ -22,7 +24,7 @@ def _get_currency():
 
     if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
         return Shop.objects.first().currency
-    return settings.SHUUP_HOME_CURRENCY
+    return configuration.get(None, SHUUP_HOME_CURRENCY)
 
 
 def _get_prices_include_tax():

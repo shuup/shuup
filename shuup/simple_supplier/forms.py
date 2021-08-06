@@ -7,14 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from typing import Optional
 
 from shuup.core.fields import FormattedDecimalFormField
+from shuup import configuration
 from shuup.core.models import SalesUnit, Shop
+from shuup.core.setting_keys import SHUUP_HOME_CURRENCY
 from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.i18n import get_currency_name
 
@@ -23,7 +24,7 @@ class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
         label=format_lazy(
             _("Purchase price per unit ({currency_name})"),
-            currency_name=get_currency_name(settings.SHUUP_HOME_CURRENCY),
+            currency_name=lambda: get_currency_name(configuration.get(None, SHUUP_HOME_CURRENCY)),
         )
     )
     delta = FormattedDecimalFormField(label=_("Quantity"), decimal_places=0)

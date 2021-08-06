@@ -1,0 +1,9 @@
+[{
+    "model": "shuup.configurationitem",
+    "pk": 1,
+    "fields": {
+        "shop": null,
+        "key": "home_currency",
+        "value": "\"USD\""
+    }
+}]

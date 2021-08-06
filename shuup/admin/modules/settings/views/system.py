@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shuup.admin.form_part import FormPartsViewMixin
-from shuup.admin.modules.settings.forms.system import OrderSettingsFormPart
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.utils.form_group import FormGroup
 
@@ -19,7 +18,8 @@ from shuup.utils.form_group import FormGroup
 class SystemSettingsView(FormPartsViewMixin, FormView):
     form_class = None
     template_name = "shuup/admin/settings/edit.jinja"
-    base_form_part_classes = [OrderSettingsFormPart]
+    base_form_part_classes = []
+    form_part_class_provide_key = "system_settings_form_part"
 
     @atomic
     def form_valid(self, form):

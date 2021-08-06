@@ -103,11 +103,12 @@ def test_supplier_with_stock_counts(rf, stock_managed):
 
 @pytest.mark.django_db
 def test_supplier_with_stock_counts_2(rf, admin_user, settings):
-    with override_settings(SHUUP_HOME_CURRENCY="USD", SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    shuup_currency = "USD"
+    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         assert shop.prices_include_tax
-        assert shop.currency != settings.SHUUP_HOME_CURRENCY
+        assert shop.currency != shuup_currency
         product = create_product("simple-test-product", shop, supplier)
         quantity = random.randint(100, 600)
         supplier.adjust_stock(product.pk, quantity)
@@ -135,12 +136,12 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
             sa = StockAdjustment.objects.first()  # refetch to invalidate cache
             assert sa.purchase_price.currency != shop.currency
-            assert sa.purchase_price.currency == settings.SHUUP_HOME_CURRENCY
+            assert sa.purchase_price.currency == shuup_currency
             assert not sa.purchase_price.includes_tax
             sc = StockCount.objects.first()
-            assert sc.stock_value.currency == settings.SHUUP_HOME_CURRENCY
+            assert sc.stock_value.currency == shuup_currency
             assert not sc.stock_value.includes_tax
-            assert sc.stock_unit_price.currency == settings.SHUUP_HOME_CURRENCY
+            assert sc.stock_unit_price.currency == shuup_currency
             assert not sc.stock_unit_price.includes_tax
 
 

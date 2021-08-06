@@ -19,6 +19,7 @@ from parler.models import TranslatedFields
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.setting_keys import SHUUP_HOME_CURRENCY
 from shuup.utils.analog import define_log_model
 from shuup.utils.django_compat import force_text
 
@@ -27,7 +28,9 @@ from ._orders import Order
 
 
 def _get_default_currency():
-    return settings.SHUUP_HOME_CURRENCY
+    from shuup import configuration
+
+    return configuration.get(None, SHUUP_HOME_CURRENCY)
 
 
 class ShopManager(TranslatableManager):

@@ -9,13 +9,15 @@ from __future__ import unicode_literals
 
 import six
 from django import forms
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
-from shuup.core.models import ConfigurationItem
+from shuup.core.models import ConfigurationItem, Currency
+from shuup.core.setting_keys import SHUUP_HOME_CURRENCY
 
 
 class BaseSettingsFormPart(FormPart):
@@ -44,6 +46,8 @@ class BaseSettingsFormPart(FormPart):
         for key, value in six.iteritems(form.cleaned_data):
             if isinstance(value, Enum):
                 value = value.value
+            if isinstance(value, models.Model):
+                value = str(value)
             configuration.set(None, key, value)
         return True
 
@@ -77,3 +81,27 @@ class OrderSettingsForm(BaseSettingsForm):
 class OrderSettingsFormPart(BaseSettingsFormPart):
     form = OrderSettingsForm
     name = "order_settings"
+
+
+class CoreSettingsForm(BaseSettingsForm):
+    title = _("Core Settings")
+    home_currency = forms.ModelChoiceField(
+        label=_("Home Currency"),
+        queryset=Currency.objects.all(),
+        help_text=_(
+            "This option defines the currency in that all the monetary values are expressed. "
+            "Enter a valid ISO-4217 currency code."
+        ),
+        required=True,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(CoreSettingsForm, self).__init__(*args, **kwargs)
+        self.fields[SHUUP_HOME_CURRENCY].initial = Currency.objects.filter(
+            code=configuration.get(None, SHUUP_HOME_CURRENCY)
+        ).first()
+
+
+class CoreSettingsFormPart(BaseSettingsFormPart):
+    form = CoreSettingsForm
+    name = "core_settings"

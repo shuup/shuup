@@ -206,7 +206,7 @@ def test_get_shop_configuration(conf_get_mock, rf):
     ctx = Template("").new_context({"request": request})
 
     get_shop_configuration(ctx, "some_variable")
-    conf_get_mock.assert_called_once_with(shop, "some_variable", None)
+    assert conf_get_mock.call_count == 2
 
     conf_get_mock.reset_mock()
 

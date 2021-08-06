@@ -134,6 +134,10 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.taxes.object_selector.TaxClassAdminObjectSelector",
             "shuup.admin.modules.users.object_selector.UserAdminObjectSelector",
         ],
+        "system_settings_form_part": [
+            "shuup.admin.modules.settings.forms.system.CoreSettingsFormPart",
+            "shuup.admin.modules.settings.forms.system.OrderSettingsFormPart",
+        ],
     }
 
     def ready(self):

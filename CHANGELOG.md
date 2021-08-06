@@ -39,6 +39,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Core: move shuup settings to database
 - Admin: Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
 - Core: Block an attempt to delete a service provider that still has associated shipping or payment methods.
 - Core: consider an order fully shipped only when all out shipments are sent
