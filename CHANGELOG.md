@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Added
 
 - Add new Catalog API to index and fetch products with annotated price and discounted price
+- Add django-phonenumber-field and phonenumberslite packages.
 
 ### Changed
 
@@ -23,6 +24,8 @@ List all changes after the last release here (newer on top). Each change on a se
   and `ProductListFormModifier.get_queryset`.
 - Front: user the new Catalog API on every place that retrieve products from the database
 - Xtheme: user the new Catalog API on plugins that retrieve products
+- Core: Address model uses `PhoneNumberField` for `phone` field.
+- Use the `PhoneNumberPrefixWidget` for phone numbers.
 
 ### Fixed
 
