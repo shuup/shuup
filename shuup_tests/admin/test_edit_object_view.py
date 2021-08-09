@@ -9,7 +9,6 @@ import pytest
 from django.contrib.contenttypes.models import ContentType
 from django.http.response import Http404
 
-from shuup.admin.shop_provider import SHOP_SESSION_KEY
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.views.edit import EditObjectView, NoModelUrl
 from shuup.testing import factories

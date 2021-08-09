@@ -24,5 +24,32 @@
             "key": "allow_anonymous_orders",
             "value": true
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 4,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_method",
+            "value": "\"unique\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 5,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_length",
+            "value": 17
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 6,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_prefix",
+            "value": "\"\""
+        }
     }
 ]

@@ -10,9 +10,9 @@ from django.test.utils import override_settings
 from django.utils.translation import activate
 
 from shuup import configuration
-from shuup.admin.modules.settings import consts
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
+from shuup.core.setting_keys import SHUUP_REFERENCE_NUMBER_LENGTH, SHUUP_REFERENCE_NUMBER_PREFIX
 from shuup.testing.factories import (
     create_product,
     create_random_order,
@@ -105,8 +105,8 @@ def test_order_configuration(rf, admin_user):
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
 
-    length_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD
-    prefix_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
+    length_form_field = "order_configuration-%s" % SHUUP_REFERENCE_NUMBER_LENGTH
+    prefix_form_field = "order_configuration-%s" % SHUUP_REFERENCE_NUMBER_PREFIX
 
     length_field = soup.find("input", attrs={"id": "id_%s" % length_form_field})
     prefix_field = soup.find("input", attrs={"id": "id_%s" % prefix_form_field})
@@ -124,7 +124,7 @@ def test_order_configuration(rf, admin_user):
     assert "is required" not in soup.prettify()
     assert response.status_code == 302  # redirect after success
 
-    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 18
+    assert configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH) == 18
 
     # set global system settings
     # TODO: Enable this before 1.3
@@ -133,10 +133,8 @@ def test_order_configuration(rf, admin_user):
     data[prefix_form_field] = "0"
     client.post(url, data=data)
 
-    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 19
-    assert not configuration.get(
-        shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
-    )  # None because disabled line 104, else 0
+    assert configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH) == 19
+    assert not configuration.get(shop, SHUUP_REFERENCE_NUMBER_PREFIX)  # None because disabled line 104, else 0
 
 
 def get_base_form_data(shop):

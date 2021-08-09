@@ -9,3 +9,6 @@
 SHUUP_HOME_CURRENCY = "home_currency"
 SHUUP_ADDRESS_HOME_COUNTRY = "address_home_country"
 SHUUP_ALLOW_ANONYMOUS_ORDERS = "allow_anonymous_orders"
+SHUUP_REFERENCE_NUMBER_METHOD = "order_reference_number_method"
+SHUUP_REFERENCE_NUMBER_LENGTH = "order_reference_number_length"
+SHUUP_REFERENCE_NUMBER_PREFIX = "order_reference_number_prefix"
