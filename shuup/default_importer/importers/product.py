@@ -15,6 +15,7 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.permissions import has_permission
+from shuup.core.catalog import ProductCatalog
 from shuup.core.models import (
     MediaFile,
     Product,
@@ -344,6 +345,8 @@ class ProductMetaBase(ImportMetaBase):
         # add shop relation to all categories
         for category in shop_product.categories.all():
             category.shops.add(sess.shop)
+
+        ProductCatalog.index_shop_product(shop_product)
 
     def _find_related_values(self, field_name, sess, value):
         is_related_field = False

@@ -14,6 +14,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Importer: index product after importing it
 - BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.
 - BREAKING: Discounts: Remove coupon code, availability exception and exclude selected contact group from the Discount model.
   All the related feature were also removed.
