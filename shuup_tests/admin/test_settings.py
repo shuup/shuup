@@ -29,6 +29,11 @@ def test_system_settings(rf, admin_user, reference_method):
             reference_method.value,
         ),
         (
+            "order_settings",
+            SHUUP_ALLOW_ANONYMOUS_ORDERS,
+            True,
+        ),
+        (
             "core_settings",
             SHUUP_HOME_CURRENCY,
             "USD",

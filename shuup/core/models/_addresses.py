@@ -8,12 +8,12 @@
 from __future__ import unicode_literals
 
 import six
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from enumfields import Enum, EnumIntegerField
 
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY
 from shuup.core.utils.name_mixin import NameMixin
 from shuup.utils.analog import define_log_model
 from shuup.utils.importing import cached_load
@@ -206,9 +206,12 @@ class Address(NameMixin, ShuupModel):
     # Properties
     @property
     def is_home(self):
-        if not settings.SHUUP_ADDRESS_HOME_COUNTRY:
+        from shuup import configuration
+
+        home_country = configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
+        if not home_country:
             return False
-        return self.country.code == settings.SHUUP_ADDRESS_HOME_COUNTRY.upper()
+        return self.country.code == home_country.upper()
 
     @property
     def is_european_union(self):

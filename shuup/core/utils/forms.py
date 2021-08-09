@@ -13,7 +13,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.core.models import Contact, ImmutableAddress, MutableAddress
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY
 from shuup.core.shop_provider import get_shop
 from shuup.core.utils.users import send_user_reset_password_email
 from shuup.utils.iterables import first
@@ -41,7 +43,7 @@ class MutableAddressForm(forms.ModelForm):
         super(MutableAddressForm, self).__init__(**kwargs)
         if not kwargs.get("instance"):
             # Set default country
-            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
+            self.fields["country"].initial = configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
 
         field_properties = settings.SHUUP_ADDRESS_FIELD_PROPERTIES
         for field, properties in field_properties.items():

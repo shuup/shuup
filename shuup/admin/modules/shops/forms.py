@@ -10,10 +10,12 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import QuickAddLabelMultiSelect, QuickAddUserMultiSelect
 from shuup.core.models import Currency, MutableAddress, Shop
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.django_compat import force_text
@@ -155,7 +157,7 @@ class ShopAddressWizardForm(forms.ModelForm):
         self.fields["phone"].required = True
 
         if not self.instance.pk:
-            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
+            self.fields["country"].initial = configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
 
         if self.instance.pk:
             name_components = self.instance.name.split(" ")

@@ -19,7 +19,7 @@ from parler.models import TranslatedFields
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
-from shuup.setting_keys import SHUUP_HOME_CURRENCY
+from shuup.core.setting_keys import SHUUP_HOME_CURRENCY
 from shuup.utils.analog import define_log_model
 from shuup.utils.django_compat import force_text
 

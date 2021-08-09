@@ -11,6 +11,8 @@ import six
 from django import forms
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_countries import countries
+from django_countries.fields import LazyTypedChoiceField
 from enumfields import Enum, EnumField
 
 from shuup import configuration
@@ -39,6 +41,7 @@ class BaseSettingsFormPart(FormPart):
 
         for key in form.fields.keys():
             try:
+                # delete also from EncryptedConfigurationItem
                 ConfigurationItem.objects.get(shop=None, key=key).delete()
             except ConfigurationItem.DoesNotExist:
                 continue
@@ -76,6 +79,11 @@ class OrderSettingsForm(BaseSettingsForm):
         ),
         required=False,
     )
+    allow_anonymous_orders = forms.BooleanField(
+        label=_("Allow Anonymous Orders"),
+        help_text=_("Whether or not anonymous orders (without a `creator` user) are allowed."),
+        required=False,
+    )
 
 
 class OrderSettingsFormPart(BaseSettingsFormPart):
@@ -93,6 +101,17 @@ class CoreSettingsForm(BaseSettingsForm):
             "Enter a valid ISO-4217 currency code."
         ),
         required=True,
+    )
+    address_home_country = LazyTypedChoiceField(
+        label=_("Home Country"),
+        choices=[("", _("Select Language"))] + list(countries),
+        help_text=_(
+            "This option defines the home country of the system. It will configure the default country for "
+            "order addresses. The home country must be a code (ISO 3166-1 alpha 2) for the Shuup installation. "
+            "If empty, among other things, addresses that would be printed with the country visible, are printed "
+            "with no country."
+        ),
+        required=False,
     )
 
     def __init__(self, *args, **kwargs):

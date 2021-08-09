@@ -1,9 +1,28 @@
 [{
-    "model": "shuup.configurationitem",
-    "pk": 1,
-    "fields": {
-        "shop": null,
-        "key": "home_currency",
-        "value": "\"USD\""
+        "model": "shuup.configurationitem",
+        "pk": 1,
+        "fields": {
+            "shop": null,
+            "key": "home_currency",
+            "value": "\"USD\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 2,
+        "fields": {
+            "shop": null,
+            "key": "home_country",
+            "value": "\"US\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 3,
+        "fields": {
+            "shop": null,
+            "key": "allow_anonymous_orders",
+            "value": true
+        }
     }
-}]
+]

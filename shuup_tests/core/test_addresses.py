@@ -10,6 +10,7 @@ import six
 from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.translation import override
+from mock import patch
 
 from shuup.core.models import ImmutableAddress, MutableAddress, SavedAddress, get_person_contact
 from shuup.testing.factories import get_address
@@ -91,9 +92,9 @@ def test_address_ownership(admin_user):
 def test_home_country_in_address():
     with override("fi"):
         finnish_address = MutableAddress(country="FI")
-        with override_settings(SHUUP_ADDRESS_HOME_COUNTRY="US"):
+        with patch("shuup.configuration.get", new=lambda shop, key: "US"):
             assert "Suomi" in str(finnish_address), "When home is not Finland, Finland appears in address string"
-        with override_settings(SHUUP_ADDRESS_HOME_COUNTRY="FI"):
+        with patch("shuup.configuration.get", new=lambda shop, key: "FI"):
             assert "Suomi" not in str(
                 finnish_address
             ), "When home is Finland, Finland does not appear in address string"

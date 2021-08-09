@@ -7,3 +7,5 @@
 
 
 SHUUP_HOME_CURRENCY = "home_currency"
+SHUUP_ADDRESS_HOME_COUNTRY = "address_home_country"
+SHUUP_ALLOW_ANONYMOUS_ORDERS = "allow_anonymous_orders"

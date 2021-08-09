@@ -18,6 +18,7 @@ from jsonfield import JSONField
 from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
 from shuup.core.fields import MeasurementField, MoneyValueField
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY
 
 from ._addresses import REGION_ISO3166
 from ._service_base import ServiceBehaviorComponent, ServiceCost, TranslatableServiceBehaviorComponent
@@ -309,8 +310,10 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
     )
 
     def get_unavailability_reasons(self, service, source):
+        from shuup import configuration
+
         address = source.shipping_address if hasattr(service, "carrier") else source.billing_address
-        country = address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY
+        country = address.country if address else configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
         if not (address or country):
             yield ValidationError(_("Service is not available without a defined country."), code="no_country")
 

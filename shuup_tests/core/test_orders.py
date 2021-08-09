@@ -11,6 +11,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.timezone import now
+from mock import patch
 
 from shuup.core.excs import (
     InvalidRefundAmountException,
@@ -307,7 +308,7 @@ def test_known_extra_data():
 
 @pytest.mark.django_db
 def test_anon_disabling():
-    with override_settings(SHUUP_ALLOW_ANONYMOUS_ORDERS=False):
+    with patch("shuup.configuration.get", new=lambda shop, key: False):
         with pytest.raises(ValidationError):
             order = create_empty_order()
             order.save()

@@ -36,6 +36,7 @@ from shuup.core.excs import (
 )
 from shuup.core.fields import CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.setting_keys import SHUUP_ALLOW_ANONYMOUS_ORDERS
 from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
     order_changed,
@@ -341,7 +342,7 @@ class OrderStatusManager(object):
         """
         # run only if there are no allowed_next_statues defined.
         os_qs = OrderStatus.objects.filter(~Q(allowed_next_statuses=None))
-        if not os_qs:
+        if not os_qs.exists():
             order_status_qs = OrderStatus.objects.all()
             for order_status in order_status_qs:
                 allowed_status_list = []
@@ -693,8 +694,10 @@ class Order(MoneyPropped, models.Model):
         return super(Order, self).full_clean(exclude, validate_unique)
 
     def save(self, *args, **kwargs):
+        from shuup import configuration
+
         if not self.creator_id:
-            if not settings.SHUUP_ALLOW_ANONYMOUS_ORDERS:
+            if not configuration.get(None, SHUUP_ALLOW_ANONYMOUS_ORDERS):
                 raise ValidationError(
                     "Error! Anonymous (userless) orders are not allowed "
                     "when `SHUUP_ALLOW_ANONYMOUS_ORDERS` is not enabled."
