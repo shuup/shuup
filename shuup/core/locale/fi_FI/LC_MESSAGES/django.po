@@ -1676,7 +1676,7 @@ msgid ""
 msgstr "Kerro tuotteesi tai tuotepaketoinnin leveys. Tämä auttaa toimituskulujen laskennassa."
 
 msgid "height ({})"
-msgstr "korkeus {()}"
+msgstr "korkeus ({})"
 
 msgid ""
 "Set the measured height of your product or product packaging. This will "
@@ -1702,7 +1702,7 @@ msgid ""
 msgstr "Kerro tuotteen paino ILMAN paketointia."
 
 msgid "gross weight ({})"
-msgstr "bruttopaino {()}"
+msgstr "bruttopaino ({})"
 
 msgid ""
 "Set the measured gross weight of your product WITH its packaging. This will "
@@ -1918,7 +1918,7 @@ msgid "The minimum weight for this price to apply."
 msgstr "Paino mistä lähtien määritetty hinta on voimassa."
 
 msgid "max weight ({})"
-msgstr "max paino {()}"
+msgstr "max paino ({})"
 
 msgid "The maximum weight before this price no longer applies."
 msgstr "Suurin paino mihin asti määritetty hinta on voimassa."
@@ -2105,7 +2105,7 @@ msgid "volume ({})"
 msgstr "äänenvoimakkuus ({})"
 
 msgid "weight ({})"
-msgstr "paino {()}"
+msgstr "paino ({})"
 
 msgid "shipment"
 msgstr "lähetys"
@@ -2114,10 +2114,10 @@ msgid "shipments"
 msgstr "lähetykset"
 
 msgid "unit volume ({})"
-msgstr "yksikkö-tilavuus {()}"
+msgstr "yksikkö-tilavuus ({})"
 
 msgid "unit weight ({})"
-msgstr "yksikköpaino {()}"
+msgstr "yksikköpaino ({})"
 
 msgid "sent product"
 msgstr "lähetetty tuote"
