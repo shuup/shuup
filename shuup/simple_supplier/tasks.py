@@ -5,14 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from typing import Union
+from typing import Optional, Union
 
 from shuup.core.models import AnonymousContact, Product, ProductCatalogPrice, ShopProduct, Supplier
 
 
-def index_product(product: Union[Product, int]):
+def index_product(product: Union[Product, int], supplier: Optional[Union[Supplier, int]] = None):
     product_id = product if not isinstance(product, Product) else product.pk
-    for shop_product in ShopProduct.objects.filter(product_id=product_id):
+    shop_products = ShopProduct.objects.filter(product_id=product_id)
+    if supplier:
+        shop_products = shop_products.filter(suppliers=supplier)
+    for shop_product in shop_products:
         index_shop_product(shop_product=shop_product)
 
 
