@@ -9,18 +9,17 @@
 import domready from "../lib/domready";
 import { mutate } from "../lib/qs";
 import el from "../lib/el";
+import './editor.less';
 
 function post(args) {
     if (window.CSRF_TOKEN) {
         args.csrfmiddlewaretoken = window.CSRF_TOKEN;
     }
-    const inputs = Object.keys(args).
-        map((key) => {
-            const val = args[key];
-            return typeof val !== "undefined"? el("input", {type: "hidden", name: key, value: val}) : null;
-        }
-    );
-    const form = el("form", {method: "POST", action: location.href}, inputs);
+    const inputs = Object.keys(args).map((key) => {
+        const val = args[key];
+        return typeof val !== "undefined" ? el("input", { type: "hidden", name: key, value: val }) : null;
+    });
+    const form = el("form", { method: "POST", action: location.href }, inputs);
     document.body.appendChild(form);
     form.submit();
 }
@@ -90,48 +89,48 @@ function updateModelChoiceWidgetURL(select) {
     const url = selectedObject.dataset.adminUrl;
     const widgetExtraDiv = document.getElementById("extra_for_" + select.id);
     const linkText = interpolate(gettext("Edit %s"), [selectedObject.text]);
-    widgetExtraDiv.innerHTML = url ? el("a", {"target": "_blank", "href": url}, [linkText]).outerHTML : "";
+    widgetExtraDiv.innerHTML = url ? el("a", { "target": "_blank", "href": url }, [linkText]).outerHTML : "";
 }
 
 domready(() => {
     let changesMade = false;
-    $(".layout-cell").on("click", function() {
-        if(changesMade) {
-            if(!confirm(gettext("Changing plugin cells without saving will cause changes made to this cell to be lost."))) {
+    $(".layout-cell").on("click", function () {
+        if (changesMade) {
+            if (!confirm(gettext("Changing plugin cells without saving will cause changes made to this cell to be lost."))) {
                 return;
             }
         }
-        const {x, y} = this.dataset;
-        const newQs = mutate({x, y});
+        const { x, y } = this.dataset;
+        const newQs = mutate({ x, y });
         location.href = "?" + newQs;
     });
-    $(".layout-add-cell-btn").on("click", function() {
-        const {y, cellCount, cellLimit} = this.dataset;
+    $(".layout-add-cell-btn").on("click", function () {
+        const { y, cellCount, cellLimit } = this.dataset;
         if (cellCount >= cellLimit) {
             alert(interpolate(gettext("Error: Cannot add more than %s cells to one row."), [cellLimit]));
             return;
         }
-        post({y: y, command: "add_cell"});
+        post({ y: y, command: "add_cell" });
     });
-    $(".layout-add-row-btn").on("click", function() {
-        const {y} = this.dataset;
-        post({y, command: "add_row"});
+    $(".layout-add-row-btn").on("click", function () {
+        const { y } = this.dataset;
+        post({ y, command: "add_row" });
     });
-    $(".layout-del-row-btn").on("click", function() {
+    $(".layout-del-row-btn").on("click", function () {
         if (!confirm(gettext("Are you sure you wish to delete this row?"))) {
             return;
         }
-        const {y} = this.dataset;
-        post({y, command: "del_row"});
+        const { y } = this.dataset;
+        post({ y, command: "del_row" });
     });
-    $(".del-cell-btn").on("click", function() {
+    $(".del-cell-btn").on("click", function () {
         if (!confirm(gettext("Are you sure you wish to delete this cell?"))) {
             return;
         }
-        const {x, y} = this.dataset;
-        post({x, y, command: "del_cell"});
+        const { x, y } = this.dataset;
+        post({ x, y, command: "del_cell" });
     });
-    $(".publish-btn").on("click", function() {
+    $(".publish-btn").on("click", function () {
         if (!confirm(gettext("Are you sure you wish to publish changes made to this view?"))) {
             return;
         }
@@ -140,40 +139,40 @@ domready(() => {
                 document.getElementsByName("publish")[0].setAttribute("value", "1");
                 document.getElementById("xt-editor-form").submit();
             } else {
-                post({command: "publish"});
+                post({ command: "publish" });
             }
         } else {
-            post({command: "publish"});
+            post({ command: "publish" });
         }
     });
 
-    $("#xtheme-editor-close").on("click", function() {
+    $("#xtheme-editor-close").on("click", function () {
         parent.togglePopup(false);
     });
 
-    $(".revert-btn").on("click", function() {
+    $(".revert-btn").on("click", function () {
         if (!confirm(gettext("Are you sure you wish to revert all changes made since the last published version?"))) {
             return;
         }
-        post({command: "revert"});
+        post({ command: "revert" });
     });
-    $("input, select, textarea").on("change input", function() {
+    $("input, select, textarea").on("change input", function () {
         if (this.id === "id_general-plugin") {
             return;
         }
         changesMade = true;
     });
-    $("#id_general-plugin").on("change", function() {
+    $("#id_general-plugin").on("change", function () {
         if (changesMade) {
             if (!confirm(gettext("Changing plugins will cause other changes made on this form to be lost."))) {
                 return;
             }
         }
-        post({command: "change_plugin", plugin: this.value});
+        post({ command: "change_plugin", plugin: this.value });
     });
-    $(".xtheme-model-choice-widget").each(function(element) {
+    $(".xtheme-model-choice-widget").each(function (element) {
         updateModelChoiceWidgetURL(element);
-        element.addEventListener("change", function() {
+        element.addEventListener("change", function () {
             updateModelChoiceWidgetURL(document.getElementById(this.id));
         });
     });
@@ -185,17 +184,17 @@ domready(() => {
 
     new window.Sortable(document.querySelector(".layout-rows"), {
         handle: ".layout-move-row-btn",
-		forceFallback: true,
-        onUpdate: function(evt) {
-            post({command: "move_row_to_index", from_y: evt.oldIndex, to_y: evt.newIndex});
+        forceFallback: true,
+        onUpdate: function (evt) {
+            post({ command: "move_row_to_index", from_y: evt.oldIndex, to_y: evt.newIndex });
         }
     });
 
     var els = document.getElementsByClassName("layout-row-cells");
-    for(var i = 0; i < els.length; i++) {
+    for (var i = 0; i < els.length; i++) {
         new window.Sortable(els[i], {
             group: "cells",
-            onUpdate: function(evt) {
+            onUpdate: function (evt) {
                 // cell re-arranged within the same row
                 post({
                     command: "move_cell_to_position",
@@ -205,7 +204,7 @@ domready(() => {
                     to_y: evt.item.dataset.y
                 });
             },
-            onAdd: function(evt) {
+            onAdd: function (evt) {
                 // cell moved to different row
                 post({
                     command: "move_cell_to_position",
@@ -221,5 +220,5 @@ domready(() => {
 });
 
 window.refreshPlaceholderInParent = (placeholderName) => {
-    window.parent.postMessage({"reloadPlaceholder": placeholderName}, "*");
+    window.parent.postMessage({ "reloadPlaceholder": placeholderName }, "*");
 };

@@ -55,8 +55,6 @@ class Builder(object):
         self.install_command = ["npm", "install"]
         self.build_command = ["npm", "run", "build"]
         self.env = os.environ.copy()
-        self.env["NODE_ENV"] = "production" if self.opts.production else ""
-        self.env["CI"] = "true"
 
         if self.opts.ci:
             self.install_command.append("--no-audit")

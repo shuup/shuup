@@ -4,8 +4,8 @@
   "description": "Shuup XTheme Editor",
   "main": "build_resources.js",
   "scripts": {
-    "watch": "node build_resources --watch",
-    "build": "node build_resources --sync",
+    "watch": "parcel watch .",
+    "build": "parcel build . --no-source-maps",
     "lint": "eslint static_src"
   },
   "shuup": {
@@ -15,26 +15,52 @@
   "private": true,
   "license": "OSL-3.0",
   "dependencies": {
-    "@babel/cli": "7.12.7",
-    "@babel/core": "7.12.7",
-    "@babel/preset-env": "7.12.7",
-    "autoprefixer": "^9.8.6",
-    "babel-preset-env": "^1.7.0",
     "bootstrap": "^3.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
-    "less": "3.12.2",
     "lodash": "^4.17.20",
     "open-sans-all": "0.1.3",
-    "parcel-bundler": "^1.12.4",
-    "postcss-modules": "^1.5.0",
     "select2": "^4.0.13",
-    "shuup-static-build-tools": "^1.0.5",
-    "sortablejs": "^1.13.0",
+    "sortablejs": "^1.14.0",
     "summernote": "0.8.18"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "eslint": "^5.1.0"
+    "@babel/preset-env": "^7.14.7",
+    "@parcel/transformer-less": "^2.0.0-nightly.758",
+    "eslint": "^5.1.0",
+    "parcel": "^2.0.0-beta.3.1"
+  },
+  "browserslist": ["> 0.2%", "not dead"],
+  "xtheme_admin_script": "static/xtheme/admin/script.js",
+  "xtheme_admin_snippet": "static/xtheme/admin/snippet.js",
+  "xtheme_admin_style": "static/xtheme/admin/xtheme_admin.css",
+  "xtheme_editor": "static/xtheme/editor.js",
+  "xtheme_editor_vendor": "static/xtheme/vendor.js",
+  "xtheme_editor_injection": "static/xtheme/editor-injection.js",
+  "targets": {
+    "xtheme_admin_script": {
+      "source": "static_src/admin/script.js",
+      "context": "browser"
+    },
+    "xtheme_admin_style": {
+      "source": "static_src/admin/xtheme_admin.less",
+      "context": "browser"
+    },
+    "xtheme_admin_snippet": {
+      "source": "static_src/admin/snippet.js",
+      "context": "browser"
+    },
+    "xtheme_editor": {
+      "source": "static_src/editor/editor.js",
+      "context": "browser"
+    },
+    "xtheme_editor_vendor": {
+      "source": "static_src/editor/vendor.js",
+      "context": "browser"
+    },
+    "xtheme_editor_injection": {
+      "source": "static_src/injection/editor-injection.js",
+      "context": "browser"
+    }
   }
 }
