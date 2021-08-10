@@ -103,6 +103,18 @@ class OrderSettingsForm(BaseSettingsForm):
         ),
         required=True,
     )
+    pricing_module = forms.ChoiceField(
+        label=_("Pricing Module"),
+        choices=(
+            ("customer_group_pricing", "Customer Group Pricing"),
+            ("multivendor_supplier_pricing", "Multivendor Supplier Pricing"),
+        ),
+        help_text=_(
+            "The identifier of the pricing module used for pricing products. "
+            "Determines how product prices are calculated."
+        ),
+        required=True,
+    )
     allow_anonymous_orders = forms.BooleanField(
         label=_("Allow Anonymous Orders"),
         help_text=_("Whether or not anonymous orders (without a `creator` user) are allowed."),

@@ -52,18 +52,15 @@ from .utils import get_price_display_patched_configuration
 
 PRICING_MODULE_SPEC = __name__ + ":DummyPricingModule"
 
-original_pricing_module = settings.SHUUP_PRICING_MODULE
 pricing_overrider = override_provides("pricing_module", [PRICING_MODULE_SPEC])
 
 
 def setup_module(module):
     pricing_overrider.__enter__()
-    settings.SHUUP_PRICING_MODULE = "dummy_pricing_module"
 
 
 def teardown_module(module):
     pricing_overrider.__exit__(None, None, None)
-    settings.SHUUP_PRICING_MODULE = original_pricing_module
 
 
 class DummyPricingModule(PricingModule):

@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
+from mock import patch
 
 from shuup.core.models import AnonymousContact, ContactGroup
 from shuup.core.pricing import get_pricing_module
@@ -16,19 +17,12 @@ from shuup.customer_group_pricing.module import CustomerGroupPricingModule
 from shuup.testing.factories import create_product, create_random_person, get_shop
 from shuup.testing.utils import apply_request_middleware
 
+from .utils import get_customer_group_pricing_patched_configuration
+
+
 pytestmark = pytest.mark.skipif(
     "shuup.customer_group_pricing" not in settings.INSTALLED_APPS, reason="customer_group_pricing not installed"
 )
-
-original_pricing_module = settings.SHUUP_PRICING_MODULE
-
-
-def setup_module(module):
-    settings.SHUUP_PRICING_MODULE = "customer_group_pricing"
-
-
-def teardown_module(module):
-    settings.SHUUP_PRICING_MODULE = original_pricing_module
 
 
 def create_customer():
@@ -52,6 +46,8 @@ def initialize_test(rf, include_tax=False, customer=create_customer):
     return request, shop, customer.groups.first()
 
 
+@pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_module_is_active():
     """
     Check that CustomerGroupPricingModule is active.
@@ -61,6 +57,7 @@ def test_module_is_active():
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_shop_specific_cheapest_price_1(rf):
     request, shop, group = initialize_test(rf, False)
     price = shop.create_price
@@ -75,6 +72,7 @@ def test_shop_specific_cheapest_price_1(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_shop_specific_cheapest_price_2(rf):
     request, shop, group = initialize_test(rf, False)
     price = shop.create_price
@@ -88,6 +86,7 @@ def test_shop_specific_cheapest_price_2(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_set_taxful_price_works(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -105,6 +104,7 @@ def test_set_taxful_price_works(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_price_works_no_shop_product(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -125,6 +125,7 @@ def test_price_works_no_shop_product(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_set_taxful_price_works_with_product_id(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -143,6 +144,7 @@ def test_set_taxful_price_works_with_product_id(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_price_infos(rf, reindex_catalog):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -176,6 +178,7 @@ def test_price_infos(rf, reindex_catalog):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_customer_is_anonymous(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -192,6 +195,7 @@ def test_customer_is_anonymous(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_anonymous_customers_default_group(rf):
     request, shop, group = initialize_test(rf, True)
     discount_value = 49
@@ -205,6 +209,7 @@ def test_anonymous_customers_default_group(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_zero_default_price(rf, admin_user):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
@@ -221,6 +226,7 @@ def test_zero_default_price(rf, admin_user):
 
 @pytest.mark.parametrize("price,discount", [(10, 8), (8, 4), (4, 8), (999, 999)])
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_discount_for_customer(rf, admin_user, price, discount):
     request, shop, group = initialize_test(rf, True)
 
@@ -232,6 +238,7 @@ def test_discount_for_customer(rf, admin_user, price, discount):
 
 @pytest.mark.parametrize("price,discount", [(10, 8), (8, 4), (4, 8), (999, 999)])
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_discount_for_anonymous(rf, admin_user, price, discount):
     request, shop, group = initialize_test(rf, True, AnonymousContact())
 
@@ -243,6 +250,7 @@ def test_discount_for_anonymous(rf, admin_user, price, discount):
 
 @pytest.mark.parametrize("price, discount, anonymous_discount", [(10, 8, 6), (8, 4, 3), (4, 8, 8), (999, 999, 999)])
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_discount_for_multi_group_using_customer(rf, admin_user, price, discount, anonymous_discount):
     customer = create_customer()
     anonymous = AnonymousContact()
@@ -271,6 +279,7 @@ def test_discount_for_multi_group_using_customer(rf, admin_user, price, discount
 
 @pytest.mark.parametrize("price,discount,quantity", [(10, 8, 2), (8, 4, 3), (999, 999, 4)])
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_discount_quantities(rf, admin_user, price, discount, quantity):
     request, shop, group = initialize_test(rf, True)
 
@@ -286,6 +295,7 @@ def test_discount_quantities(rf, admin_user, price, discount, quantity):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_customer_group_pricing_patched_configuration)
 def test_price_info_cache_bump(rf):
     request, shop, group = initialize_test(rf, True)
 

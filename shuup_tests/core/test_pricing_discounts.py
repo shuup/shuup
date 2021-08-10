@@ -29,19 +29,11 @@ provide_overrider = override_provides("discount_module", [__name__ + ":Minus25Di
 
 
 def setup_module(module):
-    global original_pricing_module
-
-    original_pricing_module = settings.SHUUP_PRICING_MODULE
-
-    settings.SHUUP_PRICING_MODULE = "default_pricing"
     provide_overrider.__enter__()
 
 
 def teardown_module(module):
-    global original_pricing_module
-
     provide_overrider.__exit__(None, None, None)
-    settings.SHUUP_PRICING_MODULE = original_pricing_module
 
 
 class Minus25DiscountModule(DiscountModule):

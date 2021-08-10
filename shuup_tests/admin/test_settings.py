@@ -19,6 +19,7 @@ from shuup.core.setting_keys import (
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
     SHUUP_DISCOUNT_MODULES,
     SHUUP_HOME_CURRENCY,
+    SHUUP_PRICING_MODULE,
     SHUUP_REFERENCE_NUMBER_LENGTH,
     SHUUP_REFERENCE_NUMBER_METHOD,
     SHUUP_REFERENCE_NUMBER_PREFIX,
@@ -51,6 +52,12 @@ def get_data(reference_method):
             SHUUP_DISCOUNT_MODULES,
             ("customer_group_discount", "product_discounts"),
             ("customer_group_discount", "product_discounts"),
+        ),
+        (
+            "order_settings",
+            SHUUP_PRICING_MODULE,
+            "multivendor_supplier_pricing",
+            "multivendor_supplier_pricing",
         ),
         (
             "order_settings",

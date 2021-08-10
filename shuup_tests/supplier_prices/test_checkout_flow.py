@@ -9,6 +9,7 @@ import decimal
 import pytest
 import random
 from django.test import override_settings
+from mock import patch
 
 from shuup.core import cache
 from shuup.core.models import Order, Supplier
@@ -20,6 +21,8 @@ from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import SmartClient
+
+from .utils import get_supplier_prices_patched_configuration
 
 
 @pytest.mark.django_db
@@ -52,56 +55,57 @@ def test_order_flow_with_multiple_suppliers():
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=product_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
-    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+    with patch("shuup.configuration.get", new=get_supplier_prices_patched_configuration):
+        with override_settings(SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
 
-        # Ok so cheapest price should be default supplier
-        expected_supplier = shop_product.get_supplier()
-        assert expected_supplier.name == "Mike Inc"
-        with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
-            c = SmartClient()
+            # Ok so cheapest price should be default supplier
+            expected_supplier = shop_product.get_supplier()
+            assert expected_supplier.name == "Mike Inc"
+            with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+                c = SmartClient()
 
-            # Case 1: use default supplier
-            _add_to_basket(c, product.pk, 2)
-            order = _complete_checkout(c, n_orders_pre + 1)
-            assert order
-            product_lines = order.lines.products()
-            assert len(product_lines) == 1
-            assert product_lines[0].supplier.pk == expected_supplier.pk
-            assert product_lines[0].base_unit_price_value == decimal.Decimal("10")
+                # Case 1: use default supplier
+                _add_to_basket(c, product.pk, 2)
+                order = _complete_checkout(c, n_orders_pre + 1)
+                assert order
+                product_lines = order.lines.products()
+                assert len(product_lines) == 1
+                assert product_lines[0].supplier.pk == expected_supplier.pk
+                assert product_lines[0].base_unit_price_value == decimal.Decimal("10")
 
-            # Case 2: force supplier to Johnny Inc
-            johnny_supplier = Supplier.objects.filter(name="Johnny Inc").first()
-            _add_to_basket(c, product.pk, 3, johnny_supplier)
-            order = _complete_checkout(c, n_orders_pre + 2)
-            assert order
-            product_lines = order.lines.products()
-            assert len(product_lines) == 1
-            assert product_lines[0].supplier.pk == johnny_supplier.pk
-            assert product_lines[0].base_unit_price_value == decimal.Decimal("30")
+                # Case 2: force supplier to Johnny Inc
+                johnny_supplier = Supplier.objects.filter(name="Johnny Inc").first()
+                _add_to_basket(c, product.pk, 3, johnny_supplier)
+                order = _complete_checkout(c, n_orders_pre + 2)
+                assert order
+                product_lines = order.lines.products()
+                assert len(product_lines) == 1
+                assert product_lines[0].supplier.pk == johnny_supplier.pk
+                assert product_lines[0].base_unit_price_value == decimal.Decimal("30")
 
-            # Case 3: order 2 pcs from Mike and 3 pcs from Simon Inc
-            mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
-            _add_to_basket(c, product.pk, 2, mike_supplier)
+                # Case 3: order 2 pcs from Mike and 3 pcs from Simon Inc
+                mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
+                _add_to_basket(c, product.pk, 2, mike_supplier)
 
-            simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
-            _add_to_basket(c, product.pk, 3, simon_supplier)
+                simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
+                _add_to_basket(c, product.pk, 3, simon_supplier)
 
-            order = _complete_checkout(c, n_orders_pre + 3)
-            assert order
-            assert order.taxful_total_price_value == decimal.Decimal("80")  # Math: 2x10e + 3x20e
+                order = _complete_checkout(c, n_orders_pre + 3)
+                assert order
+                assert order.taxful_total_price_value == decimal.Decimal("80")  # Math: 2x10e + 3x20e
 
-            product_lines = order.lines.products()
-            assert len(product_lines) == 2
+                product_lines = order.lines.products()
+                assert len(product_lines) == 2
 
-            mikes_line = [line for line in product_lines if line.supplier.pk == mike_supplier.pk][0]
-            assert mikes_line
-            assert mikes_line.quantity == 2
-            assert mikes_line.base_unit_price_value == decimal.Decimal("10")
+                mikes_line = [line for line in product_lines if line.supplier.pk == mike_supplier.pk][0]
+                assert mikes_line
+                assert mikes_line.quantity == 2
+                assert mikes_line.base_unit_price_value == decimal.Decimal("10")
 
-            simon_line = [line for line in product_lines if line.supplier.pk == simon_supplier.pk][0]
-            assert simon_line
-            assert simon_line.quantity == 3
-            assert simon_line.base_unit_price_value == decimal.Decimal("20")
+                simon_line = [line for line in product_lines if line.supplier.pk == simon_supplier.pk][0]
+                assert simon_line
+                assert simon_line.quantity == 3
+                assert simon_line.base_unit_price_value == decimal.Decimal("20")
 
 
 def _add_to_basket(client, product_id, quantity, supplier=None):

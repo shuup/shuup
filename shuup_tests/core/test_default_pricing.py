@@ -7,21 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
+from mock import patch
 
 from shuup.core.pricing import get_pricing_module
 from shuup.core.pricing.default_pricing import DefaultPricingModule
 from shuup.testing.factories import create_product, create_random_person, get_default_customer_group, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
-original_pricing_module = settings.SHUUP_PRICING_MODULE
-
-
-def setup_module(module):
-    settings.SHUUP_PRICING_MODULE = "default_pricing"
-
-
-def teardown_module(module):
-    settings.SHUUP_PRICING_MODULE = original_pricing_module
+from .utils import get_default_pricing_patched_configuration
 
 
 def get_shop_with_tax(include_tax):
@@ -46,12 +39,15 @@ def initialize_test(rf, include_tax=False):
     return request, shop, group
 
 
+@pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_default_pricing_patched_configuration)
 def test_module_is_active():  # this test is because we want to make sure `CustomerGroupPricing` is active
     module = get_pricing_module()
     assert isinstance(module, DefaultPricingModule)
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_default_pricing_patched_configuration)
 def test_default_price_none_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
@@ -60,6 +56,7 @@ def test_default_price_none_allowed(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_default_pricing_patched_configuration)
 def test_default_price_zero_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
@@ -68,6 +65,7 @@ def test_default_price_zero_allowed(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_default_pricing_patched_configuration)
 def test_default_price_value_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
@@ -76,6 +74,7 @@ def test_default_price_value_allowed(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_default_pricing_patched_configuration)
 def test_non_one_quantity(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()

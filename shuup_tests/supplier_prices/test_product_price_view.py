@@ -10,11 +10,14 @@ from __future__ import unicode_literals
 import pytest
 from bs4 import BeautifulSoup
 from django.test import override_settings
+from mock import patch
 
 from shuup.core.models import Supplier
 from shuup.testing import factories
 from shuup.testing.models import SupplierPrice
 from shuup.utils.django_compat import reverse
+
+from .utils import get_supplier_prices_patched_configuration
 
 
 @pytest.mark.django_db
@@ -35,13 +38,14 @@ def test_product_price(client):
         SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=product_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
-    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
-        for name, price in supplier_data:
-            supplier = Supplier.objects.get(name=name)
-            response = client.get(
-                reverse("shuup:xtheme_extra_view", kwargs={"view": "product_price"})
-                + "?id=%s&quantity=%s&supplier=%s" % (product.pk, 1, supplier.pk)
-            )
-            soup = BeautifulSoup(response.content)
-            price_span = soup.find("span", {"class": "product-price"})
-            assert "%s" % price in price_span.text
+    with patch("shuup.configuration.get", new=get_supplier_prices_patched_configuration):
+        with override_settings(SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+            for name, price in supplier_data:
+                supplier = Supplier.objects.get(name=name)
+                response = client.get(
+                    reverse("shuup:xtheme_extra_view", kwargs={"view": "product_price"})
+                    + "?id=%s&quantity=%s&supplier=%s" % (product.pk, 1, supplier.pk)
+                )
+                soup = BeautifulSoup(response.content)
+                price_span = soup.find("span", {"class": "product-price"})
+                assert "%s" % price in price_span.text

@@ -60,5 +60,14 @@
             "key": "discount_modules",
             "value": ["customer_group_discount", "product_discounts"]
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 8,
+        "fields": {
+            "shop": null,
+            "key": "pricing_module",
+            "value": "\"customer_group_pricing\""
+        }
     }
 ]
