@@ -2,8 +2,7 @@
 {% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 {% from "shuup/admin/macros/general.jinja" import auth_block %}
 {% block content %}
-    {%- set logo = request.shop.logo if request.shop.logo else None -%}
-    {% call auth_block(logo=logo) %}
+    {% call auth_block(logo=request.shop.logo) %}
         <form action="{{ request.path }}" method="post" id="login_form">
             <div class="auth-body">
                 <div class="auth-heading pt-3 pb-3 text-center">

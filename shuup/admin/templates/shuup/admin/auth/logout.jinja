@@ -2,8 +2,7 @@
 {% block title %}{% trans %}Logged out{% endtrans %}{% endblock %}
 {% from "shuup/admin/macros/general.jinja" import auth_block %}
 {% block content %}
-    {%- set logo = request.shop.logo if request.shop.logo else None -%}
-    {% call auth_block(logo=logo) %}
+    {% call auth_block(logo=request.shop.logo) %}
         <div class="auth-body">
             <h4 class="pt-4 pb-4 text-center">{% trans %}You have been securely logged out. Hope to see you soon!{% endtrans %}</h4>
             <div class="actions">
