@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from typing import Iterable
 
@@ -18,6 +17,7 @@ from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.campaigns.admin_module.utils import get_extra_permissions_for_admin_module
 from shuup.campaigns.models import BasketCampaign, Coupon
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES
 
 
 class CampaignAdminModule(AdminModule):
@@ -36,14 +36,10 @@ class CampaignAdminModule(AdminModule):
             name_template="coupon.%s",
         )
 
-        catalog_campaign_urls = (
-            get_edit_and_list_urls(
-                url_prefix="^campaigns/catalog",
-                view_template="shuup.campaigns.admin_module.views.CatalogCampaign%sView",
-                name_template="catalog_campaign.%s",
-            )
-            if _show_catalog_campaigns_in_admin()
-            else []
+        catalog_campaign_urls = get_edit_and_list_urls(
+            url_prefix="^campaigns/catalog",
+            view_template="shuup.campaigns.admin_module.views.CatalogCampaign%sView",
+            name_template="catalog_campaign.%s",
         )
 
         return basket_campaign_urls + catalog_campaign_urls + coupon_urls
@@ -117,4 +113,6 @@ class CampaignAdminModule(AdminModule):
 
 
 def _show_catalog_campaigns_in_admin():
-    return bool("catalog_campaigns" in settings.SHUUP_DISCOUNT_MODULES)
+    from shuup import configuration
+
+    return bool("catalog_campaigns" in configuration.get(None, SHUUP_DISCOUNT_MODULES))

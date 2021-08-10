@@ -6,9 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from decimal import Decimal
-from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
+from mock import patch
 
 from shuup.campaigns.models import CatalogCampaign
 from shuup.campaigns.models.catalog_filters import CategoryFilter, ProductFilter, ProductTypeFilter
@@ -18,6 +18,8 @@ from shuup.front.basket import get_basket
 from shuup.testing.factories import create_product, get_default_category, get_default_supplier, get_shipping_method
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
+
+from .utils import get_discount_patched_configuration
 
 
 @pytest.mark.django_db
@@ -93,7 +95,7 @@ def test_product_type_filter(rf):
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_productfilter_works():
     rf = RequestFactory()
     request, shop, group = initialize_test(rf, False)

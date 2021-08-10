@@ -17,6 +17,7 @@ from shuup.core.models import Currency
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_DISCOUNT_MODULES,
     SHUUP_HOME_CURRENCY,
     SHUUP_REFERENCE_NUMBER_LENGTH,
     SHUUP_REFERENCE_NUMBER_METHOD,
@@ -44,6 +45,12 @@ def get_data(reference_method):
             SHUUP_REFERENCE_NUMBER_PREFIX,
             "",
             "",
+        ),
+        (
+            "order_settings",
+            SHUUP_DISCOUNT_MODULES,
+            ("customer_group_discount", "product_discounts"),
+            ("customer_group_discount", "product_discounts"),
         ),
         (
             "order_settings",
@@ -95,6 +102,8 @@ def test_system_settings_forms(rf, admin_user):
     for form_id, key, value, expected_value in field_data:
         if isinstance(cleaned_data[key], (str, int, bool)):
             assert cleaned_data[key] == expected_value
+        elif isinstance(cleaned_data[key], list):
+            assert cleaned_data[key] == list(expected_value)
         else:
             assert str(cleaned_data[key]) == expected_value
 
@@ -117,10 +126,13 @@ def test_system_settings(rf, admin_user, reference_method):
 
     assert response.status_code == 302
     for form_id, key, value, expected_value in field_data:
+        result_value = configuration.get(None, key)
         if isinstance(expected_value, models.Model):
-            assert configuration.get(None, key) == str(expected_value)
+            assert result_value == str(expected_value)
+        elif isinstance(result_value, list):
+            assert result_value == list(expected_value)
         else:
-            assert configuration.get(None, key) == expected_value
+            assert result_value == expected_value
 
     assert len(messages.get_messages(request)) == 1
 
@@ -128,8 +140,11 @@ def test_system_settings(rf, admin_user, reference_method):
     response = view_func(request)
     assert response.status_code == 302
     for form_id, key, value, expected_value in field_data:
+        result_value = configuration.get(None, key)
         if isinstance(expected_value, models.Model):
             assert configuration.get(None, key) == str(expected_value)
+        elif isinstance(result_value, list):
+            assert result_value == list(expected_value)
         else:
             assert configuration.get(None, key) == expected_value
 

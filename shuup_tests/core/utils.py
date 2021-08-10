@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.configuration import get as original_configuration_get
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES
 
 
 class modify(object):
@@ -27,3 +29,15 @@ class modify(object):
             setattr(self.target, key, value)
         if self.save:
             self.target.save()
+
+
+def get_price_display_patched_configuration(shop, key, default=None):
+    if key == SHUUP_DISCOUNT_MODULES:
+        return []
+    return original_configuration_get(shop, key, default)
+
+
+def get_pricing_discounts_patched_configuration(shop, key, default=None):
+    if key == SHUUP_DISCOUNT_MODULES:
+        return ["minus25"]
+    return original_configuration_get(shop, key, default)

@@ -51,5 +51,14 @@
             "key": "order_reference_number_prefix",
             "value": "\"\""
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 7,
+        "fields": {
+            "shop": null,
+            "key": "discount_modules",
+            "value": ["customer_group_discount", "product_discounts"]
+        }
     }
 ]

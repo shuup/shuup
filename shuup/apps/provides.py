@@ -17,6 +17,8 @@ loading components, both first-party and third-party.
 
 from __future__ import unicode_literals
 
+import importlib
+
 import six
 from collections import OrderedDict, defaultdict
 from contextlib import contextmanager
@@ -170,61 +172,73 @@ def override_provides(category, spec_list):
         _provide_specs[category] = old_provides
 
 
-def load_module(setting_name, provide_category):
+def load_module(configuration_name, provide_category):
     """
-    Load a module from a module setting.
+    Load a module from a module configuration.
 
-    The value of the setting must be a module
+    The value of the configuration must be a module
     identifier for the given provide category.
 
-    :param setting_name: The setting name for the identifier.
-    :type setting_name: str
+    :param configuration_name: The configuration name for the identifier.
+    :type configuration_name: str
     :param provide_category:
       The provide category for the identifier lookup (e.g. ``tax_module``).
     :type provide_category: str
     :return: An object.
     :rtype: Any
     """
-    setting_value = _get_settings_value(setting_name)
-    return _load_module(provide_category, setting_name, setting_value)
+    setting_value = _get_configuration_value(configuration_name)
+    return _load_module(provide_category, configuration_name, setting_value)
 
 
-def load_modules(setting_name, provide_category):
+def load_modules(configuration_name, provide_category):
     """
-    Load a list of modules from a module setting.
+    Load a list of modules from a module configuration or module setting.
 
-    The value of the setting must be a list of module
+    The value of the configuration must be a list of module
     identifiers for the given provide category.
 
     The modules are returned in the same order they
     are declared in the settings.
 
-    :param setting_name: The setting name for the identifier list.
-    :type setting_name: str
+    :param configuration_name: The configuration name for the identifier list.
+    :type configuration_name: str
     :param provide_category:
       The provide category for the identifier lookup (e.g. ``tax_module``).
     :type provide_category: str
     :return: A list of objects.
     :rtype: list[Any]
     """
-    setting_value = _get_settings_value(setting_name)
-    return [_load_module(provide_category, setting_name, x) for x in setting_value]
+    configuration_value = _get_configuration_value(configuration_name)
+    return [_load_module(provide_category, configuration_name, x) for x in configuration_value]
 
 
-def load_module_instances(setting_name, provide_category):
+def load_module_instances(configuration_name, provide_category):
     """
-    Load a list of initialized modules from a module setting.
+    Load a list of initialized modules from a module configuration or a module settings.
 
     Basically does the same as `load_modules`, but also initializes the
     loaded modules by calling them.
     """
-    return [x() for x in load_modules(setting_name, provide_category)]
+    return [x() for x in load_modules(configuration_name, provide_category)]
 
 
-def _get_settings_value(setting_name):
-    if not hasattr(settings, setting_name):
-        raise ImproperlyConfigured("Error! The setting `%s` MUST be set." % setting_name)
-    return getattr(settings, setting_name, None)
+def _get_configuration_value(configuration_name):
+    from shuup import configuration
+
+    try:
+        configuration_key = getattr(importlib.import_module("shuup.core.setting_keys"), configuration_name)
+    except AttributeError:
+        pass
+    try:
+        configuration_value = configuration.get(None, configuration_key)
+        if configuration_value is not None:
+            return configuration_value
+    except NameError:
+        pass
+    if not hasattr(settings, configuration_name):
+        raise ImproperlyConfigured("Error! The setting `%s` MUST be set." % configuration_name)
+    return getattr(settings, configuration_name, None)
 
 
 def _load_module(provide_category, setting_name, setting_value):

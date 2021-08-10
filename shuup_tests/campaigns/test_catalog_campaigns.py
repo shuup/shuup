@@ -9,10 +9,10 @@ import decimal
 import json
 import pytest
 from decimal import Decimal
-from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.timezone import now
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.admin.modules.orders.views.edit import OrderEditView
 from shuup.campaigns.models.campaigns import CatalogCampaign
@@ -24,9 +24,11 @@ from shuup.testing.factories import create_product, get_default_customer_group, 
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.campaigns import initialize_test
 
+from .utils import get_discount_patched_configuration
+
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_campaign_creation():
     rf = RequestFactory()
     activate("en")
@@ -62,7 +64,7 @@ def test_campaign_creation():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_condition_doesnt_match():
     rf = RequestFactory()
     activate("en")
@@ -77,7 +79,7 @@ def test_condition_doesnt_match():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_condition_affects_price():
     rf = RequestFactory()
     activate("en")
@@ -100,7 +102,7 @@ def test_condition_affects_price():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_filter_affects_price():
     rf = RequestFactory()
     activate("en")
@@ -126,7 +128,7 @@ def test_filter_affects_price():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_campaign_all_rules_must_match1():
     rf = RequestFactory()
     activate("en")
@@ -164,7 +166,7 @@ def test_campaign_all_rules_must_match1():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_percentage_campaigns():
     rf = RequestFactory()
     activate("en")
@@ -202,7 +204,7 @@ def test_percentage_campaigns():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_only_best_price_affects():
     rf = RequestFactory()
     activate("en")
@@ -245,7 +247,7 @@ def test_only_best_price_affects():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_minimum_price_is_forced():
     rf = RequestFactory()
     activate("en")
@@ -280,7 +282,7 @@ def test_minimum_price_is_forced():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_price_cannot_be_under_zero():
     rf = RequestFactory()
     activate("en")
@@ -319,7 +321,7 @@ def create_condition_and_filter(cat, request):
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_start_end_dates():
     rf = RequestFactory()
     activate("en")
@@ -378,7 +380,7 @@ def test_start_end_dates():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_availability():
     rf = RequestFactory()
     activate("en")
@@ -397,7 +399,7 @@ def test_availability():
 
 @pytest.mark.django_db
 def test_admin_order_with_campaign(rf, admin_user):
-    with override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"]):
+    with patch("shuup.configuration.get", new=get_discount_patched_configuration):
         request, shop, group = initialize_test(rf, False)
         customer = request.customer
         cat = Category.objects.create(name="test")
@@ -431,7 +433,7 @@ def test_admin_order_with_campaign(rf, admin_user):
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_product_catalog_campaigns():
     shop = get_default_shop()
 
@@ -512,7 +514,7 @@ def test_product_catalog_campaigns():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_product_catalog_campaigns2():
     shop = get_default_shop()
     product = create_product("test", shop, default_price=20)
@@ -539,7 +541,7 @@ def test_product_catalog_campaigns2():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_product_catalog_campaigns3():
     shop = get_default_shop()
     product = create_product("test", shop, default_price=20)

@@ -7,7 +7,9 @@
 import decimal
 import pytest
 from django.conf import settings
+from mock import patch
 
+from shuup import configuration
 from shuup.apps.provides import override_provides
 from shuup.core.pricing import (
     DiscountModule,
@@ -17,31 +19,29 @@ from shuup.core.pricing import (
     get_pricing_steps,
     get_pricing_steps_for_products,
 )
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
+
+from .utils import get_pricing_discounts_patched_configuration
 
 provide_overrider = override_provides("discount_module", [__name__ + ":Minus25DiscountModule"])
 
 
 def setup_module(module):
     global original_pricing_module
-    global original_discount_modules
 
     original_pricing_module = settings.SHUUP_PRICING_MODULE
-    original_discount_modules = settings.SHUUP_DISCOUNT_MODULES
 
     settings.SHUUP_PRICING_MODULE = "default_pricing"
-    settings.SHUUP_DISCOUNT_MODULES = ["minus25"]
     provide_overrider.__enter__()
 
 
 def teardown_module(module):
     global original_pricing_module
-    global original_discount_modules
 
     provide_overrider.__exit__(None, None, None)
     settings.SHUUP_PRICING_MODULE = original_pricing_module
-    settings.SHUUP_DISCOUNT_MODULES = original_discount_modules
 
 
 class Minus25DiscountModule(DiscountModule):
@@ -67,6 +67,7 @@ def initialize_test(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_get_price_info(rf):
     (request, products, price) = initialize_test(rf)
     pi = get_price_info(request, products[0])
@@ -76,6 +77,7 @@ def test_get_price_info(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_get_price_info_with_quantity(rf):
     (request, products, price) = initialize_test(rf)
     pi = get_price_info(request, products[0], 20)
@@ -85,6 +87,7 @@ def test_get_price_info_with_quantity(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_product_get_price_info(rf):
     (request, products, price) = initialize_test(rf)
     pi = products[0].get_price_info(request)
@@ -93,6 +96,7 @@ def test_product_get_price_info(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_get_price_infos(rf):
     (request, products, price) = initialize_test(rf)
     pis = get_price_infos(request, products)
@@ -106,6 +110,7 @@ def test_get_price_infos(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_get_pricing_steps(rf):
     (request, products, price) = initialize_test(rf)
     pis = get_pricing_steps(request, products[0])
@@ -116,6 +121,7 @@ def test_get_pricing_steps(rf):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_pricing_discounts_patched_configuration)
 def test_get_pricing_steps_for_products(rf):
     (request, products, price) = initialize_test(rf)
     pis = get_pricing_steps_for_products(request, products)

@@ -5,8 +5,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.test import override_settings
 from django.test.client import RequestFactory
+from mock import patch
 
 from shuup.campaigns.models.campaigns import CatalogCampaign
 from shuup.campaigns.models.context_conditions import ContactCondition, ContactGroupCondition
@@ -14,6 +14,8 @@ from shuup.campaigns.models.product_effects import ProductDiscountAmount
 from shuup.core.models import AnonymousContact
 from shuup.testing.factories import create_product, create_random_person, get_default_customer_group, get_shop
 from shuup.testing.utils import apply_request_middleware
+
+from .utils import get_discount_patched_configuration
 
 
 def get_request_for_contact_tests(rf):
@@ -41,7 +43,7 @@ def assert_product_price_value_with_customer(request, customer, product, price_v
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_context_contact_group_condition():
     rf = RequestFactory()
     original_price_value, discount_value = 123, 15
@@ -63,7 +65,7 @@ def test_context_contact_group_condition():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_group_condition_with_anonymous_contact():
     rf = RequestFactory()
     original_price_value, discount_value = 6, 4
@@ -78,7 +80,7 @@ def test_group_condition_with_anonymous_contact():
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_context_contact_condition():
     rf = RequestFactory()
     original_price_value, discount_value = 2, 1

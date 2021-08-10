@@ -5,6 +5,7 @@ from shuup import configuration
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_DISCOUNT_MODULES,
     SHUUP_HOME_CURRENCY,
     SHUUP_REFERENCE_NUMBER_LENGTH,
     SHUUP_REFERENCE_NUMBER_METHOD,
@@ -19,6 +20,7 @@ def move_settings_to_db(apps, schema_editor):
     configuration.set(None, SHUUP_REFERENCE_NUMBER_METHOD, settings.SHUUP_REFERENCE_NUMBER_METHOD)
     configuration.set(None, SHUUP_REFERENCE_NUMBER_LENGTH, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
     configuration.set(None, SHUUP_REFERENCE_NUMBER_PREFIX, settings.SHUUP_REFERENCE_NUMBER_PREFIX)
+    configuration.set(None, SHUUP_DISCOUNT_MODULES, settings.SHUUP_DISCOUNT_MODULES)
 
 
 class Migration(migrations.Migration):
