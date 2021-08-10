@@ -11,6 +11,7 @@ import bleach
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
@@ -129,3 +130,4 @@ class SupplierContactAddressForm(forms.ModelForm):
             "latitude",
             "longitude",
         )
+        widgets = {"phone": PhoneNumberPrefixWidget}

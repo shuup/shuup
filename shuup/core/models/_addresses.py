@@ -13,6 +13,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from enumfields import Enum, EnumIntegerField
+from phonenumber_field.modelfields import PhoneNumberField
 
 from shuup.core.utils.name_mixin import NameMixin
 from shuup.utils.analog import define_log_model
@@ -171,8 +172,8 @@ class Address(NameMixin, ShuupModel):
         blank=True,
         help_text=_("The business tax number. For example, EIN in the USA or VAT code in the EU."),
     )
-    phone = models.CharField(
-        verbose_name=_("phone"), max_length=64, blank=True, help_text=_("The primary phone number for the address.")
+    phone = PhoneNumberField(
+        verbose_name=_("phone"), blank=True, help_text=_("The primary phone number for the address.")
     )
     email = models.EmailField(
         verbose_name=_("email"), max_length=128, blank=True, help_text=_("The primary email for the address.")

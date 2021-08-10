@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from shuup.core.models import Contact, ImmutableAddress, MutableAddress
 from shuup.core.shop_provider import get_shop
@@ -36,6 +37,7 @@ class MutableAddressForm(forms.ModelForm):
             "country",
         )
         labels = {"region_code": _("Region")}
+        widgets = {"phone": PhoneNumberPrefixWidget}
 
     def __init__(self, **kwargs):
         super(MutableAddressForm, self).__init__(**kwargs)

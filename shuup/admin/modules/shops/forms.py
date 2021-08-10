@@ -9,6 +9,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
@@ -89,6 +90,7 @@ class ContactAddressForm(forms.ModelForm):
             "latitude",
             "longitude",
         )
+        widgets = {"phone": PhoneNumberPrefixWidget}
 
 
 class ShopWizardForm(ShuupAdminForm):
@@ -134,7 +136,7 @@ class ShopAddressWizardForm(forms.ModelForm):
             "region_code",
             "region",
         )
-        widgets = {"region_code": forms.Select(choices=[])}
+        widgets = {"region_code": forms.Select(choices=[]), "phone": PhoneNumberPrefixWidget}
         labels = {
             "postal_code": _("Zip/Postal code"),
             "region_code": _("State/Province"),
