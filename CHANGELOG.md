@@ -29,6 +29,13 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Discounts: show the `exclude_selected_category` field in admin
 
+## [2.14.2] - 2021-08-10
+
+### Fixed
+
+- Admin: Fix auth_block macro to have logo as optional parameter
+- General: Fix formatted Finish translations
+
 ## [2.14.1] - 2021-08-04
 
 ### Fixed
