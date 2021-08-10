@@ -130,7 +130,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         # item doesn't manage stocks
         if not sv.stock_managed:
             # make sure to index products either way
-            run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier_id=self.supplier.pk)
+            run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier=self.supplier.pk)
             return
 
         values = get_current_stock_value(supplier_id=supplier_id, product_id=product_id)
@@ -164,7 +164,7 @@ class SimpleSupplierModule(BaseSupplierModule):
         stocks_updated.send(
             type(self), shops=self.supplier.shops.all(), product_ids=[product_id], supplier=self.supplier
         )
-        run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier_id=self.supplier.pk)
+        run_task("shuup.simple_supplier.tasks.index_product", product=product_id, supplier=self.supplier.pk)
 
     def ship_products(self, shipment, product_quantities, *args, **kwargs):
         # stocks are managed, do stocks check
