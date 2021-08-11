@@ -233,10 +233,7 @@ def test_safe_product_description():
         assert safe_product_description(text) == text
 
     with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION=False):
-        assert (
-            safe_product_description(text)
-            == "<p>&lt;strong&gt;product description&lt;/strong&gt;<br>Some text here.</p>"
-        )
+        assert safe_product_description(text) == "<p>product description<br>Some text here.</p>"
 
 
 def test_safe_vendor_description():

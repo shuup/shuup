@@ -368,9 +368,12 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_metadata(object, title, text, content_type) %}
+{% macro render_metadata(object, title, text, content_type, tags="") %}
     {% if text %}
-        <meta name="description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+        <meta name="description" content="{{ text|cleanmeta|truncate(160) }}">
+    {% endif %}
+    {% if tags %}
+        <meta name="tags" content="{{ tags }}">
     {% endif %}
     {{ render_open_graph_metadata(object, title, text, content_type) }}
 {% endmacro %}
@@ -381,7 +384,7 @@
     <meta property="og:url" content="{{ shuup.urls.model_url(object, absolute=True) }}">
     <meta property="og:title" content="{{ title }}">
     {% if text %}
-        <meta property="og:description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+        <meta property="og:description" content="{{ text|cleanmeta|truncate(160) }}">
     {% endif %}
     {% if content_type == "product" %}
         {% set object_image = object.primary_image or object.media.filter(shops=request.shop, kind=2).order_by("ordering").first() %}
