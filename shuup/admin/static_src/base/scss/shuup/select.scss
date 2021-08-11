@@ -48,7 +48,7 @@ span.select2-selection__placeholder,
 span.select2-container--default,
 span.select2-selection--single,
 span.select2-selection__rendered {
-    color: var(--text-color)
+    color: var(--text-color)!important;
 }
 span.select2-selection__rendered {
     width: 100%;

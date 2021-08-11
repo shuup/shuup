@@ -188,11 +188,12 @@
         }
 
         td a {
-            color: darken($primary, 10%);
+            color: var(--primary-dark);
             text-decoration: none;
 
             &:hover {
                 text-decoration: underline;
+                color: var(--primary);
             }
             &.set-shipment-status{
                 color: #ffffff;
