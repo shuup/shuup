@@ -12,6 +12,10 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Add new Catalog API to index and fetch products with annotated price and discounted price
 
+### Fixed
+
+- Admin: Fix primary buttons, list buttons, and filter dropdowns to use css variables
+
 ### Changed
 
 - Importer: index product after importing it

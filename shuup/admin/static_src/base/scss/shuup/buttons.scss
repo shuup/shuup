@@ -154,17 +154,131 @@ fieldset[disabled] .btn {
     }
 }
 
+.btn-primary.dropdown-toggle,
+.dropup .btn-primary.dropdown-toggle {
+    &:after {
+        color: $white!important;
+    }
+}
+
+
 .btn-primary {
-    @include btn-override-mixin($primary, 7%, 12%, 11%);
-    box-shadow: 0 2px 8px var(--primary-lightest);
-    border: none;
+    background-color: var(--primary);
+    color: $white;
+    font-weight: 700;
+    border-color: var(--primary);
+
+    &:hover {
+        background-color: var(--primary-dark);
+        color: $white;
+        border-color: var(--primary-dark);
+    }
+
+    &.btn-inverse {
+        background-color: var(--primary-very-light);
+        border-color: var(--primary-opaque);
+        color: var(--primary);
+    }
+
+    &:focus {
+        border-color: var(--primary-dark);
+        background: var(--primary-dark);
+        color: $white;
+        box-shadow: none;
+    }
+    
+    &:active {
+        border-top-color: var(--primary-dark);
+        border-left-color: var(--primary-dark);
+        border-right-color: var(--primary-dark);
+    }
+    
+    &.disabled, &[disabled] {
+        border-color: var(--primary);
+        background-color: var(--primary);
+    }
+    
+    &.btn-inverse {
+        border-color: var(--primary);
+        background: transparent;
+        color: var(--primary);
+        &:hover, &:focus {
+            color: $white;
+            background: var(--primary);
+        }
+        &:active {
+            border-top-color: var(--primary-dark);
+            border-left-color: var(--primary-dark);
+            border-right-color: var(--primary-dark);
+        }
+    }
+    
+    .btn + .dropdown-toggle {
+        border-left-color: var(--primary-dark);
+    
+        &:active {
+            border-top-color: var(--primary-dark);
+            border-left-color: var(--primary-dark);
+            border-right-color: var(--primary-dark);
+        }
+    }
+    
+    .open > .dropdown-toggle {
+        background: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+    
+    .open > .btn + .dropdown-toggle {
+        background: var(--primary-dark);
+        border-color: transparent;
+        border-left-color: var(--primary-dark);
+    }  
+
+
+    &.btn-dropdown-toggle {
+        background-color: var(--primary-lighter);
+        transition: none;
+
+        &.opaque {
+            background-color: var(--sucess-darker);
+
+            &::after {
+                color: $white !important;
+            }
+        }
+    }
+
+    &.btn-save {
+        transition: none;
+
+        &.opaque {
+            background-color: var(--primary-dark);
+            color: $white;
+            position: fixed;
+            bottom: 10px;
+            right: 20px;
+            z-index: $zindex-fixed;
+        }
+    }
 
     &.btn-dropdown-toggle {
         background-color: var(--primary-dark);
 
         &::after {
-            color: $white;
+            color: $white!important;
         }
+    }
+
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active,
+    .show > &.dropdown-toggle {
+      background-color: var(--primary-dark);
+      border-color:  var(--primary-dark);
+      box-shadow: 0 0 0 $btn-focus-width  var(--primary-light);
+  
+      &:focus {
+          box-shadow: 0 0 0 $btn-focus-width  var(--primary-light);
+      }
     }
 }
 
@@ -362,7 +476,7 @@ fieldset[disabled] .btn {
 .btn-inverse {
     background-color: var(--secondary-opaque);
     border-color: transparent;
-    color: var(--secondary-light);
+    color: var(--secondary);
     font-weight: 700;
 
     i {
@@ -372,7 +486,7 @@ fieldset[disabled] .btn {
     &:hover,
     &:focus {
         background-color: var(--secondary-lightest);
-        color: var(--secondary-light);
+        color: var(--secondary-dark);
 
         i {
             opacity: 0.8;
