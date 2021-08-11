@@ -90,7 +90,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             "variation_name",
         )
         widgets = {
-            "keywords": forms.TextInput(),
+            "keywords": forms.TextInput(attrs={"placeholder": _("EXAMPLE: cotton, wool, clothing, ...")}),
             "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
             "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
             "description": (
