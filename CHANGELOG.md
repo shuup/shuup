@@ -35,6 +35,7 @@ List all changes after the last release here (newer on top). Each change on a se
   and `ProductListFormModifier.get_queryset`.
 - Front: user the new Catalog API on every place that retrieve products from the database
 - Xtheme: user the new Catalog API on plugins that retrieve products
+- Core: Edit verbose name for ProductMedia.ordering to be more intuitive.
 
 ## [2.14.2] - 2021-08-10
 
