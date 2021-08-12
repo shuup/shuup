@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.configuration import get as original_configuration_get
 from shuup.core.setting_keys import (
+    SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
     SHUUP_DISCOUNT_MODULES,
     SHUUP_PRICING_MODULE,
     SHUUP_TAX_MODULE,
@@ -72,5 +73,17 @@ def get_telemetry_false_configuration(shop, key, default=None):
 
 def get_telemetry_true_configuration(shop, key, default=None):
     if key == SHUUP_TELEMETRY_ENABLED:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_calculate_taxes_false_configuration(shop, key, default=None):
+    if key == SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_calculate_taxes_true_configuration(shop, key, default=None):
+    if key == SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
         return True
     return original_configuration_get(shop, key, default)

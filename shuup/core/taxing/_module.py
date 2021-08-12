@@ -22,6 +22,7 @@ from shuup.core.excs import (
     SupplierHasNoSupplierModules,
 )
 from shuup.core.pricing import TaxfulPrice
+from shuup.core.setting_keys import SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
 from shuup.utils.money import Money
 
 from ._context import TaxingContext
@@ -43,14 +44,16 @@ def get_tax_module():
 
 def should_calculate_taxes_automatically():
     """
-    If ``settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE``
+    If configuration ``SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE``
     is False taxes shouldn't be calculated automatically otherwise
     use current tax module value ``TaxModule.calculating_is_cheap``
     to determine whether taxes should be calculated automatically.
 
     :rtype: bool
     """
-    if not settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+    from shuup import configuration
+
+    if not configuration.get(None, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE):
         return False
     return get_tax_module().calculating_is_cheap
 

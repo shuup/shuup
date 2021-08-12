@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 import pytest
 from collections import defaultdict
 from decimal import Decimal
-from django.test.utils import override_settings
+from mock import patch
 
 from shuup.core.models import OrderLineType, Tax, TaxClass
 from shuup.core.order_creator import OrderSource
@@ -19,25 +19,19 @@ from shuup.core.taxing import TaxSummary
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import create_product, get_payment_method, get_shipping_method, get_shop
 from shuup.utils import babel_precision_provider
-from shuup.utils.money import Money, set_precision_provider
+from shuup.utils.money import set_precision_provider
 from shuup.utils.numbers import bankers_round
+from shuup_tests.core.utils import get_calculate_taxes_false_configuration
 
 
 def setup_module(module):
     # uses the get_precision to avoid db hits
     set_precision_provider(babel_precision_provider.get_precision)
 
-    global settings_overrider
-    settings_overrider = override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=False)
-    settings_overrider.__enter__()
-
-
-def teardown_module(module):
-    settings_overrider.__exit__(None, None, None)
-
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_1prod(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -67,6 +61,7 @@ def test_1prod(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_2prods(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -111,6 +106,7 @@ def test_2prods(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_2prods_2taxrates(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -163,6 +159,7 @@ def test_2prods_2taxrates(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_3prods_with_services(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -214,6 +211,7 @@ def test_3prods_with_services(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_3prods_services_2discounts(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -278,6 +276,7 @@ def test_3prods_services_2discounts(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_3prods_services_2discounts2(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -342,6 +341,7 @@ def test_3prods_services_2discounts2(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_all_discounted(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -388,6 +388,7 @@ def test_all_discounted(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_zero_priced_products(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),
@@ -417,6 +418,7 @@ def test_zero_priced_products(taxes):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("taxes", ["taxful", "taxless"])
+@patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration)
 def test_no_products(taxes):
     source = create_order_source(
         prices_include_tax=(taxes == "taxful"),

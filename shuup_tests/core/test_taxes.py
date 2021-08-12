@@ -7,8 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from decimal import Decimal
-from django.test.utils import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import CustomerTaxGroup, OrderLineType
@@ -27,7 +27,7 @@ from shuup.testing.factories import (
 )
 from shuup.utils.money import Money
 from shuup.utils.numbers import bankers_round
-from shuup_tests.campaigns.test_reports import seed_source
+from shuup_tests.core.utils import get_calculate_taxes_false_configuration, get_calculate_taxes_true_configuration
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
@@ -65,7 +65,7 @@ def get_source():
 
 @pytest.mark.django_db
 def test_calculate_taxes_automatically_setting():
-    with override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=True):
+    with patch("shuup.configuration.get", new=get_calculate_taxes_true_configuration):
         source = get_source()
         source.get_final_lines()
         assert source._taxes_calculated == True
@@ -75,7 +75,7 @@ def test_calculate_taxes_automatically_setting():
         source.calculate_taxes_or_raise()
         assert source._taxes_calculated == True
 
-    with override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=False):
+    with patch("shuup.configuration.get", new=get_calculate_taxes_false_configuration):
         source = get_source()
         source.get_final_lines()
         assert source._taxes_calculated == False
@@ -171,7 +171,7 @@ def test_broken_order(admin_user):
 
 @pytest.mark.django_db
 def test_ignore_lines_from_other_sources():
-    with override_settings(SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=True):
+    with patch("shuup.configuration.get", new=get_calculate_taxes_true_configuration):
         source1 = get_source()
         source2 = get_source()
 

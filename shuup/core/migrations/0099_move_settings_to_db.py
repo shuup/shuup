@@ -6,6 +6,7 @@ from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
     SHUUP_ALLOW_EDITING_ORDER,
+    SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
     SHUUP_DEFAULT_ORDER_LABEL,
     SHUUP_DISCOUNT_MODULES,
     SHUUP_ENABLE_ATTRIBUTES,
@@ -41,6 +42,9 @@ def move_settings_to_db(apps, schema_editor):
     configuration.set(None, SHUUP_ALLOW_EDITING_ORDER, settings.SHUUP_ALLOW_EDITING_ORDER)
     configuration.set(None, SHUUP_DEFAULT_ORDER_LABEL, settings.SHUUP_DEFAULT_ORDER_LABEL)
     configuration.set(None, SHUUP_TELEMETRY_ENABLED, settings.SHUUP_TELEMETRY_ENABLED)
+    configuration.set(
+        None, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE, settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
+    )
 
 
 class Migration(migrations.Migration):

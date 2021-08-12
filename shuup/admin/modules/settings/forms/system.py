@@ -228,6 +228,15 @@ class CoreSettingsForm(BaseSettingsForm):
         help_text=_("The flag to enable/disable the telemetry (statistics) system."),
         required=False,
     )
+    calculate_taxes_automatically_if_possible = forms.BooleanField(
+        label=_("Calculate Taxes Automatically If Possible"),
+        help_text=_(
+            "Whether taxes should be calculated automatically in TaxModule. Perhaps you "
+            "don't need it if you are selling to a specific group of customers (foregners, businesses), "
+            "where automatic tax calculation is not needed."
+        ),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)
@@ -246,6 +255,8 @@ class CoreSettingsForm(BaseSettingsForm):
                 self.fields["manage_contacts_per_shop"].value = False
             if "telemetry_enabled" not in self.data:
                 self.fields["telemetry_enabled"].value = False
+            if "calculate_taxes_automatically_if_possible" not in self.data:
+                self.fields["calculate_taxes_automatically_if_possible"].value = False
 
 
 class CoreSettingsFormPart(BaseSettingsFormPart):

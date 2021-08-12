@@ -141,5 +141,14 @@
             "key": "telemetry_enabled",
             "value": false
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 17,
+        "fields": {
+            "shop": null,
+            "key": "calculate_taxes_automatically_if_possible",
+            "value": true
+        }
     }
 ]
