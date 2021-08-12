@@ -34,8 +34,6 @@ from shuup.core.models import MediaFile, MediaFolder
 from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.utils.excs import Problem
 from shuup.utils.filer import (
-    UploadFileForm,
-    UploadImageForm,
     can_see_root_folder,
     ensure_media_file,
     ensure_media_folder,
@@ -402,6 +400,8 @@ class MediaBrowserView(TemplateView):
 
 
 def _process_form(request, folder):
+    from shuup.utils.filer_forms import UploadFileForm, UploadImageForm
+
     try:
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():

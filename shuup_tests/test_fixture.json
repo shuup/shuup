@@ -159,5 +159,14 @@
             "key": "allow_arbitrary_refunds",
             "value": true
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 19,
+        "fields": {
+            "shop": null,
+            "key": "allowed_upload_extensions",
+            "value": ["pdf", "ttf", "eot", "woff", "woff2", "otf"]
+        }
     }
 ]

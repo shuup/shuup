@@ -17,6 +17,7 @@ from enumfields import Enum, EnumField
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.admin.forms.fields import ListToCommaSeparatedStringField
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
 from shuup.core.models import ConfigurationItem, Currency
 from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES, SHUUP_HOME_CURRENCY
@@ -244,6 +245,11 @@ class CoreSettingsForm(BaseSettingsForm):
             "required that all refunds are linked to the actual order items/lines."
         ),
         required=False,
+    )
+    allowed_upload_extensions = ListToCommaSeparatedStringField(
+        label=_("Allowed Upload File Extensions"),
+        help_text=_("List of allowed extensions for file or image uploads."),
+        required=True,
     )
 
     def __init__(self, *args, **kwargs):

@@ -17,6 +17,7 @@ from shuup.core.models import Currency
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_ALLOWED_UPLOAD_EXTENSIONS,
     SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
     SHUUP_DEFAULT_ORDER_LABEL,
     SHUUP_DISCOUNT_MODULES,
@@ -134,6 +135,12 @@ def get_data(reference_method):
             SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
             True,
             True,
+        ),
+        (
+            "core_settings",
+            SHUUP_ALLOWED_UPLOAD_EXTENSIONS,
+            ("pdf,ttf,eot,woff,woff2,otf"),
+            ("pdf", "ttf", "eot", "woff", "woff2", "otf"),
         ),
     }
 
