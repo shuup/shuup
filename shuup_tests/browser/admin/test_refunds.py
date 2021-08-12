@@ -11,6 +11,7 @@ import pytest
 import selenium
 from selenium.webdriver.common.keys import Keys
 
+from shuup.core.models import ShipmentStatus
 from shuup.testing.browser_utils import (
     click_element,
     initialize_admin_browser_test,
@@ -24,7 +25,6 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_supplier,
 )
-from shuup.core.models import ShipmentStatus
 from shuup.utils.django_compat import reverse
 from shuup.utils.i18n import format_money
 
