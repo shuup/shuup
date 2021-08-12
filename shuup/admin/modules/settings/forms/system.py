@@ -237,6 +237,14 @@ class CoreSettingsForm(BaseSettingsForm):
         ),
         required=False,
     )
+    allow_arbitrary_refunds = forms.BooleanField(
+        label=_("Allow Arbitrary Refunds"),
+        help_text=_(
+            "Whether to allow to create arbitrary refunds. Set this to False when it is "
+            "required that all refunds are linked to the actual order items/lines."
+        ),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)
@@ -257,6 +265,8 @@ class CoreSettingsForm(BaseSettingsForm):
                 self.fields["telemetry_enabled"].value = False
             if "calculate_taxes_automatically_if_possible" not in self.data:
                 self.fields["calculate_taxes_automatically_if_possible"].value = False
+            if "allow_arbitrary_refunds" not in self.data:
+                self.fields["allow_arbitrary_refunds"].value = False
 
 
 class CoreSettingsFormPart(BaseSettingsFormPart):

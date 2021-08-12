@@ -5,6 +5,7 @@ from shuup import configuration
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_ALLOW_ARBITRARY_REFUNDS,
     SHUUP_ALLOW_EDITING_ORDER,
     SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
     SHUUP_DEFAULT_ORDER_LABEL,
@@ -45,6 +46,7 @@ def move_settings_to_db(apps, schema_editor):
     configuration.set(
         None, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE, settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
     )
+    configuration.set(None, SHUUP_ALLOW_ARBITRARY_REFUNDS, settings.SHUUP_ALLOW_ARBITRARY_REFUNDS)
 
 
 class Migration(migrations.Migration):

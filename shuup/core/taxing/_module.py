@@ -7,7 +7,6 @@
 import abc
 import six
 from collections import defaultdict
-from django.conf import settings
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from itertools import chain
@@ -22,7 +21,7 @@ from shuup.core.excs import (
     SupplierHasNoSupplierModules,
 )
 from shuup.core.pricing import TaxfulPrice
-from shuup.core.setting_keys import SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
+from shuup.core.setting_keys import SHUUP_ALLOW_ARBITRARY_REFUNDS, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
 from shuup.utils.money import Money
 
 from ._context import TaxingContext
@@ -254,6 +253,8 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
     @transaction.atomic  # noqa (C901) FIXME: simply this
     def create_refund_lines(self, order, supplier, created_by, refund_data):
+        from shuup import configuration
+
         context = self.get_context_from_order_source(order)
 
         lines = order.lines.all()
@@ -270,13 +271,13 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         zero = Money(0, order.currency)
         total_refund_amount = zero
 
+        allow_arbitrary_refunds = configuration.get(None, SHUUP_ALLOW_ARBITRARY_REFUNDS)
         for refund in refund_data:
             index += 1
             amount = refund.get("amount", zero)
             quantity = refund.get("quantity", 0)
             parent_line = refund.get("line", "amount")
-
-            if not settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
+            if not allow_arbitrary_refunds and (not parent_line or parent_line == "amount"):
                 raise RefundArbitraryRefundsNotAllowedException
 
             restock_products = refund.get("restock_products")

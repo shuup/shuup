@@ -7,19 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 import six
-from collections import defaultdict
 from decimal import Decimal
-from django.test import override_settings
+from mock import patch
 
 from shuup.core.excs import RefundArbitraryRefundsNotAllowedException, RefundExceedsAmountException
 from shuup.core.models import OrderLine, OrderLineType, ShippingMode, Supplier
-from shuup.testing.factories import (
-    add_product_to_order,
-    create_empty_order,
-    create_product,
-    get_default_shop,
-    get_supplier,
-)
+from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
+from shuup_tests.admin.utils import get_allow_arbitrary_refunds_false_configuration
 
 
 @pytest.mark.django_db
@@ -113,7 +107,7 @@ def test_order_refunds_with_multiple_suppliers():
     assert order.get_total_unrefunded_amount(supplier3).value == Decimal("255")  # 51 * 5
     assert order.get_total_unrefunded_quantity(supplier3) == Decimal("51")  # 3 x product1 and 13 x product2
 
-    with override_settings(SHUUP_ALLOW_ARBITRARY_REFUNDS=False):
+    with patch("shuup.configuration.get", new=get_allow_arbitrary_refunds_false_configuration):
         with pytest.raises(RefundArbitraryRefundsNotAllowedException):
             order.create_refund(
                 [{"line": "amount", "quantity": 1, "amount": order.shop.create_price(200)}], supplier=supplier3

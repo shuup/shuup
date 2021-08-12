@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.conf import settings
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +16,7 @@ from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import InvalidRefundAmountException, NoRefundToCreateException, RefundExceedsAmountException
 from shuup.core.models import Order, OrderLineType, Shop
+from shuup.core.setting_keys import SHUUP_ALLOW_ARBITRARY_REFUNDS
 from shuup.utils.django_compat import reverse
 from shuup.utils.money import Money
 
@@ -155,12 +155,17 @@ class OrderCreateRefundView(UpdateView):
         return text
 
     def _get_line_number_choices(self, supplier):
+        from shuup import configuration
+
         lines = self.object.lines.all()
         if supplier:
             lines = lines.filter(supplier=supplier)
 
         line_number_choices = [("", "---")]
-        if settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and self.object.get_total_unrefunded_amount(supplier).value > 0:
+        if (
+            configuration.get(None, SHUUP_ALLOW_ARBITRARY_REFUNDS)
+            and self.object.get_total_unrefunded_amount(supplier).value > 0
+        ):
             line_number_choices += [("amount", _("Refund arbitrary amount"))]
         return line_number_choices + [
             (line.ordering, self._get_line_text(line))

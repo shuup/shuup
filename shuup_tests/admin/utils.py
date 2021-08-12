@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.configuration import get as original_configuration_get
 from shuup.core.setting_keys import (
+    SHUUP_ALLOW_ARBITRARY_REFUNDS,
     SHUUP_ENABLE_MULTIPLE_SHOPS,
     SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
     SHUUP_MANAGE_CONTACTS_PER_SHOP,
@@ -76,5 +77,11 @@ def get_multiple_suppliers_true_configuration(shop, key, default=None):
 
 def get_multiple_suppliers_false_configuration(shop, key, default=None):
     if key == SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_allow_arbitrary_refunds_false_configuration(shop, key, default=None):
+    if key == SHUUP_ALLOW_ARBITRARY_REFUNDS:
         return False
     return original_configuration_get(shop, key, default)

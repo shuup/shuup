@@ -150,5 +150,14 @@
             "key": "calculate_taxes_automatically_if_possible",
             "value": true
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 18,
+        "fields": {
+            "shop": null,
+            "key": "allow_arbitrary_refunds",
+            "value": true
+        }
     }
 ]
