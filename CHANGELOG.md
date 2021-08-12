@@ -18,6 +18,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Core: allow saving encrypted configurations
 - Front: improve SEO by tuning description meta tag to product, category and CMS pages
 - Importer: index product after importing it
 - BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.

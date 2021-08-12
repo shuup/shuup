@@ -10,7 +10,7 @@ from django.test.utils import override_settings
 
 from shuup import configuration
 from shuup.core import cache
-from shuup.core.models import ConfigurationItem
+from shuup.core.models import ConfigurationItem, EncryptedConfigurationItem
 from shuup.testing.factories import get_default_shop
 
 
@@ -51,6 +51,11 @@ def test_simple_set_and_get_without_shop():
         assert configuration.get(None, "non-existing") is None
         configuration.set(None, "non-existing", "hello")
         assert configuration.get(None, "non-existing") == "hello"
+
+        configuration.set(None, "encrypted-key", "encrypted-value", encrypted=True)
+        assert configuration.get(None, "encrypted-key") == "encrypted-value"
+        assert EncryptedConfigurationItem.objects.filter(shop=None, key="encrypted-key").exists()
+        assert not ConfigurationItem.objects.filter(shop=None, key="encrypted-key").exists()
 
 
 @pytest.mark.django_db
