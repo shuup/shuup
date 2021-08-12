@@ -13,7 +13,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from typing import Optional
 
-from shuup.admin.forms.fields import DecimalPlaceField
+from shuup.core.fields import FormattedDecimalFormField
 from shuup.core.models import SalesUnit, Shop
 from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.i18n import get_currency_name
@@ -26,19 +26,20 @@ class StockAdjustmentForm(forms.Form):
             currency_name=get_currency_name(settings.SHUUP_HOME_CURRENCY),
         )
     )
-    delta = DecimalPlaceField(label=_("Quantity"))
+    delta = FormattedDecimalFormField(label=_("Quantity"), decimal_places=0)
 
     def __init__(self, sales_unit: Optional[SalesUnit] = None, *args, **kwargs):
-        super(StockAdjustmentForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+
         if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             self.fields["purchase_price"].label = format_lazy(
                 _("Purchase price per unit ({currency_name})"),
                 currency_name=get_currency_name(Shop.objects.first().currency),
             )
+        self.decimals = 0
         if sales_unit:
             self.decimals = sales_unit.decimals
-            self.fields["delta"].decimal_places = self.decimals
-            self.fields["delta"].widget = DecimalPlaceField(label=_("Quantity"), decimal_places=self.decimals).widget
+            self.fields["delta"] = FormattedDecimalFormField(label=_("Quantity"), decimal_places=sales_unit.decimals)
 
     def clean_delta(self):
         delta = self.cleaned_data.get("delta")
@@ -53,7 +54,24 @@ class StockAdjustmentForm(forms.Form):
 
 
 class AlertLimitForm(forms.Form):
-    alert_limit = forms.DecimalField(label=_("Alert limit"))
+    alert_limit = forms.DecimalField(label=_("Alert limit"), decimal_places=0)
+
+    def __init__(self, sales_unit: Optional[SalesUnit] = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.decimals = 0
+        if sales_unit:
+            self.decimals = sales_unit.decimals
+            self.fields["alert_limit"] = forms.DecimalField(label=_("Alert limit"), decimal_places=sales_unit.decimals)
+
+    def clean_alert_limit(self):
+        alert_limit = self.cleaned_data.get("alert_limit")
+        if self.decimals:
+            precision = Decimal("0.1") ** self.decimals
+        else:
+            precision = Decimal("1")
+
+        return Decimal(alert_limit).quantize(precision)
 
 
 class StockManagedForm(forms.Form):

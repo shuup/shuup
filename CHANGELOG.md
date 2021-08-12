@@ -6,10 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Fixed
-
-- Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
-
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
 ### Added
@@ -22,6 +18,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
 - Front: improve SEO by tuning description meta tag to product, category and CMS pages
 - Importer: index product after importing it
 - BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.

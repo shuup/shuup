@@ -9,7 +9,6 @@ from decimal import Decimal
 from django.conf import settings
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
-from math import pow
 
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.core.models import (
@@ -146,7 +145,6 @@ def get_stock_adjustment_div(request, supplier, product):
     context = {
         "product": product,
         "supplier": supplier,
-        "delta_step": pow(0.1, product.sales_unit.decimals) if product.sales_unit.decimals else 0,
         "adjustment_form": StockAdjustmentForm(
             initial={
                 "purchase_price": purchase_price,
@@ -158,7 +156,11 @@ def get_stock_adjustment_div(request, supplier, product):
         "stock_managed_form": StockManagedForm(initial={"stock_managed": not stock.stock_managed}),
     }
     if "shuup.notify" in settings.INSTALLED_APPS:
-        context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": stock.alert_limit or Decimal()})
+        initial_alert_limit = stock.alert_limit or Decimal()
+        precision = Decimal("0.1") ** product.sales_unit.decimals if product.sales_unit.decimals else Decimal("1")
+        context["alert_limit_form"] = AlertLimitForm(
+            initial={"alert_limit": initial_alert_limit.quantize(precision)}, sales_unit=product.sales_unit
+        )
         if not get_missing_permissions(request.user, ("notify.script.list",)):
             context["notify_url"] = reverse("shuup_admin:notify.script.list")
         else:

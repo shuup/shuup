@@ -17,11 +17,18 @@
                         text: msg.message
                     });
                 },
-                error: function(response) {
-                    window.Messages.enqueue({
-                        tags: "error",
-                        text: response.message
-                    });
+                error: function(response, textStatus, errorThrown) {
+                    if (response.responseJSON && response.responseJSON.message) {
+                        window.Messages.enqueue({
+                            tags: "error",
+                            text: response.responseJSON.message
+                        });
+                    } else {
+                        window.Messages.enqueue({
+                            tags: "error",
+                            text: response.responseText
+                        });
+                    }
                 }
             });
         }

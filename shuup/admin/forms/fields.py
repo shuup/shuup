@@ -37,20 +37,6 @@ class PercentageField(DecimalField):
         return attrs
 
 
-class DecimalPlaceField(DecimalField):
-    def widget_attrs(self, widget):
-        attrs = super().widget_attrs(widget)
-        if self.min_value is not None:
-            attrs["min"] = self.min_value
-        if self.max_value is not None:
-            attrs["max"] = self.max_value
-        if self.decimal_places == 0:
-            attrs["onkeydown"] = "comma=0.1.toLocaleString().replace(/"
-            "d/g, '');if(event.key===comma){event.preventDefault();}"
-            attrs["oninput"] = "event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
-        return attrs
-
-
 class Select2ModelField(Field):
     """
     This form field class is deprecated and it will be removed on version 3.
