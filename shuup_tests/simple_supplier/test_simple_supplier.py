@@ -115,7 +115,7 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         request = apply_request_middleware(rf.get("/"), user=admin_user)
         request.POST = {"purchase_price": decimal.Decimal(32.00), "delta": adjust_quantity}
         response = process_stock_adjustment(request, supplier.id, product.id)
-        assert response.status_code == 400  # Only POST is allowed
+        assert response.status_code == 405  # Only POST is allowed
         request.method = "POST"
         response = process_stock_adjustment(request, supplier.id, product.id)
         assert response.status_code == 200
@@ -292,9 +292,8 @@ def test_process_stock_managed(rf, admin_user):
     product = create_product("simple-test-product", shop)
     request = apply_request_middleware(rf.get("/", data={"stock_managed": True}), user=admin_user)
 
-    with pytest.raises(Exception) as ex:
-        # Should raise exception becasue only POST is allowed
-        response = process_stock_managed(request, supplier.id, product.id)
+    response = process_stock_managed(request, supplier.id, product.id)
+    assert response.status_code == 405
 
     request = apply_request_middleware(rf.post("/", data={"stock_managed": True}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
@@ -304,21 +303,21 @@ def test_process_stock_managed(rf, admin_user):
     sc = StockCount.objects.filter(supplier=supplier, product=product).first()
     assert sc.logical_count == 0
     # Check stock count managed by default
-    assert sc.stock_managed == True
+    assert sc.stock_managed is True
     # Now test with stock managed turned off
     request = apply_request_middleware(rf.post("/", data={"stock_managed": False}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is disabled for product
     sc = StockCount.objects.filter(supplier=supplier, product=product).first()
-    assert sc.stock_managed == False
+    assert sc.stock_managed is False
     # Now test with stock managed turned on
     request = apply_request_middleware(rf.post("/", data={"stock_managed": True}), user=admin_user)
     response = process_stock_managed(request, supplier.id, product.id)
     assert response.status_code == 200
     # Check stock management is enabled for product
     sc = StockCount.objects.filter(supplier=supplier, product=product).first()
-    assert sc.stock_managed == True
+    assert sc.stock_managed is True
 
 
 @pytest.mark.django_db

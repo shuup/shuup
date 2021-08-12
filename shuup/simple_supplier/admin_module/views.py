@@ -145,7 +145,26 @@ def _process_stock_adjustment(form, request, supplier_id, product_id):
 
 
 def process_stock_adjustment(request, supplier_id, product_id):
-    return _process_and_catch_errors(_process_stock_adjustment, StockAdjustmentForm, request, supplier_id, product_id)
+    try:
+        if request.method != "POST":
+            return JsonResponse({}, status=405)
+
+        product = Product.objects.select_related("sales_unit").filter(pk=product_id).first()
+        form = StockAdjustmentForm(data=request.POST, sales_unit=product.sales_unit)
+
+        if form.is_valid():
+            return _process_stock_adjustment(form, request, supplier_id, product_id)
+
+        errors = form.non_field_errors()
+        if form.errors:
+            for field, field_errors in form.errors.items():
+                errors.append(f"{field}: {','.join(field_errors)}")
+
+        error_message = ugettext("Please check submitted values and try again ({}).").format(", ".join(errors))
+        return JsonResponse({"message": error_message}, status=400)
+    except Exception as exc:
+        error_message = ugettext("Please check submitted values and try again (%(error)s).") % {"error": exc}
+        return JsonResponse({"message": error_message}, status=400)
 
 
 def _process_alert_limit(form, request, supplier_id, product_id):
@@ -155,7 +174,6 @@ def _process_alert_limit(form, request, supplier_id, product_id):
     data = form.cleaned_data
     sc.alert_limit = data.get("alert_limit")
     sc.save()
-
     supplier = Supplier.objects.get(id=supplier_id)
 
     success_message = _get_success_message(
@@ -175,13 +193,22 @@ def process_alert_limit(request, supplier_id, product_id):
 def _process_and_catch_errors(process, form_class, request, supplier_id, product_id):
     try:
         if request.method != "POST":
-            raise Exception(_("Non-POST request methods are forbidden."))
-        form = form_class(request.POST)
+            return JsonResponse({}, status=405)
+
+        product = Product.objects.select_related("sales_unit").filter(pk=product_id).first()
+
+        form = form_class(data=request.POST, sales_unit=product.sales_unit)
         if form.is_valid():
             return process(form, request, supplier_id, product_id)
 
-        error_message = ugettext("Please check submitted values and try again.")
+        errors = form.non_field_errors()
+        if form.errors:
+            for field, field_errors in form.errors.items():
+                errors.append(f"{field}: {','.join(field_errors)}")
+
+        error_message = ugettext("Please check submitted values and try again ({}).").format(", ".join(errors))
         return JsonResponse({"message": error_message}, status=400)
+
     except Exception as exc:
         error_message = ugettext("Please check submitted values and try again (%(error)s).") % {"error": exc}
         return JsonResponse({"message": error_message}, status=400)
@@ -189,7 +216,7 @@ def _process_and_catch_errors(process, form_class, request, supplier_id, product
 
 def process_stock_managed(request, supplier_id, product_id):
     if request.method != "POST":
-        raise Exception(_("Non-POST request methods are forbidden."))
+        return JsonResponse({}, status=405)
 
     stock_managed = bool(request.POST.get("stock_managed") == "True")
     supplier = Supplier.objects.get(id=supplier_id)
