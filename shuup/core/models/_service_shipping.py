@@ -20,7 +20,7 @@ from ._service_base import Service, ServiceChoice, ServiceProvider
 
 
 class ShippingMethod(Service):
-    carrier = models.ForeignKey("Carrier", null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("carrier"))
+    carrier = models.ForeignKey("Carrier", null=True, blank=True, on_delete=models.PROTECT, verbose_name=_("carrier"))
 
     translations = TranslatedFields(
         name=models.CharField(

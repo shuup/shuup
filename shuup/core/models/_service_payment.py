@@ -25,7 +25,7 @@ from ._service_behavior import StaffOnlyBehaviorComponent
 
 class PaymentMethod(Service):
     payment_processor = models.ForeignKey(
-        "PaymentProcessor", null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_("payment processor")
+        "PaymentProcessor", null=True, blank=True, on_delete=models.PROTECT, verbose_name=_("payment processor")
     )
 
     translations = TranslatedFields(

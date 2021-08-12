@@ -5,11 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import django
 import pytest
 from bs4 import BeautifulSoup
+from django.db.models.deletion import ProtectedError
 from django.test import override_settings
-from django.utils import version
 
 from shuup.admin.modules.service_providers.views import ServiceProviderEditView
 from shuup.apps.provides import override_provides
@@ -179,17 +178,9 @@ def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
 )
 def test_delete(get_object, service_provider_attr):
     method = get_object()
-    method_cls = method.__class__
-    method_pk = method.pk
     assert method.enabled
     service_provider = getattr(method, service_provider_attr)
     assert service_provider
-    service_provider_cls = service_provider.__class__
-    service_provider_pk = service_provider.pk
 
-    service_provider.delete()
-    # Re fetch method to check it's new field
-    method = method_cls.objects.get(pk=method_pk)
-    assert getattr(method, service_provider_attr) is None
-    assert method.enabled is False
-    assert not service_provider_cls.objects.filter(pk=service_provider_pk).exists()
+    with pytest.raises(ProtectedError):
+        service_provider.delete()
