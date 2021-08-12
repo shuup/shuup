@@ -18,11 +18,17 @@ from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
     SHUUP_DISCOUNT_MODULES,
+    SHUUP_ENABLE_ATTRIBUTES,
+    SHUUP_ENABLE_MULTIPLE_SHOPS,
+    SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
     SHUUP_HOME_CURRENCY,
+    SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
     SHUUP_PRICING_MODULE,
     SHUUP_REFERENCE_NUMBER_LENGTH,
     SHUUP_REFERENCE_NUMBER_METHOD,
     SHUUP_REFERENCE_NUMBER_PREFIX,
+    SHUUP_TAX_MODULE,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -65,12 +71,48 @@ def get_data(reference_method):
             True,
             True,
         ),
+        (
+            "order_settings",
+            SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
+            ("basket_campaigns"),
+            ("basket_campaigns"),
+        ),
         ("core_settings", SHUUP_HOME_CURRENCY, Currency.objects.all().first().id, Currency.objects.all().first().code),
         (
             "core_settings",
             SHUUP_ADDRESS_HOME_COUNTRY,
             "US",
             "US",
+        ),
+        (
+            "core_settings",
+            SHUUP_TAX_MODULE,
+            "default_tax",
+            "default_tax",
+        ),
+        (
+            "core_settings",
+            SHUUP_ENABLE_ATTRIBUTES,
+            True,
+            True,
+        ),
+        (
+            "core_settings",
+            SHUUP_ENABLE_MULTIPLE_SHOPS,
+            False,
+            False,
+        ),
+        (
+            "core_settings",
+            SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
+            False,
+            False,
+        ),
+        (
+            "core_settings",
+            SHUUP_MANAGE_CONTACTS_PER_SHOP,
+            False,
+            False,
         ),
     }
 

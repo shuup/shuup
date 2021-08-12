@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.configuration import get as original_configuration_get
-from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES, SHUUP_PRICING_MODULE
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES, SHUUP_PRICING_MODULE, SHUUP_TAX_MODULE
 
 
 class modify(object):
@@ -50,4 +50,10 @@ def get_pricing_discounts_patched_configuration(shop, key, default=None):
 def get_default_pricing_patched_configuration(shop, key, default=None):
     if key == SHUUP_PRICING_MODULE:
         return "default_pricing"
+    return original_configuration_get(shop, key, default)
+
+
+def get_dummy_tax_module_patched_configuration(shop, key, default=None):
+    if key == SHUUP_TAX_MODULE:
+        return "dummy_tax_module"
     return original_configuration_get(shop, key, default)

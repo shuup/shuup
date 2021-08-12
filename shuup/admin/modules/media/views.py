@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import json
-from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError, models
@@ -23,6 +22,7 @@ from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
 
+from shuup import configuration
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.media.form_parts import MediaFolderBaseFormPart
 from shuup.admin.modules.media.utils import delete_folder
@@ -31,6 +31,7 @@ from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.permissions import has_permission
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import MediaFile, MediaFolder
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.utils.excs import Problem
 from shuup.utils.filer import (
     UploadFileForm,
@@ -50,7 +51,7 @@ from shuup.utils.mptt import get_cached_trees
 
 
 def _is_folder_shared(folder):
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+    if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
         return False
 
     media_folder = MediaFolder.objects.filter(folder=folder).first()
@@ -80,7 +81,7 @@ def _get_folder_query(shop, user=None, folder=None):
 
 
 def _is_file_shared(file):
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+    if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
         return False
 
     media_file = MediaFile.objects.filter(file=file).first()

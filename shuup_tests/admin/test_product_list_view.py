@@ -8,11 +8,12 @@
 import json
 import pytest
 from django.test import override_settings
+from mock import patch
 
-from shuup.core.settings import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
+from shuup_tests.admin.utils import get_multiple_suppliers_true_configuration
 
 
 @pytest.mark.django_db
@@ -58,7 +59,7 @@ def test_list_view_with_multiple_suppliers(rf, admin_user):
     shop_product2.save()
     shop_product2.categories.add(shop_product.primary_category)
 
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SUPPLIERS=True):
+    with patch("shuup.configuration.get", new=get_multiple_suppliers_true_configuration):
         view = load("shuup.admin.modules.products.views:ProductListView").as_view()
         request = apply_request_middleware(
             rf.get("/", {"jq": json.dumps({"perPage": 100, "page": 1})}), user=admin_user

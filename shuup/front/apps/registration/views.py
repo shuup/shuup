@@ -15,7 +15,9 @@ from django.views.generic import View
 from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views
 
+from shuup import configuration
 from shuup.core.models import get_company_contact, get_person_contact
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.front.apps.registration.forms import CompanyRegistrationForm
 from shuup.front.template_helpers import urls
 from shuup.front.utils.companies import allow_company_registration
@@ -90,7 +92,9 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
     def register(self, form):
         user = super(CompanyRegistrationView, self).register(form)
 
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) and configuration.get(
+            None, SHUUP_MANAGE_CONTACTS_PER_SHOP
+        ):
             company = get_company_contact(user)
             company.add_to_shop(self.request.shop)
 

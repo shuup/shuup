@@ -17,8 +17,6 @@ loading components, both first-party and third-party.
 
 from __future__ import unicode_literals
 
-import importlib
-
 import six
 from collections import OrderedDict, defaultdict
 from contextlib import contextmanager
@@ -27,6 +25,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 from shuup.apps import AppConfig
+from shuup.apps.settings import get_configuration_setting
 from shuup.utils.importing import load
 
 _provide_specs = defaultdict(list)
@@ -224,18 +223,9 @@ def load_module_instances(configuration_name, provide_category):
 
 
 def _get_configuration_value(configuration_name):
-    from shuup import configuration
-
-    try:
-        configuration_key = getattr(importlib.import_module("shuup.core.setting_keys"), configuration_name)
-    except AttributeError:
-        pass
-    try:
-        configuration_value = configuration.get(None, configuration_key)
-        if configuration_value is not None:
-            return configuration_value
-    except NameError:
-        pass
+    configuration_value = get_configuration_setting(configuration_name)
+    if configuration_value is not None:
+        return configuration_value
     if not hasattr(settings, configuration_name):
         raise ImproperlyConfigured("Error! The setting `%s` MUST be set." % configuration_name)
     return getattr(settings, configuration_name, None)

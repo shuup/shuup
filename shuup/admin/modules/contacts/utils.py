@@ -5,16 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
 from django.core.exceptions import PermissionDenied
 
+from shuup import configuration
 from shuup.admin.shop_provider import get_shop
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 
 
 def request_limited(request):
     return (
-        settings.SHUUP_ENABLE_MULTIPLE_SHOPS
-        and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
+        configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS)
+        and configuration.get(None, SHUUP_MANAGE_CONTACTS_PER_SHOP)
         and not request.user.is_superuser
     )
 

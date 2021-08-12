@@ -13,6 +13,7 @@ from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView, check_and_raise_if_only_one_allowed
 from shuup.core.models import Supplier
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.utils.django_compat import reverse
 
 
@@ -33,7 +34,7 @@ class SupplierEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
 
     def get_object(self, queryset=None):
         obj = super(SupplierEditView, self).get_object(queryset)
-        check_and_raise_if_only_one_allowed("SHUUP_ENABLE_MULTIPLE_SUPPLIERS", obj)
+        check_and_raise_if_only_one_allowed(SHUUP_ENABLE_MULTIPLE_SUPPLIERS, obj)
         return obj
 
     def get_queryset(self):

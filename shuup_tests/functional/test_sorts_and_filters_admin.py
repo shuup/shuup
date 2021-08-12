@@ -9,6 +9,7 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.admin.modules.categories.views import CategoryEditView
 from shuup.admin.modules.shops.views import ShopEditView
@@ -17,6 +18,7 @@ from shuup.core import cache
 from shuup.front.utils.sorts_and_filters import get_configuration
 from shuup.testing.factories import get_default_category, get_default_shop
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_false_configuration
 
 DEFAULT_FORM_MODIFIERS = [
     "shuup.front.forms.product_list_modifiers.SortProductListByName",
@@ -29,7 +31,7 @@ DEFAULT_FORM_MODIFIERS = [
 def test_sorts_and_filter_in_shop_edit(rf, admin_user):
     cache.clear()
     activate("en")
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    with patch("shuup.configuration.get", new=get_multiple_shops_false_configuration):
         with override_provides("front_extend_product_list_form", DEFAULT_FORM_MODIFIERS):
             shop = get_default_shop()
             view = ShopEditView.as_view()
@@ -72,7 +74,7 @@ def test_sorts_and_filter_in_category_edit(rf, admin_user):
     get_default_shop()
     cache.clear()
     activate("en")
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    with patch("shuup.configuration.get", new=get_multiple_shops_false_configuration):
         with override_provides("front_extend_product_list_form", DEFAULT_FORM_MODIFIERS):
             category = get_default_category()
             view = CategoryEditView.as_view()

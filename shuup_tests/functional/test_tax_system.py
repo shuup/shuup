@@ -9,15 +9,24 @@ from __future__ import unicode_literals
 
 import pytest
 from decimal import Decimal
-from django.test.utils import override_settings
+from mock import patch
 
 from shuup.apps.provides import override_provides
+from shuup.configuration import get as original_configuration_get
 from shuup.core.models import MutableAddress, OrderLineType
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.setting_keys import SHUUP_TAX_MODULE
 from shuup.core.taxing import TaxModule
 from shuup.core.taxing.utils import stacked_value_added_taxes
 from shuup.testing.factories import get_default_product, get_default_supplier, get_shop, get_tax
+
+
+def get_irvine_tax_module_patched_configuration(shop, key, default=None):
+    if key == SHUUP_TAX_MODULE:
+        return "irvine"
+    return original_configuration_get(shop, key, default)
+
 
 TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
 
@@ -54,7 +63,7 @@ def test_stacked_tax_taxless_price():
         base_unit_price=source.create_price(10),
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
-        with override_settings(SHUUP_TAX_MODULE="irvine"):
+        with patch("shuup.configuration.get", new=get_irvine_tax_module_patched_configuration):
             source.shipping_address = MutableAddress(
                 street="16215 Alton Pkwy",
                 postal_code="92602",
@@ -86,7 +95,7 @@ def test_stacked_tax_taxful_price():
         base_unit_price=source.create_price(20),
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
-        with override_settings(SHUUP_TAX_MODULE="irvine"):
+        with patch("shuup.configuration.get", new=get_irvine_tax_module_patched_configuration):
             source.shipping_address = MutableAddress(
                 street="16215 Alton Pkwy",
                 postal_code="92602",

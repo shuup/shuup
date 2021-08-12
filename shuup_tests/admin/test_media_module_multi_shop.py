@@ -8,10 +8,10 @@ import json
 import pytest
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import JsonResponse
-from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
 from filer.models import File, Folder
+from mock import patch
 from six import BytesIO
 
 from shuup.admin.modules.media.views import MediaBrowserView
@@ -20,11 +20,12 @@ from shuup.admin.utils.permissions import set_permissions_for_group
 from shuup.core.models import MediaFile, MediaFolder
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 
 
 @pytest.mark.django_db
 def test_media_view_images(rf):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = factories.get_shop(identifier="shop1", enabled=True)
         shop1_staff1 = _create_random_staff(shop1)
         shop1_staff2 = _create_random_staff(shop1)
@@ -80,7 +81,7 @@ def test_media_view_images(rf):
 
 @pytest.mark.django_db
 def test_edit_shared_folder(admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = factories.get_shop(identifier="shop1", enabled=True)
         shop2 = factories.get_shop(identifier="shop2", enabled=True)
 
@@ -120,7 +121,7 @@ def test_edit_shared_folder(admin_user):
 
 @pytest.mark.django_db
 def test_edit_shared_file(admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = factories.get_shop(identifier="shop1", enabled=True)
         shop2 = factories.get_shop(identifier="shop2", enabled=True)
 

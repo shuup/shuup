@@ -5,7 +5,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.test.utils import override_settings
+from mock import patch
 
 from shuup.admin.modules.manufacturers.views import ManufacturerDeleteView, ManufacturerEditView, ManufacturerListView
 from shuup.admin.shop_provider import set_shop
@@ -13,10 +13,12 @@ from shuup.core.models import Manufacturer
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 
+from .utils import get_multiple_shops_false_configuration, get_multiple_shops_true_configuration
+
 
 @pytest.mark.django_db
 def test_manufacturer_admin_simple_shop(rf, staff_user, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    with patch("shuup.configuration.get", new=get_multiple_shops_false_configuration):
         shop1 = factories.get_default_shop()
         shop1.staff_members.add(staff_user)
 
@@ -42,7 +44,7 @@ def test_manufacturer_admin_simple_shop(rf, staff_user, admin_user):
 
 @pytest.mark.django_db
 def test_manufacturer_delete(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    with patch("shuup.configuration.get", new=get_multiple_shops_false_configuration):
         shop1 = factories.get_default_shop()
         shop1.staff_members.add(admin_user)
         manu = Manufacturer.objects.create(name="manuf 1")
@@ -60,7 +62,7 @@ def test_manufacturer_delete(rf, admin_user):
 
 @pytest.mark.parametrize("superuser", [True, False])
 def test_manufacturer_admin_multishop_shop(rf, staff_user, admin_user, superuser):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = factories.get_shop(identifier="shop1", enabled=True)
         shop2 = factories.get_shop(identifier="shop2", enabled=True)
         shop1.staff_members.add(staff_user)

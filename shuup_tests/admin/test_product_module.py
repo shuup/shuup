@@ -10,6 +10,7 @@ import pytest
 from django.http.response import Http404
 from django.test import override_settings
 from filer.models import File
+from mock import patch
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
@@ -39,7 +40,7 @@ from shuup.testing.factories import (
     get_shop as get_new_shop,
 )
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.admin.utils import admin_only_urls
+from shuup_tests.admin.utils import admin_only_urls, get_multiple_shops_true_configuration
 from shuup_tests.utils import empty_iterable
 
 
@@ -205,7 +206,7 @@ def test_product_edit_view_multipleshops(rf):
     Check whether a staff user from Shop A can see the product from Shop B
     when the staff user is only attached to Shop A
     """
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         assert Product.objects.count() == 0
         shop1 = get_default_shop()
         shop2 = get_new_shop(identifier="shop2", domain="shop2", name="Shop 2")

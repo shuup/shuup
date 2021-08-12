@@ -9,11 +9,12 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Shop, ShopStatus
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 
 
 class ShopListView(PicotableListView):
@@ -38,7 +39,7 @@ class ShopListView(PicotableListView):
         return Shop.objects.get_for_user(self.request.user)
 
     def get_toolbar(self):
-        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             return super(ShopListView, self).get_toolbar()
         else:
             return Toolbar.for_view(self)

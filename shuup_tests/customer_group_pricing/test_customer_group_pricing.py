@@ -19,7 +19,6 @@ from shuup.testing.utils import apply_request_middleware
 
 from .utils import get_customer_group_pricing_patched_configuration
 
-
 pytestmark = pytest.mark.skipif(
     "shuup.customer_group_pricing" not in settings.INSTALLED_APPS, reason="customer_group_pricing not installed"
 )

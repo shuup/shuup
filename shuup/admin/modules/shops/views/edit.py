@@ -14,6 +14,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
+from shuup import configuration
 from shuup.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shuup.admin.modules.shops.forms import ContactAddressForm, ShopBaseForm
 from shuup.admin.shop_provider import set_shop
@@ -22,7 +23,7 @@ from shuup.admin.utils.views import CreateOrUpdateView, check_and_raise_if_only_
 from shuup.admin.utils.wizard import onboarding_complete
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.utils.django_compat import reverse
 
 
@@ -88,12 +89,12 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
 
     def get_object(self, queryset=None):
         obj = super(ShopEditView, self).get_object(queryset)
-        check_and_raise_if_only_one_allowed("SHUUP_ENABLE_MULTIPLE_SHOPS", obj)
+        check_and_raise_if_only_one_allowed(SHUUP_ENABLE_MULTIPLE_SHOPS, obj)
         return obj
 
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
-        with_split_save = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
+        with_split_save = configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS)
         toolbar = get_default_edit_toolbar(self, save_form_id, with_split_save=with_split_save)
 
         for button in get_provide_objects("admin_shop_edit_toolbar_button"):

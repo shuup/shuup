@@ -9,6 +9,8 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import get_provide_objects
+from shuup.configuration import get as original_configuration_get
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
 from shuup.testing.factories import create_package_product
 
@@ -84,3 +86,11 @@ def login_allowed_signal(sender, request, user, *args, **kwargs):
 def checkout_complete_signal(sender, request, user, order, *args, **kwargs):
     order.ip_address = "127.0.0.2"
     order.save()
+
+
+def get_registration_multishop_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return True
+    if key == SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        return True
+    return original_configuration_get(shop, key, default)

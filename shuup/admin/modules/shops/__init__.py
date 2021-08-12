@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from typing import Iterable
 
+from shuup import configuration
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.shop_provider import get_shop
@@ -18,6 +18,7 @@ from shuup.admin.utils.object_selector import get_object_selector_permission_nam
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import Shop, ShopStatus
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.utils.django_compat import reverse
 
 
@@ -84,7 +85,7 @@ class ShopModule(AdminModule):
         return derive_model_url(Shop, "shuup_admin:shop", object, kind)
 
     def get_search_results(self, request, query):
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             return
 
         minimum_query_length = 3

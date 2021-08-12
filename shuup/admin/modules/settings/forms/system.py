@@ -115,11 +115,35 @@ class OrderSettingsForm(BaseSettingsForm):
         ),
         required=True,
     )
+    order_source_modifier_modules = forms.ChoiceField(
+        label=_("Order Source Modifier Modules"),
+        choices=(("basket_campaigns", "Basket Campaigns"),),
+        help_text=_("The list of identifiers of order source modifier modules."),
+        required=True,
+    )
+    allow_editing_order = forms.BooleanField(
+        label=_("Allow Editing Order"),
+        help_text=_(
+            "Whether to allow editing order. "
+            "By default when multiple suppliers is enabled this option is disabled "
+            "since order edit does not offer supplier select for product line. "
+            "You can enable this when there is max one vendor per product."
+        ),
+        required=False,
+    )
     allow_anonymous_orders = forms.BooleanField(
         label=_("Allow Anonymous Orders"),
         help_text=_("Whether or not anonymous orders (without a `creator` user) are allowed."),
-        required=True,
+        required=False,
     )
+
+    def __init__(self, *args, **kwargs):
+        super(OrderSettingsForm, self).__init__(*args, **kwargs)
+        if self.data:
+            if "allow_editing_order" not in self.data:
+                self.fields["allow_editing_order"].value = False
+            if "allow_anonymous_orders" not in self.data:
+                self.fields["allow_anonymous_orders"].value = False
 
 
 class OrderSettingsFormPart(BaseSettingsFormPart):
@@ -149,12 +173,66 @@ class CoreSettingsForm(BaseSettingsForm):
         ),
         required=True,
     )
+    tax_module = forms.ChoiceField(
+        label=_("Tax Module"),
+        choices=(("default_tax", "Default Tax"),),
+        help_text=_(
+            "The identifier of the tax module used to determining taxes of products and order lines."
+            "Determines taxation rules for products, shipping/payment methods and other order items."
+        ),
+        required=True,
+    )
+    enable_attributes = forms.BooleanField(
+        label=_("Enable Attributes"),
+        help_text=_(
+            "Whether product attributes are enabled. For installations not requiring attributes, "
+            "disabling this may give a small performance increase."
+        ),
+        required=False,
+    )
+    enable_multiple_shops = forms.BooleanField(
+        label=_("Enable Multiple Shops"),
+        help_text=_(
+            "Whether multiple shops are expected to be enabled in this installation. "
+            "Enabling or disabling this flag does not make it (im)possible to set up multiple shops, "
+            "but having it disabled may give a small performance increase."
+        ),
+        required=False,
+    )
+    enable_multiple_suppliers = forms.BooleanField(
+        label=_("Enable Multiple Suppliers"),
+        help_text=_(
+            "Whether multiple suppliers are enabled in this installation. "
+            "Enabling this flag allows supplier creation from Admin Panel."
+        ),
+        required=False,
+    )
+    manage_contacts_per_shop = forms.BooleanField(
+        label=_("Manage Contacts Per Shop"),
+        help_text=_(
+            "Indicates whether Shuup should restrict Contact access per Shop. "
+            "This is useful when multi-shop is in use and the contact shouldn't "
+            "be visible by other shops. "
+            "When enabled, the contact will only be visible for shops in which user."
+        ),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)
         self.fields[SHUUP_HOME_CURRENCY].initial = Currency.objects.filter(
             code=configuration.get(None, SHUUP_HOME_CURRENCY)
         ).first()
+        if self.data:
+            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
+            if "enable_attributes" not in self.data:
+                self.fields["enable_attributes"].value = False
+            if "enable_multiple_shops" not in self.data:
+                self.fields["enable_multiple_shops"].value = False
+            if "enable_multiple_suppliers" not in self.data:
+                self.fields["enable_multiple_suppliers"].value = False
+            if "manage_contacts_per_shop" not in self.data:
+                self.fields["manage_contacts_per_shop"].value = False
 
 
 class CoreSettingsFormPart(BaseSettingsFormPart):

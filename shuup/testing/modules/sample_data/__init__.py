@@ -11,10 +11,11 @@ import os
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.urls import admin_url
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.testing.modules.sample_data import manager as sample_manager
 
 SAMPLE_BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -44,7 +45,7 @@ class SampleDataAdminModule(AdminModule):
     def get_notifications(self, request):
         """ Injects a message to the user and also a notification """
         # multi-shop not supported
-        if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             from shuup.admin.shop_provider import get_shop
 
             shop = get_shop(request)

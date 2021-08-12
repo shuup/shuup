@@ -10,6 +10,7 @@ import pytest
 from django import forms
 from django.http.response import Http404
 from django.test.utils import override_settings
+from mock import patch
 
 from shuup.admin.shop_provider import set_shop
 from shuup.notify.actions.email import SendEmail
@@ -20,6 +21,7 @@ from shuup.notify.models import Script
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import force_text, reverse
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.notify.fixtures import TEST_TEMPLATE_DATA, ATestEvent
 
 # TODO: Embetter the tests in this file
@@ -74,7 +76,7 @@ def test_notify_item_admin_form(rf, admin_user):
 
 @pytest.mark.django_db
 def test_admin_script_list(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = factories.get_shop(identifier="shop-1", enabled=True)
         shop2 = factories.get_shop(identifier="shop-2", enabled=True)
 

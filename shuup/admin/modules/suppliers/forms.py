@@ -12,11 +12,13 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MutableAddress, Shop, Supplier, SupplierShop
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.utils.django_compat import force_text
 
 
@@ -96,7 +98,7 @@ class SupplierBaseForm(ShuupAdminForm):
 
         shop = get_shop(self.request)
 
-        if not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS or "shops" not in self.fields:
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS) or "shops" not in self.fields:
             instance.shops.add(shop)
 
         self._save_supplier_shop(shop, instance)

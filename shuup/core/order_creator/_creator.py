@@ -9,11 +9,11 @@ from __future__ import unicode_literals
 
 import warnings
 from decimal import Decimal
-from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from shuup.core.models import Order, OrderLine, OrderLineType, ShopProduct
 from shuup.core.order_creator.signals import order_creator_finished, post_order_line_save
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils.users import real_user_or_none
 from shuup.utils.deprecation import RemovedFromShuupWarning
@@ -233,6 +233,8 @@ class OrderProcessor(object):
         return order
 
     def _update_customer_info_if_needed(self, order):
+        from shuup import configuration
+
         if not order.customer:
             return
 
@@ -260,7 +262,9 @@ class OrderProcessor(object):
             order.customer.save()
 
         # add shop to the customer shop list if needed
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) and configuration.get(
+            None, SHUUP_MANAGE_CONTACTS_PER_SHOP
+        ):
             order.customer.add_to_shop(order.shop)
 
     def _assign_code_usages(self, order_source, order):

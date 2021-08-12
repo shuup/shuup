@@ -69,5 +69,68 @@
             "key": "pricing_module",
             "value": "\"customer_group_pricing\""
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 9,
+        "fields": {
+            "shop": null,
+            "key": "order_source_modifier_modules",
+            "value": ["basket_campaigns"]
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 10,
+        "fields": {
+            "shop": null,
+            "key": "tax_module",
+            "value": "\"default_tax\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 11,
+        "fields": {
+            "shop": null,
+            "key": "enable_attributes",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 12,
+        "fields": {
+            "shop": null,
+            "key": "enable_multiple_shops",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 13,
+        "fields": {
+            "shop": null,
+            "key": "enable_multiple_suppliers",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 14,
+        "fields": {
+            "shop": null,
+            "key": "manage_contacts_per_shop",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 15,
+        "fields": {
+            "shop": null,
+            "key": "allow_editing_order",
+            "value": true
+        }
     }
 ]

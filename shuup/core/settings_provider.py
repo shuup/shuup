@@ -7,9 +7,14 @@
 from django.conf import settings
 
 from shuup.apps.provides import get_provide_objects
+from shuup.apps.settings import get_configuration_setting
 
 
 class BaseSettingsProvider(object):
+    """
+    This class is deceprecated as the shuup settings were moved to configuration.
+    """
+
     provided_settings = []
 
     def offers(self, setting_key):
@@ -20,8 +25,16 @@ class BaseSettingsProvider(object):
 
 
 class ShuupSettings(object):
+    """
+    This class is deceprecated as the shuup settings were moved to configuration. Use shuup.configuration.get instead.
+    """
+
     @classmethod
     def get_setting(cls, setting_key):
+        configuration_value = get_configuration_setting(setting_key)
+        if configuration_value is not None:
+            return configuration_value
+
         for provider_cls in get_provide_objects("shuup_settings_provider"):
             provider = provider_cls()
             if provider.offers(setting_key):

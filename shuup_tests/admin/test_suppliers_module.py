@@ -10,6 +10,7 @@ import pytest
 from decimal import Decimal
 from django.test.utils import override_settings
 from django.utils.text import slugify
+from mock import patch
 
 from shuup.admin.modules.suppliers.views import SupplierDeleteView, SupplierEditView, SupplierListView
 from shuup.core.catalog import ProductCatalog, ProductCatalogContext
@@ -18,6 +19,7 @@ from shuup.testing import factories
 from shuup.testing.factories import get_default_supplier
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import reverse
+from shuup_tests.admin.utils import get_multiple_suppliers_true_configuration
 
 
 @pytest.mark.django_db
@@ -56,7 +58,7 @@ def test_suppliers_edit(rf, admin_user, manage_stock, stock_module):
     staff_user = factories.create_random_user("en", is_staff=True)
     shop.staff_members.add(staff_user)
 
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SUPPLIERS=True):
+    with patch("shuup.configuration.get", new=get_multiple_suppliers_true_configuration):
         for index, user in enumerate([admin_user, staff_user]):
             payload = {
                 "base-name": "Supplier Name %d" % index,

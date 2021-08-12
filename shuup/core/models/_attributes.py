@@ -13,7 +13,6 @@ import six
 from collections import defaultdict
 from decimal import Decimal
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import yesno
@@ -27,6 +26,7 @@ from parler.models import TranslatableModel, TranslatedFields
 from typing import Iterable, Union
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.core.setting_keys import SHUUP_ENABLE_ATTRIBUTES
 from shuup.core.templatetags.shuup_common import datetime as format_datetime, number as format_number
 from shuup.utils.analog import define_log_model
 from shuup.utils.dates import parse_date
@@ -461,7 +461,9 @@ class AttributableMixin(object):
 
     @classmethod
     def cache_attributes_for_targets(cls, applied_attr_cls, targets, attribute_identifiers, language):
-        if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
+        from shuup import configuration
+
+        if not configuration.get(None, SHUUP_ENABLE_ATTRIBUTES):  # pragma: no cover
             return targets
 
         applied_attrs_by_target_id = defaultdict(list)
@@ -495,7 +497,9 @@ class AttributableMixin(object):
         )
 
     def get_all_attribute_info(self, language=None, visibility_mode=None):
-        if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
+        from shuup import configuration
+
+        if not configuration.get(None, SHUUP_ENABLE_ATTRIBUTES):  # pragma: no cover
             return {}
 
         language = language or get_language()
@@ -540,7 +544,9 @@ class AttributableMixin(object):
         :return: Attribute value (or fallback).
         :rtype: object
         """
-        if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
+        from shuup import configuration
+
+        if not configuration.get(None, SHUUP_ENABLE_ATTRIBUTES):  # pragma: no cover
             return ""
 
         language = language or get_language()
@@ -588,7 +594,9 @@ class AttributableMixin(object):
         :return: Applied attribute object or None.
         :rtype: AppliedAttribute|None
         """
-        if not settings.SHUUP_ENABLE_ATTRIBUTES:  # pragma: no cover
+        from shuup import configuration
+
+        if not configuration.get(None, SHUUP_ENABLE_ATTRIBUTES):  # pragma: no cover
             return
 
         attr = self.get_available_attribute_queryset().get(identifier=identifier)

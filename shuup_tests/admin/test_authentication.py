@@ -5,16 +5,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.test import override_settings
+from mock import patch
 
 from shuup.core.models import ShopStatus
 from shuup.testing import factories
 from shuup.utils.django_compat import reverse
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.utils import SmartClient
 
 
 @pytest.mark.django_db
-@override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True)
+@patch("shuup.configuration.get", new=get_multiple_shops_true_configuration)
 def test_staff_authentication():
     shop = factories.get_shop(True, "USD", enabled=True)
     staff_user = factories.create_random_user(is_staff=True)

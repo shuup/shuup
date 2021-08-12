@@ -9,6 +9,7 @@ import decimal
 import pytest
 import random
 from django.test import override_settings
+from mock import patch
 from time import time
 
 from shuup.admin.modules.products.views.edit import ProductEditView
@@ -31,6 +32,7 @@ from shuup.testing.factories import (
     get_initial_order_status,
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_false_configuration, get_multiple_shops_true_configuration
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
 
@@ -104,7 +106,7 @@ def test_supplier_with_stock_counts(rf, stock_managed):
 @pytest.mark.django_db
 def test_supplier_with_stock_counts_2(rf, admin_user, settings):
     shuup_currency = "USD"
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=False):
+    with patch("shuup.configuration.get", new=get_multiple_shops_false_configuration):
         supplier = get_simple_supplier()
         shop = get_default_shop()
         assert shop.prices_include_tax
@@ -133,7 +135,7 @@ def test_supplier_with_stock_counts_2(rf, admin_user, settings):
         assert sc.stock_unit_price.currency == shop.currency
         assert sc.stock_unit_price.includes_tax
 
-        with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+        with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
             sa = StockAdjustment.objects.first()  # refetch to invalidate cache
             assert sa.purchase_price.currency != shop.currency
             assert sa.purchase_price.currency == shuup_currency

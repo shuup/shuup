@@ -8,6 +8,7 @@ import pytest
 from django.conf import settings
 from django.test.utils import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup import configuration
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
@@ -22,6 +23,7 @@ from shuup.testing.factories import (
     get_default_supplier,
 )
 from shuup.utils.django_compat import reverse
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.utils import SmartClient, printable_gibberish
 from shuup_tests.utils.forms import get_form_data
 
@@ -71,7 +73,7 @@ def _test_cleanliness(shop_form):
 
 @pytest.mark.django_db
 def test_new_shop(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         get_default_shop()
         assert Shop.objects.count() == 1
 

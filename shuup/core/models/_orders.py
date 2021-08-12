@@ -36,8 +36,7 @@ from shuup.core.excs import (
 )
 from shuup.core.fields import CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
-from shuup.core.setting_keys import SHUUP_ALLOW_ANONYMOUS_ORDERS
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ALLOW_ANONYMOUS_ORDERS, SHUUP_ALLOW_EDITING_ORDER, SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.core.signals import (
     order_changed,
     order_status_changed,
@@ -585,11 +584,13 @@ class Order(MoneyPropped, models.Model):
         verbose_name_plural = _("orders")
 
     def __str__(self):  # pragma: no cover
+        from shuup import configuration
+
         if self.billing_address_id:
             name = self.billing_address.name
         else:
             name = "-"
-        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             return "Order %s (%s, %s)" % (self.identifier, self.shop.name, name)
         else:
             return "Order %s (%s)" % (self.identifier, name)
@@ -1247,8 +1248,10 @@ class Order(MoneyPropped, models.Model):
         return self.shipments.all_except_deleted().sent()
 
     def can_edit(self):
+        from shuup import configuration
+
         return (
-            settings.SHUUP_ALLOW_EDITING_ORDER
+            configuration.get(None, SHUUP_ALLOW_EDITING_ORDER)
             and not self.has_refunds()
             and not self.is_canceled()
             and not self.is_complete()
