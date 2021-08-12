@@ -6,10 +6,8 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-import six
-from collections import defaultdict
 
-from shuup.core.models import ShippingMode, Supplier, SupplierModule
+from shuup.core.models import ShipmentStatus, ShippingMode, Supplier, SupplierModule
 from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
 
 
@@ -184,6 +182,8 @@ def test_order_product_summary_with_multiple_suppliers():
     order.create_refund([{"line": line_to_refund, "quantity": 1, "amount": shop.create_price("1").amount}])
 
     assert not order.get_unshipped_products()
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.is_fully_shipped()
 
     # Verify product summary

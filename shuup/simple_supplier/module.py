@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import F
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core.excs import NoProductsToShipException
 from shuup.core.models import Product
 from shuup.core.signals import stocks_updated
 from shuup.core.stocks import ProductStockStatus
@@ -19,7 +20,6 @@ from shuup.core.utils import context_cache
 from shuup.simple_supplier.utils import get_current_stock_value
 from shuup.utils.django_compat import force_text
 from shuup.utils.djangoenv import has_installed
-from shuup.utils.excs import Problem
 
 from .models import StockAdjustment, StockCount
 
@@ -183,7 +183,7 @@ class SimpleSupplierModule(BaseSupplierModule):
                     % {"name": force_text(name), "quantity": force_text(int(quantity))}
                     for (name, quantity) in insufficient_stocks.items()
                 ]
-                raise Problem(
+                raise NoProductsToShipException(
                     _("Insufficient physical stock count for the following products: `%(product_counts)s`.")
                     % {"product_counts": ", ".join(formatted_counts)}
                 )

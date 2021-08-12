@@ -162,10 +162,10 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
                 order=order, product_quantities=products_to_quantities, shipment=unsaved_shipment
             )
         except Problem as problem:
-            messages.error(self.request, problem)
+            messages.error(self.request, str(problem))
             return self.form_invalid(form)
-        except NoProductsToShipException:
-            messages.error(self.request, _("No products to ship."))
+        except NoProductsToShipException as exc:
+            messages.error(self.request, str(exc))
             return self.form_invalid(form)
         except NoShippingAddressException:
             messages.error(self.request, _("Shipping address is not set."))

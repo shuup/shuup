@@ -24,6 +24,7 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_supplier,
 )
+from shuup.core.models import ShipmentStatus
 from shuup.utils.django_compat import reverse
 from shuup.utils.i18n import format_money
 
@@ -83,7 +84,8 @@ def _test_create_full_refund(browser, live_server, order):
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()
-    assert order.is_fully_shipped()
+    assert not order.is_fully_shipped()
+    assert not order.shipments.exists()
 
 
 def _test_refund_view(browser, live_server, order):

@@ -56,6 +56,9 @@ class ShipmentQueryset(models.QuerySet):
     def sent(self):
         return self.filter(status=ShipmentStatus.SENT)
 
+    def out_only(self):
+        return self.filter(type=ShipmentType.OUT)
+
 
 class Shipment(ShuupModel):
     order = models.ForeignKey(
@@ -148,6 +151,8 @@ class Shipment(ShuupModel):
 
         self.status = ShipmentStatus.SENT
         self.save()
+        if self.order:
+            self.order.update_shipping_status()
         shipment_sent.send(sender=type(self), order=self.order, shipment=self)
 
     def set_received(self, purchase_prices=None, created_by=None):
@@ -164,6 +169,8 @@ class Shipment(ShuupModel):
         """
         self.status = ShipmentStatus.RECEIVED
         self.save()
+        if self.order:
+            self.order.update_shipping_status()
         if self.type == ShipmentType.IN:
             for product_id, quantity in self.products.values_list("product_id", "quantity"):
                 purchase_price = purchase_prices.get(product_id, None) if purchase_prices else None
