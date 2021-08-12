@@ -9,21 +9,15 @@ import pytest
 from decimal import Decimal
 
 from shuup.core.models import SalesUnit
-from shuup.simple_supplier.forms import StockAdjustmentForm
-from shuup.testing.factories import get_default_product
+from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
 
 
 @pytest.mark.django_db
-def test_form(rf, admin_user):
+def test_adjustment_form(rf, admin_user):
     """
     Test StockAdjustmentForm.
     """
-    product = get_default_product()
-
     partial_sales_unit = SalesUnit.objects.create(identifier="test-sales-partial", decimals=2, name="Partial unit")
-    product.sales_unit = partial_sales_unit
-    product.save()
-
     form = StockAdjustmentForm(
         data={
             "purchase_price": 10,
@@ -31,15 +25,9 @@ def test_form(rf, admin_user):
         },
         sales_unit=partial_sales_unit,
     )
-    assert form.errors == {}
-    form.full_clean()
-    assert form.cleaned_data["delta"] == Decimal("1.2")
+    assert form.is_valid()
 
-    product2 = get_default_product()
     integer_sales_unit = SalesUnit.objects.create(identifier="test-sales-integer", decimals=0, name="Integer unit")
-    product2.sales_unit = integer_sales_unit
-    product2.save()
-
     form = StockAdjustmentForm(
         data={
             "purchase_price": 10,
@@ -47,6 +35,19 @@ def test_form(rf, admin_user):
         },
         sales_unit=integer_sales_unit,
     )
-    assert form.errors == {}
-    form.full_clean()
-    assert form.cleaned_data["delta"] == Decimal("1")
+    assert not form.is_valid()
+
+
+@pytest.mark.django_db
+def test_alet_form(rf, admin_user):
+    """
+    Test AlertLimitForm.
+    """
+    partial_sales_unit = SalesUnit.objects.create(identifier="test-sales-partial", decimals=2, name="Partial unit")
+    integer_sales_unit = SalesUnit.objects.create(identifier="test-sales-integer", decimals=0, name="Integer unit")
+
+    form = AlertLimitForm(data={"alert_limit": Decimal("10.43")}, sales_unit=partial_sales_unit)
+    assert form.is_valid()
+
+    form = StockAdjustmentForm(data={"alert_limit": 1.2}, sales_unit=integer_sales_unit)
+    assert not form.is_valid()
