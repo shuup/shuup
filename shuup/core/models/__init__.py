@@ -12,7 +12,7 @@ from ._background_tasks import BackgroundTask, BackgroundTaskExecution, Backgrou
 from ._base import PolymorphicShuupModel, PolymorphicTranslatableShuupModel, ShuupModel, TranslatableShuupModel
 from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
-from ._configurations import ConfigurationItem
+from ._configurations import ConfigurationItem, EncryptedConfigurationItem
 from ._contacts import (
     AnonymousContact,
     CompanyContact,
@@ -131,6 +131,7 @@ __all__ = [
     "Currency",
     "DefaultOrderStatus",
     "DisplayUnit",
+    "EncryptedConfigurationItem",
     "FixedCostBehaviorComponent",
     "get_all_available_combinations",
     "get_company_contact",
