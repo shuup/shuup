@@ -30,7 +30,6 @@ def clear_caches(setting, **kwargs):
 
 def pytest_configure(config):
     setting_changed.connect(clear_caches, dispatch_uid="shuup_test_clear_caches")
-    settings.SHUUP_TELEMETRY_ENABLED = False
 
 
 def pytest_runtest_call(item):

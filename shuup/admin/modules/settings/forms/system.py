@@ -136,10 +136,16 @@ class OrderSettingsForm(BaseSettingsForm):
         help_text=_("Whether or not anonymous orders (without a `creator` user) are allowed."),
         required=False,
     )
+    default_order_label = forms.CharField(
+        label=_("Default Order Label"),
+        help_text=_("The order label to apply to orders by default."),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(OrderSettingsForm, self).__init__(*args, **kwargs)
         if self.data:
+            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
             if "allow_editing_order" not in self.data:
                 self.fields["allow_editing_order"].value = False
             if "allow_anonymous_orders" not in self.data:
@@ -217,6 +223,11 @@ class CoreSettingsForm(BaseSettingsForm):
         ),
         required=False,
     )
+    telemetry_enabled = forms.BooleanField(
+        label=_("Enable Telemetry"),
+        help_text=_("The flag to enable/disable the telemetry (statistics) system."),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)
@@ -233,6 +244,8 @@ class CoreSettingsForm(BaseSettingsForm):
                 self.fields["enable_multiple_suppliers"].value = False
             if "manage_contacts_per_shop" not in self.data:
                 self.fields["manage_contacts_per_shop"].value = False
+            if "telemetry_enabled" not in self.data:
+                self.fields["telemetry_enabled"].value = False
 
 
 class CoreSettingsFormPart(BaseSettingsFormPart):

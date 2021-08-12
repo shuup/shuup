@@ -12,7 +12,6 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import ProtectedError
-from django.test import override_settings
 from mock import patch
 
 from shuup import configuration

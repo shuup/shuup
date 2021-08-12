@@ -40,6 +40,7 @@ from shuup.testing.factories import (
     get_default_supplier,
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.core.utils import get_telemetry_false_configuration, get_telemetry_true_configuration
 from shuup_tests.utils import SmartClient
 
 
@@ -101,35 +102,36 @@ def test_get_telemetry_data_after_login(rf, admin_user):
 
 @pytest.mark.django_db
 def test_optin_optout(rf, admin_user):
-    with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
-        with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
-            _clear_telemetry_submission()
-            assert not set_opt_out(False)  # Not opted out
-            assert not is_opt_out()
-            try_send_telemetry()
-            with pytest.raises(TelemetryNotSent) as ei:
-                try_send_telemetry(raise_on_error=True)  # Still gracey
-            assert ei.value.code == "grace"
+    with patch("shuup.configuration.get", new=get_telemetry_true_configuration):
+        with override_settings(DEBUG=True):
+            with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
+                _clear_telemetry_submission()
+                assert not set_opt_out(False)  # Not opted out
+                assert not is_opt_out()
+                try_send_telemetry()
+                with pytest.raises(TelemetryNotSent) as ei:
+                    try_send_telemetry(raise_on_error=True)  # Still gracey
+                assert ei.value.code == "grace"
 
-            _backdate_installation_key()
-            try_send_telemetry(max_age_hours=72)
-            try_send_telemetry(max_age_hours=None)  # Forcibly re-send for the hell of it
-            with pytest.raises(TelemetryNotSent) as ei:
-                try_send_telemetry(raise_on_error=True)  # Don't ignore last-send; shouldn't send anyway
-            assert ei.value.code == "age"
+                _backdate_installation_key()
+                try_send_telemetry(max_age_hours=72)
+                try_send_telemetry(max_age_hours=None)  # Forcibly re-send for the hell of it
+                with pytest.raises(TelemetryNotSent) as ei:
+                    try_send_telemetry(raise_on_error=True)  # Don't ignore last-send; shouldn't send anyway
+                assert ei.value.code == "age"
 
-            assert len(requestor.mock_calls) == 2
-            assert set_opt_out(True)
-            assert is_opt_out()
-            with pytest.raises(TelemetryNotSent) as ei:
-                try_send_telemetry(max_age_hours=0, raise_on_error=True)
-            assert ei.value.code == "optout"
-            assert len(requestor.mock_calls) == 2
+                assert len(requestor.mock_calls) == 2
+                assert set_opt_out(True)
+                assert is_opt_out()
+                with pytest.raises(TelemetryNotSent) as ei:
+                    try_send_telemetry(max_age_hours=0, raise_on_error=True)
+                assert ei.value.code == "optout"
+                assert len(requestor.mock_calls) == 2
 
 
 @pytest.mark.django_db
 def test_disable(rf, admin_user):
-    with override_settings(SHUUP_TELEMETRY_ENABLED=False):
+    with patch("shuup.configuration.get", new=get_telemetry_false_configuration):
         _clear_telemetry_submission()
         _backdate_installation_key()
         set_opt_out(False)
@@ -143,7 +145,7 @@ def test_graceful_error(admin_user):
     def thrower(*args, **kwargs):
         raise ValueError("Error! aaaagh")
 
-    with override_settings(SHUUP_TELEMETRY_ENABLED=True):
+    with patch("shuup.configuration.get", new=get_telemetry_true_configuration):
         with patch.object(requests, "post", thrower) as requestor:
             _clear_telemetry_submission()
             _backdate_installation_key()
@@ -153,9 +155,9 @@ def test_graceful_error(admin_user):
 
 def test_disabling_telemetry_hides_menu_item(rf):
     request = rf.get("/")
-    with override_settings(SHUUP_TELEMETRY_ENABLED=True):
+    with patch("shuup.configuration.get", new=get_telemetry_true_configuration):
         assert any(me.original_url == "shuup_admin:telemetry" for me in SystemModule().get_menu_entries(request))
-    with override_settings(SHUUP_TELEMETRY_ENABLED=False):
+    with patch("shuup.configuration.get", new=get_telemetry_false_configuration):
         assert not any(me.original_url == "shuup_admin:telemetry" for me in SystemModule().get_menu_entries(request))
 
 
@@ -163,7 +165,7 @@ def test_disabling_telemetry_hides_menu_item(rf):
 def test_telemetry_is_sent_on_login(rf, admin_user):
     shop = get_default_shop()
     with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
-        with override_settings(SHUUP_TELEMETRY_ENABLED=True):
+        with patch("shuup.configuration.get", new=get_telemetry_true_configuration):
             _backdate_installation_key(days=0)  # instance was created today
             request = apply_request_middleware(rf.get("/"), user=admin_user)
             view_func = DashboardView.as_view()
@@ -236,11 +238,12 @@ def test_telemetry_daily_data_components(data_key, data_value, create_object):
 
 @pytest.mark.django_db
 def test_telemetry_multiple_days(rf, admin_user):
-    with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
-        with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
-            try_send_telemetry()
-            day = now()
-            _backdate_telemetry_submission(days=0)
-            assert not get_daily_data(day)
-            _backdate_telemetry_submission(days=20)
-            assert len(get_daily_data(now())) == 19  # Since current day is not added to telemetry
+    with patch("shuup.configuration.get", new=get_telemetry_true_configuration):
+        with override_settings(DEBUG=True):
+            with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
+                try_send_telemetry()
+                day = now()
+                _backdate_telemetry_submission(days=0)
+                assert not get_daily_data(day)
+                _backdate_telemetry_submission(days=20)
+                assert len(get_daily_data(now())) == 19  # Since current day is not added to telemetry

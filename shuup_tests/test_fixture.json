@@ -132,5 +132,14 @@
             "key": "allow_editing_order",
             "value": true
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 16,
+        "fields": {
+            "shop": null,
+            "key": "telemetry_enabled",
+            "value": false
+        }
     }
 ]

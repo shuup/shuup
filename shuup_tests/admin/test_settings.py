@@ -17,6 +17,7 @@ from shuup.core.models import Currency
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_DEFAULT_ORDER_LABEL,
     SHUUP_DISCOUNT_MODULES,
     SHUUP_ENABLE_ATTRIBUTES,
     SHUUP_ENABLE_MULTIPLE_SHOPS,
@@ -29,6 +30,7 @@ from shuup.core.setting_keys import (
     SHUUP_REFERENCE_NUMBER_METHOD,
     SHUUP_REFERENCE_NUMBER_PREFIX,
     SHUUP_TAX_MODULE,
+    SHUUP_TELEMETRY_ENABLED,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -77,6 +79,12 @@ def get_data(reference_method):
             ("basket_campaigns"),
             ("basket_campaigns"),
         ),
+        (
+            "order_settings",
+            SHUUP_DEFAULT_ORDER_LABEL,
+            "default",
+            "default",
+        ),
         ("core_settings", SHUUP_HOME_CURRENCY, Currency.objects.all().first().id, Currency.objects.all().first().code),
         (
             "core_settings",
@@ -111,6 +119,12 @@ def get_data(reference_method):
         (
             "core_settings",
             SHUUP_MANAGE_CONTACTS_PER_SHOP,
+            False,
+            False,
+        ),
+        (
+            "core_settings",
+            SHUUP_TELEMETRY_ENABLED,
             False,
             False,
         ),

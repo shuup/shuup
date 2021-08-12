@@ -21,6 +21,7 @@ from django.utils.timezone import now
 import shuup
 from shuup import configuration
 from shuup.core.models import Contact, Order, Payment, PersistentCacheEntry, Product
+from shuup.core.setting_keys import SHUUP_TELEMETRY_ENABLED
 from shuup.utils.django_compat import force_text
 
 User = get_user_model()
@@ -70,7 +71,7 @@ def is_in_grace_period():
 
 
 def is_telemetry_enabled():
-    return bool(settings.SHUUP_TELEMETRY_ENABLED)
+    return bool(configuration.get(None, SHUUP_TELEMETRY_ENABLED))
 
 
 def set_opt_out(flag):
