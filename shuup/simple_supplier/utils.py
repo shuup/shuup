@@ -100,7 +100,7 @@ def get_stock_information_div_id(supplier, product):
     return "stock-information-%s-%s" % (supplier.id, product.id)
 
 
-def get_stock_information_html(supplier, product):
+def get_stock_information_html(supplier, product, context={}):
     """
     Get html string to show current stock information for product
 
@@ -112,12 +112,14 @@ def get_stock_information_html(supplier, product):
     :rtype: str
     """
     stock = StockCount.objects.filter(product=product, supplier=supplier).first()
-    context = {
-        "div_id": get_stock_information_div_id(supplier, product),
-        "sales_decimals": product.sales_unit.decimals if product.sales_unit else 0,
-        "sales_unit": product.sales_unit.symbol if product.sales_unit else "",
-        "stock": stock,
-    }
+    context.update(
+        {
+            "div_id": get_stock_information_div_id(supplier, product),
+            "sales_decimals": product.sales_unit.decimals if product.sales_unit else 0,
+            "sales_unit": product.sales_unit.symbol if product.sales_unit else "",
+            "stock": stock,
+        }
+    )
     if "shuup.notify" in settings.INSTALLED_APPS:
         context["alert_limit"] = True
     return render_to_string("shuup/simple_supplier/admin/stock_information.jinja", context)

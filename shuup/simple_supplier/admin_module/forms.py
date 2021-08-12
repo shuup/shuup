@@ -44,7 +44,7 @@ class SimpleSupplierForm(forms.Form):
         ).exists()
 
     def get_stock_information(self, supplier, product):
-        return get_stock_information_html(supplier, product)
+        return get_stock_information_html(supplier, product, context={"request": self.request})
 
     def get_stock_adjustment_form(self, supplier, product):
         return get_stock_adjustment_div(self.request, supplier, product)
