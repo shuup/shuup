@@ -143,8 +143,16 @@ def safe_product_description(value):
     if isinstance(value, Undefined):
         return value
     if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
-        value = linebreaks(bleach.clean(value, tags=[]))
+        value = linebreaks(bleach.clean(value, tags=[], strip=True))
     return mark_safe(value)
+
+
+@library.filter
+def cleanmeta(value):
+    if isinstance(value, Undefined):
+        return value
+    prepared_content = value.replace("&nbsp;", " ").replace("</p>", " ").replace("<br>", " ").replace('"', "'")
+    return bleach.clean(prepared_content, tags=[], strip=True)
 
 
 @library.filter

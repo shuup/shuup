@@ -1,13 +1,13 @@
 {% macro render_open_graph(page) %}
     {% set title = (page.open_graph and page.open_graph.title) or page.title %}
-    {% set description = (page.open_graph and page.open_graph.description) or (page.content|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'")) %}
+    {% set description = (page.open_graph and page.open_graph.description) or page.content %}
     {% set type = (page.open_graph and page.open_graph.og_type.value) or "website" %}
 
     <meta property="og:site_name" content="{{ (request.shop.public_name or request.shop.name) }}">
     <meta property="og:url" content="{{ shuup.urls.model_url(object, absolute=True) }}">
     <meta property="og:title" content="{{ title }}" />
     <meta property="og:type" content="{{ type }}" />
-    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:description" content="{{ description|cleanmeta|truncate(160) }}" />
 
     {% if (page.open_graph and page.open_graph.image) %}
         <meta property="og:image" content="{{ request.build_absolute_uri(page.open_graph.image.url) }}" />

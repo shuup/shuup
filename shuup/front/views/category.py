@@ -31,7 +31,6 @@ def get_context_data(context, request, category, product_filters):
             visibility=ShopProductVisibility.LISTED,
         )
     )
-
     products = (
         catalog.get_products_queryset()
         .filter(**product_filters)
