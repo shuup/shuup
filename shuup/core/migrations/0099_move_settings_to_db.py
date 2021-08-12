@@ -16,6 +16,7 @@ from shuup.core.setting_keys import (
     SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
     SHUUP_HOME_CURRENCY,
     SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_MAX_UPLOAD_SIZE,
     SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
     SHUUP_PRICING_MODULE,
     SHUUP_REFERENCE_NUMBER_LENGTH,
@@ -49,6 +50,7 @@ def move_settings_to_db(apps, schema_editor):
     )
     configuration.set(None, SHUUP_ALLOW_ARBITRARY_REFUNDS, settings.SHUUP_ALLOW_ARBITRARY_REFUNDS)
     configuration.set(None, SHUUP_ALLOWED_UPLOAD_EXTENSIONS, settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS)
+    configuration.set(None, SHUUP_MAX_UPLOAD_SIZE, settings.SHUUP_MAX_UPLOAD_SIZE)
 
 
 class Migration(migrations.Migration):

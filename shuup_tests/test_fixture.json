@@ -168,5 +168,14 @@
             "key": "allowed_upload_extensions",
             "value": ["pdf", "ttf", "eot", "woff", "woff2", "otf"]
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 20,
+        "fields": {
+            "shop": null,
+            "key": "max_upload_size",
+            "value": 5000000
+        }
     }
 ]

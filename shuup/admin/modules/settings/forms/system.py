@@ -251,6 +251,11 @@ class CoreSettingsForm(BaseSettingsForm):
         help_text=_("List of allowed extensions for file or image uploads."),
         required=True,
     )
+    max_upload_size = forms.IntegerField(
+        label=_("Max Upload Size"),
+        help_text=_("Maximum allowed file size (in bytes) for uploads."),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)

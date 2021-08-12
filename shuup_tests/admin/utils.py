@@ -11,6 +11,7 @@ from shuup.core.setting_keys import (
     SHUUP_ENABLE_MULTIPLE_SHOPS,
     SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
     SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_MAX_UPLOAD_SIZE,
 )
 from shuup_tests.utils import replace_urls
 
@@ -84,4 +85,10 @@ def get_multiple_suppliers_false_configuration(shop, key, default=None):
 def get_allow_arbitrary_refunds_false_configuration(shop, key, default=None):
     if key == SHUUP_ALLOW_ARBITRARY_REFUNDS:
         return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_max_upload_size_patched_configuration(shop, key, default=None):
+    if key == SHUUP_MAX_UPLOAD_SIZE:
+        return 10
     return original_configuration_get(shop, key, default)

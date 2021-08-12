@@ -12,10 +12,10 @@ import tempfile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import ProtectedError
 from django.http import JsonResponse
-from django.test import override_settings
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
 from filer.models import File, Folder, Image
+from mock import patch
 from six import BytesIO
 
 from shuup.admin.modules.media.views import MediaBrowserView
@@ -25,6 +25,7 @@ from shuup.testing.factories import generate_image, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import reverse
 from shuup.utils.filer import can_see_root_folder, ensure_media_folder, get_or_create_folder
+from shuup_tests.admin.utils import get_max_upload_size_patched_configuration
 from shuup_tests.utils import printable_gibberish
 
 
@@ -397,7 +398,7 @@ def test_upload_valid_image(client, rf, admin_user):
 @pytest.mark.django_db
 def test_large_image(client, rf, admin_user):
     assert File.objects.count() == 0
-    with override_settings(SHUUP_MAX_UPLOAD_SIZE=10):
+    with patch("shuup.configuration.get", new=get_max_upload_size_patched_configuration):
         tmp_file = tempfile.NamedTemporaryFile(suffix=".jpg")
         generate_image(120, 120).save(tmp_file)
         # tmp_file.seek(0)
