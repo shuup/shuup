@@ -8,7 +8,7 @@
 import pytest
 from django.utils.timezone import now
 
-from shuup.core.models import Order, OrderLine, OrderLineTax, OrderLineType, get_person_contact
+from shuup.core.models import Order, OrderLine, OrderLineTax, OrderLineType, ShipmentStatus, get_person_contact
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.default_tax.module import DefaultTaxModule
 from shuup.testing.factories import (
@@ -92,6 +92,8 @@ def create_order(request, creator, customer, product):
 
     assert not order.is_fully_shipped()
     shipment = order.create_shipment_of_all_products(supplier=supplier)
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.is_fully_shipped()
 
     assert shipment.total_products == 5, "All products were shipped"

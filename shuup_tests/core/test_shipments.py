@@ -9,7 +9,8 @@ import decimal
 import pytest
 from django.conf import settings
 
-from shuup.core.models import Shipment, ShipmentProduct, ShippingMode, ShippingStatus
+from shuup.core.excs import NoProductsToShipException
+from shuup.core.models import Shipment, ShipmentProduct, ShipmentStatus, ShippingMode, ShippingStatus
 from shuup.testing.factories import (
     add_product_to_order,
     create_empty_order,
@@ -17,7 +18,6 @@ from shuup.testing.factories import (
     get_default_shop,
     get_default_supplier,
 )
-from shuup.utils.excs import Problem
 
 
 @pytest.mark.django_db
@@ -32,6 +32,8 @@ def test_shipment_identifier():
             expected_key_start = "%s/%s" % (order.pk, i)
             assert shipment.identifier.startswith(expected_key_start)
         assert order.shipments.count() == int(line.quantity)
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED  # Check that order is now fully shipped
     assert not order.can_edit()
 
@@ -90,6 +92,8 @@ def test_partially_shipped_order_status():
     first_product_line = order.lines.exclude(product_id=None).first()
     assert first_product_line.quantity > 1
     order.create_shipment({first_product_line.product: 1}, supplier=supplier)
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
     assert not order.can_edit()
 
@@ -103,6 +107,8 @@ def test_shipment_delete():
     first_product_line = order.lines.exclude(product_id=None).first()
     assert first_product_line.quantity > 1
     shipment = order.create_shipment({first_product_line.product: 1}, supplier=supplier)
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
     assert order.shipments.all().count() == 1
 
@@ -135,6 +141,11 @@ def test_shipment_with_insufficient_stock(stock_managed):
     assert stock_status.physical_count == 10
 
     order.create_shipment({product: 5}, supplier=supplier)
+
+    # mark all shipments as sent
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
+
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
     assert order.shipments.all().count() == 1
 
@@ -143,7 +154,7 @@ def test_shipment_with_insufficient_stock(stock_managed):
         supplier.stock_managed = True
         supplier.save()
 
-        with pytest.raises(Problem):
+        with pytest.raises(NoProductsToShipException):
             order.create_shipment({product: 10}, supplier=supplier)
 
         # Should be fine after adding more stock
@@ -175,6 +186,11 @@ def test_shipment_with_unshippable_products():
 
     assert order.shipments.count() == 1
     assert ShipmentProduct.objects.filter(shipment__order_id=order.id).count() == initial_product_line_count
+
+    # mark all shipments as sent
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
+
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
     assert order.can_set_complete()
 

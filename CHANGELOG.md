@@ -15,6 +15,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Fixed
 
+- Admin: do not break when it's not possible to create shipments
 - Admin: Fix primary buttons, list buttons, and filter dropdowns to use css variables
 - Discounts: show the `exclude_selected_category` field in admin
 
@@ -22,6 +23,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Do not let users to set value with decimals while adjusting stock quantity if the sales unit doesn't permit.
 - Core: Block an attempt to delete a service provider that still has associated shipping or payment methods.
+- Core: consider an order fully shipped only when all out shipments are sent
 - Front: improve SEO by tuning description meta tag to product, category and CMS pages
 - Importer: index product after importing it
 - BREAKING: Core: Discounts are not cumulative anymore. The best discounted price returned by discount modules is considered.

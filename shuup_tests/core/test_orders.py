@@ -29,6 +29,7 @@ from shuup.core.models import (
     PaymentStatus,
     ProductMedia,
     ProductMediaKind,
+    ShipmentStatus,
     ShippingStatus,
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice, get_pricing_module
@@ -511,6 +512,13 @@ def test_refund_with_shipment(restock):
     # Shipment should decrease physical count by 2, logical by none
     order.create_shipment({product_line.product: 2}, supplier=supplier)
     check_stock_counts(supplier, product, physical=8, logical=6)
+
+    # mark all shipments as sent
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
+
+    # still not shipped as there is unshipped products
+    assert order.get_unshipped_products()
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
 
     # Check correct refunded quantities
@@ -522,6 +530,12 @@ def test_refund_with_shipment(restock):
         [{"line": product_line, "quantity": 3, "amount": Money(600, order.currency), "restock_products": restock}]
     )
     assert product_line.refunded_quantity == 3
+
+    # mark all shipments as sent
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
+
+    assert not order.get_unshipped_products()
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
     if restock:
         check_stock_counts(supplier, product, physical=9, logical=9)
@@ -904,6 +918,11 @@ def test_product_summary():
     assert order.shipping_status == ShippingStatus.NOT_SHIPPED
     assert order.can_create_shipment()
     order.create_shipment(supplier=supplier, product_quantities={product: 1})
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+
+    # mark all shipments as sent
+    order.shipments.update(status=ShipmentStatus.SENT)
+    order.update_shipping_status()
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
 
     order.create_refund([{"line": shipping_line, "quantity": 1, "amount": Money(5, order.currency), "restock": False}])

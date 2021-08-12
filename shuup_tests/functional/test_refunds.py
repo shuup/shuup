@@ -13,7 +13,7 @@ from shuup.campaigns.models.basket_effects import BasketDiscountAmount
 from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign
 from shuup.campaigns.models.catalog_filters import CategoryFilter
 from shuup.campaigns.models.product_effects import ProductDiscountAmount
-from shuup.core.models import AnonymousContact, OrderLineType, PaymentStatus, ShippingStatus
+from shuup.core.models import AnonymousContact, OrderLineType, PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator import OrderCreator
 from shuup.core.pricing import get_pricing_module
 from shuup.testing.factories import (
@@ -146,7 +146,8 @@ def test_create_full_refund(prices_include_tax):
     assert not order.taxful_total_price_value
     assert not order.taxless_total_price_value
     assert order.lines.refunds().count() == num_order_lines
-    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
     assert order.payment_status == PaymentStatus.FULLY_PAID
     assert order.get_total_refunded_amount() == original_order_total.amount
     assert not order.get_total_unrefunded_amount().value
@@ -183,7 +184,7 @@ def test_create_refund_line_by_line(prices_include_tax):
     assert not order.taxful_total_price_value
     assert not order.taxless_total_price_value
     assert order.lines.refunds().count() == num_order_lines
-    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
     assert order.get_total_refunded_amount() == original_order_total.amount
     assert not order.get_total_unrefunded_amount().value
 
@@ -212,7 +213,6 @@ def test_create_refund_amount(prices_include_tax):
     assert not order.taxful_total_price_value
     assert not order.taxless_total_price_value
     assert order.lines.refunds().count() == num_order_lines
-    # we haven't refunded any quantity so the shipping status remains as-is
     assert order.shipping_status == ShippingStatus.NOT_SHIPPED
     assert order.payment_status == PaymentStatus.FULLY_PAID
     assert order.get_total_refunded_amount() == original_order_total.amount
@@ -223,4 +223,5 @@ def test_create_refund_amount(prices_include_tax):
             [{"line": line, "quantity": line.quantity, "amount": Money(0, "EUR"), "restock_products": True}]
         )
 
-    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    # nothing changes
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED

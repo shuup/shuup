@@ -83,7 +83,7 @@ def test_order_shipments(rf, admin_user):
     order.create_shipment({product1: 10}, supplier=supplier1)
 
     assert not order.get_unshipped_products()
-    assert order.is_fully_shipped()
+    assert not order.is_fully_shipped()
 
     context = ShipmentSection.get_context_data(order, request)
     assert len(context["suppliers"]) == 2
@@ -141,6 +141,9 @@ def test_order_shipments(rf, admin_user):
     for mark_sent_url in context["set_sent_urls"].values():
         response = client.post(mark_sent_url)
         assert response.status_code == 302
+
+    order.refresh_from_db()
+    assert order.is_fully_shipped()
 
     assert order.get_sent_shipments().count() == 3
     order.shipments.filter(status=ShipmentStatus.NOT_SENT) == 0
