@@ -27,3 +27,6 @@ SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE = "calculate_taxes_automatically
 SHUUP_ALLOW_ARBITRARY_REFUNDS = "allow_arbitrary_refunds"
 SHUUP_ALLOWED_UPLOAD_EXTENSIONS = "allowed_upload_extensions"
 SHUUP_MAX_UPLOAD_SIZE = "max_upload_size"
+SHUUP_MASS_UNIT = "mass_unit"
+SHUUP_LENGTH_UNIT = "length_unit"
+SHUUP_VOLUME_UNIT = "volume_unit"

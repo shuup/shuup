@@ -6,14 +6,15 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import django_jinja
-from django.conf import settings
 from django.utils.functional import SimpleLazyObject
 from django.utils.safestring import mark_safe
 from django_jinja import library
 from functools import lru_cache
 from markdown import Markdown
 
+from shuup import configuration
 from shuup.apps.provides import get_provide_objects
+from shuup.core.setting_keys import SHUUP_LENGTH_UNIT, SHUUP_MASS_UNIT
 from shuup.utils.django_compat import force_text
 
 
@@ -73,4 +74,4 @@ def get_mass_and_length_units():
 
     :rtype: Tuple[str, str]
     """
-    return settings.SHUUP_MASS_UNIT, settings.SHUUP_LENGTH_UNIT
+    return configuration.get(None, SHUUP_MASS_UNIT), configuration.get(None, SHUUP_LENGTH_UNIT)

@@ -25,7 +25,9 @@ from shuup.core.setting_keys import (
     SHUUP_ENABLE_MULTIPLE_SHOPS,
     SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
     SHUUP_HOME_CURRENCY,
+    SHUUP_LENGTH_UNIT,
     SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_MASS_UNIT,
     SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
     SHUUP_PRICING_MODULE,
     SHUUP_REFERENCE_NUMBER_LENGTH,
@@ -33,6 +35,7 @@ from shuup.core.setting_keys import (
     SHUUP_REFERENCE_NUMBER_PREFIX,
     SHUUP_TAX_MODULE,
     SHUUP_TELEMETRY_ENABLED,
+    SHUUP_VOLUME_UNIT,
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -141,6 +144,24 @@ def get_data(reference_method):
             SHUUP_ALLOWED_UPLOAD_EXTENSIONS,
             ("pdf,ttf,eot,woff,woff2,otf"),
             ("pdf", "ttf", "eot", "woff", "woff2", "otf"),
+        ),
+        (
+            "core_settings",
+            SHUUP_MASS_UNIT,
+            "g",
+            "g",
+        ),
+        (
+            "core_settings",
+            SHUUP_LENGTH_UNIT,
+            "mm",
+            "mm",
+        ),
+        (
+            "core_settings",
+            SHUUP_VOLUME_UNIT,
+            "mm3",
+            "mm3",
         ),
     }
 

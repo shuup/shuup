@@ -177,5 +177,32 @@
             "key": "max_upload_size",
             "value": 5000000
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 21,
+        "fields": {
+            "shop": null,
+            "key": "mass_unit",
+            "value": "\"g\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 22,
+        "fields": {
+            "shop": null,
+            "key": "length_unit",
+            "value": "\"mm\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 23,
+        "fields": {
+            "shop": null,
+            "key": "volume_unit",
+            "value": "\"mm3\""
+        }
     }
 ]

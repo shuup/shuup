@@ -7,19 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.db import models
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
-from shuup.core.fields import InternalIdentifierField, MeasurementField, QuantityField
+from shuup.core.fields import InternalIdentifierField, QuantityField, UnitKeyField
 from shuup.core.models import ShuupModel
+from shuup.core.setting_keys import SHUUP_MASS_UNIT, SHUUP_VOLUME_UNIT
 from shuup.core.signals import shipment_deleted, shipment_sent
-from shuup.core.utils.units import get_shuup_volume_unit
 from shuup.utils.analog import define_log_model
 
 __all__ = ("Shipment", "ShipmentProduct")
@@ -73,11 +71,13 @@ class Shipment(ShuupModel):
     tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
     tracking_url = models.URLField(blank=True, verbose_name=_("tracking url"))
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
-    volume = MeasurementField(
-        unit=get_shuup_volume_unit(), verbose_name=format_lazy(_("volume ({})"), get_shuup_volume_unit())
+    volume = UnitKeyField(
+        unit_key=SHUUP_VOLUME_UNIT,
+        verbose_name=_("volume ({})"),
     )
-    weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT, verbose_name=format_lazy(_("weight ({})"), settings.SHUUP_MASS_UNIT)
+    weight = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("weight ({})"),
     )
     identifier = InternalIdentifierField(unique=True)
     type = EnumIntegerField(ShipmentType, default=ShipmentType.OUT, verbose_name=_("type"))
@@ -189,11 +189,10 @@ class ShipmentProduct(ShuupModel):
     )
     quantity = QuantityField(verbose_name=_("quantity"))
 
-    unit_volume = MeasurementField(
-        unit=get_shuup_volume_unit(), verbose_name=format_lazy(_("unit volume ({})"), get_shuup_volume_unit())
-    )
-    unit_weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT, verbose_name=format_lazy(_("unit weight ({})"), settings.SHUUP_MASS_UNIT)
+    unit_volume = UnitKeyField(unit_key=SHUUP_VOLUME_UNIT, verbose_name=_("unit volume ({})"))
+    unit_weight = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("unit weight ({})"),
     )
 
     class Meta:

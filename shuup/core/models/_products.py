@@ -8,20 +8,20 @@
 from __future__ import unicode_literals, with_statement
 
 import six
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 from typing import TYPE_CHECKING, Iterable
 
+# from shuup import configuration
 from shuup.core.excs import ImpossibleProductModeException
-from shuup.core.fields import InternalIdentifierField, MeasurementField
+from shuup.core.fields import InternalIdentifierField, UnitKeyField
+from shuup.core.setting_keys import SHUUP_LENGTH_UNIT, SHUUP_MASS_UNIT
 from shuup.core.signals import post_clean, pre_clean
 from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_choices
 from shuup.core.taxing import TaxableItem
@@ -308,41 +308,41 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     cost_center = models.CharField(max_length=32, verbose_name=_("cost center"), blank=True)
 
     # Physical dimensions
-    width = MeasurementField(
-        unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=format_lazy(_("width ({})"), settings.SHUUP_LENGTH_UNIT),
+    width = UnitKeyField(
+        unit_key=SHUUP_LENGTH_UNIT,
+        verbose_name=_("width ({})"),
         help_text=_(
             "Set the measured width of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         ),
     )
-    height = MeasurementField(
-        unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=format_lazy(_("height ({})"), settings.SHUUP_LENGTH_UNIT),
+    height = UnitKeyField(
+        unit_key=SHUUP_LENGTH_UNIT,
+        verbose_name=_("height ({})"),
         help_text=_(
             "Set the measured height of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         ),
     )
-    depth = MeasurementField(
-        unit=settings.SHUUP_LENGTH_UNIT,
-        verbose_name=format_lazy(_("depth ({})"), settings.SHUUP_LENGTH_UNIT),
+    depth = UnitKeyField(
+        unit_key=SHUUP_LENGTH_UNIT,
+        verbose_name=_("depth ({})"),
         help_text=_(
             "Set the measured depth or length of your product or product packaging. "
             "This will provide customers with the product size and help with calculating shipping costs."
         ),
     )
-    net_weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=format_lazy(_("net weight ({})"), settings.SHUUP_MASS_UNIT),
+    net_weight = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("net weight ({})"),
         help_text=_(
             "Set the measured weight of your product WITHOUT its packaging. "
             "This will provide customers with the actual product's weight."
         ),
     )
-    gross_weight = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=format_lazy(_("gross weight ({})"), settings.SHUUP_MASS_UNIT),
+    gross_weight = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("gross weight ({})"),
         help_text=_(
             "Set the measured gross weight of your product WITH its packaging. "
             "This will help with calculating shipping costs."

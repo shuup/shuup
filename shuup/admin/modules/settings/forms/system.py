@@ -256,6 +256,49 @@ class CoreSettingsForm(BaseSettingsForm):
         help_text=_("Maximum allowed file size (in bytes) for uploads."),
         required=False,
     )
+    mass_unit = forms.ChoiceField(
+        label=_("Mass Unit"),
+        choices=(
+            ("Kg", "Kilogram"),
+            ("g", "Gram"),
+            ("lb", "Pound"),
+        ),
+        help_text=_("The mass/weight unit that Shuup should use."),
+        required=True,
+    )
+    length_unit = forms.ChoiceField(
+        label=_("Length Unit"),
+        choices=(
+            ("mm", "Millimetre"),
+            ("cm", "Centimetre"),
+            ("m", "Metre"),
+            ("km", "Kilometre"),
+            ("in", "Inch"),
+            ("ft", "Foot"),
+            ("yd", "Yard"),
+            ("mi", "Mile"),
+        ),
+        help_text=_(
+            "The length/distance unit that Shuup should use. "
+            "All area values will use this unit raised to the power of 2."
+        ),
+        required=True,
+    )
+    volume_unit = forms.ChoiceField(
+        label=_("Volume Unit"),
+        choices=(
+            ("mm3", "Cubic Millimetre"),
+            ("cm3", "Cubic Centimetre"),
+            ("m3", "Cubic Metre"),
+            ("km3", "Cubic Kilometre"),
+            ("in3", "Cubic Inch"),
+            ("ft3", "Cubic Foot"),
+            ("yd3", "Cubic Yard"),
+            ("mi3", "Cubic Mile"),
+        ),
+        help_text=_("The volume unit that Shuup should use."),
+        required=True,
+    )
 
     def __init__(self, *args, **kwargs):
         super(CoreSettingsForm, self).__init__(*args, **kwargs)
