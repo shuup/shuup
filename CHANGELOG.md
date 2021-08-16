@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+## [3.0.0] - 2021-08-16
+
 ### Added
 
 - Core: allow saving encrypted configurations
