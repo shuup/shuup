@@ -222,5 +222,14 @@
             "key": "admin_allow_html_in_vendor_description",
             "value": true
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 26,
+        "fields": {
+            "shop": null,
+            "key": "front_max_upload_size",
+            "value": 5000000
+        }
     }
 ]

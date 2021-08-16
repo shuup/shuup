@@ -12,6 +12,7 @@ from shuup.apps.provides import get_provide_objects
 from shuup.configuration import get as original_configuration_get
 from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.front.providers import FormDefinition, FormDefProvider, FormFieldDefinition, FormFieldProvider
+from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
 from shuup.testing.factories import create_package_product
 
 
@@ -93,4 +94,10 @@ def get_registration_multishop_configuration(shop, key, default=None):
         return True
     if key == SHUUP_MANAGE_CONTACTS_PER_SHOP:
         return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_front_max_upload_size_patched_configuration(shop, key, default=None):
+    if key == SHUUP_FRONT_MAX_UPLOAD_SIZE:
+        return 10
     return original_configuration_get(shop, key, default)

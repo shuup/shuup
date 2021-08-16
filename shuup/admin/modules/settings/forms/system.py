@@ -360,3 +360,17 @@ class AdminSettingsForm(BaseSettingsForm):
 class AdminSettingsFormPart(BaseSettingsFormPart):
     form = AdminSettingsForm
     name = "admin_settings"
+
+
+class FrontSettingsForm(BaseSettingsForm):
+    title = _("Front Settings")
+    front_max_upload_size = forms.IntegerField(
+        label=_("Front Max Upload Size"),
+        help_text=_("Maximum allowed file size (in bytes) for uploads in frontend."),
+        required=False,
+    )
+
+
+class FrontSettingsFormPart(BaseSettingsFormPart):
+    form = FrontSettingsForm
+    name = "front_settings"

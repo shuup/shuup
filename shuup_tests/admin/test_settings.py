@@ -40,6 +40,7 @@ from shuup.core.setting_keys import (
     SHUUP_TELEMETRY_ENABLED,
     SHUUP_VOLUME_UNIT,
 )
+from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -177,6 +178,12 @@ def get_data(reference_method):
             SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
             True,
             True,
+        ),
+        (
+            "front_settings",
+            SHUUP_FRONT_MAX_UPLOAD_SIZE,
+            500000,
+            500000,
         ),
     }
 

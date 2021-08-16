@@ -13,16 +13,18 @@ from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseForbidden, JsonResponse
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.core.shop_provider import get_shop
+from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
 from shuup.utils.filer import ensure_media_file, filer_file_to_json_dict, filer_image_from_upload, get_or_create_folder
 
 
 def file_size_validator(value):
     size = getattr(value, "size", None)
-    if size and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE and settings.SHUUP_FRONT_MAX_UPLOAD_SIZE < size:
+    front_max_upload_size = configuration.get(None, SHUUP_FRONT_MAX_UPLOAD_SIZE)
+    if size and front_max_upload_size and front_max_upload_size < size:
         raise ValidationError(
-            _("Maximum file size reached (%(size)s MB).")
-            % {"size": settings.SHUUP_FRONT_MAX_UPLOAD_SIZE / 1000 / 1000},
+            _("Maximum file size reached (%(size)s MB).") % {"size": front_max_upload_size / 1000 / 1000},
             code="file_max_size_reached",
         )
 
