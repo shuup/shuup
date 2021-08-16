@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Changed
 
 - BREAKING: Suppliers with no supplier modules cannot create shipments
+- Core: Category.get_hierarchy now ignores any None objects
 
 ## [3.0.0] - 2021-08-16
 
