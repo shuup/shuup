@@ -110,7 +110,7 @@ modules, use command:
 Roadmap
 -------
 
-v3 (early 2021)
+v3 (Q4 2021)
 ###############
 
 * Initial Django 3.x support
@@ -119,7 +119,7 @@ v3 (early 2021)
   individual macros in macro folders. This does not work well with latest
   Jinja and adds extra complexity.
 
-v4 (mid 2021)
+v4 (Q1 2022)
 #############
 
 * Move Shuup front, xtheme and theming features to own addons. This so that
