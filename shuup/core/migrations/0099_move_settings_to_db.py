@@ -33,6 +33,7 @@ from shuup.core.setting_keys import (
     SHUUP_VOLUME_UNIT,
 )
 from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
+from shuup.reports.setting_keys import DEFAULT_REPORTS_ITEM_LIMIT
 
 
 def move_settings_to_db(apps, schema_editor):
@@ -70,6 +71,7 @@ def move_settings_to_db(apps, schema_editor):
         None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION, settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
     )
     configuration.set(None, SHUUP_FRONT_MAX_UPLOAD_SIZE, settings.SHUUP_FRONT_MAX_UPLOAD_SIZE)
+    configuration.set(None, DEFAULT_REPORTS_ITEM_LIMIT, settings.DEFAULT_REPORTS_ITEM_LIMIT)
 
 
 class Migration(migrations.Migration):

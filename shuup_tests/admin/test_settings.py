@@ -41,6 +41,7 @@ from shuup.core.setting_keys import (
     SHUUP_VOLUME_UNIT,
 )
 from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
+from shuup.reports.setting_keys import DEFAULT_REPORTS_ITEM_LIMIT
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -184,6 +185,12 @@ def get_data(reference_method):
             SHUUP_FRONT_MAX_UPLOAD_SIZE,
             500000,
             500000,
+        ),
+        (
+            "report_settings",
+            DEFAULT_REPORTS_ITEM_LIMIT,
+            2000,
+            2000,
         ),
     }
 

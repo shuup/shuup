@@ -139,6 +139,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.settings.forms.system.CoreSettingsFormPart",
             "shuup.admin.modules.settings.forms.system.FrontSettingsFormPart",
             "shuup.admin.modules.settings.forms.system.OrderSettingsFormPart",
+            "shuup.admin.modules.settings.forms.system.ReportSettingsFormPart",
         ],
     }
 

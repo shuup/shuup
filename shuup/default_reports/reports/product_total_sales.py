@@ -35,7 +35,7 @@ class ProductSalesReport(OrderReportMixin, ShuupReportBase):
         return (
             order_line_qs.select_related("product")
             .prefetch_related("taxes")
-            .order_by("product__id")[: self.queryset_row_limit]
+            .order_by("product__id")[: self.get_queryset_row_limit()]
         )
 
     def get_data(self):

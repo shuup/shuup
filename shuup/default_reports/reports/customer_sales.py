@@ -38,7 +38,7 @@ class CustomerSalesReport(OrderReportMixin, ShuupReportBase):
                 taxful_total=Sum("customer_orders__taxful_total_price_value"),
             )
             .filter(order_count__gt=0)
-            .order_by("-%s" % self.options["order_by"])[: self.queryset_row_limit]
+            .order_by("-%s" % self.options["order_by"])[: self.get_queryset_row_limit()]
             .values("name", "order_count", "average_sales", "taxless_total", "taxful_total")
         )
 

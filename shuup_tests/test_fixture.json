@@ -231,5 +231,14 @@
             "key": "front_max_upload_size",
             "value": 5000000
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 27,
+        "fields": {
+            "shop": null,
+            "key": "default_reports_item_limit",
+            "value": 2000
+        }
     }
 ]

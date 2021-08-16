@@ -374,3 +374,17 @@ class FrontSettingsForm(BaseSettingsForm):
 class FrontSettingsFormPart(BaseSettingsFormPart):
     form = FrontSettingsForm
     name = "front_settings"
+
+
+class ReportSettingsForm(BaseSettingsForm):
+    title = _("Report Settings")
+    default_reports_item_limit = forms.IntegerField(
+        label=_("Default Report Item Limit"),
+        help_text=_("Defines the maximum number of items that will be rendered by a report."),
+        required=False,
+    )
+
+
+class ReportSettingsFormPart(BaseSettingsFormPart):
+    form = ReportSettingsForm
+    name = "report_settings"
