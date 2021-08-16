@@ -256,14 +256,6 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         lines = order.lines.all()
         if supplier:
             lines = lines.filter(supplier=supplier)
-        supplier_module_problem = any(
-            [
-                refund.get("restock_products") and not refund.get("line").supplier.supplier_modules.exists()
-                for refund in refund_data
-            ]
-        )
-        if supplier_module_problem:
-            raise SupplierHasNoSupplierModules("There are items to restock but the supplier has no supplier modules.")
 
         index = lines.aggregate(models.Max("ordering"))["ordering__max"]
         tax_proportions = self._get_tax_class_proportions(order)
@@ -280,6 +272,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
             amount = refund.get("amount", zero)
             quantity = refund.get("quantity", 0)
             parent_line = refund.get("line", "amount")
+
             if not settings.SHUUP_ALLOW_ARBITRARY_REFUNDS and (not parent_line or parent_line == "amount"):
                 raise RefundArbitraryRefundsNotAllowedException
 
@@ -318,6 +311,12 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
 
                 if restock_products and quantity and product:
                     from shuup.core.suppliers.enums import StockAdjustmentType
+
+                    # check whether the line has a valid supplier in case products must be restocked
+                    if parent_line.supplier and not parent_line.supplier.supplier_modules.exists():
+                        raise SupplierHasNoSupplierModules(
+                            "There are items to restock but the supplier has no supplier module."
+                        )
 
                     # restock from the unshipped quantity first
                     unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
