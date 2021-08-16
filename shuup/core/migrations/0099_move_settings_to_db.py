@@ -2,6 +2,10 @@ from django.conf import settings
 from django.db import migrations
 
 from shuup import configuration
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+)
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
@@ -57,6 +61,13 @@ def move_settings_to_db(apps, schema_editor):
     configuration.set(None, SHUUP_MASS_UNIT, settings.SHUUP_MASS_UNIT)
     configuration.set(None, SHUUP_LENGTH_UNIT, settings.SHUUP_LENGTH_UNIT)
     configuration.set(None, SHUUP_VOLUME_UNIT, "{}3".format(settings.SHUUP_LENGTH_UNIT))
+
+    configuration.set(
+        None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION, settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
+    )
+    configuration.set(
+        None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION, settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
+    )
 
 
 class Migration(migrations.Migration):

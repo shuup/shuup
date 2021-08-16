@@ -326,3 +326,37 @@ class CoreSettingsForm(BaseSettingsForm):
 class CoreSettingsFormPart(BaseSettingsFormPart):
     form = CoreSettingsForm
     name = "core_settings"
+
+
+class AdminSettingsForm(BaseSettingsForm):
+    title = _("Admin Settings")
+    admin_allow_html_in_product_description = forms.BooleanField(
+        label=_("Allow Html In Product Description"),
+        help_text=_(
+            "Whether to allow vendors and staff to use a rich text editor and HTML for product descriptions. "
+            "If this is False, only allow simple text field and sanitize all HTML from it."
+        ),
+        required=False,
+    )
+    admin_allow_html_in_vendor_description = forms.BooleanField(
+        label=_("Allow Html In Vendor Description"),
+        help_text=_(
+            "Whether to allow vendors to use a rich text editor and HTML for their profile descriptions. "
+            "If this is False, only a allow simple text field and sanitize all HTML from it."
+        ),
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(AdminSettingsForm, self).__init__(*args, **kwargs)
+        if self.data:
+            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
+            if "admin_allow_html_in_product_description" not in self.data:
+                self.fields["admin_allow_html_in_product_description"].value = False
+            if "admin_allow_html_in_vendor_description" not in self.data:
+                self.fields["admin_allow_html_in_vendor_description"].value = False
+
+
+class AdminSettingsFormPart(BaseSettingsFormPart):
+    form = AdminSettingsForm
+    name = "admin_settings"

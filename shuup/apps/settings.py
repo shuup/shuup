@@ -126,13 +126,18 @@ def reload_apps():
 def get_configuration_setting(setting_key: str):
     from shuup import configuration
 
-    try:
-        configuration_key = getattr(importlib.import_module("shuup.core.setting_keys"), setting_key)
-    except AttributeError:
-        pass
-    try:
-        configuration_value = configuration.get(None, configuration_key)
-        if configuration_value is not None:
-            return configuration_value
-    except NameError:
-        pass
+    modules = [
+        "shuup.core.setting_keys",
+        "shuup.admin.setting_keys",
+    ]
+    for module in modules:
+        try:
+            configuration_key = getattr(importlib.import_module(module), setting_key)
+        except AttributeError:
+            continue
+        try:
+            configuration_value = configuration.get(None, configuration_key)
+            if configuration_value is not None:
+                return configuration_value
+        except NameError:
+            pass

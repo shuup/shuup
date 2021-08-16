@@ -5,6 +5,10 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+)
 from shuup.configuration import get as original_configuration_get
 from shuup.core.setting_keys import (
     SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
@@ -85,5 +89,29 @@ def get_calculate_taxes_false_configuration(shop, key, default=None):
 
 def get_calculate_taxes_true_configuration(shop, key, default=None):
     if key == SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_product_desc_false_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_product_desc_true_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_vendor_false_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_vendor_true_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
         return True
     return original_configuration_get(shop, key, default)

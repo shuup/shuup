@@ -204,5 +204,23 @@
             "key": "volume_unit",
             "value": "\"mm3\""
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 24,
+        "fields": {
+            "shop": null,
+            "key": "admin_allow_html_in_product_description",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 25,
+        "fields": {
+            "shop": null,
+            "key": "admin_allow_html_in_vendor_description",
+            "value": true
+        }
     }
 ]

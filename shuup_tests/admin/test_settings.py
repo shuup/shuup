@@ -11,8 +11,11 @@ from django.db import models
 
 from shuup import configuration
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
-from shuup.admin.modules.settings.forms.system import CoreSettingsForm, OrderSettingsForm
 from shuup.admin.modules.settings.views import SystemSettingsView
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+)
 from shuup.core.models import Currency
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
@@ -163,6 +166,18 @@ def get_data(reference_method):
             "mm3",
             "mm3",
         ),
+        (
+            "admin_settings",
+            SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+            True,
+            True,
+        ),
+        (
+            "admin_settings",
+            SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+            True,
+            True,
+        ),
     }
 
 
@@ -186,16 +201,14 @@ def test_system_settings_forms(rf, admin_user):
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     field_data = get_data(OrderReferenceNumberMethod.UNIQUE)
 
-    order_form = OrderSettingsForm(request=request, data=get_settings_data(field_data, "form"))
-    result = order_form.is_valid()
-    assert result is True
+    system_view = SystemSettingsView()
+    form_part_classes = system_view.get_form_part_classes()
     cleaned_data = dict()
-    cleaned_data.update(order_form.cleaned_data)
-
-    core_form = CoreSettingsForm(request=request, data=get_settings_data(field_data, "form"))
-    result = core_form.is_valid()
-    assert result is True
-    cleaned_data.update(core_form.cleaned_data)
+    for form_part_class in form_part_classes:
+        form = form_part_class.form(request=request, data=get_settings_data(field_data, "form"))
+        result = form.is_valid()
+        assert result is True
+        cleaned_data.update(form.cleaned_data)
 
     for form_id, key, value, expected_value in field_data:
         if isinstance(cleaned_data[key], (str, int, bool)):

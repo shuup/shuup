@@ -135,6 +135,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.users.object_selector.UserAdminObjectSelector",
         ],
         "system_settings_form_part": [
+            "shuup.admin.modules.settings.forms.system.AdminSettingsFormPart",
             "shuup.admin.modules.settings.forms.system.CoreSettingsFormPart",
             "shuup.admin.modules.settings.forms.system.OrderSettingsFormPart",
         ],

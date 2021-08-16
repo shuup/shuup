@@ -28,6 +28,12 @@ from shuup.core.templatetags.shuup_common import (
 )
 from shuup.core.utils.static import get_shuup_static_url
 from shuup.utils.money import Money
+from shuup_tests.core.utils import (
+    get_admin_allow_html_in_product_desc_false_configuration,
+    get_admin_allow_html_in_product_desc_true_configuration,
+    get_admin_allow_html_in_vendor_false_configuration,
+    get_admin_allow_html_in_vendor_true_configuration,
+)
 
 
 def nbsp(x):
@@ -229,20 +235,20 @@ def test_get_global_configuration_with_default(conf_get_mock, rf):
 def test_safe_product_description():
     text = "<strong>product description</strong>\nSome text here."
 
-    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION=True):
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_product_desc_true_configuration):
         assert safe_product_description(text) == text
 
-    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION=False):
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_product_desc_false_configuration):
         assert safe_product_description(text) == "<p>product description<br>Some text here.</p>"
 
 
 def test_safe_vendor_description():
     text = "<strong>vendor description</strong>\nSome text here."
 
-    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION=True):
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_vendor_true_configuration):
         assert safe_vendor_description(text) == text
 
-    with override_settings(SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION=False):
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_vendor_false_configuration):
         assert (
             safe_vendor_description(text) == "<p>&lt;strong&gt;vendor description&lt;/strong&gt;<br>Some text here.</p>"
         )
