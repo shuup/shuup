@@ -8,18 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Changed
+
+- BREAKING: Suppliers with no supplier modules cannot create shipments
+
 ## [3.0.0] - 2021-08-16
 
 ### Added
 
 - Core: allow saving encrypted configurations
 - Core: add new Catalog API to index and fetch products with annotated price and discounted price
-- SupplierHasNoSupplierModules exception.
-- Suppliers with no supplier modules cannot create shipments.
-
-### Added
-
-- Add new Catalog API to index and fetch products with annotated price and discounted price
 
 ### Fixed
 
