@@ -571,9 +571,9 @@ class ShopProduct(MoneyPropped, TranslatableModel):
             cached_customer_groups = getattr(customer, "_cached_customer_groups", None)
             if cached_customer_groups:
                 groups = customer._cached_customer_groups
-            else:
-                groups = list(customer.groups.order_by("pk").values_list("pk", flat=True))
-                customer._cached_customer_groups = groups
+        elif customer and customer.id:
+            groups = list(customer.groups.order_by("pk").values_list("pk", flat=True))
+            customer._cached_customer_groups = groups
         else:
             from shuup.core.models import AnonymousContact
 

@@ -11,6 +11,7 @@ List all changes after the last release here (newer on top). Each change on a se
 ### Fixed
 
 - Admin: Fix primary buttons, list buttons, and filter dropdowns to use css variables
+- Core: Fix getting customer groups when customer is not saved 
 
 ## [2.14.2] - 2021-08-10
 

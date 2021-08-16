@@ -29,9 +29,9 @@ def _get_price_info_cache_key_params(context, item, quantity, **context_args):
         cached_customer_groups = getattr(customer, "_cached_customer_groups", None)
         if cached_customer_groups:
             groups = customer._cached_customer_groups
-        else:
-            groups = list(customer.groups.order_by("pk").values_list("pk", flat=True))
-            customer._cached_customer_groups = groups
+    elif customer and customer.id:
+        groups = list(customer.groups.order_by("pk").values_list("pk", flat=True))
+        customer._cached_customer_groups = groups
     else:
         anonymous_group_id = getattr(AnonymousContact, "_cached_default_group_id", None)
         if anonymous_group_id:
