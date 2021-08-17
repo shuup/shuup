@@ -201,12 +201,17 @@ class Category(MPTTModel, TranslatableModel):
 
     def get_hierarchy(self, reverse=True):
         return " / ".join(
-            [
-                ancestor.safe_translation_getter("name", any_language=True) or ancestor.identifier
-                for ancestor in self.get_ancestors(ascending=reverse, include_self=True).prefetch_related(
-                    "translations"
+            list(
+                filter(
+                    None,
+                    [
+                        ancestor.safe_translation_getter("name", any_language=True) or ancestor.identifier
+                        for ancestor in self.get_ancestors(ascending=reverse, include_self=True).prefetch_related(
+                            "translations"
+                        )
+                    ],
                 )
-            ]
+            )
         )
 
     def get_cached_children(self):
