@@ -144,12 +144,14 @@ msgstr ""
 "Kategorie enthalten sein werden, z. B. _ga, mysession, user_c_"
 
 msgid "Snippets to block if not consented"
-msgstr ""
+msgstr "Snippets zum Blockieren, wenn nicht zugestimmt wurde"
 
 msgid ""
 "Select the snippets that shouldn't be injected if the cookie is not "
 "consented."
 msgstr ""
+"Wähle die Snippets aus, die nicht aktiviert werden sollen, wenn dem Cookie "
+"nicht zugestimmt wird."
 
 msgid "name"
 msgstr "Name"

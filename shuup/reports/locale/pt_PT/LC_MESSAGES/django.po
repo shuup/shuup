@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-27 22:28+0000\n"
 "PO-Revision-Date: 2017-01-06 15:35+0000\n"
+"Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,79 +22,79 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Reports"
-msgstr ""
+msgstr "Relatórios"
 
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgid "Select the type of report to run."
-msgstr ""
+msgstr "Selecionar o tipo de relatório a executar."
 
 msgid "Custom"
-msgstr ""
+msgstr "Personalizado"
 
 msgid "Today"
-msgstr ""
+msgstr "Hoje"
 
 msgid "Running Week (last 7 days)"
-msgstr ""
+msgstr "Semana Atual (últimos 7 dias)"
 
 msgid "Running Month (last 30 days)"
-msgstr ""
+msgstr "Mês Atual (últimos 30 dias)"
 
 msgid "This Week"
-msgstr ""
+msgstr "Esta Semana"
 
 msgid "This Month"
-msgstr ""
+msgstr "Este Mês"
 
 msgid "This Year"
-msgstr ""
+msgstr "Este Ano"
 
 msgid "All Time"
-msgstr ""
+msgstr "Sempre"
 
 msgid "Output Format"
-msgstr ""
+msgstr "Formato de Saída"
 
 msgid "The format to show the report results."
-msgstr ""
+msgstr "O formato para exibir os resultados de relatório."
 
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 msgid "Enable this to download the report."
-msgstr ""
+msgstr "Ativar para fazer o download do relatório."
 
 msgid "Shop"
-msgstr ""
+msgstr "Loja"
 
 msgid "Filter report results by shop."
-msgstr ""
+msgstr "Filtrar resultados de relatório por loja."
 
 msgid "Date Range"
-msgstr ""
+msgstr "Intervalo de Datas"
 
 msgid "Filter report results by a date range."
-msgstr ""
+msgstr "Filtrar resultados de relatório por intervalo de datas."
 
 msgid "Start Date"
-msgstr ""
+msgstr "Data de Início"
 
 msgid "For a custom date range."
-msgstr ""
+msgstr "Para um intervalo de datas personalizado."
 
 msgid "End Date"
-msgstr ""
+msgstr "Data de Fim"
 
 msgid "Report Description"
-msgstr ""
+msgstr "Descrição do Relatório"
 
 msgid "Toggle Filters"
-msgstr ""
+msgstr "Alternar Filtros"
 
 msgid "Get Report"
-msgstr ""
+msgstr "Obter Relatório"
 
 msgid "No reports available"
-msgstr ""
+msgstr "Nenhum relatório disponível"

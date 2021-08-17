@@ -10,6 +10,7 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Pull translations from Transifex
 - BREAKING: Suppliers with no supplier modules cannot create shipments
 - Core: Category.get_hierarchy now ignores any None objects
 

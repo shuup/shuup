@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Christian Hess, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-09 17:10+0000\n"
-"PO-Revision-Date: 2020-11-10 17:15+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2021-08-17 13:13+0000\n"
+"Last-Translator: Christian Hess\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,264 +20,264 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Content Pages"
-msgstr ""
+msgstr "Páginas de Conteúdo"
 
 msgid "Pages"
-msgstr ""
+msgstr "Páginas"
 
 msgid "Show pages"
-msgstr ""
+msgstr "Mostrar páginas"
 
 msgid "Add a web page"
-msgstr ""
+msgstr "Adicionar uma página web"
 
 msgid "New page"
-msgstr ""
+msgstr "Nova página"
 
 msgid "Available since"
-msgstr ""
+msgstr "Disponível desde"
 
 msgid "Available until"
-msgstr ""
+msgstr "Disponível até"
 
 msgid "Template"
-msgstr ""
+msgstr "Template"
 
 msgid "URL already exists."
-msgstr ""
+msgstr "O URL já existe."
 
 msgid "URL must be unique."
-msgstr ""
+msgstr "O URL tem de ser único."
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
-msgstr ""
+msgstr "%(label)s é necessária quando um campo %(language)s está preenchido."
 
 msgid "Please fill at least one language fully."
-msgstr ""
+msgstr "Preencha pelo menos um idioma totalmente."
 
 msgid "A page may not be made a child of itself."
-msgstr ""
+msgstr "Uma página não pode ser uma página inferior de si mesma."
 
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 msgid "Date created"
-msgstr ""
+msgstr "Data de criação"
 
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #, python-format
 msgid "%s has been marked deleted."
-msgstr ""
+msgstr "%s foi marcado como eliminado."
 
 msgid "Content in this placeholder is shown for this page only."
-msgstr ""
+msgstr "O conteúdo deste espaço reservado é exibido apenas para esta página."
 
 #, python-format
 msgid "Content in this placeholder is shown for %(title)s only."
-msgstr ""
+msgstr "O conteúdo deste espaço reservado é exibido apenas para %(title)s."
 
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 msgid "Article"
-msgstr ""
+msgstr "Artigo"
 
 msgid "shop"
-msgstr ""
+msgstr "loja"
 
 msgid "supplier"
-msgstr ""
+msgstr "fornecedor"
 
 msgid "available since"
-msgstr ""
+msgstr "disponível desde"
 
 msgid ""
 "Set an available date to restrict the page to be available only after a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
-msgstr ""
+msgstr "Definir uma data disponível para restringir a página de forma a estar apenas disponível após uma certa data e hora. É útil para páginas que descrevam campanhas de vendas ou outras páginas sensíveis ao tempo."
 
 msgid "available until"
-msgstr ""
+msgstr "disponível até"
 
 msgid ""
 "Set an available date to restrict the page to be available only until a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
-msgstr ""
+msgstr "Definir uma data disponível para restringir a página de forma a estar apenas disponível até uma certa data e hora. É útil para páginas que descrevam campanhas de vendas ou outras páginas sensíveis ao tempo."
 
 msgid "Available for permission groups"
-msgstr ""
+msgstr "Disponível para grupos de permissão"
 
 msgid "Select the permission groups that can have access to this page."
-msgstr ""
+msgstr "Selecionar os grupos de permissão que possuem acesso a esta página."
 
 msgid "created by"
-msgstr ""
+msgstr "criado por"
 
 msgid "modified by"
-msgstr ""
+msgstr "modificado por"
 
 msgid "created on"
-msgstr ""
+msgstr "criado em"
 
 msgid "modified on"
-msgstr ""
+msgstr "modificado em"
 
 msgid "This identifier can be used in templates to create URLs"
-msgstr ""
+msgstr "Este identificador pode ser utilizado em templates para criar URLs"
 
 msgid "visible in menu"
-msgstr ""
+msgstr "visível no menu"
 
 msgid ""
 "Enable this if this page should have a visible link in the top menu of the "
 "store front."
-msgstr ""
+msgstr "Ativar se a página deve possuir um link visível no menu superior da loja."
 
 msgid "parent"
-msgstr ""
+msgstr "principal"
 
 msgid ""
 "Set this to a parent page if this page should be subcategorized (sub-menu) "
 "under another page."
-msgstr ""
+msgstr "Definir como página principal se esta página deve ser subcategorizada (submenu) sob outra página."
 
 msgid "display children on page"
-msgstr ""
+msgstr "exibir secundário na página"
 
 msgid "Enable this if this page should display all of its children pages."
-msgstr ""
+msgstr "Ativar se esta página deve exibir todas as suas páginas secundárias."
 
 msgid "show child page timestamps"
-msgstr ""
+msgstr "exibir carimbos de data/hora em páginas secundárias"
 
 msgid ""
 "Enable this if you want to show timestamps on the child pages. Please note, "
 "that this requires the children to be listed on the page as well."
-msgstr ""
+msgstr "Ativar se pretende exibir carimbos de data/hora nas páginas secundárias. Tenha em consideração que para tal é necessário que as secundárias estejam também listadas na página."
 
 msgid "deleted"
-msgstr ""
+msgstr "eliminado"
 
 msgid "title"
-msgstr ""
+msgstr "título"
 
 msgid "The page title. This is shown anywhere links to your page are shown."
-msgstr ""
+msgstr "O título da página. É exibido sempre que forem visíveis links para a sua página."
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 msgid ""
 "The page url. Choose a descriptive url so that search engines can rank your "
 "page higher. Often the best url is simply the page title with spaces "
 "replaced with dashes."
-msgstr ""
+msgstr "O URL de página. Escolher um URL descritivo de forma a que motores de busca posicionem a sua página mais alto. Frequentemente, o melhor url é simplesmente o título da página com espaços a substituir os travessões."
 
 msgid "content"
-msgstr ""
+msgstr "conteúdo"
 
 msgid ""
 "The page content. This is the text that is displayed when customers click on"
 " your page link.You can leave this empty and add all page content through "
 "placeholder editor in shop front.To edit the style of the page you can use "
 "the Snippet plugin which is in shop front editor."
-msgstr ""
+msgstr "O conteúdo de página. O texto que é exibido quando clientes clicam no link da sua página. Pode deixar em branco ou adicionar todo o conteúdo de página através do editor de espaços reservados na loja. Para editar o estilo da página pode utilizar o plugin Snippet que se encontra no editor de loja."
 
 msgid "Template path"
-msgstr ""
+msgstr "Caminho de template"
 
 msgid "render title"
-msgstr ""
+msgstr "apresentar título"
 
 msgid "Enable this if this page should have a visible title."
-msgstr ""
+msgstr "Ativar se a página deve possuir um título visível."
 
 msgid "page"
-msgstr ""
+msgstr "página"
 
 msgid "pages"
-msgstr ""
+msgstr "páginas"
 
 msgid "Untitled"
-msgstr ""
+msgstr "Sem título"
 
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
 msgid "The image of your object."
-msgstr ""
+msgstr "A imagem do seu objeto."
 
 msgid "type"
-msgstr ""
+msgstr "tipo"
 
 msgid ""
 "The title of your object as it should appear within the graph, e.g. The "
 "Rock."
-msgstr ""
+msgstr "O título do seu objeto como deve aparecer no gráfico, ex. The Rock."
 
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 msgid "A one to two sentence description of your object."
-msgstr ""
+msgstr "Uma descrição de uma ou duas frases para o seu objeto."
 
 msgid "Section"
-msgstr ""
+msgstr "Secção"
 
 msgid ""
 "A high-level section name, e.g. Technology. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "Um nome de secção de nível elevado, ex. Tecnologia. Apenas aplicável quando o tipo é Artigo."
 
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 msgid ""
 "Tag words associated with this article. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "Palavras tag associadas com este artigo. Apenas aplicável quando o tipo é Artigo."
 
 msgid "Article author"
-msgstr ""
+msgstr "Autor de artigo"
 
 msgid ""
 "The name of the author for the article. Only applicable when type is "
 "Article."
-msgstr ""
+msgstr "O nome do autor do artigo. Apenas aplicável quando o tipo é Artigo."
 
 msgid "CMS Page Links"
-msgstr ""
+msgstr "Links Página de Serviço de Gestão de Cliente"
 
 msgid "Show all pages"
-msgstr ""
+msgstr "Mostrar todas as páginas"
 
 msgid "All pages are shown, even if not selected"
-msgstr ""
+msgstr "Todas as páginas estão visíveis, mesmo que não selecionadas"
 
 msgid "Hide expired pages"
-msgstr ""
+msgstr "Ocultar páginas expiradas"
 
 msgid "Default Page"
-msgstr ""
+msgstr "Página Padrão"
 
 msgid "Page with sidebar"
-msgstr ""
+msgstr "Página com barra lateral"
 
 msgid ""
 "Fill the fields below to add extra OpenGraph information to the page meta.\n"
 "        If not informed, some values will be inferred from the page attributes."
-msgstr ""
+msgstr "Preencher os campos abaixo para adicionar informações OpenGraph extra à meta página\n        Se não indicado, alguns valores serão inferidos dos atributos de página."
 
 msgid "New Page"
-msgstr ""
+msgstr "Nova Página"
 
 msgid "Home"
-msgstr ""
+msgstr "Início"

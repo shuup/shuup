@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Christian Hess, 2021
+# Christian Hess, 2021
 # João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-03 19:12+0000\n"
-"PO-Revision-Date: 2021-08-03 19:13+0000\n"
+"PO-Revision-Date: 2021-08-17 13:01+0000\n"
 "Last-Translator: Christian Hess\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +29,7 @@ msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
 "be case-sensitive. In case of multiple accounts with the same email, only "
 "username can be used to log in."
-msgstr "Por favor introduza um %(username)scorreto e password. Tenha em atenção que ambos os campos são sensíveis a letras maiúsculas e minúsculas. No caso de múltiplas contas com o mesmo endereço de email, apenas o nome de utilizador poderá ser usado para o login."
+msgstr "Por favor introduza um %(username)s correto e password. Tenha em atenção que ambos os campos são sensíveis a letras maiúsculas e minúsculas. No caso de múltiplas contas com o mesmo endereço de email, apenas o nome de utilizador poderá ser usado para o login."
 
 msgid "This account is inactive."
 msgstr "Esta conta encontra-se inativa."
@@ -827,10 +828,10 @@ msgid "Shipping Status"
 msgstr "Estado de Envio"
 
 msgid "Total, incl. tax"
-msgstr ""
+msgstr "Total, incl. impostos"
 
 msgid "Total, excl. tax"
-msgstr ""
+msgstr "Total, excl. impostos"
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -969,7 +970,7 @@ msgid "Shipment %s has been deleted."
 msgstr "Envio %s foi eliminado."
 
 msgid "Shipment has been marked as sent."
-msgstr ""
+msgstr "Envio marcado como enviado."
 
 msgid "ID"
 msgstr "ID"
@@ -1432,7 +1433,7 @@ msgid "unique"
 msgstr "único"
 
 msgid "running"
-msgstr ""
+msgstr "em execução"
 
 msgid "shop running"
 msgstr "loja em funcionamento"
@@ -3397,7 +3398,7 @@ msgid "Product media %(index)s"
 msgstr ""
 
 msgid "Primary image"
-msgstr ""
+msgstr "Imagem principal"
 
 msgid "Set as primary image"
 msgstr ""

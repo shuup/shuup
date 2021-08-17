@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-22 17:54+0000\n"
-"PO-Revision-Date: 2021-06-05 14:58+0000\n"
+"PO-Revision-Date: 2021-08-10 19:06+0000\n"
 "Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Carrosséis"
 
 #, python-format
 msgid "%s has been deleted."
-msgstr "%s foi apagado."
+msgstr "%s foi eliminado."
 
 msgid "Name"
 msgstr "Nome"
@@ -41,7 +41,7 @@ msgid "Slide"
 msgstr "Slide"
 
 msgid "Fade"
-msgstr "Extinguir"
+msgstr "Desvanecer"
 
 msgid "Current page"
 msgstr "Página atual"
@@ -53,13 +53,13 @@ msgid "shops"
 msgstr "lojas"
 
 msgid "Select which shops you would like the carousel to be visible in."
-msgstr "Selecione as lojas nas quais gostaria que o carrossel seja visível."
+msgstr "Selecionar as lojas nas quais gostaria que o carrossel seja visível."
 
 msgid "name"
 msgstr "nome"
 
 msgid "The carousel name use for carousel configuration."
-msgstr "O uso do nome de carrossel para a configuração de carrossel."
+msgstr "A utilização do nome de carrossel para configuração de carrossel."
 
 msgid "animation"
 msgstr "animação"
@@ -71,13 +71,13 @@ msgid "interval"
 msgstr "intervalo"
 
 msgid "Slide interval in seconds."
-msgstr "Intervalo de slides em segundos."
+msgstr "Intervalo de slide em segundos."
 
 msgid "pause on hover"
-msgstr "pausa em suspensão"
+msgstr "pausa em passagem"
 
 msgid "When checked, the carousel cycling pauses on mouse over."
-msgstr "Quando selecionado, o círculo de carrossel pausa quando o rato se sobrepõe."
+msgstr "Quando selecionado, o círculo de carrossel pausa quando o rato passa por cima."
 
 msgid "show navigation arrows"
 msgstr "mostrar setas de navegação"
@@ -85,13 +85,13 @@ msgstr "mostrar setas de navegação"
 msgid ""
 "When checked, navigational arrows are shown on the carousel allowing for "
 "customers to go back and forward."
-msgstr "Quando selecionado, as setas de navegação aparecem no carrossel permitindo aos clientes visualizarem para trás e para a frente."
+msgstr "Quando selecionado, as setas de navegação aparecem no carrossel permitindo aos clientes ir para trás e para a frente."
 
 msgid "show navigation dots"
 msgstr "mostrar pontos de navegação"
 
 msgid "When checked, navigational indicator dots are shown."
-msgstr "Quando selecionado, os pontos indicadores de navegação são mostrados."
+msgstr "Quando selecionado, os pontos indicadores de navegação são exibidos."
 
 msgid "image width"
 msgstr "largura de imagem"
@@ -109,10 +109,10 @@ msgid "Arrows color"
 msgstr "Cor das setas"
 
 msgid "Set the custom color for the arrows."
-msgstr "Definir a cor customizada para as setas."
+msgstr "Definir a cor personalizada para as setas."
 
 msgid "Name is only used to configure slides."
-msgstr "O nome é apenas utilizado para configurar os slides."
+msgstr "O nome é apenas utilizado para configurar slides."
 
 msgid "product link"
 msgstr "link do produto"
@@ -120,7 +120,7 @@ msgstr "link do produto"
 msgid ""
 "Set the product detail page that should be shown when this slide is clicked,"
 " if any."
-msgstr "Definir a página de detalhes do produto que deverá ser mostrada quando este slide for selecionado, no caso de querer alguma."
+msgstr "Definir a página de detalhes do produto que deverá ser exibida ao clicar neste slide, se quiser alguma."
 
 msgid "category link"
 msgstr "link de categoria"
@@ -128,120 +128,120 @@ msgstr "link de categoria"
 msgid ""
 "Set the product category page that should be shown when this slide is "
 "clicked, if any."
-msgstr "Definir a página de categoria de produto que deverá ser mostrada quando este slide for selecionado, no caso de querer alguma."
+msgstr "Definir a página de categoria de produto que deverá ser exibida ao clicar neste slide, se quiser alguma."
 
 msgid "cms page link"
-msgstr "Link da página do serviço de gestão de cliente"
+msgstr "link página de serviço de gestão de cliente"
 
 msgid ""
 "Set the web page that should be shown when the slide is clicked, if any."
-msgstr "Definir a página web que deverá ser mostrada quando este slide for selecionado, no caso de querer alguma."
+msgstr "Definir a página web que deverá ser exibida ao clicar neste slide, se quiser alguma."
 
 msgid "ordering"
-msgstr "Encomendar"
+msgstr "ordem"
 
 msgid ""
 "Set the numeric order in which this slide should appear relative to other "
 "slides in this carousel."
-msgstr "Definir a ordem numérica na qual este slide aparecerá relativamente à ordem de slides neste carrossel."
+msgstr "Definir a ordem numérica na qual este slide deverá aparecer relativamente a outros slides neste carrossel."
 
 msgid "link target"
-msgstr "objectivo do link"
+msgstr "alvo do link"
 
 msgid ""
 "Set this to current if clicking on this slide should open a new browser tab."
-msgstr "Definir isto como atual se, clicando neste slide deverá abrir uma nova barra de navegação. "
+msgstr "Definir isto como atual se ao clicar neste slide quiser abrir uma nova barra de navegação."
 
 msgid "available since"
-msgstr ""
+msgstr "disponível desde"
 
 msgid ""
 "Set the date and time, starting from which this slide should be visible in "
 "the carousel. This is useful to advertise sales campaigns or other time-"
 "sensitive marketing."
-msgstr ""
+msgstr "Definir data e hora, a partir da qual este slide deve ser visível no carrossel. É útil para publicitar campanhas de vendas ou outro marketing sensível em termos de tempo."
 
 msgid "available until"
-msgstr ""
+msgstr "disponível até"
 
 msgid ""
 "Set the date and time, until which this slide should be visible in the "
 "carousel. This is useful to advertise sales campaigns or other time-"
 "sensitive marketing."
-msgstr ""
+msgstr "Definir data e hora, até à qual este slide deve ser visível no carrossel. É útil para publicitar campanhas de vendas ou outro marketing sensível em termos de tempo."
 
 msgid "Inactive dot border color"
-msgstr ""
+msgstr "Cor do limite pontos desativo"
 
 msgid "Customize the dot border color when slide is not active."
-msgstr ""
+msgstr "Personalizar a cor do limite de pontos quando o slide não está ativo."
 
 msgid "Active dot color"
-msgstr ""
+msgstr "Cor do limite pontos ativo"
 
 msgid "Customize the dot color when slide is active."
-msgstr ""
+msgstr "Personalizar a cor do limite de pontos quando o slide está ativo."
 
 msgid "caption"
-msgstr ""
+msgstr "captura"
 
 msgid ""
 "Text that describes the image. It is displayed on top of the image if "
 "'Render image text' box is enabled in front-end. Also used for search engine"
 " purposes."
-msgstr ""
+msgstr "Texto que descreve a imagem. É exibido no topo da imagem se a caixa “Apresentar texto imagem” estiver verificada no front-end. Também é utilizado para propósitos de motor de busca."
 
 msgid "caption text"
-msgstr ""
+msgstr "texto captura"
 
 msgid ""
 "Caption text is displayed as secondary text on top of the image if 'Render "
 "image text' box is enabled in front-end for 'Carousel plugin' type (disabled"
 " for 'Banner box' type). It is also shown as a tooltip."
-msgstr ""
+msgstr "O texto de captura é exibido como texto secundário no topo da imagem se a caixa “Apresentar texto imagem” estiver verificada no front-end para tipo “Plugin Carrossel’ (desativo para tipo ‘Caixa banner’. Também é exibido como um tooltip."
 
 msgid "external link"
-msgstr ""
+msgstr "link externo"
 
 msgid ""
 "Set the external site that should be shown when this slide is clicked, if "
 "any."
-msgstr ""
+msgstr "Definir o site externo que deve ser exibido ao clicar neste slide, se quiser algum."
 
 msgid "image"
-msgstr ""
+msgstr "imagem"
 
 msgid "The slide image to show."
-msgstr ""
+msgstr "A imagem de slide a mostrar."
 
 msgid "Slides"
-msgstr ""
+msgstr "Slides"
 
 msgid "Carousel Plugin"
-msgstr ""
+msgstr "Plugin Carrossel"
 
 msgid "Render image text"
-msgstr ""
+msgstr "Apresentar texto imagem"
 
 msgid "Display the text on top of the image."
-msgstr ""
+msgstr "Exibir o texto no topo da imagem."
 
 msgid "Banner Box"
-msgstr ""
+msgstr "Caixa Banner"
 
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 msgid "Slides can be added after saving the Carousel."
-msgstr ""
+msgstr "Podem ser adicionados slides após guardar o Carrossel."
 
 msgid ""
 "This form is also used to define banner boxes. Marked fields only apply to "
 "banner boxes."
-msgstr ""
+msgstr "Este formulário também é utilizado para definir caixas banner. Os campos marcados apenas se aplicam a caixas banner."
 
 msgid "Adding the carousel to your site"
-msgstr ""
+msgstr "Adicionar o carrossel ao seu site"
 
 msgid ""
 "To add a carousel to your site, you must edit the page using the placeholder"
@@ -250,30 +250,30 @@ msgid ""
 "change and add a new plugin row and from the plugin dropdown and select "
 "'Carousel Plugin'. From 'Carousel' dropdown options choose the carousel you "
 "want to display. As a final step, save the plugin and publish changes."
-msgstr ""
+msgstr "Para adicionar um carrossel ao seu site, deve editar a página utilizando o editor de espaços reservados. Para tal, vá ao seu site e clique em ‘Editar página’, na página em que pretende adicionar o banner de carrossel. Depois, selecione o espaço reservado a alterar e adicione uma nova coluna de plugin e da lista de plugins selecione ‘Plugin de Carrossel’. Das opções em lista de ‘Carrossel’ escolha o carrossel que pretende exibir. Por último, guarde o plugin e publique as alterações."
 
 msgid "Learn more."
-msgstr ""
+msgstr "Saber mais."
 
 msgid "Basic details"
-msgstr ""
+msgstr "Detalhes básicos"
 
 msgid "Advanced options"
-msgstr ""
+msgstr "Opções avançadas"
 
 msgid "Remove Slide"
-msgstr ""
+msgstr "Retirar Slide"
 
 msgid "Only image for default language is required."
-msgstr ""
+msgstr "Apenas são necessárias imagens para o idioma padrão."
 
 msgid ""
 "If external link is not set link will fallback to product link, category "
 "link or cms page link in this order."
-msgstr ""
+msgstr "Se um link externo não está definido, o link irá redirecionar para o link de produto, de categoria ou de página cms (sistema de gestão de conteúdos) nesta encomenda."
 
 msgid "Add new slide"
-msgstr ""
+msgstr "Adicionar novo slide"
 
 msgid "New Carousel"
-msgstr ""
+msgstr "Novo Carrossel"

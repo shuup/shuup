@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"POT-Creation-Date: 2021-08-03 19:01+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: French (Canada) (https://www.transifex.com/shuup/teams/55306/fr_CA/)\n"
@@ -30,29 +30,17 @@ msgstr "Désarchiver les remises"
 msgid "Delete Discounts"
 msgstr "Supprimer les remises"
 
-msgid "Product Discounts Coupon Codes"
-msgstr "Codes de réduction sur les produits"
-
 msgid "Discounts"
 msgstr "Réductions"
 
 msgid "Product Discounts"
 msgstr "Remises sur les produits"
 
-msgid "Allow the user to select coupons in admin."
-msgstr ""
-
 msgid "Allow the user to select discounts in admin."
 msgstr ""
 
 msgid "Archived Product Discounts"
 msgstr "Remises sur les produits archivés"
-
-msgid "Discounts Availability Exceptions"
-msgstr "Remises Exceptions de disponibilité"
-
-msgid "Product Discounts Availability Exceptions"
-msgstr "Remises sur les produits Exceptions de disponibilité"
 
 msgid "Discounts Happy Hours"
 msgstr "Réductions Happy Hours"
@@ -90,41 +78,11 @@ msgstr "Contact"
 msgid "Filter by contact..."
 msgstr "Filtrer par contact ..."
 
-msgid "Coupon code"
-msgstr "Code de coupon"
-
-msgid "Filter by coupon code..."
-msgstr "Filtrer par code promo ..."
-
 msgid "Effect"
 msgstr "Effet"
 
 msgid "End Date and Time"
 msgstr "Date et heure de fin"
-
-msgid "Code"
-msgstr "Code"
-
-msgid "Usages"
-msgstr "Coutumes"
-
-msgid "Usages Limit per contact"
-msgstr "Limite d'usages par contact"
-
-msgid "Usage Limit"
-msgstr "Limite d'utilisation"
-
-msgid "Active"
-msgstr "actif"
-
-msgid "Created by"
-msgstr "Créé par"
-
-msgid "Date created"
-msgstr "Date créée"
-
-msgid "Select discounts linked to this coupon code."
-msgstr "Sélectionnez les remises liées à ce code de coupon."
 
 #, python-format
 msgid "%s has been deleted."
@@ -135,15 +93,6 @@ msgstr "Pourcentage de remise"
 
 msgid "The discount percentage for this discount."
 msgstr "Le pourcentage de remise pour cette remise."
-
-msgid "Exception Name"
-msgstr "Nom de l'exception"
-
-msgid "Start Date and Time"
-msgstr "Date et heure de début"
-
-msgid "Select discounts to be ignored on given time frame."
-msgstr "Sélectionnez les remises à ignorer sur une période donnée."
 
 msgid "Happy Hour Name"
 msgstr "Nom de l'happy hour"
@@ -168,75 +117,8 @@ msgstr ""
 msgid "Weekdays the happy hour is active."
 msgstr "En semaine, l'happy hour est active."
 
-msgid "shops"
-msgstr "magasins"
-
 msgid "name"
 msgstr "Nom"
-
-msgid ""
-"The name for this exception. Used internally with exception lists for "
-"filtering."
-msgstr ""
-"Le nom de cette exception. Utilisé en interne avec des listes d'exceptions "
-"pour le filtrage."
-
-msgid "start since"
-msgstr "commencer depuis"
-
-msgid ""
-"Set to restrict the availability exception to be available only after a "
-"certain date and time."
-msgstr ""
-"Défini pour restreindre l'exception de disponibilité à être disponible "
-"uniquement après une certaine date et heure."
-
-msgid "end until"
-msgstr "fin jusqu'à"
-
-msgid ""
-"Set to restrict the availability exception to be available only until a "
-"certain date and time."
-msgstr ""
-"Défini pour restreindre l'exception de disponibilité à être disponible "
-"uniquement jusqu'à une certaine date et heure."
-
-msgid "availability exception"
-msgstr "exception de disponibilité"
-
-msgid "availability exceptions"
-msgstr "exceptions de disponibilité"
-
-msgid "created on"
-msgstr "créé sur"
-
-msgid "usage limit per customer"
-msgstr "limite d'utilisation par client"
-
-msgid "Limit the amount of usages per a single customer."
-msgstr "Limitez le nombre d'utilisations par client."
-
-msgid "usage limit"
-msgstr "limite d'utilisation"
-
-msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
-msgstr ""
-"Définissez la limite absolue d'utilisation de ce coupon. Si la limite est de"
-" zéro (0), le coupon ne peut pas être utilisé."
-
-msgid "active"
-msgstr "actif"
-
-msgid "created by"
-msgstr "créé par"
-
-msgid "modified by"
-msgstr "modifié par"
-
-msgid "modified on"
-msgstr "modifié le"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
@@ -245,11 +127,29 @@ msgstr ""
 "Le nom de cette réduction. Utilisé en interne avec des listes de remises "
 "pour le filtrage."
 
+msgid "shop"
+msgstr ""
+
+msgid "created by"
+msgstr "créé par"
+
+msgid "modified by"
+msgstr "modifié par"
+
+msgid "created on"
+msgstr "créé sur"
+
+msgid "modified on"
+msgstr "modifié le"
+
 msgid "supplier"
 msgstr "fournisseur"
 
 msgid "Select supplier for this discount."
 msgstr "Sélectionnez le fournisseur pour cette remise."
+
+msgid "active"
+msgstr "actif"
 
 msgid ""
 "Enable this if the discount is currently active. Please also set a start and"
@@ -284,9 +184,6 @@ msgstr "heures heureuses"
 msgid "Select happy hours for this discount."
 msgstr "Sélectionnez des happy hours pour cette réduction."
 
-msgid "Select availability for this discount."
-msgstr "Sélectionnez la disponibilité pour cette réduction."
-
 msgid "product"
 msgstr "produit"
 
@@ -311,24 +208,11 @@ msgstr "contact"
 msgid "Select contact for this discount."
 msgstr "Sélectionnez le contact pour cette réduction."
 
-msgid "exclude selected contact group"
-msgstr "exclure le groupe de contacts sélectionné"
-
-msgid "Exclude contacts in selected contact group from this discount."
-msgstr ""
-"Exclure les contacts du groupe de contacts sélectionné de cette réduction."
-
 msgid "contact group"
 msgstr "groupe de contact"
 
 msgid "Select contact group for this discount."
 msgstr "Sélectionnez le groupe de contact pour cette réduction."
-
-msgid "coupon code"
-msgstr "code promo"
-
-msgid "Select coupon code for this discount."
-msgstr "Sélectionnez le code de réduction pour cette réduction."
 
 msgid "discounted price"
 msgstr "prix réduit"
@@ -353,6 +237,14 @@ msgstr "remise de produit"
 
 msgid "product discounts"
 msgstr "remises sur les produits"
+
+msgid "Start date and end date are required when the discount is active."
+msgstr ""
+
+msgid ""
+"Either discounted price or discount percentage or discount amount should be "
+"configured."
+msgstr ""
 
 msgid ""
 "The name for this HappyHour. Used internally with exception lists for "

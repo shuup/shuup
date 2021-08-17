@@ -316,7 +316,7 @@ msgid "The file doesn't contain data."
 msgstr "Die Datei enthält keine Daten."
 
 msgid "Failed to import data: {}."
-msgstr ""
+msgstr "Fehler beim Importieren der Daten: {}."
 
 #, python-brace-format
 msgid "{file_name} is not a valid file."

@@ -142,13 +142,13 @@ msgid "body"
 msgstr "Textkörper"
 
 msgid "Task Created"
-msgstr ""
+msgstr "Aufgabe erstellt"
 
 msgid "Task"
 msgstr "Aufgabe"
 
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 msgid "New Task"
 msgstr "Neue Aufgabe"

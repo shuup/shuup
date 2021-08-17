@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"POT-Creation-Date: 2021-08-03 19:01+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: William Lindholm <william.lindholm@shuup.com>, 2020\n"
 "Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/sv_SE/)\n"
@@ -31,29 +31,17 @@ msgstr "Ta bort arkivering av rabatter"
 msgid "Delete Discounts"
 msgstr "Ta bort rabatter"
 
-msgid "Product Discounts Coupon Codes"
-msgstr "Produktrabatter Kupongkoder"
-
 msgid "Discounts"
 msgstr "Rabatter"
 
 msgid "Product Discounts"
 msgstr "Produktrabatter"
 
-msgid "Allow the user to select coupons in admin."
-msgstr ""
-
 msgid "Allow the user to select discounts in admin."
 msgstr ""
 
 msgid "Archived Product Discounts"
 msgstr "Arkiverade produktrabatter"
-
-msgid "Discounts Availability Exceptions"
-msgstr "Undantag för tillgänglighet rabatter"
-
-msgid "Product Discounts Availability Exceptions"
-msgstr "Produktrabatter Undantag från tillgänglighet"
 
 msgid "Discounts Happy Hours"
 msgstr "Rabatter Happy Hours"
@@ -91,41 +79,11 @@ msgstr "Kontakt"
 msgid "Filter by contact..."
 msgstr "Filtrera efter kontakt ..."
 
-msgid "Coupon code"
-msgstr "Kupongskod"
-
-msgid "Filter by coupon code..."
-msgstr "Filtrera efter kupongkod ..."
-
 msgid "Effect"
 msgstr "Effekt"
 
 msgid "End Date and Time"
 msgstr "Slutdatum och tid"
-
-msgid "Code"
-msgstr "Kod"
-
-msgid "Usages"
-msgstr "Användningar"
-
-msgid "Usages Limit per contact"
-msgstr "Användningsgräns per kontakt"
-
-msgid "Usage Limit"
-msgstr "Användnings gräns"
-
-msgid "Active"
-msgstr "Aktiva"
-
-msgid "Created by"
-msgstr "Skapad av"
-
-msgid "Date created"
-msgstr "Skapat datum"
-
-msgid "Select discounts linked to this coupon code."
-msgstr "Välj rabatter kopplade till den här kupongkoden."
 
 #, python-format
 msgid "%s has been deleted."
@@ -136,15 +94,6 @@ msgstr "Rabattprocent"
 
 msgid "The discount percentage for this discount."
 msgstr "Rabattprocenten för denna rabatt."
-
-msgid "Exception Name"
-msgstr "Undantagsnamn"
-
-msgid "Start Date and Time"
-msgstr "Startdatum och tid"
-
-msgid "Select discounts to be ignored on given time frame."
-msgstr "Välj rabatter som ska ignoreras under en viss tidsram."
 
 msgid "Happy Hour Name"
 msgstr "Happy Hour-namn"
@@ -167,75 +116,8 @@ msgstr ""
 msgid "Weekdays the happy hour is active."
 msgstr "På vardagar är happy hour aktiv."
 
-msgid "shops"
-msgstr "butiker"
-
 msgid "name"
 msgstr "namn"
-
-msgid ""
-"The name for this exception. Used internally with exception lists for "
-"filtering."
-msgstr ""
-"Namnet på detta undantag. Används internt med undantagslistor för "
-"filtrering."
-
-msgid "start since"
-msgstr "starta sedan"
-
-msgid ""
-"Set to restrict the availability exception to be available only after a "
-"certain date and time."
-msgstr ""
-"Ställ in för att begränsa tillgänglighetsundantaget så att det bara är "
-"tillgängligt efter ett visst datum och tid."
-
-msgid "end until"
-msgstr "slut till"
-
-msgid ""
-"Set to restrict the availability exception to be available only until a "
-"certain date and time."
-msgstr ""
-"Ställ in för att begränsa tillgänglighetsundantaget så att det bara är "
-"tillgängligt till ett visst datum och tid."
-
-msgid "availability exception"
-msgstr "tillgänglighetsundantag"
-
-msgid "availability exceptions"
-msgstr "undantag från tillgänglighet"
-
-msgid "created on"
-msgstr "skapad på"
-
-msgid "usage limit per customer"
-msgstr "användningsgräns per kund"
-
-msgid "Limit the amount of usages per a single customer."
-msgstr "Begränsa antalet användningar per enskild kund."
-
-msgid "usage limit"
-msgstr "användningsgräns"
-
-msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
-msgstr ""
-"Ställ in den absoluta gränsen för användningen för den här kupongen. Om "
-"gränsen är noll (0) kan inte kupongen användas."
-
-msgid "active"
-msgstr "aktiva"
-
-msgid "created by"
-msgstr "skapad av"
-
-msgid "modified by"
-msgstr "modifierad av"
-
-msgid "modified on"
-msgstr "ändrad den"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
@@ -243,11 +125,29 @@ msgid ""
 msgstr ""
 "Namnet på denna rabatt. Används internt med rabattlistor för filtrering."
 
+msgid "shop"
+msgstr ""
+
+msgid "created by"
+msgstr "skapad av"
+
+msgid "modified by"
+msgstr "modifierad av"
+
+msgid "created on"
+msgstr "skapad på"
+
+msgid "modified on"
+msgstr "ändrad den"
+
 msgid "supplier"
 msgstr "leverantör"
 
 msgid "Select supplier for this discount."
 msgstr "Välj leverantör för denna rabatt."
+
+msgid "active"
+msgstr "aktiva"
 
 msgid ""
 "Enable this if the discount is currently active. Please also set a start and"
@@ -282,9 +182,6 @@ msgstr "lyckliga timmar"
 msgid "Select happy hours for this discount."
 msgstr "Välj happy hours för denna rabatt."
 
-msgid "Select availability for this discount."
-msgstr "Välj tillgänglighet för denna rabatt."
-
 msgid "product"
 msgstr "produkt"
 
@@ -309,23 +206,11 @@ msgstr "Kontakt"
 msgid "Select contact for this discount."
 msgstr "Välj kontakt för denna rabatt."
 
-msgid "exclude selected contact group"
-msgstr "utesluta vald kontaktgrupp"
-
-msgid "Exclude contacts in selected contact group from this discount."
-msgstr "Uteslut kontakter i vald kontaktgrupp från denna rabatt."
-
 msgid "contact group"
 msgstr "kontaktgrupp"
 
 msgid "Select contact group for this discount."
 msgstr "Välj kontaktgrupp för denna rabatt."
-
-msgid "coupon code"
-msgstr "kupongskod"
-
-msgid "Select coupon code for this discount."
-msgstr "Välj kupongkod för denna rabatt."
 
 msgid "discounted price"
 msgstr "nedsatt pris"
@@ -350,6 +235,14 @@ msgstr "produktrabatt"
 
 msgid "product discounts"
 msgstr "produktrabatter"
+
+msgid "Start date and end date are required when the discount is active."
+msgstr ""
+
+msgid ""
+"Either discounted price or discount percentage or discount amount should be "
+"configured."
+msgstr ""
 
 msgid ""
 "The name for this HappyHour. Used internally with exception lists for "

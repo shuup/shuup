@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 18:31+0000\n"
+"POT-Creation-Date: 2021-08-17 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,18 +53,15 @@ msgid ""
 "stock (%(supplier_name)s)."
 msgstr ""
 
-#, python-format
-msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
-msgstr ""
-
-msgid "Non-POST request methods are forbidden."
-msgstr ""
-
-msgid "Please check submitted values and try again."
+msgid "Please check submitted values and try again ({})."
 msgstr ""
 
 #, python-format
 msgid "Please check submitted values and try again (%(error)s)."
+msgstr ""
+
+#, python-format
+msgid "Alert limit for product `%(product_name)s` set to `%(value)s`."
 msgstr ""
 
 #, python-brace-format

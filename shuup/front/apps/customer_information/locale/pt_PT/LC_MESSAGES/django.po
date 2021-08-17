@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-10 20:10+0000\n"
-"PO-Revision-Date: 2021-06-24 18:53+0000\n"
+"PO-Revision-Date: 2021-08-10 18:11+0000\n"
 "Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -20,90 +20,90 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Customer Information Editing"
-msgstr "Shuup Frontend - Edição da informação de cliente"
+msgstr "Shuup Frontend - Edição de Informações de cliente"
 
 msgid "Customer Information"
-msgstr "Informação do cliente"
+msgstr "Informações de Cliente"
 
 msgid "Company Information"
-msgstr "Informação da empresa"
+msgstr "Informações de Empresa"
 
 msgid "Edit Company Information."
-msgstr "Editar informação da empresa."
+msgstr "Editar Informações de Empresa."
 
 msgid "Address Book"
-msgstr "Livro de endereços"
+msgstr "Livro de Endereços"
 
 msgid "Language"
 msgstr "Idioma"
 
 msgid "Will become default user email when linked."
-msgstr "Tornar-se-á email padrão de utilizador quando conectado."
+msgstr "Tornar-se-á e-mail padrão de utilizador quando conectado."
 
 msgid "Given Tax Number already exists. Please contact support."
-msgstr "O número de identificação fiscal introduzido já existe. Por favor entre em contacto com o suporte."
+msgstr "O Número de Identificação Fiscal introduzido já existe. Contactar o suporte."
 
 msgid "Address Title"
-msgstr "Título de endereço"
+msgstr "Título de Endereço"
 
 msgid "Address Type"
-msgstr "Tipo de endereço"
+msgstr "Tipo de Endereço"
 
 msgid "Address Status"
-msgstr "Estado do endereço"
+msgstr "Estado do Endereço"
 
 msgid "Company information was saved."
-msgstr "Informação da empresa foi guardada."
+msgstr "As informações da empresa foram guardadas."
 
 msgid ""
 "Company information was saved. Please follow the instructions sent to your "
 "email address."
-msgstr "Informação da empresa foi guardada. Por favor siga as instruções enviadas para o seu endereço de email."
+msgstr "As informações da empresa foram guardadas. Siga as instruções enviadas para o seu endereço de e-mail."
 
 msgid "Customer Email"
-msgstr "Email do cliente"
+msgstr "E-mail de cliente"
 
 msgid "Home"
-msgstr "Página inicial"
+msgstr "Início"
 
 msgid "Dashboard"
-msgstr "Painel de controlo"
+msgstr "Painel de Controlo"
 
 msgid "General Information"
-msgstr "Informação geral"
+msgstr "Informações Gerais"
 
 msgid "Contact Information"
-msgstr "Informação de contacto"
+msgstr "Informações de Contacto"
 
 msgid "Address"
 msgstr "Endereço"
 
 msgid "Default Addresses"
-msgstr "Endereços padrão"
+msgstr "Endereços Padrão"
 
 msgid "Edit"
 msgstr "Editar"
 
 msgid "Default Billing Address"
-msgstr "Endereço padrão de faturação"
+msgstr "Endereço de Faturação Padrão"
 
 msgid "No Default Billing Address set."
-msgstr "Nenhum endereço padrão de faturação definido."
+msgstr "Nenhum Endereço de Faturação Padrão definido."
 
 msgid "Default Shipping Address"
-msgstr "Endereço padrão de envio"
+msgstr "Endereço de Envio Padrão"
 
 msgid "No Default Shipping Address set."
-msgstr "Nenhum endereço padrão de envio definido."
+msgstr "Nenhum Endereço de Envio Padrão definido."
 
 msgid "Additional Addresses"
-msgstr "Endereços adicionais"
+msgstr "Endereços Adicionais"
 
 msgid "Create new"
 msgstr "Criar novo"
 
 msgid "Role"
-msgstr "Cargo"
+msgstr "Função"
 
 msgid "Status"
 msgstr "Estado"
@@ -112,31 +112,31 @@ msgid "Delete"
 msgstr "Eliminar"
 
 msgid "You don't have any additional addresses"
-msgstr "Não tem nenhum endereço adicional"
+msgstr "Não possui nenhum endereço adicional"
 
 msgid "Change Password"
 msgstr "Alterar Password"
 
 msgid "Change password"
-msgstr "Alterar Password"
+msgstr "Alterar password"
 
 msgid "Basic Information"
-msgstr "Informação Básica"
+msgstr "Informações Básicas"
 
 msgid "Name"
 msgstr "Nome"
 
 msgid "Email"
-msgstr "Email"
+msgstr "E-mail"
 
 msgid "Phone"
 msgstr "Telefone"
 
 msgid "Tax Number"
-msgstr "Número de identificação fiscal"
+msgstr "Número de Identificação Fiscal"
 
 msgid "Birth Date"
-msgstr "Data de nascimento"
+msgstr "Data de Nascimento"
 
 msgid "Gender"
 msgstr "Género"
@@ -151,12 +151,12 @@ msgid "No"
 msgstr "Não"
 
 msgid "Company account information"
-msgstr "Informação de conta da empresa"
+msgstr "Informações de conta de empresa"
 
 msgid ""
 "You have already linked your account to a company and it is pending "
 "approval."
-msgstr "Já conectou a sua conta a uma empresa e está com aprovação pendente."
+msgstr "Já conectou a sua conta a uma empresa e está a aguardar aprovação."
 
 msgid "Not specified"
 msgstr "Não especificado"
@@ -174,43 +174,43 @@ msgid "Country"
 msgstr "País"
 
 msgid "Billing information"
-msgstr "Informação de faturação"
+msgstr "Informações de faturação"
 
 msgid "Copy to shipping information"
-msgstr "Copiar para informação de envio"
+msgstr "Copiar para informações de envio"
 
 msgid "Shipping information"
-msgstr "Informação de envio"
+msgstr "Informações de envio"
 
 msgid "Copy to billing information"
-msgstr "Copiar para informação de faturação"
+msgstr "Copiar para informações de faturação"
 
 msgid "Edit customer information"
-msgstr "Editar informação do cliente"
+msgstr "Editar informações de cliente"
 
 msgid "Save password"
-msgstr "Guardar Password"
+msgstr "Guardar password"
 
 msgid "Save changes"
-msgstr "Guardar altereações"
+msgstr "Guardar alterações"
 
 msgid "Edit company information"
-msgstr "Editar informação da empresa."
+msgstr "Editar informações de empresa"
 
 msgid "Link account to company"
 msgstr "Conectar conta a empresa"
 
 msgid "Company information"
-msgstr "Informação da empresa"
+msgstr "Informações de empresa"
 
 msgid "Password changed."
-msgstr "Password alterada"
+msgstr "Password alterada."
 
 msgid "Account information was saved."
-msgstr "Informação da empresa foi guardada."
+msgstr "As informações de empresa foram guardadas."
 
 msgid "Address information was saved."
-msgstr "Informação de endereço foi guardada."
+msgstr "As informações de endereço foram guardadas."
 
 msgid "Cannot remove address because it doesn't exist."
-msgstr "Endereço não pode ser removido porque não existe."
+msgstr "Não é possível eliminar endereço porque não existe."

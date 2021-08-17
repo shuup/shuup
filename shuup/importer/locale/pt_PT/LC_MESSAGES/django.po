@@ -5,6 +5,8 @@
 # 
 # Translators:
 # João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021
+# Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021
+# Christian Hess, 2021
 # 
 #, fuzzy
 msgid ""
@@ -13,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-06 22:55+0000\n"
 "PO-Revision-Date: 2017-03-01 14:19+0000\n"
-"Last-Translator: João Gaspar Monteiro <joao.monteiro@qintera.pt>, 2021\n"
+"Last-Translator: Christian Hess, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,44 +28,47 @@ msgstr "Importação de dados"
 
 msgid "Allow the user to see the imports from all shops and suppliers."
 msgstr ""
+"Permitir que o utilizador veja as importações de todas as lojas e "
+"fornecedores."
 
 msgid "Allow the user to run importers."
-msgstr ""
+msgstr "Permitir que o utilizar execute importadores."
 
 msgid "Allow the user to list imports."
-msgstr ""
+msgstr "Permitir que o utilizador liste importações."
 
 msgid "Allow the user to import a file."
-msgstr ""
+msgstr "Permitir que o utilizador importe um ficheiro."
 
 msgid "Allow the user to download sample files."
-msgstr ""
+msgstr "Permitir que o utilizador efetue o download de ficheiros exemplo."
 
 #, python-brace-format
 msgid "Allow the user to use the {importer_name} importer."
-msgstr ""
+msgstr "Permitir que o utilizar utilize o importador {importer_name}."
 
 msgid "Import mode"
 msgstr "Modo de importação"
 
 msgid "Importing language"
-msgstr "A importar linguagem"
+msgstr "Idioma de importação"
 
 msgid "The language of the data you want to import."
-msgstr "A linguagem de dados que pretende importar."
+msgstr "O idioma dos dados que pretende importar."
 
 msgid "Importer"
 msgstr "Importador"
 
 msgid "Select a importer type matching the data you want to import"
 msgstr ""
-"Selecionar tipo de importador correspondente aos dados que quer importar."
+"Selecionar um tipo de importador que corresponda aos dados que pretende "
+"importar"
 
 msgid "File"
 msgstr "Ficheiro"
 
 msgid "Data imports"
-msgstr ""
+msgstr "Importações de dados"
 
 msgid "Invalid importer."
 msgstr "Importador inválido."
@@ -72,10 +77,10 @@ msgid "File is missing."
 msgstr "Ficheiro está em falta."
 
 msgid "The import was queued!"
-msgstr ""
+msgstr "A importação foi colocada em fila de espera!"
 
 msgid "Failed to process the file."
-msgstr ""
+msgstr "Falha ao processar o ficheiro."
 
 msgid "Invalid parameters."
 msgstr "Parâmetros inválidos."
@@ -84,25 +89,25 @@ msgid "Invalid file name."
 msgstr "Nome de ficheiro inválido."
 
 msgid "File was not found."
-msgstr "Ficheiro não encontrado."
+msgstr "Ficheiro não foi encontrado."
 
 msgid "Import date"
-msgstr ""
+msgstr "Data de importação"
 
 msgid "User"
-msgstr ""
+msgstr "Utilizador"
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Import file"
-msgstr ""
+msgstr "Ficheiro de importação"
 
 msgid "Importdate"
-msgstr ""
+msgstr "Data de importação"
 
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 msgid "Import"
 msgstr "Importar"
@@ -114,16 +119,16 @@ msgstr "Linha ignorada (item não existente e criar novo não é permitido)."
 msgid ""
 "Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
 msgstr ""
-"Linha ignorada (objeto já existe (%(object_name)swith id: %(object_id)s)."
+"Linha ignorada (objeto já existe (%(object_name)s com id: %(object_id)s)."
 
 #, python-format
 msgid "Failed while setting value for field %(field_name)s. (%(exception)s)"
-msgstr "Falha a atribuir valor para campo %(field_name)s. (%(exception)s)"
+msgstr "Falha ao atribuir valor para campo %(field_name)s. (%(exception)s)"
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
 msgstr ""
-"Não foi possível atribuir valor %(original_value)spara o campo "
+"Não foi possível atribuir valor %(original_value)s para campo "
 "%(field_name)s."
 
 #, python-format
@@ -131,7 +136,7 @@ msgid "Row import failed (%s)."
 msgstr "Falha na importação de linha (%s)."
 
 msgid "Unexpected error while trying to import the file."
-msgstr ""
+msgstr "Ocorreu um erro inesperado ao tentar importar o ficheiro."
 
 msgid "Example files"
 msgstr "Ficheiros exemplo"
@@ -141,37 +146,37 @@ msgid ""
 "                    make sure to leave the ignore column empty for all your rows,\n"
 "                    otherwise the rows won't be imported."
 msgstr ""
-"Se houver uma coluna \"ignorar\" no ficheiro exemplo que está a utilizar,\n"
-"certifique-se que deixa em branco a coluna ignorar para todas as suas linhas, \n"
-"caso contrário as linhas não serão importadas."
+"Se existir uma coluna  'Ignorar' no ficheiro exemplo que está a utilizar,\n"
+"                    assegure.se de deixar a coluna vazia para todas as suas linhas\n"
+"                    caso contrário as linhas não serão importadas."
 
 msgid "This importer provides example files. Click below to download them:"
 msgstr ""
-"Este importador providencia ficheiros exemplo. Clique abaixo para fazer "
+"Este importador oferece ficheiros exemplo. Clicar abaixo para efetuar "
 "download dos mesmos:"
 
 msgid "Continue"
 msgstr "Continuar"
 
 msgid "Import Data - process"
-msgstr "Importação de Dados - processo"
+msgstr "Importar Dados - processo"
 
 msgid "Amount if items being imported"
-msgstr ""
+msgstr "Número de itens a importar"
 
 msgid "The following fields were automatically mapped"
-msgstr "Os seguintes campos foram automaticamente mapeados."
+msgstr "Os seguintes campos foram mapeados automaticamente"
 
 msgid ""
 "The following fields in the file are being used a s possible connection "
 "keys:"
 msgstr ""
-"Os seguintes campos no ficheiros estão a ser usados como possíveis chaves de"
-" conexão:"
+"Os seguintes campos no ficheiro estão a ser utilizados como possíveis chaves"
+" de conexão:"
 
 msgid "Not a single connection key was found, File cannot be imported."
 msgstr ""
-"Não foi encontrada nem uma única chave de conexão, o Ficheiro não pode ser "
+"Não foi encontrada nem uma chave de conexão, o Ficheiro não pode ser "
 "importado."
 
 msgid "Connection Keys"
@@ -184,8 +189,8 @@ msgid ""
 "The following fields are Read Only and changes for those fields will be "
 "ignored."
 msgstr ""
-"Os seguintes campos são de Só Leitura e as alterações para esses campos "
-"serão ignoradas."
+"Os seguintes campos são Só Leitura e as alterações a esses campos serão "
+"ignoradas."
 
 msgid "Import method"
 msgstr "Método de importação"
@@ -200,10 +205,10 @@ msgid "Shuup field"
 msgstr "Campo Shuup"
 
 msgid "Sample values"
-msgstr "Valores de amostra"
+msgstr "Valores exemplo"
 
 msgid "The following fields must be manually tied"
-msgstr "Os seguintes campos devem ser manualmente interligados"
+msgstr "Os seguintes campos devem ser interligados manualmente"
 
 msgid "Don't import"
 msgstr "Não importar"
@@ -221,27 +226,27 @@ msgid ""
 "File may not be imported because no connection keys were found. Connection "
 "keys are unique keys that are used to map results."
 msgstr ""
-"Ficheiro poderá não ser importado porque nenhuma chave de conexão foi "
-"encontrada. Chaves de conexão são chaves únicas que são utilizadas para "
+"O ficheiro poderá não ser importado porque não foi encontrada nenhuma chave "
+"de conexão. Chaves de conexão são chaves únicas que são utilizadas para "
 "mapear resultados."
 
 msgid ""
 "Please consider adding some of the following fields to your import file:"
 msgstr ""
-"Por favor considere adicionar alguns dos seguintes campos ao ficheiro de "
+"Considere adicionar alguns dos seguintes campos ao seu ficheiro de "
 "importação:"
 
 msgid "Products"
 msgstr "Produtos"
 
 msgid "SKU"
-msgstr "SKU"
+msgstr "Ref."
 
 msgid "Customers"
 msgstr "Clientes"
 
 msgid "email"
-msgstr "email"
+msgstr "e-mail"
 
 msgid "Importer type"
 msgstr "Tipo de importador"
@@ -250,41 +255,41 @@ msgid "Field(s) to add"
 msgstr "Campo(s) a adicionar"
 
 msgid "You can continue importing, but it might end up in error"
-msgstr "Poderá continuar a importar, mas poderá terminar em erro"
+msgstr "Pode continuar a importar, mas poderá terminar em erro"
 
 msgid ""
 "If you are importing customers this might be a false alarm if you have email"
 " key set"
 msgstr ""
 "Se está a importar clientes isto poderá ser falso alarme se tiver chave de "
-"email definida"
+"e-mail definida"
 
 msgid "Start Import"
 msgstr "Começar importação"
 
 msgid "Import Results"
-msgstr ""
+msgstr "Resultados de Importação"
 
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 msgid "New items"
-msgstr "Novos items"
+msgstr "Itens novos"
 
 msgid "The following items were imported as new:"
-msgstr "Os seguintes items foram importados como novos:"
+msgstr "Os seguintes itens foram importados como novos:"
 
 msgid "Zero new items were created."
-msgstr "Foram criados zero novos items."
+msgstr "Foram criados zero itens novos."
 
 msgid "Updated items"
-msgstr "Items atualizados."
+msgstr "Itens atualizados."
 
 msgid "The following items were updated:"
-msgstr "Os seguintes items foram atualizados:"
+msgstr "Os seguintes itens foram atualizados:"
 
 msgid "Zero items were updated."
-msgstr "Foram atualizados zero items."
+msgstr "Foram atualizados zero itens."
 
 msgid "Import log"
 msgstr "Registo de importação"
@@ -298,7 +303,7 @@ msgstr "Erros de importação"
 #, python-format
 msgid "Can't import more than %s rows from one file."
 msgstr ""
-"Não é possível importar mais de %slinhas a partir de um único ficheiro."
+"Não é possível importar mais de %s linhas a partir de um único ficheiro."
 
 msgid "Allow create and update"
 msgstr "Permitir criar e atualizar"
@@ -310,14 +315,14 @@ msgid "Only update existing (no new ones are created)"
 msgstr "Apenas atualizar existentes (não são criados novos)"
 
 msgid "The file doesn't contain data."
-msgstr ""
+msgstr "O ficheiro não contém dados."
 
 msgid "Failed to import data: {}."
-msgstr ""
+msgstr "Falha ao importar dados: {}."
 
 #, python-brace-format
 msgid "{file_name} is not a valid file."
-msgstr ""
+msgstr "{file_name} não é um ficheiro válido."
 
 msgid "The file is missing."
-msgstr ""
+msgstr "O ficheiro está em falta."

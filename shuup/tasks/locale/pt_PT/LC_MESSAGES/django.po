@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-27 19:58+0000\n"
 "PO-Revision-Date: 2018-06-01 17:37+0000\n"
+"Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>, 2021\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/shuup/teams/55306/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,161 +22,161 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Tasks"
-msgstr ""
+msgstr "Tarefas"
 
 msgid "Show Tasks"
-msgstr ""
+msgstr "Mostrar Tarefas"
 
 msgid "Task Types"
-msgstr ""
+msgstr "Tipos de Tarefa"
 
 msgid "Show Task Types"
-msgstr ""
+msgstr "Mostrar Tipos de Tarefa"
 
 #, python-brace-format
 msgid "Changed assigment from {from_contact_name} to {to_contact_name}."
-msgstr ""
+msgstr "Alterar atribuição de {from_contact_name} para {to_contact_name}."
 
 msgid "Set In Progress"
-msgstr ""
+msgstr "Definir como Em Progresso"
 
 msgid "Set Completed"
-msgstr ""
+msgstr "Definir como Concluída"
 
 msgid "Invalid status."
-msgstr ""
+msgstr "Estado inválido."
 
 msgid "Status changed."
-msgstr ""
+msgstr "Estado alterado."
 
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Filtrar por nome..."
 
 msgid "Creator"
-msgstr ""
+msgstr "Criador"
 
 msgid "Filter by creator..."
-msgstr ""
+msgstr "Filtrar por criador..."
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Priority"
-msgstr ""
+msgstr "Prioridade"
 
 msgid "Comments"
-msgstr ""
+msgstr "Comentários"
 
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 msgid "In progress"
-msgstr ""
+msgstr "Em Progresso"
 
 msgid "Completed"
-msgstr ""
+msgstr "Concluído"
 
 msgid "Deleted"
-msgstr ""
+msgstr "Eliminado"
 
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 msgid "Staff Only"
-msgstr ""
+msgstr "Apenas para Staff"
 
 msgid "Admins Only"
-msgstr ""
+msgstr "Apenas para Admin"
 
 msgid "shop"
-msgstr ""
+msgstr "loja"
 
 msgid "name"
-msgstr ""
+msgstr "nome"
 
 msgid "task type"
-msgstr ""
+msgstr "tipo de tarefa"
 
 msgid "task types"
-msgstr ""
+msgstr "tipos de tarefa"
 
 msgid "status"
-msgstr ""
+msgstr "estado"
 
 msgid "priority"
-msgstr ""
+msgstr "prioridade"
 
 msgid "creator"
-msgstr ""
+msgstr "criador"
 
 msgid "assigned to"
-msgstr ""
+msgstr "atribuída a"
 
 msgid "completed by"
-msgstr ""
+msgstr "concluída por"
 
 msgid "completed on"
-msgstr ""
+msgstr "concluída em"
 
 msgid "created on"
-msgstr ""
+msgstr "criada em"
 
 msgid "modified on"
-msgstr ""
+msgstr "modificada em"
 
 msgid "task"
-msgstr ""
+msgstr "tarefa"
 
 msgid "author"
-msgstr ""
+msgstr "autor"
 
 msgid "visibility"
-msgstr ""
+msgstr "visibilidade"
 
 msgid "body"
-msgstr ""
+msgstr "corpo"
 
 msgid "Task Created"
-msgstr ""
+msgstr "Tarefa Criada"
 
 msgid "Task"
-msgstr ""
+msgstr "Tarefa"
 
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgid "New Task"
-msgstr ""
+msgstr "Nova Tarefa"
 
 msgid "General Information"
-msgstr ""
+msgstr "Informação Geral"
 
 msgid "Created on"
-msgstr ""
+msgstr "Criada em"
 
 msgid "Completed on"
-msgstr ""
+msgstr "Concluída em"
 
 msgid "Completed by"
-msgstr ""
+msgstr "Concluída por"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "Visibility"
-msgstr ""
+msgstr "Visibilidade"
 
 msgid "Comment"
-msgstr ""
+msgstr "Comentário"
 
 msgid "Post a new comment"
-msgstr ""
+msgstr "Publicar um comentário novo"
 
 msgid "New Task Type"
-msgstr ""
+msgstr "Novo Tipo de Tarefa"
 
 msgid "Last 10 pending tasks assigned for you"
-msgstr ""
+msgstr "As últimas 10 tarefas pendentes foram atribuídas a si"

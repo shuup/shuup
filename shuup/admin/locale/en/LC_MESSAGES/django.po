@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 19:12+0000\n"
+"POT-Creation-Date: 2021-08-17 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -949,9 +949,6 @@ msgstr ""
 
 #, python-format
 msgid "%(product_name)s (%(supplier)s)"
-msgstr ""
-
-msgid "No products to ship."
 msgstr ""
 
 msgid "Shipping address is not set."

@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-29 14:00+0000\n"
-"PO-Revision-Date: 2021-03-29 14:28+0000\n"
-"Last-Translator: Transifex Bot <>\n"
+"PO-Revision-Date: 2021-08-10 18:48+0000\n"
+"Last-Translator: Ricardo Ibrahim <ricardo.ibrahim@qintera.pt>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/shuup/shuup/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,220 +18,220 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 msgid "Filter report results by customer."
-msgstr ""
+msgstr "Filtrar resultados de relatório por cliente."
 
 msgid "Orderer"
-msgstr ""
+msgstr "Solicitante"
 
 msgid "Filter report results by the person that made the order."
-msgstr ""
+msgstr "Filtrar resultados de relatório por pessoa que efetuou a encomenda."
 
 msgid "Order Line Type"
-msgstr ""
+msgstr "Tipo de Linha de Encomenda"
 
 msgid "Suppliers"
-msgstr ""
+msgstr "Fornecedores"
 
 msgid "Filter order lines by suppliers."
-msgstr ""
+msgstr "Filtrar linhas de encomenda por fornecedores."
 
 msgid "Order status"
-msgstr ""
+msgstr "Estado de encomenda"
 
 msgid "Filter order lines by status of their order."
-msgstr ""
+msgstr "Filtrar linhas de encomenda por estado da encomenda."
 
 msgid "Quantity"
-msgstr ""
+msgstr "Quantidade"
 
 msgid "Taxless Total"
-msgstr ""
+msgstr "Total s/ Impostos"
 
 msgid "Taxful Total"
-msgstr ""
+msgstr "Total c/ Impostos"
 
 msgid "Sort order"
-msgstr ""
+msgstr "Sequência de ordenação"
 
 msgid "Year"
-msgstr ""
+msgstr "Ano"
 
 msgid "Year/Month"
-msgstr ""
+msgstr "Ano/Mês"
 
 msgid "Year/Month/Day"
-msgstr ""
+msgstr "Ano/Mês/Dia"
 
 msgid "Group by"
-msgstr ""
+msgstr "Agrupar por"
 
 msgid "Order Count"
-msgstr ""
+msgstr "Contagem Encomenda"
 
 msgid "Average Sales"
-msgstr ""
+msgstr "Vendas Médias"
 
 msgid "Tax"
-msgstr ""
+msgstr "Imposto"
 
 msgid "Filter report results by tax."
-msgstr ""
+msgstr "Filtrar resultados de relatório por imposto."
 
 msgid "Tax Class"
-msgstr ""
+msgstr "Classe de Imposto"
 
 msgid "Filter report results by tax class."
-msgstr ""
+msgstr "Filtrar resultados de relatório por classe de imposto."
 
 msgid "Shipping Method"
-msgstr ""
+msgstr "Método de Envio"
 
 msgid "Filter report results by shipping method."
-msgstr ""
+msgstr "Filtrar resultados de relatório por método de envio."
 
 msgid "Carrier"
-msgstr ""
+msgstr "Transportadora"
 
 msgid "Filter report results by carrier."
-msgstr ""
+msgstr "Filtrar resultados de relatório por transportadora."
 
 msgid "Customer Sales"
-msgstr ""
+msgstr "Vendas Cliente"
 
 msgid "Orders"
-msgstr ""
+msgstr "Encomendas"
 
 msgid "New Customers"
-msgstr ""
+msgstr "Clientes Novos"
 
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 msgid "Persons"
-msgstr ""
+msgstr "Pessoas"
 
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 msgid "Users"
-msgstr ""
+msgstr "Utilizadores"
 
 msgid "Orders Report"
-msgstr ""
+msgstr "Relatório de Encomendas"
 
 msgid "Order ref."
-msgstr ""
+msgstr "Ref. de encomenda"
 
 msgid "Order date"
-msgstr ""
+msgstr "Data de encomenda"
 
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 msgid "Order line quantity"
-msgstr ""
+msgstr "Quantidade de linha de encomenda"
 
 msgid "Payment status"
-msgstr ""
+msgstr "Estado de pagamento"
 
 msgid "Shipment status"
-msgstr ""
+msgstr "Estado de envio"
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 msgid "Order Line Report"
-msgstr ""
+msgstr "Relatório de Linha de Encomenda"
 
 msgid "Order Line SKU"
-msgstr ""
+msgstr "Ref. de Linha de Encomenda"
 
 msgid "Order Line Text"
-msgstr ""
+msgstr "Texto de Linha de Encomenda"
 
 msgid "Taxless Unit Price"
-msgstr ""
+msgstr "Preço Unitário S/ Imposto"
 
 msgid "Taxful Unit Price"
-msgstr ""
+msgstr "Preço Unitário C/ Imposto"
 
 msgid "Taxful Price"
-msgstr ""
+msgstr "Preço C/ Imposto"
 
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgid "Product Total Sales"
-msgstr ""
+msgstr "Vendas Totais de Produto"
 
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 msgid "SKU"
-msgstr ""
+msgstr "Ref."
 
 msgid "Refunded Sales"
-msgstr ""
+msgstr "Vendas Reembolsadas"
 
 msgid "Refunded Orders"
-msgstr ""
+msgstr "Encomendas Reembolsadas"
 
 msgid "Total Refunded"
-msgstr ""
+msgstr "Total Reembolsos"
 
 msgid "Sales Report"
-msgstr ""
+msgstr "Relatório de Vendas"
 
 msgid "Products"
-msgstr ""
+msgstr "Produtos"
 
 msgid "Sales Per Hour"
-msgstr ""
+msgstr "Vendas Por Hora"
 
 msgid "Hour"
-msgstr ""
+msgstr "Hora"
 
 msgid "Order Amount"
-msgstr ""
+msgstr "Valor de Encomenda"
 
 msgid "Total Sales"
-msgstr ""
+msgstr "Vendas Totais"
 
 msgid "Shipping"
-msgstr ""
+msgstr "Envio"
 
 msgid "Shipping method"
-msgstr ""
+msgstr "Método de envio"
 
 msgid "Total Charged"
-msgstr ""
+msgstr "Total Cobrado"
 
 msgid "Taxes"
-msgstr ""
+msgstr "Impostos"
 
 msgid "Rate (%)"
-msgstr ""
+msgstr "Taxa (%)"
 
 msgid "Pre-tax Total"
-msgstr ""
+msgstr "Total Antes de Impostos"
 
 msgid "Total Tax Amount"
-msgstr ""
+msgstr "Valor de Imposto Total"
 
 msgid "Shop Name"
-msgstr ""
+msgstr "Nome de Loja"
 
 msgid "Currency"
-msgstr ""
+msgstr "Moeda"
 
 msgid "Customers"
-msgstr ""
+msgstr "Clientes"
 
 msgid "Customer Average Sale"
-msgstr ""
+msgstr "Venda Média de Cliente"

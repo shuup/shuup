@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:47+0000\n"
-"PO-Revision-Date: 2021-08-03 19:11+0000\n"
-"Last-Translator: Christian Hess\n"
+"POT-Creation-Date: 2021-08-03 19:12+0000\n"
+"PO-Revision-Date: 2021-08-09 16:30+0000\n"
+"Last-Translator: Melanie Missbach <melanie@buyhappy.de>\n"
 "Language-Team: German (http://www.transifex.com/shuup/shuup/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,7 +115,7 @@ msgid "Attributes"
 msgstr "Merkmale"
 
 msgid "Allow the user to select attributes in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Attribute im Admininstrationsbereich auszuwählen."
 
 #, python-format
 msgid "%s has been deleted."
@@ -155,7 +155,7 @@ msgid "New category"
 msgstr "Neue Kategorie"
 
 msgid "Allow the user to select categories in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Kategorien im Admininstrationsbereich auszuwählen."
 
 msgid "Can't use this category as a parent for this shop."
 msgstr "Diese Kategorie kann nicht als Hauptkategorie für diesen Händlerbereich verwendet werden."
@@ -252,13 +252,13 @@ msgid "Number of Members"
 msgstr "Anzahl Mitglieder"
 
 msgid "Allow the user to select contacts in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Kontakte im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select person contacts in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Personenkontakte im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select company contacts in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Firmenkontakte im Admininstrationsbereich auszuwählen."
 
 #, python-format
 msgid "User `%(bind_user)s` already has a contact."
@@ -507,7 +507,7 @@ msgid "Manufacturers"
 msgstr "Hersteller"
 
 msgid "Allow the user to select manufacturers in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Hersteller im Admininstrationsbereich auszuwählen."
 
 msgid ""
 "Select shops for this manufacturer. Keep it blank to share with all shops."
@@ -720,7 +720,7 @@ msgid "Admin comment/notes"
 msgstr "Admin-Kommentar/Anmerkungen"
 
 msgid "Status history"
-msgstr ""
+msgstr "Statusverlauf"
 
 msgid "Set Status"
 msgstr "Status setzen"
@@ -827,10 +827,10 @@ msgid "Shipping Status"
 msgstr "Versandstatus"
 
 msgid "Total, incl. tax"
-msgstr ""
+msgstr "Summe (brutto)"
 
 msgid "Total, excl. tax"
-msgstr ""
+msgstr "Summe (netto)"
 
 #, python-format
 msgid "Create Payment -- %s"
@@ -997,19 +997,19 @@ msgid "Default"
 msgstr "Standardwert"
 
 msgid "Allowed Next Status"
-msgstr ""
+msgstr "Zulässiger nächster Status"
 
 msgid "Visible For Customer"
-msgstr ""
+msgstr "Sichtbar für Kunden"
 
 msgid "No allowed next status."
-msgstr ""
+msgstr "Es gibt keinen zulässigen nächsten Status."
 
 msgid "Granular Permission Groups"
 msgstr "Granulare Berechtigungsgruppen"
 
 msgid "Allow the user to select permission group in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Berechtigungsgruppen im Admininstrationsbereich auszuwählen."
 
 msgid "The Permission Group name."
 msgstr "Die Bezeichnung der Berechtigungsgruppe."
@@ -1024,7 +1024,7 @@ msgid "Product types"
 msgstr "Artikeltypen"
 
 msgid "Allow the user to select product types in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Artikeltypen im Admininstrationsbereich auszuwählen."
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -1065,10 +1065,10 @@ msgid "Add a product to see it in your store"
 msgstr "Füge einen Artikel hinzu, um ihn in Deinem Händlerbereich zu sehen"
 
 msgid "Allow the user to select products in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Artikel im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select shop_products in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Marktplatzartikel im Admininstrationsbereich auszuwählen."
 
 msgid "Primary Product Image"
 msgstr "Hauptproduktbild"
@@ -1356,10 +1356,13 @@ msgid "Additional instructions shown in the shop checkout process."
 msgstr "Zusätzliche Anweisungen werden bei der Kaufabschluss angezeigt."
 
 msgid "Allow the user to select carriers in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Versanddienstleister im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select payment methods in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Zahlungsmethoden im Admininstrationsbereich auszuwählen."
+
+msgid "Allow the user to select shipping methods in admin."
+msgstr "Dem Benutzer erlauben, Versandmethoden im Admininstrationsbereich auszuwählen."
 
 msgid "Shipping Methods"
 msgstr "Versandarten"
@@ -1501,7 +1504,7 @@ msgid "Available Shops [currently active: {}]"
 msgstr "Verfügbare Händler [derzeit aktiv: {}]"
 
 msgid "Allow the user to select shops in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Marktplätze im Admininstrationsbereich auszuwählen."
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
@@ -1584,7 +1587,7 @@ msgid "Default Tax Class"
 msgstr "Standard-Steuerklasse"
 
 msgid "Allow the user to select suppliers in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Händler im Admininstrationsbereich auszuwählen."
 
 msgid "Select shops for this supplier. Keep it blank to share with all shops."
 msgstr "Wähle Marktplätze für diesen Lieferanten aus. Lasse das Feld leer, um den Händler für alle Marktplätze freizugeben."
@@ -1639,13 +1642,13 @@ msgid "Tax Classes"
 msgstr "Steuerklassen"
 
 msgid "Allow the user to select customer tax groups in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Steuergruppen kundenseitig im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select taxes in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Steuersätze im Admininstrationsbereich auszuwählen."
 
 msgid "Allow the user to select tax classes in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, Steuerklassen im Admininstrationsbereich auszuwählen."
 
 msgid "Rate"
 msgstr "Steuersatz"
@@ -1681,7 +1684,7 @@ msgid "Allow the user to change the user list columns."
 msgstr "Ermöglichen Sie dem Benutzer, die Spalten der Benutzerliste zu ändern."
 
 msgid "Allow the user to select users in admin."
-msgstr ""
+msgstr "Dem Benutzer erlauben, die Benutzersteuerung im Admininstrationsbereich auszuwählen."
 
 msgid "Add some users to help manage your shop"
 msgstr "Füge Benutzer hinzu, die Dir bei der Verwaltung Deines Marktplatzes helfen"
@@ -3083,7 +3086,7 @@ msgid ""
 msgstr "Lass uns einige der Dinge durchgehen, die Du hier tun kannst. Klicke auf \"Weiter\", um zu starten."
 
 msgid "shop logo"
-msgstr ""
+msgstr "Marktplatz-Logo"
 
 msgid "Date"
 msgstr "Datum"
@@ -3268,13 +3271,13 @@ msgid "Do you want to mark this shipment as sent?"
 msgstr "Möchtest Du diese Lieferung als gesendet markieren?"
 
 msgid "When"
-msgstr ""
+msgstr "Wann"
 
 msgid "The order has no status history."
-msgstr ""
+msgstr "Die Bestellung hat keinen Statusverlauf."
 
 msgid "Are you sure you want to delete this order status history item?"
-msgstr ""
+msgstr "Bist Du sicher, dass Du die Auftragshistorie löschen möchtest?"
 
 msgid "Line #"
 msgstr "Position #"
@@ -3835,4 +3838,4 @@ msgid "Couldn't get selections for %s."
 msgstr "Es konnte keine Auswahl für %s gefunden werden."
 
 msgid "Selector not found."
-msgstr ""
+msgstr "Auswahl nicht gefunden."

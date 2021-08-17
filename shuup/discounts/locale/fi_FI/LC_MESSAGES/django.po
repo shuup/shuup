@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 16:47+0000\n"
+"POT-Creation-Date: 2021-08-03 19:01+0000\n"
 "PO-Revision-Date: 2018-10-02 06:50+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2020\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
@@ -30,29 +30,17 @@ msgstr "Poista alennukset arkistoinnista"
 msgid "Delete Discounts"
 msgstr "Poista alennukset"
 
-msgid "Product Discounts Coupon Codes"
-msgstr "Tuotealennukset kuponkikoodeista"
-
 msgid "Discounts"
 msgstr "Alennukset"
 
 msgid "Product Discounts"
 msgstr "Tuotealennukset"
 
-msgid "Allow the user to select coupons in admin."
-msgstr ""
-
 msgid "Allow the user to select discounts in admin."
 msgstr ""
 
 msgid "Archived Product Discounts"
 msgstr "Arkistoidut tuotealennukset"
-
-msgid "Discounts Availability Exceptions"
-msgstr "Alennukset saatavuuden poikkeuksista"
-
-msgid "Product Discounts Availability Exceptions"
-msgstr "Tuotealennukset Saatavuuspoikkeukset"
 
 msgid "Discounts Happy Hours"
 msgstr "Alennukset Happy Hours -palvelusta"
@@ -90,41 +78,11 @@ msgstr "Ottaa yhteyttä"
 msgid "Filter by contact..."
 msgstr "Suodata kontaktin mukaan ..."
 
-msgid "Coupon code"
-msgstr "Kuponkikoodi"
-
-msgid "Filter by coupon code..."
-msgstr "Suodata kuponkikoodin mukaan ..."
-
 msgid "Effect"
 msgstr "Vaikutus"
 
 msgid "End Date and Time"
 msgstr "Lopetuspäivä ja -aika"
-
-msgid "Code"
-msgstr "Koodi"
-
-msgid "Usages"
-msgstr "Käyttötavat"
-
-msgid "Usages Limit per contact"
-msgstr "Käyttötarkoitus yhteystietoa kohden"
-
-msgid "Usage Limit"
-msgstr "Käyttöraja"
-
-msgid "Active"
-msgstr "Aktiivinen"
-
-msgid "Created by"
-msgstr "Luonut"
-
-msgid "Date created"
-msgstr "Päivämäärä luotu"
-
-msgid "Select discounts linked to this coupon code."
-msgstr "Valitse tähän kuponkikoodiin liittyvät alennukset."
 
 #, python-format
 msgid "%s has been deleted."
@@ -135,15 +93,6 @@ msgstr "Alennusprosentti"
 
 msgid "The discount percentage for this discount."
 msgstr "Tämän alennuksen alennusprosentti."
-
-msgid "Exception Name"
-msgstr "Poikkeuksen nimi"
-
-msgid "Start Date and Time"
-msgstr "Aloituspäivä ja -aika"
-
-msgid "Select discounts to be ignored on given time frame."
-msgstr "Valitse alennukset, jotka jätetään huomioimatta tietyllä aikavälillä."
 
 msgid "Happy Hour Name"
 msgstr "Happy Hour -nimi"
@@ -168,75 +117,8 @@ msgstr ""
 msgid "Weekdays the happy hour is active."
 msgstr "Arkisin happy hour on aktiivinen."
 
-msgid "shops"
-msgstr "kauppoja"
-
 msgid "name"
 msgstr "nimi"
-
-msgid ""
-"The name for this exception. Used internally with exception lists for "
-"filtering."
-msgstr ""
-"Tämän poikkeuksen nimi. Käytetään sisäisesti poikkeusluetteloiden avulla "
-"suodattamiseen."
-
-msgid "start since"
-msgstr "aloita siitä lähtien"
-
-msgid ""
-"Set to restrict the availability exception to be available only after a "
-"certain date and time."
-msgstr ""
-"Aseta rajoittamaan saatavuuspoikkeutta, joka on käytettävissä vasta tietyn "
-"päivämäärän ja ajan jälkeen."
-
-msgid "end until"
-msgstr "päättyy"
-
-msgid ""
-"Set to restrict the availability exception to be available only until a "
-"certain date and time."
-msgstr ""
-"Aseta rajoittamaan saatavuuspoikkeutta, joka on käytettävissä vain tiettyyn "
-"päivämäärään ja aikaan saakka."
-
-msgid "availability exception"
-msgstr "saatavuutta koskeva poikkeus"
-
-msgid "availability exceptions"
-msgstr "saatavuutta koskevat poikkeukset"
-
-msgid "created on"
-msgstr "luotu"
-
-msgid "usage limit per customer"
-msgstr "käyttöraja asiakasta kohti"
-
-msgid "Limit the amount of usages per a single customer."
-msgstr "Rajoita käyttömääriä yksittäistä asiakasta kohti."
-
-msgid "usage limit"
-msgstr "käyttöraja"
-
-msgid ""
-"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
-"coupon cannot be used."
-msgstr ""
-"Aseta tämän kuponin absoluuttinen käyttöraja. Jos raja on nolla (0), "
-"kuponkia ei voi käyttää."
-
-msgid "active"
-msgstr "aktiivinen"
-
-msgid "created by"
-msgstr "luonut"
-
-msgid "modified by"
-msgstr "muokannut"
-
-msgid "modified on"
-msgstr "muokattu"
 
 msgid ""
 "The name for this discount. Used internally with discount lists for "
@@ -245,11 +127,29 @@ msgstr ""
 "Tämän alennuksen nimi. Käytetään sisäisesti alennusluetteloiden kanssa "
 "suodattamiseen."
 
+msgid "shop"
+msgstr ""
+
+msgid "created by"
+msgstr "luonut"
+
+msgid "modified by"
+msgstr "muokannut"
+
+msgid "created on"
+msgstr "luotu"
+
+msgid "modified on"
+msgstr "muokattu"
+
 msgid "supplier"
 msgstr "toimittaja"
 
 msgid "Select supplier for this discount."
 msgstr "Valitse tämän alennuksen toimittaja."
+
+msgid "active"
+msgstr "aktiivinen"
 
 msgid ""
 "Enable this if the discount is currently active. Please also set a start and"
@@ -284,9 +184,6 @@ msgstr "iloiset tunnit"
 msgid "Select happy hours for this discount."
 msgstr "Valitse onnelliset ajat tälle alennukselle."
 
-msgid "Select availability for this discount."
-msgstr "Valitse tämän alennuksen saatavuus."
-
 msgid "product"
 msgstr "tuote"
 
@@ -311,23 +208,11 @@ msgstr "ottaa yhteyttä"
 msgid "Select contact for this discount."
 msgstr "Valitse yhteyshenkilö tästä alennuksesta."
 
-msgid "exclude selected contact group"
-msgstr "poista valittu yhteysryhmä"
-
-msgid "Exclude contacts in selected contact group from this discount."
-msgstr "Sulje pois valitun yhteysryhmän yhteystiedot tästä alennuksesta."
-
 msgid "contact group"
 msgstr "yhteysryhmä"
 
 msgid "Select contact group for this discount."
 msgstr "Valitse tämän alennuksen yhteysryhmä."
-
-msgid "coupon code"
-msgstr "Kuponkikoodi"
-
-msgid "Select coupon code for this discount."
-msgstr "Valitse kuponkikoodi tälle alennukselle."
 
 msgid "discounted price"
 msgstr "alennettu hinta"
@@ -352,6 +237,14 @@ msgstr "tuotealennus"
 
 msgid "product discounts"
 msgstr "tuotealennukset"
+
+msgid "Start date and end date are required when the discount is active."
+msgstr ""
+
+msgid ""
+"Either discounted price or discount percentage or discount amount should be "
+"configured."
+msgstr ""
 
 msgid ""
 "The name for this HappyHour. Used internally with exception lists for "
