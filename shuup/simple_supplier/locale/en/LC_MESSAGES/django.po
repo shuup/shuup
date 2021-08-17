@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-17 10:49+0000\n"
+"POT-Creation-Date: 2021-08-17 20:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -209,18 +209,6 @@ msgid "Disable stock management"
 msgstr ""
 
 msgid "Enable stock management"
-msgstr ""
-
-#, python-format
-msgid ""
-"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
-"does not have suppliers with %(module_name)s module."
-msgstr ""
-
-#, python-format
-msgid ""
-"Please go in this product's Additional tab section and add enabled Suppliers "
-"that have both %(module_name)s module and stock management enabled."
 msgstr ""
 
 #, python-format
