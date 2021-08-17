@@ -3,38 +3,42 @@
 {% set ss_form = form["simple_supplier"] %}
 
 {%  macro render_product(suppliers, product, product_url, product_qty) %}
-    {% if suppliers %}
-        <div class="row">
-            {% if product_qty > 1 %}<h2><a href="{{ product_url }}" target="_blank">{{ product.name }}</a></h2>{% endif %}
-            {% for supplier in suppliers %}
-                <div class="col-12 pl-3 pt-2">
-                    <h3>{{ supplier.name }}</h3>
-                </div>
-                <div class="col-3 p-3">
-                    {{ ss_form.get_stock_information(supplier, product)|safe }}
-                </div>
-                <div class="col-9">
-                    {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p class="section-description">
-            {% trans product_name=product.name, product_url=product_url, module_name=ss_form.module_name -%}
-                Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> does not have suppliers with {{ module_name }} module.
-            {%- endtrans %}
-            {% trans module_name=ss_form.module_name -%}
-                Please go in this product's Additional tab section and add enabled Suppliers that have both {{ module_name }} module and stock management enabled.
-            {%- endtrans %}
-        </p>
-    {% endif %}
+    <div class="row">
+        {% if product_qty > 1 %}
+            <div class="col">
+                <h2>
+                    {% if product_url %}<a href="{{ product_url }}" target="_blank">{% endif %}
+                    {{ product.name }}
+                    {% if product_url %}</a>{% endif %}
+                </h2>
+            </div>
+        {% endif %}
+        {% for supplier in suppliers %}
+            <div class="col-12 pl-3 pt-2">
+                <h3>{{ supplier.name }}</h3>
+            </div>
+            <div class="col-3 p-3">
+                {{ ss_form.get_stock_information(supplier, product)|safe }}
+            </div>
+            <div class="col-9">
+                {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
+            </div>
+        {% endfor %}
+    </div>
 {% endmacro %}
 
 {% macro render_products(form) %}
     {% set product_qty = ss_form.products|length %}
     {% for product in form.products %}
         {% set product_url = shuup_admin.model_url(product) %}
-        {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
+        {% set suppliers = form.get_suppliers(product) %}
+        {% if suppliers %}
+            {% if has_first_draw %}
+            <hr>
+            {% endif %}
+            {{ render_product(suppliers, product, product_url, product_qty) }}
+            {% set has_first_draw = true %}
+        {% endif %}
     {% endfor %}
 {% endmacro %}
 

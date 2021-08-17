@@ -56,14 +56,23 @@ class SimpleSupplierFormPart(FormPart):
     form = SimpleSupplierForm
 
     def get_form_defs(self):
-        if self.object.pk:  # Don't yield form if product is in new mode
-            yield TemplatedFormDef(
-                name=self.name,
-                form_class=self.form,
-                template_name="shuup/simple_supplier/admin/product_form_part.jinja",
-                required=False,
-                kwargs={"product": self.object.product, "request": self.request},
-            )
+        # product doesn't exist
+        if not self.object.pk:
+            return
+
+        # simple supplier module is not enabled
+        if not self.object.suppliers.filter(
+            supplier_modules__module_identifier=SimpleSupplierModule.identifier
+        ).exists():
+            return
+
+        yield TemplatedFormDef(
+            name=self.name,
+            form_class=self.form,
+            template_name="shuup/simple_supplier/admin/product_form_part.jinja",
+            required=False,
+            kwargs={"product": self.object.product, "request": self.request},
+        )
 
     def form_valid(self, form):
         return  # No need to save anything since all stock adjustments are made by AJAX
