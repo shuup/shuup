@@ -2,9 +2,12 @@
 from django.db import migrations
 
 from shuup.core.catalog import ProductCatalog
+from django.conf import settings
+from django.utils.translation import activate
 
 
 def reindex_catalog(apps, schema_editor):
+    activate(settings.PARLER_DEFAULT_LANGUAGE_CODE)
     ShopProduct = apps.get_model("shuup", "ShopProduct")
     from shuup.core.models import ProductMode
 
