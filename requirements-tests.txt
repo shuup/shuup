@@ -71,7 +71,7 @@ tinycss2==1.1.0                 # via cairosvg, cssselect2, weasyprint
 toml==0.10.2                    # via shuup
 unicodecsv==0.14.1              # via shuup
 unidecode==1.1.2                # via django-filer
-urllib3==1.26.4                 # via pytest-splinter, requests, selenium
+urllib3==1.26.5                 # via pytest-splinter, requests, selenium
 wcwidth==0.2.5                  # via pytest
 weasyprint==52.2
 webencodings==0.5.1             # via bleach, cssselect2, html5lib, tinycss2
