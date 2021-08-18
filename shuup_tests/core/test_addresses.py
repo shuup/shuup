@@ -8,7 +8,6 @@
 import pytest
 import six
 from django.core.exceptions import ValidationError
-from django.test import override_settings
 from django.utils.translation import override
 from mock import patch
 

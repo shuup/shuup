@@ -104,15 +104,6 @@ SHUUP_ADMIN_REQUIRE_SHIPPING_METHOD_AT_ORDER_CREATOR = True
 #:
 SHUUP_ADMIN_REQUIRE_PAYMENT_METHOD_AT_ORDER_CREATOR = True
 
-#: Whether to allow vendors and staff to use a rich text editor and HTML for product descriptions.
-#: If this is False, only a allow simple text field and sanitize all HTML from it.
-#:
-SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = True
-
-#: Whether to allow vendors to use a rich text editor and HTML for their profile descriptions.
-#: If this is False, only a allow simple text field and sanitize all HTML from it.
-#:
-SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION = True
 
 #: The method used to get the media folder from the folder.
 #: The relationship between media folder and folder is a foregin key from the mediafolder to the folder.

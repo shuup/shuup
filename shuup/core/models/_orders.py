@@ -651,8 +651,11 @@ class Order(MoneyPropped, models.Model):
     def _cache_values(self):
         self._cache_contact_values()
 
+        from shuup import configuration
+        from shuup.core.setting_keys import SHUUP_DEFAULT_ORDER_LABEL
+
         if not self.label:
-            self.label = settings.SHUUP_DEFAULT_ORDER_LABEL
+            self.label = configuration.get(None, SHUUP_DEFAULT_ORDER_LABEL)
 
         if not self.currency:
             self.currency = self.shop.currency
@@ -701,7 +704,7 @@ class Order(MoneyPropped, models.Model):
             if not configuration.get(None, SHUUP_ALLOW_ANONYMOUS_ORDERS):
                 raise ValidationError(
                     "Error! Anonymous (userless) orders are not allowed "
-                    "when `SHUUP_ALLOW_ANONYMOUS_ORDERS` is not enabled."
+                    "when `SHUUP_ALLOW_ANONYMOUS_ORDERS` configuration is not enabled."
                 )
         self._cache_values()
         first_save = not self.pk

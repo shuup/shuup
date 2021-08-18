@@ -19,7 +19,7 @@ from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.reports.forms import BaseReportForm
-from shuup.reports.setting_keys import DEFAULT_REPORTS_ITEM_LIMIT
+from shuup.reports.setting_keys import SHUUP_DEFAULT_REPORTS_ITEM_LIMIT
 from shuup.reports.utils import parse_date_range
 from shuup.utils.django_compat import force_text
 
@@ -86,7 +86,7 @@ class ShuupReportBase(object):
 
     @classmethod
     def get_queryset_row_limit(self):
-        return configuration.get(None, DEFAULT_REPORTS_ITEM_LIMIT)
+        return configuration.get(None, SHUUP_DEFAULT_REPORTS_ITEM_LIMIT)
 
     def ensure_texts(self):
         """

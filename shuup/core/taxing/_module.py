@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from itertools import chain
 from typing import TYPE_CHECKING, Union
 
-from shuup.apps.provides import load_module
+from shuup.apps.provides import load_configuration_module
 from shuup.core.excs import (
     InvalidRefundAmountException,
     RefundArbitraryRefundsNotAllowedException,
@@ -21,7 +21,11 @@ from shuup.core.excs import (
     SupplierHasNoSupplierModules,
 )
 from shuup.core.pricing import TaxfulPrice
-from shuup.core.setting_keys import SHUUP_ALLOW_ARBITRARY_REFUNDS, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
+from shuup.core.setting_keys import (
+    SHUUP_ALLOW_ARBITRARY_REFUNDS,
+    SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
+    SHUUP_TAX_MODULE,
+)
 from shuup.utils.money import Money
 
 from ._context import TaxingContext
@@ -38,7 +42,7 @@ def get_tax_module():
 
     :rtype: shuup.core.taxing.TaxModule
     """
-    return load_module("SHUUP_TAX_MODULE", "tax_module")()
+    return load_configuration_module(SHUUP_TAX_MODULE, "tax_module")()
 
 
 def should_calculate_taxes_automatically():

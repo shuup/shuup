@@ -15,7 +15,7 @@ from shuup import configuration
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import TextEditorWidget
-from shuup.admin.setting_keys import SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
+from shuup.admin.setting_keys import SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION
 from shuup.admin.shop_provider import get_shop
 from shuup.core.models import MutableAddress, Shop, Supplier, SupplierShop
 from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
@@ -57,7 +57,7 @@ class SupplierBaseForm(ShuupAdminForm):
         )
         for key, f in self.fields.items():
             if "description" in key:
-                if configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION):
+                if configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION):
                     widget = TextEditorWidget()
                 else:
                     widget = forms.Textarea(attrs={"rows": 5})
@@ -77,7 +77,7 @@ class SupplierBaseForm(ShuupAdminForm):
         if stock_managed and not supplier_modules:
             self.add_error("stock_managed", _("It is not possible to manage inventory when no module is selected."))
 
-        if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION):
+        if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION):
             for key, value in cleaned_data.items():
                 if key.startswith("description__"):
                     cleaned_data[key] = bleach.clean(value, tags=[])

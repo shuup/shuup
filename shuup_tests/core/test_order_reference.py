@@ -11,7 +11,6 @@ from django.test import override_settings
 from mock import patch
 
 from shuup import configuration
-from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
 from shuup.core.models import ConfigurationItem
 from shuup.core.models._order_utils import get_order_identifier, get_reference_number
 from shuup.core.setting_keys import (
@@ -20,6 +19,11 @@ from shuup.core.setting_keys import (
     SHUUP_REFERENCE_NUMBER_PREFIX,
 )
 from shuup.testing.factories import create_empty_order, get_default_shop
+from shuup_tests.core.utils import (
+    get_reference_number_method_running_configuration,
+    get_reference_number_method_shop_running_configuration,
+    get_reference_number_method_unique_configuration,
+)
 
 
 def custom_refno_gen(order):
@@ -33,11 +37,15 @@ def custom_ident_gen(order):
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "method",
-    [OrderReferenceNumberMethod.UNIQUE, OrderReferenceNumberMethod.RUNNING, OrderReferenceNumberMethod.SHOP_RUNNING],
+    [
+        get_reference_number_method_unique_configuration,
+        get_reference_number_method_running_configuration,
+        get_reference_number_method_shop_running_configuration,
+    ],
 )
 def test_refno_generation(method):
     for attempt in range(10):
-        with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
+        with patch("shuup.configuration.get", new=method):
             order = create_empty_order()
             order.save()
             assert order.reference_number

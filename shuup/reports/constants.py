@@ -6,6 +6,4 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 
-
-SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION = "admin_allow_html_in_product_description"
-SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION = "admin_allow_html_in_supplier_description"
+DEFAULT_REPORTS_ITEM_LIMIT = 2000

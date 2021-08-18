@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import receiver
 
-from shuup.core.signals import context_cache_item_bumped
+from shuup.core.models import Shop
+from shuup.core.signals import context_cache_item_bumped, shuup_initialized
 from shuup.core.utils import context_cache
+from shuup.xtheme import set_current_theme
 from shuup.xtheme.views.plugins import PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX
 
 
@@ -18,3 +20,9 @@ def handle_context_cache_item_bumped(sender, **kwargs):
     if shop_id:
         cache_key = PRODUCT_HIGHLIGHT_CACHE_KEY_PREFIX % {"shop_id": shop_id}
         context_cache.bump_cache_for_item(cache_key)
+
+
+@receiver(shuup_initialized)
+def on_shuup_initialized(sender, **kwargs):
+    theme = set_current_theme("shuup.themes.classic_gray", Shop.objects.first())
+    theme.set_setting("show_supplier_info", True)

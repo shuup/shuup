@@ -12,7 +12,13 @@ from mock import patch
 
 from shuup.core.excs import RefundArbitraryRefundsNotAllowedException, RefundExceedsAmountException
 from shuup.core.models import OrderLine, OrderLineType, ShippingMode, Supplier
-from shuup.testing.factories import add_product_to_order, create_empty_order, create_product, get_default_shop
+from shuup.testing.factories import (
+    add_product_to_order,
+    create_empty_order,
+    create_product,
+    get_default_shop,
+    get_supplier,
+)
 from shuup_tests.admin.utils import get_allow_arbitrary_refunds_false_configuration
 
 

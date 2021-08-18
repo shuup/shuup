@@ -6,10 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import pytest
-from django.conf import settings
 from mock import patch
 
-from shuup import configuration
 from shuup.apps.provides import override_provides
 from shuup.core.pricing import (
     DiscountModule,
@@ -19,7 +17,6 @@ from shuup.core.pricing import (
     get_pricing_steps,
     get_pricing_steps_for_products,
 )
-from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import apply_request_middleware
 

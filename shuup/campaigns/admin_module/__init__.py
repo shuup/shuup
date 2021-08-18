@@ -115,4 +115,4 @@ class CampaignAdminModule(AdminModule):
 def _show_catalog_campaigns_in_admin():
     from shuup import configuration
 
-    return bool("catalog_campaigns" in configuration.get(None, SHUUP_DISCOUNT_MODULES))
+    return bool("catalog_campaigns" in (configuration.get(None, SHUUP_DISCOUNT_MODULES) or []))

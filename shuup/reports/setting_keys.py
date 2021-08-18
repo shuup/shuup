@@ -9,4 +9,4 @@
 #: Defines the maximum number of items that will be rendered by a report
 
 
-DEFAULT_REPORTS_ITEM_LIMIT = "default_reports_item_limit"
+SHUUP_DEFAULT_REPORTS_ITEM_LIMIT = "default_reports_item_limit"

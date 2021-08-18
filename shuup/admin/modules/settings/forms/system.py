@@ -19,8 +19,11 @@ from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.forms.fields import ListToCommaSeparatedStringField
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
-from shuup.core.models import ConfigurationItem, Currency
-from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES, SHUUP_HOME_CURRENCY
+from shuup.apps.provides import get_provide_objects
+from shuup.core.catalog.utils import reindex_all_shop_products
+from shuup.core.models import ConfigurationItem, Currency, EncryptedConfigurationItem
+from shuup.core.pricing import get_discount_modules
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES, SHUUP_HOME_CURRENCY, SHUUP_PRICING_MODULE
 
 
 class BaseSettingsFormPart(FormPart):
@@ -36,28 +39,36 @@ class BaseSettingsFormPart(FormPart):
             kwargs={"request": self.request},
         )
 
+    def _delete_configuration_items(self, form):
+        for key in form.fields.keys():
+            try:
+                key_deleted = ConfigurationItem.objects.get(shop=None, key=key).delete()
+            except ConfigurationItem.DoesNotExist:
+                key_deleted = False
+            if not key_deleted:
+                try:
+                    EncryptedConfigurationItem.objects.get(shop=None, key=key).delete()
+                except EncryptedConfigurationItem.DoesNotExist:
+                    pass
+
     def save(self, form):
         if not form.has_changed():
             return False  # no need to save
 
-        for key in form.fields.keys():
-            try:
-                # delete also from EncryptedConfigurationItem
-                ConfigurationItem.objects.get(shop=None, key=key).delete()
-            except ConfigurationItem.DoesNotExist:
-                continue
-
+        self._delete_configuration_items(form)
         for key, value in six.iteritems(form.cleaned_data):
             if isinstance(value, Enum):
                 value = value.value
             if isinstance(value, models.Model):
                 value = str(value)
-            configuration.set(None, key, value)
+            encrypt = key in form.encrypted_fields
+            configuration.set(None, key, value, encrypted=encrypt)
         return True
 
 
 class BaseSettingsForm(forms.Form):
     title = None
+    encrypted_fields = []
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request")
@@ -65,6 +76,13 @@ class BaseSettingsForm(forms.Form):
 
         for field in self.fields.keys():
             self.fields[field].initial = configuration.get(None, field)
+
+        if self.data:
+            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
+            for field in self.fields:
+                if isinstance(self.fields[field], forms.BooleanField):
+                    if "%s-%s" % (self.prefix, field) not in self.data:
+                        self.fields[field].value = False
 
 
 class OrderSettingsForm(BaseSettingsForm):
@@ -87,39 +105,32 @@ class OrderSettingsForm(BaseSettingsForm):
     )
     order_reference_number_prefix = forms.CharField(
         label=_("Order Reference number prefix"),
-        help_text=_("#: An arbitrary (numeric) default prefix for certain reference number generators."),
+        help_text=_("An arbitrary (numeric) default prefix for certain reference number generators."),
         required=False,
     )
     discount_modules = forms.MultipleChoiceField(
         label=_("Discount Modules"),
         initial=lambda: configuration.get(None, SHUUP_DISCOUNT_MODULES),
-        choices=(
-            ("customer_group_discount", "Customer Group Discount"),
-            ("product_discounts", "Product Discounts"),
-            ("catalog_campaigns", "Catalog Campaigns"),
-        ),
+        choices=lambda: [(module.identifier, module.name) for module in get_discount_modules()],
         help_text=_(
-            "The list of used identifiers of discount modules. "
+            "The list of discount modules to use in the platform. "
             "Each discount module may change the price of a product."
         ),
         required=True,
     )
     pricing_module = forms.ChoiceField(
         label=_("Pricing Module"),
-        choices=(
-            ("customer_group_pricing", "Customer Group Pricing"),
-            ("multivendor_supplier_pricing", "Multivendor Supplier Pricing"),
-        ),
+        choices=[(module.identifier, module.name) for module in get_provide_objects("pricing_module")],
         help_text=_(
-            "The identifier of the pricing module used for pricing products. "
-            "Determines how product prices are calculated."
+            "The pricing module that should be used for pricing products. It determines how product prices are "
+            "calculated. Warning: all prices will be reindexed once the pricing module is changed."
         ),
         required=True,
     )
     order_source_modifier_modules = forms.ChoiceField(
         label=_("Order Source Modifier Modules"),
-        choices=(("basket_campaigns", "Basket Campaigns"),),
-        help_text=_("The list of identifiers of order source modifier modules."),
+        choices=[(module.identifier, module.name) for module in get_provide_objects("order_source_modifier_module")],
+        help_text=_("The list of modules of order source modifiers."),
         required=True,
     )
     allow_editing_order = forms.BooleanField(
@@ -143,19 +154,22 @@ class OrderSettingsForm(BaseSettingsForm):
         required=False,
     )
 
-    def __init__(self, *args, **kwargs):
-        super(OrderSettingsForm, self).__init__(*args, **kwargs)
-        if self.data:
-            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
-            if "allow_editing_order" not in self.data:
-                self.fields["allow_editing_order"].value = False
-            if "allow_anonymous_orders" not in self.data:
-                self.fields["allow_anonymous_orders"].value = False
-
 
 class OrderSettingsFormPart(BaseSettingsFormPart):
     form = OrderSettingsForm
     name = "order_settings"
+    priority = 3
+
+    def save(self, form):
+        needs_reindexing = False
+        if not (
+            form.data.getlist("%s-%s" % (self.name, "discount_modules"))
+            == configuration.get(None, SHUUP_DISCOUNT_MODULES)
+        ) or not (form.data["%s-%s" % (self.name, "pricing_module")] == configuration.get(None, SHUUP_PRICING_MODULE)):
+            needs_reindexing = True
+        super().save(form)
+        if needs_reindexing:
+            reindex_all_shop_products()
 
 
 class CoreSettingsForm(BaseSettingsForm):
@@ -171,7 +185,7 @@ class CoreSettingsForm(BaseSettingsForm):
     )
     address_home_country = LazyTypedChoiceField(
         label=_("Home Country"),
-        choices=[("", _("Select Language"))] + list(countries),
+        choices=[("", _("Select Country"))] + list(countries),
         help_text=_(
             "This option defines the home country of the system. It will configure the default country for "
             "order addresses. The home country must be a code (ISO 3166-1 alpha 2) for the Shuup installation. "
@@ -182,9 +196,9 @@ class CoreSettingsForm(BaseSettingsForm):
     )
     tax_module = forms.ChoiceField(
         label=_("Tax Module"),
-        choices=(("default_tax", "Default Tax"),),
+        choices=[(module.identifier, module.name) for module in get_provide_objects("tax_module")],
         help_text=_(
-            "The identifier of the tax module used to determining taxes of products and order lines."
+            "The tax module used to determining taxes of products and order lines. "
             "Determines taxation rules for products, shipping/payment methods and other order items."
         ),
         required=True,
@@ -232,8 +246,8 @@ class CoreSettingsForm(BaseSettingsForm):
     calculate_taxes_automatically_if_possible = forms.BooleanField(
         label=_("Calculate Taxes Automatically If Possible"),
         help_text=_(
-            "Whether taxes should be calculated automatically in TaxModule. Perhaps you "
-            "don't need it if you are selling to a specific group of customers (foregners, businesses), "
+            "Whether taxes should be calculated automatically. Perhaps you "
+            "don't need it if you are selling to a specific group of customers (foreigners, businesses), "
             "where automatic tax calculation is not needed."
         ),
         required=False,
@@ -248,20 +262,22 @@ class CoreSettingsForm(BaseSettingsForm):
     )
     allowed_upload_extensions = ListToCommaSeparatedStringField(
         label=_("Allowed Upload File Extensions"),
+        initial=["pdf", "png", "jpeg", "jpg"],
         help_text=_("List of allowed extensions for file or image uploads."),
         required=True,
     )
     max_upload_size = forms.IntegerField(
         label=_("Max Upload Size"),
+        initial=500000,
         help_text=_("Maximum allowed file size (in bytes) for uploads."),
         required=False,
     )
     mass_unit = forms.ChoiceField(
         label=_("Mass Unit"),
         choices=(
-            ("Kg", "Kilogram"),
-            ("g", "Gram"),
-            ("lb", "Pound"),
+            ("kg", _("Kilogram")),
+            ("g", _("Gram")),
+            ("lb", _("Pound")),
         ),
         help_text=_("The mass/weight unit that Shuup should use."),
         required=True,
@@ -269,14 +285,14 @@ class CoreSettingsForm(BaseSettingsForm):
     length_unit = forms.ChoiceField(
         label=_("Length Unit"),
         choices=(
-            ("mm", "Millimetre"),
-            ("cm", "Centimetre"),
-            ("m", "Metre"),
-            ("km", "Kilometre"),
-            ("in", "Inch"),
-            ("ft", "Foot"),
-            ("yd", "Yard"),
-            ("mi", "Mile"),
+            ("mm", _("Millimetre")),
+            ("cm", _("Centimetre")),
+            ("m", _("Metre")),
+            ("km", _("Kilometre")),
+            ("in", _("Inch")),
+            ("ft", _("Foot")),
+            ("yd", _("Yard")),
+            ("mi", _("Mile")),
         ),
         help_text=_(
             "The length/distance unit that Shuup should use. "
@@ -287,14 +303,14 @@ class CoreSettingsForm(BaseSettingsForm):
     volume_unit = forms.ChoiceField(
         label=_("Volume Unit"),
         choices=(
-            ("mm3", "Cubic Millimetre"),
-            ("cm3", "Cubic Centimetre"),
-            ("m3", "Cubic Metre"),
-            ("km3", "Cubic Kilometre"),
-            ("in3", "Cubic Inch"),
-            ("ft3", "Cubic Foot"),
-            ("yd3", "Cubic Yard"),
-            ("mi3", "Cubic Mile"),
+            ("mm3", _("Cubic Millimetre")),
+            ("cm3", _("Cubic Centimetre")),
+            ("m3", _("Cubic Metre")),
+            ("km3", _("Cubic Kilometre")),
+            ("in3", _("Cubic Inch")),
+            ("ft3", _("Cubic Foot")),
+            ("yd3", _("Cubic Yard")),
+            ("mi3", _("Cubic Mile")),
         ),
         help_text=_("The volume unit that Shuup should use."),
         required=True,
@@ -305,27 +321,12 @@ class CoreSettingsForm(BaseSettingsForm):
         self.fields[SHUUP_HOME_CURRENCY].initial = Currency.objects.filter(
             code=configuration.get(None, SHUUP_HOME_CURRENCY)
         ).first()
-        if self.data:
-            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
-            if "enable_attributes" not in self.data:
-                self.fields["enable_attributes"].value = False
-            if "enable_multiple_shops" not in self.data:
-                self.fields["enable_multiple_shops"].value = False
-            if "enable_multiple_suppliers" not in self.data:
-                self.fields["enable_multiple_suppliers"].value = False
-            if "manage_contacts_per_shop" not in self.data:
-                self.fields["manage_contacts_per_shop"].value = False
-            if "telemetry_enabled" not in self.data:
-                self.fields["telemetry_enabled"].value = False
-            if "calculate_taxes_automatically_if_possible" not in self.data:
-                self.fields["calculate_taxes_automatically_if_possible"].value = False
-            if "allow_arbitrary_refunds" not in self.data:
-                self.fields["allow_arbitrary_refunds"].value = False
 
 
 class CoreSettingsFormPart(BaseSettingsFormPart):
     form = CoreSettingsForm
     name = "core_settings"
+    priority = 1
 
 
 class AdminSettingsForm(BaseSettingsForm):
@@ -333,58 +334,22 @@ class AdminSettingsForm(BaseSettingsForm):
     admin_allow_html_in_product_description = forms.BooleanField(
         label=_("Allow Html In Product Description"),
         help_text=_(
-            "Whether to allow vendors and staff to use a rich text editor and HTML for product descriptions. "
+            "Whether to allow vendors and staff the use of rich text editor and HTML for their product descriptions. "
             "If this is False, only allow simple text field and sanitize all HTML from it."
         ),
         required=False,
     )
-    admin_allow_html_in_vendor_description = forms.BooleanField(
+    admin_allow_html_in_supplier_description = forms.BooleanField(
         label=_("Allow Html In Vendor Description"),
         help_text=_(
-            "Whether to allow vendors to use a rich text editor and HTML for their profile descriptions. "
+            "Whether to allow the use of rich text editor and HTML for their profile descriptions. "
             "If this is False, only a allow simple text field and sanitize all HTML from it."
         ),
         required=False,
     )
 
-    def __init__(self, *args, **kwargs):
-        super(AdminSettingsForm, self).__init__(*args, **kwargs)
-        if self.data:
-            # The html input of type checkout doesn't send the value if False. Here we force it to uncheck the value.
-            if "admin_allow_html_in_product_description" not in self.data:
-                self.fields["admin_allow_html_in_product_description"].value = False
-            if "admin_allow_html_in_vendor_description" not in self.data:
-                self.fields["admin_allow_html_in_vendor_description"].value = False
-
 
 class AdminSettingsFormPart(BaseSettingsFormPart):
     form = AdminSettingsForm
     name = "admin_settings"
-
-
-class FrontSettingsForm(BaseSettingsForm):
-    title = _("Front Settings")
-    front_max_upload_size = forms.IntegerField(
-        label=_("Front Max Upload Size"),
-        help_text=_("Maximum allowed file size (in bytes) for uploads in frontend."),
-        required=False,
-    )
-
-
-class FrontSettingsFormPart(BaseSettingsFormPart):
-    form = FrontSettingsForm
-    name = "front_settings"
-
-
-class ReportSettingsForm(BaseSettingsForm):
-    title = _("Report Settings")
-    default_reports_item_limit = forms.IntegerField(
-        label=_("Default Report Item Limit"),
-        help_text=_("Defines the maximum number of items that will be rendered by a report."),
-        required=False,
-    )
-
-
-class ReportSettingsFormPart(BaseSettingsFormPart):
-    form = ReportSettingsForm
-    name = "report_settings"
+    priority = 2

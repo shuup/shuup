@@ -30,6 +30,9 @@ class ShuupCoreAppConfig(AppConfig):
             "shuup.core.order_creator:OrderSourceSupplierValidator",
         ],
         "product_kind_specs": ["shuup.core.specs.product_kind:DefaultProductKindSpec"],
+        "system_setting_keys": [
+            "shuup.core.setting_keys",
+        ],
     }
 
     def ready(self):

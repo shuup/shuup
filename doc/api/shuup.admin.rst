@@ -109,7 +109,7 @@ shuup\.admin\.shop\_provider module
 shuup\.admin\.signal\_handling module
 -------------------------------------
 
-.. automodule:: shuup.admin.signal_handling
+.. automodule:: shuup.admin.signal_handlers
     :members:
     :undoc-members:
     :show-inheritance:

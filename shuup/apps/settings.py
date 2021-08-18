@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import importlib
-
 import django.apps
 import django.conf
 from django.core.exceptions import ImproperlyConfigured
@@ -121,23 +119,3 @@ def reload_apps():
     django.apps.apps.app_configs.clear()
     django.apps.apps.ready = False
     django.setup()
-
-
-def get_configuration_setting(setting_key: str):
-    from shuup import configuration
-
-    modules = [
-        "shuup.core.setting_keys",
-        "shuup.admin.setting_keys",
-    ]
-    for module in modules:
-        try:
-            configuration_key = getattr(importlib.import_module(module), setting_key)
-        except AttributeError:
-            continue
-        try:
-            configuration_value = configuration.get(None, configuration_key)
-            if configuration_value is not None:
-                return configuration_value
-        except NameError:
-            pass

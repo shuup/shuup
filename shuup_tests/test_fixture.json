@@ -240,5 +240,14 @@
             "key": "default_reports_item_limit",
             "value": 2000
         }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 28,
+        "fields": {
+            "shop": null,
+            "key": "default_order_label",
+            "value": "\"default\""
+        }
     }
 ]

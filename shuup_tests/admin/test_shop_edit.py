@@ -116,7 +116,9 @@ def test_order_configuration(rf, admin_user):
     assert length_field
     assert prefix_field
 
-    assert length_field["value"] == str(settings.SHUUP_REFERENCE_NUMBER_LENGTH)  # default value because nothing set yet
+    assert length_field["value"] == str(
+        configuration.get(None, SHUUP_REFERENCE_NUMBER_LENGTH)
+    )  # default value because nothing set yet
     assert "value" not in prefix_field  # field empty
 
     data = get_base_form_data(shop)
@@ -136,7 +138,7 @@ def test_order_configuration(rf, admin_user):
     client.post(url, data=data)
 
     assert configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH) == 19
-    assert not configuration.get(shop, SHUUP_REFERENCE_NUMBER_PREFIX)  # None because disabled line 104, else 0
+    assert not configuration.get(shop, SHUUP_REFERENCE_NUMBER_PREFIX)  # None because disabled line 135, else 0
 
 
 def get_base_form_data(shop):

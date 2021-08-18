@@ -32,7 +32,7 @@ from json import dumps as json_dump
 
 from shuup.admin.setting_keys import (
     SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
-    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
 )
 from shuup.utils.i18n import format_money, format_percent, get_current_babel_locale
 from shuup.utils.serialization import ExtendedJSONEncoder
@@ -167,7 +167,7 @@ def safe_vendor_description(value):
 
     if isinstance(value, Undefined):
         return value
-    if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION):
+    if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION):
         value = linebreaks(bleach.clean(value, tags=[]))
     return mark_safe(value)
 

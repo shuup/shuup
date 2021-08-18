@@ -192,8 +192,6 @@ LOGIN_URL = "/login/"
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
-SHUUP_PRICING_MODULE = "customer_group_pricing"
-
 SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.shops.views:ShopWizardPane",
     "shuup.admin.modules.service_providers.views.PaymentWizardPane",

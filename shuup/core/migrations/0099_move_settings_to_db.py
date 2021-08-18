@@ -2,10 +2,7 @@ from django.conf import settings
 from django.db import migrations
 
 from shuup import configuration
-from shuup.admin.setting_keys import (
-    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
-    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
-)
+from shuup.core.constants import DEFAULT_REFERENCE_NUMBER_LENGTH
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
     SHUUP_ALLOW_ANONYMOUS_ORDERS,
@@ -32,46 +29,57 @@ from shuup.core.setting_keys import (
     SHUUP_TELEMETRY_ENABLED,
     SHUUP_VOLUME_UNIT,
 )
-from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
-from shuup.reports.setting_keys import DEFAULT_REPORTS_ITEM_LIMIT
 
 
 def move_settings_to_db(apps, schema_editor):
-    configuration.set(None, SHUUP_HOME_CURRENCY, settings.SHUUP_HOME_CURRENCY)
-    configuration.set(None, SHUUP_ADDRESS_HOME_COUNTRY, settings.SHUUP_ADDRESS_HOME_COUNTRY)
-    configuration.set(None, SHUUP_ALLOW_ANONYMOUS_ORDERS, settings.SHUUP_ALLOW_ANONYMOUS_ORDERS)
-    configuration.set(None, SHUUP_REFERENCE_NUMBER_METHOD, settings.SHUUP_REFERENCE_NUMBER_METHOD)
-    configuration.set(None, SHUUP_REFERENCE_NUMBER_LENGTH, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
-    configuration.set(None, SHUUP_REFERENCE_NUMBER_PREFIX, settings.SHUUP_REFERENCE_NUMBER_PREFIX)
-    configuration.set(None, SHUUP_DISCOUNT_MODULES, settings.SHUUP_DISCOUNT_MODULES)
-    configuration.set(None, SHUUP_PRICING_MODULE, settings.SHUUP_PRICING_MODULE)
-    configuration.set(None, SHUUP_ORDER_SOURCE_MODIFIER_MODULES, settings.SHUUP_ORDER_SOURCE_MODIFIER_MODULES)
-    configuration.set(None, SHUUP_TAX_MODULE, settings.SHUUP_TAX_MODULE)
-    configuration.set(None, SHUUP_ENABLE_ATTRIBUTES, settings.SHUUP_ENABLE_ATTRIBUTES)
-    configuration.set(None, SHUUP_ENABLE_MULTIPLE_SHOPS, settings.SHUUP_ENABLE_MULTIPLE_SHOPS)
-    configuration.set(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS, settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS)
-    configuration.set(None, SHUUP_MANAGE_CONTACTS_PER_SHOP, settings.SHUUP_MANAGE_CONTACTS_PER_SHOP)
-    configuration.set(None, SHUUP_ALLOW_EDITING_ORDER, settings.SHUUP_ALLOW_EDITING_ORDER)
-    configuration.set(None, SHUUP_DEFAULT_ORDER_LABEL, settings.SHUUP_DEFAULT_ORDER_LABEL)
-    configuration.set(None, SHUUP_TELEMETRY_ENABLED, settings.SHUUP_TELEMETRY_ENABLED)
+    configuration.set(None, SHUUP_HOME_CURRENCY, getattr(settings, "SHUUP_HOME_CURRENCY", "EUR"))
+    configuration.set(None, SHUUP_ADDRESS_HOME_COUNTRY, getattr(settings, "SHUUP_ADDRESS_HOME_COUNTRY", None))
+    configuration.set(None, SHUUP_ALLOW_ANONYMOUS_ORDERS, getattr(settings, "SHUUP_ALLOW_ANONYMOUS_ORDERS", True))
+    configuration.set(None, SHUUP_REFERENCE_NUMBER_METHOD, getattr(settings, "SHUUP_REFERENCE_NUMBER_METHOD", "unique"))
     configuration.set(
-        None, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE, settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE
+        None,
+        SHUUP_REFERENCE_NUMBER_LENGTH,
+        getattr(settings, "SHUUP_REFERENCE_NUMBER_LENGTH", DEFAULT_REFERENCE_NUMBER_LENGTH),
     )
-    configuration.set(None, SHUUP_ALLOW_ARBITRARY_REFUNDS, settings.SHUUP_ALLOW_ARBITRARY_REFUNDS)
-    configuration.set(None, SHUUP_ALLOWED_UPLOAD_EXTENSIONS, settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS)
-    configuration.set(None, SHUUP_MAX_UPLOAD_SIZE, settings.SHUUP_MAX_UPLOAD_SIZE)
-    configuration.set(None, SHUUP_MASS_UNIT, settings.SHUUP_MASS_UNIT)
-    configuration.set(None, SHUUP_LENGTH_UNIT, settings.SHUUP_LENGTH_UNIT)
-    configuration.set(None, SHUUP_VOLUME_UNIT, "{}3".format(settings.SHUUP_LENGTH_UNIT))
-
+    configuration.set(None, SHUUP_REFERENCE_NUMBER_PREFIX, getattr(settings, "SHUUP_REFERENCE_NUMBER_PREFIX", ""))
     configuration.set(
-        None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION, settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
+        None,
+        SHUUP_DISCOUNT_MODULES,
+        getattr(settings, "SHUUP_DISCOUNT_MODULES", ["customer_group_discount", "product_discounts"]),
     )
     configuration.set(
-        None, SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION, settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION
+        None, SHUUP_PRICING_MODULE, getattr(settings, "SHUUP_PRICING_MODULE", "multivendor_supplier_pricing")
     )
-    configuration.set(None, SHUUP_FRONT_MAX_UPLOAD_SIZE, settings.SHUUP_FRONT_MAX_UPLOAD_SIZE)
-    configuration.set(None, DEFAULT_REPORTS_ITEM_LIMIT, settings.DEFAULT_REPORTS_ITEM_LIMIT)
+    configuration.set(
+        None,
+        SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
+        getattr(settings, "SHUUP_ORDER_SOURCE_MODIFIER_MODULES", ["basket_campaigns"]),
+    )
+    configuration.set(None, SHUUP_TAX_MODULE, getattr(settings, "SHUUP_TAX_MODULE", "default_tax"))
+    configuration.set(None, SHUUP_ENABLE_ATTRIBUTES, getattr(settings, "SHUUP_ENABLE_ATTRIBUTES", True))
+    configuration.set(None, SHUUP_ENABLE_MULTIPLE_SHOPS, getattr(settings, "SHUUP_ENABLE_MULTIPLE_SHOPS", False))
+    configuration.set(
+        None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS, getattr(settings, "SHUUP_ENABLE_MULTIPLE_SUPPLIERS", False)
+    )
+    configuration.set(None, SHUUP_MANAGE_CONTACTS_PER_SHOP, getattr(settings, "SHUUP_MANAGE_CONTACTS_PER_SHOP", False))
+    configuration.set(None, SHUUP_ALLOW_EDITING_ORDER, getattr(settings, "SHUUP_ALLOW_EDITING_ORDER", True))
+    configuration.set(None, SHUUP_DEFAULT_ORDER_LABEL, getattr(settings, "SHUUP_DEFAULT_ORDER_LABEL", "default"))
+    configuration.set(None, SHUUP_TELEMETRY_ENABLED, getattr(settings, "SHUUP_TELEMETRY_ENABLED", True))
+    configuration.set(
+        None,
+        SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
+        getattr(settings, "SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE", True),
+    )
+    configuration.set(None, SHUUP_ALLOW_ARBITRARY_REFUNDS, getattr(settings, "SHUUP_ALLOW_ARBITRARY_REFUNDS", True))
+    configuration.set(
+        None,
+        SHUUP_ALLOWED_UPLOAD_EXTENSIONS,
+        getattr(settings, "SHUUP_ALLOWED_UPLOAD_EXTENSIONS", ["pdf", "ttf", "eot", "woff", "woff2", "otf"]),
+    )
+    configuration.set(None, SHUUP_MAX_UPLOAD_SIZE, getattr(settings, "SHUUP_MAX_UPLOAD_SIZE", 5000000))
+    configuration.set(None, SHUUP_MASS_UNIT, getattr(settings, "SHUUP_MASS_UNIT", "g"))
+    configuration.set(None, SHUUP_LENGTH_UNIT, getattr(settings, "SHUUP_LENGTH_UNIT", "mm"))
+    configuration.set(None, SHUUP_VOLUME_UNIT, "{}3".format(getattr(settings, "SHUUP_LENGTH_UNIT", "mm3")))
 
 
 class Migration(migrations.Migration):

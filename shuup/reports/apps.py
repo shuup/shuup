@@ -12,4 +12,15 @@ class AppConfig(shuup.apps.AppConfig):
     provides = {
         "admin_module": ["shuup.reports.admin_module:ReportsAdminModule"],
         "report_writer_populator": ["shuup.reports.writer.populate_default_writers"],
+        "system_settings_form_part": [
+            "shuup.reports.admin_module.setting_form.ReportSettingsFormPart",
+        ],
+        "system_setting_keys": [
+            "shuup.reports.setting_keys",
+        ],
     }
+
+    def ready(self):
+
+        # connect signals
+        import shuup.reports.signal_handlers  # noqa: F401

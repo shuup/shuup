@@ -14,8 +14,9 @@ from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
 from shuup.admin.modules.settings.views import SystemSettingsView
 from shuup.admin.setting_keys import (
     SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
-    SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
 )
+from shuup.core.constants import DEFAULT_REFERENCE_NUMBER_LENGTH
 from shuup.core.models import Currency
 from shuup.core.setting_keys import (
     SHUUP_ADDRESS_HOME_COUNTRY,
@@ -41,7 +42,8 @@ from shuup.core.setting_keys import (
     SHUUP_VOLUME_UNIT,
 )
 from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
-from shuup.reports.setting_keys import DEFAULT_REPORTS_ITEM_LIMIT
+from shuup.reports.constants import DEFAULT_REPORTS_ITEM_LIMIT
+from shuup.reports.setting_keys import SHUUP_DEFAULT_REPORTS_ITEM_LIMIT
 from shuup.testing.utils import apply_request_middleware
 
 
@@ -56,8 +58,8 @@ def get_data(reference_method):
         (
             "order_settings",
             SHUUP_REFERENCE_NUMBER_LENGTH,
-            17,
-            17,
+            DEFAULT_REFERENCE_NUMBER_LENGTH,
+            DEFAULT_REFERENCE_NUMBER_LENGTH,
         ),
         (
             "order_settings",
@@ -74,8 +76,8 @@ def get_data(reference_method):
         (
             "order_settings",
             SHUUP_PRICING_MODULE,
-            "multivendor_supplier_pricing",
-            "multivendor_supplier_pricing",
+            "customer_group_pricing",
+            "customer_group_pricing",
         ),
         (
             "order_settings",
@@ -176,7 +178,7 @@ def get_data(reference_method):
         ),
         (
             "admin_settings",
-            SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION,
+            SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
             True,
             True,
         ),
@@ -188,9 +190,9 @@ def get_data(reference_method):
         ),
         (
             "report_settings",
+            SHUUP_DEFAULT_REPORTS_ITEM_LIMIT,
             DEFAULT_REPORTS_ITEM_LIMIT,
-            2000,
-            2000,
+            DEFAULT_REPORTS_ITEM_LIMIT,
         ),
     }
 
@@ -219,6 +221,7 @@ def test_system_settings_forms(rf, admin_user):
     form_part_classes = system_view.get_form_part_classes()
     cleaned_data = dict()
     for form_part_class in form_part_classes:
+        print(form_part_class)
         form = form_part_class.form(request=request, data=get_settings_data(field_data, "form"))
         result = form.is_valid()
         assert result is True
