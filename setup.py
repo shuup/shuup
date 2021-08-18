@@ -108,7 +108,7 @@ REQUIRES = [
     "Markdown>=3,<4",
     "openpyxl>=3.0.7,<4",
     "python-dateutil>=2.8",
-    "shuup-mirage-field>=2.1.1,<3",
+    "shuup-mirage-field>=2.2.0,<3",
     "toml>=0.10.0,<1" "pytz>=2015.4",
     "requests>=2.7,<3",
     "six>=1.9,<2",
