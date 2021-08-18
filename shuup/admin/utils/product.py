@@ -86,7 +86,7 @@ class ProductCloner:
             media_copy.save()
 
         product_copied.send(
-            sender=type(self), shop=shop_product.shop, suppliers=self.current_supplier, copied=product, copy=new_product
+            sender=type(self), shop=shop_product.shop, supplier=self.current_supplier, copied=product, copy=new_product
         )
 
         transaction.on_commit(
