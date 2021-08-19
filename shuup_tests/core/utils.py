@@ -5,6 +5,21 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
+)
+from shuup.configuration import get as original_configuration_get
+from shuup.core.setting_keys import (
+    SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
+    SHUUP_DISCOUNT_MODULES,
+    SHUUP_PRICING_MODULE,
+    SHUUP_REFERENCE_NUMBER_METHOD,
+    SHUUP_TAX_MODULE,
+    SHUUP_TELEMETRY_ENABLED,
+)
 
 
 class modify(object):
@@ -27,3 +42,109 @@ class modify(object):
             setattr(self.target, key, value)
         if self.save:
             self.target.save()
+
+
+def get_price_display_patched_configuration(shop, key, default=None):
+    if key == SHUUP_DISCOUNT_MODULES:
+        return []
+    if key == SHUUP_PRICING_MODULE:
+        return "dummy_pricing_module"
+    return original_configuration_get(shop, key, default)
+
+
+def get_pricing_discounts_patched_configuration(shop, key, default=None):
+    if key == SHUUP_DISCOUNT_MODULES:
+        return ["minus25"]
+    if key == SHUUP_PRICING_MODULE:
+        return "default_pricing"
+    return original_configuration_get(shop, key, default)
+
+
+def get_default_pricing_patched_configuration(shop, key, default=None):
+    if key == SHUUP_PRICING_MODULE:
+        return "default_pricing"
+    return original_configuration_get(shop, key, default)
+
+
+def get_dummy_tax_module_patched_configuration(shop, key, default=None):
+    if key == SHUUP_TAX_MODULE:
+        return "dummy_tax_module"
+    return original_configuration_get(shop, key, default)
+
+
+def get_telemetry_false_configuration(shop, key, default=None):
+    if key == SHUUP_TELEMETRY_ENABLED:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_telemetry_true_configuration(shop, key, default=None):
+    if key == SHUUP_TELEMETRY_ENABLED:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_calculate_taxes_false_configuration(shop, key, default=None):
+    if key == SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_calculate_taxes_true_configuration(shop, key, default=None):
+    if key == SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_product_desc_false_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_product_desc_true_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_vendor_false_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_admin_allow_html_in_vendor_true_configuration(shop, key, default=None):
+    if key == SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_reference_number_method_unique_configuration(shop, key, default=None):
+    if key == SHUUP_REFERENCE_NUMBER_METHOD:
+        return OrderReferenceNumberMethod.UNIQUE.value
+    return original_configuration_get(shop, key, default)
+
+
+def get_reference_number_method_running_configuration(shop, key, default=None):
+    if key == SHUUP_REFERENCE_NUMBER_METHOD:
+        return OrderReferenceNumberMethod.RUNNING.value
+    return original_configuration_get(shop, key, default)
+
+
+def get_reference_number_method_shop_running_configuration(shop, key, default=None):
+    if key == SHUUP_REFERENCE_NUMBER_METHOD:
+        return OrderReferenceNumberMethod.SHOP_RUNNING.value
+    return original_configuration_get(shop, key, default)
+
+
+def get_allow_anonymous_order_true_configuration(shop, key, default=None):
+    if key == SHUUP_ALLOW_ANONYMOUS_ORDERS:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_allow_anonymous_order_false_configuration(shop, key, default=None):
+    if key == SHUUP_ALLOW_ANONYMOUS_ORDERS:
+        return False
+    return original_configuration_get(shop, key, default)

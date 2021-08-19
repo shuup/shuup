@@ -31,7 +31,7 @@ class NewCustomersReport(ShuupReportBase):
         contacts = (
             Contact.objects.filter(created_on__range=(self.start_date, self.end_date))
             .select_related("polymorphic_ctype")
-            .order_by("created_on")[: self.queryset_row_limit]
+            .order_by("created_on")[: self.get_queryset_row_limit()]
         )
 
         data = {}

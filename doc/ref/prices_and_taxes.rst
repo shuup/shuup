@@ -58,8 +58,8 @@ When Taxes Are Determined
 There are two modes of operation for calculating the taxes: on-demand
 and on-checkout.  If current tax module declares that tax calculation is
 "cheap" (does not cost a transaction fee and is fast to compute) and
-`~shuup.core.settings.SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE`
-setting is true, then on-demand calculation will be used.  Otherwise
+`SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE`
+configuration is true, then on-demand calculation will be used.  Otherwise
 on-checkout calculation will be used.
 
 With on-checkout tax calculation mode Shuup calculates taxes for a

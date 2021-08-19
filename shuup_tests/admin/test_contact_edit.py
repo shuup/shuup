@@ -8,7 +8,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.http.response import Http404
-from django.test.utils import override_settings
+from mock import patch
 
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.modules.contacts.forms import CompanyContactBaseForm, PersonContactBaseForm
@@ -22,6 +22,7 @@ from shuup.testing.factories import (
     get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_true_contacts_per_shop_true_configuration
 from shuup_tests.utils import printable_gibberish
 
 
@@ -181,7 +182,7 @@ def test_company_contact_edit_form_2(rf, admin_user):
 
 @pytest.mark.django_db
 def test_contact_edit_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -214,7 +215,7 @@ def test_contact_edit_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_company_edit_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -298,7 +299,7 @@ def test_contact_company_edit_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_detail_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -323,7 +324,7 @@ def test_contact_detail_multishop(rf):
 
 @pytest.mark.django_db
 def test_company_contact_detail_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)
@@ -350,7 +351,7 @@ def test_company_contact_detail_multishop(rf):
 
 @pytest.mark.django_db
 def test_contact_company_list_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)

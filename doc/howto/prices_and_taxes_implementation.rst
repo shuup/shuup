@@ -105,7 +105,7 @@ Types Used for Prices and Taxes
   is a based on a table of tax rules (saved with
   `~shuup.default_tax.models.TaxRule` model).  See
   :ref:`default-tax-module`.  Used `TaxModule` can be changed with
-  `~shuup.core.settings.SHUUP_TAX_MODULE` setting.
+  `~shuup.core.setting_keys.SHUUP_TAX_MODULE` configuration key.
 
 `~shuup.core.taxing.TaxedPrice`
 

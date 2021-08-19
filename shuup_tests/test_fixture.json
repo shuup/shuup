@@ -1,0 +1,253 @@
+[{
+        "model": "shuup.configurationitem",
+        "pk": 1,
+        "fields": {
+            "shop": null,
+            "key": "home_currency",
+            "value": "\"USD\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 2,
+        "fields": {
+            "shop": null,
+            "key": "home_country",
+            "value": "\"US\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 3,
+        "fields": {
+            "shop": null,
+            "key": "allow_anonymous_orders",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 4,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_method",
+            "value": "\"unique\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 5,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_length",
+            "value": 17
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 6,
+        "fields": {
+            "shop": null,
+            "key": "order_reference_number_prefix",
+            "value": "\"\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 7,
+        "fields": {
+            "shop": null,
+            "key": "discount_modules",
+            "value": ["customer_group_discount", "product_discounts"]
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 8,
+        "fields": {
+            "shop": null,
+            "key": "pricing_module",
+            "value": "\"customer_group_pricing\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 9,
+        "fields": {
+            "shop": null,
+            "key": "order_source_modifier_modules",
+            "value": ["basket_campaigns"]
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 10,
+        "fields": {
+            "shop": null,
+            "key": "tax_module",
+            "value": "\"default_tax\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 11,
+        "fields": {
+            "shop": null,
+            "key": "enable_attributes",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 12,
+        "fields": {
+            "shop": null,
+            "key": "enable_multiple_shops",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 13,
+        "fields": {
+            "shop": null,
+            "key": "enable_multiple_suppliers",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 14,
+        "fields": {
+            "shop": null,
+            "key": "manage_contacts_per_shop",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 15,
+        "fields": {
+            "shop": null,
+            "key": "allow_editing_order",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 16,
+        "fields": {
+            "shop": null,
+            "key": "telemetry_enabled",
+            "value": false
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 17,
+        "fields": {
+            "shop": null,
+            "key": "calculate_taxes_automatically_if_possible",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 18,
+        "fields": {
+            "shop": null,
+            "key": "allow_arbitrary_refunds",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 19,
+        "fields": {
+            "shop": null,
+            "key": "allowed_upload_extensions",
+            "value": ["pdf", "ttf", "eot", "woff", "woff2", "otf"]
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 20,
+        "fields": {
+            "shop": null,
+            "key": "max_upload_size",
+            "value": 5000000
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 21,
+        "fields": {
+            "shop": null,
+            "key": "mass_unit",
+            "value": "\"g\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 22,
+        "fields": {
+            "shop": null,
+            "key": "length_unit",
+            "value": "\"mm\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 23,
+        "fields": {
+            "shop": null,
+            "key": "volume_unit",
+            "value": "\"mm3\""
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 24,
+        "fields": {
+            "shop": null,
+            "key": "admin_allow_html_in_product_description",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 25,
+        "fields": {
+            "shop": null,
+            "key": "admin_allow_html_in_vendor_description",
+            "value": true
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 26,
+        "fields": {
+            "shop": null,
+            "key": "front_max_upload_size",
+            "value": 5000000
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 27,
+        "fields": {
+            "shop": null,
+            "key": "default_reports_item_limit",
+            "value": 2000
+        }
+    },
+    {
+        "model": "shuup.configurationitem",
+        "pk": 28,
+        "fields": {
+            "shop": null,
+            "key": "default_order_label",
+            "value": "\"default\""
+        }
+    }
+]

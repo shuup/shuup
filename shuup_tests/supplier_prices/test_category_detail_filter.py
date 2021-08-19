@@ -8,6 +8,7 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.test import override_settings
+from mock import patch
 
 from shuup.core.models import Supplier
 from shuup.front.forms.product_list_supplier_modifier import SupplierProductListFilter
@@ -19,6 +20,8 @@ from shuup.themes.classic_gray.theme import ClassicGrayTheme
 from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
+
+from .utils import get_supplier_prices_patched_configuration
 
 
 @pytest.mark.django_db
@@ -122,45 +125,46 @@ def test_category_detail_filters(client, reindex_catalog):
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
-    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
-        with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
-            reindex_catalog()
+    with override_settings(SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+        with patch("shuup.configuration.get", new=get_supplier_prices_patched_configuration):
+            with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+                reindex_catalog()
 
-            laptop = [product for product in products if product.sku == "laptop"][0]
-            keyboard = [product for product in products if product.sku == "keyboard"][0]
-            mouse = [product for product in products if product.sku == "mouse"][0]
-            # Let's get products for Johnny
-            supplier_johnny = Supplier.objects.filter(name="Johnny Inc").first()
-            soup = _get_category_detail_soup(client, category, supplier_johnny.pk)
+                laptop = [product for product in products if product.sku == "laptop"][0]
+                keyboard = [product for product in products if product.sku == "keyboard"][0]
+                mouse = [product for product in products if product.sku == "mouse"][0]
+                # Let's get products for Johnny
+                supplier_johnny = Supplier.objects.filter(name="Johnny Inc").first()
+                soup = _get_category_detail_soup(client, category, supplier_johnny.pk)
 
-            laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
-            _assert_supplier_info(laptop_product_box, "Johnny Inc")
-            _assert_product_price(laptop_product_box, 750)
+                laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
+                _assert_supplier_info(laptop_product_box, "Johnny Inc")
+                _assert_product_price(laptop_product_box, 750)
 
-            # Now here when the category view is filtered based on supplier
-            # the product urls should lead to supplier product url so we
-            # can show details and prices for correct supplier.
-            _assert_product_url(laptop_product_box, supplier_johnny, laptop)
+                # Now here when the category view is filtered based on supplier
+                # the product urls should lead to supplier product url so we
+                # can show details and prices for correct supplier.
+                _assert_product_url(laptop_product_box, supplier_johnny, laptop)
 
-            # Let's test rest of the products and suppliers
-            keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
-            _assert_supplier_info(keyboard_product_box, "Johnny Inc")
-            _assert_product_price(keyboard_product_box, 75)
-            _assert_product_url(keyboard_product_box, supplier_johnny, keyboard)
+                # Let's test rest of the products and suppliers
+                keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
+                _assert_supplier_info(keyboard_product_box, "Johnny Inc")
+                _assert_product_price(keyboard_product_box, 75)
+                _assert_product_url(keyboard_product_box, supplier_johnny, keyboard)
 
-            mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
-            soup = _get_category_detail_soup(client, category, mike_supplier.pk)
-            keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
-            _assert_supplier_info(keyboard_product_box, "Mike Inc")
-            _assert_product_price(keyboard_product_box, 135)
-            _assert_product_url(keyboard_product_box, mike_supplier, keyboard)
+                mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
+                soup = _get_category_detail_soup(client, category, mike_supplier.pk)
+                keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
+                _assert_supplier_info(keyboard_product_box, "Mike Inc")
+                _assert_product_price(keyboard_product_box, 135)
+                _assert_product_url(keyboard_product_box, mike_supplier, keyboard)
 
-            simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
-            soup = _get_category_detail_soup(client, category, simon_supplier.pk)
-            mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
-            _assert_supplier_info(mouse_product_box, "Simon Inc")
-            _assert_product_price(mouse_product_box, 120)
-            _assert_product_url(mouse_product_box, simon_supplier, mouse)
+                simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
+                soup = _get_category_detail_soup(client, category, simon_supplier.pk)
+                mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
+                _assert_supplier_info(mouse_product_box, "Simon Inc")
+                _assert_product_price(mouse_product_box, 120)
+                _assert_product_url(mouse_product_box, simon_supplier, mouse)
 
 
 @pytest.mark.django_db
@@ -207,22 +211,23 @@ def test_category_detail_multiselect_supplier_filters(client, reindex_catalog):
     reindex_catalog()
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
-    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
-        with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
-            johnny_supplier = Supplier.objects.filter(name="Johnny Inc").first()
-            mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
-            simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
+    with override_settings(SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+        with patch("shuup.configuration.get", new=get_supplier_prices_patched_configuration):
+            with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+                johnny_supplier = Supplier.objects.filter(name="Johnny Inc").first()
+                mike_supplier = Supplier.objects.filter(name="Mike Inc").first()
+                simon_supplier = Supplier.objects.filter(name="Simon Inc").first()
 
-            soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk])
-            assert len(soup.findAll("div", {"class": "single-product"})) == 1
+                soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk])
+                assert len(soup.findAll("div", {"class": "single-product"})) == 1
 
-            soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk, mike_supplier.pk])
-            assert len(soup.findAll("div", {"class": "single-product"})) == 2
+                soup = _get_category_detail_soup_multiselect(client, category, [johnny_supplier.pk, mike_supplier.pk])
+                assert len(soup.findAll("div", {"class": "single-product"})) == 2
 
-            soup = _get_category_detail_soup_multiselect(
-                client, category, [johnny_supplier.pk, mike_supplier.pk, simon_supplier.pk]
-            )
-            assert len(soup.findAll("div", {"class": "single-product"})) == 3
+                soup = _get_category_detail_soup_multiselect(
+                    client, category, [johnny_supplier.pk, mike_supplier.pk, simon_supplier.pk]
+                )
+                assert len(soup.findAll("div", {"class": "single-product"})) == 3
 
 
 def _get_category_detail_soup(client, category, supplier_id):

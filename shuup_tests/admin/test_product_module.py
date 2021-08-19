@@ -7,9 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import json
 import pytest
+from bs4 import BeautifulSoup
 from django.http.response import Http404
 from django.test import override_settings
 from filer.models import File
+from mock import patch
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
@@ -39,7 +41,11 @@ from shuup.testing.factories import (
     get_shop as get_new_shop,
 )
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.admin.utils import admin_only_urls
+from shuup_tests.admin.utils import admin_only_urls, get_multiple_shops_true_configuration
+from shuup_tests.core.utils import (
+    get_admin_allow_html_in_product_desc_false_configuration,
+    get_admin_allow_html_in_product_desc_true_configuration,
+)
 from shuup_tests.utils import empty_iterable
 
 
@@ -205,7 +211,7 @@ def test_product_edit_view_multipleshops(rf):
     Check whether a staff user from Shop A can see the product from Shop B
     when the staff user is only attached to Shop A
     """
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         assert Product.objects.count() == 0
         shop1 = get_default_shop()
         shop2 = get_new_shop(identifier="shop2", domain="shop2", name="Shop 2")
@@ -273,3 +279,37 @@ def test_product_module_get_model_url(rf, admin_user):
 
     ShopProduct.objects.create(shop=shop2, product=product)
     assert module.get_model_url(product, "edit", shop2)
+
+
+@pytest.mark.django_db
+def test_product_description(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("product", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+
+    product_with_supplier = create_product(sku="product_with_supplier", shop=shop, supplier=supplier)
+    shop_product_with_supplier = product_with_supplier.get_shop_instance(shop)
+
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_product_desc_false_configuration):
+        request = apply_request_middleware(rf.get("/", HTTP_HOST=shop.domain), user=admin_user)
+        view_func = ProductEditView.as_view()
+        response = view_func(request, pk=shop_product.pk)
+        assert response.status_code == 200
+        response.render()
+        soup = BeautifulSoup(response.content, "lxml")
+        assert soup.select("textarea[name*=base-description]")
+        assert not soup.find("div", attrs={"id": "id_base-short_description__en-editor-wrap"})
+
+    with patch("shuup.configuration.get", new=get_admin_allow_html_in_product_desc_true_configuration):
+        request = apply_request_middleware(rf.get("/", HTTP_HOST=shop.domain), user=admin_user)
+        view_func = ProductEditView.as_view()
+        response = view_func(request, pk=shop_product.pk)
+        assert response.status_code == 200
+        response.render()
+        soup = BeautifulSoup(response.content, "lxml")
+
+        assert soup.find_all("textarea", attrs={"name": "base-description__en", "class": "hidden"})
+
+        description_div = soup.find("div", attrs={"id": "id_base-short_description__en-editor-wrap"})
+        assert description_div

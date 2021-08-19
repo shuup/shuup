@@ -32,6 +32,7 @@ from shuup.testing.factories import (
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.utils import atomic_commit_mock
 
 
@@ -335,7 +336,7 @@ def test_product_edit_view(rf, admin_user, settings):
 
 @pytest.mark.django_db
 def test_product_edit_view_multishop(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         activate("en")
         product = create_product(sku="TEST-SKU-HAHA")
         shop_products = []

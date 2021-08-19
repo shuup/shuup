@@ -6,7 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from shuup.apps.provides import load_module_instances
+from shuup.apps.provides import load_configuration_module_instances
+from shuup.core.setting_keys import SHUUP_ORDER_SOURCE_MODIFIER_MODULES
 
 
 def get_order_source_modifier_modules():
@@ -15,7 +16,7 @@ def get_order_source_modifier_modules():
 
     :rtype: list[OrderSourceModifierModule]
     """
-    return load_module_instances("SHUUP_ORDER_SOURCE_MODIFIER_MODULES", "order_source_modifier_module")
+    return load_configuration_module_instances(SHUUP_ORDER_SOURCE_MODIFIER_MODULES, "order_source_modifier_module")
 
 
 def is_code_usable(order_source, code):

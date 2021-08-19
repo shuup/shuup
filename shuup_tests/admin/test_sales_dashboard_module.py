@@ -8,7 +8,7 @@
 import pytest
 from bs4 import BeautifulSoup
 from datetime import date
-from django.test import override_settings
+from mock import patch
 
 from shuup.admin.modules.sales_dashboard.dashboard import (
     OrderValueChartDashboardBlock,
@@ -27,6 +27,7 @@ from shuup.testing.factories import (
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.dates import to_aware
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 
 NUM_ORDERS_COLUMN_INDEX = 2
 NUM_CUSTOMERS_COLUMN_INDEX = 3
@@ -63,7 +64,7 @@ def test_order_chart_works(rf, admin_user):
     ],
 )
 def test_shop_overview_block(rf, data, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = get_default_shop()
         shop2 = get_shop(identifier="shop2", status=ShopStatus.ENABLED, name="Shop2")
 
@@ -108,7 +109,7 @@ def test_shop_overview_block(rf, data, admin_user):
 
 @pytest.mark.django_db
 def test_recent_orders_block(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop1 = get_default_shop()
         shop2 = get_shop(identifier="shop2", status=ShopStatus.ENABLED, name="Shop2")
         customer = create_random_person()

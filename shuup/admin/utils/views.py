@@ -17,13 +17,13 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
+from shuup import configuration
 from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.signals import object_created, object_saved, view_form_valid
 from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar, get_default_edit_toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages, get_possible_name_fields_for_model
 from shuup.admin.utils.picotable import Column, PicotableViewMixin
 from shuup.admin.utils.urls import NoModelUrl, get_model_front_url, get_model_url
-from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.django_compat import force_text
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormGroup
@@ -200,7 +200,7 @@ def get_create_or_change_title(request, instance, name_field=None):
 
 
 def check_and_raise_if_only_one_allowed(setting_name, obj):
-    if ShuupSettings.get_setting(setting_name):
+    if configuration.get(None, setting_name):
         return
     if not obj.pk and obj.__class__.objects.count() >= 1:
         raise Problem(_("Only one %(model)s permitted.") % {"model": obj._meta.verbose_name})

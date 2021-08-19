@@ -7,15 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from typing import Optional
 
+from shuup import configuration
 from shuup.core.fields import FormattedDecimalFormField
 from shuup.core.models import SalesUnit, Shop
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_HOME_CURRENCY
 from shuup.utils.i18n import get_currency_name
 
 
@@ -23,15 +23,14 @@ class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
         label=format_lazy(
             _("Purchase price per unit ({currency_name})"),
-            currency_name=get_currency_name(settings.SHUUP_HOME_CURRENCY),
+            currency_name=lambda: get_currency_name(configuration.get(None, SHUUP_HOME_CURRENCY)),
         )
     )
     delta = FormattedDecimalFormField(label=_("Quantity"), decimal_places=0)
 
     def __init__(self, sales_unit: Optional[SalesUnit] = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             self.fields["purchase_price"].label = format_lazy(
                 _("Purchase price per unit ({currency_name})"),
                 currency_name=get_currency_name(Shop.objects.first().currency),

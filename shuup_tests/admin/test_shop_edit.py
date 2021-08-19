@@ -8,11 +8,12 @@ import pytest
 from django.conf import settings
 from django.test.utils import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup import configuration
-from shuup.admin.modules.settings import consts
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
+from shuup.core.setting_keys import SHUUP_REFERENCE_NUMBER_LENGTH, SHUUP_REFERENCE_NUMBER_PREFIX
 from shuup.testing.factories import (
     create_product,
     create_random_order,
@@ -22,6 +23,7 @@ from shuup.testing.factories import (
     get_default_supplier,
 )
 from shuup.utils.django_compat import reverse
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.utils import SmartClient, printable_gibberish
 from shuup_tests.utils.forms import get_form_data
 
@@ -71,7 +73,7 @@ def _test_cleanliness(shop_form):
 
 @pytest.mark.django_db
 def test_new_shop(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         get_default_shop()
         assert Shop.objects.count() == 1
 
@@ -105,8 +107,8 @@ def test_order_configuration(rf, admin_user):
     response, soup = client.response_and_soup(url)
     assert response.status_code == 200
 
-    length_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD
-    prefix_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
+    length_form_field = "order_configuration-%s" % SHUUP_REFERENCE_NUMBER_LENGTH
+    prefix_form_field = "order_configuration-%s" % SHUUP_REFERENCE_NUMBER_PREFIX
 
     length_field = soup.find("input", attrs={"id": "id_%s" % length_form_field})
     prefix_field = soup.find("input", attrs={"id": "id_%s" % prefix_form_field})
@@ -114,7 +116,9 @@ def test_order_configuration(rf, admin_user):
     assert length_field
     assert prefix_field
 
-    assert length_field["value"] == str(settings.SHUUP_REFERENCE_NUMBER_LENGTH)  # default value because nothing set yet
+    assert length_field["value"] == str(
+        configuration.get(None, SHUUP_REFERENCE_NUMBER_LENGTH)
+    )  # default value because nothing set yet
     assert "value" not in prefix_field  # field empty
 
     data = get_base_form_data(shop)
@@ -124,7 +128,7 @@ def test_order_configuration(rf, admin_user):
     assert "is required" not in soup.prettify()
     assert response.status_code == 302  # redirect after success
 
-    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 18
+    assert configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH) == 18
 
     # set global system settings
     # TODO: Enable this before 1.3
@@ -133,10 +137,8 @@ def test_order_configuration(rf, admin_user):
     data[prefix_form_field] = "0"
     client.post(url, data=data)
 
-    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 19
-    assert not configuration.get(
-        shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
-    )  # None because disabled line 104, else 0
+    assert configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH) == 19
+    assert not configuration.get(shop, SHUUP_REFERENCE_NUMBER_PREFIX)  # None because disabled line 135, else 0
 
 
 def get_base_form_data(shop):

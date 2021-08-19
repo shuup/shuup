@@ -8,7 +8,7 @@
 import json
 import pytest
 from django.http.response import Http404
-from django.test.utils import override_settings
+from mock import patch
 
 from shuup.admin.modules.contacts import ContactModule
 from shuup.admin.modules.contacts.views.detail import ContactDetailView
@@ -22,6 +22,7 @@ from shuup.testing.factories import (
     get_shop,
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_true_contacts_per_shop_true_configuration
 from shuup_tests.utils import empty_iterable
 
 
@@ -79,7 +80,7 @@ def test_admin_contact_edit(rf, admin_user):
 
 @pytest.mark.django_db
 def test_contact_module_search_multishop(rf):
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         staff_user = create_random_user(is_staff=True)
 
         shop1 = get_shop(identifier="shop-1", enabled=True)

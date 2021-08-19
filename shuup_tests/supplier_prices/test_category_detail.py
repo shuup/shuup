@@ -8,6 +8,7 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.test import override_settings
+from mock import patch
 
 from shuup.core.models import Supplier
 from shuup.front.utils.sorts_and_filters import set_configuration
@@ -17,6 +18,8 @@ from shuup.themes.classic_gray.theme import ClassicGrayTheme
 from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import ThemeSettings
 from shuup.xtheme.testing import override_current_theme_class
+
+from .utils import get_supplier_prices_patched_configuration
 
 
 @pytest.mark.django_db
@@ -66,50 +69,51 @@ def test_category_detail(client, reindex_catalog):
             SupplierPrice.objects.create(supplier=supplier, shop=shop, product=product, amount_value=supplier_price)
 
     strategy = "shuup.testing.supplier_pricing.supplier_strategy:CheapestSupplierPriceSupplierStrategy"
-    with override_settings(SHUUP_PRICING_MODULE="supplier_pricing", SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
-        with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
-            reindex_catalog()
+    with patch("shuup.configuration.get", new=get_supplier_prices_patched_configuration):
+        with override_settings(SHUUP_SHOP_PRODUCT_SUPPLIERS_STRATEGY=strategy):
+            with override_current_theme_class(ClassicGrayTheme, shop):  # Ensure settings is refreshed from DB
+                reindex_catalog()
 
-            soup = _get_category_detail_soup(client, category)
+                soup = _get_category_detail_soup(client, category)
 
-            # Johnny Inc has the best prices for everything
-            laptop = [product for product in products if product.sku == "laptop"][0]
-            laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
-            _assert_supplier_info(laptop_product_box, "Johnny Inc")
-            _assert_product_price(laptop_product_box, 750)
+                # Johnny Inc has the best prices for everything
+                laptop = [product for product in products if product.sku == "laptop"][0]
+                laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
+                _assert_supplier_info(laptop_product_box, "Johnny Inc")
+                _assert_product_price(laptop_product_box, 750)
 
-            keyboard = [product for product in products if product.sku == "keyboard"][0]
-            keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
-            _assert_supplier_info(keyboard_product_box, "Johnny Inc")
-            _assert_product_price(keyboard_product_box, 75)
+                keyboard = [product for product in products if product.sku == "keyboard"][0]
+                keyboard_product_box = soup.find("div", {"id": "product-%s" % keyboard.pk})
+                _assert_supplier_info(keyboard_product_box, "Johnny Inc")
+                _assert_product_price(keyboard_product_box, 75)
 
-            mouse = [product for product in products if product.sku == "mouse"][0]
-            mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
-            _assert_supplier_info(mouse_product_box, "Johnny Inc")
-            _assert_product_price(mouse_product_box, 75)
+                mouse = [product for product in products if product.sku == "mouse"][0]
+                mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
+                _assert_supplier_info(mouse_product_box, "Johnny Inc")
+                _assert_product_price(mouse_product_box, 75)
 
-            # Ok competition has done it job and the other suppliers
-            # has to start adjust their prices.
+                # Ok competition has done it job and the other suppliers
+                # has to start adjust their prices.
 
-            # Let's say Mike has the cheapest laptop
-            mike_supplier = Supplier.objects.get(name="Mike Inc")
-            SupplierPrice.objects.filter(supplier=mike_supplier, shop=shop, product=laptop).update(amount_value=333)
-            reindex_catalog()
+                # Let's say Mike has the cheapest laptop
+                mike_supplier = Supplier.objects.get(name="Mike Inc")
+                SupplierPrice.objects.filter(supplier=mike_supplier, shop=shop, product=laptop).update(amount_value=333)
+                reindex_catalog()
 
-            soup = _get_category_detail_soup(client, category)
-            laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
-            _assert_supplier_info(laptop_product_box, "Mike Inc")
-            _assert_product_price(laptop_product_box, 333)
+                soup = _get_category_detail_soup(client, category)
+                laptop_product_box = soup.find("div", {"id": "product-%s" % laptop.pk})
+                _assert_supplier_info(laptop_product_box, "Mike Inc")
+                _assert_product_price(laptop_product_box, 333)
 
-            # Just to make sure Simon takes over the mouse biz
-            simon_supplier = Supplier.objects.get(name="Simon Inc")
-            SupplierPrice.objects.filter(supplier=simon_supplier, shop=shop, product=mouse).update(amount_value=1)
-            reindex_catalog()
+                # Just to make sure Simon takes over the mouse biz
+                simon_supplier = Supplier.objects.get(name="Simon Inc")
+                SupplierPrice.objects.filter(supplier=simon_supplier, shop=shop, product=mouse).update(amount_value=1)
+                reindex_catalog()
 
-            soup = _get_category_detail_soup(client, category)
-            mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
-            _assert_supplier_info(mouse_product_box, "Simon Inc")
-            _assert_product_price(mouse_product_box, 1)
+                soup = _get_category_detail_soup(client, category)
+                mouse_product_box = soup.find("div", {"id": "product-%s" % mouse.pk})
+                _assert_supplier_info(mouse_product_box, "Simon Inc")
+                _assert_product_price(mouse_product_box, 1)
 
 
 def _get_category_detail_soup(client, category):

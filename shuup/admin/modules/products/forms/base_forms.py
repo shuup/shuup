@@ -18,6 +18,7 @@ from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext, ugettext_lazy as _
 from filer.models import Image
 
+from shuup import configuration
 from shuup.admin.forms.fields import ObjectSelect2ModelField, ObjectSelect2ModelMultipleField
 from shuup.admin.forms.quick_select import NoModel
 from shuup.admin.forms.widgets import (
@@ -34,6 +35,7 @@ from shuup.admin.forms.widgets import (
     QuickAddTaxClassSelect,
     TextEditorWidget,
 )
+from shuup.admin.setting_keys import SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.signals import form_post_clean, form_pre_clean
 from shuup.core.models import (
@@ -50,6 +52,7 @@ from shuup.core.models import (
     ShopProduct,
     Supplier,
 )
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
 
@@ -93,11 +96,6 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput(),
             "sales_unit": QuickAddSalesUnitSelect(editable_model="shuup.SalesUnit"),
             "tax_class": QuickAddTaxClassSelect(editable_model="shuup.TaxClass"),
-            "description": (
-                TextEditorWidget()
-                if settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION
-                else forms.Textarea(attrs={"rows": 5})
-            ),
             "short_description": forms.TextInput(),
         }
 
@@ -119,6 +117,14 @@ class ProductBaseForm(MultiLanguageModelForm):
                 attrs={"data-placeholder": ugettext("Select a manufacturer")},
             ),
         )
+        for key, f in self.fields.items():
+            if "description" in key:
+                if configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION):
+                    widget = TextEditorWidget()
+                else:
+                    widget = forms.Textarea(attrs={"rows": 5})
+                self.fields[key].widget = widget
+
         if self.instance.pk:
             initial_type = self.instance.type
         else:
@@ -163,7 +169,7 @@ class ProductBaseForm(MultiLanguageModelForm):
         form_pre_clean.send(Product, instance=self.instance, cleaned_data=self.cleaned_data)
         super(ProductBaseForm, self).clean()
 
-        if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+        if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION):
             for key, value in self.cleaned_data.items():
                 if key.startswith("description__"):
                     self.cleaned_data[key] = bleach.clean(value, tags=[])
@@ -233,7 +239,7 @@ class ShopProductForm(MultiLanguageModelForm):
         if self.instance.pk:
             initial_categories = self.instance.categories.all()
             initial_suppliers = self.instance.suppliers.all()
-        elif not settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        elif not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS):
             supplier = Supplier.objects.first()
             initial_suppliers = [supplier] if supplier else []
 

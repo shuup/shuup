@@ -8,6 +8,7 @@
 import os
 import pytest
 from django.conf import settings
+from django.core.management import call_command
 from django.core.signals import setting_changed
 
 from shuup.apps.provides import clear_provides_cache
@@ -29,7 +30,6 @@ def clear_caches(setting, **kwargs):
 
 def pytest_configure(config):
     setting_changed.connect(clear_caches, dispatch_uid="shuup_test_clear_caches")
-    settings.SHUUP_TELEMETRY_ENABLED = False
 
 
 def pytest_runtest_call(item):
@@ -108,3 +108,9 @@ def reindex_catalog():
         call_command("reindex_product_catalog")
 
     return _
+
+
+@pytest.fixture(scope="session")
+def django_db_setup(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        call_command("loaddata", "shuup_tests/test_fixture.json")

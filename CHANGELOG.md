@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 List all changes after the last release here (newer on top). Each change on a separate bullet point line
 
+### Customer Changes
+
+- Added many new configurable system setting options.
+
+### Changed
+
+- Core: move shuup settings to database and added forms to configurate system settings.
+
 ### Fixed
 
 - Admin: fix typo in product cloner

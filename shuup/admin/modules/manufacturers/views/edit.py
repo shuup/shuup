@@ -8,19 +8,20 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.conf import settings
 from django.contrib import messages
 from django.db.models import Q
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
+from shuup import configuration
 from shuup.admin.forms import ShuupAdminFormNoTranslation
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Manufacturer, Shop
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.utils.django_compat import force_text, reverse_lazy
 
 
@@ -56,7 +57,7 @@ class ManufacturerForm(ShuupAdminFormNoTranslation):
         instance = super(ManufacturerForm, self).save(commit)
 
         # if shops field is not available and it is a new manufacturer, set the current shop
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS or "shops" not in self.fields:
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) or "shops" not in self.fields:
             instance.shops.add(get_shop(self.request))
 
         return instance

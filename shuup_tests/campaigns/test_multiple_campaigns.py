@@ -7,8 +7,8 @@
 
 import pytest
 from decimal import Decimal
-from django.test import override_settings
 from django.test.client import RequestFactory
+from mock import patch
 
 from shuup.campaigns.models import BasketCampaign, BasketLineEffect, CatalogCampaign
 from shuup.campaigns.models.basket_conditions import CategoryProductsBasketCondition, ComparisonOperator
@@ -20,9 +20,11 @@ from shuup.testing.factories import create_product, get_default_category, get_de
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
 
+from .utils import get_discount_patched_configuration
+
 
 @pytest.mark.django_db
-@override_settings(SHUUP_DISCOUNT_MODULES=["customer_group_discount", "catalog_campaigns"])
+@patch("shuup.configuration.get", new=get_discount_patched_configuration)
 def test_multiple_campaigns_cheapest_price():
     rf = RequestFactory()
     request, shop, group = initialize_test(rf, False)

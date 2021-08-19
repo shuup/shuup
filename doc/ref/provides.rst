@@ -271,7 +271,7 @@ Core
     ``ValidationError`` instances.
 
 ``pricing_module``
-    Pricing module classes; the pricing module in use is set with the ``SHUUP_PRICING_MODULE`` setting.
+    Pricing module classes; the pricing module in use is set with the ``SHUUP_PRICING_MODULE`` configuration.
 
 ``product_kind_specs``
     List of classes that define the product kinds that can be used in the platform.
@@ -312,8 +312,14 @@ Core
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
     as used by `~shuup.core.models.Supplier`.
 
+``system_settings_form_part``
+    Form part classes that shows on the admin menu System Settings.
+
+``system_setting_keys``
+    Modules defining the system setting keys.
+
 ``tax_module``
-    Tax module classes; the tax module in use is set with the ``SHUUP_TAX_MODULE`` setting.
+    Tax module classes; the tax module in use is set with the ``SHUUP_TAX_MODULE`` configuration key.
 
 ``xtheme``
     XTheme themes (full theme sets).

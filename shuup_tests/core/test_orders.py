@@ -11,6 +11,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.timezone import now
+from mock import patch
 
 from shuup.core.excs import (
     InvalidRefundAmountException,
@@ -48,6 +49,7 @@ from shuup.testing.factories import (
     get_random_filer_image,
 )
 from shuup.utils.money import Money
+from shuup_tests.core.utils import get_allow_anonymous_order_false_configuration
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
 
@@ -307,7 +309,7 @@ def test_known_extra_data():
 
 @pytest.mark.django_db
 def test_anon_disabling():
-    with override_settings(SHUUP_ALLOW_ANONYMOUS_ORDERS=False):
+    with patch("shuup.configuration.get", new=get_allow_anonymous_order_false_configuration):
         with pytest.raises(ValidationError):
             order = create_empty_order()
             order.save()

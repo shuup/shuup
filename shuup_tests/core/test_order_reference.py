@@ -8,11 +8,22 @@
 import hashlib
 import pytest
 from django.test import override_settings
+from mock import patch
 
 from shuup import configuration
 from shuup.core.models import ConfigurationItem
 from shuup.core.models._order_utils import get_order_identifier, get_reference_number
+from shuup.core.setting_keys import (
+    SHUUP_REFERENCE_NUMBER_LENGTH,
+    SHUUP_REFERENCE_NUMBER_METHOD,
+    SHUUP_REFERENCE_NUMBER_PREFIX,
+)
 from shuup.testing.factories import create_empty_order, get_default_shop
+from shuup_tests.core.utils import (
+    get_reference_number_method_running_configuration,
+    get_reference_number_method_shop_running_configuration,
+    get_reference_number_method_unique_configuration,
+)
 
 
 def custom_refno_gen(order):
@@ -24,10 +35,17 @@ def custom_ident_gen(order):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("method", ["unique", "running", "shop_running"])
+@pytest.mark.parametrize(
+    "method",
+    [
+        get_reference_number_method_unique_configuration,
+        get_reference_number_method_running_configuration,
+        get_reference_number_method_shop_running_configuration,
+    ],
+)
 def test_refno_generation(method):
     for attempt in range(10):
-        with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
+        with patch("shuup.configuration.get", new=method):
             order = create_empty_order()
             order.save()
             assert order.reference_number
@@ -39,7 +57,7 @@ def test_refno_generation(method):
 def test_custom_refno_generation():
     methods = (custom_refno_gen, "%s.%s" % (__name__, custom_refno_gen.__name__))
     for method in methods:
-        with override_settings(SHUUP_REFERENCE_NUMBER_METHOD=method):
+        with patch("shuup.configuration.get", return_value=method):
             order = create_empty_order()
             order.save()
             assert order.reference_number == custom_refno_gen(order)
@@ -61,7 +79,6 @@ def test_custom_ident_generation():
 
 @pytest.mark.django_db
 def test_ref_lengths():
-    from shuup.admin.modules.settings import consts
     from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
 
     # clear shop configurations
@@ -79,48 +96,48 @@ def test_ref_lengths():
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.UNIQUE.value)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_METHOD, OrderReferenceNumberMethod.UNIQUE.value)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 17 + 1  # unique ref + checksum
 
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD, 25)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_LENGTH, 25)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 25 + 1  # unique ref + checksum
 
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD, 19)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_LENGTH, 19)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 19 + 1  # Finnish case
 
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.RUNNING.value)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_METHOD, OrderReferenceNumberMethod.RUNNING.value)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 19 + 1
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, "123")
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_PREFIX, "123")
     ref_number = get_reference_number(order)
     assert len(ref_number) == 19 + 1
     order.reference_number = None
     order.save()
 
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, 123)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_PREFIX, 123)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 19 + 1  # Finnish case
     order.reference_number = None
     order.save()
 
     # reset prefix
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, "")
-    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.SHOP_RUNNING.value)
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_PREFIX, "")
+    configuration.set(shop, SHUUP_REFERENCE_NUMBER_METHOD, OrderReferenceNumberMethod.SHOP_RUNNING.value)
     ref_number = get_reference_number(order)
     assert len(ref_number) == 19 + 1  # Finnish case
     order.reference_number = None

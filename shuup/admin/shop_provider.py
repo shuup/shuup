@@ -4,11 +4,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.core.models import Shop, ShopStatus
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.core.utils.shops import get_shop_from_host
 from shuup.utils.importing import cached_load
 
@@ -30,7 +31,7 @@ class AdminShopProvider(object):
 
     def _get_shop(self, request):
         # take the first if multishop is disabled
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS):
             return Shop.objects.first()
 
         permitted_shops = Shop.objects.get_for_user(request.user).filter(status=ShopStatus.ENABLED)

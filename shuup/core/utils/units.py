@@ -5,7 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
+from shuup.core.setting_keys import SHUUP_LENGTH_UNIT
 
 
 def get_shuup_volume_unit():
@@ -14,4 +14,6 @@ def get_shuup_volume_unit():
 
     :rtype: str
     """
-    return "{}3".format(settings.SHUUP_LENGTH_UNIT)
+    from shuup import configuration
+
+    return "{}3".format(configuration.get(None, SHUUP_LENGTH_UNIT))

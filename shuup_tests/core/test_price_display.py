@@ -48,23 +48,19 @@ from shuup.testing.factories import (
     get_default_tax_class,
 )
 
+from .utils import get_price_display_patched_configuration
+
 PRICING_MODULE_SPEC = __name__ + ":DummyPricingModule"
 
-original_pricing_module = settings.SHUUP_PRICING_MODULE
-original_discount_modules = settings.SHUUP_DISCOUNT_MODULES
 pricing_overrider = override_provides("pricing_module", [PRICING_MODULE_SPEC])
 
 
 def setup_module(module):
-    settings.SHUUP_PRICING_MODULE = "dummy_pricing_module"
-    settings.SHUUP_DISCOUNT_MODULES = []
     pricing_overrider.__enter__()
 
 
 def teardown_module(module):
     pricing_overrider.__exit__(None, None, None)
-    settings.SHUUP_PRICING_MODULE = original_pricing_module
-    settings.SHUUP_DISCOUNT_MODULES = original_discount_modules
 
 
 class DummyPricingModule(PricingModule):
@@ -102,6 +98,8 @@ def _get_price_info(shop, product=None, quantity=2):
     return PriceInfo(quantity * price, quantity * 4 * price, quantity)
 
 
+@pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_price_display_patched_configuration)
 def test_pricing_module_is_active():
     """
     Make sure that our custom pricing module is active.
@@ -185,6 +183,7 @@ TEST_DATA = [
 
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
+@patch("shuup.configuration.get", new=get_price_display_patched_configuration)
 @pytest.mark.django_db
 def test_filter(expr, expected_result, reindex_catalog):
     (engine, context) = _get_template_engine_and_context(create_var_product=True)
@@ -199,6 +198,7 @@ def test_filter(expr, expected_result, reindex_catalog):
 
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
+@patch("shuup.configuration.get", new=get_price_display_patched_configuration)
 @pytest.mark.django_db
 def test_filter_cache(expr, expected_result, reindex_catalog):
     with override_settings(
@@ -223,6 +223,7 @@ def test_filter_cache(expr, expected_result, reindex_catalog):
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_price_display_patched_configuration)
 def test_filter_parameter():
     (engine, context) = _get_template_engine_and_context()
     result = engine.from_string("{{ prod|price(quantity=2, include_taxes=True) }}")
@@ -233,6 +234,7 @@ def test_filter_parameter():
 
 
 @pytest.mark.django_db
+@patch("shuup.configuration.get", new=get_price_display_patched_configuration)
 def test_filter_parameter_contact_groups():
     customer_price = 10.3
     anonymous_price = 14.6

@@ -8,7 +8,8 @@ import abc
 import six
 from typing import TYPE_CHECKING, Dict, Iterable, Union
 
-from shuup.apps.provides import load_module_instances
+from shuup.apps.provides import load_configuration_module_instances
+from shuup.core.setting_keys import SHUUP_DISCOUNT_MODULES
 
 if TYPE_CHECKING:  # pragma: no cover
     from shuup.core.models import Product, ShopProduct
@@ -21,7 +22,7 @@ def get_discount_modules():
 
     :rtype: list[DiscountModule]
     """
-    return load_module_instances("SHUUP_DISCOUNT_MODULES", "discount_module")
+    return load_configuration_module_instances(SHUUP_DISCOUNT_MODULES, "discount_module")
 
 
 class DiscountModule(six.with_metaclass(abc.ABCMeta)):

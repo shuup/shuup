@@ -12,6 +12,7 @@ from django.forms import Form, ModelForm
 from django.forms.widgets import NumberInput
 from django.utils.encoding import force_text
 
+from shuup.admin.forms.fields import ListToCommaSeparatedStringField
 from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
     FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -108,3 +109,18 @@ def test_separated_value_field():
     assert fm.separated_values == ["1", "2", "3"]
     assert fm.separated_values_semi == ["4", "5", "6"]
     assert fm.separated_values_dash == ["7", "8", "9"]
+
+
+def test_list_to_comma_separated_string_field():
+    class TestForm(Form):
+        f = ListToCommaSeparatedStringField()
+
+    form1 = TestForm(data={"f": "one,two,three"})
+    form1.full_clean()
+    assert form1.is_valid() is True
+    assert form1.cleaned_data["f"] == ["one", "two", "three"]
+
+    form2 = TestForm(data={"f": " one , two , three "})
+    form2.full_clean()
+    assert form2.is_valid() is True
+    assert form2.cleaned_data["f"] == ["one", "two", "three"]

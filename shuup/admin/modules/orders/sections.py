@@ -7,14 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.base import Section
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import OrderStatusHistory, Shipment, Supplier
 from shuup.core.models._orders import OrderLogEntry
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.utils.django_compat import reverse
 
 
@@ -38,8 +39,8 @@ class BasicDetailsOrderSection(Section):
                 provided_information.append((info.title, info.information))
         return {
             "provided_information": provided_information,
-            "multiple_shops_enabled": settings.SHUUP_ENABLE_MULTIPLE_SHOPS,
-            "multiple_suppliers_enabled": settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
+            "multiple_shops_enabled": configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS),
+            "multiple_suppliers_enabled": configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS),
         }
 
 

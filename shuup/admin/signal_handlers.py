@@ -12,11 +12,24 @@ from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
 from shuup.admin.modules.orders.receivers import handle_custom_payment_return_requests
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
+)
 from shuup.admin.signals import object_saved
 from shuup.core import cache
 from shuup.core.models import Product, ShopProduct
 from shuup.core.order_creator.signals import order_creator_finished
+from shuup.core.signals import shuup_initialized
 from shuup.core.tasks import run_task
+
+
+@receiver(shuup_initialized)
+def on_shuup_initialized(sender, **kwargs):
+    from shuup import configuration
+
+    configuration.set(None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION, True)
+    configuration.set(None, SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION, True)
 
 
 @receiver(m2m_changed, sender=get_user_model().groups.through)

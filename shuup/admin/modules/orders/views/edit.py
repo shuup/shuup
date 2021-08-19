@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 import decimal
 import json
 from babel.numbers import format_currency, format_decimal
-from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ValidationError
@@ -21,6 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django_countries import countries
 
+from shuup import configuration
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.signals import object_created, object_saved
 from shuup.admin.toolbar import Toolbar
@@ -41,6 +41,7 @@ from shuup.core.models import (
     ShopStatus,
 )
 from shuup.core.pricing import get_pricing_module
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY
 from shuup.utils.django_compat import force_text, reverse
 from shuup.utils.http import get_client_ip
 from shuup.utils.i18n import format_money, format_percent, get_current_babel_locale, get_locally_formatted_datetime
@@ -197,7 +198,7 @@ class OrderEditView(CreateOrUpdateView):
         payment_methods = PaymentMethod.objects.for_shop(shop).enabled()
         return {
             "shops": shops,
-            "countryDefault": settings.SHUUP_ADDRESS_HOME_COUNTRY,
+            "countryDefault": configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY),
             "countries": [{"id": code, "name": name} for code, name in list(countries)],
             "shippingMethods": [encode_method(sm) for sm in shipping_methods],
             "paymentMethods": [encode_method(pm) for pm in payment_methods],

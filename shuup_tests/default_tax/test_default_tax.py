@@ -10,9 +10,11 @@ from __future__ import unicode_literals
 import pytest
 import random
 from decimal import Decimal
-from django.test.utils import override_settings
+from mock import patch
 
+from shuup.configuration import get as original_configuration_get
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
+from shuup.core.setting_keys import SHUUP_TAX_MODULE
 from shuup.core.taxing import TaxingContext, get_tax_module
 from shuup.default_tax.admin_module.views import TaxRuleEditView
 from shuup.default_tax.models import TaxRule
@@ -21,6 +23,12 @@ from shuup.testing.factories import create_product, get_default_shop, get_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.money import Money
 from shuup_tests.utils.forms import get_form_data
+
+
+def get_default_tax_module_patched_configuration(shop, key, default=None):
+    if key == SHUUP_TAX_MODULE:
+        return "default_tax"
+    return original_configuration_get(shop, key, default)
 
 
 class RuleDef(object):
@@ -189,7 +197,7 @@ def test_module(address, expected_taxes):
         rule.tax_classes.add(product.tax_class)
     assert TaxRule.objects.count() == len(TAX_RULE_DEFS)
 
-    with override_settings(SHUUP_TAX_MODULE="default_tax"):
+    with patch("shuup.configuration.get", new=get_default_tax_module_patched_configuration):
         module = get_tax_module()
         assert isinstance(module, DefaultTaxModule)
 
@@ -266,7 +274,8 @@ def test_rule_admin(rf, admin_user):
     data.update(
         {
             "shop": shop.pk,
-            "postal_codes_pattern": "99501-99511,99513-99524,99529-99530,99540,99590,99550,99567,99573,99577,99586-99588",
+            "postal_codes_pattern": "99501-99511,99513-99524,99529-99530,99540,"
+            "99590,99550,99567,99573,99577,99586-99588",
             "country_codes_pattern": "FI,CA,US,SE",
             "region_codes_pattern": "CA,AR,IA,AK,WY,TN",
             "tax": tax.id,
@@ -323,7 +332,7 @@ def test_rules_with_anonymous():
     company_tax_rule.tax_classes.add(tax_class)
     company_tax_rule.customer_tax_groups.add(companies_tax_group)
 
-    with override_settings(SHUUP_TAX_MODULE="default_tax"):
+    with patch("shuup.configuration.get", new=get_default_tax_module_patched_configuration):
         module = get_tax_module()
         assert isinstance(module, DefaultTaxModule)
 
@@ -362,7 +371,7 @@ def test_rules_with_disabled_tax():
     tax_rule = TaxRule.objects.create(tax=tax)
     tax_rule.tax_classes.add(tax_class)
 
-    with override_settings(SHUUP_TAX_MODULE="default_tax"):
+    with patch("shuup.configuration.get", new=get_default_tax_module_patched_configuration):
         module = get_tax_module()
         assert isinstance(module, DefaultTaxModule)
 

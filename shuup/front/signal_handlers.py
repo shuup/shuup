@@ -11,10 +11,18 @@ from filer.models import Image
 
 from shuup.core import cache
 from shuup.core.models import Manufacturer, ProductCrossSell, ProductMedia, Shop, ShopProduct
-from shuup.core.signals import context_cache_item_bumped  # noqa
+from shuup.core.signals import context_cache_item_bumped, shuup_initialized  # noqa
 from shuup.core.utils import context_cache
+from shuup.front.setting_keys import SHUUP_FRONT_MAX_UPLOAD_SIZE
 from shuup.front.utils import cache as cache_utils
 from shuup.front.utils.sorts_and_filters import bump_product_queryset_cache
+
+
+@receiver(shuup_initialized)
+def on_shuup_initialized(sender, **kwargs):
+    from shuup import configuration
+
+    configuration.set(None, SHUUP_FRONT_MAX_UPLOAD_SIZE, 500000)
 
 
 @receiver(context_cache_item_bumped, dispatch_uid="context-cache-item-bumped")

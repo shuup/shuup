@@ -189,6 +189,27 @@ def load_module(setting_name, provide_category):
     return _load_module(provide_category, setting_name, setting_value)
 
 
+def load_configuration_module(configuration_key, provide_category):
+    """
+    Load a module from a module configuration.
+
+    The value of the configuration must be a module
+    identifier for the given provide category.
+
+    :param configuration_key: The configuration name for the identifier.
+    :type configuration_key: str
+    :param provide_category:
+      The provide category for the identifier lookup (e.g. ``tax_module``).
+    :type provide_category: str
+    :return: An object.
+    :rtype: Any
+    """
+    from shuup import configuration
+
+    configuration_value = configuration.get(None, configuration_key)
+    return _load_module(provide_category, configuration_key, configuration_value)
+
+
 def load_modules(setting_name, provide_category):
     """
     Load a list of modules from a module setting.
@@ -211,14 +232,48 @@ def load_modules(setting_name, provide_category):
     return [_load_module(provide_category, setting_name, x) for x in setting_value]
 
 
-def load_module_instances(setting_name, provide_category):
+def load_configuration_modules(configuration_key, provide_category):
     """
-    Load a list of initialized modules from a module setting.
+    Load a list of modules from a module configuration.
+
+    The value of the configuration must be a list of module
+    identifiers for the given provide category.
+
+    The modules are returned in the same order they
+    are declared in the settings.
+
+    :param configuration_key: The configuration key for the identifier list.
+    :type configuration_name: str
+    :param provide_category:
+      The provide category for the identifier lookup (e.g. ``tax_module``).
+    :type provide_category: str
+    :return: A list of objects.
+    :rtype: list[Any]
+    """
+    from shuup import configuration
+
+    configuration_value = configuration.get(None, configuration_key)
+    return [_load_module(provide_category, configuration_key, x) for x in configuration_value]
+
+
+def load_module_instances(configuration_name, provide_category):
+    """
+    Load a list of initialized modules from a module settings.
 
     Basically does the same as `load_modules`, but also initializes the
     loaded modules by calling them.
     """
-    return [x() for x in load_modules(setting_name, provide_category)]
+    return [x() for x in load_modules(configuration_name, provide_category)]
+
+
+def load_configuration_module_instances(configuration_key, provide_category):
+    """
+    Load a list of initialized modules from a module configuration.
+
+    Basically does the same as `load_modules`, but also initializes the
+    loaded modules by calling them.
+    """
+    return [x() for x in load_configuration_modules(configuration_key, provide_category)]
 
 
 def _get_settings_value(setting_name):

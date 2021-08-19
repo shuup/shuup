@@ -9,7 +9,7 @@
 Shuup modular product pricing functionality.
 
 The pricing module in use is declared by the
-:obj:`~shuup.core.settings.SHUUP_PRICING_MODULE` setting.  The
+:obj:`SHUUP_PRICING_MODULE` configuration key.  The
 default is a pricing module that always prices everything to be free.
 The base distribution contains :obj:`shuup.customer_group_pricing`, which is an
 useful pricing module for many cases.

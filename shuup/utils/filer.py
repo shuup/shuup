@@ -9,41 +9,29 @@ from __future__ import absolute_import
 
 import hashlib
 import six
-from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
-from django.core.validators import FileExtensionValidator
 from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File, Folder, Image
 
 from shuup.admin.utils.permissions import has_permission
 from shuup.core.models import MediaFile, MediaFolder
+from shuup.core.setting_keys import SHUUP_MAX_UPLOAD_SIZE
 
 
 def file_size_validator(value):
+    from shuup import configuration
+
     size = getattr(value, "size", None)
-    if size and settings.SHUUP_MAX_UPLOAD_SIZE and settings.SHUUP_MAX_UPLOAD_SIZE < size:
+    max_upload_size = configuration.get(None, SHUUP_MAX_UPLOAD_SIZE)
+    if size and max_upload_size and max_upload_size < size:
         raise ValidationError(
-            _("Maximum file size reached (%(size)s MB).") % {"size": settings.SHUUP_MAX_UPLOAD_SIZE / 1000 / 1000},
+            _("Maximum file size reached (%(size)s MB).") % {"size": max_upload_size / 1000 / 1000},
             code="file_max_size_reached",
         )
 
     return value
-
-
-class UploadFileForm(forms.Form):
-    file = forms.FileField(
-        validators=[
-            FileExtensionValidator(allowed_extensions=settings.SHUUP_ALLOWED_UPLOAD_EXTENSIONS),
-            file_size_validator,
-        ]
-    )
-
-
-class UploadImageForm(forms.Form):
-    file = forms.ImageField(validators=[file_size_validator])
 
 
 def filer_folder_from_path(path):

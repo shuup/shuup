@@ -10,11 +10,12 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import ObjectSelect2MultipleField
 from shuup.admin.forms.widgets import QuickAddLabelMultiSelect, QuickAddUserMultiSelect
 from shuup.core.models import Currency, MutableAddress, Shop
-from shuup.core.settings_provider import ShuupSettings
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY, SHUUP_ENABLE_MULTIPLE_SHOPS
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.django_compat import force_text
 from shuup.utils.i18n import get_current_babel_locale
@@ -55,7 +56,7 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
         initial_members = self.instance.staff_members.all() if self.instance.pk else []
         staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["staff_members"] = staff_members
-        self.fields["domain"].required = ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS")
+        self.fields["domain"].required = configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS)
         self.disable_protected_fields()
 
     def clean_domain(self):
@@ -155,7 +156,7 @@ class ShopAddressWizardForm(forms.ModelForm):
         self.fields["phone"].required = True
 
         if not self.instance.pk:
-            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
+            self.fields["country"].initial = configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
 
         if self.instance.pk:
             name_components = self.instance.name.split(" ")

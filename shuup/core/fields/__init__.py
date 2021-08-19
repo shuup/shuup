@@ -143,6 +143,50 @@ class MeasurementField(FormattedDecimalField):
         return (name, path, args, kwargs)
 
 
+class UnitFormField(FormattedDecimalFormField):
+    """
+    Form Field for representing unit related configuration keys like SHUUP_LENGTH_UNIT, SHUUP_MASS_UNIT,
+    SHUUP_VOLUME_UNIT.
+    Allows updating the label with the db configuration value.
+    """
+
+    def __init__(self, unit_key=None, **kwargs):
+        self.unit_key = unit_key
+        super().__init__(**kwargs)
+        self.formatted_label = self.label
+
+    def update_label(self):
+        from shuup import configuration
+
+        self.unit = configuration.get(None, self.unit_key)
+        self.label = self.formatted_label.format(self.unit)
+
+
+class UnitKeyField(FormattedDecimalField):
+    """
+    Model Field for representing unit related configuration keys like SHUUP_LENGTH_UNIT, SHUUP_MASS_UNIT,
+    SHUUP_VOLUME_UNIT.
+    """
+
+    def __init__(self, unit_key, **kwargs):
+        self.unit_key = unit_key
+        kwargs.setdefault("decimal_places", FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+        kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)
+        kwargs.setdefault("default", 0)
+        super(UnitKeyField, self).__init__(**kwargs)
+
+    def deconstruct(self):
+        parent = super(UnitKeyField, self)
+        (name, path, args, kwargs) = parent.deconstruct()
+        kwargs["unit_key"] = self.unit_key
+        return (name, path, args, kwargs)
+
+    def formfield(self, **kwargs):
+        kwargs.setdefault("form_class", UnitFormField)
+        kwargs.setdefault("unit_key", self.unit_key)
+        return super(FormattedDecimalField, self).formfield(**kwargs)
+
+
 class LanguageFieldMixin(object):
     LANGUAGE_CODES = remove_extinct_languages(tuple(set(babel.Locale("en").languages.keys())))
 

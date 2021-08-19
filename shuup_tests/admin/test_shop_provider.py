@@ -8,17 +8,19 @@ import pytest
 from django.core.exceptions import PermissionDenied
 from django.test import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.admin.shop_provider import AdminShopProvider, get_shop, set_shop, unset_shop
 from shuup.core.models import Shop, ShopStatus
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("get_shop_fn", [get_shop, AdminShopProvider().get_shop])
 def test_get_shop(rf, get_shop_fn):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         activate("en")
         shop1 = Shop.objects.create(identifier="shop1", status=ShopStatus.ENABLED)
         shop2 = Shop.objects.create(identifier="shop2", status=ShopStatus.ENABLED)
@@ -59,7 +61,7 @@ def test_get_shop(rf, get_shop_fn):
     "set_shop_fn,get_shop_fn", [(set_shop, get_shop), (AdminShopProvider().set_shop, AdminShopProvider().get_shop)]
 )
 def test_set_shop(rf, set_shop_fn, get_shop_fn):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         activate("en")
         factories.get_default_shop()
         shop1 = Shop.objects.create(identifier="shop1", status=ShopStatus.ENABLED)
@@ -124,7 +126,7 @@ def test_unset_shop(rf, set_shop_fn, get_shop_fn, unset_shop_fn):
 
     request = apply_request_middleware(rf.post("/"), user=staff_user, skip_session=True)
 
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         set_shop_fn(request, shop2)
         assert get_shop_fn(request) == shop2
         unset_shop_fn(request)

@@ -25,6 +25,7 @@ from shuup.admin.utils.menu import is_menu_open
 from shuup.admin.utils.urls import NoModelUrl, manipulate_query_string
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.core.telemetry import is_telemetry_enabled
 from shuup.utils import django_compat
 from shuup.utils.django_compat import NoReverseMatch, force_text, reverse
@@ -209,7 +210,7 @@ def get_admin_shop(context):
 
 @contextfunction
 def is_multishop_enabled(context):
-    return settings.SHUUP_ENABLE_MULTIPLE_SHOPS is True
+    return configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) is True
 
 
 @contextfunction
@@ -226,7 +227,7 @@ def get_admin_supplier(context):
 
 @contextfunction
 def is_multiple_suppliers_enabled(context):
-    return settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS is True
+    return configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS) is True
 
 
 @contextfunction

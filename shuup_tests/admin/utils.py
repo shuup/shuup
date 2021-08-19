@@ -5,6 +5,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.configuration import get as original_configuration_get
+from shuup.core.setting_keys import (
+    SHUUP_ALLOW_ARBITRARY_REFUNDS,
+    SHUUP_ENABLE_MULTIPLE_SHOPS,
+    SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
+    SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_MAX_UPLOAD_SIZE,
+)
 from shuup_tests.utils import replace_urls
 
 
@@ -24,3 +32,63 @@ def get_admin_only_urls():
 
 def admin_only_urls():
     return replace_urls(get_admin_only_urls())
+
+
+def get_multiple_shops_true_multiple_suppliers_false_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return True
+    if key == SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_shops_true_multiple_suppliers_true_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return True
+    if key == SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_shops_false_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_shops_true_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_shops_true_contacts_per_shop_true_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return True
+    if key == SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_suppliers_true_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        return True
+    return original_configuration_get(shop, key, default)
+
+
+def get_multiple_suppliers_false_configuration(shop, key, default=None):
+    if key == SHUUP_ENABLE_MULTIPLE_SUPPLIERS:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_allow_arbitrary_refunds_false_configuration(shop, key, default=None):
+    if key == SHUUP_ALLOW_ARBITRARY_REFUNDS:
+        return False
+    return original_configuration_get(shop, key, default)
+
+
+def get_max_upload_size_patched_configuration(shop, key, default=None):
+    if key == SHUUP_MAX_UPLOAD_SIZE:
+        return 10
+    return original_configuration_get(shop, key, default)

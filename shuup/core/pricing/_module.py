@@ -9,7 +9,8 @@ import six
 from django.http import HttpRequest
 from typing import TYPE_CHECKING, Union
 
-from shuup.apps.provides import load_module
+from shuup.apps.provides import load_configuration_module
+from shuup.core.setting_keys import SHUUP_PRICING_MODULE
 
 from ._context import PricingContext
 
@@ -21,7 +22,7 @@ def get_pricing_module():
     """
     :rtype: shuup.core.pricing.PricingModule
     """
-    return load_module("SHUUP_PRICING_MODULE", "pricing_module")()
+    return load_configuration_module(SHUUP_PRICING_MODULE, "pricing_module")()
 
 
 class PricingModule(six.with_metaclass(abc.ABCMeta)):

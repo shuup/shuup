@@ -8,7 +8,7 @@ import datetime
 import json
 import pytest
 from django.http.response import Http404
-from django.test import override_settings
+from mock import patch
 
 from shuup.admin.shop_provider import set_shop
 from shuup.core.models import Shop
@@ -16,6 +16,7 @@ from shuup.discounts.admin.views import HappyHourDeleteView, HappyHourEditView, 
 from shuup.discounts.models import Discount, HappyHour
 from shuup.testing import factories
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 
 
 def _assert_view_get(rf, instance, shop, user, raises_404=False):
@@ -32,7 +33,7 @@ def _assert_view_get(rf, instance, shop, user, raises_404=False):
 
 @pytest.mark.django_db
 def test_happy_hours_admin_edit_view(rf, staff_user, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop = factories.get_default_shop()
         shop.staff_members.add(staff_user)
         factories.get_shop(identifier="shop2", enabled=True)
@@ -215,7 +216,7 @@ def _test_happy_hours_list_view(rf, index):
 
 @pytest.mark.django_db
 def test_discount_admin_list_view(rf, admin_user):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         for x in range(3):
             _test_happy_hours_list_view(rf, x)
 
@@ -266,6 +267,6 @@ def _test_happy_hours_delete_view(rf, index):
 
 @pytest.mark.django_db
 def test_happy_hours_admin_delete_view(rf):
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         for x in range(3):
             _test_happy_hours_delete_view(rf, x)

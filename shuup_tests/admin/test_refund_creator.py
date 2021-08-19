@@ -8,7 +8,7 @@
 
 import pytest
 from bs4 import BeautifulSoup
-from django.test import override_settings
+from mock import patch
 
 from shuup.admin.modules.orders.views.refund import OrderCreateFullRefundView, OrderCreateRefundView
 from shuup.core.models import OrderLine, OrderLineType
@@ -22,6 +22,7 @@ from shuup.testing.factories import (
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import force_text
+from shuup_tests.admin.utils import get_allow_arbitrary_refunds_false_configuration
 
 
 @pytest.mark.django_db
@@ -112,7 +113,7 @@ def test_arbitrary_refund_availability(rf, admin_user):
 
     refund_option_str = '<option value="amount">Refund arbitrary amount</option>'
     assert refund_option_str in get_refund_view_content()
-    with override_settings(SHUUP_ALLOW_ARBITRARY_REFUNDS=False):
+    with patch("shuup.configuration.get", new=get_allow_arbitrary_refunds_false_configuration):
         assert refund_option_str not in get_refund_view_content()
 
 

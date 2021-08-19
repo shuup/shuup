@@ -6,14 +6,15 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import get_person_contact
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.front.signals import login_allowed
 
 
@@ -92,7 +93,9 @@ class EmailAuthenticationForm(AuthenticationForm):
                 self.error_messages["inactive"],
                 code="inactive",
             )
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) and configuration.get(
+            None, SHUUP_MANAGE_CONTACTS_PER_SHOP
+        ):
             if not user.is_superuser:
                 shop = self.request.shop
                 if shop not in user.contact.shops.all():

@@ -8,26 +8,25 @@ from __future__ import unicode_literals
 
 import pytest
 from decimal import Decimal
-from django.conf import settings
 from django.test.client import RequestFactory
+from mock import patch
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import AnonymousContact, Product, Shop, Tax, TaxClass
 from shuup.core.pricing import PriceInfo, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import SourceLineTax, TaxedPrice, TaxModule
 from shuup.core.utils.prices import convert_taxness
-from shuup.testing.factories import get_currency
 from shuup.utils import babel_precision_provider
 from shuup.utils.money import Money, set_precision_provider
 
+from .utils import get_dummy_tax_module_patched_configuration
+
 TAX_MODULE_SPEC = __name__ + ":DummyTaxModule"
 
-original_tax_module = settings.SHUUP_TAX_MODULE
 tax_mod_overrider = override_provides("tax_module", [TAX_MODULE_SPEC])
 
 
 def setup_module(module):
-    settings.SHUUP_TAX_MODULE = "dummy_tax_module"
     tax_mod_overrider.__enter__()
 
     # uses the get_precision to avoid db hits
@@ -36,7 +35,6 @@ def setup_module(module):
 
 def teardown_module(module):
     tax_mod_overrider.__exit__(None, None, None)
-    settings.SHUUP_TAX_MODULE = original_tax_module
 
 
 class DummyTaxModule(TaxModule):
@@ -69,6 +67,8 @@ class DummyTaxModule(TaxModule):
         (True, TaxfulPrice),
     ],
 )
+@pytest.mark.db_django
+@patch("shuup.configuration.get", new=get_dummy_tax_module_patched_configuration)
 def test_convert_taxness_without_conversion(taxes, price_cls):
     request = get_request()
     item = Product()
@@ -83,6 +83,8 @@ def test_convert_taxness_without_conversion(taxes, price_cls):
     assert calcs_done_after == calcs_done_before
 
 
+@pytest.mark.db_django
+@patch("shuup.configuration.get", new=get_dummy_tax_module_patched_configuration)
 def test_convert_taxness_taxless_to_taxful():
     request = get_request()
     tax_class = TaxClass()
@@ -101,6 +103,8 @@ def test_convert_taxness_taxless_to_taxful():
     assert calcs_done_after == calcs_done_before + 2
 
 
+@pytest.mark.db_django
+@patch("shuup.configuration.get", new=get_dummy_tax_module_patched_configuration)
 def test_convert_taxness_taxful_to_taxless():
     request = get_request()
     tax_class = TaxClass()

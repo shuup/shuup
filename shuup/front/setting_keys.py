@@ -6,6 +6,4 @@
 # LICENSE file in the root directory of this source tree.
 
 
-ORDER_REFERENCE_NUMBER_LENGTH_FIELD = "order_reference_number_length"
-ORDER_REFERENCE_NUMBER_PREFIX_FIELD = "order_reference_number_prefix"
-ORDER_REFERENCE_NUMBER_METHOD_FIELD = "order_reference_number_method"
+SHUUP_FRONT_MAX_UPLOAD_SIZE = "front_max_upload_size"

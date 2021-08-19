@@ -6,16 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import six
-from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from typing import Iterable
 
+from shuup import configuration
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
 from shuup.admin.utils.object_selector import get_object_selector_permission_name
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import CompanyContact, Contact, PersonContact
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 
 
 class ContactModule(AdminModule):
@@ -80,7 +81,9 @@ class ContactModule(AdminModule):
             filters = Q(Q(name__icontains=query) | Q(email=query))
 
             # show only contacts which the shop has access
-            if settings.SHUUP_ENABLE_MULTIPLE_SHOPS and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP:
+            if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS) and configuration.get(
+                None, SHUUP_MANAGE_CONTACTS_PER_SHOP
+            ):
                 filters &= Q(shops=request.shop)
 
             if not request.user.is_superuser:

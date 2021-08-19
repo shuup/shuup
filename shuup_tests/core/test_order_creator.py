@@ -12,7 +12,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db.models import ProtectedError
-from django.test import override_settings
+from mock import patch
 
 from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
@@ -43,6 +43,7 @@ from shuup.testing.factories import (
 )
 from shuup.utils.models import get_data_dict
 from shuup.utils.money import Money
+from shuup_tests.admin.utils import get_multiple_shops_true_contacts_per_shop_true_configuration
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
@@ -389,7 +390,7 @@ def test_order_creator_min_total(rf, admin_user):
 
 @pytest.mark.django_db
 def test_order_creator_contact_multishop():
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         user = create_random_user()
         customer = create_random_person("en")
         customer.user = user
@@ -412,7 +413,7 @@ def test_order_creator_contact_multishop():
 
 @pytest.mark.django_db
 def test_order_creator_company_multishop():
-    with override_settings(SHUUP_MANAGE_CONTACTS_PER_SHOP=True, SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_contacts_per_shop_true_configuration):
         company = create_random_company()
         shop = get_shop(identifier="random-shop", enabled=True)
 

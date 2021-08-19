@@ -8,16 +8,15 @@
 from __future__ import unicode_literals
 
 import decimal
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from jsonfield import JSONField
 from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
-from shuup.core.fields import MeasurementField, MoneyValueField
+from shuup.core.fields import MoneyValueField, UnitKeyField
+from shuup.core.setting_keys import SHUUP_ADDRESS_HOME_COUNTRY, SHUUP_MASS_UNIT
 
 from ._addresses import REGION_ISO3166
 from ._service_base import ServiceBehaviorComponent, ServiceCost, TranslatableServiceBehaviorComponent
@@ -136,16 +135,16 @@ class WeightBasedPriceRange(TranslatableModel):
     component = models.ForeignKey(
         "WeightBasedPricingBehaviorComponent", related_name="ranges", on_delete=models.CASCADE
     )
-    min_value = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=format_lazy(_("min weight ({})"), settings.SHUUP_MASS_UNIT),
+    min_value = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("min weight ({})"),
         blank=True,
         null=True,
         help_text=_("The minimum weight for this price to apply."),
     )
-    max_value = MeasurementField(
-        unit=settings.SHUUP_MASS_UNIT,
-        verbose_name=format_lazy(_("max weight ({})"), settings.SHUUP_MASS_UNIT),
+    max_value = UnitKeyField(
+        unit_key=SHUUP_MASS_UNIT,
+        verbose_name=_("max weight ({})"),
         blank=True,
         null=True,
         help_text=_("The maximum weight before this price no longer applies."),
@@ -309,8 +308,10 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
     )
 
     def get_unavailability_reasons(self, service, source):
+        from shuup import configuration
+
         address = source.shipping_address if hasattr(service, "carrier") else source.billing_address
-        country = address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY
+        country = address.country if address else configuration.get(None, SHUUP_ADDRESS_HOME_COUNTRY)
         if not (address or country):
             yield ValidationError(_("Service is not available without a defined country."), code="no_country")
 
@@ -353,8 +354,8 @@ def _is_in_range(value, min_value, max_value):
     range only when it's zero. Max value is always part of the range.
 
     :type value: decimal.Decimal
-    :type min_value: MeasurementField|MoneyValueField
-    :type max_value: MeasurementField|MoneyValueField
+    :type min_value: MeasurementField|MoneyValueField|UnitKeyField
+    :type max_value: MeasurementField|MoneyValueField|UnitKeyField
     :rtype: bool
     """
     if value is None:

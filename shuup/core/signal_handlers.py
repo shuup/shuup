@@ -9,6 +9,7 @@ from django.db.backends.signals import connection_created
 from django.db.models.signals import m2m_changed, post_migrate, post_save
 from django.dispatch import receiver
 
+from shuup.core.constants import DEFAULT_REFERENCE_NUMBER_LENGTH
 from shuup.core.models import (
     Category,
     CompanyContact,
@@ -26,7 +27,33 @@ from shuup.core.models import (
 from shuup.core.models._contacts import get_groups_ids, get_price_display_options
 from shuup.core.models._units import get_display_unit
 from shuup.core.order_creator.signals import order_creator_finished
-from shuup.core.signals import context_cache_item_bumped, order_changed
+from shuup.core.setting_keys import (
+    SHUUP_ADDRESS_HOME_COUNTRY,
+    SHUUP_ALLOW_ANONYMOUS_ORDERS,
+    SHUUP_ALLOW_ARBITRARY_REFUNDS,
+    SHUUP_ALLOW_EDITING_ORDER,
+    SHUUP_ALLOWED_UPLOAD_EXTENSIONS,
+    SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE,
+    SHUUP_DEFAULT_ORDER_LABEL,
+    SHUUP_DISCOUNT_MODULES,
+    SHUUP_ENABLE_ATTRIBUTES,
+    SHUUP_ENABLE_MULTIPLE_SHOPS,
+    SHUUP_ENABLE_MULTIPLE_SUPPLIERS,
+    SHUUP_HOME_CURRENCY,
+    SHUUP_LENGTH_UNIT,
+    SHUUP_MANAGE_CONTACTS_PER_SHOP,
+    SHUUP_MASS_UNIT,
+    SHUUP_MAX_UPLOAD_SIZE,
+    SHUUP_ORDER_SOURCE_MODIFIER_MODULES,
+    SHUUP_PRICING_MODULE,
+    SHUUP_REFERENCE_NUMBER_LENGTH,
+    SHUUP_REFERENCE_NUMBER_METHOD,
+    SHUUP_REFERENCE_NUMBER_PREFIX,
+    SHUUP_TAX_MODULE,
+    SHUUP_TELEMETRY_ENABLED,
+    SHUUP_VOLUME_UNIT,
+)
+from shuup.core.signals import context_cache_item_bumped, order_changed, shuup_initialized
 from shuup.core.utils import context_cache
 from shuup.core.utils.context_cache import (
     bump_internal_cache,
@@ -35,6 +62,36 @@ from shuup.core.utils.context_cache import (
 )
 from shuup.core.utils.db import extend_sqlite_functions
 from shuup.core.utils.price_cache import bump_all_price_caches, bump_prices_for_product, bump_prices_for_shop_product
+
+
+@receiver(shuup_initialized)
+def on_shuup_initialized(sender, **kwargs):
+    from shuup import configuration
+
+    configuration.set(None, SHUUP_HOME_CURRENCY, "EUR")
+    configuration.set(None, SHUUP_ADDRESS_HOME_COUNTRY, None)
+    configuration.set(None, SHUUP_ALLOW_ANONYMOUS_ORDERS, True)
+    configuration.set(None, SHUUP_REFERENCE_NUMBER_METHOD, "unique")
+    configuration.set(None, SHUUP_REFERENCE_NUMBER_LENGTH, DEFAULT_REFERENCE_NUMBER_LENGTH)
+    configuration.set(None, SHUUP_REFERENCE_NUMBER_PREFIX, "")
+    configuration.set(None, SHUUP_DISCOUNT_MODULES, ["customer_group_discount", "product_discounts"])
+    configuration.set(None, SHUUP_PRICING_MODULE, "multivendor_supplier_pricing")
+    configuration.set(None, SHUUP_ORDER_SOURCE_MODIFIER_MODULES, ["basket_campaigns"])
+    configuration.set(None, SHUUP_TAX_MODULE, "default_tax")
+    configuration.set(None, SHUUP_ENABLE_ATTRIBUTES, True)
+    configuration.set(None, SHUUP_ENABLE_MULTIPLE_SHOPS, False)
+    configuration.set(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS, False)
+    configuration.set(None, SHUUP_MANAGE_CONTACTS_PER_SHOP, False)
+    configuration.set(None, SHUUP_ALLOW_EDITING_ORDER, not configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS))
+    configuration.set(None, SHUUP_DEFAULT_ORDER_LABEL, "default")
+    configuration.set(None, SHUUP_TELEMETRY_ENABLED, True)
+    configuration.set(None, SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE, True)
+    configuration.set(None, SHUUP_ALLOW_ARBITRARY_REFUNDS, True)
+    configuration.set(None, SHUUP_ALLOWED_UPLOAD_EXTENSIONS, ["pdf", "ttf", "eot", "woff", "woff2", "otf"])
+    configuration.set(None, SHUUP_MAX_UPLOAD_SIZE, 5000000)
+    configuration.set(None, SHUUP_MASS_UNIT, "g")
+    configuration.set(None, SHUUP_LENGTH_UNIT, "mm")
+    configuration.set(None, SHUUP_VOLUME_UNIT, "mm3")
 
 
 @receiver(post_migrate)

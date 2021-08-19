@@ -27,7 +27,6 @@ from shuup.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 from shuup.testing.factories import get_default_customer_group, get_default_shop
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.django_db

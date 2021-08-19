@@ -10,6 +10,12 @@ from __future__ import unicode_literals
 import datetime
 from django.conf import settings
 
+from shuup.core.constants import DEFAULT_REFERENCE_NUMBER_LENGTH
+from shuup.core.setting_keys import (
+    SHUUP_REFERENCE_NUMBER_LENGTH,
+    SHUUP_REFERENCE_NUMBER_METHOD,
+    SHUUP_REFERENCE_NUMBER_PREFIX,
+)
 from shuup.utils.django_compat import force_text
 from shuup.utils.importing import load
 
@@ -27,10 +33,10 @@ def calc_reference_number_checksum(rn):
 
 def get_unique_reference_number(shop, id):
     from shuup import configuration
-    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_LENGTH_FIELD
 
     now = datetime.datetime.now()
-    ref_length = configuration.get(shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
+
+    ref_length = configuration.get(shop, SHUUP_REFERENCE_NUMBER_LENGTH, DEFAULT_REFERENCE_NUMBER_LENGTH)
     dt = ("%06s%07d%04d" % (now.strftime("%y%m%d"), now.microsecond, id % 1000)).rjust(ref_length, "0")
     return dt + calc_reference_number_checksum(dt)
 
@@ -41,18 +47,10 @@ def get_unique_reference_number_for_order(order):
 
 def get_running_reference_number(order):
     from shuup import configuration
-    from shuup.admin.modules.settings.consts import (
-        ORDER_REFERENCE_NUMBER_LENGTH_FIELD,
-        ORDER_REFERENCE_NUMBER_PREFIX_FIELD,
-    )
 
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
-    prefix = "%s" % configuration.get(
-        order.shop, ORDER_REFERENCE_NUMBER_PREFIX_FIELD, settings.SHUUP_REFERENCE_NUMBER_PREFIX
-    )
-    ref_length = configuration.get(
-        order.shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH
-    )
+    prefix = "%s" % configuration.get(order.shop, SHUUP_REFERENCE_NUMBER_PREFIX)
+    ref_length = configuration.get(order.shop, SHUUP_REFERENCE_NUMBER_LENGTH, DEFAULT_REFERENCE_NUMBER_LENGTH)
 
     padded_value = force_text(value).rjust(ref_length - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
@@ -61,13 +59,10 @@ def get_running_reference_number(order):
 
 def get_shop_running_reference_number(order):
     from shuup import configuration
-    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_LENGTH_FIELD
 
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
     prefix = "%06d" % order.shop.pk
-    ref_length = configuration.get(
-        order.shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH
-    )
+    ref_length = configuration.get(order.shop, SHUUP_REFERENCE_NUMBER_LENGTH, DEFAULT_REFERENCE_NUMBER_LENGTH)
     padded_value = force_text(value).rjust(ref_length - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
     return reference_no + calc_reference_number_checksum(reference_no)
@@ -75,18 +70,18 @@ def get_shop_running_reference_number(order):
 
 def get_reference_number(order):
     from shuup import configuration
-    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_METHOD_FIELD
+    from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
 
     if order.reference_number:
         raise ValueError("Error! Order passed to function `get_reference_number()` already has a reference number.")
     reference_number_method = configuration.get(
-        order.shop, ORDER_REFERENCE_NUMBER_METHOD_FIELD, settings.SHUUP_REFERENCE_NUMBER_METHOD
+        order.shop, SHUUP_REFERENCE_NUMBER_METHOD, DEFAULT_REFERENCE_NUMBER_LENGTH
     )
-    if reference_number_method == "unique":
+    if reference_number_method == OrderReferenceNumberMethod.UNIQUE.value:
         return get_unique_reference_number_for_order(order)
-    elif reference_number_method == "running":
+    elif reference_number_method == OrderReferenceNumberMethod.RUNNING.value:
         return get_running_reference_number(order)
-    elif reference_number_method == "shop_running":
+    elif reference_number_method == OrderReferenceNumberMethod.SHOP_RUNNING.value:
         return get_shop_running_reference_number(order)
     elif callable(reference_number_method):
         return reference_number_method(order)

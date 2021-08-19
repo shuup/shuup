@@ -6,7 +6,6 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import json
-from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,11 +14,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
 
+from shuup import configuration
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SHOPS, SHUUP_MANAGE_CONTACTS_PER_SHOP
 from shuup.core.tasks import run_task
 from shuup.gdpr.admin_module.forms import GDPRBaseFormPart, GDPRCookieCategoryFormPart
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
@@ -76,8 +77,8 @@ class BaseContactView(SingleObjectMixin, View):
         queryset = Contact.objects.all()
 
         limited = (
-            settings.SHUUP_ENABLE_MULTIPLE_SHOPS
-            and settings.SHUUP_MANAGE_CONTACTS_PER_SHOP
+            configuration.get(None, SHUUP_ENABLE_MULTIPLE_SHOPS)
+            and configuration.get(None, SHUUP_MANAGE_CONTACTS_PER_SHOP)
             and not self.request.user.is_superuser
         )
         if limited:

@@ -134,10 +134,18 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.taxes.object_selector.TaxClassAdminObjectSelector",
             "shuup.admin.modules.users.object_selector.UserAdminObjectSelector",
         ],
+        "system_settings_form_part": [
+            "shuup.admin.modules.settings.forms.system.AdminSettingsFormPart",
+            "shuup.admin.modules.settings.forms.system.CoreSettingsFormPart",
+            "shuup.admin.modules.settings.forms.system.OrderSettingsFormPart",
+        ],
+        "system_setting_keys": [
+            "shuup.admin.setting_keys",
+        ],
     }
 
     def ready(self):
-        import shuup.admin.signal_handling  # noqa (F401)
+        import shuup.admin.signal_handlers  # noqa (F401)
 
         validate_templates_configuration()
 

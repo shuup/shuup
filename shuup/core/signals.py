@@ -8,6 +8,7 @@
 
 from django.dispatch import Signal
 
+shuup_initialized = Signal(providing_args=["shop"], use_caching=True)
 get_visibility_errors = Signal(providing_args=["shop_product", "customer"], use_caching=True)
 get_orderability_errors = Signal(providing_args=["shop_product", "customer", "supplier", "quantity"], use_caching=True)
 shipment_created = Signal(providing_args=["order", "shipment"], use_caching=True)
@@ -24,7 +25,7 @@ context_cache_item_bumped = Signal(providing_args=["item", "shop_id"], use_cachi
 order_changed = Signal(providing_args=["order"], use_caching=True)
 order_status_changed = Signal(providing_args=["order", "old_status", "new_status"], use_caching=True)
 user_reset_password_requested = Signal(providing_args=["shop", "user", "reset_domain_url", "reset_url_name"])
-
+settings_updated = Signal(providing_args=["shop"], use_caching=True)
 #: Send from supplier module after the stocks updated have
 #: been triggered after order, shipment and shop product change.
 #:

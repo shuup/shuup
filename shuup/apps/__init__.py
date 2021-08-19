@@ -55,7 +55,8 @@ rules for naming their settings.
  1. Each setting should be prefixed with the string `SHUUP_`
  2. Boolean toggle settings should have a verb in imperative mood as
     part of the name, e.g. `SHUUP_ALLOW_ANONYMOUS_ORDERS`,
-    `SHUUP_ENABLE_ATTRIBUTES` or `SHUUP_ENABLE_MULTIPLE_SHOPS`.
+    `SHUUP_ENABLE_ATTRIBUTES` or `SHUUP_ENABLE_MULTIPLE_SHOPS`
+    (actually these settings were moved to the configuration).
  3. Setting that is used to locate a replaceable module should have
     suffix `_SPEC` or `_SPECS` (if the setting is a list or mapping of
     those), e.g. `SHUUP_PRICING_MODULE_SPEC`.

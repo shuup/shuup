@@ -84,6 +84,12 @@ class MultiLanguageModelForm(TranslatableModelForm):
                 self.trans_name_map[lang][f.name] = language_field_name
                 self.translated_field_names.append(language_field_name)
 
+        # update dynamic labels that displays information from the configuration.
+        for field_name, field in self.base_fields.items():
+            update_label = getattr(field, "update_label", None)
+            if callable(update_label):
+                update_label()
+
         instance = kwargs.get("instance")
         initial = kwargs.get("initial")
         if instance is not None:

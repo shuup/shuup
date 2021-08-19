@@ -69,7 +69,7 @@ class OrderLineReport(OrderLineReportMixin, ShuupReportBase):
 
     def get_data(self):
         data = []
-        order_lines = self.get_objects()[: self.queryset_row_limit]
+        order_lines = self.get_objects()[: self.get_queryset_row_limit()]
         for line in order_lines:
             data.append(
                 {

@@ -16,6 +16,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import resolve_url
 from django.test import override_settings
+from mock import patch
 
 from shuup import configuration
 from shuup.core.models import CompanyContact, get_company_contact, get_person_contact
@@ -26,6 +27,7 @@ from shuup.testing.factories import create_random_user, generate_image, get_defa
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.django_compat import reverse
+from shuup_tests.front.utils import get_front_max_upload_size_patched_configuration
 from shuup_tests.utils import SmartClient
 from shuup_tests.utils.fixtures import REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME, regular_user
 
@@ -79,7 +81,7 @@ def test_with_invalid_image(client, regular_user):
 def test_large_file(client, regular_user):
     client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
     with override_settings(SHUUP_CUSTOMER_INFORMATION_ALLOW_PICTURE_UPLOAD=True):
-        with override_settings(SHUUP_FRONT_MAX_UPLOAD_SIZE=10):
+        with patch("shuup.configuration.get", new=get_front_max_upload_size_patched_configuration):
             tmp_file = tempfile.NamedTemporaryFile(suffix=".jpg")
             generate_image(120, 120).save(tmp_file)
             with open(tmp_file.name, "rb") as data:

@@ -7,16 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.db.models import Q
 from django.templatetags.static import static
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.shop_provider import get_shop
 from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.picotable import ChoicesFilter, Column, Picotable, RangeFilter, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import ProductMode, Shop, ShopProduct
+from shuup.core.setting_keys import SHUUP_ENABLE_MULTIPLE_SUPPLIERS
 from shuup.core.specs.product_kind import DefaultProductKindSpec, get_product_kind_specs
 from shuup.utils.iterables import first
 
@@ -116,7 +117,7 @@ class ProductListView(PicotableListView):
         def get_suppliers_filter():
             return TextFilter(filter_field="suppliers__name", placeholder=_("Filter by supplier name..."))
 
-        if settings.SHUUP_ENABLE_MULTIPLE_SUPPLIERS and not get_suppliers_column(self.default_columns):
+        if configuration.get(None, SHUUP_ENABLE_MULTIPLE_SUPPLIERS) and not get_suppliers_column(self.default_columns):
             self.default_columns.append(
                 Column(
                     "suppliers",

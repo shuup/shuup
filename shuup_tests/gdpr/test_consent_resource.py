@@ -13,6 +13,7 @@ from bs4 import BeautifulStoneSoup
 from django.conf import settings
 from django.test.utils import override_settings
 from django.utils.translation import activate
+from mock import patch
 
 from shuup.core.models import ShopStatus
 from shuup.gdpr.models import GDPRCookieCategory, GDPRSettings
@@ -24,6 +25,7 @@ from shuup.gdpr.utils import (
 from shuup.testing import factories
 from shuup.utils.django_compat import reverse
 from shuup.xtheme.models import Snippet, SnippetType
+from shuup_tests.admin.utils import get_multiple_shops_true_configuration
 from shuup_tests.utils import SmartClient
 
 
@@ -88,7 +90,7 @@ def test_resource_injection(client):
     assert default_active_input.has_attr("checked")
 
     # make sure no other shop has this
-    with override_settings(SHUUP_ENABLE_MULTIPLE_SHOPS=True):
+    with patch("shuup.configuration.get", new=get_multiple_shops_true_configuration):
         shop2 = factories.get_shop(identifier="shop2", status=ShopStatus.DISABLED, domain="shop2")
         response = client.get(index_url, HTTP_HOST=shop2.domain)
         response_content = response.content.decode("utf-8")

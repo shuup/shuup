@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 from django.core.exceptions import ValidationError
-from django.forms import DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
+from django.forms import CharField, DecimalField, Field, MultipleChoiceField, Select, SelectMultiple
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from numbers import Number
@@ -35,6 +35,22 @@ class PercentageField(DecimalField):
         if self.max_value is not None:
             attrs["max"] = self.max_value * self.MULTIPLIER
         return attrs
+
+
+class ListToCommaSeparatedStringField(CharField):
+    def to_python(self, value):
+        if isinstance(value, str):
+            splitted = value.split(",")
+            value = [s.strip() for s in splitted]
+        else:
+            value = super(ListToCommaSeparatedStringField, self).to_python(value)
+        return value
+
+    def prepare_value(self, value):
+        if isinstance(value, (list, tuple)):
+            stripped = [s.strip() for s in value]
+            value = ",".join(stripped)
+        return value
 
 
 class Select2ModelField(Field):

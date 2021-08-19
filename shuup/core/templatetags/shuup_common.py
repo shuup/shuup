@@ -30,6 +30,10 @@ from jinja2 import Undefined
 from jinja2.utils import contextfunction
 from json import dumps as json_dump
 
+from shuup.admin.setting_keys import (
+    SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION,
+    SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION,
+)
 from shuup.utils.i18n import format_money, format_percent, get_current_babel_locale
 from shuup.utils.serialization import ExtendedJSONEncoder
 
@@ -140,9 +144,11 @@ def json(value):
 
 @library.filter
 def safe_product_description(value):
+    from shuup import configuration
+
     if isinstance(value, Undefined):
         return value
-    if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
+    if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION):
         value = linebreaks(bleach.clean(value, tags=[], strip=True))
     return mark_safe(value)
 
@@ -157,9 +163,11 @@ def cleanmeta(value):
 
 @library.filter
 def safe_vendor_description(value):
+    from shuup import configuration
+
     if isinstance(value, Undefined):
         return value
-    if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
+    if not configuration.get(None, SHUUP_ADMIN_ALLOW_HTML_IN_SUPPLIER_DESCRIPTION):
         value = linebreaks(bleach.clean(value, tags=[]))
     return mark_safe(value)
 

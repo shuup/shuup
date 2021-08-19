@@ -11,14 +11,15 @@ import six
 from collections import OrderedDict
 from datetime import datetime, timedelta
 from decimal import Decimal
-from django.conf import settings
 from django.utils.functional import Promise
 from django.utils.timezone import get_current_timezone, make_aware
 
+from shuup import configuration
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Shop
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.reports.forms import BaseReportForm
+from shuup.reports.setting_keys import SHUUP_DEFAULT_REPORTS_ITEM_LIMIT
 from shuup.reports.utils import parse_date_range
 from shuup.utils.django_compat import force_text
 
@@ -30,7 +31,6 @@ class ShuupReportBase(object):
 
     filename_template = None
     icon = "fa-money"
-    queryset_row_limit = settings.DEFAULT_REPORTS_ITEM_LIMIT
 
     form_class = BaseReportForm
 
@@ -83,6 +83,10 @@ class ShuupReportBase(object):
             return has_permission(request.user, cls.identifier)
         except ImportError:
             return True
+
+    @classmethod
+    def get_queryset_row_limit(self):
+        return configuration.get(None, SHUUP_DEFAULT_REPORTS_ITEM_LIMIT)
 
     def ensure_texts(self):
         """
