@@ -412,7 +412,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             help_text=_(
                 "You can enter keywords that describe your product. "
                 "This will help your shoppers learn about your products. "
-                "It will also help shoppers find them in the store and on the web."
+                "It will also help shoppers find them in the store and on the web. "
+                "Enter the keywords as a comma separated list. EXAMPLE: cotton, wool, clothing"
             ),
         ),
         variation_name=models.CharField(
