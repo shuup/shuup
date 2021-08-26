@@ -97,7 +97,7 @@ REQUIRES = [
     "django-registration-redux==2.7",
     "django-reversion==3.0.5",
     "django-timezone-field==3.1",  # doesn't support Django 3 in this version
-    "djangorestframework==3.11",
+    "djangorestframework==3.12.4",
     "factory-boy==2.7.0",
     "fake-factory>=0.5.0,<0.5.4",
     "Jinja2==2.8.1",

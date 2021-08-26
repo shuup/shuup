@@ -28,7 +28,7 @@ from ._base import ShuupModel
 from ._shipments import ShipmentProduct
 
 
-class OrderLineType(Enum):
+class OrderLineType(int, Enum):
     PRODUCT = 1
     SHIPPING = 2
     PAYMENT = 3

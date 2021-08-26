@@ -25,7 +25,7 @@ from shuup.utils.analog import define_log_model
 __all__ = ("Shipment", "ShipmentProduct")
 
 
-class ShipmentStatus(Enum):
+class ShipmentStatus(int, Enum):
     NOT_SENT = 0
     SENT = 1
     RECEIVED = 2  # if the customer deigns to tell us
@@ -40,7 +40,7 @@ class ShipmentStatus(Enum):
         DELETED = _("Deleted")
 
 
-class ShipmentType(Enum):
+class ShipmentType(int, Enum):
     OUT = 0
     IN = 1
 

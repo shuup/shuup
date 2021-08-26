@@ -60,7 +60,7 @@ if TYPE_CHECKING:  # pragma: no cover
     from ._service_base import Service, ServiceBehaviorComponent  # noqa: F401
 
 
-class PaymentStatus(Enum):
+class PaymentStatus(int, Enum):
     NOT_PAID = 0
     PARTIALLY_PAID = 1
     FULLY_PAID = 2
@@ -75,7 +75,7 @@ class PaymentStatus(Enum):
         DEFERRED = _("deferred")
 
 
-class ShippingStatus(Enum):
+class ShippingStatus(int, Enum):
     NOT_SHIPPED = 0
     PARTIALLY_SHIPPED = 1
     FULLY_SHIPPED = 2

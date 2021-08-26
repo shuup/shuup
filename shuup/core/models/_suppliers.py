@@ -31,7 +31,7 @@ if TYPE_CHECKING:  # pragma: no cover
 LOGGER = logging.getLogger(__name__)
 
 
-class SupplierType(Enum):
+class SupplierType(int, Enum):
     INTERNAL = 1
     EXTERNAL = 2
 

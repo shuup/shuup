@@ -44,7 +44,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 # TODO (3.0): This should be extandable
-class ProductMode(Enum):
+class ProductMode(int, Enum):
     NORMAL = 0
     PACKAGE_PARENT = 1
     SIMPLE_VARIATION_PARENT = 2

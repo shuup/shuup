@@ -106,6 +106,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         exclude = ()
+        ref_name = "GdprOrderSerializer"
 
 
 class SavedAddressSerializer(serializers.ModelSerializer):
@@ -128,6 +129,7 @@ class FrontSavedBasketSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoredBasket
         exclude = ()
+        ref_name = "FrontSavedBasketSerializer"
 
 
 class ContactSerializer(serializers.ModelSerializer):

@@ -26,7 +26,7 @@ from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import LogEntryKind, define_log_model
 
 
-class CategoryStatus(Enum):
+class CategoryStatus(int, Enum):
     INVISIBLE = 0
     VISIBLE = 1
     DELETED = 2
@@ -37,7 +37,7 @@ class CategoryStatus(Enum):
         DELETED = _("deleted")
 
 
-class CategoryVisibility(Enum):
+class CategoryVisibility(int, Enum):
     VISIBLE_TO_ALL = 1
     VISIBLE_TO_LOGGED_IN = 2
     VISIBLE_TO_GROUPS = 3
