@@ -1,7 +1,7 @@
 FROM ubuntu:18.04 as base
 
 USER root
-RUN apt update
+RUN apt-get update
 #    && apt --assume-yes install \
 #        libpangocairo-1.0-0 \
 #        python3 \
@@ -24,6 +24,8 @@ RUN rm -rf /var/lib/apt/lists/ /var/cache/apt/
 COPY . /app
 WORKDIR /app
 
+RUN pip3 install -U pip
+RUN pip3 install -U setuptools
 RUN pip3 install -r requirements-dev.txt
 RUN python3 setup.py build_resources
 
@@ -39,4 +41,4 @@ except IntegrityError:\n\
     pass\n'\
 | python3 -m shuup_workbench shell
 
-CMD ["python3", "-m", "shuup_workbench", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "-m", "shuup_workbench", "runserver", "0.0.0.0:8001"]
