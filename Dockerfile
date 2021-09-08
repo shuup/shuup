@@ -38,4 +38,4 @@ except IntegrityError:\n\
 | python3 -m shuup_workbench shell
 
 # CMD ["python3", "-m", "shuup_workbench", "runserver", "0.0.0.0:8000"]
-CMD ["gunicorn shuup_workbench.wsgi:application"]
+CMD ["gunicorn", "shuup_workbench.wsgi:application"]
