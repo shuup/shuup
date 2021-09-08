@@ -20,7 +20,7 @@ WORKDIR /app
 # The dev compose file sets this to 1 to support development and editing the source code.
 # The default value of 0 just installs the demo for running.
 ARG editable=0
-# 
+# pip upgrade to be able to install cryptography
 RUN pip3 install --upgrade pip
 RUN if [ "$editable" -eq 1 ]; then pip3 install -r requirements-tests.txt && python3 setup.py build_resources; else pip3 install shuup; fi
 
