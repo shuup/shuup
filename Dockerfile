@@ -22,6 +22,7 @@ WORKDIR /app
 ARG editable=0
 # pip upgrade to be able to install cryptography
 RUN pip3 install --upgrade pip
+RUN pip3 install gunicorn
 RUN if [ "$editable" -eq 1 ]; then pip3 install -r requirements-tests.txt && python3 setup.py build_resources; else pip3 install shuup; fi
 
 RUN python3 -m shuup_workbench migrate
