@@ -52,7 +52,7 @@ pytz==2021.1              # via babel, django, django-timezone-field
 regex==2021.3.17          # via black
 requests==2.25.1          # via shuup
 six==1.15.0               # via bleach, django-filer, django-parler, jsonfield, python-dateutil, shuup
-sqlparse==0.4.1           # via django
+sqlparse==0.4.2           # via django
 toml==0.10.2              # via black, shuup
 typed-ast==1.4.2          # via black
 typing-extensions==3.7.4.3  # via black, importlib-metadata

@@ -66,7 +66,7 @@ requests==2.25.1                # via codecov, shuup
 selenium==3.141.0
 six==1.15.0                     # via bleach, cryptography, django-filer, django-parler, html5lib, jsonfield, mock, python-dateutil, shuup, splinter
 splinter==0.14.0
-sqlparse==0.4.1                 # via django
+sqlparse==0.4.2                 # via django
 tinycss2==1.1.0                 # via cairosvg, cssselect2, weasyprint
 toml==0.10.2                    # via shuup
 unicodecsv==0.14.1              # via shuup
