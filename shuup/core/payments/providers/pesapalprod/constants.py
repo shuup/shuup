@@ -1,0 +1,1 @@
+PESAPAL_PAYMENT_METHOD_ID = "pesapal"

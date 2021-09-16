@@ -5,15 +5,23 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import logging
+
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import View
 from six.moves import urllib
 
+from shuup.core.payments.providers.pesapalprod.constants import PESAPAL_PAYMENT_METHOD_ID
+from shuup.core.payments.providers.pesapalprod.models import PesapalPayment
+from shuup.core.payments.providers.pesapalprod.utils import get_pesapal_payment_url
 from shuup.front.checkout import CheckoutProcess, VerticalCheckoutProcess
 from shuup.utils.django_compat import reverse
 from shuup.utils.importing import cached_load
+from shuup.core.models import PaymentMethod
 
 __all__ = ["BaseCheckoutView"]
+logger = logging.getLogger(__name__)
 
 
 class BaseCheckoutView(View):
@@ -24,6 +32,7 @@ class BaseCheckoutView(View):
     process_class = CheckoutProcess
 
     def dispatch(self, request, *args, **kwargs):
+        self.check_and_update_pesapal_details()
         if request.basket.is_empty and self.empty_phase_spec:
             self.phase_specs = [self.empty_phase_spec]
             phase_identifier = "empty"
@@ -43,7 +52,31 @@ class BaseCheckoutView(View):
             url = current_phase.get_url()
             params = ("?" + urllib.parse.urlencode(request.GET)) if request.GET else ""
             return redirect(url + params)
+
+        if request.method == 'POST':
+
+            pesapal_id = PaymentMethod.objects.get(identifier=PESAPAL_PAYMENT_METHOD_ID).id
+            basket = self.request.basket
+            reference = basket.get_payments_reference()
+            pesapal_payment = PesapalPayment.objects.filter(merchant_reference=reference).first()
+            if not pesapal_payment and request.POST.get('payment_method') == str(pesapal_id):
+                amount = basket.taxful_total_price.amount.value
+                url = get_pesapal_payment_url(request=self.request, amount=amount,
+                                              reference=reference, lines=basket.get_lines())
+                return redirect(url)
         return current_phase.dispatch(request, *args, **kwargs)
+
+    def check_and_update_pesapal_details(self):
+        merchant_reference = self.request.GET.get('pesapal_merchant_reference')
+        pesapal_tracking_id = self.request.GET.get('pesapal_transaction_tracking_id')
+        if pesapal_tracking_id and merchant_reference:
+            try:
+                pesapal_payment = PesapalPayment.objects.get(merchant_reference=merchant_reference)
+                pesapal_payment.pesapal_reference = pesapal_tracking_id
+                pesapal_payment.save()
+                messages.success(self.request, "Payment recieved successfully. Click continue to place your order")
+            except PesapalPayment.DoesNotExist as e:
+                logger.warning(f"Failed to process PesapalPayment MR {merchant_reference} PR {pesapal_tracking_id} : {e}")
 
     def get_url(self, **kwargs):
         """

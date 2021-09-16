@@ -19,6 +19,7 @@ from shuup.apps.provides import get_provide_objects
 
 from .views.basket import BasketView
 from .views.category import AllCategoriesView, CategoryView
+
 from .views.checkout import get_checkout_view
 from .views.dashboard import DashboardView
 from .views.index import IndexView

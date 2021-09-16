@@ -158,3 +158,5 @@ class CustomerTaxGroup(TranslatableShuupModel):
 TaxLogEntry = define_log_model(Tax)
 TaxClassLogEntry = define_log_model(TaxClass)
 CustomerTaxGroupLogEntry = define_log_model(CustomerTaxGroup)
+
+ZERO_TAX_CLASS_ID = "zero_tax_class"

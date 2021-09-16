@@ -21,6 +21,8 @@ from shuup.utils.django_compat import force_text
 from shuup.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules
+from shuup.core.payments.providers.pesapalprod.models import PesapalPayment
+from ...utils.money import Money
 
 
 class OrderProcessor(object):
@@ -204,6 +206,7 @@ class OrderProcessor(object):
             payment_data=order_source.payment_data,
             shipping_data=order_source.shipping_data,
             extra_data=order_source.extra_data,
+
         )
 
     def finalize_creation(self, order, order_source):
@@ -306,4 +309,19 @@ class OrderCreator(OrderProcessor):
         order.save()
         order = self.finalize_creation(order, order_source)
         order_creator_finished.send(sender=type(self), order=order, source=order_source)
+        self.check_pesapal_payments(order)
         return order
+
+    def check_pesapal_payments(self, order):
+        from shuup.core.basket.objects import BASKET_PAYMENTS_REFERENCE_KEY
+        reference = order.extra_data.get(BASKET_PAYMENTS_REFERENCE_KEY)
+        if reference:
+            try:
+                payment = PesapalPayment.objects.get(merchant_reference=reference)
+                description = f"Payment of KES {payment.amount} via Pesapal"
+                amount = Money(value=payment.amount, currency="KES")
+                order.create_payment(amount=amount, payment_identifier=payment.pesapal_reference,
+                                     description=description)
+                order.update_payment_status()
+            except PesapalPayment.DoesNotExist as e:
+                pass

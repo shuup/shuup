@@ -14,6 +14,7 @@ from django.views.generic import FormView
 from logging import getLogger
 
 from shuup.apps.provides import get_provide_objects
+from shuup.core.basket.objects import BASKET_PAYMENTS_REFERENCE_KEY
 from shuup.core.models import OrderStatus
 from shuup.front.basket import get_basket_order_creator
 from shuup.front.checkout import CheckoutPhaseViewMixin
@@ -130,6 +131,9 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         basket.orderer = self.request.person
         basket.customer = self.request.customer
         basket.creator = self.request.user
+        basket.extra_data.update(
+            {BASKET_PAYMENTS_REFERENCE_KEY: basket.get_payments_reference()}
+        )
         if "impersonator_user_id" in self.request.session:
             basket.creator = get_user_model().objects.get(pk=self.request.session["impersonator_user_id"])
         basket.status = OrderStatus.objects.get_default_initial()

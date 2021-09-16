@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import os
+
 """
 Settings of Shuup Core.
 
@@ -15,15 +17,14 @@ about the Shuup settings system.  Especially, when inventing settings of
 your own, the :ref:`apps-naming-settings` section is an important read.
 """
 
-
 #: The home currency for the Shuup installation. All monetary values
 #: are implicitly in this currency unless somehow otherwise specified.
-SHUUP_HOME_CURRENCY = "EUR"
+SHUUP_HOME_CURRENCY = "KES"
 
 #: The home country code (ISO 3166-1 alpha 2) for the Shuup installation.
 #: If `None`, among other things, addresses that would be printed with the country
 #: visible, are printed with no country.
-SHUUP_ADDRESS_HOME_COUNTRY = None
+SHUUP_ADDRESS_HOME_COUNTRY = "KE"
 
 #: Whether or not anonymous orders (without a ``creator`` user)
 #: are allowed.
@@ -95,7 +96,7 @@ SHUUP_ENABLE_MULTIPLE_SHOPS = False
 
 #: Whether multiple suppliers are enabled in this installation.
 #: Enabling this flag allows supplier creation from Admin Panel.
-SHUUP_ENABLE_MULTIPLE_SUPPLIERS = False
+SHUUP_ENABLE_MULTIPLE_SUPPLIERS = True
 
 #: Whether to allow editing order
 #: By default when multiple suppliers is enabled this option is disabled
@@ -157,7 +158,7 @@ SHUUP_ORDER_KNOWN_SHIPPING_DATA_KEYS = []
 SHUUP_ORDER_KNOWN_EXTRA_DATA_KEYS = []
 
 #: The flag to enable/disable the telemetry (statistics) system.
-SHUUP_TELEMETRY_ENABLED = True
+SHUUP_TELEMETRY_ENABLED = False
 
 #: The host URL for Shuup's telemetry (statistics) system.
 SHUUP_TELEMETRY_HOST_URL = "https://telemetry.shuup.com"
@@ -207,7 +208,9 @@ SHUUP_ADDRESS_MODEL_FORM = "shuup.core.utils.forms.MutableAddressForm"
 #:
 #: It should be noted, however, that overriding some of the settings (such as making a
 #: required field non-required) could create other validation issues.
-SHUUP_ADDRESS_FIELD_PROPERTIES = {}
+SHUUP_ADDRESS_FIELD_PROPERTIES = {
+    "postal_code": {"required": False}
+}
 
 #: Indicates maximum days for daily data included to one telemetry request
 SHUUP_MAX_DAYS_IN_TELEMETRY = 180
@@ -287,3 +290,20 @@ SHUUP_MASS_UNIT = "g"
 #: All volume values will use this unit raised to the power of 3.
 #:
 SHUUP_LENGTH_UNIT = "mm"
+
+
+def os_env_to_bool(key, default):
+    val = os.environ.get(key, default)
+    if isinstance(val, bool):
+        return val
+    else:
+        if val.lower() == 'true':
+            return True
+        else:
+            return False
+
+
+PESAPAL_CONSUMER_KEY = os.environ.get('PESAPAL_CONSUMER_KEY')
+PESAPAL_CONSUMER_SECRET = os.environ.get('PESAPAL_CONSUMER_SECRET')
+PESAPAL_TESTING = os_env_to_bool('PESAPAL_TESTING', False)
+DEFAULT_PESAPAL_PHONE_NUMBER = "0700123456"

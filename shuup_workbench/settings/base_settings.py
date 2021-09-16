@@ -116,18 +116,18 @@ SOUTH_TESTS_MIGRATE = False  # Makes tests that much faster.
 DEFAULT_FROM_EMAIL = "no-reply@example.com"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGGING = {
-    "version": 1,
-    "formatters": {
-        "verbose": {"format": "[%(asctime)s] (%(name)s:%(levelname)s): %(message)s"},
-    },
-    "handlers": {
-        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"},
-    },
-    "loggers": {
-        "shuup": {"handlers": ["console"], "level": "DEBUG", "propagate": True},
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "formatters": {
+#         "verbose": {"format": "[%(asctime)s] (%(name)s:%(levelname)s): %(message)s"},
+#     },
+#     "handlers": {
+#         "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"},
+#     },
+#     "loggers": {
+#         "shuup": {"handlers": ["console"], "level": "DEBUG", "propagate": True},
+#     },
+# }
 
 LANGUAGES = [
     # List all supported languages here.

@@ -794,6 +794,13 @@ class BaseBasket(OrderSource):
             return self.storage.get_log_entries(self)
         return []
 
+    def get_payments_reference(self):
+        unique_key = str(self.request.session.session_key + self.ip_address).encode()
+        return hashlib.md5(unique_key).hexdigest()[:20]
+
 
 class Basket(BaseBasket):
     pass
+
+
+BASKET_PAYMENTS_REFERENCE_KEY = 'basket_payments_reference'
