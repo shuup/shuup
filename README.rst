@@ -60,7 +60,7 @@ Fastest way to get Shuup up and running is to use `Docker <https://www.docker.co
 
    .. code-block:: shell
 
-      docker-compose up
+      docker-compose --env-file .env up --build
 
 2. Open `localhost:8000/sa <http://localhost:8000/sa>`_ in a browser,
    log in with username: ``admin`` password: ``admin``

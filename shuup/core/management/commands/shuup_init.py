@@ -48,7 +48,6 @@ class Initializer(object):
         schema(CustomerTaxGroup, "default_company_customers", name="Company Customers"),
         schema(Currency, "USD", decimal_places=2),
         schema(Currency, "EUR", decimal_places=2),
-        schema(Currency, "KES", decimal_places=2),
     ]
 
     def __init__(self):
@@ -77,18 +76,21 @@ class Initializer(object):
 
         return obj
 
+    def create_currency(self):
+        Currency.objects.get_or_create(code="KES", decimal_places=2)
+
     def create_payment_method(self):
         print_("Creating payment method...", end=" ")
         kwargs = dict(name="Pesapal", enabled=True, identifier=PESAPAL_PAYMENT_METHOD_ID)
         from shuup.core.models import PaymentProcessor
-        processor = PaymentProcessor.objects.create(**kwargs)
+        processor, _ = PaymentProcessor.objects.get_or_create(**kwargs)
         from shuup.core.models import TaxClass
         zero_tax, _ = TaxClass.objects.get_or_create(identifier=ZERO_TAX_CLASS_ID)
         method_args = dict(payment_processor=processor, identifier=PESAPAL_PAYMENT_METHOD_ID,
                            enabled=True, shop_id=1, name='Pesapal', tax_class=zero_tax,
                            description='Pay via Card, banks and Mpesa')
         from shuup.core.models import PaymentMethod
-        method = PaymentMethod.objects.create(**method_args)
+        method, _ = PaymentMethod.objects.get_or_create(**method_args)
         print_("done.")
         return method
 
@@ -119,4 +121,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with atomic():
+
             Initializer().run()
