@@ -43,7 +43,7 @@ python-dateutil==2.8.1    # via shuup
 pytz==2021.1              # via babel, django, django-timezone-field
 readthedocs-sphinx-ext==0.5.17
 requests==2.25.1          # via readthedocs-sphinx-ext, shuup, sphinx
-shuup==2.10.2
+shuup==2.11.0
 six==1.16.0               # via bleach, django-filer, django-parler, jsonfield, python-dateutil, shuup, sphinx
 snowballstemmer==2.1.0    # via sphinx
 sphinx==1.5.6
