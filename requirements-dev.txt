@@ -1,6 +1,6 @@
 -e .
 appdirs==1.4.4            # via black
-babel==2.5.3              # via shuup
+babel==2.9.1              # via shuup
 black==20.8b1
 bleach==3.1.5             # via shuup
 certifi==2020.12.5        # via requests
