@@ -34,7 +34,7 @@ jinja2==2.8.1             # via django-jinja, shuup
 jsonfield==2.1.1          # via shuup
 keyring==23.0.1           # via shuup
 keyrings.alt==4.0.2       # via shuup
-lxml==4.6.3               # via shuup
+lxml==4.6.5               # via shuup
 markdown==3.3.4           # via shuup
 markupsafe==1.1.1         # via jinja2
 mccabe==0.6.1             # via flake8
