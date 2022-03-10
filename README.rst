@@ -9,7 +9,7 @@
    :alt: Known Vulnerabilities
    :target: https://snyk.io/test/github/shuup/shuup
 
-Shuup
+
 =====
 
 Shuup is an Open Source E-Commerce Platform based on Django and Python.
@@ -150,4 +150,4 @@ Admin Preview
 
 .. image:: doc/_static/admin_order_detail.png
     :target: doc/_static/admin_order_detail.png
-    :height: 300px
+
