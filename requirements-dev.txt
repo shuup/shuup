@@ -42,7 +42,7 @@ mypy-extensions==0.4.3    # via black
 openpyxl==3.0.7           # via shuup
 packaging==20.9           # via bleach
 pathspec==0.8.1           # via black
-pillow==8.2.0             # via easy-thumbnails
+pillow==9.0.1             # via easy-thumbnails
 prequ==1.4.7
 pycodestyle==2.6.0        # via flake8
 pyflakes==2.2.0           # via flake8
