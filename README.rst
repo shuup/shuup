@@ -52,7 +52,7 @@ We have a Gitter chat room for Shuup.  Come chat with us!  |Join chat|
    :target: https://gitter.im/shuup/shuup
 
 Docker quick start
-------------------
+---------------
 
 Fastest way to get Shuup up and running is to use `Docker <https://www.docker.com>`_.
 
