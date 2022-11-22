@@ -49,7 +49,7 @@ mock==3.0.5
 more-itertools==8.7.0           # via pytest
 openpyxl==3.0.7                 # via shuup
 packaging==20.9                 # via bleach, pytest
-pillow==8.2.0                   # via cairosvg, easy-thumbnails, weasyprint
+pillow==9.3.0                   # via cairosvg, easy-thumbnails, weasyprint
 pluggy==0.13.1                  # via pytest
 py==1.10.0                      # via pytest
 pycparser==2.20                 # via cffi
