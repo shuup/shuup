@@ -6,7 +6,7 @@ beautifulsoup4==4.5.3
 bleach==3.1.5                   # via shuup
 cairocffi==1.2.0                 # via cairosvg, weasyprint
 cairosvg==2.5.2                 # via weasyprint
-certifi==2020.12.5               # via requests
+certifi==2022.12.7               # via requests
 cffi==1.14.5                     # via cairocffi, cryptography, weasyprint
 chardet==4.0.0                  # via requests
 codecov==2.1.11

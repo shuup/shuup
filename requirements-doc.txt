@@ -1,7 +1,7 @@
 alabaster==0.7.12         # via sphinx
 babel==2.5.3              # via shuup, sphinx
 bleach==3.1.5             # via shuup
-certifi==2021.5.30        # via requests
+certifi==2022.12.7        # via requests
 chardet==4.0.0            # via requests
 django==2.2.24            # via django-filer, django-filter, django-jinja, django-mptt, django-reversion, django-timezone-field, django-polymorphic, djangorestframework, easy-thumbnails, jsonfield, shuup
 django-bootstrap3==11.0.0  # via shuup
