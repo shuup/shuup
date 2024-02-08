@@ -9,7 +9,7 @@ cairosvg==2.5.2                 # via weasyprint
 certifi==2020.12.5               # via requests
 cffi==1.14.5                     # via cairocffi, cryptography, weasyprint
 chardet==4.0.0                  # via requests
-codecov==2.1.11
+codecov==2.1.13
 coverage==5.5                   # via codecov, pytest-cov
 cryptography==3.4.7
 cssselect2==0.4.1               # via cairosvg, weasyprint

@@ -1,0 +1,3 @@
+shuup
+shuup_setup_utils
+shuup_workbench
