@@ -36,7 +36,7 @@ window.Messages = (function Messages(document) {
     }
     function clear() {
         container.classList.remove("clear");
-        while (container && container.firstChild) {
+        while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
     }
