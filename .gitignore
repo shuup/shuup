@@ -43,3 +43,6 @@ node_modules
 .sqlite
 .python-version
 .unit_tests
+pip-wheel-metadata/shuup.dist-info/top_level.txt
+pip-wheel-metadata/shuup.dist-info/METADATA
+pip-wheel-metadata/shuup.dist-info/LICENSE
