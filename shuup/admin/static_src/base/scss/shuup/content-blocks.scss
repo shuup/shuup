@@ -391,7 +391,7 @@
 .active-theme {
     &::before {
         content: '\f00c';
-        font-family: 'FontAwesome', 'monospace';
+        font-family: 'Arial', 'monospace';
         width: 32px;
         height: 32px;
         color: $white;
