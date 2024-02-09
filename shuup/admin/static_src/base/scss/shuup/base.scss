@@ -183,13 +183,12 @@ body.order-create #scroll-to-top .scroll-to-top-button {
         justify-content: center;
         align-items: center;
 
-        color: var(--primary);
         transform: translateY(0);
 
         &:hover {
             color: var(--primary-light);
-            animation-timing-function: ease-in-out;
             animation: jump 0.1s linear forwards;
+            animation-timing-function: ease-in-out;
         }
     }
 }
