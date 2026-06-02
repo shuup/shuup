@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
@@ -76,7 +77,10 @@ class ShopEnablerView(View):
         shop.maintenance_mode = not enable
         shop.save()
         messages.info(request, _("Your store is now live."))
-        return HttpResponseRedirect(request.POST.get("redirect"))
+        redirect_url = request.POST.get("redirect") or reverse("shuup_admin:home")
+        if not url_has_allowed_host_and_scheme(redirect_url, allowed_hosts={request.get_host()}):
+            redirect_url = reverse("shuup_admin:home")
+        return HttpResponseRedirect(redirect_url)
 
 
 class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
