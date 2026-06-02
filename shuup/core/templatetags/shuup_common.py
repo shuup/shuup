@@ -138,12 +138,28 @@ def json(value):
     return mark_safe(json_dump(value, cls=ExtendedJSONEncoder))
 
 
+_SAFE_HTML_TAGS = [
+    "p", "br", "b", "i", "em", "strong", "ul", "ol", "li",
+    "a", "h2", "h3", "h4", "h5", "blockquote", "pre", "code",
+    "span", "div", "table", "thead", "tbody", "tr", "td", "th",
+    "img", "hr",
+]
+_SAFE_HTML_ATTRS = {
+    "a": ["href", "title", "rel"],
+    "img": ["src", "alt", "width", "height"],
+    "*": ["class"],
+}
+
+
 @library.filter
 def safe_product_description(value):
     if isinstance(value, Undefined):
         return value
     if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_PRODUCT_DESCRIPTION:
         value = linebreaks(bleach.clean(value, tags=[], strip=True))
+    else:
+        # Always sanitize to a whitelist even when HTML is allowed (CWE-79)
+        value = bleach.clean(value, tags=_SAFE_HTML_TAGS, attributes=_SAFE_HTML_ATTRS, strip=True)
     return mark_safe(value)
 
 
@@ -161,6 +177,9 @@ def safe_vendor_description(value):
         return value
     if not settings.SHUUP_ADMIN_ALLOW_HTML_IN_VENDOR_DESCRIPTION:
         value = linebreaks(bleach.clean(value, tags=[]))
+    else:
+        # Always sanitize to a whitelist even when HTML is allowed (CWE-79)
+        value = bleach.clean(value, tags=_SAFE_HTML_TAGS, attributes=_SAFE_HTML_ATTRS, strip=True)
     return mark_safe(value)
 
 
