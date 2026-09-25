@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import decimal
+import logging
 import six
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
@@ -28,6 +29,8 @@ from shuup.utils.django_compat import is_authenticated
 from shuup.utils.importing import cached_load
 from shuup.utils.numbers import parse_decimal_string
 
+
+logger = logging.getLogger(__name__)
 
 # TODO: Refactor handle_add, it's too complex
 def handle_add(  # noqa (C901)
@@ -118,6 +121,7 @@ def handle_add(  # noqa (C901)
         "parent_line": kwargs.get("parent_line"),
     }
     line = basket.add_product(**add_product_kwargs)
+    logger.info("Added product to basket: product_id=%s quantity=%s", product.id, quantity)
 
     return {"ok": basket.smart_product_count, "line_id": line.line_id, "added": quantity}
 

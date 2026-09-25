@@ -58,10 +58,23 @@ Inheritance order for product macors:
             </div>
         </a>
         <div class="actions clearfix">
+            <form method="post"
+                  action="{{ url('shuup:basket') }}"
+                  class="add-to-basket">
+                <input type="hidden" name="command" value="add">
+                <input type="hidden" name="product_id" value="{{ shop_product.product.id }}">
+                <input type="hidden" name="quantity" value="1">
+
+                <button type="submit"
+                        class="btn btn-primary btn-add-cart">
+                    {% trans %}Add to cart{% endtrans %}
+                </button>
+            </form>
+
             <button type="button"
-                    class="btn btn-block text-muted"
+                    class="btn btn-preview"
                     onclick="showPreview('{{ product.id }}');">
-                <i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}
+                {% trans %}Preview{% endtrans %}
             </button>
         </div>
     </div>
