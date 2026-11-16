@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.http import JsonResponse
 from django.utils.translation import ugettext, ugettext_lazy as _
 
+from shuup.admin.supplier_provider import get_supplier
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Product, Supplier
@@ -84,12 +85,16 @@ class StocksListView(PicotableListView):
         ]
 
     def get_queryset(self):
-        return StockCount.objects.filter(
+        queryset = StockCount.objects.filter(
             supplier__supplier_modules__module_identifier="simple_supplier",
             supplier__enabled=True,
             supplier__stock_managed=True,
             product__deleted=False,
         ).order_by("product__id")
+        supplier = get_supplier(self.request)
+        if supplier:
+            queryset = queryset.filter(supplier=supplier)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(PicotableListView, self).get_context_data(**kwargs)
@@ -102,6 +107,11 @@ class StocksListView(PicotableListView):
 
     def get_stock_adjustment_form(self, instance):
         return get_stock_adjustment_div(self.request, instance.supplier, instance.product)
+
+
+def _ensure_supplier_access(request, supplier_id):
+    current_supplier = get_supplier(request)
+    return current_supplier is None or str(current_supplier.pk) == str(supplier_id)
 
 
 def get_adjustment_success_message(stock_adjustment):
@@ -148,6 +158,8 @@ def process_stock_adjustment(request, supplier_id, product_id):
     try:
         if request.method != "POST":
             return JsonResponse({}, status=405)
+        if not _ensure_supplier_access(request, supplier_id):
+            return JsonResponse({"message": ugettext("No permission for this supplier.")}, status=403)
 
         product = Product.objects.select_related("sales_unit").filter(pk=product_id).first()
         form = StockAdjustmentForm(data=request.POST, sales_unit=product.sales_unit)
@@ -194,6 +206,8 @@ def _process_and_catch_errors(process, form_class, request, supplier_id, product
     try:
         if request.method != "POST":
             return JsonResponse({}, status=405)
+        if not _ensure_supplier_access(request, supplier_id):
+            return JsonResponse({"message": ugettext("No permission for this supplier.")}, status=403)
 
         product = Product.objects.select_related("sales_unit").filter(pk=product_id).first()
 
@@ -217,6 +231,8 @@ def _process_and_catch_errors(process, form_class, request, supplier_id, product
 def process_stock_managed(request, supplier_id, product_id):
     if request.method != "POST":
         return JsonResponse({}, status=405)
+    if not _ensure_supplier_access(request, supplier_id):
+        return JsonResponse({"message": ugettext("No permission for this supplier.")}, status=403)
 
     stock_managed = bool(request.POST.get("stock_managed") == "True")
     supplier = Supplier.objects.get(id=supplier_id)
